@@ -24,23 +24,7 @@
 
                         <div class="slds-grid">
                             <div class="slds-col slds-size_1-of-2">
-                                <div
-                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <template if:true={customerMarkingOptions}>
-                                        <lightning-combobox data-id="customerMarking" name="customerMarking"
-                                            label="Marcatura" placeholder="Seleziona Marcatura"
-                                            value={markingValue} options={customerMarkingOptions}
-                                            onchange={handleChange} required>
-                                        </lightning-combobox>
-                                        <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
-                                    </template>
-                                </div>
-                                <div data-id="hideBusinessName"
-                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small slds-show">
-                                    <lightning-input type="text" data-id="businessName" label="Ragione Sociale"
-                                        required>
-                                    </lightning-input>
-                                </div>
+                               
                                 <div class="slds-hide" data-id="showDiv">
                                     <div
                                         class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
@@ -55,37 +39,124 @@
                                         </lightning-input>
                                     </div>
                                 </div>
+                                <div data-id="hideBusinessName"
+                                class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small slds-show">
+                                
+                                    <lightning-input type="text" data-id="businessName" label="Ragione Sociale"
+                                        required>
+                                    </lightning-input> 
+                                </div>
+                                <div 
+                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small slds-show">
+                                    <!-- <lightning-input type="text" data-id="businessName" label="Ragione Sociale"
+                                        required>
+                                    </lightning-input> -->
+                                    <lightning-input type="text" data-id="vatNumber" label="Partita IVA" max-length="11" onchange={handleVatChange} required>
+                                    </lightning-input> 
+                                </div>
                                 <div
                                     class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required={makerequired}>
+                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" max-length="16"  required={makerequired}>
                                     </lightning-input>
                                 </div>
                             </div>
                             <div class="slds-col slds-size_1-of-2">
                                 <div
                                     class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                    <template if:true={categoryOptions}>
+                                    <!-- <template if:true={categoryOptions}>
                                         <lightning-combobox data-id="category" name="category" label="Categoria"
                                             placeholder="Seleziona Categoria" value={categoryValue}
                                             options={categoryOptions} required>
                                         </lightning-combobox>
                                         <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
-                                    </template>
-                                </div>
-                                <div
-                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                    <lightning-input type="text" data-id="vatNumber" label="Partita IVA" onchange={handleVatChange} required>
-                                    </lightning-input>
-                                </div>
-                                <div
-                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    </template> -->
                                     <template if:true={companyOwnerOptions.data}>
                                         <lightning-combobox data-id="companyOwner" name="companyOwner"
                                             label="Silos" placeholder="Seleziona Società" onchange={handleCompanyOwnerChange}
-                                            options={companyOwnerOptions.data.values} required>
+                                            options={companyOwnerOptions.data.values}  disabled={showCompanyOwner} value={companyDefault} required>
                                         </lightning-combobox>
                                     </template>
                                 </div>
+                                <div
+                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <!-- <lightning-input type="text" data-id="vatNumber" label="Partita IVA" onchange={handleVatChange} required>
+                                    </lightning-input> -->
+                                    <!-- <template if:true={customerMarkingOptions}>
+                                        <lightning-combobox data-id="customerMarking" name="customerMarking"
+                                            label="Marcatura" placeholder="Seleziona Marcatura"
+                                            value={markingValue} options={customerMarkingOptions}
+                                            onchange={handleChange} required>
+                                        </lightning-combobox>
+                                        <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
+                                    </template> -->
+                                    <lightning-combobox data-id="SocietaSilos" name="SocietaSilos"
+                                    label="Società Silos" placeholder="Società Silos"
+                                    options={companyOptions}  required>
+                                </lightning-combobox>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                   
+                                    <!-- <template if:true={categoryOptions}>
+                                        <lightning-combobox data-id="category" name="category" label="Categoria"
+                                            placeholder="Seleziona Categoria" value={categoryValue}
+                                            options={categoryOptions} required>
+                                        </lightning-combobox>
+                                        <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
+                                    </template> -->
+                                    <template if:true={customerMarkingOptions}>
+                                        <lightning-combobox data-id="customerMarking" name="customerMarking"
+                                            label="Marcatura" placeholder="Seleziona Marcatura"
+                                            value={markingValue} options={customerMarkingOptions}
+                                            onchange={handleChange} required>
+                                        </lightning-combobox>
+                                        <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
+                                    </template>
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div  data-id="hideBusinessName2" class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                             
+                                <!-- <lightning-input type="text" data-id="customerType" value={customerType}
+                                label="Cliente Finale" disabled="true"> </lightning-input> -->
+                                <template if:true={customerTypeOptions}>
+                                    <lightning-combobox data-id="ClienteFinale" name="Cliente Finale" label="Cliente Finale"
+                                      options={customerTypeOptions} value={customerType} disabled={makerequired}>
+                                    </lightning-combobox  >
+                                </template>
+                            <!-- <template if:true={categoryOptions}>
+                                <lightning-combobox data-id="category" name="category" label="Categoria"
+                                    placeholder="Seleziona Categoria" value={categoryValue}
+                                    options={categoryOptions} required>
+                                </lightning-combobox>
+                                <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
+                            </template>  -->
+                                <!-- <template if:true={customerMarkingOptions}>
+                                    <lightning-combobox data-id="customerMarking" name="customerMarking"
+                                        label="Marcatura" placeholder="Seleziona Marcatura"
+                                        value={markingValue} options={customerMarkingOptions}
+                                        onchange={handleChange} required>
+                                    </lightning-combobox>
+                                    <lightning-helptext content='Per completare il campo selezionare prima un valore per "Silos"'></lightning-helptext>
+                                </template> -->
+                            </div>
+                            <div  data-id="showDiv2" class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small slds-hide">
+                                <lightning-input type="text" data-id="customerType" value={customerType}
+                                label="Cliente Finale" disabled="true"> </lightning-input> 
+         
+                            </div>
+                            <div class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                               <template if:true={categoryOptions}>
+                                <lightning-combobox data-id="category" name="category" label="Categoria"
+                                    placeholder="Seleziona Categoria" value={categoryValue}
+                                    options={categoryOptions} required>
+                                </lightning-combobox>
+                                <lightning-helptext content='Per completare il campo selezionare prima un valore per "Marcatura"'></lightning-helptext>
+                            </template>  
+                            
                             </div>
                         </div>
                         <div class="slds-m-top_x-large">
@@ -267,7 +338,7 @@
                                 <div class="slds-col slds-grid">
                                     <div
                                         class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-input type="text" data-id="personFiscalCode" label="Codice Fiscale"
+                                        <lightning-input type="text" data-id="personFiscalCode" label="Codice Fiscale" max-length="16"
                                             required>
                                         </lightning-input>
                                     </div>

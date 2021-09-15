@@ -1,0 +1,19 @@
+<template>
+    <template if:true={loader}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <div if:false={loader}>
+        <div if:true={altMessage} class="container-altmessage">
+            <h2 style="font-size:0.8rem">{altMessage}</h2>
+        </div>
+        <div if:false={altMessage} class="container-table" style="height: 400px;">
+            <lightning-datatable 
+                data={rowData}
+                columns={columns}
+                key-field="_id"
+                onrowselection={getSelectedRecord}
+                max-row-selection={maxRowSelect}>     
+            </lightning-datatable>
+        </div>
+    </div>
+</template>

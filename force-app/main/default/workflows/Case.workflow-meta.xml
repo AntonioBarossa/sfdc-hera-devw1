@@ -21,6 +21,16 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Passa_a_Attesa_Modulo_Firmato</fullName>
+        <field>Phase__c</field>
+        <literalValue>Da Inviare</literalValue>
+        <name>Passa a &quot;Attesa Modulo Firmato&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Passa_a_Da_Inviare</fullName>
         <field>Phase__c</field>
         <literalValue>Da Inviare</literalValue>

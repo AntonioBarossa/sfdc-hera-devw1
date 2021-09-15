@@ -11,7 +11,7 @@
                 <!--<span class="slds-assistive-text">Description of icon when needed</span>-->
             </span>
             <span class="slds-size_3-of-5 slds-float_left">
-                <p class="slds-truncate" title={pillLabel}>{pillLabel}</p>
+                <p class="slds-truncate" title={pillLabel}>{pillValue}</p>
             </span>
             <span class="slds-size_1-of-5">
                 <lightning-button-icon onclick={handleRemove} class="slds-float_right" icon-name="utility:close" variant="bare" alternative-text="Close" title="Close"></lightning-button-icon>
@@ -36,6 +36,7 @@
             row-id={rowId}
             icon={pillIcon}
             rate={rate}
+            rate-type-value={rateTypeValue}
             onclosemodal={hanldeCloseMOdal}
             onsetvalue={hanldeSetValue}
         ></c-hdt-modal-data-table>

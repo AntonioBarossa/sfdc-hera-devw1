@@ -3,11 +3,13 @@
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
-      <target>lightning__FlowScreen</target>
+        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="theCase" type="@salesforce/schema/Case" />
+            <property name="theCase" type="@salesforce/schema/Case"/>
+            <property name="cancelCase" type="Boolean"/>
+            <property name="hideNavigationButtons" type="Boolean" role="inputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

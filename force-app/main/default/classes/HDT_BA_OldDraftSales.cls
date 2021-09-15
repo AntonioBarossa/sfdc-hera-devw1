@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date May/2021
+* @description HDT_BA_OldDraftSales
+* @history Lorenzo – May/2021 – created class 
+*/
+
 public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sObject> {
 
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();

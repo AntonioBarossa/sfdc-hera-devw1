@@ -5,6 +5,10 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import { NavigationMixin } from 'lightning/navigation';
+import { updateRecord } from 'lightning/uiRecordApi';
+import ID_FIELD from '@salesforce/schema/Account.Id';
+import MOD_SPED from '@salesforce/schema/Account.SendMode__c';
+
 export default class HdtAccountDocumentSignatureManager extends NavigationMixin(LightningElement) {
     @api context;
     @api recordId;
@@ -27,6 +31,7 @@ export default class HdtAccountDocumentSignatureManager extends NavigationMixin(
         }
     ];
     connectedCallback(){
+        console.log('account ' + this.recordId);
         getInfoAccountStatement({
             accountId: this.recordId
         }).then(result => {
@@ -100,13 +105,34 @@ export default class HdtAccountDocumentSignatureManager extends NavigationMixin(
                     if(!allValid){
                         console.log('KO');
                     }else{
-                        this.sendDocumentFile();
+
+                        const fields = {};
+                        fields[ID_FIELD.fieldApiName] = this.recordId;
+                        fields[MOD_SPED.fieldApiName] = modSpedizione.value;
+                        const recordInput = { fields };
+                        updateRecord(recordInput)
+                                .then(() => {
+                                    console.log('Record aggiornato');
+                                    this.sendDocumentFile();
+                                })
+                                .catch(error => {
+                                    console.log('Errore in aggiornamento');
+                                    this.dispatchEvent(
+                                        new ShowToastEvent({
+                                            title: 'Error creating record',
+                                            message: error.body.message,
+                                            variant: 'error'
+                                        })
+                                    );
+                                });
                     }
                 }
         }catch (error) {
             console.error(error);
         }
     }
+
+    
     sendDocumentFile(){
         var sendMode = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value;
         if(sendMode.localeCompare('Stampa Cartacea')===0){

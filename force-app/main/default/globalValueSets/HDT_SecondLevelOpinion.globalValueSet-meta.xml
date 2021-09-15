@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Contratto SAP</fullName>
+        <default>false</default>
+        <label>Contratto SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Energia Elettrica</fullName>
+        <default>false</default>
+        <label>Energia Elettrica</label>
+    </customValue>
+    <customValue>
+        <fullName>Gas</fullName>
+        <default>false</default>
+        <label>Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Pratiche legali</fullName>
+        <default>false</default>
+        <label>Supporto Pratiche legali</label>
+    </customValue>
+    <customValue>
+        <fullName>Rateizzazioni</fullName>
+        <default>false</default>
+        <label>Rateizzazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifiche clienti TOP</fullName>
+        <default>false</default>
+        <label>Verifiche clienti TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>Morosità riattivazione</fullName>
+        <default>false</default>
+        <label>Morosità riattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Morosità sospensione</fullName>
+        <default>false</default>
+        <label>Morosità sospensione</label>
+    </customValue>
+    <customValue>
+        <fullName>Piani di rientro</fullName>
+        <default>false</default>
+        <label>Piani di rientro</label>
+    </customValue>
+    <customValue>
+        <fullName>Recupero diretto</fullName>
+        <default>false</default>
+        <label>Recupero diretto</label>
+    </customValue>
+    <customValue>
+        <fullName>Recupero indiretto</fullName>
+        <default>false</default>
+        <label>Recupero indiretto</label>
+    </customValue>
+    <customValue>
+        <fullName>Fondo svalutazione crediti</fullName>
+        <default>false</default>
+        <label>Fondo svalutazione crediti</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit Management</fullName>
+        <default>false</default>
+        <label>Credit Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazioni vs DL</fullName>
+        <default>false</default>
+        <label>Comunicazioni vs DL</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazioni vs SII</fullName>
+        <default>false</default>
+        <label>Comunicazioni vs SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifiche portali</fullName>
+        <default>false</default>
+        <label>Verifiche portali</label>
+    </customValue>
+    <customValue>
+        <fullName>CMOR</fullName>
+        <default>false</default>
+        <label>CMOR</label>
+    </customValue>
+    <customValue>
+        <fullName>Canone RAI</fullName>
+        <default>false</default>
+        <label>Canone RAI</label>
+    </customValue>
+    <customValue>
+        <fullName>Bonus Sociale</fullName>
+        <default>false</default>
+        <label>Bonus Sociale</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione Elettronica</fullName>
+        <default>false</default>
+        <label>Fatturazione Elettronica</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica fattura Sap</fullName>
+        <default>false</default>
+        <label>Verifica fattura Sap</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagamenti e incassi</fullName>
+        <default>false</default>
+        <label>Pagamenti e incassi</label>
+    </customValue>
+    <customValue>
+        <fullName>Domiciliazioni</fullName>
+        <default>false</default>
+        <label>Domiciliazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Fattura SD</fullName>
+        <default>false</default>
+        <label>Fattura SD</label>
+    </customValue>
+    <customValue>
+        <fullName>Dichiarazione di intento</fullName>
+        <default>false</default>
+        <label>Dichiarazione di intento</label>
+    </customValue>
+    <customValue>
+        <fullName>Storno iva detraibile</fullName>
+        <default>false</default>
+        <label>Storno iva detraibile</label>
+    </customValue>
+    <customValue>
+        <fullName>Iva e accise</fullName>
+        <default>false</default>
+        <label>Iva e accise</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita diretta</fullName>
+        <default>false</default>
+        <label>Vendita diretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita indiretta</fullName>
+        <default>false</default>
+        <label>Vendita indiretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Condomini e PA</fullName>
+        <default>false</default>
+        <label>Condomini e PA</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Call Center</fullName>
+        <default>false</default>
+        <label>Gestione Call Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Sportello</fullName>
+        <default>false</default>
+        <label>Gestione Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>Parere Legale</fullName>
+        <default>false</default>
+        <label>Parere Legale</label>
+    </customValue>
+    <customValue>
+        <fullName>Privacy</fullName>
+        <default>false</default>
+        <label>Privacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Parere Normativo</fullName>
+        <default>false</default>
+        <label>Parere Normativo</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto HC</fullName>
+        <default>false</default>
+        <label>Supporto HC</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Responsabile HC</fullName>
+        <default>false</default>
+        <label>Supporto Responsabile HC</label>
+    </customValue>
+    <customValue>
+        <fullName>Costing e Forecasting</fullName>
+        <default>false</default>
+        <label>Costing e Forecasting</label>
+    </customValue>
+    <customValue>
+        <fullName>Contratto Salesforce</fullName>
+        <default>false</default>
+        <label>Contratto Salesforce</label>
+    </customValue>
+    <masterLabel>Pareri 2° Livello</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

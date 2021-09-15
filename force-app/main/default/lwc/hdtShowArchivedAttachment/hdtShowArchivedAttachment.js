@@ -23,21 +23,25 @@ export default class HdtShowArchivedAttachment extends NavigationMixin(Lightning
                 recordId: this.recordId
             }).then(result => {
                 var resultParsed = JSON.parse(result);
-                if(resultParsed.code === '200'){
-                    if(resultParsed.result === '000'){
-                        this.showPdfFromBase64(resultParsed.base64);
+                if(resultParsed.outcome === 'OK'){
+                    this.showPdfFromBase64(resultParsed.base64);
+                    this.closeAction();
+                }else{
+                    if(resultParsed.errorMessage != null && resultParsed.errorMessage != undefined){
                         this.closeAction();
+                        this.showErrorMessage(resultParsed.errorMessage);
                     }else{
+                        this.closeAction();
                         this.showErrorMessage('Impossibile visualizzare il documento archiviato.');
                     }
-                }else{
-                    this.showErrorMessage('Impossibile visualizzare il documento archiviato.');
                 }
             })
             .catch(error => {
+                this.closeAction();
                 console.error('error: ' + JSON.stringify(error));
             });
         }catch(error){
+            this.closeAction();
             console.error('error: ' + JSON.stringify(error));
         }
     }

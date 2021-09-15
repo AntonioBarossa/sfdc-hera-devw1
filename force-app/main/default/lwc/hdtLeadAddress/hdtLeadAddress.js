@@ -9,7 +9,7 @@ export default class HdtLeadAddress extends LightningElement {
     @api addressObject;
     flag = true;
     @api objectApiName;
-    @track currentObjectName = 'Lead';
+    @api currentObjectName = 'Lead';
     @api leadAddress = [];
     @api fieldsToUpdate = []; 
     isVerified= false;
@@ -42,7 +42,7 @@ export default class HdtLeadAddress extends LightningElement {
     handleSave(){
         //this.template.querySelector("c-hdt-target-object-address-fields").handleConfirm();
         this.leadAddress=this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
-        console.log("PROVAPROVAPROVA_:" + JSON.stringify(this.leadAddress));
+        console.log("Lead Address :" + JSON.stringify(this.leadAddress));
         this.updateLeadAdress();
         console.log("DENTROUPDATELEADADDRES6");
         if(this.isVerified){
@@ -58,7 +58,7 @@ export default class HdtLeadAddress extends LightningElement {
                 }).then((response) => {
                     const event = new ShowToastEvent({
                         message: "Successo",
-                        variant: 'Successo',
+                        variant: 'success',
                         mode: 'dismissable'
                     });
                     this.dispatchEvent(event);

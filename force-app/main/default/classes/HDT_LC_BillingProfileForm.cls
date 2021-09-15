@@ -38,7 +38,6 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         List<String> rid = new List<String>{
             'BillSendingMethod__c',
-            'XMLType__c',
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
             'SendCertifiedEmailConsentDate__c',
@@ -56,6 +55,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         List<String> fatturazioneElettronica = new List<String>{
             'ElectronicInvoicingMethod__c',
+            'XMLType__c',
             'ElectronicInvoiceCertifiedEmailAddress__c',
             'SubjectCode__c',
             'SubjectCodeStartDate__c',
@@ -112,8 +112,48 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
 
         if(billingProfile.PaymentMethod__c == 'RID' && !billingProfile.IbanIsForeign__c){
-            billingProfile.IBAN__c = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+            String iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+
+            HDT_UTL_ValidateIban.HDT_UTL_FlowInputs ibanToValidate = new HDT_UTL_ValidateIban.HDT_UTL_FlowInputs();
+            // ibanToValidate.iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+            ibanToValidate.iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+
+            List<String> ibanValidationResult = HDT_UTL_ValidateIban.validateIban(new List<HDT_UTL_ValidateIban.HDT_UTL_FlowInputs>{ibanToValidate});
+
+            if (ibanValidationResult[0] == 'KO') {
+                throw new AuraHandledException('IBAN non valido');
+            }
+
+            billingProfile.IBAN__c = iban;
         }
+
+       Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c');
+
+       Map<String,String> mapCustMarkToAccClass = new Map<String,String>{
+           'D2 - Ditta individuale' => 'Small Business',
+           'D3 - Azienda' => 'Small Business',
+           'Associazione' => 'Small Business',
+           'D6 - Associazione' => 'Small Business',
+           'Ditta individuale' => 'Small Business',
+           'Azienda' => 'Small Business',
+           'MMS Parti comuni' => 'Small Business',
+           'AAS Azienda' => 'Small Business',
+           'AAS Associazione' => 'Small Business',
+           'D4 - Parti comuni' => 'Small Business',
+           'Parti comuni' => 'Small Business',
+
+           'Persona fisica' => 'Privati',
+           'D1 - Persona fisica' => 'Privati',
+           'MMS Persona fisica' => 'Privati',
+           'AAS Persona fisica' => 'Privati',
+           
+           'Condominio' => 'Piccoli Condomini',
+           'D5 - Condominio' => 'Piccoli Condomini',
+           'AAS Condominio' => 'Piccoli Condomini'
+
+       };
+
+       billingProfile.AccountClass__c = mapCustMarkToAccClass.get(acc.CustomerMarking__c);
 
         return billingProfileSrv.createRecord(billingProfile);
     }

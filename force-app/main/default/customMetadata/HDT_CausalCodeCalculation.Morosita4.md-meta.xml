@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Process__c</field>
-        <value xsi:type="xsd:string">Risoluzione No Punto Sospeso</value>
+        <value xsi:type="xsd:string">Risoluzione No Sospensione</value>
     </values>
     <values>
         <field>Subprocess__c</field>

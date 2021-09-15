@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>QF3218M</label>
+    <protected>false</protected>
+    <values>
+        <field>ComparePowReq__c</field>
+        <value xsi:type="xsd:string">MAG</value>
+    </values>
+    <values>
+        <field>ConnectionType__c</field>
+        <value xsi:type="xsd:string">Temporanea permanente</value>
+    </values>
+    <values>
+        <field>DistributorFixedQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>EnergyUseCase__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>OperationCode__c</field>
+        <value xsi:type="xsd:double">2.0</value>
+    </values>
+    <values>
+        <field>PowerQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>PowerRange__c</field>
+        <value xsi:type="xsd:string">INT 30_40</value>
+    </values>
+    <values>
+        <field>ProcessCode__c</field>
+        <value xsi:type="xsd:string">A10</value>
+    </values>
+    <values>
+        <field>QuotationType__c</field>
+        <value xsi:type="xsd:string">Analitico</value>
+    </values>
+    <values>
+        <field>RT__c</field>
+        <value xsi:type="xsd:string">HDT_RT_AttivazioneConModifica</value>
+    </values>
+    <values>
+        <field>RequestPhase__c</field>
+        <value xsi:type="xsd:string">Trifase</value>
+    </values>
+    <values>
+        <field>SellerFixedQuote__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">QuotationType</value>
+    </values>
+    <values>
+        <field>VAT__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>VendDistr__c</field>
+        <value xsi:type="xsd:string">ExtraRete</value>
+    </values>
+    <values>
+        <field>VoltageLevel__c</field>
+        <value xsi:type="xsd:string">BT</value>
+    </values>
+</CustomMetadata>

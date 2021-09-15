@@ -26,6 +26,15 @@
         // id del lead oggetto del process.
         var leadId = myPageRef.state.c__leadId;
 
+        //attributo per innesco da ServicePoint
+        var servicePointId = myPageRef.state.c__servicePointId;
+        //attributo per innesco da BillingProfile
+        var billingProfileId = myPageRef.state.c__billingProfileId;
+        //attributo per sequenzializzazione
+        var serviceRequestId = myPageRef.state.c__serviceRequestId;
+        //attributo per esito compatibilita
+        var compatibile = myPageRef.state.c__compatibile;
+
 
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
@@ -40,6 +49,10 @@
         console.log('# parentRecordId --> '         + parentRecordId);
         console.log('# campaignId -> '              + campaignId)
         console.log('# leadId -> '                  + leadId);
+        console.log('# servicePointId -> '          + servicePointId);
+        console.log('# billingProfileId -> '        + billingProfileId);
+        console.log('# serviceRequestId -> '        + serviceRequestId);
+        console.log('# compatibile -> '             + compatibile);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -90,7 +103,11 @@
                         c__catalogId: serviceCatalogId,
                         c__parentRecordId: parentRecordId,
                         c__campaignId: campaignId,
-                        c__leadId: leadId
+                        c__leadId: leadId,
+                        c__servicePointId: servicePointId,
+                        c__billingProfileId: billingProfileId,
+                        c__serviceRequestId: serviceRequestId,
+                        c__compatibile: compatibile
                     }
                 },
                 focus: true

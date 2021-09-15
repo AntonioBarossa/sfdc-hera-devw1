@@ -11,16 +11,17 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
     @api fieldsAddressObject=[];
     @api wrapObjectInput= [];
-    @api wrapAddressObject;
+    @api wrapaddressobject;
     @api fieldsDataReq;
     @api selectedservicepoint;
-    @api servicePointRetrievedData ;
+    @api servicepointretrieveddata ;
     @api herokuAddressServiceData;
     hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
     verifyDisabledOnUpdate = true;
     verifyFieldsAddressDisabled= true;
     disableVerifIndiButton = true;
+    disableLocalita= false;
     @api recordtype;
     @api headertoshow;
     @api checkBoxFieldValue = false;
@@ -37,10 +38,13 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api codStradarioSAP;
     @api CodiceLocalita;
     @api Localita;
+    @api nazione;
     @api IndEstero = false ;
     @api aprimodal = false;
     @api flagVerificato =false;
     @track openmodel = false;
+    @api viewNazione=false;
+    @api viewStato=false;
     tableData = [];
     dataAccountAddress=[];
     dataAddressFornitura=[];
@@ -72,18 +76,264 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     disableCap=false;
     disableCodComuneSap=false;
     disableCodViaSap=false;
-    visibleCopiaResidenza=false;
-    visibleSelezioneIndirizzi=false;
-    disableFlagVerificato=false;
+    @api visibleCopiaResidenza=false;
+    @api visibleSelezioneIndirizzi=false;
+    @api disableFlagVerificato=false;
     boolProvincia=false;
     boolCap = false;
     boolComune = false;
     boolVia = false;
     boolCivico = false;
     statusCodeComune='';
-    
+    localit='';
+    @api processtype;
+    disableAll=false;
     
 
+    get options() {
+        return [
+            { label: 'AFGHANISTAN', value: 'AFGHANISTAN' },
+            { label: 'ALBANIA', value: 'ALBANIA' },
+            { label: 'ALGERIA', value: 'ALGERIA' },
+            { label: 'ANDORRA', value: 'ANDORRA' },
+            { label: 'ANGOLA', value: 'ANGOLA' },
+            { label: 'ANGUILLA', value: 'ANGUILLA' },
+            { label: 'ANTARTIDE', value: 'ANTARTIDE' },
+            { label: 'ANTIGUA E BARBUDA', value: 'ANTIGUA E BARBUDA' },
+            { label: 'ANTILLE OLANDESI', value: 'ANTILLE OLANDESI' },
+            { label: 'ARABIA SAUDITA', value: 'ARABIA SAUDITA' },
+            { label: 'ARGENTINA', value: 'ARGENTINA' },
+            { label: 'ARMENIA', value: 'ARMENIA' },
+            { label: 'ARUBA', value: 'ARUBA' },
+            { label: 'AUSTRALIA', value: 'AUSTRALIA' },
+            { label: 'AUSTRIA', value: 'AUSTRIA' },
+            { label: 'AZERBAIJAN', value: 'AZERBAIJAN' },
+            { label: 'BAHAMAS', value: 'BAHAMAS' },
+            { label: 'BAHRAIN', value: 'BAHRAIN' },
+            { label: 'BANGLADESH', value: 'BANGLADESH' },
+            { label: 'BARBADOS', value: 'BARBADOS' },
+            { label: 'BELGIO', value: 'BELGIO' },
+            { label: 'BELIZE', value: 'BELIZE' },
+            { label: 'BENIN', value: 'BENIN' },
+            { label: 'BERMUDA', value: 'BERMUDA' },
+            { label: 'BHUTAN', value: 'BHUTAN' },
+            { label: 'BIELORUSSIA', value: 'BIELORUSSIA' },
+            { label: 'BOLIVIA', value: 'BOLIVIA' },
+            { label: 'BOSNIA ERZEGOVINA', value: 'BOSNIA ERZEGOVINA' },
+            { label: 'BOTSWANA', value: 'BOTSWANA' },
+            { label: 'BRASILE', value: 'BRASILE' },
+            { label: 'BRUNEI DARUSSALAM', value: 'BRUNEI DARUSSALAM' },
+            { label: 'BULGARIA', value: 'BULGARIA' },
+            { label: 'BURKINA FASO', value: 'BURKINA FASO' },
+            { label: 'BURUNDI', value: 'BURUNDI' },
+            { label: 'CAMBOGIA', value: 'CAMBOGIA' },
+            { label: 'CAMERUN', value: 'CAMERUN' },
+            { label: 'CANADA', value: 'CANADA' },
+            { label: 'CAPO VERDE', value: 'CAPO VERDE' },
+            { label: 'CIAD', value: 'CIAD' },
+            { label: 'CILE', value: 'CILE' },
+            { label: 'CINA', value: 'CINA' },
+            { label: 'CIPRO', value: 'CIPRO' },
+            { label: 'CITTÀ DEL VATICANO', value: 'CITTÀ DEL VATICANO' },
+            { label: 'COLOMBIA', value: 'COLOMBIA' },
+            { label: 'COMORE', value: 'COMORE' },
+            { label: 'COREA DEL NORD', value: 'COREA DEL NORD' },
+            { label: 'COREA DEL SUD', value: 'COREA DEL SUD' },
+            { label: 'COSTA D AVORIO', value: 'COSTA D AVORIO' },
+            { label: 'COSTA RICA', value: 'COSTA RICA' },
+            { label: 'CROAZIA', value: 'CROAZIA' },
+            { label: 'CUBA', value: 'CUBA' },
+            { label: 'DANIMARCA', value: 'DANIMARCA' },
+            { label: 'DOMINICA', value: 'DOMINICA' },
+            { label: 'ECUADOR', value: 'ECUADOR' },
+            { label: 'EGITTO', value: 'EGITTO' },
+            { label: 'EIRE', value: 'EIRE' },
+            { label: 'EL SALVADOR', value: 'EL SALVADOR' },
+            { label: 'EMIRATI ARABI UNITI', value: 'EMIRATI ARABI UNITI' },
+            { label: 'ERITREA', value: 'ERITREA' },
+            { label: 'ESTONIA', value: 'ESTONIA' },
+            { label: 'ETIOPIA', value: 'ETIOPIA' },
+            { label: 'FEDERAZIONE RUSSA', value: 'FEDERAZIONE RUSSA' },
+            { label: 'FIJI', value: 'FIJI' },
+            { label: 'FILIPPINE', value: 'FILIPPINE' },
+            { label: 'FINLANDIA', value: 'FINLANDIA' },
+            { label: 'FRANCIA', value: 'FRANCIA' },
+            { label: 'GABON', value: 'GABON' },
+            { label: 'GAMBIA', value: 'GAMBIA' },
+            { label: 'GEORGIA', value: 'GEORGIA' },
+            { label: 'GERMANIA', value: 'GERMANIA' },
+            { label: 'GHANA', value: 'GHANA' },
+            { label: 'GIAMAICA', value: 'GIAMAICA' },
+            { label: 'GIAPPONE', value: 'GIAPPONE' },
+            { label: 'GIBILTERRA', value: 'GIBILTERRA' },
+            { label: 'GIBUTI', value: 'GIBUTI' },
+            { label: 'GIORDANIA', value: 'GIORDANIA' },
+            { label: 'GRECIA', value: 'GRECIA' },
+            { label: 'GRENADA', value: 'GRENADA' },
+            { label: 'GROENLANDIA', value: 'GROENLANDIA' },
+            { label: 'GUADALUPA', value: 'GUADALUPA' },
+            { label: 'GUAM', value: 'GUAM' },
+            { label: 'GUATEMALA', value: 'GUATEMALA' },
+            { label: 'GUINEA', value: 'GUINEA' },
+            { label: 'GUINEA-BISSAU', value: 'GUINEA-BISSAU' },
+            { label: 'GUINEA EQUATORIALE', value: 'GUINEA EQUATORIALE' },
+            { label: 'GUYANA', value: 'GUYANA' },
+            { label: 'GUYANA FRANCESE', value: 'GUYANA FRANCESE' },
+            { label: 'HAITI', value: 'HAITI' },
+            { label: 'HONDURAS', value: 'HONDURAS' },
+            { label: 'HONG KONG', value: 'HONG KONG' },
+            { label: 'INDIA', value: 'INDIA' },
+            { label: 'INDONESIA', value: 'INDONESIA' },
+            { label: 'IRAN', value: 'IRAN' },
+            { label: 'IRAQ', value: 'IRAQ' },
+            { label: 'ISLANDA', value: 'ISLANDA' },
+            { label: 'ISOLA BOUVET', value: 'ISOLA BOUVET' },
+            { label: 'ISOLA DI NATALE', value: 'ISOLA DI NATALE' },
+            { label: 'ISOLA HEARD E ISOLE MCDONALD', value: 'ISOLA HEARD E ISOLE MCDONALD' },
+            { label: 'ISOLA NORFOLK', value: 'ISOLA NORFOLK' },
+            { label: 'ISOLE CAYMAN', value: 'ISOLE CAYMAN' },
+            { label: 'ISOLE COCOS', value: 'ISOLE COCOS' },
+            { label: 'ISOLE COOK', value: 'ISOLE COOK' },
+            { label: 'ISOLE FALKLAND', value: 'ISOLE FALKLAND' },
+            { label: 'ISOLE FAROE', value: 'ISOLE FAROE' },
+            { label: 'ISOLE MARIANNE SETTENTRIONALI', value: 'ISOLE MARIANNE SETTENTRIONALI' },
+            { label: 'ISOLE MARSHALL', value: 'ISOLE MARSHALL' },
+            { label: 'ISOLE MINORI DEGLI STATI UNITI D AMERICA', value: 'ISOLE MINORI DEGLI STATI UNITI D AMERICA' },
+            { label: 'ISOLE SOLOMON', value: 'ISOLE SOLOMON' },
+            { label: 'ISOLE TURKS E CAICOS', value: 'ISOLE TURKS E CAICOS' },
+            { label: 'ISOLE VERGINI AMERICANE', value: 'ISOLE VERGINI AMERICANE' },
+            { label: 'ISOLE VERGINI BRITANNICHE', value: 'ISOLE VERGINI BRITANNICHE' },
+            { label: 'ISRAELE', value: 'ISRAELE' },
+            { label: 'ITALIA', value: 'ITALIA' },
+            { label: 'KAZAKHISTAN', value: 'KAZAKHISTAN' },
+            { label: 'KENYA', value: 'KENYA' },
+            { label: 'KIRGHIZISTAN', value: 'KIRGHIZISTAN' },
+            { label: 'KIRIBATI', value: 'KIRIBATI' },
+            { label: 'KUWAIT', value: 'KUWAIT' },
+            { label: 'LAOS', value: 'LAOS' },
+            { label: 'LESOTHO', value: 'LESOTHO' },
+            { label: 'LETTONIA', value: 'LETTONIA' },
+            { label: 'LIBANO', value: 'LIBANO' },
+            { label: 'LIBERIA', value: 'LIBERIA' },
+            { label: 'LIBIA', value: 'LIBIA' },
+            { label: 'LIECHTENSTEIN', value: 'LIECHTENSTEIN' },
+            { label: 'LITUANIA', value: 'LITUANIA' },
+            { label: 'LUSSEMBURGO', value: 'LUSSEMBURGO' },
+            { label: 'MACAO', value: 'MACAO' },
+            { label: 'MACEDONIA', value: 'MACEDONIA' },
+            { label: 'MADAGASCAR', value: 'MADAGASCAR' },
+            { label: 'MALAWI', value: 'MALAWI' },
+            { label: 'MALDIVE', value: 'MALDIVE' },
+            { label: 'MALESIA', value: 'MALESIA' },
+            { label: 'MALI', value: 'MALI' },
+            { label: 'MALTA', value: 'MALTA' },
+            { label: 'MAROCCO', value: 'MAROCCO' },
+            { label: 'MARTINICA', value: 'MARTINICA' },
+            { label: 'MAURITANIA', value: 'MAURITANIA' },
+
+            { label: 'MAURIZIUS', value: 'MAURIZIUS' },
+            { label: 'MAYOTTE', value: 'MAYOTTE' },
+            { label: 'MESSICO', value: 'MESSICO' },
+            { label: 'MOLDAVIA', value: 'MOLDAVIA' },
+            { label: 'MONACO', value: 'MONACO' },
+            { label: 'MONGOLIA', value: 'MONGOLIA' },
+            { label: 'MONTSERRAT', value: 'MONTSERRAT' },
+            { label: 'MOZAMBICO', value: 'MOZAMBICO' },
+            { label: 'MYANMAR', value: 'MYANMAR' },
+            { label: 'NAMIBIA', value: 'NAMIBIA' },
+            { label: 'NAURU', value: 'NAURU' },
+            { label: 'NEPAL', value: 'NEPAL' },
+            { label: 'NICARAGUA', value: 'NICARAGUA' },
+            { label: 'NIGER', value: 'NIGER' },
+            { label: 'NIGERIA', value: 'NIGERIA' },
+            { label: 'NIUE', value: 'NIUE' },
+            { label: 'NORVEGIA', value: 'NORVEGIA' },
+            { label: 'NUOVA CALEDONIA', value: 'NUOVA CALEDONIA' },
+            { label: 'NUOVA ZELANDA', value: 'NUOVA ZELANDA' },
+            { label: 'OMAN', value: 'OMAN' },
+            { label: 'PAESI BASSI', value: 'PAESI BASSI' },
+            { label: 'PAKISTAN', value: 'PAKISTAN' },
+            { label: 'PALAU', value: 'PALAU' },
+            { label: 'PANAMÁ', value: 'PANAMÁ' },
+            { label: 'PAPUA NUOVA GUINEA', value: 'PAPUA NUOVA GUINEA' },
+            { label: 'PARAGUAY', value: 'PARAGUAY' },
+            { label: 'PERÙ', value: 'PERÙ' },
+            { label: 'PITCAIRN', value: 'PITCAIRN' },
+            { label: 'POLINESIA FRANCESE', value: 'POLINESIA FRANCESE' },
+            { label: 'POLONIA', value: 'POLONIA' },
+            { label: 'PORTOGALLO', value: 'PORTOGALLO' },
+            { label: 'PORTO RICO', value: 'PORTO RICO' },
+            { label: 'QATAR', value: 'QATAR' },
+            { label: 'REGNO UNITO', value: 'REGNO UNITO' },
+            { label: 'REPUBBLICA CECA', value: 'REPUBBLICA CECA' },
+            { label: 'REPUBBLICA CENTROAFRICANA', value: 'REPUBBLICA CENTROAFRICANA' },
+            { label: 'REPUBBLICA DEL CONGO', value: 'REPUBBLICA DEL CONGO' },
+            { label: 'REPUBBLICA DEMOCRATICA DEL CONGO', value: 'REPUBBLICA DEMOCRATICA DEL CONGO' },
+            { label: 'REPUBBLICA DOMINICANA', value: 'REPUBBLICA DOMINICANA' },
+            { label: 'REUNION', value: 'REUNION' },
+            { label: 'ROMANIA', value: 'ROMANIA' },
+            { label: 'RUANDA', value: 'RUANDA' },
+            { label: 'SAHARA OCCIDENTALE', value: 'SAHARA OCCIDENTALE' },
+            { label: 'SAINT KITTS E NEVIS', value: 'SAINT KITTS E NEVIS' },
+            { label: 'SAINT PIERRE E MIQUELON', value: 'SAINT PIERRE E MIQUELON' },
+            { label: 'SAINT VINCENT E GRENADINE', value: 'SAINT VINCENT E GRENADINE' },
+            { label: 'SAMOA', value: 'SAMOA' },
+            { label: 'SAMOA AMERICANE', value: 'SAMOA AMERICANE' },
+            { label: 'SAN MARINO', value: 'SAN MARINO' },
+            { label: 'SANTA LUCIA', value: 'SANTA LUCIA' },
+            { label: 'SANT ELENA', value: 'SANT ELENA' },
+            { label: 'SAO TOME E PRINCIPE', value: 'SAO TOME E PRINCIPE' },
+            { label: 'SENEGAL', value: 'SENEGAL' },
+            { label: 'SERBIA E MONTENEGRO', value: 'SERBIA E MONTENEGRO' },
+            { label: 'SEYCHELLES', value: 'SEYCHELLES' },
+            { label: 'SIERRA LEONE', value: 'SIERRA LEONE' },
+            { label: 'SINGAPORE', value: 'SINGAPORE' },
+            { label: 'SIRIA', value: 'SIRIA' },
+            { label: 'SLOVACCHIA', value: 'SLOVACCHIA' },
+            { label: 'SLOVENIA', value: 'SLOVENIA' },
+            { label: 'SOMALIA', value: 'SOMALIA' },
+            { label: 'SPAGNA', value: 'SPAGNA' },
+            { label: 'SRI LANKA', value: 'SRI LANKA' },
+            { label: 'STATI FEDERATI DELLA MICRONESIA', value: 'STATI FEDERATI DELLA MICRONESIA' },
+            { label: 'STATI UNITI D AMERICA', value: 'STATI UNITI D AMERICA' },
+            { label: 'SUD AFRICA', value: 'SUD AFRICA' },
+            { label: 'SUDAN', value: 'SUDAN' },
+            { label: 'SUD GEORGIA E ISOLE SANDWICH', value: 'SUD GEORGIA E ISOLE SANDWICH' },
+            { label: 'SURINAME', value: 'SURINAME' },
+            { label: 'SVALBARD E JAN MAYEN', value: 'SVALBARD E JAN MAYEN' },
+            { label: 'SVEZIA', value: 'SVEZIA' },
+            { label: 'SVIZZERA', value: 'SVIZZERA' },
+            { label: 'SWAZILAND', value: 'SWAZILAND' },
+            { label: 'TAGIKISTAN', value: 'TAGIKISTAN' },
+            { label: 'TAILANDIA', value: 'TAILANDIA' },
+            { label: 'TAIWAN', value: 'TAIWAN' },
+            { label: 'TANZANIA', value: 'TANZANIA' },
+            { label: 'TERRITORI BRITANNICI DELL OCEANO INDIANO', value: 'TERRITORI BRITANNICI DELL OCEANO INDIANO' },
+            { label: 'TERRITORI FRANCESI DEL SUD', value: 'TERRITORI FRANCESI DEL SUD' },
+            { label: 'TIMOR EST', value: 'TIMOR EST' },
+            { label: 'TOGO', value: 'TOGO' },
+            { label: 'TOKELAU', value: 'TOKELAU' },
+            { label: 'TONGA', value: 'TONGA' },
+            { label: 'TRINIDAD E TOBAGO', value: 'TRINIDAD E TOBAGO' },
+            { label: 'TUNISIA', value: 'TUNISIA' },
+            { label: 'TURCHIA', value: 'TURCHIA' },
+            { label: 'TURKMENISTAN', value: 'TURKMENISTAN' },
+            { label: 'TUVALU', value: 'TUVALU' },
+            { label: 'UCRAINA', value: 'UCRAINA' },
+            { label: 'UGANDA', value: 'UGANDA' },
+            { label: 'UNGHERIA', value: 'UNGHERIA' },
+            { label: 'URUGUAY', value: 'URUGUAY' },
+            { label: 'UZBEKISTAN', value: 'UZBEKISTAN' },
+            { label: 'VANUATU', value: 'VANUATU' },
+            { label: 'VENEZUELA', value: 'VENEZUELA' },
+            { label: 'VIETNAM', value: 'VIETNAM' },
+            { label: 'WALLIS E FUTUNA', value: 'WALLIS E FUTUNA' },
+            { label: 'YEMEN', value: 'YEMEN' },
+            { label: 'ZAMBIA', value: 'ZAMBIA' },
+            { label: 'ZIMBABWE', value: 'ZIMBABWE' },
+        ];
+        
+    }
     handleSelectedValue(event) {
     console.log('handleSelectedValue - event ' +JSON.stringify(event.detail));
     console.log('handleSelectedValue - rowtosend****' + JSON.stringify(this.rowToSend));
@@ -152,7 +402,7 @@ handleAddressFromAccount()
             this.comune=data['Comune'];		
             this.provincia=data['Provincia'];
             this.cap=data['CAP'];
-            this.stato=data['Stato'].toUpperCase();
+            this.stato=data['Stato']?.toUpperCase();
 			this.estensCivico=data['Est.Civico'];
             this.codComuneSAP=data['Codice Comune SAP'];
             this.codStradarioSAP=data['Codice Via Stradario SAP'];
@@ -168,6 +418,7 @@ handleAddressFromAccount()
             this.theRecord['Codice Comune SAP']=data['Codice Comune SAP'];
             this.theRecord['Codice Via Stradario SAP']= data['Codice Via Stradario SAP'];
             this.theRecord['Flag Verificato']= true;
+            this.theRecord['Indirizzo Estero']=false;
             
 
         }
@@ -178,75 +429,75 @@ handleAddressFromAccount()
 }
 
 @api
-handleAddressValuesIfSap(servicePointRetrievedData){
+handleAddressValuesIfSap(servicepointretrieveddata){
     console.log('handleAddressValuesIfSap START');
-    console.log('handleAddressValuesIfSap servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
+    console.log('handleAddressValuesIfSap servicepointretrieveddata :' + JSON.stringify(servicepointretrieveddata));
     
-    Object.keys(servicePointRetrievedData).forEach(key=>{
+    Object.keys(servicepointretrieveddata).forEach(key=>{
         switch(key){
             case 'SupplyCountry__c':
-                this.stato = servicePointRetrievedData[key] ;
-                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
+                this.stato = servicepointretrieveddata[key] ;
+                this.theRecord['Stato'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyCity__c':
-                this.comune= servicePointRetrievedData[key] ;
-                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
+                this.comune= servicepointretrieveddata[key] ;
+                this.theRecord['Comune'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyProvince__c':
-                this.provincia= servicePointRetrievedData[key] ;
-                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
+                this.provincia= servicepointretrieveddata[key] ;
+                this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyPostalCode__c':
-                this.cap = servicePointRetrievedData[key] ;
-                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
+                this.cap = servicepointretrieveddata[key] ;
+                this.theRecord['CAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreet__c':
-                this.via = servicePointRetrievedData[key] ;
-                this.theRecord['Via'] = servicePointRetrievedData[key] ;
+                this.via = servicepointretrieveddata[key] ;
+                this.theRecord['Via'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreetNumberExtension__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.estensCivico = servicePointRetrievedData[key] ;
-                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.estensCivico = servicepointretrieveddata[key] ;
+                this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyStreetNumber__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.civico = servicePointRetrievedData[key] ;
-                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.civico = servicepointretrieveddata[key] ;
+                this.theRecord['Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplySAPCityCode__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codComuneSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codComuneSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplySAPStreetCode__c':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codStradarioSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Stradario SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'SupplyIsAddressVerified__c':
 
-            console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-            this.flagVerificato = servicePointRetrievedData[key] ;
-            this.theRecord['Flag Verificato'] = servicePointRetrievedData[key] ;
+            console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+            this.flagVerificato = servicepointretrieveddata[key] ;
+            this.theRecord['Flag Verificato'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlace__c':
 
-            this.CodiceLocalita = servicePointRetrievedData[key] ;
-            this.theRecord['Codice Localita'] = servicePointRetrievedData[key] ;
+            this.CodiceLocalita = servicepointretrieveddata[key] ;
+            this.theRecord['Localita'] = servicepointretrieveddata[key] ;
 
             break;
             case 'SupplyPlaceCode__c':
 
-            this.Localita = servicePointRetrievedData[key] ;
-            this.theRecord['Localita'] = servicePointRetrievedData[key] ;
+            this.Localita = servicepointretrieveddata[key] ;
+            this.theRecord['Codice Localita'] = servicepointretrieveddata[key] ;
 
             break;
 
         }
-        this.flagVerificato=true;
-        this.theRecord['Flag Verificato'] = this.FlagVerificato;
+     //   this.flagVerificato=true;
+     //   this.theRecord['Flag Verificato'] = this.FlagVerificato;
         
     });
     console.log('handleAddressValues END ');
@@ -335,8 +586,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             this.theRecord['CodiceComuneSAP'] = this.codComuneSAP;
             this.theRecord['CodiceViaStradarioSAP'] = this.codStradarioSAP;
             this.theRecord['IndirizzoEstero'] = this.IndEstero;
-            this.theRecord['Flag Verificato'] = this.FlagVerificato;
-
+           // this.theRecord['Flag Verificato'] = this.FlagVerificato;
+           this.theRecord['Flag Verificato'] = true;
             
 
         this.preloading = false;
@@ -710,60 +961,67 @@ handleAddressValuesIfSap(servicePointRetrievedData){
 
 
 @api
-handleAddressValues(servicePointRetrievedData){
-    console.log('handleAddressValues START - servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
-    Object.keys(servicePointRetrievedData).forEach(key=>{
+handleAddressValues(servicepointretrieveddata){
+    console.log('handleAddressValues START - servicepointretrieveddata :' + JSON.stringify(servicepointretrieveddata));
+    Object.keys(servicepointretrieveddata).forEach(key=>{
         switch(key){
             case 'Stato':
-                this.stato = servicePointRetrievedData[key] ;
-                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
+                this.stato = servicepointretrieveddata[key] ;
+                this.theRecord['Stato'] = servicepointretrieveddata[key] ;
             break;
             case 'Provincia':
-                this.provincia= servicePointRetrievedData[key] ;
-                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
+                this.provincia= servicepointretrieveddata[key] ;
+                this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
             break;
             case 'Comune':
-                this.comune= servicePointRetrievedData[key] ;
-                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
+                this.comune= servicepointretrieveddata[key] ;
+                this.theRecord['Comune'] = servicepointretrieveddata[key] ;
             break;
             case 'CAP':
-                this.cap = servicePointRetrievedData[key] ;
-                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
+                this.cap = servicepointretrieveddata[key] ;
+                this.theRecord['CAP'] = servicepointretrieveddata[key] ;
             break;
             case 'Via':
-                this.via = servicePointRetrievedData[key] ;
-                this.theRecord['Via'] = servicePointRetrievedData[key] ;
+                this.via = servicepointretrieveddata[key] ;
+                this.theRecord['Via'] = servicepointretrieveddata[key] ;
             break;
             case 'Civico':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.civico = servicePointRetrievedData[key] ;
-                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.civico = servicepointretrieveddata[key] ;
+                this.theRecord['Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'EstensCivico':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.estensCivico = servicePointRetrievedData[key] ;
-                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.estensCivico = servicepointretrieveddata[key] ;
+                this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceComuneSAP':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codComuneSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codComuneSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceViaStradarioSAP':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.codStradarioSAP = servicePointRetrievedData[key] ;
-                this.theRecord['Codice Via Stradario SAP'] = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'IndirizzoEstero':
-                this.IndEstero = servicePointRetrievedData[key] ;
+                this.IndEstero = servicepointretrieveddata[key] ;
                 this.theRecord['Indirizzo Estero'] = this.IndEstero;
 
             break;
             case 'FlagVerificato':
 
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-                this.flagVerificato = servicePointRetrievedData[key] ;
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.flagVerificato = servicepointretrieveddata[key] ;
                 this.theRecord['Flag Verificato'] = this.flagVerificato;
+
+            break;
+            case 'Localita':
+
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.Localita = servicepointretrieveddata[key] ;
+                this.theRecord['Localita'] = this.Localita;
 
             break;
         }
@@ -786,8 +1044,15 @@ handleCheckBoxChange(event){
                 this.IndEstero = event.target.checked;
                 if(event.target.checked==true){
                     this.stato='ESTERO';
+                    if(this.objectapiname!='ServicePoint__c'){
+                        this.viewNazione=true;
+                        this.viewStato=false;
+                    }
+
                 }else{
                     this.stato='ITALIA';
+                    this.viewNazione=false;
+                    this.viewStato=true;
                 }
                 this.flagVerificatoFalse();
                 break;
@@ -875,18 +1140,20 @@ handleChangeComune(event){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
+                    console.log('TryTestHOLA210');
                     if(this.IndEstero==true)
                     {
+                        console.log('TryTestHOLA211');
                         this.booleanForm=false;
                     }
                     else
                     {
                         this.booleanForm=true;
-
+                        console.log('TryTestHOLA212');
                         this.template.querySelector('c-hdt-selection-address-response').openedForm();
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
                         this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
-
+                        console.log('TryTestHOLA213');
                     }
                     
                 }
@@ -961,9 +1228,9 @@ handleChangeComune(event){
                 break;
         }
         this.flagVerificatoFalse();
-        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
+        this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
        
-        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
 
 }
 
@@ -1056,8 +1323,8 @@ handleChangeIndirizz(event){
                 break;
         }
         this.flagVerificatoFalse();
-        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
-        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
+        console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
 
 }
 
@@ -1110,11 +1377,14 @@ handleTextChange(event){
             case 'Codice Via Stradario SAP':
                 this.codStradarioSAP = event.target.value;
                 break;
+            case 'Localita':
+                this.localit = event.target.value;
+                break;
         }
         this.flagVerificatoFalse();
         
-        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
-        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        this.wrapaddressobject = this.toObjectAddressInit(this.theRecord);
+        console.log('wrapaddressobject -handleTextChange ********************'+ JSON.stringify(this.wrapaddressobject));
         if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
             this.disableVerifIndiButton = false;
         }
@@ -1126,7 +1396,10 @@ handleTextChange(event){
 
 @api
     handleAddressFields(){
-        console.log('saveAddressField - wrapAddressObject START '+ JSON.stringify(this.theRecord));
+        console.log('saveAddressField - wrapaddressobject START '+ JSON.stringify(this.theRecord));
+        if(this.theRecord['Indirizzo Estero'] == undefined){
+            this.theRecord['Indirizzo Estero'] = false;
+        }
         return this.theRecord;
 
     }
@@ -1174,33 +1447,65 @@ disabledverifyFieldsAddressDisabled(){
             this.visibleSelezioneIndirizzi=true;
         }
 
-        if(this.IndEstero==true){
-            this.stato='ESTERO';
-        }
+        if(this.objectapiname!='ServicePoint__c')
+        {
+            if(this.IndEstero==false)
+            {
+                this.viewNazione=false;
+                this.viewStato=true;
+                this.theRecord['Stato'] = this.stato;
+            }
+            else
+            {
+                this.viewNazione=true;
+                this.viewStato=false;
+                this.theRecord['Stato'] = this.nazione;
 
-        this.theRecord['Stato'] = this.stato;
+            }
+        }
+        else
+        {
+            if(this.IndEstero==true)
+            {
+                this.stato='ESTERO';
+            }
+            this.viewStato=true;
+            this.theRecord['Stato'] = this.stato;
+        }
+        
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
+        if(this.processtype !== undefined && this.processtype!= null && this.processtype!=''){
+            this.disableAll=true;
+            this.disableCodComuneSap=true;
+            this.disableCap=true;
+            this.disableCodViaSap=true;
+            this.disableFlagVerificato=true;
+            this.disableLocalita=true;
+            this.disableProvincia=true;
+            this.disableStato=true;
+            
+        }
         
     }
 
 
 @api
-    getInstanceWrapObject(servicePointRetrievedData){
+    getInstanceWrapObject(servicepointretrieveddata){
         console.log('getInstanceWrapObject - START');
-        console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
-        getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
+        console.log('getInstanceWrapObject - servicepointretrieveddata' +JSON.stringify(servicepointretrieveddata));
+        getInstanceWrapAddressObject({s:servicepointretrieveddata}).then(data => {
             this.handleAddressValues(data);
-            console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
-            //this.wrapAddressObject = this.toObjectAddressInit(data);
+            console.log('getInstanceWrapObject - getInstancewrapaddressobject Start '+ JSON.stringify(data));
+            //this.wrapaddressobject = this.toObjectAddressInit(data);
             if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
                 this.disableVerifIndiButton = false;
             }
             else{
                 this.disableVerifIndiButton = true;
             }
-            console.log('getInstanceWrapObject - wrapAddressObject' + JSON.stringify(this.wrapAddressObject));
+            console.log('getInstanceWrapObject - wrapaddressobject' + JSON.stringify(this.wrapaddressobject));
             //this.toObjectAddress();
             
         });
@@ -1225,7 +1530,7 @@ disabledverifyFieldsAddressDisabled(){
      */
     
     /*get verifyFieldsAddressDisabled(){
-        console.log('verifyFieldsAddressDisabled - START ' + JSON.stringify(this.wrapAddressObject));
+        console.log('verifyFieldsAddressDisabled - START ' + JSON.stringify(this.wrapaddressobject));
         let result = true;       
         
 
@@ -1248,16 +1553,16 @@ disabledverifyFieldsAddressDisabled(){
     }*/
 @api
     stampWrapObject(){
-        console.log('wrapAddressObject in StampWrapAddressObject*******************'+ this.wrapAddressObject);
+        console.log('wrapaddressobject in Stampwrapaddressobject*******************'+ this.wrapaddressobject);
     }
 
   @api  
-     objectToMap(wrapAddressObject) {
+     objectToMap(wrapaddressobject) {
         console.log('hdtTargetObjectAddressFields - objectToMap START');  
         let wrapObjectInput=[];
         console.log('arrivo qui');
 
-        const ObjArray = Object.getOwnPropertyNames(wrapAddressObject);
+        const ObjArray = Object.getOwnPropertyNames(wrapaddressobject);
         console.log('arrivo qui1');
         for(let i = 0; i < ObjArray.length; i++){
             console.log('entra nel for'+ ObjArray[i]);
@@ -1271,8 +1576,8 @@ disabledverifyFieldsAddressDisabled(){
     @api
      toObjectAddress(){
         console.log('hdtTargetObjectAddressFields - toObjectAddress START');
-        this.fieldsAddressObject= this.wrapAddressObject;
-        /*let fieldMap = this.objectToMap(this.wrapAddressObject);
+        this.fieldsAddressObject= this.wrapaddressobject;
+        /*let fieldMap = this.objectToMap(this.wrapaddressobject);
         console.log(''+fieldMap.keys);
         fieldMap.forEach(element => {
 
@@ -1365,9 +1670,14 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;
+                 
+                    this.dispEvent(true);
+               
                 }
                 else{
                     console.log("ErrorrrrrreeeeeeeeeEeee:" + JSON.stringify(data));
+                    this.dispEvent(false);
+
                 }
                 
     
@@ -1385,7 +1695,14 @@ disabledverifyFieldsAddressDisabled(){
             detail: this.hasAddressBeenVerified
           }));*/
     }
-
+    dispEvent(param){
+        const custEvent = new CustomEvent(
+            'callpasstoparent', {
+                detail: param 
+            });
+        this.dispatchEvent(custEvent);
+    }
+    
     handleKeyPress(event){
 													  
 

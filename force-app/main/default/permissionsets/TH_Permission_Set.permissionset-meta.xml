@@ -2095,11 +2095,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.SupplyType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6751,11 +6746,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.et4ae5__ValidExactTargetUser__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__IndividualEmailResult__c.BounceType__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

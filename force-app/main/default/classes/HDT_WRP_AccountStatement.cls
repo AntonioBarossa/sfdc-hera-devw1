@@ -56,12 +56,12 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public Boolean isAmount;
     }
 
-    public class HDT_WRP_ResponseObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public Boolean dataError;
-        @AuraEnabled public String bodyBase64;
-    }
+    //public class HDT_WRP_ResponseObj {
+    //    @AuraEnabled public Boolean success;
+    //    @AuraEnabled public String message;
+    //    @AuraEnabled public Boolean dataError;
+    //    @AuraEnabled public String bodyBase64;
+    //}
 
     public class HDT_WRP_ReturnPicklist {
         @AuraEnabled public Boolean success;
@@ -156,9 +156,11 @@ public class HDT_WRP_AccountStatement {
         public String DEL_569;
         public String documentoPareggio;
         public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativo;
+        public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativoF2;
     }
 
     public class HDT_WRP_SecondLevelObj {
+        public String docPareggio;
     }
 
 }

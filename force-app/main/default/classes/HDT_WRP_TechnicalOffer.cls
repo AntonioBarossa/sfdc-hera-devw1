@@ -54,6 +54,8 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
     public class HDT_WRP_MatrixTable {
         @auraEnabled public Boolean success;
         @auraEnabled public String message;
+        @auraEnabled public String sapCode;
+        @auraEnabled public String sapErrorMessage;
         @auraEnabled public Boolean isEditable;
         @auraEnabled public List<HDT_WRP_MatrixSingleRow> rowList;
     }

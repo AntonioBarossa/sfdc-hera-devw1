@@ -20,6 +20,12 @@
             <layoutItems>
                 <field>Language</field>
             </layoutItems>
+            <layoutItems>
+                <field>ExpirationDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>PublicLink__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

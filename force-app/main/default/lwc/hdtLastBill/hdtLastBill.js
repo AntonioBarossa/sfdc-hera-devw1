@@ -3,6 +3,9 @@ import imageResource from '@salesforce/resourceUrl/HDT_Service1';
 import imageResource2 from '@salesforce/resourceUrl/HDT_Service2';
 import getData from '@salesforce/apex/HDT_LC_LastBill.getData';
 import { getRecord } from 'lightning/uiRecordApi';
+import getDataInContinuation from '@salesforce/apexContinuation/HDT_LC_LastBill.startRequest';
+import updateKpiTracking from '@salesforce/apex/HDT_LC_LastBill.updateKpiTracking';
+
 const FIELDS = [
     'Account.CustomerCode__c',
     'Account.KpiTracking__c'
@@ -37,31 +40,20 @@ export default class HdtLastBill extends LightningElement {
                 kpiId: data.fields.KpiTracking__c.value
             }).then(result => {
                 var resultJSON = JSON.parse(result);
-                console.log(result + ' ' + resultJSON);
-                if(resultJSON.outcome === 'OK'){
-                    this.amount = resultJSON.amount;
-                    this.status = resultJSON.billStatus;
-                    this.expirationDate = resultJSON.expiredDate;
-                    this.billNumber = resultJSON.billNumber;
-                    this.commodity = JSON.parse(resultJSON.commodity);
-                    console.log(this.commodity);
-                    console.log(this.amount);
-                    console.log(this.status);
-                    console.log(this.expirationDate);
-                    console.log(this.billNumber);
-                    this.energy = this.commodity['Energia elettrica'];
-                    this.gas = this.commodity['Gas'];
-                    console.log(this.energy);
-                    this.spinner = false;
-                }else{
-                    this.error = true;
-                    this.message = resultJSON.message;
-                    this.spinner = false;
+                //console.log(result + ' ' + resultJSON);
+                console.log('>>>> RESULT ' + result);
+                
+                if(resultJSON.callws==='true'){
+                    resultJSON = this.getDataFromContinuation(data);
+                } else {
+                    this.setData(resultJSON);
                 }
+                
+
             })
             .catch(error => {
                 //console.log('errore ' +error.body.message);
-                console.log('errore ' + error.body.message);
+                console.log('errore ' + JSON.stringify(error));
                 this.error = true;
                 this.spinner = false;
                 this.message = 'Si è verificato un errore inatteso';
@@ -73,8 +65,50 @@ export default class HdtLastBill extends LightningElement {
         }
     }
 
-    connectedCallback(){
-        
+    getDataFromContinuation(data){
+        getDataInContinuation({
+            accountCode: data.fields.CustomerCode__c.value,
+            mode: 'KPI',
+            kpiId: data.fields.KpiTracking__c.value
+        }).then(result => {
+            var resultJSON = JSON.parse(result);
+            console.log('>>>> RESULT ' + result);
+            this.setData(resultJSON);
+
+            if(resultJSON.outcome === 'OK'){
+                this.updateKpiTracking(result, data);
+            }
+        });
+    }
+
+    setData(resultJSON){
+        if(resultJSON.outcome === 'OK'){
+            this.amount = resultJSON.amount;
+            this.status = resultJSON.billStatus;
+            this.expirationDate = resultJSON.expiredDate;
+            this.billNumber = resultJSON.billNumber;
+            this.commodity = JSON.parse(resultJSON.commodity);
+            console.log(this.commodity);
+            console.log(this.amount);
+            console.log(this.status);
+            console.log(this.expirationDate);
+            console.log(this.billNumber);
+            this.energy = this.commodity['Energia elettrica'];
+            this.gas = this.commodity['Gas'];
+            console.log(this.energy);
+            this.spinner = false;
+        }else{
+            this.error = true;
+            this.message = resultJSON.message;
+            this.spinner = false;
+        }
+    }
+
+    updateKpiTracking(result, data){
+        console.log('>>> UPDATE KpiTracking');
+        updateKpiTracking({result, kpiId: data.fields.KpiTracking__c.value}).then(result => {
+            console.log('>>> UPDATE RESULT ' + JSON.stringify(result));
+        });
     }
 
 }

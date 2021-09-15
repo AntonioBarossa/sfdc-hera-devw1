@@ -1,5 +1,8 @@
 import { LightningElement, track ,api, wire} from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+import COMPANY_FIELD from '@salesforce/schema/Contact.Company__c';
 import PHONE_PREFIX from '@salesforce/schema/Account.PhonePrefix__c';
 import MOBILEPHONE_PREFIX from '@salesforce/schema/Account.MobilePhonePrefix__c';
 import CUSTOM_MARKING from '@salesforce/schema/Account.CustomerMarking__c';
@@ -13,15 +16,19 @@ import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
+import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
+
+
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
-
-
+    
+    @api showCompanyOwner = false;
     @track spinner=false;
     @track errorMessage='';
     @track phonePrefixValue;
     @track phonePrefixOptions;
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
+    @api companyDefault;
     @track fiscalCode;
     @api customerMarkingOptions = [];
     @api categoryOptions = [];
@@ -29,6 +36,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @api categoryData = [];
     @api markingValue;
     @api categoryValue;
+
+    disableCopyAdd=true;
+    disableCopyRes=true;
+    customerType='Persona Fisica'
     currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
@@ -43,83 +54,201 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     gender;
     birthDate;
     birthPlace;
+    valueCompany='';
     accountAddress;
+    accountAddressRes;
     fieldsToUpdate= {};
+    fieldsToUpdateRes= {};
     isVerified= false;
+    isVerifiedShipping=false;
     showModal= true;
     @api RecordTypeId;
 
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    contactInfo;
+    @track companyOptions;
+    
+    
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: COMPANY_FIELD })
+    companyFieldInfo({ data, error }) {
+        if (data) this.companyFieldData = data;
+    }
+    companyPicklist( comp) {
+        let key = this.companyFieldData.controllerValues[comp];
+        this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
+        var customCompanyOptions=[];
+        this.companyOptions.forEach(function callbackFn(element, index) {
+            if(element.value!='HC+HCM+EENE'){ 
+                customCompanyOptions.push(element);
+            }
+        })
+        
+        this.companyOptions=customCompanyOptions;
+
+    }
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
-          if(data.defaultValue !=null){
-            this.phonePrefixValue = data.defaultValue.value;
-            this.phonePrefixOptions= data.values;
-          }
+            if(data.defaultValue !=null){
+                this.phonePrefixValue = data.defaultValue.value;
+                this.phonePrefixOptions= data.values;
+            }
         }
     };
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: MOBILEPHONE_PREFIX })
     mobilePhonePrefixGetOptions({error, data}) {
         if (data) {
-          if(data.defaultValue !=null){
-            this.mobilePhonePrefixValue = data.defaultValue.value;
-            this.mobilePhonePrefixOptions= data.values;
-          }
+            if(data.defaultValue !=null){
+                this.mobilePhonePrefixValue = data.defaultValue.value;
+                this.mobilePhonePrefixOptions= data.values;
+            }
         }
     };
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
     customerGetMarkingOptions({error, data}) {
         if (data){
             this.customerData = data;
         }
     };
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CATEGORY })
     categoryGetOptions({error, data}) {
         if (data){
             this.categoryData = data;
+            this.inizializeInit();
         }
     };
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
     
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: EDUCATIONALQUALIFICATION })
     educationalOptions;
-
+    
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: COMPANY_OWNER })
     companyOwnerOptions;
-
+    
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
         { label: 'Familiare', value: 'Familiare' }
     ];
     handleCompanyOwnerChange(event) {
+        console.log("***************CHANGE" + event.target.value);
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions();
+        this.companyPicklist( event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
+        
+    }
+    filterMarkingOptions(){
+        var customMarkingOptions=[];
+        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+            var arrayToRemove=[];
+            for (let i = 0; i < 20; i++) {
+                arrayToRemove.push('D'+i+' -');
+            }
+            console.log(JSON.stringify(element.value));
+            var startSubString=element.value;
+            startSubString=element.label.substring(0, 4);            
+            if(!arrayToRemove.includes(startSubString)){ 
+                customMarkingOptions.push(element);
+            }
+        })
+        
+        this.customerMarkingOptions=customMarkingOptions;
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
+        
+        
     }
     closeModal() {
         this.showModal = false;
         window.history.back();
     }
+    
+    inizializeInit(){
+        checkRole({}).then((response) => {
+            if(response == 'HDT_BackOffice'){
+                this.showCompanyOwner = false;
+            }else if(response == 'HDT_FrontOffice_HERACOMM'){
+                this.companyDefault = 'HERA COMM';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+                
+            }else if(response == 'HDT_FrontOffice_Reseller'){
+                this.companyDefault = 'Reseller';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['Reseller'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+            }
+            else if(response == 'HDT_FrontOffice_MMS'){
+                this.companyDefault = 'MMS';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['MMS'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+                
+            }
+            else if(response == 'HDT_FrontOffice_AAAEBT'){
+                this.companyDefault = 'AAA-EBT';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['AAA-EBT'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+                
+                
+            }
+            else{
+                this.companyDefault = 'HERA COMM';
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+                this.companyPicklist(this.companyDefault);
+                
+            }
+            this.filterMarkingOptions();
 
+        });
+    }
+    
     connectedCallback(){
         this.currentObjectApiName= 'Account';
     }
+    passToParent(event){
+            this.disableCopyAdd=!event.detail;
+            this.disableCopyRes=true;
+    }
+    
+    handleCopyAddRes(event){
+     let copy=event.target.checked;
+     
+        // if (copy) {
+        //   this.accountAddressRes=this.accountAddress;    
+      
 
+        // }
+        // else{
+        //     this.accountAddressRes=[];
+         
+        // }
+        this.disableCopyRes=!copy;
+        console.log('disableCopyRes '+this.disableCopyRes);
+    }
     handleCalculation(){
-
+        
         var isValidated= true;
         let firstName =this.template.querySelector('[data-id="firstName"]').value;
         let lastName= this.template.querySelector('[data-id="lastName"]').value;
@@ -127,7 +256,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
         this.fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
         this.birthPlace=this.template.querySelector('[data-id="birthPlace"]').value;
-
+        
         if(firstName=== undefined || firstName.trim()===''){
             isValidated= false;
         }
@@ -145,19 +274,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
         if(isValidated){
             var information={
-                                firstName:firstName, 
-                                lastName:lastName, 
-                                gender: this.gender, 
-                                birthDate: this.birthDate, 
-                                birthPlace: this.birthPlace
-                            };
+                firstName:firstName, 
+                lastName:lastName, 
+                gender: this.gender, 
+                birthDate: this.birthDate, 
+                birthPlace: this.birthPlace
+            };
             calculateFiscalCode({infoData: information}).then((response) => {
                 if(response == null){
                     //this.showError(errorMsg);
                     const event = new ShowToastEvent({
-                    message: 'Comune inserito NON presente a sistema',
-                    variant: 'error',
-                    mode: 'dismissable'
+                        message: 'Comune inserito NON presente a sistema',
+                        variant: 'error',
+                        mode: 'dismissable'
                     });
                     this.dispatchEvent(event);
                 }else{
@@ -182,9 +311,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
     }
     getAccountAdress(){
-
+        
         if(this.accountAddress!= undefined){
-
+            
             if(this.accountAddress['Via'] != null){
                 this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
                 this.fieldsToUpdate['BillingStreetName__c'] = this.accountAddress['Via'];
@@ -213,15 +342,65 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             if(this.accountAddress['Civico'] != null){
                 this.fieldsToUpdate['BillingStreetNumber__c'] = this.accountAddress['Civico'];
             }
+            if(this.accountAddress['Localita'] != null){
+                this.fieldsToUpdate['BillingPlace__c'] = this.accountAddress['Localita'];
+            }
+            if(this.accountAddress['Codice Localita'] != null){
+                this.fieldsToUpdate['BillingPlaceCode__c'] = this.accountAddress['Codice Localita'];
+            }
             if(this.accountAddress['Flag Verificato'] !=null){
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
         }
     }
-
+    getAccountAdressRes(){
+        
+        if(this.accountAddressRes!= undefined){
+            console.log( this.accountAddressRes['Via']);
+            if(this.accountAddressRes['Via'] != null){
+                this.fieldsToUpdateRes['ShippingStreet'] = this.accountAddressRes['Via'];
+               // this.fieldsToUpdateRes['ShippingStreet'] = this.accountAddressRes['Via'];
+            }
+            if(this.accountAddressRes['Comune'] != null){
+                this.fieldsToUpdateRes['ShippingCity'] = this.accountAddressRes['Comune'];
+            }
+            if(this.accountAddressRes['CAP'] != null){
+                this.fieldsToUpdateRes['ShippingPostalCode'] = this.accountAddressRes['CAP'];
+            }
+            if(this.accountAddressRes['Stato'] != null){
+                this.fieldsToUpdateRes['ShippingCountry'] = this.accountAddressRes['Stato'];
+            }
+            if(this.accountAddressRes['Provincia'] != null){
+                this.fieldsToUpdateRes['ShippingState'] = this.accountAddressRes['Provincia'];
+            }
+            if(this.accountAddressRes['Codice Comune SAP'] != null){
+                this.fieldsToUpdateRes['ShippingCityCode__c'] = this.accountAddressRes['Codice Comune SAP'];
+            }
+            if(this.accountAddressRes['Codice Via Stradario SAP'] != null){
+                this.fieldsToUpdateRes['ShippingStreetCode__c'] = this.accountAddressRes['Codice Via Stradario SAP'];
+            }
+            if(this.accountAddressRes['Estens.Civico'] != null){
+                this.fieldsToUpdateRes['ShippingStreetNumberExtension__c'] = this.accountAddressRes['Estens.Civico'];
+            }
+            if(this.accountAddressRes['Civico'] != null){
+                this.fieldsToUpdateRes['ShippingStreetNumber__c'] = this.accountAddressRes['Civico'];
+            }
+            if(this.accountAddressRes['Localita'] != null){
+                this.fieldsToUpdateRes['ShippingPlace__c'] = this.accountAddressRes['Localita'];
+            }
+            if(this.accountAddressRes['Codice Localita'] != null){
+                this.fieldsToUpdateRes['ShippingPlace__c'] = this.accountAddressRes['Codice Localita'];
+            }
+            if(this.accountAddressRes['Flag Verificato'] !=null){
+                this.fieldsToUpdateRes['ShippingIsAddressVerified__c'] = this.accountAddressRes['Flag Verificato'];
+                this.isVerifiedShipping = this.accountAddressRes['Flag Verificato'];
+            }
+        }
+    }
     handleSave(){
         console.log(this.RecordTypeId);
-
+        
         let isValidated= true;
         let firstName =this.template.querySelector('[data-id="firstName"]');
         let lastName= this.template.querySelector('[data-id="lastName"]');
@@ -232,6 +411,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
         let role= this.template.querySelector('[data-id="role"]');
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
+        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
         // let settlDistrict= this.template.querySelector('[data-id="settlementDistrict"]');
         // let settlMunicipality= this.template.querySelector('[data-id="settlementMunicipality"]');
         // let settlAddress= this.template.querySelector('[data-id="settlementAddress"]');
@@ -253,7 +433,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         this.spinner= true;
         let messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
-
+        
         if(!firstName.reportValidity()){
             isValidated=false;
         } 
@@ -329,7 +509,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
             }
         }
-
+        
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
                 isValidated=false;
@@ -341,6 +521,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 isValidated=false;
                 messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
+            if( String(phoneNumber.value).charAt(0)!='0'){
+                isValidated=false;
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+            }
         }
         if(!(email.value=== undefined || email.value.trim()==='')){
             if(!mailFormat.test(email.value)){
@@ -348,11 +532,21 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 messageError=" Formato email errato !";
             }
         }
-
+        
         if(isValidated){
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+            console.log('accountAddressRes : '+ JSON.stringify(this.accountAddressRes));
             this.getAccountAdress();
-            if(this.isVerified){
+            if (!this.disableCopyRes) {
+                this.accountAddressRes=this.accountAddress;    
+              }
+              else{
+                  this.accountAddressRes=[];
+                  this.accountAddressRes =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
+                  
+              }
+            this.getAccountAdressRes();
+            if(this.isVerified && this.isVerifiedShipping ){
                 var isEmpty=false;
                 if(this.gender === undefined || this.gender.trim()===''){
                     isEmpty= true;
@@ -364,21 +558,33 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     isEmpty= true;
                 }
                 if(isEmpty){
-
-
+                    
+                    
                     
                     getFromFiscalCode({
                         fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
                     }).then((response) => {
-                        let fiscData= response;
-                        if(this.gender === undefined || this.gender.trim()===''){
-                            this.gender= fiscData.gender;
+                        var fiscData= response;
+                        console.log('fiscData ' +JSON.stringify(fiscData));
+                        console.log('fiscalCode ' + this.fiscalCode.value);
+                        var keyCode= this.fiscalCode.value;
+                        console.log('fiscData[keyCode].gender' + fiscData[keyCode].gender);
+                        if(!this.gender  || this.gender.trim()==='' ){
+                            this.gender=fiscData[keyCode].gender;
+                            console.log('gender : ' + this.gender);
+                            //this.gender= fiscData.gender;
                         }
-                        if(this.birthDate === undefined || this.birthDate.trim()===''){
-                            this.birthDate= fiscData.birthDate;
+                        if(!this.birthDate || this.birthDate.trim()===''){
+                            this.birthDate=fiscData[keyCode].birthDate;
+                            console.log('birthDate : ' + this.birthDate);
+                            
+                            //this.birthDate= fiscData.birthDate;
                         }
-                        if(this.birthPlace === undefined || this.birthPlace.trim()===''){
-                            this.birthPlace= fiscData.birthPlace;
+                        if(!this.birthPlace || this.birthPlace.trim()===''){
+                            this.birthPlace=fiscData[keyCode].birthPlace;
+                            console.log('birthPlace : ' + this.birthPlace);
+                            
+                            //this.birthPlace= fiscData.birthPlace;
                         }
                         
                         let acc= {
@@ -400,14 +606,17 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "birthDate" : this.birthDate,
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
-                            "mobilePhonePrefix" : mobilePhonePrefix.value   
+                            "mobilePhonePrefix" : mobilePhonePrefix.value, 
+                            "company":companyValue.value,
+                            "customerType":this.customerType,
                         };
                         insertAccount({
                             dataAccount : acc,
-                            accountAddress: this.fieldsToUpdate
+                            accountAddress: this.fieldsToUpdate,
+                            accountAddressRes: this.fieldsToUpdateRes
                         }).then((response) => {
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' creato con successo!',
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -433,7 +642,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         });
                     }).catch((errorMsg) => {
                         const event = new ShowToastEvent({
-                            message: 'Entra un valido codice fiscale!',
+                            message: 'Inserire un codice fiscale valido',
                             variant: 'error',
                             mode: 'dismissable'
                         });
@@ -441,6 +650,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         this.spinner=false;
                     });
                 }else{
+                    getFromFiscalCode({
+                        fiscalCodes : this.fiscalCode.value.replace(/ /g,"")
+                    }).then((response) => {
                     let acc= {
                         "firstName": firstName.value,
                         "lastName": lastName.value,
@@ -460,14 +672,19 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "birthDate" : this.birthDate,
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
-                        "mobilePhonePrefix" : mobilePhonePrefix.value 
+                        "mobilePhonePrefix" : mobilePhonePrefix.value,
+                        "company":companyValue.value,
+                        "customerType":this.customerType,
+                        
                     };
                     insertAccount({
                         dataAccount : acc,
-                        accountAddress: this.fieldsToUpdate
+                        accountAddress: this.fieldsToUpdate,
+                        accountAddressRes: this.fieldsToUpdateRes
+
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' creato con successo!',
                             variant: 'success',
                             mode: 'dismissable'
                         });
@@ -491,6 +708,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         this.dispatchEvent(event);
                         this.spinner=false;
                     });
+                }).catch((errorMsg) => {
+                    const event = new ShowToastEvent({
+                        message: 'Inserire un codice fiscale valido',
+                        variant: 'error',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                    this.spinner=false;
+                });
                 }
             }else{
                 const event = new ShowToastEvent({
@@ -511,13 +737,12 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             this.dispatchEvent(event);
             this.spinner=false;
         }
-            
+        
     }
-
+    
     copyAddressHandler(event){
         let checkboxSelected= event.target.checked;
         if(checkboxSelected){
-
             let residenceRegion =this.template.querySelector('[data-id="residenceRegion"]');
             let residenceDistrict= this.template.querySelector('[data-id="residenceDistrict"]');
             let residenceMunicipality= this.template.querySelector('[data-id="residenceMunicipality"]');
@@ -539,9 +764,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             this.settlementIntern= residenceIntern.value;
             this.settlementPostalCode= residencePostalCode.value;
         }
-
+        
     }
-
+    
     showError(error){
         this.errorMessage='';
         if(error.body.message){
@@ -553,7 +778,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 }
             }
         }
-            
+        
     }
-
+    
 }

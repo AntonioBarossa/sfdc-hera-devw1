@@ -9,7 +9,7 @@
         ></c-hdt-confirmation-modal>
     </template>
 
-    <lightning-card title="Ricerca criterio eleggibilità" icon-name="standard:proposition" >
+    <lightning-card title={label.mainTitle} icon-name="standard:proposition" >
 
         <div if:true={spinnerObj.spinner} class="progress">
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
@@ -38,7 +38,7 @@
             
             <div class="slds-section slds-is-open">
                 <h3 class="slds-section__title slds-theme_shade">
-                  <span class="slds-truncate slds-p-horizontal_small" title="Dettagli offerta corrente">Stai creando un criterio per questa offerta</span>
+                  <span class="slds-truncate slds-p-horizontal_small" title={label.heplText2}>{label.heplText1}</span>
                 </h3>
                 <div aria-hidden="false" class="slds-section__content">
 
@@ -106,7 +106,7 @@
 
             <div class="slds-section slds-is-open">
                 <h3 class="slds-section__title slds-theme_shade">
-                  <span class="slds-truncate slds-p-horizontal_small" title="Cerca">Cerca un criterio esistente</span>
+                  <span class="slds-truncate slds-p-horizontal_small" title="Cerca">{label.search}</span>
                 </h3>
                 <div aria-hidden="false" class="slds-section__content">
 

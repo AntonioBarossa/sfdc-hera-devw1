@@ -1,9 +1,9 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
-    public static List<sObject> getTableData(String objectApiName, String rate, String searchByField, String searchValue){
+    public static List<sObject> getTableData(String objectApiName, String rate, String rateTypeValue, String searchByField, String searchValue){
         try{
-            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, searchByField, searchValue);
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, rateTypeValue, searchByField, searchValue);
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
@@ -32,7 +32,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(String.isEmpty(thisProduct[0].Family) || !thisProduct[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
                 respObj.success = false;
-                respObj.errorMessage = 'Questa funzionalità è riservata alle offerte commerciali';
+                respObj.errorMessage = Label.HDT_OfferConfig_OfferType;
                 return respObj;
             }
 
@@ -142,7 +142,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 TechnicalOffer__c techOff;
                 techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
-                
+                matrixTable.sapCode = techOff.SapCode__c;
+                matrixTable.sapErrorMessage = techOff.Message__c;
+
                 if(String.isEmpty(techOff.Product__r.Status__c) || !techOff.Product__r.Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     matrixTable.isEditable = false;
                 }
@@ -186,13 +188,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate, Boolean sendToSap){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate){
         
         System.debug('# saveNewOfferConfigured #');
         System.debug('# techOffObj > ' + techOffObj);
         System.debug('# idToClone > ' + idToClone);
         System.debug('# technicalofferid > ' + technicalofferid);
-        System.debug('# sendToSap > ' + sendToSap);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 

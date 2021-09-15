@@ -5,6 +5,7 @@
 * @history Keltin Mesonjesi – 23/11/2020 – Created class
 */
 public inherited sharing class HDT_LC_SaleServiceContainer {
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     
     private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
     private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
@@ -18,8 +19,8 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      */
     private static Boolean isServicePointLinkedToContract(ServicePoint__c newServicePoint, String accountId) {
         
-        saleServiceItemSrv.checkReadAccess('Quote__c,Quote__r.ContractReference__c,Opportunity__c,Opportunity__r.CreatedDate');
-        List<SaleServiceItem__c> linkedContracts = saleServiceItemQr.getRecordsWithContractsByServicePointAndAccount(newServicePoint.Id, accountId);
+        saleServiceItemSrv.checkReadAccess('Id, Status,AccountId,ServicePoint__c ');
+        List<Contract> linkedContracts = contractQr.getRecordsWithContractsByServicePointAndAccountId(newServicePoint.Id, accountId);
 
         return !linkedContracts.isEmpty();
     }
@@ -44,7 +45,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      * @param Sale__c sale
      */
     @AuraEnabled
-    public static void createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, ServicePoint__c oldServicePoint){
+    public static Map<String,Boolean> createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale, ServicePoint__c oldServicePoint){
         
         Map<String,String> extraParams = new Map<String,String>();
 
@@ -56,6 +57,11 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         }
 
         saleServiceItemSrv.createRecord(servicePoint, sale, extraParams);
+        boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
+        Map<String,Boolean> result = new Map<String,Boolean>{
+            'isTransition'=>isTransition
+        };
+        return result;
 
     }
     

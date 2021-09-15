@@ -1,0 +1,15 @@
+<template>
+    <template if:true={showTable}>
+        <lightning-card title="Configurazione Prodotti Gruppo">
+            <div style="height: 500px;">
+                <lightning-datatable class="productDt" show-row-number-column key-field="id" data={dataList}
+                    columns={columnsList} selected-rows={preSelectedRows}>
+                </lightning-datatable>
+            </div>
+            <div slot="footer" class="slds-m-around--x-small slds-text-align--right">
+                <lightning-button label="Aggiorna i prodotti selezionati" onclick={assignSelectedProductsHandler}>
+                </lightning-button>
+            </div>
+        </lightning-card>
+    </template>
+</template>

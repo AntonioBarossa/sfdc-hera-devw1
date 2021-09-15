@@ -31,4 +31,10 @@
         <label>In Lavorazione</label>
         <closed>false</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Sequenzializzato</fullName>
+        <default>false</default>
+        <label>Sequenzializzato</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>

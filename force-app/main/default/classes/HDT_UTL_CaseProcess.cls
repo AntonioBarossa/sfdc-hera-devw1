@@ -7,7 +7,19 @@ public with sharing class HDT_UTL_CaseProcess {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
 
-
+    public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
+        List<Account> accountsToUpdate = new List<Account>();
+        for(Case newCase : (List<Case>) newMap.values()) {
+            if(((Case) oldMap.get(newCase.Id)).PraxidiaOverrallSatisfaction__c != newCase.PraxidiaOverrallSatisfaction__c) {
+                accountsToUpdate.add(new Account(
+                    Id = newCase.AccountId,
+                    SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c,
+                    PraxidiaUpdateDate__c = newCase.PraxidiaDateOutcome__c  
+                ));
+            }
+        }
+        update accountsToUpdate;
+    }
 
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
 
@@ -55,7 +67,7 @@ public with sharing class HDT_UTL_CaseProcess {
                    if(mapAccount.get(newCase.AccountId) != null){
                        a = mapAccount.get(newCase.AccountId);
                    }
-                   if(a != null && c != null){
+                   if(a != null && c != null && newCase.Lead__c == null){
                     commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
                    }  
                }
@@ -67,6 +79,7 @@ public with sharing class HDT_UTL_CaseProcess {
     }
 
     public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        HDT_QR_Case caseQr = new HDT_QR_Case();
 		Case caseNew = caseList[0];
 		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
 		String newPhase = caseNew.Phase__c;
@@ -75,9 +88,77 @@ public with sharing class HDT_UTL_CaseProcess {
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
 				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
-                if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura')){
+                //Variazione Indirizzzo di Fornitura
+                if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
                     System.debug('Inside Condition');
                     createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
+                }
+                //Annullamento Case di Richiesta Parere legati al case di Reclamo
+                //Annullamento activities legate al case di Richiesta Parere
+                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){    
+                    List<Case> childCases = new List<Case>();
+                    List<String> caseIds = new List<String>();
+                    List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+                    List<SObject> updateList = new List<SObject>();
+                    Set<String> activitiesOwnerId = new Set<String>();
+                    String activityId = '';
+                    childCases = caseQr.getChildCase(caseNew.Id);
+                    if(childCases != null){
+                        for(Case child : childCases){
+                            if(!(child.Phase__c.equalsIgnoreCase('Completata'))){
+                                caseIds.add(child.Id);
+                                child.Phase__c = 'Annullato';
+                                child.Status = 'Closed';
+                            }
+                        }
+                        if(caseIds != null){
+                            try{
+                                HDT_QR_Knowledge knowledgeQr = new HDT_QR_Knowledge();
+                                CustomNotificationType customNotif = new CustomNotificationType();
+                                customNotif = knowledgeQr.getCustomNotificationType();
+                                activities = caseQr.getCaseActivities(caseIds);
+                                if(activities != null){
+                                    for(wrts_prcgvr__Activity__c activity : activities){
+                                        activitiesOwnerId.clear();
+                                        if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
+                                            activityId = activity.OwnedByUser__c;
+                                        }else{
+                                            activityId = activity.OwnerId;
+                                        }
+                                        activitiesOwnerId.add(activityId);
+                                        activity.wrts_prcgvr__Status__c = 'Completed';
+                                        activity.Status__c = 'Annullata';
+                                        //Notification Fire to activity's owner
+                                        try{
+                                            if(customNotif != null && activitiesOwnerId.size() > 0){
+                                                String title = 'Activity Annullata';
+                                                String body = 'L\'Activity ' + activity.wrts_prcgvr__ActivityTemplate__r.Name + ' è stata annullata';
+                                                HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
+                                            }
+                                        } catch(Exception e){
+                                            System.debug('Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                        }
+                                    }
+                                    updateList.addAll(activities);
+                                }
+                            }catch(Exception e){
+                                System.Debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                            }
+                        }
+                        updateList.addAll(childCases);
+                        HDT_UTL_DatabaseService.updateSObject(updateList);
+                    }
+                }
+                //Contratto Non Richiesto
+                if(newPhase.equalsIgnoreCase('Annullato')){
+                    Case nonReqContr = new Case();
+                    nonReqContr = caseQr.getNonReqContrCase(caseNew.Id);
+                    System.debug('Id ' + nonReqContr.Id);
+                    System.debug('Id Cond ' + String.isBlank(nonReqContr.Id));
+                    if(!(String.isBlank(nonReqContr.Id))){
+                        nonReqContr.Phase__c = 'Completata';
+                        HDT_UTL_DatabaseService.updateSObject(nonReqContr);
+                    }
                 }
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
@@ -113,8 +194,8 @@ public with sharing class HDT_UTL_CaseProcess {
             }
             Map<String,String> accountIdCase = new Map<String,String> ();
             Map<String,String> campaignIdCase = new Map<String,String>();
-            for (Case newCase : newCasesList) {
-                if (oldCaseMap.get(newCase.id) != null && oldCaseMap.get(newCase.id).status == 'New' && newCase.Status == 'In Lavorazione') {
+            for (Case newCase : newCasesList) {// Start 27/08/2021 HRAWRM-314 per processi autoconclusivi (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')
+                if (oldCaseMap.get(newCase.id) != null && (oldCaseMap.get(newCase.id).status == 'New' && (newCase.Status == 'In Lavorazione')||newCase.Status == 'Closed')) {
                     closedCaseIds.add(newCase.Id);
                     accountIdCase.put(newCase.AccountId, newCase.Id);
                     campaignIdCase.put(newCase.Campaign__c, newCase.Id);
@@ -135,11 +216,42 @@ public with sharing class HDT_UTL_CaseProcess {
                     membersToUpdate.add(updateMember);
                 }
             }
+            //update campaignMember siblings Status a 'Non Proposto Auto'
+            List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, newCasesList[0].Campaign__r.Channel__c);
+            List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
+            if (campaignMembersIdList.size()>0) {
+                List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
+            }
         
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
 		
 		}
+    }
+
+    public static void updateServiceRequest(List<Case> newCasesList, List<Case> oldCasesList){
+        Map<String,Case> mapCases = new Map<String,Case>();
+        Map<String,String> caseStatuses= new Map<String,String>();
+        List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+        Set<Id> caseIds= new Set<Id>();
+        for(Case o: oldCasesList){
+            mapCases.put(o.id, o);
+        }
+        for (Case cs: newCasesList){
+            Case oldCase= mapCases.get(cs.id);
+            
+            if(cs.Status != oldCase.Status ){
+                caseIds.add(cs.Id);
+                caseStatuses.put(cs.Id, cs.Status);
+            }
+        }
+        List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(caseIds, 'Case__c');
+        for(ServiceRequest__c s: srvRequests){
+            ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+            s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(caseStatuses.get(s.Case__c), 'Case');
+            sReqToUpdate.add(s);
+        }
+        HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
 }

@@ -93,6 +93,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         updateRecord({fields: { Id: this.recordId }}).then(() => {
                         console.log('Record Refreshato');
                         console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                        console.log('Seconda Colonna ' + JSON.stringify(this.secondColumn));
                         this.variablesLoaded = true;
                         }).catch(error => {
                             console.log('Error Refreshing record');
@@ -169,6 +170,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         console.log('### END Connected ###');
         
     }
+    renderedCallback(){
+        //this.installmentsLogic();
+    }
     /*get formats(){
         var formats = [];
         console.log(this.acceptedFormats);
@@ -216,6 +220,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         if(this.recordId != null){
         var record = event.detail.records;
         var fields = record[this.recordId].fields;
+        this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
         }
     }
@@ -365,7 +370,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     handleChange(event){
 
         //Reclami customizations
+        this.complaintsLogic();
+        //PianoRata customizations
+        this.installmentsLogic();
+    }
 
+    complaintsLogic(){
         let five = this.objSelector('FithLevelComplaintClassification__c');
         console.log('Five '+five);
         let channel = this.objSelector('ComplaintEntryChannel__c');
@@ -374,8 +384,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             let fifthLevel = this.selector('FithLevelComplaintClassification__c');
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
-                if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
-                    let soldBy = this.selector('SoldBy__c');
+                let soldBy = this.selector('SoldBy__c');
+                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                    soldBy.disabled = false;
+                }else{
+                    soldBy.disabled = true;
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){
@@ -388,11 +401,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 address.required = false;
             }
         }
-        //PianoRata customizations
+    }
+
+    installmentsLogic(){
         let reasonObj =  this.objSelector('Reason__c');
         console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
-        console.log('#PaymentType --> ' + paymentType);
+        console.log('#PaymentType --> ' + JSON.stringify(paymentType));
         if(!(Object.keys(reasonObj).length === 0)){
             let reason = this.selector('Reason__c');
             if(reason != null){
@@ -401,18 +416,30 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     if(!(Object.keys(paymentType).length === 0)){
                         console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
+                        let workStatus = this.selector('WorkStatus__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
                             payType.disabled = false;
-                        } else {
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
+                        }else if(reason.value.localeCompare('Fattura SD') === 0 && workStatus != null){
+                            workStatus.disabled = false;
+                            workStatus.required = true;
+                        } 
+                        else {
                             payType.disabled = true;
                             payType.value = '';
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
                         }
                     }
                 }
             }
         }
         let depositObj = this.objSelector('Deposit__c');
+        console.log('#Deposit --> ' + JSON.stringify(depositObj));
         if(!(Object.keys(depositObj).length === 0)){
             let deposit = this.selector('Deposit__c');
             console.log('#Deposit -> ' + deposit.value);
@@ -440,5 +467,35 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }
+        let depositPaymentModeObj = this.objSelector('DepositPaymentMode__c');
+        console.log('#DepositPaymentMode --> ' + JSON.stringify(depositPaymentModeObj));
+        if(!(Object.keys(depositPaymentModeObj).length === 0)){
+            let depositPaymentMode = this.selector('DepositPaymentMode__c');
+            console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
+            if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
+                let paperlessCode = this.selector('SendPaperlessCodeMode__c');
+                if(depositPaymentMode.value === 'Paperless'){
+                    paperlessCode.disabled = false;
+                } else {
+                    paperlessCode.disabled = true;
+                }
+            }
+        }
+        //let installmentTypeObj = this.objSelector('TypeInstallmentPlan__c');
+        /*if(!(Object.keys(installmentTypeObj).length === 0)){
+            let installmentType = this.selector('TypeInstallmentPlan__c');
+            console.log('#InstallmentType -> ' + installmentType.value);
+            if(installmentType.value !== null && installmentType.value !== undefined){
+                let applicationInterestObj = this.objSelector('ApplicationInterests__c');
+                if(!(Object.keys(installmentTypeObj).length === 0)){
+                    let applicationInterest = this.selector('ApplicationInterests__c');
+                    if(installmentType.value.includes('Solo Piano Mensile')){
+                        applicationInterest.value = true;
+                    } else {
+                        applicationInterest.value = false;
+                    }
+                }
+            }
+        }*/
     }
 }

@@ -68,7 +68,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr.mailSbl = assignAccountIdCont.get(wr.c.accountid) != null ? assignAccountIdCont.get(wr.c.accountid).Email != null ? assignAccountIdCont.get(wr.c.accountid).Email : '': '';
                 fr.dataValiditaA = '31/1/9999';
                 fr.dataValiditaDa = '31/1/9999';
-                fr.codiceRds = 'C_' + wr.c.Casenumber;
+                fr.codiceRds = 'C_' + wr.c.id;
                 fr.codiceServizio = wr.c.CommodityFormula__c != null ? wr.c.CommodityFormula__c : '';
                 fr.tipoRds = wr.c.Cluster__c != null ? wr.c.Cluster__c : '';
                 fr.sottotipoRds = wr.c.type != null ? wr.c.type : '';
@@ -119,7 +119,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr2.mailSbl = assignAccountIdCont.get(wr.o.accountid) != null ? assignAccountIdCont.get(wr.o.accountid).Email != null ? assignAccountIdCont.get(wr.o.accountid).Email : '': '';
                 fr2.dataValiditaA = '31/12/9999';
                 fr2.dataValiditaDa = '31/12/9999';
-                fr2.codiceRds = 'O_' + wr.o.OrderNumber;
+                fr2.codiceRds = 'O_' + wr.o.id;
                 fr2.codiceServizio = wr.o.CommodityFormula__c != null ? wr.o.CommodityFormula__c : '';
                 fr2.tipoRds = wr.o.Recordtype.Name;
                 fr2.sottotipoRds = wr.o.processType__C != null ? wr.o.processType__C : '';
@@ -142,7 +142,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr2.tipoOperazione = wr.o.processType__c != null ? wr.o.processType__c : '';
                 fr2.dfTipoOperazioneSr = '';
                 fr2.xConnId = 'ND';
-                fr2.indirizzoEmailContatto = assignAccountIdCont.get(wr.c.accountid) != null ? assignAccountIdCont.get(wr.o.accountid).Email != null ? assignAccountIdCont.get(wr.o.accountid).Email : '' : '';
+                fr2.indirizzoEmailContatto = assignAccountIdCont.get(wr.o.accountid) != null ? assignAccountIdCont.get(wr.o.accountid).Email != null ? assignAccountIdCont.get(wr.o.accountid).Email : '' : '';
                 fr2.procedura = '';//assignAccountIdCont.get(wr.o.accountid) != null ? assignAccountIdCont.get(wr.o.accountid).provenance__c : '';
                 wrapFrontList.add(fr2);
             }

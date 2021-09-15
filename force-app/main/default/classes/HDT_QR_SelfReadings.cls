@@ -17,11 +17,12 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         if(objRes.isAccessible()) {
             
-            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r';
+            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r'; // TODO WAVE 2: adeguare per altre commodity.
             String queryTemplate = 'SELECT Id, (Select Id from {0} LIMIT 1) FROM {1} WHERE Id = :objectId';
             List<String> queryParameters = new List<String> { relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);
 
+            System.debug('Query: ' + query);
             List<SObject> objects = Database.query(query);
 
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
@@ -33,11 +34,31 @@ public inherited sharing class HDT_QR_SelfReadings {
         return null;
     }
 
+    public Reading__c getReading(String objectName, Id objectId, String commodity, String readingFields) {
+        SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+        if(objRes.isAccessible()) {
+            
+            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r';
+            String queryTemplate = 'SELECT Id, (Select {0} from {1} LIMIT 1) FROM {2} WHERE Id = :objectId';
+            List<String> queryParameters = new List<String> { readingFields, relationshipName, objectName };
+            String query = String.format(queryTemplate, queryParameters);
+
+            List<SObject> objects = Database.query(query);
+            List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
+            return objReadings[0];
+        }
+
+        return null;
+    }
+
     public Contract getContractBySapCode(String contractCode) {
         List<Contract> contracts = [
             SELECT 
             Id,
             AccountId,
+            ServicePoint__r.Distributor__r.Code__c,
             ServicePoint__c
             FROM Contract WHERE SAPContractCode__c = :contractCode
             WITH SECURITY_ENFORCED
@@ -59,7 +80,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         if(objRes.isAccessible()) {
 
-            String query = 'SELECT Id, EffectiveDate__c, CreatedDate FROM Order';
+            String query = 'SELECT Id, EffectiveDate__c, CreatedDate, RecordType.DeveloperName FROM Order';
 
             if (String.isNotBlank(accountId)) {
                 query += ' WHERE AccountId = :accountId';

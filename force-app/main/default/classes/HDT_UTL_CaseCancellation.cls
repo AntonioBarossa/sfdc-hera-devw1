@@ -35,14 +35,15 @@ public inherited sharing class HDT_UTL_CaseCancellation {
         HDT_UTL_ResponseCancellationReason toReturn;
         try{
             List<String> listDescription = new List<String>();
-            String queryCmd = 'SELECT Technical_Causal_Cancellation_Reason__c, CancellationReasonDescription__c FROM HDT_TechnicalCancellationReason__mdt WHERE Causal_Process_to_Cancell__c = \''
-            + input.causalCode +'\' AND SelectedProcessCancellationReason__c = \''
-            + input.processCancellationReason +'\' WITH SECURITY_ENFORCED';
+            String queryCmd = 'SELECT Technical_Causal_Cancellation_Reason__c, CancellationReasonDescription__c FROM HDT_TechnicalCancellationReason__mdt WHERE (Causal_Process_to_Cancell__c = \''
+            + input.causalCode +'\' OR Causal_Process_to_Cancell__c = null) AND SelectedProcessCancellationReason__c = \''
+            + input.processCancellationReason +'\' AND (SelectedProcessCancellationReason__c = null) WITH SECURITY_ENFORCED';
             List<HDT_TechnicalCancellationReason__mdt> technicalCancellationReasonList = Database.query(queryCmd);
             if(technicalCancellationReasonList != null && technicalCancellationReasonList.size()>0){
                 toReturn = new HDT_UTL_ResponseCancellationReason(technicalCancellationReasonList[0].Technical_Causal_Cancellation_Reason__c, technicalCancellationReasonList[0].CancellationReasonDescription__c,'OK','Causale ricavata con successo',null);
             }else{
-                toReturn = new HDT_UTL_ResponseCancellationReason('KO','ERR-0001: Nessuna causale di annullamento identificata');
+                toReturn = new HDT_UTL_ResponseCancellationReason('AN1', '','OK','Causale ricavata con successo',null);
+                //toReturn = new HDT_UTL_ResponseCancellationReason('KO','ERR-0001: Nessuna causale di annullamento identificata');
             }
         }catch(Exception e){
             toReturn = new HDT_UTL_ResponseCancellationReason('KO','ERR-0001: ' +e.getMessage());

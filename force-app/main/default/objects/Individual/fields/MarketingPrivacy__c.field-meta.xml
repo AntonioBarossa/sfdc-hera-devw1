@@ -23,7 +23,7 @@
             </value>
             <value>
                 <fullName>Non espresso</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Non espresso</label>
             </value>
         </valueSetDefinition>

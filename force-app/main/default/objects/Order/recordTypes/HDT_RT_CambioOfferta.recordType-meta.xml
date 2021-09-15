@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_CambioOfferta</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <label>Cambio Offerta</label>
     <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
@@ -266,11 +267,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cliente Non Trovato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Codice ABI obsoleto</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Consegna%2FInstallazione Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato%2FDisdetto %28Servizio%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -283,6 +296,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installazione Fallita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -310,6 +327,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reso %28Prodotto%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
             <default>false</default>
         </values>
@@ -319,6 +340,10 @@
         </values>
         <values>
             <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutato Preventivamente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -339,6 +364,14 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -480,7 +513,7 @@
     <picklistValues>
         <picklist>ConventionAssociation__c</picklist>
         <values>
-            <fullName>%C2%A05%2F3%2F21</fullName>
+            <fullName>UISMO-UISP MODENA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1901,6 +1934,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OdvCreated__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OfferType__c</picklist>
         <values>
             <fullName>Progetto</fullName>
@@ -2025,6 +2073,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Caricamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completata</fullName>
             <default>false</default>
         </values>
@@ -2082,6 +2138,10 @@
         </values>
         <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2198,6 +2258,14 @@
         </values>
         <values>
             <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento per Switch-out</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2713,6 +2781,25 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

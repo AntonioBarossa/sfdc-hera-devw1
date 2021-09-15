@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsDigitalMarking__c</fullName>
+    <description>Indica se il cliente ha una tra le nuove marcature previste per la Digital.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+CASE(TEXT(CustomerMarking__c), 
+&apos;D1 - Persona fisica&apos;, 1,
+&apos;D2 - Ditta individuale&apos;, 1,
+&apos;D3 - Azienda&apos;, 1,
+&apos;D4 - Parti comuni&apos;, 1,
+&apos;D5 - Condominio&apos;, 1,
+&apos;D6 - Associazione&apos;, 1,
+&apos;D7 - BP Doppio&apos;, 1,
+&apos;D8 - Marcatura nulla&apos;, 1, 
+0) = 1,
+TRUE, FALSE)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Marcatura Digital</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

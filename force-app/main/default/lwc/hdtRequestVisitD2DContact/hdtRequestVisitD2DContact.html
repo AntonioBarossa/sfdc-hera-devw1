@@ -1,0 +1,30 @@
+<template>
+    <div class="modal-header slds-size_1-of-1 slds-box--x-small">
+        <h4 class="title slds-text-heading--medium">New Activity</h4>
+    </div>
+    <div
+    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+    <lightning-input type = "text" name="zipCode" label="CAP" data-id="zipCodeField" value={zipCodeValue}>
+    </lightning-input>
+</div>
+            <div
+            class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+        <lightning-combobox name="consumption" placeholder="--Seleziona consumi--" label="Consumi"
+            value={consumptionValues} data-id="consumptionField" options={consumptionOptions}></lightning-combobox>
+        </div>
+        <div
+class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+   
+        <lightning-combobox name="category" placeholder="--Seleziona categoria--"
+            label="Categoria" value={categoryValues} data-id="categoryField"
+            options={categoryOptions}></lightning-combobox>
+        </div>
+    <footer class="slds-card__footer">
+         <lightning-button class="slds-float--right" type="button" label="Salva" onclick={handleSubmit}>
+        </lightning-button>
+    </footer>
+
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+</template>

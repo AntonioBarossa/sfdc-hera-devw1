@@ -21,46 +21,39 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
         
-        if (orderParent.ContractSigned__c == false) {
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
 
-            //update child orders
-            for (Order childOrder : childOrders) {
+        // if (orderParent.ContractSigned__c == false) {
+        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+        // }
 
-                // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
-                    ordersToUpdate.add(new Order(
-                        Id = childOrder.Id,
-                        //EVERIS: AGGIUNTA CASISTICA VOLTURA
-                        Phase__c = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
-                        checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                    ));
-                // }
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
 
+        for (Order childOrd : childOrders) {
+            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
+                ordersToUpdate.add(
+                    new Order(
+                        Id = childOrd.Id,
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    )
+                );
             }
+        }
+        
+        ordersToUpdate.add(orderToUpdate);
 
-            //update parent order
-            ordersToUpdate.add(new Order(
-                Id = orderParent.Id,
-                Phase__c = 'Documentazione da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
-            ));
-
-        } else {
-
-            //update child orders
-            for (Order childOrder : childOrders) {
-                // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
-                    ordersToUpdate.add(new Order(
-                        Id = childOrder.Id,
-                        Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                    ));
-                // }
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
             }
-
-            //update parent order
-            ordersToUpdate.add(new Order(
-                Id = orderParent.Id,
-                Phase__c = 'Documentazione da validare'
-            ));
-
         }
 
         orderSrv.updateRecords(ordersToUpdate);

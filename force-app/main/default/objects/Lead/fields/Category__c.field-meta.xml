@@ -5,249 +5,1538 @@
     <label>Categoria</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>CustomerMarking__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CategoryTypeClient</valueSetName>
         <valueSettings>
-            <controllingFieldValue>MIWA ENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>NEWENRGGEL-Altro</controllingFieldValue>
-            <controllingFieldValue>ONE POWER-Altro</controllingFieldValue>
-            <controllingFieldValue>S4 ENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>SGR-Altro</controllingFieldValue>
-            <controllingFieldValue>EstEnergy-Altro</controllingFieldValue>
-            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
-            <controllingFieldValue>NOIENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>NWGENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
-            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
-            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
-            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
-            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
-            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
-            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
-            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
-            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
-            <controllingFieldValue>TOP ENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>UNION-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
-            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
-            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
-            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
-            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
-            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
-            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
-            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
-            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
-            <valueName>Reseller - Extra Gruppo</valueName>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Accedi</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>MIWA ENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>NEWENRGGEL-Altro</controllingFieldValue>
-            <controllingFieldValue>ONE POWER-Altro</controllingFieldValue>
-            <controllingFieldValue>S4 ENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>SGR-Altro</controllingFieldValue>
-            <controllingFieldValue>EstEnergy-Altro</controllingFieldValue>
-            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
-            <controllingFieldValue>NOIENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>NWGENERGIA-Altro</controllingFieldValue>
-            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
-            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
-            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
-            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
-            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
-            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
-            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
-            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
-            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
-            <controllingFieldValue>TOP ENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>UNION-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
-            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
-            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
-            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
-            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
-            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
-            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
-            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
-            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
-            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
-            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
-            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
-            <valueName>Reseller - Gruppo</valueName>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Aziende</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>piccoli condomini</controllingFieldValue>
-            <valueName>Parti Comuni</valueName>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Aziende SME</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>piccoli condomini</controllingFieldValue>
-            <valueName>MMS parti comuni</valueName>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>AAS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Aziende Soho</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Aziende TOP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Banca centrale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Comuni Territorio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Default gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>MMS Azienda</controllingFieldValue>
+            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Enti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
             <controllingFieldValue>MIWA ENERGIA-Persona fisica</controllingFieldValue>
             <controllingFieldValue>NEWENRGGEL-Persona fisica</controllingFieldValue>
             <controllingFieldValue>ONE POWER-Persona fisica</controllingFieldValue>
             <controllingFieldValue>S4 ENERGIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>EstEnergy-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>Enegan-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>NOIENERGIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>Persona fisica</controllingFieldValue>
-            <controllingFieldValue>AAS Persona fisica</controllingFieldValue>
-            <controllingFieldValue>NWGENERGIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>GRAN SASSO-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ERMES-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>LIRENAS-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>MMS Persona fisica</controllingFieldValue>
-            <controllingFieldValue>FUTURENERGY-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGIA SOCIALE-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ITALIANGAS-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ACEL-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>MOODS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ANTENORE ENERGY-Persona fisica</controllingFieldValue>
             <controllingFieldValue>BENACO-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>GENESI-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>BE POWER-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>AAS Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ACEL-Persona fisica</controllingFieldValue>
             <controllingFieldValue>BLU RANTON-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>CMV E e I - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>Enegan-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGETICA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGIA SOCIALE-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGIECHIARE-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGYGAS ITA - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ENERGYPOLIS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ERMES-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>EstEnergy-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ETRURIA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>FUTURA TR-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>FUTURENERGY-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>GENESI-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>GRAN SASSO-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>GREEN EN-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ITALIANGAS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>LIRENAS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>LUCEEG IT SERV-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>MMS Persona fisica</controllingFieldValue>
+            <controllingFieldValue>MOODS-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>NOIENERGIA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>NWGENERGIA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>OMNIA EN-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>ONOVA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>Persona fisica</controllingFieldValue>
+            <controllingFieldValue>PIUENERGIA SPA-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>SGR-Persona fisica</controllingFieldValue>
             <controllingFieldValue>TOP ENERGY-Persona fisica</controllingFieldValue>
             <controllingFieldValue>UNION-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGYGAS ITA - Persona fisica</controllingFieldValue>
-            <controllingFieldValue>CMV E e I - Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ANTENORE ENERGY-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ETRURIA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGETICA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGIECHIARE-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ONOVA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>ENERGYPOLIS-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>PIUENERGIA SPA-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>LUCEEG IT SERV-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>BE POWER-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>OMNIA EN-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>SGR-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>GREEN EN-Persona fisica</controllingFieldValue>
-            <controllingFieldValue>FUTURA TR-Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Famiglie</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>AAS Parti comuni</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Parti comuni</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Parti comuni</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <valueName>Piccoli Condomini</valueName>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>FUI domestico</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <valueName>Aziende SME</valueName>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>FUI non domestico</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
             <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
             <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <valueName>Aziende Soho</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <valueName>Aziende TOP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <valueName>Comuni Territorio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
-            <valueName>Enti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
-            <controllingFieldValue>Associazione</controllingFieldValue>
-            <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Grandi Condomini</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
             <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
             <controllingFieldValue>MMS Condominio</controllingFieldValue>
-            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Intercompany</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>AAS Associazione</controllingFieldValue>
-            <controllingFieldValue>Azienda</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>NRI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Personale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
             <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>AAS Parti comuni</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Associazione</controllingFieldValue>
+            <controllingFieldValue>MMS Azienda</controllingFieldValue>
             <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Parti comuni</controllingFieldValue>
+            <controllingFieldValue>Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Piccoli Condomini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>MIWA ENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>NEWENRGGEL-Altro</controllingFieldValue>
+            <controllingFieldValue>ONE POWER-Altro</controllingFieldValue>
+            <controllingFieldValue>S4 ENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>SGR-Altro</controllingFieldValue>
+            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
+            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
+            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
+            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
+            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
+            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
+            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
+            <controllingFieldValue>EstEnergy-Altro</controllingFieldValue>
+            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
+            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
+            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
+            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
+            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
+            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
+            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
+            <controllingFieldValue>NOIENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>NWGENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
+            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
+            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
+            <controllingFieldValue>TOP ENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>UNION-Altro</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Reseller - Extra Gruppo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>MIWA ENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>NEWENRGGEL-Altro</controllingFieldValue>
+            <controllingFieldValue>ONE POWER-Altro</controllingFieldValue>
+            <controllingFieldValue>S4 ENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>ANTENORE ENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>SGR-Altro</controllingFieldValue>
+            <controllingFieldValue>BENACO-Altro</controllingFieldValue>
+            <controllingFieldValue>BE POWER-Altro</controllingFieldValue>
+            <controllingFieldValue>BLU RANTON-Altro</controllingFieldValue>
+            <controllingFieldValue>ACEL-Altro</controllingFieldValue>
+            <controllingFieldValue>CMV E e I - Altro</controllingFieldValue>
+            <controllingFieldValue>Enegan-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGETICA-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIA SOCIALE-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGIECHIARE-Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYGAS ITA - Altro</controllingFieldValue>
+            <controllingFieldValue>ENERGYPOLIS-Altro</controllingFieldValue>
+            <controllingFieldValue>ERMES-Altro</controllingFieldValue>
+            <controllingFieldValue>EstEnergy-Altro</controllingFieldValue>
+            <controllingFieldValue>ETRURIA-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURA TR-Altro</controllingFieldValue>
+            <controllingFieldValue>FUTURENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>GENESI-Altro</controllingFieldValue>
+            <controllingFieldValue>GRAN SASSO-Altro</controllingFieldValue>
+            <controllingFieldValue>GREEN EN-Altro</controllingFieldValue>
+            <controllingFieldValue>ITALIANGAS-Altro</controllingFieldValue>
+            <controllingFieldValue>LIRENAS-Altro</controllingFieldValue>
+            <controllingFieldValue>LUCEEG IT SERV-Altro</controllingFieldValue>
+            <controllingFieldValue>MOODS-Altro</controllingFieldValue>
+            <controllingFieldValue>NOIENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>NWGENERGIA-Altro</controllingFieldValue>
+            <controllingFieldValue>OMNIA EN-Altro</controllingFieldValue>
+            <controllingFieldValue>ONOVA-Altro</controllingFieldValue>
+            <controllingFieldValue>PIUENERGIA SPA-Altro</controllingFieldValue>
+            <controllingFieldValue>TOP ENERGY-Altro</controllingFieldValue>
+            <controllingFieldValue>UNION-Altro</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Reseller - Gruppo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Salvaguardia Aziende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Salvaguardia Enti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>Associazione</controllingFieldValue>
+            <controllingFieldValue>Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Associazione</controllingFieldValue>
+            <controllingFieldValue>AAS Azienda</controllingFieldValue>
+            <controllingFieldValue>AAS Condominio</controllingFieldValue>
+            <controllingFieldValue>Condominio</controllingFieldValue>
+            <controllingFieldValue>MMS Condominio</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Societa Vendita Terze</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>VIP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Agenzia di confisca</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Applicazione della legge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Assicuratore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Assistenza a lungo termine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Assistenza gestita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Associazione grossisti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Attività bancaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Auto/Casalinghi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Azienda wireline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Azienda/Di passaggio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Broker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>BSU ESP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Casa progettazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Casalinghi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Centro convegni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Centro di assistenza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Centro di formazione aziendale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Centro formaz altri produttori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Chain Drug</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Chain Food</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Cliente azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Clinica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Commerciante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Commerciante all&apos;ingrosso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Commerciante non in negozio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Commercio di massa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Company</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Concorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Consulente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Dettagliante diretto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Dettagliante indiretto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Drogheria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Elettrodomestici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Enti Consip</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Esperto finanziario</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Farmacia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Federale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Filiale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Fornitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Funzionario produttore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Governo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Grossista di prod. farmac.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Gruppo di programmazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Gruppo reparto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Hotel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>HQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>In sede</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Industriale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Investitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Località</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Luogo di vacanza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Magazzino a prezzi scontati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Meeting/Congressi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Negozio prod. farmac./propr.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Non a scopo di lucro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Non Definito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Normale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>ODM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>OEM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>OEM del concorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Offerta di investimento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Officina</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Ospedale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Paramedici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Partnership</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Polizia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Produttore su contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Reparto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Residenziale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Rivenditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Rivenditore del concorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>S-Corp</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Servizio affari Internet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Società</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Società a resp. limitata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Società d&apos;assicurazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Società fiduciaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Società immobiliare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Società in accomandita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Soggiorno esteso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Spedizioniere</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Subcontraente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Suite</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Supermarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Supermercato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Ufficio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Ulteriori informazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Università</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Venditore di varie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D6 - Associazione</controllingFieldValue>
+            <controllingFieldValue>D7 - BP Doppio</controllingFieldValue>
+            <controllingFieldValue>D8 - Marcatura nulla</controllingFieldValue>
+            <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
+            <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
+            <controllingFieldValue>D3 - Azienda</controllingFieldValue>
+            <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
+            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
+            <valueName>Vigili del Fuoco</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

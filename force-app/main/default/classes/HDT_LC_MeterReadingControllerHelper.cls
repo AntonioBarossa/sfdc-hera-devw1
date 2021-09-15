@@ -118,12 +118,22 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
             if(restMessage.status != 'success'){
                 meterReadingObj.success = false;
-                meterReadingObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                meterReadingObj.message += ']; Detail: ' + restMessage.errorDetails.message;
-                meterReadingObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+
+                meterReadingObj.message += '[CODE: ' + restMessage.errorDetails[0].code + ']; DETAILS: ';
+                for(Integer n=0; n < restMessage.errorDetails.size(); n++){
+                    meterReadingObj.message += restMessage.errorDetails[n].message;
+                    if(n < (restMessage.errorDetails.size()-1)){
+                        meterReadingObj.message += ', ';
+                    }
+                }
+
+                //meterReadingObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                //meterReadingObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+                //meterReadingObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+
                 return meterReadingObj;
             }
-    
+
             meterReadingObj.success = true;
             HDT_WRP_EstrattoLettureResponse responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
 
@@ -206,6 +216,25 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             data.statoLettura = readingStatusMap.get(data.statoLettura);
             data.tipoLettura = readingTypeMap.get(data.tipoLettura);
             data.tipoNumeratore = numTypeMap.get(data.tipoNumeratore);
+
+            // In caso di lettura stornata, da as-is siebel gli unici campi da valorizzare sono: codiceContratto, apparecchiatura, dataLetturaPianificata, settoreMerceologico, letturaStornata
+            // Per cui tutti gli altri campi vanno sbiancati.
+            if (String.isNotBlank(data.letturaStornata)) {
+                data.campo = null;
+                data.posizioniPrecedentiLaVirgola = null;
+                data.decimali = null;
+                data.quantitaCalcolo = null;
+                data.tipoLettura = null;
+                data.categoriaLettura = null;
+                data.statoLettura = null;
+                data.consumoMedioGiornaliero = null;
+                data.giorniConsumo = null;
+                data.identificazioneNumeratore = null;
+                data.unitaDiMisura = null;
+                data.categoriaNumeratore = null;
+                data.tipoNumeratore = null;
+                data.motivazione = null;
+            }
         }
 
     }
@@ -230,6 +259,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         public String categoriaNumeratore;
         public String tipoNumeratore;
         public String motivazione;
+        public String letturaStornata;
     }
     
     public class HDT_WRP_EstrattoLettureResponse{

@@ -2,9 +2,21 @@ import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getRecords from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getEligibilityCriteriaRecord';
 import cloneRecord from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import mainTitle from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_MainTitle';
+import heplText1 from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_HeplText1';
+import heplText2 from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_HeplText2';
+import search from '@salesforce/label/c.HDT_LWC_SearchEligibilityCriteria_Search';
 
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
+    
+    label = {
+        mainTitle,
+        heplText1,
+        heplText2,
+        search
+    };
+    
     data = [];
     //treeNotAvailable = [];
     detailFields = ['Version__c', 'ProductCode__c'];

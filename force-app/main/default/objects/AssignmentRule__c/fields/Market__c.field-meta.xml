@@ -6,9 +6,10 @@
     <label>Mercato</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetName>HDT_Market</valueSetName>
     </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

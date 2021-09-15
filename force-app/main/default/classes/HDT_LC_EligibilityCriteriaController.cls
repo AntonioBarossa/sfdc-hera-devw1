@@ -118,7 +118,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             //if(String.isEmpty(prodList[0].Family) || !prodList[0].Family.equalsIgnoreCase(Label.HDT_ProductFamilyTrigger)){
             if(String.isEmpty(prodList[0].Family) || !familySet.contains(prodList[0].Family)){
                 recObj.success = false;
-                recObj.message = 'Questa funzionalità è riservata alle Offerte commerciali, VAS Prodotto e VAS Servizio';
+                recObj.message = Label.HDT_EligCriteria_ProductType;
                 return recObj;
             }
 
@@ -137,7 +137,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 
                 if(!prodList[0].Status__c.equalsIgnoreCase(Label.HDT_InDevelopment)){
                     recObj.success = false;
-                    recObj.message = 'E\' possibile configurare dei criteri solamente nello stato "In Sviluppo"';
+                    recObj.message = Label.HDT_EligCriteria_ProdStatus;
                 }
 
             }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VisitAssignmentRules__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Regole Assegnazione Visite</label>
+    <referenceTo>VisitAssignmentRules__c</referenceTo>
+    <relationshipLabel>Regole Percentuali Assegnazione Visite</relationshipLabel>
+    <relationshipName>Regole_Percentuali_Assegnazione_Visite</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

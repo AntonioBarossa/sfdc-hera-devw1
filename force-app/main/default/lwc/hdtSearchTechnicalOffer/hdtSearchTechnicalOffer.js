@@ -2,7 +2,10 @@ import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getRecords from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords';
 import cloneRecord from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.cloneRecord';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import mainTitle from '@salesforce/label/c.HDT_LWC_SearchOffer_MainTitle';
+import searchTitle from '@salesforce/label/c.HDT_LWC_SearchOffer_SearchTitle';
+import searchExistingOffer from '@salesforce/label/c.HDT_LWC_SearchOffer_SearchExistingOffer';
 
 const columns = [
     { label: 'Definizione', fieldName: 'Definition__c' },
@@ -21,9 +24,16 @@ const columns = [
 ];
 
 export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningElement) {
+
+    label = {
+        mainTitle,
+        searchTitle,
+        searchExistingOffer
+    };
+
     data = [];
     columns = columns;
-    detailFields = ['Version__c', 'OfferCode__c'];
+    detailFields = ['Version__c'];
     filter;
     showTable = false;
 

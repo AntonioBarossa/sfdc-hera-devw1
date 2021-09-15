@@ -10,6 +10,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
         scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getExpiredCase());
+        scope.addAll(postsalesQr.getQuotationCase());
+        scope.addAll(postsalesQr.getNonReqContract());
 
         return scope;
 
@@ -24,42 +26,66 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             switch on sobj{
 
                 when Knowledge__kav article{
-
                     if(article.ExpirationDate__c != null){
-
                         KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
-
                     }
-
                 }
-
                 when Case currentCase{
+                    if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione')){
+                        SObject transition;
+                        SObject action;
+                        String method = 'HDT_InstallmentPlans';
+                        Map<String, Object> args = new Map<String,Object>();
+                        Case newCase = new Case();
+                        newCase.Id = currentCase.Id;
+                        args.put('transition', transition);
+                        args.put('action', action);
+                        args.put('method',method);
+                        args.put('sender', currentCase);
 
-                    SObject transition;
-                    SObject action;
-                    String method = 'HDT_InstallmentPlans';
-                    Map<String, Object> args = new Map<String,Object>();
-                    Case newCase = new Case();
-                    newCase.Id = currentCase.Id;
-                    args.put('transition', transition);
-                    args.put('action', action);
-                    args.put('method',method);
-                    args.put('sender', currentCase);
+                        HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
+                        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+                        responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
-                    HDT_WS_Payments paymentsWs = new HDT_WS_Payments();
-                    wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-                    responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
-
-                    //TO trigger Technical Phase
-                    HDT_UTL_DatabaseService.updateSObject(newCase);
-
+                        //TO trigger Technical Phase
+                        HDT_UTL_DatabaseService.updateSObject(newCase);
+                    }
+                    else if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')){
+                        currentCase.Phase__c = 'Preventivo scaduto';
+                        HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                        event.SerializedCase__c = JSON.serialize(currentCase);
+                        Database.SaveResult sr = EventBus.publish(event);
+                        if (sr.isSuccess()) {
+                            System.debug('Successfully published event.');
+                        } else {
+                            for (Database.Error err : sr.getErrors()) {
+                                System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                            }
+                        }
+                    }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto')){
+                        HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
+                        Order relatedOrder = postsalesQr.getRelatedOrder(currentCase.Order__c);
+                        if(relatedOrder!= null){
+                            if(relatedOrder.EffectiveDate__c < System.today()){
+                                currentCase.Phase__c = 'Da Inviare';
+                                //Fire del platform event per inviare il flusso ad Heroku
+                                //System.debug('# case da delegare ad un altro evento: ' + currentCase.size());
+                                HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                                event.SerializedCase__c = JSON.serialize(currentCase);
+                                Database.SaveResult sr = EventBus.publish(event);
+                                if (sr.isSuccess()) {
+                                    System.debug('Successfully published event.');
+                                } else {
+                                    for (Database.Error err : sr.getErrors()) {
+                                        System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-
             }
-
-
         }
-
     }
 
 

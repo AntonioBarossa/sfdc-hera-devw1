@@ -49,6 +49,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
 
             }
 
+            when 'innescoAllineamentoAnagraficaGestioneDisalimentabilita'{
+
+                psmUtl.innescoAllineamentoAnagraficaGestioneDisalimentabilita(sender);
+
+            }
+
             when 'evaluateEffectiveDate'{
 
                 psmUtl.evaluateEffectiveDate(sender);
@@ -84,6 +90,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             }
             when 'sendDocumentFile'{
                 psmUtl.sendDocumentFile(sender);
+            }
+            when 'updateServicePoint'{
+                psmUtl.updateServicePoint(sender);
+            }
+            when 'handleInvioLettureForzato'{
+                HDT_SRV_SelfReadings.handleInvioLettureForzato(sender);
             }
         }
 

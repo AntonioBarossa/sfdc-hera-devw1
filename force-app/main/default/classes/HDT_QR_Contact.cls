@@ -1,9 +1,16 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 14/01/2021
+ * @description HDT_QR_Contact.cls
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
 public inherited sharing class HDT_QR_Contact {
     
     public Contact getRecordById(String id) {
 
         List<Contact> contactsList = [
             SELECT
+            Name,
             FirstName,
             LastName,
             MobilePhone,
@@ -62,10 +69,20 @@ public inherited sharing class HDT_QR_Contact {
     public List<Contact> getContactsByAccount(String accountId){
         return [
             SELECT
+            Id, Name,FirstName, LastName, Title, Phone, Email,DegreeOfStudies__c 
+            FROM Contact
+            WHERE AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Contact getContactsByIndividual(String individualId){
+        return [
+            SELECT
             Id,
             Email
             FROM Contact
-            WHERE AccountId = :accountId
+            WHERE IndividualId = :individualId
             WITH SECURITY_ENFORCED
         ];
     }
@@ -85,7 +102,8 @@ public inherited sharing class HDT_QR_Contact {
     }
     
     public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
-        return [Select id,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
+        // Start HRAWRM-450 07/09/2021 add CertifiedEmail__c
+        return [Select id,CertifiedEmail__c,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
     }
 
     // INIZIO SVILUPPI EVERIS
@@ -159,5 +177,20 @@ public inherited sharing class HDT_QR_Contact {
             WHERE Email = :fromEmail
             WITH SECURITY_ENFORCED
         ];
+    }
+
+        /**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @description Get Contact Point records by Id
+     * @param String individualId Id of the individual to filter the Leads
+     * @param String fields fields to retrieve separated by ,
+     */
+    public List<Contact> getRecordByIndividual(String individualId, String fields) {
+
+        String query = 'SELECT '+ fields +
+                ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED';
+
+        return Database.query(query);
+
     }
 }

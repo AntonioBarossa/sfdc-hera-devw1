@@ -1,0 +1,63 @@
+/**
+ * @description       : Scheduled job for sending Orders to Vas engine automatically after N days
+ * @author            : gabriele.rota@webresults.it
+ * @group             : WR
+ * @last modified on  : 2021-07-27
+ * @last modified by  : gabriele.rota@webresults.it
+**/
+public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<SObject>, Schedulable{
+
+    private static final Integer AFTERTHOUGHT_DAYS_NUMBER = 14;
+    private static final String ORDER_RT_VAS = 'HDT_RT_VAS';
+    private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
+    private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
+
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
+    /**
+    * @description Running batch
+    * @author gabriele.rota@webresults.it | 2021-07-27 
+    * @param sc 
+    **/
+    public void execute(SchedulableContext sc){
+        Database.executeBatch(this);
+    }
+
+    /**
+    * @description Getting orders with expired time for afterthought
+    * @author gabriele.rota@webresults.it | 2021-07-27 
+    * @param bc 
+    * @return Database.QueryLocator 
+    **/
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        Date nDaysAgo = Date.today().addDays(AFTERTHOUGHT_DAYS_NUMBER*-1);
+        String query = 'SELECT Id FROM Order';
+        query += ' WHERE Phase__c = :ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT';
+        query += ' AND RecordType.DeveloperName = :ORDER_RT_VAS';
+        query += ' AND SignedDate__c <= :nDaysAgo';
+        return Database.getQueryLocator(query);
+    }
+
+    /**
+    * @description Updating Phase
+    * @author gabriele.rota@webresults.it | 2021-07-27 
+    * @param bc 
+    * @param orders 
+    **/
+    public void execute(Database.BatchableContext bc, List<Order> orders) {
+        for (Order currentOrder:orders) {
+            currentOrder.Phase__c = ORDER_PHASE_VAS_COMMUNICATION;
+        }
+
+        orderSrv.updateRecords(orders);
+    }
+
+    /**
+    * @description Finish logic
+    * @author gabriele.rota@webresults.it | 2021-07-27 
+    * @param bc 
+    **/
+    public void finish(Database.BatchableContext bc) {
+        System.debug(LoggingLevel.INFO, 'HDT_BA_VasEngineSender finish');
+    }
+}

@@ -106,7 +106,7 @@ mapViaCarracci=  [
 
 @api
     openedForm(){
-        
+        console.log('TryTestHOLA214');
         this.openForm=true;
         this.currentPage = 1;
     }
@@ -178,6 +178,7 @@ mapViaCarracci=  [
 
 @api
 handleFilterDataTable(event) {
+    console.log('TryTestHOLA216');
     let val = event.target.value;
         let self = this;
         let data;
@@ -299,6 +300,7 @@ getSelectedComune(event){
         //Object.keys(this.prevwrapaddressobject[0]).forEach(key=>{
         //    console.log('key*********************************' + key);
             //this.createTable(this.listObjtoShow);
+            console.log('TryTestHOLA215');
             this.createTable(data);
             if(headerTab = 'Comune'){
                 

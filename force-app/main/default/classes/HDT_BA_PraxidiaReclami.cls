@@ -37,7 +37,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
                 HDT_WRP_CampaignPraxidia.reclami fr = new HDT_WRP_CampaignPraxidia.reclami();
                 Long dayWorking = businessDateid != null ? BusinessHours.diff(businessDateid, ca.createddate, system.today()) : null ;
                 fr.idJob = '';
-                fr.rdsRiga = 'C_' + ca.caseNumber;
+                fr.rdsRiga = 'C_' + ca.Id;
                 fr.acr = '';
                 fr.societa = ca.CompanyOwner__c;
                 fr.assegnatario = assigncaseToActivity.get(ca.id) != null ? assigncaseToActivity.get(ca.id).owner.name : '';

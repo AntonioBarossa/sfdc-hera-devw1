@@ -4,6 +4,7 @@
 * @description Apex controller for hdtGeneralInfo.js component
 * @history Keltin Mesonjesi – 11/11/2020 – Created class
 */
+
 public inherited sharing class HDT_LC_GeneralInfo {
 
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
@@ -113,6 +114,20 @@ public inherited sharing class HDT_LC_GeneralInfo {
 
     return agentList;
 
+    }
+
+    @AuraEnabled
+    public static Map<String,String> initComp(){
+
+        Map<String,String> result = new Map<String,String>();
+
+        List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+
+        if (user[0].UserRole != null) {
+            result.put('userRole', user[0].UserRole.DeveloperName );
+        }
+
+        return result;
     }
 
 }

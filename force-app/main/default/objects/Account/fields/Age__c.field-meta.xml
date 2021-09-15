@@ -2,11 +2,16 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Age__c</fullName>
     <externalId>false</externalId>
-    <label>Età</label>
-    <precision>3</precision>
+    <formula>IF( NOT( ISBLANK( BirthDate__c ) ) ,
+IF( DATE( 2000 , MONTH( BirthDate__c ) , DAY( BirthDate__c ) ) &lt;= DATE( 2000 , MONTH( TODAY() ) , DAY( TODAY() ) ),
+YEAR (Today()) - YEAR ( BirthDate__c ),
+YEAR (Today()) - YEAR ( BirthDate__c ) -1 ),
+Null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Età</label> 
+    <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>

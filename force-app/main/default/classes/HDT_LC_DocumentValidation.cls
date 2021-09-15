@@ -1,10 +1,17 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 27/02/2021
+* @description HDT_LC_DocumentValidation
+* @history Keltin Mesonjesi – 27/02/2021 – Created class
+*/
+
 public inherited sharing class HDT_LC_DocumentValidation {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
 	private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     @AuraEnabled
     public static Boolean isValidPhase(String recordId){
         Order ord = orderQr.getRecordById(recordId);
-        return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c));
+        return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c) || 'Documentazione da validare'.equalsIgnoreCase(ord.Phase__c));
     }
     
     @AuraEnabled
@@ -35,6 +42,9 @@ public inherited sharing class HDT_LC_DocumentValidation {
             if(ord.AutorizationVolturaThirdTrader__c != null && !'Validato'.EqualsIgnoreCase(ord.AutorizationVolturaThirdTrader__c)){
                 check = false;
             }
+            if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
+                check = false;
+            }
             
         }
         if(check){
@@ -44,11 +54,20 @@ public inherited sharing class HDT_LC_DocumentValidation {
                 if(orderRetrive.RecordType.DeveloperName == 'HDT_RT_Voltura'){
                     ord.Phase__c = 'Documentazione Validata';
                 } else {
-                   ord.Phase__c = 'Comunicazione verso Heroku';
+                //    if(){
+                 //       ord.Phase__c = 'Comunicazione verso Heroku';
+                 //   }else{
+                        ord.Phase__c = 'Documentazione Validata';
+                 //   }
                 }
             } else {
                 ord.Phase__c = 'Documentazione Validata';
             }
+
+            if(orderRetrive.ParentOrder__c == null){
+                ord.Phase__c = 'Documentazione Gestita';
+            }
+
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
@@ -56,5 +75,14 @@ public inherited sharing class HDT_LC_DocumentValidation {
         //return true;
         //Order ord = orderQr.getRecordById(recordId);
         //return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c));
+    }
+
+    @AuraEnabled
+    public static void cancelOrder(String recordId){
+        orderSrv.updateRecord(new Order(
+            Id = recordId,
+            Status = 'Annullato', //Chiuso
+            Phase__c = 'Annullato'
+        ));
     }
 }

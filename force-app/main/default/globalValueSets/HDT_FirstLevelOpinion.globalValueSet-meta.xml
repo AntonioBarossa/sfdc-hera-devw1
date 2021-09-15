@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Anomalia contratto</fullName>
+        <default>false</default>
+        <label>Anomalia contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Anomalia letture e contatori</fullName>
+        <default>false</default>
+        <label>Anomalia letture e contatori</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto credito Hera Comm</fullName>
+        <default>false</default>
+        <label>Supporto credito Hera Comm</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto HC</fullName>
+        <default>false</default>
+        <label>Supporto HC</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto responsabile HC</fullName>
+        <default>false</default>
+        <label>Supporto responsabile HC</label>
+    </customValue>
+    <customValue>
+        <fullName>Costing e Forecasting</fullName>
+        <default>false</default>
+        <label>Costing e Forecasting</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto credito Hera SPA</fullName>
+        <default>false</default>
+        <label>Supporto credito Hera SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>Rapporto con i distributori e SII</fullName>
+        <default>false</default>
+        <label>Rapporto con i distributori e SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Canone RAI e bonus sociale</fullName>
+        <default>false</default>
+        <label>Canone RAI e bonus sociale</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione e pagamenti</fullName>
+        <default>false</default>
+        <label>Fatturazione e pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Fiscale</fullName>
+        <default>false</default>
+        <label>Supporto Fiscale</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Normativo</fullName>
+        <default>false</default>
+        <label>Supporto Normativo</label>
+    </customValue>
+    <customValue>
+        <fullName>Supporto Vendita</fullName>
+        <default>false</default>
+        <label>Supporto Vendita</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Gestione Front</fullName>
+        <default>false</default>
+        <label>Verifica Gestione Front</label>
+    </customValue>
+    <masterLabel>Pareri 1° Livello</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

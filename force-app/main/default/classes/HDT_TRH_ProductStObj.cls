@@ -107,6 +107,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
     }
 
+    /*@TestVisible
     private static Set<String> checkProduct2Duplicate(Set<String> allUniqueProductCodeSet){
 
         Boolean isUpdate = Trigger.isUpdate;
@@ -148,16 +149,16 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         }
 
         return allUniqueProductCodeSet;
-    }
+    }*/
 
-    private static String generateUniqueCode(Product2 product){
-        return product.ProductCode + '_' + product.Version__c + '_' + product.DescriptionSAP__c;
-    }
+    //private static String generateUniqueCode(Product2 product){
+    //    return product.ProductCode + '_' + product.Version__c + '_' + product.DescriptionSAP__c;
+    //}
 
-    private static String generateErrorMessage(Product2 product){
-        String s = 'ATTENZIONE! Valori inseriti già esistenti: ';
-        s += '[ProductCode=' + product.ProductCode + '], [Version=' + product.Version__c + '], [DescriptionSAP=' + product.DescriptionSAP__c + ']';
-        return s;
-    }
+    //private static String generateErrorMessage(Product2 product){
+    //    String s = 'ATTENZIONE! Valori inseriti già esistenti: ';
+    //    s += '[ProductCode=' + product.ProductCode + '], [Version=' + product.Version__c + '], [DescriptionSAP=' + product.DescriptionSAP__c + ']';
+    //    return s;
+    //}
 
 }

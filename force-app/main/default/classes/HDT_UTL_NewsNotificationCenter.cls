@@ -4,18 +4,19 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
 
     public static String sendNotification(Knowledge__kav article){
 
-        List<String> clusterCategory = new List<String>();
-        List<String> channelCategory = new List<String>();
         List<String> rolesToNotificate = new List<String>();
         List<String> userToNotificate = new List<String>();
         List<Knowledge__DataCategorySelection> dataCategories = new List<Knowledge__DataCategorySelection>();
+        List<NewsNotificationCenter__c> newsList = new List<NewsNotificationCenter__c>();
 
         Set<String> userSet = new Set<String>();
+        Set<String> clusterSet = new Set<String>();
+        Set<String> channelSet = new Set<String>();
 
-        String rolesString;
         String title;
         String body;
         String result;
+        String rolesString = '';
 
 
         try{
@@ -35,26 +36,54 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
     
                 if(dataCategory.DataCategoryGroupName == 'Cluster'){
     
-                    clusterCategory.add(dataCategory.DataCategoryName);
+                    clusterSet.add(dataCategory.DataCategoryName);
     
                 }else if(dataCategory.DataCategoryGroupName == 'Canale'){
     
-                    channelCategory.add(dataCategory.DataCategoryName);
+                    channelSet.add(dataCategory.DataCategoryName);
     
                 }
     
             }
+
     
-            rolesString= qrKb.getRolesToNotificate(clusterCategory, channelCategory).Role__c;
-    
-            rolesToNotificate = rolesString.split(';');
-    
-            userToNotificate = qrKb.getUserIdToNotificate(rolesToNotificate);
-    
-            userSet.addAll(userToNotificate);
-    
-            result = fireNotification(article.Title, 'Una nuova News è stata pubblicata',article.Id, userSet);
+            newsList= qrKb.getRolesToNotificate();
+
+            //Populate roleList
+            //First checks Cluster form data cateogries and from query
+            //Than checks EntryChannel from data categories and from query
+            //If all check are succesfully roles are added to list 'rolesToNotificate'
+            if(newsList.size() > 0){
+                Set<String> tmpCluster = new Set<String>();
+                Set<String> tmpChannel = new Set<String>();
+                Boolean retainAllResult;
+                for(NewsNotificationCenter__c news : newsList){ 
+                    tmpCluster = clusterSet;
+                    tmpChannel = channelSet;
+                    Set<String> returnedCluster = new Set<String>(news.Cluster__c.split(';'));
+                    Set<String> returnedChannel = new Set<String>(news.EntryChannel__c.split(';'));
+                    retainAllResult = tmpCluster.retainAll(returnedCluster);
+                    if((retainAllResult && tmpCluster.size() > 0) || (!retainAllResult)){
+                        retainAllResult = tmpChannel.retainAll(returnedChannel);
+                        if((retainAllResult && tmpChannel.size() > 0) || (!retainAllResult)){
+                            rolesString += news.Role__c;
+                        }else{
+                            System.debug('Rule Not Found');
+                        }
+                    }else{
+                        System.debug('Rule Not Found');
+                    }
+                    
+                }
             
+                rolesToNotificate = rolesString.split(';');
+        
+                userToNotificate = qrKb.getUserIdToNotificate(rolesToNotificate);
+        
+                userSet.addAll(userToNotificate);
+        
+                result = fireNotification(article.Title, 'Una nuova News è stata pubblicata',article.Id, userSet);
+            }
         }
         
 

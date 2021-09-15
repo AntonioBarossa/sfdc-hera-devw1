@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CST_OU_ID_SALESFORCE__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
     <description>CST_OU_ID_SALESFORCE</description>
     <externalDeveloperName>CST_OU_ID_SALESFORCE</externalDeveloperName>
     <externalId>false</externalId>
@@ -9,9 +8,10 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Cliente Salesforce</label>
+    <length>15</length>
+    <referenceTargetField>Account.RowIdSiebel__c</referenceTargetField>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Richieste</relationshipLabel>
+    <relationshipLabel>RDS Siebel (Cliente Salesforce)</relationshipLabel>
     <relationshipName>SiebelRds</relationshipName>
-    <required>false</required>
-    <type>Lookup</type>
+    <type>IndirectLookup</type>
 </CustomField>

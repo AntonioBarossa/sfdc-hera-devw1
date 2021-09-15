@@ -12,6 +12,7 @@ public inherited sharing class HDT_LC_SaleVas {
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
@@ -26,6 +27,8 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param String accountId
      * @param Sale sale
      */
+
+     
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
@@ -41,6 +44,64 @@ public inherited sharing class HDT_LC_SaleVas {
             
         }
     }
+    @AuraEnabled
+    public static boolean transitionCheck(String salesId){
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
+        boolean check = true;
+        //HDT_UTL_Sales.isTransitionNoUp()
+        //System.debug('*****MAVUOIANNA:'+ transitionlist);
+        //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        wrapReturn wrpRes = new wrapReturn();
+
+
+
+
+        if(HDT_UTL_Sales.isTransitionNoUp(sal)){
+            check = false;
+            wrpRes.messRes = 'transitorio';
+        }
+
+        wrpRes.res = check;
+
+        System.debug('*****VUOIANNA2:' + check);
+        return check;
+    }
+    @AuraEnabled
+    public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
+        boolean check = true;
+        //HDT_UTL_Sales.isTransitionNoUp()
+        //System.debug('*****MAVUOIANNA:'+ transitionlist);
+        //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        String com = comune.toUpperCase();
+        wrapReturn wrpRes = new wrapReturn();
+        if(tipologia == 'VAS stand alone'){
+            List<City__c> listCity = HDT_QR_City.getRecordByComune(com);
+            if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null){
+                String provin = listCity[0].Province__c;
+                Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+                if(!stabbedData.contains(provin)){
+                    check = false;
+                    wrpRes.messRes = 'transitorio';
+                }
+            }
+            else{
+                check = false;
+                wrpRes.messRes = 'city';
+            }
+        }
+        if(HDT_UTL_Sales.isTransitionNoUp(sal)){
+            check = false;
+            wrpRes.messRes = 'transitorio';
+        }
+        wrpRes.res = check;
+        System.debug('*****VUOIANNA2:' + check);
+        return wrpRes;
+    }
+    public class wrapReturn{
+        @AuraEnabled public boolean res = true;
+        @AuraEnabled public string messRes {get;set;}
+    }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -54,7 +115,12 @@ public inherited sharing class HDT_LC_SaleVas {
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
-
+    @AuraEnabled
+    public static List<Order> getOrdersListNotActive(String accountId){
+        //Orders with status "Draft" or "In Lavorazione"
+        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
+        return orderQr.getRecordsNotActivated(accountId);
+    }
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
@@ -66,6 +132,78 @@ public inherited sharing class HDT_LC_SaleVas {
         //Contracts with status "Activated"
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status');
         return contractQr.getActiveRecordsByAccountId(accountId);
+    }
+
+
+    /**
+     * @author Federico de Felice (federico.defelice@webresults.it)
+     * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
+     * @param String accountId
+     * @return List<Contact>
+     */
+    @AuraEnabled
+    public static List<Contract> getTempNuovaAttivazContracts(String accountId){
+        //Contracts with status "Activated"
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status');
+        return contractQr.getTempNewActivationContractsByAccountId(accountId);
+    }
+
+    /**
+    * @description Getting list of Orders/Assets/Subscription
+    * @author gabriele.rota@webresults.it | 2021-07-21 
+    * @param searchString 
+    * @param key 
+    * @return List<SObject> 
+    **/
+    @AuraEnabled
+    public static List<SObject> getFornitura(String searchString, String key){
+        List<SObject> records;
+
+        switch on key {
+            when 'ORDERS_IN_PROGRESS_VAS'{
+                records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Order
+                    WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Status='In Lavorazione' AND SBQQ__Quote__r.IsVAS__c = true
+                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:searchString WITH SECURITY_ENFORCED];
+            }
+            when 'ORDERS_ELE'{
+                records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Order
+                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_ACTIVATED'{
+                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:searchString WITH SECURITY_ENFORCED];
+            }
+            when 'SUBS_ANALISI_CONSUMI'{ 
+                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED];
+            }
+            //Segnalazioni VAS - START
+            when 'CONTRACTS_VAS'{ 
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
+                    WHERE AccountId=:searchString AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS' WITH SECURITY_ENFORCED];
+            }
+            when 'SUBS_FROM_CONTRACT'{ 
+                records = [SELECT Name, SBQQ__ProductName__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_FROM_CONTRACT'{
+                records = [SELECT Name, Product2.Name
+                    FROM Asset WHERE Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            //Segnalazioni VAS - END
+            when 'CONTRACT_ELE_ACTIVE'{
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:searchString
+                    AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
+                    WITH SECURITY_ENFORCED];
+            }
+        }
+        return records;
     }
 
     /**
@@ -129,10 +267,12 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
+        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
-            Name = opportunitySrv.generateName(sale) + ' VAS',
+            Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = order.AccountId
@@ -145,15 +285,16 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
             Agency__c = sale.Agency__c,
-            Market__c = sale.Market__c,
+            Market__c = order.Market__c,
             Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
             SupplyCity__c = null, //to do (other logic to get SupplyCity)
-            SalesCompany__c = sale.SalesCompany__c,
+            SalesCompany__c = order.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             IsVAS__c = true,
+            IsBillableVas__c = false,
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
@@ -177,10 +318,12 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
+        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
-            Name = opportunitySrv.generateName(sale) + ' VAS',
+            Name = opportunitySrv.generateName(sale) + ' VAS'+pdrCode,
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = contract.AccountId
@@ -193,15 +336,16 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
             Agency__c = sale.Agency__c,
-            Market__c = sale.Market__c,
+            Market__c = 'Libero',
             Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SalesCompany__c = sale.SalesCompany__c,
+            SalesCompany__c = 'Hera Comm S.p.A.',//ribaltare da contract
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,
+            IsBillableVas__c = false,
             SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
@@ -237,13 +381,14 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Primary__c = true,
             SupplyCity__c = supplyCity,
             Agency__c = sale.Agency__c,
-            Market__c = sale.Market__c,
+            Market__c = 'Libero',
             Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SalesCompany__c = sale.SalesCompany__c,
+            SalesCompany__c = 'Hera Comm S.p.A.',
             IsVAS__c = true,
+            IsBillableVas__c = false,
             SBQQ__PricebookId__c = getPricebookId('VAS Standalone')
         ));
 

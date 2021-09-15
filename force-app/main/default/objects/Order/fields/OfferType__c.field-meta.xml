@@ -8,18 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Scaffale</fullName>
-                <default>false</default>
-                <label>Scaffale</label>
-            </value>
-            <value>
-                <fullName>Progetto</fullName>
-                <default>false</default>
-                <label>Progetto</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_OfferType</valueSetName>
     </valueSet>
 </CustomField>

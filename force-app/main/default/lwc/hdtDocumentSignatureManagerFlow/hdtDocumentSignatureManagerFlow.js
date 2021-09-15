@@ -22,8 +22,10 @@ import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
 import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
 import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
-
+import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
+import { NavigationMixin } from 'lightning/navigation';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 const FIELDS = ['Case.ContactMobile', 
                 'Case.ContactEmail',
                 'Case.DeliveryAddress__c',
@@ -54,7 +56,13 @@ const FIELDS = ['Case.ContactMobile',
 				'Case.InvoicingCountry__c',
                 'Case.InvoicingProvince__c'];
 
-export default class HdtDocumentSignatureManagerFlow extends LightningElement {
+export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(LightningElement) {
+    
+    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+    oldPhoneValue;
+    oldEmailValue;
+    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
     @api processType;
     @api quoteType;
     @api recordId;
@@ -66,6 +74,9 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @api nextLabel;
     @api nextVariant;
     @api documents;
+    @api disableSignMode;
+    //@frpanico 07/09 added EntryChannel
+    @api entryChannel;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
@@ -148,6 +159,12 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                 } else{
                     phone = contactPhone;
                 }
+
+                //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+                this.oldPhoneValue = phone;
+                this.oldEmailValue = email;
+                //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
                 var completeAddress = '';
                 var caseAddress = this.caseRecord.fields.DeliveryAddress__c.value;
                 if(caseAddress != null && caseAddress != ''){
@@ -177,7 +194,13 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     flagForzato  = false;
                     flagVerificato  = true;
                 }
-
+                var tempTipoPlico = '';
+                // Gestione stampe da processo di piano rateizzazione
+                // Se il flow passa ProcessType = 'RICH_RATEIZZAZIONE' mandiamo TipoPLico = 'RICH_RATEIZZAZIONE' e stampiamo i moduli di autorizzazione del piano rata.
+                // Altrimenti mandiamo TipoPlico vuoto e stampiamo la normale ricevuta cliente.
+                if (this.processType === 'RICH_RATEIZZAZIONE'){
+                    tempTipoPlico = 'RICH_RATEIZZAZIONE';
+                }
                 var inputParams = {
                     dataConfirmed:false,
                     context:'Case',
@@ -188,6 +211,8 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     email : email,
                     accountId : this.accountId,
                     quoteType : this.quoteType,
+                    tipoPlico : tempTipoPlico,
+                    entryChannel : this.entryChannel,
                     addressWrapper : {
                         completeAddress : completeAddress,
                         Stato : stato,
@@ -216,6 +241,70 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     handlePreview(event){
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager').handlePreview();
     }
+
+    sendAndViewDocument(formParams){
+        previewDocumentFile({
+            recordId: this.recordId,
+            context: 'Case',
+            formParams: JSON.stringify(formParams)
+        }).then(result => {
+            var resultParsed = JSON.parse(result);
+            if(resultParsed.code === '200' || resultParsed.code === '201'){
+                if(resultParsed.result === '000'){
+                    var base64 = resultParsed.base64;
+                    var sliceSize = 512;
+                    base64 = base64.replace(/^[^,]+,/, '');
+                    base64 = base64.replace(/\s/g, '');
+                    var byteCharacters = window.atob(base64);
+                    var byteArrays = [];
+
+                    for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
+                        var slice = byteCharacters.slice(offset, offset + sliceSize);
+                        var byteNumbers = new Array(slice.length);
+                        for (var i = 0; i < slice.length; i++) {
+                            byteNumbers[i] = slice.charCodeAt(i);
+                        }
+                        var byteArray = new Uint8Array(byteNumbers);
+
+                        byteArrays.push(byteArray);
+                    }
+
+                    this.blob = new Blob(byteArrays, { type: 'application/pdf' });
+
+                    const blobURL = URL.createObjectURL(this.blob);
+                    this.url = blobURL;
+                    this.fileName = 'myFileName.pdf';
+                    this.showFile = true;
+                    this.showSpinner = false;
+                    this[NavigationMixin.Navigate](
+                        {
+                            type: 'standard__webPage',
+                            attributes: {
+                                url: blobURL
+                            }
+                        }
+                    );
+                    this.dispatchEvent(new CustomEvent('previewexecuted'));
+                    this.handleGoNext();
+                }else{
+                    this.showSpinner = false;
+                    this.showMessage('Attenzione',resultParsed.message,'error');
+                    console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                    this.handleGoNext();                                         // TODO REMOVE
+                }
+            }else{
+                this.showSpinner = false;
+                this.showMessage('Attenzione','Errore nella composizione del plico','error');
+                console.log('temp workaround in caso di plico non trovato'); // TODO REMOVE
+                this.handleGoNext();                                         // TODO REMOVE
+            }
+        })
+        .catch(error => {
+            this.showSpinner = false;
+            console.error(error);
+        });
+    }
+
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
         this.confirmData = event.detail;
@@ -247,8 +336,20 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
 
             updateRecord(recordInput)
                 .then(() => {
+                    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+                    try {
+                        updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                            oldEmail: this.oldEmailValue,
+                            newPhone: resultWrapper.phone,
+                            newMail: resultWrapper.email});
+                    } catch (error) {
+                      console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
+                    }
+                    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                     console.log('Record aggiornato');
+                    this.enableNext = true;
+                    this.handleConfirm();
                     return refreshApex(this.wiredCase);
                 })
                 .catch(error => {
@@ -262,7 +363,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     );
                 });
             this.enableNext = true;
-            this.handleConfirm();
+            
         }else{
             this.enableNext = false;
         }
@@ -318,24 +419,36 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
             if(sendMode.localeCompare('Stampa Cartacea')===0){
                 sendMode = 'Sportello';
             }
+            var tipoPlico = '';
+            // Gestione stampe da processo di piano rateizzazione
+            // Se il flow passa ProcessType = 'RICH_RATEIZZAZIONE' mandiamo TipoPLico = 'RICH_RATEIZZAZIONE' e stampiamo i moduli di autorizzazione del piano rata.
+            // Altrimenti mandiamo TipoPlico vuoto e stampiamo la normale ricevuta cliente.
+            if (this.processType === 'RICH_RATEIZZAZIONE'){
+                tipoPlico = 'RICH_RATEIZZAZIONE';
+            }
             var formParams = {
                 sendMode : sendMode,
                 signMode : this.confirmData.signMode,
                 telefono : this.confirmData.telefono,      
-                email : this.confirmData.email,      
+                email : this.confirmData.email,
+                TipoPlico : tipoPlico,
                 mode : 'Print',
                 Archiviato : 'Y'
             }
-            sendDocument({
-                recordId: this.recordId,
-                context: 'Case',
-                formParams: JSON.stringify(formParams)
-            }).then(result => {
-                this.handleGoNext();
-            }).catch(error => {
-                this.showToast('Errore nell\'invio del documento al cliente.');
-                console.error(error);
-            });
+            if(sendMode.localeCompare('Sportello') ===0){
+                this.sendAndViewDocument(formParams);
+            }else{
+                sendDocument({
+                    recordId: this.recordId,
+                    context: 'Case',
+                    formParams: JSON.stringify(formParams)
+                }).then(result => {
+                    this.handleGoNext();
+                }).catch(error => {
+                    this.showToast('Errore nell\'invio del documento al cliente.');
+                    console.error(error);
+                });
+            }
         }catch(error){
             console.error(error);
         }
@@ -367,5 +480,15 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
 
         this.dispatchEvent(navigateBackEvent);
 
+    }
+
+    showMessage(title,message,variant){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant
+            }),
+        );
     }
 }

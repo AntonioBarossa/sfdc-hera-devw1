@@ -21,7 +21,7 @@
     </lookupFilter>
     <referenceTo>Service26Config__c</referenceTo>
     <relationshipLabel>Servizio26 Configs</relationshipLabel>
-    <relationshipName>Servizio26_Configs</relationshipName>
+    <relationshipName>Service26Configs</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

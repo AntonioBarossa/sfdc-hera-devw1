@@ -1,0 +1,35 @@
+<template>
+    <template if:true={show}>
+        <br></br>
+        <template for:each={objectList} for:item="oggetto">
+            <div key={oggetto} title={oggetto}>
+                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                    <lightning-accordion-section key={oggetto.api} name={oggetto.label} label={oggetto.label} class="slds-theme_shade slds-box slds-box_xx-small">
+                        <lightning-card>
+                            <lightning-record-view-form
+                                object-api-name={oggetto.api}
+                                record-id={oggetto.id}
+                                density="all">
+                                <lightning-layout key={oggetto.api} multiple-rows>
+                                    <template for:each={oggetto.fields} for:item="field">
+                                
+                                        <lightning-layout-item key={field} size="6" padding="around-small" >
+
+                                            <div class="slds-border_bottom slds-p-bottom_x-small">
+                                                <lightning-output-field key={field}
+                                                    field-name={field} >
+                                                </lightning-output-field>
+                                            </div>
+                                        </lightning-layout-item>
+
+                                    </template>
+                                </lightning-layout>
+                            </lightning-record-view-form>
+                        </lightning-card>
+                    </lightning-accordion-section>           
+                </lightning-accordion>
+                <br></br>
+            </div>
+        </template>
+    </template>
+</template>

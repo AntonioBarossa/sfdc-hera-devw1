@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/06/2021
+* @description Class HDT_SRV_CampaignMember
+* @history Keltin Mesonjesi – 30/06/2021 – Created class
+*/
 public inherited sharing class HDT_SRV_CampaignMember {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
@@ -45,25 +51,28 @@ public inherited sharing class HDT_SRV_CampaignMember {
     }
 
     public void updateRecord(CampaignMember cMember){
-        List<String> fields = helperMethods.getObjAttrList(cMember);
-        checkUpdateAccess(String.join(fields, ','));
-
+        //List<String> fields = helperMethods.getObjAttrList(cMember);
+        //checkUpdateAccess(String.join(fields, ','));
+        System.debug('********:eccolo');
         HDT_UTL_DatabaseService.updateSObject(cMember);
     }
 
-    public void createRecord(CampaignMember cMember){
-        List<String> fields = helperMethods.getObjAttrList(cMember);
-        checkUpdateAccess(String.join(fields, ','));
-
-        HDT_UTL_DatabaseService.insertSObject(cMember);
+    public CampaignMember createRecord(CampaignMember cMember){
+        //List<String> fields = helperMethods.getObjAttrList(cMember);
+       // checkUpdateAccess(String.join(fields, ','));
+       CampaignMember c = cMember;
+       insert c;
+        return c;
     }
 
-    public void updateRecords(List<CampaignMember> cmembers){
+    
 
-        for (CampaignMember cm : cmembers) {
-            List<String> fields = helperMethods.getObjAttrList(cm);
-            checkUpdateAccess(String.join(fields, ','));
-        }
+    public void updateRecords(List<CampaignMember> cmembers){
+    //! non riabilitare perche da dei falsi positivi sull' oggetto CampaignMember
+        // for (CampaignMember cm : cmembers) {
+        //     List<String> fields = helperMethods.getObjAttrList(cm);
+            // checkUpdateAccess(String.join(fields, ','));
+        // }
 
         HDT_UTL_DatabaseService.updateSObject(cmembers);
     }

@@ -13,8 +13,9 @@
 
     public override void beforeInsert(){
         
-        HDT_UTL_CompanyOwner.feedCompanOwner(trigger.new);
+        HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_GestionePrivacy.checkCloneCompany(trigger.new);
+        changeRecordType(trigger.new);
     }
 
     public override void afterInsert(){
@@ -30,6 +31,12 @@
     public override void beforeUpdate(){
         System.debug('*******TriggerContact');
         HDT_UTL_GestionePrivacy.updateContactPointFromObjectContact(trigger.new,trigger.old);
+    }
+    private static void changeRecordType(List<Contact> listContract ){
+        Id recordTypeIdAfter = Schema.SObjectType.Contact.getRecordTypeInfosByDeveloperName().get('HDT_RT_AfterCreate').getRecordTypeId();
+        for (Contact con : listContract) {
+            con.recordTypeId=recordTypeIdAfter;
+        }
     }
     
    /* public override void afterUpdate(){

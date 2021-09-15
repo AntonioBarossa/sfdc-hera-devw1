@@ -7,7 +7,7 @@
         <div class="slds-grid slds-p-horizontal--small">
             <c:hdtCampaignMemberButtonList recordId="{!v.recordId}" />
             <c:hdtCampaignMemberNegativeOutcome onafterSubmit="{!c.afterSubmit}" />
-            <c:hdtCampaignMemberButtonList2 />
+            <c:hdtCampaignMemberButtonList2 recordId="{!v.recordId}" objectApiName="campaignmember"/>
         </div>
     </div>
 

@@ -18,5 +18,15 @@
                 </div>
             </div> -->
         </lightning-card>
+        <c-hdt-confirmation-dialog-dropdown-manual
+                        options={cancellationOptions}
+                           title="Cancella Ordine"
+                           message="Scegli una causale per procedere: "
+                           confirm-label='Si'
+                           cancel-label='No'
+                           visible={isDialogVisible}
+                           name="deleteQuoteConfimation"
+                           onclick={handleDialogResponse}>
+            </c-hdt-confirmation-dialog-dropdown-manual>
     </template>
 </template>

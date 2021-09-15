@@ -1,0 +1,4 @@
+<aura:component implements="lightning:actionOverride" access="global">
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <c:hdtManualActivityCreator onsave="{!c.handleSave}"/>
+</aura:component>	

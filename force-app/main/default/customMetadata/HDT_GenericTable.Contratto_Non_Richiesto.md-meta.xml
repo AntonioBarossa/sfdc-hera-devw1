@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Contratto Non Richiesto</label>
+    <protected>false</protected>
+    <values>
+        <field>Mapping__c</field>
+        <value xsi:type="xsd:string">{
+&quot;objects&quot;:[
+{
+&quot;obj&quot; : &quot;Case&quot;,
+&quot;fields&quot;: [
+{&quot;columnName&quot; : &quot;Numero Richiesta&quot;,
+&quot;apiName&quot; : &quot;CaseNumber&quot;
+},
+{&quot;columnName&quot; : &quot;Cluster&quot;,
+&quot;apiName&quot; : &quot;Cluster__c&quot;
+},
+{&quot;columnName&quot; : &quot;Processo&quot;,
+ &quot;apiName&quot; : &quot;Type&quot;
+},
+{&quot;columnName&quot; : &quot;Fase&quot;,
+ &quot;apiName&quot; : &quot;Phase__c&quot;
+},
+{&quot;columnName&quot; : &quot;Contratto&quot;,
+ &quot;apiName&quot; : &quot;ContractCode__c&quot;
+},
+{&quot;columnName&quot; : &quot;Fornitura&quot;,
+&quot;apiName&quot; : &quot;PODPDRFormula__c&quot;
+}
+],
+&quot;whereCond&quot; : &quot;Type IN (&apos;Variazione Potenza&apos;,&apos;Variazione Fase&apos;,&apos;Variazione Tensione&apos;,&apos;Riattivazione Fornitura&apos;) AND Phase__c NOT IN (&apos;Ammissibilità KO&apos;, &apos;Annullato&apos;,&apos;Ripensato&apos;, &apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
+},
+{
+&quot;obj&quot; : &quot;Order&quot;,
+&quot;fields&quot; : [
+{&quot;columnName&quot; : &quot;Numero Richiesta&quot;,
+&quot;apiName&quot; : &quot;OrderNumber&quot;
+},
+{&quot;columnName&quot; : &quot;Cluster&quot;,
+&quot;apiName&quot; : &quot;Cluster__c&quot;
+},
+{
+&quot;columnName&quot; : &quot;Processo&quot;,
+&quot;apiName&quot;   : &quot;ProcessType__c&quot;
+},
+{
+&quot;columnName&quot; : &quot;Fase&quot;,
+&quot;apiName&quot;   : &quot;Phase__c&quot;
+},
+{
+&quot;columnName&quot; : &quot;Contratto&quot;,
+&quot;apiName&quot;   : &quot;SapContractCode__c&quot;
+},
+{
+&quot;columnName&quot; : &quot;Fornitura&quot;,
+&quot;apiName&quot; : &quot;ServicePointCode__c&quot;
+}
+],
+&quot;whereCond&quot; : &quot;ProcessType__c IN (&apos;Switch in Ele&apos;,&apos;Switch in Gas&apos;,&apos;Switch in Reseller&apos;,&apos;Voltura con Switch&apos;,&apos;Voltura&apos;,&apos;Cambio Offerta&apos;) AND Phase__c NOT IN (&apos;Annullato&apos;,&apos;Ripensato&apos;,&apos;Ammissibilità KO&apos;,&apos;Esito KO da DL&apos;,&apos;Esito KO da SII&apos;)&quot;
+}
+]
+}</value>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>TableName__c</field>
+        <value xsi:type="xsd:string">Prova</value>
+    </values>
+</CustomMetadata>

@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 24/06/2021
+* @description HDT_QR_Campaign
+* @history Lorenzo – 24/06/2021 – created class
+*/
 public with sharing class HDT_QR_Campaign {
     
     public static List<Campaign> getCampaignChild(List<String> listId){
@@ -12,12 +18,43 @@ public with sharing class HDT_QR_Campaign {
         return [
             SELECT 
             Id,
-            Name
-          //  LavorazioneFUB__c
+            Name,
+         //   LavorazioneFUB__c,
+            AssignmentType__c
             FROM Campaign
             where Id = :Id
             WITH SECURITY_ENFORCED
             LIMIT 1
+        ];
+    }
+
+    public static List<Campaign> getCampaignIds(String Name) {
+        return [
+            SELECT 
+            Id,
+            Name,
+         //   LavorazioneFUB__c,
+            MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,
+            AssignmentType__c
+            FROM Campaign
+            where Name = :Name
+          //  WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
+    public List<Campaign> getOutboundCampaigns() {
+        Date d = Date.today();
+        return [
+            SELECT 
+            Id,
+            Name
+            FROM Campaign
+            WHERE isActive = true
+            AND StartDate <= :d
+            AND (EndDate >= :d OR EndDate = NULL)
+            AND Category__c = 'Campagna Outbound'
+            AND Channel__c INCLUDES ('Telefonico Outbound')
+            WITH SECURITY_ENFORCED
         ];
     }
 
@@ -47,4 +84,17 @@ public with sharing class HDT_QR_Campaign {
         ];
     }
 
+    public Campaign getCommercialCodeCampaign(String campaignId) {
+        return [
+            SELECT 
+            Id,
+            PrefixCode__c,
+            MaxNumberEECodeUse__c,
+            MaxNumberGASCodeUse__c,
+            MaxNumberVASCodeUse__c
+            FROM Campaign
+            WHERE Id = :campaignId
+            WITH SECURITY_ENFORCED
+        ];
+}
 }

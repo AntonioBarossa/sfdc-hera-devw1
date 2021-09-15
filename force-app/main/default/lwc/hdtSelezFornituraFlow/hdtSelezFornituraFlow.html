@@ -1,0 +1,70 @@
+<!--
+  @description       : 
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-07-23
+  @last modified by  : gabriele.rota@webresults.it
+  Modifications Log 
+  Ver   Date         Author                        Modification
+  1.0   2021-07-21   gabriele.rota@webresults.it   Initial Version
+-->
+<template>
+
+    <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Loading..." size="large"></lightning-spinner>
+
+    <div class="slds-card__body slds-m-top_xx-large">
+        <div class="slds-grid">
+            <div class="slds-size_1-of-2">
+                <div class="slds-m-left_large">
+                    <lightning-radio-group
+                        label="Seleziona la tipologia:"
+                        options={radioGroupOptions}
+                        value={selectedOption}
+                        onchange={handleRadioGroupChange}>
+                    </lightning-radio-group>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-grid slds-m-top_large">
+            <div class="slds-size_1-of-1">
+
+                <div if:true={tableData}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={tableData}
+                        columns={tableColumns}
+                        max-row-selection=1
+                        onrowselection={getSelectedRecord}>
+                    </lightning-datatable>
+                </div>
+
+                <div if:false={tableData}>
+                    <div class="slds-align_absolute-center" style="height:5rem">{emptyMessage}</div>
+                </div>
+
+            </div>
+        </div>
+
+        <template if:true={showPaginationButtons}>
+            <div class="slds-grid slds-grid_align-center slds-m-top_small">
+                <div class="slds-col">
+                    <button disabled={disabledInput} onclick={previousPage} class="slds-button slds-button_neutral pagination-button">
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft"></use>
+                        </svg>Previous</button>
+                </div>
+                <div class="slds-col">
+                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPages}</p>
+                </div>
+                <div class="slds-col">
+                    <button disabled={disabledInput} onclick={nextPage} class="slds-button slds-button_neutral pagination-button next">Next
+                        <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright"></use>
+                        </svg></button>
+                </div>
+            </div>
+        </template>
+    </div>
+
+</template>

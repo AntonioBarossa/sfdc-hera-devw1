@@ -1076,6 +1076,11 @@
         <field>CampaignEasyCIM__c.MacroActivity__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
+        <editable>true</editable>
+        <field>CampaignMember.isWsBollettaInvoked__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
     <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.Agency__c</field>
@@ -2448,11 +2453,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.SupplyStreetToponym__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.SupplyType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2921,6 +2921,23 @@
         <field>ContactPointPhone.Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
+        <!--Start HRAWRM-251 08/09/2021 -->
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>Contract.CommercialProduct__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <!--Start HRAWRM-251 08/09/2021 -->
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.ExciseEle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.ExciseGas__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.BillingAccount__c</field>
@@ -3355,6 +3372,16 @@
         <editable>false</editable>
         <field>HDT_CampaignMemberStatus__mdt.Category__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -4083,6 +4110,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.ReminderComfortCall__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.ContractReference__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4124,6 +4156,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.DocumentLow80__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.DocumentPackage__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8463,11 +8500,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ServicePoint__c.Potentiality__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>ServicePoint__c.PowerAvailable__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8579,11 +8611,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.SupplyStreetNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ServicePoint__c.SupplyStreetToponym__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9073,11 +9100,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>et4ae5__IndividualEmailResult__c.BounceType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>et4ae5__IndividualEmailResult__c.CampaignID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9125,6 +9147,16 @@
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Status__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactSurname__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

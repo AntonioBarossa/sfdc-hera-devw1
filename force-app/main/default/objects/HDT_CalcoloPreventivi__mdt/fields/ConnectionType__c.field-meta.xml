@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConnectionType__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Tipo Connessione</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Temporanea</fullName>
+                <default>true</default>
+                <label>Temporanea</label>
+            </value>
+            <value>
+                <fullName>Permanente</fullName>
+                <default>false</default>
+                <label>Permanente</label>
+            </value>
+            <value>
+                <fullName>Temporanea permanente</fullName>
+                <default>false</default>
+                <label>Temporanea permanente</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

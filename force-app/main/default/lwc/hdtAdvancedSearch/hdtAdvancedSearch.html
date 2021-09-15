@@ -54,7 +54,11 @@
             <button class="slds-button slds-button_brand searchApi" onclick={callApi} disabled={apiSearchButtonStatus}>Ricerca in Sap</button>
         </lightning-layout-item>
     </lightning-layout>
-
+    <lightning-layout-item padding="around-small" size="2">
+        <div if:true={openCheckBox}>
+        <lightning-input type="Checkbox"  name='Vedi tutti i contratti' checked={flagContratto} label='Vedi tutti i contratti' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input> 
+        </div>
+        </lightning-layout-item>
     <div if:true={openmodel} style="height: auto;">
         <div>
             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
@@ -100,7 +104,7 @@
                         </lightning-layout>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="12">
-                                <lightning-datatable max-row-selection={maxRowSelected} class="table-section" key-field="id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint}></lightning-datatable>
+                                <lightning-datatable max-row-selection={maxRowSelected} class="table-section" key-field="Id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint} selected-rows={preSelectedRows}></lightning-datatable>
                             </lightning-layout-item>
                         </lightning-layout>
                     </div>

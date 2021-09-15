@@ -4,6 +4,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
     public static void insertSelfReading(String fields){
+        System.debug('HDT_LC_SelfReading: ' +fields);
  
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
  
@@ -115,6 +116,15 @@ public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
     public static String checkLastReadings(String servicePointId){
+
+        HDT_QR_ServicePoint queryHandler = new HDT_QR_ServicePoint();
+        List<ServicePoint__c> servicePoints = queryHandler.getRecordById(servicePointId, 'Id,SAPImplantCode__c');
+        if (!servicePoints.isEmpty()) {
+            // Il ServicePoint su una autolettura da processo potrebbe non ancora essere associato ad un impianto su SAP.
+            if (String.isBlank(servicePoints[0].SAPImplantCode__c)) {
+                return 'ERROR_NO_ASSET_NUMBER';
+            }
+        }
 
         HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
         sapIntegration.recordId = servicePointId;

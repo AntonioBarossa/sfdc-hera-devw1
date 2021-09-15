@@ -6,6 +6,8 @@ import EE_CLC from '@salesforce/schema/Account.CustomerLifeCycleEle__c';
 import GAS_CLC from '@salesforce/schema/Account.CustomerLifeCycleGas__c';
 import VAS_CLC from '@salesforce/schema/Account.CustomerLifeCycleVAS__c';
 
+import getKpis from '@salesforce/apex/HDT_LC_HighlightsTab.getKpis';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const fields = [
     'DataEnrichmentLastUpdate__c',
@@ -17,11 +19,11 @@ const fields = [
 var items = [{
     "label": "Customer Life Cycle: ",
     "name": "clc",
-    "expanded": false,
+    "expanded": true,
     "items": [{
         "label": "Life Cycle Energy: ",
         "name": "clcEnergy",
-        "expanded": false,
+        "expanded": true,
         "items": [{
             "label": "Commodity Life Cycle EE: ",
             "name": "clcEE",
@@ -47,9 +49,9 @@ export default class HdtHighlightsTab extends LightningElement {
     @track record;
     @track wireError;
     @track fields = fields;
-    @track openCasesNumber = 4;
-    @track openOptyNumber = 1;
-    @track koCasesNumber = 2;
+    @track openCasesNumber;
+    @track openOptyNumber;
+    @track koCasesNumber;
     @track clcItems;
 
     gridClass = '';
@@ -69,6 +71,22 @@ export default class HdtHighlightsTab extends LightningElement {
 
     connectedCallback() {
         this.gridClass = 'slds-col slds-size_1-of-' + fields.length.toString();
+        this.doGetKpis();
+    }
+
+    async doGetKpis() {
+        const result = await getKpis({accountId: this.recordId});
+        if(result.error) {
+            this.dispatchEvent(new ShowToastEvent({
+                variant: 'error',
+                title: 'Errore',
+                message: result.error,
+            }));
+        } else {
+            this.openOptyNumber = result.opportunities;
+            this.openCasesNumber = result.dossier_open;
+            this.koCasesNumber = result.dossier_ko;
+        }
     }
 
     updateClc() {

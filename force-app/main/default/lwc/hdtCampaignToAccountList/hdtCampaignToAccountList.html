@@ -2,6 +2,7 @@
     <template if:true={listResults}>
         <!-- Lighning datatable-->
         <template if:true={isSale}>
+            <div class="slds-text-heading_small slds-m-vertical_small">{title}</div>
             <div>
                 <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
                     onrowselection={handleRowSelection} max-row-selection=1>
@@ -24,7 +25,7 @@
                             <div class="slds-page-header__name">
                                 <div class="slds-page-header__name-title">
                                     <h1>
-                                        <span class="slds-page-header__title slds-truncate" title="Campaigns">Campaigns
+                                        <span class="slds-page-header__title slds-truncate" title="Campaigns">Campagne
                                             ({campaignsNumber})</span>
                                     </h1>
                                 </div>

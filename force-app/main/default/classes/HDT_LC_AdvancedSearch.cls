@@ -5,9 +5,32 @@ public with sharing class HDT_LC_AdvancedSearch {
 	private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
 	private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 	private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+	private static HDT_QR_Case caseQr = new HDT_QR_Case();
 	private static CS_SelezioneFornitura__c customSetting = servicePointQr.getCustomSetting();
 
-	
+	@AuraEnabled
+	public static Boolean isInBlacklist(String pod){
+		HDT_QR_Blacklist qrBlack = new HDT_QR_Blacklist();
+		Blacklist__c blacklist = qrBlack.getBlacklist(pod);
+		Boolean response = false;
+		if(blacklist.POD__C != null && blacklist.isActive__c!=false){
+			response = true;
+		}
+		return response;
+	}
+
+
+	@AuraEnabled
+	public static List<case> searchModificaContratti(String podPdr){
+		List<case> modificaContratti = caseQr.getCaseModificaContratti(podPdr);
+		return modificaContratti;
+	}
+
+	@AuraEnabled
+    public static Boolean permissionForFlagContract(){
+        Boolean res = FeatureManagement.checkPermission('HDT_CP_SupplySelectionSearch');
+        return res;
+    }
 	
 	@AuraEnabled
 	public static List<HDT_WRP_AddressObject> getIndirizzoFornitura(String accountId) {
@@ -284,11 +307,12 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	 */
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType,String additionalFilter) {
+															 String queryType,String additionalFilter,Boolean isSuperUser) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
-		system.debug('additionalFilter' + additionalFilter);												
+		system.debug('additionalFilter' + additionalFilter);
+		Boolean isSerachFromContract = false;												
 		switch on queryType {
 			when 'serialnumber' {																				 
 	 
@@ -329,6 +353,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 
 
 				}
+				isSerachFromContract=true;
 			}
 			when else {
 			}
@@ -357,19 +382,29 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 					}
 				}
 			}
-
-
-			Contract c = contractQr.getSapContractCode(servicePointObject.ServicePointCode__c);
-
-			if(c.SAPContractCode__c!=null){
-			
-				String value = '';
-				String label = '';
-				label='Codice Contratto';
-				value=(String) c.SAPContractCode__c;
-				record.put(label,value);
-				
+			if(isSerachFromContract != true){
+				isSuperUser=false;
 			}
+
+			Contract c = contractQr.getSapContractCode(servicePointObject.ServicePointCode__c,isSuperUser);
+			
+
+				if(c.SAPContractCode__c!=null){
+					String value = '';
+					String label = '';
+					label='Codice Contratto';
+					value=(String) c.SAPContractCode__c;
+					record.put(label,value);
+
+				}else{
+					String value = '';
+					String label = '';
+					label='Codice Contratto';
+					value=' ';
+					record.put(label,value);
+				}
+			
+
 			system.debug('record***********'+record);
 			output.add(new Map<String, Object>(record));
 			record.clear();
@@ -593,6 +628,10 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 					if(con.ServicePoint__r.ServicePointCode__c== sp.ServicePointCode__c){
 						label='Codice Contratto';
 						value=(String) con.SAPContractCode__c;
+						row.put(label,value);
+					}else{
+						label='Codice Contratto';
+						value=' ';
 						row.put(label,value);
 					}
 

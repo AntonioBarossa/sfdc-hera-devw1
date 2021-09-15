@@ -1,6 +1,6 @@
 import { LightningElement,track,api } from 'lwc';
 import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
-import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent } from 'lightning/flowSupport';
+import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent, FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
@@ -12,6 +12,17 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     @api totalReadingValue; // UNUSED
     @api selectedReadingValues;
     @api selectedReadingsConcatenated;
+    @api selectedReadingDate; //UNUSED
+    @api selectedReadingDateString;
+    //@frpanico added dispustedReadingVariables
+    @api disputedReading; //Gas
+    @api disputedReadingOne; //Ele F1
+    @api disputedReadingTwo; //Ele F2
+    @api disputedReadingThree; //Ele F3
+
+    //buttons
+    @api nonStandAlone = false;
+    @api maxRows;
 
     @api contractNumber;
     @track meterReadingColumns;
@@ -65,6 +76,65 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
         this.spinner = event.detail.spinner;
     }
 
+    handleRowSelection = event =>{
+        let readingDate;
+        if(event.detail != null){
+            console.log('Event' + JSON.stringify(event.detail));
+            let selectRow = event.detail;
+            console.log('IsArray? >>> ' + Array.isArray(selectRow));
+            if(Array.isArray(selectRow) && selectRow.length > 1)
+            {
+                readingDate = selectRow[0].dataLetturaPianificata;
+                //Caso Energia Elettrica
+                selectRow.forEach(element => 
+                {
+                    console.log('Element >>> ' + JSON.stringify(element));
+                    if(element.tipoNumeratore === 'Fascia 1')
+                    {
+                        this.disputedReadingOne = element.posizioniPrecedentiLaVirgola;
+                    }
+                    else if(element.tipoNumeratore === 'Fascia 2')
+                    {
+                        this.disputedReadingTwo = element.posizioniPrecedentiLaVirgola;
+                    }
+                    else
+                    {
+                        this.disputedReadingThree = element.posizioniPrecedentiLaVirgola;
+                    }
+                }
+                );
+
+            }
+            else
+            {
+                //Caso Gas
+                console.log('GAS_CONDITION');
+                console.log('VALORE >>> ' + JSON.stringify(selectRow.posizioniPrecedentiLaVirgola));
+                readingDate = selectRow.dataLetturaPianificata;
+                this.disputedReading = selectRow.posizioniPrecedentiLaVirgola;
+
+            }
+            console.log('Data Lettura Contestata >>> ' + readingDate);
+            console.log('Lettura Contestata Gas >>> ' + this.disputedReading);
+            console.log('Lettura Contestata Ele F1 >>> ' + this.disputedReadingOne);
+            console.log('Lettura Contestata Ele F2 >>> ' + this.disputedReadingTwo);
+            console.log('Lettura Contestata Ele F3 >>> ' + this.disputedReadingThree);
+            //let disputedValue = event.detail.posizioniPrecedentiLaVirgola;
+            let dateParse = readingDate.split("/");
+            readingDate = dateParse[2] + '-' + dateParse[1] + '-' + dateParse[0];
+            //@frpanico added events for "Data Lettura Contestata" and "Valore Lettura Contestata"
+            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedReadingDateString', readingDate);
+            this.dispatchEvent(attributeChangeEvent);
+            const attributeChangeEventDisputed = new FlowAttributeChangeEvent('disputedReading', this.disputedReading);
+            this.dispatchEvent(attributeChangeEventDisputed);
+            const attributeChangeEventDisputedOne = new FlowAttributeChangeEvent('disputedReadingOne', this.disputedReadingOne);
+            this.dispatchEvent(attributeChangeEventDisputedOne);
+            const attributeChangeEventDisputedTwo = new FlowAttributeChangeEvent('disputedReadingTwo', this.disputedReadingTwo);
+            this.dispatchEvent(attributeChangeEventDisputedTwo);
+            const attributeChangeEventDisputedThree = new FlowAttributeChangeEvent('disputedReadingThree', this.disputedReadingThree);
+            this.dispatchEvent(attributeChangeEventDisputed);
+        }
+    }
 
     handleGoNext() {
 

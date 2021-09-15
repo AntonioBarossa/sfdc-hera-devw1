@@ -1,0 +1,56 @@
+<template>
+    <div class="slds-grid slds-grid_vertical">
+        <div class="slds-col slds-grid">
+            <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-combobox data-id="cambioUso" name="cambioUso" label="Addebito Cambio Uso"
+                        placeholder="Addebito Cambio Uso" options={addebitoOptions}
+                        required>
+                    </lightning-combobox>
+            </div>
+            <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                    <lightning-combobox data-id="tipoFornitura" name="tipoFornitura" label="Tipo Fornitura" placeholder="Tipo Fornitura"
+                         options={fornituraOption} required>
+                    </lightning-combobox>
+            </div>
+
+        </div>
+        <div class="slds-col slds-grid">
+            <div
+                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                <lightning-input type="text" data-id="recapito" label="Recapito Telefonico" required>
+                </lightning-input>
+            </div>
+            <div
+                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                <lightning-combobox data-id="TipoImpianto" name="tipoImpianto" label="Tipo Impianto" placeholder="Tipo Impianto"
+                         options={impiantoOptions} required>
+                </lightning-combobox>
+            </div>
+        </div>
+        <div class="slds-col slds-grid">
+            <div
+                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                <lightning-input type="Checkbox"  name='redidente' onchange={handleChange} label='Residente' variant="label-stacked" ></lightning-input>
+            
+            </div>
+            <div
+                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                <lightning-input type="text" data-id="note" name="note"
+                     label="Note">
+                </lightning-input>
+            </div>
+        </div>
+        <br/>
+        <footer class="slds-modal__footer">
+            <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
+            </lightning-button>
+        </footer>
+
+        <div class="slds-col slds-grid">
+            
+        </div>
+        <div class="slds-col slds-grid">
+           
+        </div>
+    </div>
+</template>

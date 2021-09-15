@@ -1,0 +1,40 @@
+<template>
+    <c-hdt-generic-table 
+        table-name={tableName}
+        search-key={searchKey}
+        search-term={searchTerm}
+        max-row-select={maxRowSelect}
+        onrowselect={onSelectedRow}
+        ondisableadvance={disableButton}>
+    </c-hdt-generic-table>
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <template if:true={saveButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" onclick={handleNext} name="save" label={labelSaveButton} disabled={disabledSaveButton}>
+                </lightning-button>
+            </template>
+            <template if:true={previousButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="previous" label={labelPreviousButton} onclick={handlePrevious}>
+                </lightning-button>
+            </template>
+            <template if:true={draftButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="draft" label={labelDraftButton} onclick={handleNext}>
+                </lightning-button>
+            </template>
+            <template if:true={cancelButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" name="cancel" label={labelCancelButton} onclick={handleNext}>
+                </lightning-button>
+            </template>
+        </div>
+    </div>
+</template>

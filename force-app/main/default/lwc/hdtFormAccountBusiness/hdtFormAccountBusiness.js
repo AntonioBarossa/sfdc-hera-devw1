@@ -1,5 +1,10 @@
 import { LightningElement,track, api, wire} from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+
+import CUSTOMERTYPE_FIELD from '@salesforce/schema/Account.CustomerType__c';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+import COMPANY_FIELD from '@salesforce/schema/Contact.Company__c';
 import CUSTOM_MARKING from '@salesforce/schema/Account.CustomerMarking__c';
 import CATEGORY from '@salesforce/schema/Account.Category__c';
 import PHONE_PREFIX from '@salesforce/schema/Account.PhonePrefix__c';
@@ -14,14 +19,16 @@ import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode2 from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountBusiness.insertAccount';
-
+import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
 export default class HdtFormAccountBusiness extends NavigationMixin(LightningElement) {
 
+    @api showCompanyOwner = false;
     @track showModal= true;
     @track spinner= false;
     @track markingValue;
     @track categoryValue;
     @track errorMessage='';
+    @api companyDefault;
     @track phonePrefixValue;
     @track phonePrefixOptions;
     @track mobilePhonePrefixValue;
@@ -34,7 +41,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
-
+    customerType='Organizzazione';
     gender;
     birthDate;
     birthPlace;
@@ -43,7 +50,30 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     fieldsToUpdate= {};
     isVerified= false;
     @api RecordTypeId;
+    @track companyOptions;
+    @track customerTypeOptions;
 
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    contactInfo;
+  
+
+   
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: COMPANY_FIELD })
+    companyFieldInfo({ data, error }) {
+        if (data) this.companyFieldData = data;
+    }
+    companyPicklist( comp) {
+        let key = this.companyFieldData.controllerValues[comp];
+        this.companyOptions = this.companyFieldData.values.filter(opt => opt.validFor.includes(key));
+        var customCompanyOptions=[];
+        this.companyOptions.forEach(function callbackFn(element, index) {
+            if(element.value!='HC+HCM+EENE'){ 
+                customCompanyOptions.push(element);
+            }
+        })
+        
+        this.companyOptions=customCompanyOptions;
+    }
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
@@ -63,6 +93,49 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
     };
 
+    inizializeInit(){
+        checkRole({}).then((response) => {
+            if(response == 'HDT_BackOffice'){
+                this.showCompanyOwner = false;
+            }else if(response == 'HDT_FrontOffice_HERACOMM'){
+                this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }else if(response == 'HDT_FrontOffice_Reseller'){
+                this.companyDefault = 'Reseller';
+                this.companyPicklist(this.companyDefault);
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['Reseller'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else if(response == 'HDT_FrontOffice_MMS'){
+                this.companyDefault = 'MMS';
+                this.companyPicklist(this.companyDefault);
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['MMS'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else if(response == 'HDT_FrontOffice_AAAEBT'){
+                this.companyDefault = 'AAA-EBT';
+                this.companyPicklist(this.companyDefault);
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['AAA-EBT'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            else{
+                this.companyDefault = 'HERA COMM';
+                this.companyPicklist(this.companyDefault);
+                this.showCompanyOwner = true;
+                let key = this.customerData.controllerValues['HERA COMM'];
+                this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+            }
+            this.filterMarkingOptions();
+
+        });
+    }
+
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
     customerGetMarkingOptions({error, data}) {
         if (data){
@@ -74,12 +147,32 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     categoryGetOptions({error, data}) {
         if (data){
             this.categoryData = data;
+            this.inizializeInit();
         }
     };
+    @wire(getPicklistValues,{recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    customerTypeFunction({error, data}) {
+        if (data){
+            var customTypeOptions=[];
+            this.customerTypeOptions = data;
+            data.values.forEach(function callbackFn(element, index) {
+                
+            console.log(JSON.stringify(element.value));   
+             if(element.value!='Persona Fisica'){
+                    
+                customTypeOptions.push(element);
+            }
+                
+                
+         })        
+           this.customerTypeOptions=customTypeOptions;
 
+        }
+    };
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-
+    // @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
+    // customerTypeOptions;
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
 
@@ -111,10 +204,32 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     }
 
     handleCompanyOwnerChange(event) {
+        
         let key = this.customerData.controllerValues[event.target.value];
         this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.filterMarkingOptions();
+        this.companyPicklist(event.target.value);
         this.markingValue = '';
         this.categoryValue = '';
+    }
+    filterMarkingOptions(){
+        var customMarkingOptions=[];
+        this.customerMarkingOptions.forEach(function callbackFn(element, index) {
+            var arrayToRemove=[];
+            for (let i = 0; i < 20; i++) {
+                arrayToRemove.push('D'+i+' -');
+            }
+            console.log(JSON.stringify(element.value));
+            var startSubString=element.value;
+            startSubString=element.label.substring(0, 4);
+            if(!arrayToRemove.includes(startSubString)){
+                
+                customMarkingOptions.push(element);
+            }
+            
+            
+        })        
+        this.customerMarkingOptions=customMarkingOptions;
     }
     handleCustomerChange(event) {
         let key = this.categoryData.controllerValues[event.target.value];
@@ -132,16 +247,27 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-hide');
+            this.template.querySelector('[data-id="showDiv2"]').classList.add('slds-show');
+            this.template.querySelector('[data-id="showDiv2"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-show');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-hide');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
+            this.customerType='Persona fisica';
             this.makerequired= true;
         }else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
+            this.template.querySelector('[data-id="showDiv2"]').classList.add('slds-hide');
+            this.template.querySelector('[data-id="showDiv2"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-hide');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
+            this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.customerType='Organizzazione';
+
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
    }
@@ -244,7 +370,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(this.accountAddress['Civico'] != null){
                 this.fieldsToUpdate['BillingStreetNumber__c'] = this.accountAddress['Civico'];
             }
+            if(this.accountAddress['Localita'] != null){
+                this.fieldsToUpdate['BillingPlace__c'] = this.accountAddress['Localita'];
+            }
+            if(this.accountAddress['Codice Localita'] != null){
+                this.fieldsToUpdate['BillingPlaceCode__c'] = this.accountAddress['Codice Localita'];
+            }
             if(this.accountAddress['Flag Verificato'] !=null){
+                this.fieldsToUpdate['BillingIsAddressVerified__c'] = this.accountAddress['Flag Verificato'];
                 this.isVerified = this.accountAddress['Flag Verificato'];
             }
         }
@@ -269,6 +402,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
         let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
+        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+
+
         // let address =this.template.querySelector('[data-id="address"]');
         // let location =this.template.querySelector('[data-id="location"]');
         // let myAddress =this.template.querySelector('[data-id="myAddress"]');
@@ -416,7 +553,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
+        
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
+                isValidated=false;
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+            }
+            if( String(phoneNumber.value).charAt(0)!='0'){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
@@ -521,7 +663,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "recordTypeId" : this.RecordTypeId,
                             "companyOwner" : companyOwner.value ,
                             "phonePrefix" : phonePrefix.value ,
-                            "mobilePhonePrefix" : mobilePhonePrefix.value 
+                            "mobilePhonePrefix" : mobilePhonePrefix.value,
+                            "customerTypeValue": customerTypeValue,
                         };
                         console.log("LOG14");
                         insertAccount({
@@ -530,7 +673,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         }).then((response) => {
                             console.log("LOG15");
                             const event = new ShowToastEvent({
-                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
                                 variant: 'success',
                                 mode: 'dismissable'
                             });
@@ -565,6 +708,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         this.spinner=false;
                     });
                 }else{
+                    var prova = this.personFiscalCode.value;//.replace(/ /g,"");
+                    console.log("LOG12:" + prova);
+                    getFromFiscalCode2({
+                        fiscalCodes : prova
+                    }).then((response) => {
                     console.log("*******PRI");
                     console.log("LOG16");
                     dataAccount={
@@ -600,7 +748,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "recordTypeId" : this.RecordTypeId,
                         "companyOwner" : companyOwner.value ,
                         "phonePrefix" : phonePrefix.value ,
-                        "mobilePhonePrefix" : mobilePhonePrefix.value 
+                        "mobilePhonePrefix" : mobilePhonePrefix.value,
+                        "company":companyValue.value,
+                        "customerTypeValue": customerTypeValue.value,
+
                     };
                     console.log("*******DOP");
                     console.log("LOG17");
@@ -609,7 +760,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         accountAddress: this.fieldsToUpdate
                     }).then((response) => {
                         const event = new ShowToastEvent({
-                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
                             variant: 'success',
                             mode: 'dismissable'
                         });
@@ -633,7 +784,18 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         this.spinner=false;
                         this.dispatchEvent(event);
                     });
-                }  
+                }).catch((errorMsg) => {
+                    console.log("LOG12Error");
+                    const event = new ShowToastEvent({
+                        message: 'Inserire un codice fiscale valido',
+                        variant: 'error',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                    this.spinner=false;
+                });
+                } 
+                 
             }else{
                 console.log("LOG18");
                 const event = new ShowToastEvent({

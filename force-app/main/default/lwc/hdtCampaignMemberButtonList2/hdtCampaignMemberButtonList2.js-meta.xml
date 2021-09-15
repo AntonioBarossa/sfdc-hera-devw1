@@ -6,15 +6,14 @@
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
         <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
-        <!--<target>lightning__Tab</target>-->
-        <!--<target>lightning__Inbox</target>-->
-        <!--<target>lightning__UtilityBar</target>-->
-        <!--<target>lightning__FlowScreen</target>-->
-        <!--<target>lightningSnapin__ChatMessage</target>-->
-        <!--<target>lightningSnapin__Minimized</target>-->
-        <!--<target>lightningSnapin__PreChat</target>-->
-        <!--<target>lightningSnapin__ChatHeader</target>-->
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="objectApiName" type="String" label="Object Name" description="Automatically bind the page's object name to the component variable" default="{!objectApiName}" />
+            <property name="recordId" type="String" label="Record ID" description="Should be set to {!recordId}" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

@@ -4,6 +4,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import getTableData from '@salesforce/apex/HDT_LC_OrderDossierWizardTable.getTableData';
 import next from '@salesforce/apex/HDT_LC_OrderDossierWizardTable.next';
 import edit from '@salesforce/apex/HDT_LC_OrderDossierWizardTable.edit';
+import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
 export default class hdtOrderDossierWizardTable extends NavigationMixin(LightningElement) {
 
     @api orderParentRecord;
@@ -13,6 +14,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
     childOrdersList = [];
     orderItemList = [];
     currentStep = 2;
+    isDialogVisible = false;
 
     get hiddenEdit(){
         let result = true;
@@ -47,6 +49,13 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
         return result;
     }
 
+    get cancellationOptions() {
+        return [
+            { label: 'Pratica errata', value: 'Pratica errata' },
+            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' }
+        ];
+    }
+
     get columnsDocumenti(){
         return [
             {fieldName: 'CustomerName__c', // This field should have the actual URL in it.
@@ -61,17 +70,27 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                  target: '_parent', 
                  tooltip: 'Open the customer page'
              }},
-            {label: 'POD/PDR', fieldName: 'pod', type: 'text'},
-            {label: 'Status', fieldName: 'Status', type: 'text'},
+            {label: 'Codice punto', fieldName: 'pod', type: 'text'},
+            {label: 'Indirizzo di fornitura', fieldName: 'SupplyAddressFormula__c', type: 'text'},
             {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
-            {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
+            {label: 'Processo', fieldName: 'recordtypename', type: 'text'},
+            {label: 'Offerta', fieldName: 'CommercialProduct__c', type: 'text'},
             {type:  'button',typeAttributes:{
                     iconName: 'utility:edit',
                     label: 'Avvia Processo', 
-                    name: 'editRecord', 
+                    name: 'Avvia Processo', 
                     title: 'Avvia Processo',
                     disabled: {fieldName :'disabledActionButton'},
                     value: 'Avvia Processo'
+                }
+            },
+            {type:  'button',typeAttributes:{
+                    iconName: 'utility:delete',
+                    label: 'Annulla',
+                    name: 'cancelOrder',
+                    title: 'Annulla',
+                    disabled: {fieldName :'disabledActionButton'},
+                    value: 'cancelOrder'
                 }
             }
         ];
@@ -118,17 +137,29 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
         this.orderId = row.Id;
         this.action = action.value;
 
-        this.dispatchEvent(new CustomEvent('handlerowactionevent', {
-            detail:{
-                c__orderParent: this.orderParentRecord.Id,
-                c__orderId: this.orderId,
-                action: this.action
-            }
-        }));
+        if(this.action === 'cancelOrder'){
+            this.isDialogVisible = true;
+        } else {
+            console.log(' c__orderParent:'+ this.orderParentRecord.Id);
+            console.log('  c__orderId:'+ this.orderId);
+            console.log('  action:'+ this.action);
+
+
+
+            this.dispatchEvent(new CustomEvent('handlerowactionevent', {
+                detail:{
+                    c__orderParent: this.orderParentRecord.Id,
+                    c__orderId: this.orderId,
+                    action: this.action
+                }
+            }));
+            console.log();
+        }
 
     }
 
     connectedCallback(){
+        console.log('@@@@@@@@@id : '+this.orderParentRecord.id);
         this.setTableData();
     }
 
@@ -164,5 +195,57 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    callCancel(cancellationReason){
+        this.loading = true;
+        cancel({order: {Id: this.orderId}, cancellationReason: cancellationReason}).then(data =>{
+            this.loading = false;
+
+            this.dispatchEvent(new CustomEvent('redirecttoparent'));
+
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Processo annullato con successo',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+
+        }).catch(error => {
+            this.loading = false;
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: errorMessage,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    handleCancel(){
+        this.isDialogVisible = true;
+    }
+
+    handleDialogResponse(event){
+        if(event.detail.status == true){
+
+            this.callCancel(event.detail.choice);
+
+        } else {
+            this.isDialogVisible = false;
+        }
     }
 }

@@ -23,25 +23,29 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
                 recordId: this.recordId
             }).then(result => {
                 var resultParsed = JSON.parse(result);
-                if(resultParsed.code === '200'){
-                    if(resultParsed.result === '000'){
-                        if (resultParsed.type === 'pdf') {
-                            this.showPdfFromBase64(resultParsed.base64);
-                            this.closeAction();
-                        } else if (resultParsed.type === 'zip') {
-                            // TODO: convertire base64 in zip e farlo scaricare nel browser
-                        }
-                    }else{
-                        this.showErrorMessage('Impossibile visualizzare il documento archiviato.');
+                if(resultParsed.outcome === 'OK'){
+                    if (resultParsed.type === 'pdf') {
+                        this.showPdfFromBase64(resultParsed.base64);
+                        this.closeAction();
+                    } else if (resultParsed.type === 'zip') {
+                        // TODO: convertire base64 in zip e farlo scaricare nel browser
                     }
                 }else{
-                    this.showErrorMessage('Impossibile visualizzare il documento archiviato.');
+                    if(resultParsed.errorMessage != null && resultParsed.errorMessage != undefined){
+                        this.closeAction();
+                        this.showErrorMessage(resultParsed.errorMessage);
+                    }else{
+                        this.closeAction();
+                        this.showErrorMessage('Impossibile visualizzare il documento archiviato.');
+                    }
                 }
             })
             .catch(error => {
+                this.closeAction();
                 console.error('error: ' + JSON.stringify(error));
             });
         }catch(error){
+            this.closeAction();
             console.error('error: ' + JSON.stringify(error));
         }
     }

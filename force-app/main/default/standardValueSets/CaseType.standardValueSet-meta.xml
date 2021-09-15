@@ -4,6 +4,7 @@
     <standardValue>
         <fullName>Account/Billing Profile - errata categoria</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Account/Billing Profile - errata categoria</label>
     </standardValue>
     <standardValue>
@@ -59,6 +60,7 @@
     <standardValue>
         <fullName>Cambio cont. non registrato</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Cambio cont. non registrato</label>
     </standardValue>
     <standardValue>
@@ -164,6 +166,7 @@
     <standardValue>
         <fullName>Fiscale  - IVA Esenzione/Revoca</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Fiscale  - IVA Esenzione/Revoca</label>
     </standardValue>
     <standardValue>
@@ -219,6 +222,7 @@
     <standardValue>
         <fullName>Mod. Imp. - Em. Imp. - Var. Portata</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Mod. Imp. - Em. Imp. - Var. Portata</label>
     </standardValue>
     <standardValue>
@@ -319,11 +323,13 @@
     <standardValue>
         <fullName>Rettifica Consumi - Errore di Lettura</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Rettifica Consumi - Errore di Lettura</label>
     </standardValue>
     <standardValue>
         <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Rettifica Consumi - Errore Stima Consumi</label>
     </standardValue>
     <standardValue>
@@ -504,6 +510,7 @@
     <standardValue>
         <fullName>Variazione Tensione - Pressione</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Variazione Tensione - Pressione</label>
     </standardValue>
     <standardValue>
@@ -660,5 +667,10 @@
         <fullName>Indennizzo</fullName>
         <default>false</default>
         <label>Indennizzo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Switch Out per Voltura</fullName>
+        <default>false</default>
+        <label>Switch Out per Voltura</label>
     </standardValue>
 </StandardValueSet>

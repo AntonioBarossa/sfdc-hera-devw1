@@ -10,6 +10,8 @@ public class HDT_SRV_DocumentalManagement{
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver3');
+		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
+		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
@@ -37,10 +39,17 @@ public class HDT_SRV_DocumentalManagement{
 
 	public static String generateGetAttachmentRequest(String recordId){
 		if (String.isBlank(recordId)) {
-			throw new HDT_UTL_HeraException('Necessario passare un Id valido in input per visualizzare il documento.');
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
 		}
 
 		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
+		if (actMoga == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+
+		if (String.isBlank(actMoga.AttachmentCode__c)) {
+			throw new HDT_UTL_HeraException('Impossibile visualizzare allegato, Codice Allegato non disponibile.');
+		}
 
 		JSONGenerator gen = JSON.createGenerator(false);
 
@@ -67,16 +76,115 @@ public class HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static String generateGetEnvelopeRequest(SObject documentalObject){
+		if (documentalObject == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input una instanza di DocumentalActivity__c o DocumentSendTracking__c per visualizzare il documento.');
+		}
+
+		String envelopeId = (String) documentalObject.get('EnvelopeId__c');
+		if (String.isBlank(envelopeId)) {
+			throw new HDT_UTL_HeraException('Impossibile visualizzare il plico archiviato, Id Plico non disponibile.');
+		}
+
+		String body = '';
+		if (getDocumentType(documentalObject) == 'pdf') {
+
+			JSONGenerator gen = JSON.createGenerator(false);
+			gen.writeStartObject();
+			gen.writeFieldName('envelopeInfo');
+			gen.writeStartArray();
+			gen.writeStartObject();
+			gen.writeStringField('key', 'pt_numero_offerta');
+			gen.writeStringField('value', envelopeId);
+			gen.writeEndObject();
+			gen.writeEndArray();
+			gen.writeEndObject();
+			body = gen.getAsString();
+
+		} else {
+			// TODO: generate request per recupero zip da Intesa
+		}
+
+		System.debug('GetEnvelopeRequest body: ' + body);
+		return body;
+	}
+
+	public static String generateResendDocusignEnvelopeRequest(String recordId){
+		if (String.isBlank(recordId)) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		DocumentSendTracking__c sendTrack = HDT_QR_DocumentalConfiguration.getDocumentSendTrackingById(recordId);
+		if (sendTrack == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		if (String.isBlank(sendTrack.EnvelopeId__c)) {
+			throw new HDT_UTL_HeraException('Impossibile re-inviare la busta, Id Plico non disponibile.');
+		}
+
+		JSONGenerator gen = JSON.createGenerator(false);
+		DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+
+		gen.writeStartObject();
+		gen.writeStringField('customerId', docusignCustomSettings.CustomerEnviromentId__c);
+		gen.writeStringField('transactionId', sendTrack.EnvelopeId__c);
+		gen.writeEndObject();
+
+		String body = gen.getAsString();
+		System.debug('Intesa body: ' + body);
+		return body;
+	}
+
+	public static String generateDiscardDocusignEnvelopeRequest(String recordId){
+		if (String.isBlank(recordId)) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		DocumentSendTracking__c sendTrack = HDT_QR_DocumentalConfiguration.getDocumentSendTrackingById(recordId);
+		if (sendTrack == null) {
+			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentSendTracking__c per re-inviare la busta.');
+		}
+
+		if (String.isBlank(sendTrack.EnvelopeId__c)) {
+			throw new HDT_UTL_HeraException('Impossibile re-inviare la busta, Id Plico non disponibile.');
+		}
+
+		JSONGenerator gen = JSON.createGenerator(false);
+		DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+
+		gen.writeStartObject();
+		gen.writeStringField('customerId', docusignCustomSettings.CustomerEnviromentId__c);
+		gen.writeStringField('transactionId', sendTrack.EnvelopeId__c);
+		gen.writeEndObject();
+
+		String body = gen.getAsString();
+		System.debug('Intesa body: ' + body);
+		return body;
+	}
+
 	@future
 	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
 		String publicLink = createPublicLink(recordId,base64,fileName);
-		//updateOrder con link?
+		Order ord = new Order();
+		ord.Id = recordId;
+		switch on fileName{
+			when 'MODULISTICA_NO_B12'{
+				ord.InformationFormLink__c = publicLink;
+			}when 'MODULISTICA_B12'{
+				ord.SendFormLink__c = publicLink;
+			}when 'DELIBERA_40'{
+				ord.Decision40Link__c = publicLink;
+			}
+		}
+		HDT_UTL_DatabaseService.updateSObject(ord);
 	}
+
 	public static String createPublicLink(String recordId,String base64,String fileName){
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
 			ContentDocumentLink cl = HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
-			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id);
+			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id,fileName);
 			return publicLink;
 		} catch (Exception ex) {
 			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
@@ -98,6 +206,188 @@ public class HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
+		if (postelResponse.responseCode != 200) {
+			throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+		}
+		return postelResponse;
+	}
+	
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetEnvelopeCalloutRequest(String body, String documentType){
+		if (String.isBlank(documentType)) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
+		}
+
+		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+		if (documentType == 'pdf') {
+			postelResponse = HDT_WS_DocumentalIntegration.submitGetEnvelopePostelRequest(body);
+			if (postelResponse.responseCode != 200) {
+				throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
+			}
+		} else {
+			// TODO: invoke Intesa callout.
+		}
+
+		return postelResponse;
+	}
+
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse executeResendDocusignEnvelopeCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+		responseWrap = HDT_WS_DocumentalIntegration.submitResendDocusignEnvelopeRequest(body);
+		return responseWrap;
+	}
+
+	public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse executeDiscardDocusignEnvelopeCalloutRequest(String body){
+		HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+		responseWrap = HDT_WS_DocumentalIntegration.submitDiscardDocusignEnvelopeRequest(body);
+		return responseWrap;
+	}
+
+	public static String getTransactionId(String envelopeId){
+		String transactionId;
+		DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+		String addonUrl = '?customerId='+docusignCustomSettings.CustomerEnviromentId__c+'&envelopeId='+envelopeId;
+		Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		request.setEndpoint('Callout:DocusignTransaction'+addonUrl);
+		request.setMethod('GET');
+		HttpResponse response = http.send(request);
+		if (response.getStatusCode() == 200) {
+			Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+			System.debug('Response: ' + results);
+			if (results.containsKey('data')) {
+				Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(results.get('data')));
+				transactionId = (String) data.get('transactionId');
+			}
+			
+			System.debug('Received the following transactionId: ' + transactionId);
+		}
+		return transactionId;
+	}
+	public static SObject getSobjectFromTransactionId(String transactionId){
+		if(String.isBlank(transactionId)) return null;
+		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
+		if(docSendTracking != null){
+			if(docSendTracking.get('Case__c') != null){
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				return caseList[0];
+			}else {
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+				return orderList[0];
+			}
+		}else{
+			return null;
+		}
+	}
+
+	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+		if(record != null){
+			String status = requestBody.status;
+			String processType = (String)record.get('DocumentalProcessType__c');
+			String cluster = (String)record.get('Cluster__c');
+			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
+			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
+			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
+				listOfRadio.addAll(requestBody.listOfRadioGroup);
+				System.debug(requestBody.listOfRadioGroup);
+			}
+			if(requestBody.listOfData != null && requestBody.listOfData.size()>0){
+				listOfData.addAll(requestBody.listOfData);
+			}
+			
+			if(record.getSobjectType() == Case.getSobjectType()){
+				if(status.equalsIgnoreCase('completed')){
+					record.put('DocumentalPhase__c','Plico firmato');
+					if(cluster.equalsIgnoreCase('Preventivi')){
+						record.put('Phase__c','Preventivo accettato');
+					}
+				}else{
+					//Che fase documentale settare?
+					if(cluster.equalsIgnoreCase('Preventivi')){
+						record.put('Phase__c','Preventivo rifiutato');
+					}
+				}
+			}else {
+				if(status.equalsIgnoreCase('completed')){
+					record.put('DocumentalPhase__c','Plico firmato');					
+				}else{
+					//Che fase documentale settare?			
+				}
+			}
+			handleRadioGroup(record,listOfRadio);
+			handleDataText(record,listOfData);
+			HDT_UTL_DatabaseService.upsertSObject(record);
+		}
+	}
+
+	public static void logDocusignError(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+		if(record != null && requestBody != null){
+			String status = requestBody.status;
+			String processType = (String)record.get('DocumentalProcessType__c');
+			String cluster = (String)record.get('Cluster__c');
+			Id recordId = (Id)record.get('Id');
+			HDT_UTL_DocumentalManagement.createDocumentalActivityForError(requestBody.outcomeDescription, recordId, requestBody.envelopeId, record);
+		}
+	}
+
+	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
+		if(listOfRadio != null && listOfRadio.size()>=0){
+			String individualId;
+			if(record.getSobjectType() == Case.getSobjectType()){
+				Case caseRecord = (Case) record;
+				Contact caseContact = (Contact) caseRecord.Contact;
+				individualId = caseContact.IndividualId;
+			}else{
+				Order orderRecord = (Order) record;
+				Contact orderContact = (Contact) orderRecord.Contact__r;
+				individualId = orderContact.IndividualId;
+			}
+			Individual individualRecord = new Individual();
+			individualRecord.Id = individualId;
+
+			if(record.getSobjectType() == Case.getSobjectType()){
+				//Settare phase del case in completata
+				record.put('Phase__c', 'Completata');
+				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
+					String privacyVersion;
+					String privacyCompany;
+					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
+						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
+							privacyVersion = singleAttachment.Version__c;
+						}
+					}
+					if(singleRadio.selected.equalsIgnoreCase('true')){
+						String value = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+						if(singleRadio.groupName.indexOf('radio1') > -1){
+							record.put('MarketingPrivacy__c', value);
+							individualRecord.MarketingPrivacy__c = value;
+							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
+							individualRecord.PrivacyMarketingChoiceSource__c = 'post-sales';
+							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
+							record.put('ProfilingPrivacy__c', value);
+							individualRecord.ProfilingPrivacy__c = value;
+							individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
+							individualRecord.PrivacyProfilingChoiceSource__c = 'post-sales';
+							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+						}
+					}
+				}
+				HDT_UTL_DatabaseService.updateSObject(individualRecord);
+			}else{
+				//in caso di order aggiornare privacy individual
+				//ricercare contatto primario dell'account, ricercare l'individual e aggiornare flag
+			}
+			
+		}
+	}
+	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
+		//aggiornare i dati catastali
+	}
+
 	@future
 	private static void manageResponseFuture(String responseString, String context){
 		HDT_WRP_DocumentalResponse response = (HDT_WRP_DocumentalResponse) JSON.deserialize(responseString, HDT_WRP_DocumentalResponse.class);
@@ -106,13 +396,14 @@ public class HDT_SRV_DocumentalManagement{
 
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
-			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
+			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
+			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
-				if(response.responseCode == 200 || response.responseCode == 201 ){
-					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,response.deliverPackageResponse.requestId, response.deliverPackageResponse.packageIds,processRecord);
+				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
+					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,recordId, response.deliverPackageResponse.packageIds,processRecord);
 					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
 				}
 			}
@@ -128,13 +419,26 @@ public class HDT_SRV_DocumentalManagement{
 		String context = (String) formParams.get('Contesto') != null? (String) formParams.get('Contesto'):'';
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		String parsedContext = '';
+		String processNumber = '';
 		try{
-			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC')){
+			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
 				parsedContext = 'Case';
-			}else {
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
+				parsedContext='Order';
+			}
+			else {
 				parsedContext=context;
 			}
-			sPackageRequest.requestId = recordId;
+			if(context.equalsIgnoreCase('Case')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
+			}else if(context.equalsIgnoreCase('Order')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'OrderNumber', 0, inputs, formParams);
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', 0, inputs, formParams);
+			}else{
+				processNumber = recordId;
+			}
+			sPackageRequest.requestId = processNumber;
 			sPackageRequest.objectName = parsedContext;
 			sPackageRequest.objectId = recordId;
 			sPackageRequest.signMode = signMode;
@@ -161,7 +465,17 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate templateInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate();
 		try {
 			//signInfo
-			String telephoneNumber = (String) formParams.get('telefono');
+			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumber = '+39';
+			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
+			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
+			if(String.isNotBlank(telephoneNumberCase)){
+				telephoneNumber = telephoneNumber + telephoneNumberCase;
+			}else {
+				telephoneNumber = telephoneNumber + telephoneNumberOrder;
+			}
+			
 			DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
 			signInfo.customerEnvironmentId = docusignCustomSettings.CustomerEnviromentId__c;
 			signInfo.idCheckConfigurationName = docusignCustomSettings.IdCheckConfigurationName__c;
@@ -170,13 +484,18 @@ public class HDT_SRV_DocumentalManagement{
 			signInfo.status = docusignCustomSettings.Status__c;
 			signInfo.senderProvidedNumbers.add(telephoneNumber);
 			//customerInfo
-			String email = (String) formParams.get('email');
+			String email = String.isNotBlank(emailCase)?emailCase:emailOrder;
 			String creationUrl = formParams.get('signMode') == 'OTP Remoto'? 'false':'true';
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
-			String accountName = HDT_UTL_DocumentalManagement.getValue('Account','Name',0,inputs,formParams);
-			String processType = (String) formParams.get('processType');
+			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
+			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
+			String processType = 'Plico contrattuale';
+			if(String.isNotBlank(processTypeCase)){
+				processType = processTypeCase;
+			}
 			customerInfo.email = email;
+			customerInfo.name = accountName;
 			customerInfo.fiscalCode = fiscalCode;
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
@@ -540,7 +859,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			String altriServizi = '';
 			
 			Integer i = -1;
-			String documents = (String) formParams.get('GestioneCredito');
+			String documents = (String) formParams.get('EstrattoConto');
 			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
 			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
 			List<Object> secondoLivelloList = new List<Object>();
@@ -557,12 +876,11 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			for (Object singleRecord : primoLivelloList) {
 				i++;
 				primolivello = (Map<String, Object>) singleRecord;
-				secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
 				String currentCa = (String)primolivello.get('contoContrattuale');
 				Double residuo = Double.valueOf(primolivello.get('residuo'));
 				String modPagamento = (String)primolivello.get('modalitaPagamentoCA');
 				
-				if (String.isNotBlank((String)primolivello.get('OrdineDiPagamento'))) {
+				if (String.isNotBlank((String)primolivello.get('ordineDiPagamento'))) {
 					ordineDiPagamento = true;
 				} else {
 					ordineDiPagamento = false;	
@@ -611,7 +929,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 					//recordOttantuno.add((String)primoLivello.get('numeroFattura'));
 				}
 				recordOttantuno.add((String)primoLivello.get('rateizzato'));
-				if(String.isNotBlank((String)primoLivello.get('DataEmissione'))){
+				if(String.isNotBlank((String)primoLivello.get('dataEmissione'))){
 					String dataEmissione = (String)primoLivello.get('dataEmissione');
 					recordOttantuno.add(dataEmissione);
 				}else{
@@ -642,7 +960,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				altriServizi = '';
 				//NUOVI CAMPI aggiunti al tracciato per la Gestione Credito: CONTRATTO e TIPO_DOCUMENTO 
 				recordOttantuno.add((String)primoLivello.get('contratto'));
-				recordOttantuno.add((String)primoLivello.get('tipoDoc'));
+				recordOttantuno.add((String)primoLivello.get('tipoDocumento'));
 				recordOttantuno.add(fineRiga);
 
 				// STESSO CA
@@ -712,6 +1030,40 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 		return payload.substring(0, payload.length() - fineRiga.length());
 	}
 	
+	// Restituisce il tipo di documento archiviato: 'zip' se il documento è stato firmato con OTP, 'pdf' altrimenti.
+	public static String getDocumentType(SObject documentalObject){
+		if (documentalObject == null) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
+		}
+
+		String signMode = '';
+
+		if (documentalObject.getSobjectType() == DocumentalActivity__c.getSObjectType()) {
+			DocumentalActivity__c documentalActivity = (DocumentalActivity__c) documentalObject;
+			if (String.isNotBlank(documentalActivity.CaseId__c)) {
+				Case c = (Case) documentalActivity.CaseId__r;
+				signMode = c.SignMode__c;
+			} else if (String.isNotBlank(documentalActivity.OrderId__c)) {
+				Order o = (Order) documentalActivity.OrderId__r;
+				signMode = o.SignatureMethod__c;
+			}
+		} else if (documentalObject.getSobjectType() == DocumentSendTracking__c.getSObjectType()) {
+			DocumentSendTracking__c documentSendTracking = (DocumentSendTracking__c) documentalObject;
+			if (String.isNotBlank(documentSendTracking.Case__c)) {
+				Case c = (Case) documentSendTracking.Case__r;
+				signMode = c.SignMode__c;
+			} else if (String.isNotBlank(documentSendTracking.Order__c)) {
+				Order o = (Order) documentSendTracking.Order__r;
+				signMode = o.SignatureMethod__c;
+			}
+		}
+		if (String.isNotBlank(signMode)) {
+			return signMode.contains('OTP') ? 'zip' : 'pdf';	
+		}else {
+			return 'pdf';
+		}
+		
+	}
 
 	public static String getSignModeConfiguration(String processType, String source){
         String configurationJson = '';

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Selezione Fornitura</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="accountId" type="String" role="inputOnly" description="String to use for searching records"/>
+            <property name="groupOptions" type="String" role="inputOnly" description="One or multiple keys from HDT_LC_SaleVas.getFornitura separated by ;"/>
+
+            <property name="recordId" type="String" role="outputOnly"/>
+            <property name="sObjectName" type="String" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

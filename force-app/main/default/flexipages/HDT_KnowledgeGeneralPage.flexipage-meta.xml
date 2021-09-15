@@ -31,16 +31,10 @@
                         <valueListItems>
                             <value>CreateDraftFromOnlineKnowledgeArticleVersion</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.PublishStatus}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Draft</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.ValidationStatus}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Validato Da Pubblicatore</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -50,7 +44,7 @@
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.PublishStatus}</leftValue>
-                                    <operator>NE</operator>
+                                    <operator>EQUAL</operator>
                                     <rightValue>Draft</rightValue>
                                 </criteria>
                                 <criteria>
@@ -146,6 +140,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleVersionHistory</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_UtentiScrittoriApprovatoriPubblicatoriKnowledge}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -217,6 +218,24 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtCloneArticle</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>HDT_RT_Template</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_UtentiScrittoriApprovatoriPubblicatoriKnowledge}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleMasterVersion</componentName>
             </componentInstance>
         </itemInstances>
@@ -238,6 +257,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_UtentiScrittoriApprovatoriPubblicatoriKnowledge}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

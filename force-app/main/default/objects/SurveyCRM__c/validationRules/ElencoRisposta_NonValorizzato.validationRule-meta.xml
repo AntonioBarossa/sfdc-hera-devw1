@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ElencoRisposta_NonValorizzato</fullName>
+    <active>true</active>
+    <description>Il campo Elenco valori Risposta risulta vuoto per un Tipo Risposta &quot;Dominio chiuso&quot;</description>
+    <errorConditionFormula>OR(
+AND(ResponseValueList1__c = &quot;&quot;, ISPICKVAL(TypeResponse1__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList2__c = &quot;&quot;, ISPICKVAL(TypeResponse2__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList3__c = &quot;&quot;, ISPICKVAL(TypeResponse3__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList4__c = &quot;&quot;, ISPICKVAL(TypeResponse4__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList5__c = &quot;&quot;, ISPICKVAL(TypeResponse5__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList6__c = &quot;&quot;, ISPICKVAL(TypeResponse6__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList7__c = &quot;&quot;, ISPICKVAL(TypeResponse7__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList8__c = &quot;&quot;, ISPICKVAL(TypeResponse8__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList9__c = &quot;&quot;, ISPICKVAL(TypeResponse9__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList10__c = &quot;&quot;, ISPICKVAL(TypeResponse10__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList11__c = &quot;&quot;, ISPICKVAL(TypeResponse11__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList12__c = &quot;&quot;, ISPICKVAL(TypeResponse12__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList13__c = &quot;&quot;, ISPICKVAL(TypeResponse13__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList14__c = &quot;&quot;, ISPICKVAL(TypeResponse14__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList15__c = &quot;&quot;, ISPICKVAL(TypeResponse15__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList16__c = &quot;&quot;, ISPICKVAL(TypeResponse16__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList17__c = &quot;&quot;, ISPICKVAL(TypeResponse17__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList18__c = &quot;&quot;, ISPICKVAL(TypeResponse18__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList19__c = &quot;&quot;, ISPICKVAL(TypeResponse19__c, &quot;Dominio chiuso&quot;)),
+AND(ResponseValueList20__c = &quot;&quot;, ISPICKVAL(TypeResponse20__c, &quot;Dominio chiuso&quot;))
+)</errorConditionFormula>
+    <errorMessage>L&apos;elenco valori è obbligatorio per risposte di Tipo &quot;Dominio Chiuso&quot;</errorMessage>
+</ValidationRule>

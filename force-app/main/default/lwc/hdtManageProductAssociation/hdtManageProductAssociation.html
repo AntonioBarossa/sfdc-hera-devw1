@@ -1,0 +1,44 @@
+<template>
+
+    <template if:true={showError} >
+        <c-hdt-error-modal-message
+            header={errorHeader}
+            body-message={errorMessage}
+            header-class="slds-text-heading_large"
+            body-class="slds-text-heading_medium"
+            oncloseerrormodal={closeModal}
+        ></c-hdt-error-modal-message>
+    </template>
+
+    <template if:true={showWelcom} >
+        <c-hdt-choose-association-operation
+            icon-name="standard:product_service_campaign"
+            main-title-label={label.mainTitle}
+            delete-title-label={label.deleteTitleLabel}
+            association-title-label={label.associationTitleLabel}
+            onclosemodal={closeModal}
+            oncreateassociation={createAssociation}
+            ondeleteassociation={deleteAssociation}
+        ></c-hdt-choose-association-operation>
+    </template>
+
+    <!--<div if:true={showCreateRecord} ></div>-->
+    <template if:true={showCreateRecord} >
+        <c-hdt-product-option-edit-form
+            optional-sku-id={productid}
+            oncloseeditform={closeEditForm}
+            onsaverecord={saveRecord}
+        ></c-hdt-product-option-edit-form>
+    </template>
+
+    <template if:true={showSearchTable} >
+        <c-hdt-product-association-search-table
+            dml-context={dmlContext}
+            optional-sku-id={productid}
+            product-option-obj={productOptionObj}
+            product-option-id={productOptionId}
+            onclosemodal={closeModal}
+        ></c-hdt-product-association-search-table>
+    </template>
+
+</template>

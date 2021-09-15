@@ -4,9 +4,10 @@
     <description>Numero di occorrenza, una colonna della tabella 26 utile ad identificare i dati corretti da inviare</description>
     <externalId>false</externalId>
     <label>Occorrenza</label>
-    <length>255</length>
+    <precision>2</precision>
     <required>false</required>
+    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

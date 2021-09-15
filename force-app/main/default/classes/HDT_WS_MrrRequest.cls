@@ -9,6 +9,13 @@
 global with sharing class HDT_WS_MrrRequest {
 
     private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
+    
+    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
+                                                                                 'Esito ricevuto su richiesta chiusa',
+                                                                                 'Esito non elaborato',
+                                                                                 'Errore invio a SAP',
+                                                                                 'Eliminato esito in scarto',
+                                                                                 'Errore determinazione variante SAP'};
 
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
@@ -47,6 +54,25 @@ global with sharing class HDT_WS_MrrRequest {
 
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
             
+            //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
+            List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
+            for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
+                HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
+                    for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                        if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
+                            Map<String,String> newData = new Map<String,String>();
+                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
+                            for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
+                            dataForAttivitaTracciaturaCreation.add(newData);
+                        }
+                    }
+                }
+            }
+            System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + dataForAttivitaTracciaturaCreation);
+            if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+            //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
+
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
@@ -56,16 +82,21 @@ global with sharing class HDT_WS_MrrRequest {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
                 }
             }
+
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
-                //INIZIO SVILUPPI EVERIS
-                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                mrrResponseItem.objects.clear();
-                postSalesRequest = requestBody.requests[0];
-                responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
-                mrrResponseItem.objects.add(responseObject);
-                //FINE SVILUPPI EVERIS
+                if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
+                    mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
+                }
+                else {
+                    //INIZIO SVILUPPI EVERIS
+                    mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                    mrrResponseItem.objects.clear();
+                    postSalesRequest = requestBody.requests[0];
+                    responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
+                    mrrResponseItem.objects.add(responseObject);
+                    //FINE SVILUPPI EVERIS
+                }
             }
-            
         } catch (JSONException jsonEx) {
 
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
@@ -87,7 +118,28 @@ global with sharing class HDT_WS_MrrRequest {
 
             RestContext.response.statusCode = 400;
 
-        } catch(Exception e) {
+        }catch(CustomMessageException e){
+
+            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug('errorMessage: ' + e.getMessage());
+            System.debug('errorStack: ' + e.getStackTraceString());
+
+            mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
+
+            responseField.fieldType = 'TEXT';
+            responseField.name = 'ESITO';
+            responseField.value = 'KO';
+
+            responseFieldError.fieldType = 'TEXT';
+            responseFieldError.name = 'ERROR_MESSAGE';
+            responseFieldError.value = e.getMessage();
+
+            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+            mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
+
+            RestContext.response.statusCode = 500;
+
+        }catch(Exception e) {
             
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
             System.debug('errorMessage: ' + e.getMessage());
@@ -120,5 +172,8 @@ global with sharing class HDT_WS_MrrRequest {
         RestContext.response.headers.put('Content-Type', 'application/json');
 
     }
+
+
+    public virtual class CustomMessageException extends Exception{}
 
 }

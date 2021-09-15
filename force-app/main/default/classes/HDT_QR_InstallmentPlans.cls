@@ -76,6 +76,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         Deposit__c,
         DepositAmount__c,
         Amount__c,
+        TotalPaidCustomer__c,
         CutomerAssisted__c,
         RefundableEscape__c,
         TotalToPay__c,
@@ -118,7 +119,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
             cases = [SELECT Id
             FROM Case
-            WHERE Type = 'Sospesione Fornitura'
+            WHERE Type = 'Sospensione Fornitura'
             AND Phase__c = 'Completata'
             AND CreatedDate >= :pastTwelveMonth
             AND AccountId = :accountId

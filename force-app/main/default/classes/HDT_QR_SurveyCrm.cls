@@ -1,0 +1,34 @@
+public with sharing class HDT_QR_SurveyCrm {
+
+    // public static List<SurveyCRM__c> getSurveys(List<String> campaignIds, String fields) {
+
+    //     String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE Campaign__c IN :campaignIds';
+    //     List<SurveyCRM__c> surveys = Database.query(query);
+
+    //     return surveys;
+
+    // }
+
+    public static List<SurveyCRM__c> getSurveys(List<String> campaignIds, String fields) {
+        List<Campaign> campaigns = [SELECT Id, SurveyCRM__c FROM Campaign WHERE Id IN :campaignIds WITH SECURITY_ENFORCED];
+        List<String> surveyIds = new List<String>();
+        for (Campaign campaign : campaigns) {
+            if (campaign.SurveyCRM__c != null) {
+                surveyIds.add('\'' + campaign.SurveyCRM__c + '\'');
+            }
+        }
+        system.debug(surveyIds);
+        String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE Id IN ' + surveyIds;
+        List<SurveyCRM__c> surveys = Database.query(query);
+
+        return surveys;
+
+    }
+
+    public static List<SurveyCRM__c> getSurvey(String id, String fields) {
+
+        String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE id = :id';
+        List<SurveyCRM__c> surveys = Database.query(query);
+        return surveys;
+    }
+}

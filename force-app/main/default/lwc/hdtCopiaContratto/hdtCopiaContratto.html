@@ -1,0 +1,62 @@
+<template>
+    
+        <lightning-card title="Gestione Ordini">
+            
+            <lightning-datatable
+                key-field="id"
+                data={ordersList}
+                columns={columns}
+                max-row-selection="1"
+                
+                onrowselection= {selectedRowHandler}
+            ></lightning-datatable>
+         
+        </lightning-card>
+        <template if:true={showChildList}>
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col slds-grid">
+                    <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                            <lightning-combobox data-id="tipoCopia" name="TipoCopia" label="Tipo Copia"
+                                placeholder="Seleziona Tipologia..." options={tipoCopiaOptions}
+                                onchange={changeValueTipo}
+                                required>
+                            </lightning-combobox>
+                    </div>
+                    <template if:true={showChildList2}>
+                        <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                            <lightning-combobox data-id="tipoCopia" name="TipoAttivita" label="Tipo Attività"
+                                placeholder="Seleziona Tipo Attività..." options={tipoAttivitaOptions}
+                                onchange={changeValueTipoAttivita}
+                                required>
+                            </lightning-combobox>
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+            <br/>
+            <template if:true={showChildList2}>
+                <lightning-card title="Ordini Figli">
+                    <lightning-datatable
+                        key-field="id"
+                        data={orderChildList}
+                        hidecheckboxcolumn={hideCheck}
+                        selectedrow={selectedrowchild}
+                        columns={columnsChild}
+                    ></lightning-datatable>
+                </lightning-card>
+            </template>
+            <template if:true={typeActivity}>
+                <c-hdt-upload-documents title="Allega Fatture" record-id={recordid} accepted-formats={acceptedFormats}></c-hdt-upload-documents>
+            </template>
+            <template if:true={showButtonPreview}>
+                <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-button onclick={handlePreview} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
+                </div>
+            </template>
+            <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                <lightning-button onclick={handleConfirm} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Conferma" title="Conferma"></lightning-button>
+            </div>
+        </template>
+
+</template>

@@ -1,6 +1,6 @@
 public inherited sharing class HDT_SRV_PaymentCommunication {
 
-    HDT_QR_PaymentCommunication paymentQr = new HDT_QR_PaymentCommunication();
+    HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
     public String createRequestBody(String recordId){
@@ -14,8 +14,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         Case currentCase = new Case();
         String pretty;
 
-        currentCase = paymentQr.getCaseById(recordId);
-        documents = paymentQr.getDocumentSelectedByCase(recordId);
+        currentCase = paymentsQr.getCaseById(recordId);
+        documents = paymentsQr.getDocumentSelectedByCase(recordId);
 
         System.debug('SRV_PaymenCommunication Case--> '+currentCase);
         System.debug('SRV_PaymentCommunication Documetns--> '+documents);
@@ -24,7 +24,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
             'rds' => currentCase.CaseNumber,
             'totale' => currentCase.TotalToPay__c,
             'residuo' => currentCase.TotalToPay__c,
-            'importo' => currentCase.TotalPaidCustomer__c
+            'importo' => currentCase.Amount__c
         };
 
         caseListMap.add(caseMap);
@@ -41,7 +41,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                     'numeroBollettino' => document.Bill__c,
                     'numeroFattura' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
                     'numeroFattura1' => '',
-                    'rataFattura' => '',
+                    'rataFattura' => 'RATEIZZAZIONI' == document.Type__c ? document.DocumentNumber__c : '',
                     'scadenza' => document.ExpirationDate__c,
                     'infoBlocco' => '',
                     'idProcesso' => '',

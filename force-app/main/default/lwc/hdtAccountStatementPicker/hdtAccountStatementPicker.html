@@ -9,8 +9,8 @@
                     <div class="slds-col slds-size_1-of-4">
                         <lightning-input 
                             type="number"
-                            label="Totale Importo"
-                            value={amountWoFee}
+                            label="Totale Importo selezionato"
+                            value={amountWiFee}
                             disabled="true"
                             variant="label-stacked"
                         ></lightning-input>
@@ -18,17 +18,25 @@
                     <div class="slds-col slds-size_1-of-4">
                         <lightning-input 
                         type="number"
-                        label="Totale Importo con Canone Rai"
-                        value={amountWiFee}
+                        label="Totale Importo senza Canone Rai"
+                        value={amountWoFee}
+                        disabled="true"
+                        variant="label-stacked"
+                    ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-input 
+                        type="number"
+                        label="Totale Residuo Fatture Selezionate"
+                        value={documentResiudal}
                         disabled="true"
                         variant="label-stacked"
                     ></lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-4"></div>
-                    <div class="slds-col slds-size_1-of-4"></div>
                 </div>
                 <template if:true={documents}>
-                    <div style="max-height: 300px;">
+                    <div style="height: 300px;">
                         <lightning-datatable onrowaction={handleRowAction} key-field="id" data={documents}
                             columns={columnsDocumentSelected} hide-checkbox-column column-widths-mode="auto">
                         </lightning-datatable>

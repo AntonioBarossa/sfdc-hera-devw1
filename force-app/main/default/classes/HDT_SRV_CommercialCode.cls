@@ -1,3 +1,10 @@
+/**
+* @author Fatjola Memishaj (fatjola.memishaj@dunegroup.it)
+* @date 06/05/2021
+* @description Initialize security access instance
+* @history Fatjola Memishaj 06/05/2021 Created class
+*/
+
 public inherited sharing class HDT_SRV_CommercialCode {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
@@ -38,6 +45,11 @@ public inherited sharing class HDT_SRV_CommercialCode {
     public CommercialCode__c createRecord(CommercialCode__c cc){
         List<String> fields = helperMethods.getObjAttrList(cc);
         checkUpdateAccess(String.join(fields, ','));
+        HDT_UTL_DatabaseService.insertSObject(cc);
+        return cc;
+    }
+
+    public List<CommercialCode__c> createRecords(List<CommercialCode__c> cc){
         HDT_UTL_DatabaseService.insertSObject(cc);
         return cc;
     }

@@ -179,6 +179,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PraxidiaPostWorkAction__c</picklist>
         <values>
             <fullName>Contattare tramite email</fullName>
@@ -267,6 +282,45 @@
             <fullName>Null</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SuspensionReason__c</picklist>
+        <values>
+            <fullName>Approfondimenti in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa dettagli richiedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa di esito da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esito lavorazione esterna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa integrazione documenti da parte cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa integrazione documenti%2FVO da agenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa ricontatto cliente non trovato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto parere ad altra struttura</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Type__c</picklist>
@@ -287,14 +341,6 @@
         </values>
         <values>
             <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
             <default>false</default>
         </values>
     </picklistValues>

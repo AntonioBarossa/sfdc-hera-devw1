@@ -69,19 +69,27 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
                 if(currentCase.Phase__c == 'KO definitivo'
-                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
+                || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) == 0){
                     parentCase.Phase__c = 'Elaborazione Manuale';
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
-            } else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
+            }else if(parentCase.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente') || parentCase.Type.equalsIgnoreCase('Marcatura/Uso PdR')){
+                parentCase.Phase__c = 'Elaborazione Manuale';
+            }
+             else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
                 if(currentCase.Phase__c.equalsIgnoreCase('KO definitivo')){
-                    wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
-                    activity.Case__c = currentCase.Id;
+                    wrts_prcgvr__Activity__c activity = createActivity('Gestione Manuale');
+                    activity.Case__c = parentCase.Id;
                     HDT_UTL_DatabaseService.insertSObject(activity);
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
+            } else if(parentCase.Type.equalsIgnoreCase('Gestione Disalimentabilità')){
+                wrts_prcgvr__Activity__c activity = createActivity('Gestione Manuale SAP');
+                activity.Case__c = parentCase.Id;
+                activity.wrts_prcgvr__IsRequired__c	= true;
+                HDT_UTL_DatabaseService.insertSObject(activity);
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
@@ -278,6 +286,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    public void innescoAllineamentoAnagraficaGestioneDisalimentabilita(SObject inputCase) {
+        if (inputCase == null) {
+            System.debug('innescoAllineamentoGestioneDisalimentabilita: null input case.');
+            return;
+        }
+
+        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case di Gestione Disalimentabilità: ' + inputCase.Id);
+
+        try {
+            List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.GESTIONE_DISALIMENTABILITA);
+            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        } catch (Exception ex) {
+            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+        }
+    }
+
     public void evaluateEffectiveDate(SObject inputOrder){
 
         Order currentOrder = (Order) inputOrder;
@@ -328,6 +352,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
         }
+    }
+
+    public void updateServicePoint(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        ServicePoint__c servicePoint = new ServicePoint__c();
+        servicePoint.Id             = currentCase.ServicePoint__c;
+        servicePoint.UseCategory__c = currentCase.UseCategory__c;
+        servicePoint.SupplyType__c  = currentCase.SupplyType__c;
+        servicePoint.ImplantType__c	= currentCase.ServicePointType__c;
+        HDT_UTL_DatabaseService.updateSObject(servicePoint);
+
     }
 
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first

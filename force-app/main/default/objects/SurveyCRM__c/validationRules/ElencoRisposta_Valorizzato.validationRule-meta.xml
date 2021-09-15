@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ElencoRisposta_Valorizzato</fullName>
+    <active>true</active>
+    <description>Il campo Elenco valori Risposta risulta valorizzato per un Tipo Risposta diverso da &quot;Dominio chiuso&quot;</description>
+    <errorConditionFormula>OR(
+AND(ResponseValueList1__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse1__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList2__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse2__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList3__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse3__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList4__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse4__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList5__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse5__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList6__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse6__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList7__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse7__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList8__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse8__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList9__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse9__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList10__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse10__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList11__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse11__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList12__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse12__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList13__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse13__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList14__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse14__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList15__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse15__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList16__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse16__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList17__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse17__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList18__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse18__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList19__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse19__c, &quot;Dominio chiuso&quot;))),
+AND(ResponseValueList20__c &lt;&gt; &quot;&quot;, NOT(ISPICKVAL(TypeResponse20__c, &quot;Dominio chiuso&quot;)))
+)</errorConditionFormula>
+    <errorMessage>L&apos;elenco valori deve essere valorizzato solo per risposte di Tipo &quot;Dominio Chiuso&quot;</errorMessage>
+</ValidationRule>

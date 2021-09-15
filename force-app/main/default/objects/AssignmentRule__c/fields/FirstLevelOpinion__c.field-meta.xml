@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FirstLevelOpinion__c</fullName>
+    <externalId>false</externalId>
+    <label>Parere Primo Livello</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_FirstLevelOpinion</valueSetName>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

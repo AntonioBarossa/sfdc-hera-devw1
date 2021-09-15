@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customLabels>
+        <label>Non è possibile richiedere la certificazione per Account non di tipo “Customer”</label>
+        <name>AccountCantBeCertified</name>
+    </customLabels>
+    <customLabels>
+        <label>È già stata richiesta la certificazione per questo Contact Point</label>
+        <name>CertificationAlreadyInProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>Non è possibile richiedere la certificazione per un Contact Point già verificato</label>
+        <name>ContactPointAlreadyCertified</name>
+    </customLabels>
+    <customLabels>
         <label>Errore</label>
         <name>Error</name>
     </customLabels>
@@ -73,7 +85,23 @@
         <name>MassiveLoaderReset</name>
     </customLabels>
     <customLabels>
+        <label>Non è possibile richiedere la certificazione di un Lead</label>
+        <name>LeadCantBeCertified</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo oggetto non supportato per questa operazione</label>
+        <name>ObjectNotAllowedForCertification</name>
+    </customLabels>
+    <customLabels>
         <label>Successo</label>
         <name>Success</name>
+    </customLabels>
+    <customLabels>
+        <label>La richiesta di certificazione è stata creata con successo</label>
+        <name>SuccessfulCertificationRequest</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo Oggetto non supportato per questa azione</label>
+        <name>UnsupportedObjectType</name>
     </customLabels>
 </Translations>

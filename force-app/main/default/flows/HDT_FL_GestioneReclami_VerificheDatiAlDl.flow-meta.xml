@@ -69,7 +69,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>4334</locationY>
+        <locationY>4598</locationY>
         <assignmentItems>
             <assignToReference>GetCaseFinale.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -121,6 +121,13 @@
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Flow_Case_Aggiornato.ReadingDateDisputed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DisputedDateFormula</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
         </connector>
@@ -134,11 +141,11 @@
             <assignToReference>Get_Flow_Case_Aggiornato.ReadingDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>hdtSelfReading.readingCustomerDate</elementReference>
+                <elementReference>ReadingDateFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>aggiornaCase_0_0</targetReference>
+            <targetReference>GetLetture</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -178,6 +185,59 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_1_0_0</name>
+        <label>AssegnaValori</label>
+        <locationX>974</locationX>
+        <locationY>1670</locationY>
+        <assignmentItems>
+            <assignToReference>FlowCase.EndCustomerRequestType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EndCustomerFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriLetture</name>
+        <label>AssegnaValoriLetture</label>
+        <locationX>842</locationX>
+        <locationY>3662</locationY>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedMeterValue__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LetturaContestataGas</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedReadingValue1__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContestataF1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedReadingValue2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContestataF2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedReadingValue3__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContestataF3</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaLettura</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -364,7 +424,7 @@
         <name>Dati_Tecnici_M03_0</name>
         <label>Dati Tecnici M03?</label>
         <locationX>710</locationX>
-        <locationY>3974</locationY>
+        <locationY>4238</locationY>
         <defaultConnector>
             <targetReference>GetCaseFinale</targetReference>
         </defaultConnector>
@@ -503,7 +563,7 @@
         <locationX>842</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
-            <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+            <targetReference>AssegnaValori_1_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -551,7 +611,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1040</locationX>
-        <locationY>3854</locationY>
+        <locationY>4118</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -643,9 +703,19 @@
         <expression>{!$Flow.CurrentDateTime} - 50</expression>
     </formulas>
     <formulas>
+        <name>DisputedDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE({!DataLetturaStringa})</expression>
+    </formulas>
+    <formulas>
         <name>EndCustomerFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!ParentRecordId}), &quot;Reclamo Telefonico&quot;,IF(TEXT({!GetParentCase.ComplaintType__c})=&quot;Reclamo Scritto&quot;,&quot;Reclamo Scritto&quot;,&quot;Richiesta Info Scritta&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>ReadingDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE(TEXT({!hdtSelfReading.readingCustomerDate}))</expression>
     </formulas>
     <formulas>
         <name>VecchioTentativoNonScaduto</name>
@@ -760,7 +830,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>4214</locationY>
+        <locationY>4478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -914,7 +984,7 @@
         <name>GetCaseFinale</name>
         <label>GetCaseFinale</label>
         <locationX>842</locationX>
-        <locationY>4094</locationY>
+        <locationY>4358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -929,6 +999,34 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetLetture</name>
+        <label>GetLetture</label>
+        <locationX>842</locationX>
+        <locationY>3542</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValoriLetture</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>CaseEle__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CaseGas__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Reading__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -996,17 +1094,27 @@
         <name>aggiornaCase_0_0</name>
         <label>aggiornaCase</label>
         <locationX>1040</locationX>
-        <locationY>3734</locationY>
+        <locationY>3998</locationY>
         <connector>
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
         </connector>
         <inputReference>Get_Flow_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>AggiornaLettura</name>
+        <label>AggiornaLettura</label>
+        <locationX>842</locationX>
+        <locationY>3782</locationY>
+        <connector>
+            <targetReference>aggiornaCase_0_0</targetReference>
+        </connector>
+        <inputReference>GetLetture</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>4454</locationY>
+        <locationY>4718</locationY>
         <inputReference>GetCaseFinale</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1033,6 +1141,74 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>hdtRecordViewForm</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Processo M01 - Riepilogo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Flow_Case_Aggiornato.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>Get_Flow_Case_Aggiornato.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
             <name>hdtSelfReading</name>
             <extensionName>c:hdtSelfReading</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1051,7 +1227,7 @@
             <inputParameters>
                 <name>disabledReadingDate</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1168,6 +1344,61 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtMeterReadingTable</name>
+            <extensionName>c:hdtMeterReadingDetailTableFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>nonStandAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractNumber</name>
+                <value>
+                    <elementReference>FlowCase.ContractCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRows</name>
+                <value>
+                    <stringValue>1</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>ContestataF1</assignToReference>
+                <name>disputedReadingOne</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>ContestataF2</assignToReference>
+                <name>disputedReadingTwo</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>ContestataF3</assignToReference>
+                <name>disputedReadingThree</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>DataLetturaStringa</assignToReference>
+                <name>selectedReadingDateString</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>LetturaContestataGas</assignToReference>
+                <name>disputedReading</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>hdtCustomPicklist.outcome</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Processo M01</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>hdtRecordEditFormM01</name>
@@ -1503,7 +1734,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>3974</locationY>
+        <locationY>4238</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1553,6 +1784,37 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>ContestataF1</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>ContestataF2</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>ContestataF3</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>DataLetturaStringa</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>FlowCase</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1575,6 +1837,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>LetturaContestataGas</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
     <variables>
         <name>ParentRecordId</name>

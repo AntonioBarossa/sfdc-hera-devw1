@@ -1,0 +1,17 @@
+<!-- 
+ 
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+    * @date 07/09/2021
+    * @description HDT_LCP_CreateDistributorApointmentActivity
+    * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+
+ -->
+
+<aura:component implements="force:lightningQuickActionWithoutHeader, force:hasRecordId">
+    
+    <aura:attribute name="recordId" type="String" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+
+    <c:hdtCreateDistributorApointmentActivity recordId="{!v.recordId}" onactivitycreated="{!c.handleActivityNavigation}" onactivityerror="{!c.handleError}"></c:hdtCreateDistributorApointmentActivity>
+
+</aura:component>	

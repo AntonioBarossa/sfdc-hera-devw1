@@ -1,0 +1,1316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Subject__c</fullName>
+    <externalId>false</externalId>
+    <label>Argomento</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Acceso Piattaforme documentali</fullName>
+                <default>false</default>
+                <label>Acceso Piattaforme documentali</label>
+            </value>
+            <value>
+                <fullName>Addebito su fornitura diversa da domestica residente</fullName>
+                <default>false</default>
+                <label>Addebito su fornitura diversa da domestica residente</label>
+            </value>
+            <value>
+                <fullName>Allineamenti Contrattuali richiesti dal Distributore Locale</fullName>
+                <default>false</default>
+                <label>Allineamenti Contrattuali richiesti dal Distributore Locale</label>
+            </value>
+            <value>
+                <fullName>Allineamento portafoglio</fullName>
+                <default>false</default>
+                <label>Allineamento portafoglio</label>
+            </value>
+            <value>
+                <fullName>Ambiente</fullName>
+                <default>false</default>
+                <label>Ambiente</label>
+            </value>
+            <value>
+                <fullName>Amministrazione Assegnatore regole</fullName>
+                <default>false</default>
+                <label>Amministrazione Assegnatore regole</label>
+            </value>
+            <value>
+                <fullName>Amministrazione Attività - campi</fullName>
+                <default>false</default>
+                <label>Amministrazione Attività - campi</label>
+            </value>
+            <value>
+                <fullName>Amministrazione Sistemi</fullName>
+                <default>false</default>
+                <label>Amministrazione Sistemi</label>
+            </value>
+            <value>
+                <fullName>Analisi Reclamo Operatività CC</fullName>
+                <default>false</default>
+                <label>Analisi Reclamo Operatività CC</label>
+            </value>
+            <value>
+                <fullName>Assistenza procedurale e gestione pratiche</fullName>
+                <default>false</default>
+                <label>Assistenza procedurale e gestione pratiche</label>
+            </value>
+            <value>
+                <fullName>Attività concordate</fullName>
+                <default>false</default>
+                <label>Attività concordate</label>
+            </value>
+            <value>
+                <fullName>Bonus mancante</fullName>
+                <default>false</default>
+                <label>Bonus mancante</label>
+            </value>
+            <value>
+                <fullName>Business</fullName>
+                <default>false</default>
+                <label>Business</label>
+            </value>
+            <value>
+                <fullName>C_Malfunzionamento processi</fullName>
+                <default>false</default>
+                <label>C_Malfunzionamento processi</label>
+            </value>
+            <value>
+                <fullName>C_Malfunzionamento sistemi/funzionalità</fullName>
+                <default>false</default>
+                <label>C_Malfunzionamento sistemi/funzionalità</label>
+            </value>
+            <value>
+                <fullName>C_Post avvio progetti</fullName>
+                <default>false</default>
+                <label>C_Post avvio progetti</label>
+            </value>
+            <value>
+                <fullName>Cessione credito</fullName>
+                <default>false</default>
+                <label>Cessione credito</label>
+            </value>
+            <value>
+                <fullName>Chiarimento su importo o numero rate</fullName>
+                <default>false</default>
+                <label>Chiarimento su importo o numero rate</label>
+            </value>
+            <value>
+                <fullName>Cliente critico</fullName>
+                <default>false</default>
+                <label>Cliente critico</label>
+            </value>
+            <value>
+                <fullName>Cliente senza servizio</fullName>
+                <default>false</default>
+                <label>Cliente senza servizio</label>
+            </value>
+            <value>
+                <fullName>Clienti senza fornitura, urgenza attività</fullName>
+                <default>false</default>
+                <label>Clienti senza fornitura, urgenza attività</label>
+            </value>
+            <value>
+                <fullName>Clienti TOP Business/Grandi Condomini</fullName>
+                <default>false</default>
+                <label>Clienti TOP Business/Grandi Condomini</label>
+            </value>
+            <value>
+                <fullName>Comportamento della Banca (Bollettino, CBILL etc)</fullName>
+                <default>false</default>
+                <label>Comportamento della Banca (Bollettino, CBILL etc)</label>
+            </value>
+            <value>
+                <fullName>Comportamento della Provider (Sisal, Lottomatica, Coop, etc)</fullName>
+                <default>false</default>
+                <label>Comportamento della Provider (Sisal, Lottomatica, Coop, etc)</label>
+            </value>
+            <value>
+                <fullName>Comprensione voci invito a fatturare</fullName>
+                <default>false</default>
+                <label>Comprensione voci invito a fatturare</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni urgenti Linea Diretta</fullName>
+                <default>false</default>
+                <label>Comunicazioni urgenti Linea Diretta</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni urgenti Supporto Agenzie</fullName>
+                <default>false</default>
+                <label>Comunicazioni urgenti Supporto Agenzie</label>
+            </value>
+            <value>
+                <fullName>Consip</fullName>
+                <default>false</default>
+                <label>Consip</label>
+            </value>
+            <value>
+                <fullName>Contatore chiuso - intervento straordinario</fullName>
+                <default>false</default>
+                <label>Contatore chiuso - intervento straordinario</label>
+            </value>
+            <value>
+                <fullName>Contestaz cliente a diffida legale</fullName>
+                <default>false</default>
+                <label>Contestaz cliente a diffida legale</label>
+            </value>
+            <value>
+                <fullName>Contestazione addebito con dichiarazione di non detenzione/esenzione</fullName>
+                <default>false</default>
+                <label>Contestazione addebito con dichiarazione di non detenzione/esenzione</label>
+            </value>
+            <value>
+                <fullName>Contratti</fullName>
+                <default>false</default>
+                <label>Contratti</label>
+            </value>
+            <value>
+                <fullName>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</fullName>
+                <default>false</default>
+                <label>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</label>
+            </value>
+            <value>
+                <fullName>Copia documentazione</fullName>
+                <default>false</default>
+                <label>Copia documentazione</label>
+            </value>
+            <value>
+                <fullName>Credito Morosità</fullName>
+                <default>false</default>
+                <label>Credito Morosità</label>
+            </value>
+            <value>
+                <fullName>Credito prescritto da chiudere a perdita</fullName>
+                <default>false</default>
+                <label>Credito prescritto da chiudere a perdita</label>
+            </value>
+            <value>
+                <fullName>Default</fullName>
+                <default>false</default>
+                <label>Default</label>
+            </value>
+            <value>
+                <fullName>Default Verifiche</fullName>
+                <default>false</default>
+                <label>Default Verifiche</label>
+            </value>
+            <value>
+                <fullName>Diffide da protocollo</fullName>
+                <default>false</default>
+                <label>Diffide da protocollo</label>
+            </value>
+            <value>
+                <fullName>Errori ambiente</fullName>
+                <default>false</default>
+                <label>Errori ambiente</label>
+            </value>
+            <value>
+                <fullName>Errori di fatturazione con operandi/tariffe ENERGY E NON ENERGY</fullName>
+                <default>false</default>
+                <label>Errori di fatturazione con operandi/tariffe ENERGY E NON ENERGY</label>
+            </value>
+            <value>
+                <fullName>Errori di fatturazione mercato Retail aziende Business</fullName>
+                <default>false</default>
+                <label>Errori di fatturazione mercato Retail aziende Business</label>
+            </value>
+            <value>
+                <fullName>Errori Tari</fullName>
+                <default>false</default>
+                <label>Errori Tari</label>
+            </value>
+            <value>
+                <fullName>Errori TCP</fullName>
+                <default>false</default>
+                <label>Errori TCP</label>
+            </value>
+            <value>
+                <fullName>Estremi rimborso con assegno FAD</fullName>
+                <default>false</default>
+                <label>Estremi rimborso con assegno FAD</label>
+            </value>
+            <value>
+                <fullName>Estremi rimborso con bonifico bancario</fullName>
+                <default>false</default>
+                <label>Estremi rimborso con bonifico bancario</label>
+            </value>
+            <value>
+                <fullName>Estremi rimborso con bonifico domiciliato postale</fullName>
+                <default>false</default>
+                <label>Estremi rimborso con bonifico domiciliato postale</label>
+            </value>
+            <value>
+                <fullName>Famiglie</fullName>
+                <default>false</default>
+                <label>Famiglie</label>
+            </value>
+            <value>
+                <fullName>Fatturazione</fullName>
+                <default>false</default>
+                <label>Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Fatturazione elettronica XML_BI_VT_SD_RS</fullName>
+                <default>false</default>
+                <label>Fatturazione elettronica XML_BI_VT_SD_RS</label>
+            </value>
+            <value>
+                <fullName>Fatturazione SD</fullName>
+                <default>false</default>
+                <label>Fatturazione SD</label>
+            </value>
+            <value>
+                <fullName>Fatturazione spese legali</fullName>
+                <default>false</default>
+                <label>Fatturazione spese legali</label>
+            </value>
+            <value>
+                <fullName>Fidelizzazione mancante</fullName>
+                <default>false</default>
+                <label>Fidelizzazione mancante</label>
+            </value>
+            <value>
+                <fullName>FUI</fullName>
+                <default>false</default>
+                <label>FUI</label>
+            </value>
+            <value>
+                <fullName>Gestione attività di processo</fullName>
+                <default>false</default>
+                <label>Gestione attività di processo</label>
+            </value>
+            <value>
+                <fullName>Gestione Blocchi al Calcolo</fullName>
+                <default>false</default>
+                <label>Gestione Blocchi al Calcolo</label>
+            </value>
+            <value>
+                <fullName>Gestione cliente a portafoglio</fullName>
+                <default>false</default>
+                <label>Gestione cliente a portafoglio</label>
+            </value>
+            <value>
+                <fullName>Incongruenze SAP</fullName>
+                <default>false</default>
+                <label>Incongruenze SAP</label>
+            </value>
+            <value>
+                <fullName>Info andamento contrattuale</fullName>
+                <default>false</default>
+                <label>Info andamento contrattuale</label>
+            </value>
+            <value>
+                <fullName>Info Bollette</fullName>
+                <default>false</default>
+                <label>Info Bollette</label>
+            </value>
+            <value>
+                <fullName>Info KO</fullName>
+                <default>false</default>
+                <label>Info KO</label>
+            </value>
+            <value>
+                <fullName>Invio PEC al DL</fullName>
+                <default>false</default>
+                <label>Invio PEC al DL</label>
+            </value>
+            <value>
+                <fullName>Invito a fatturare non ricevuto</fullName>
+                <default>false</default>
+                <label>Invito a fatturare non ricevuto</label>
+            </value>
+            <value>
+                <fullName>Mancata archiviazione documenti di fatturazione (PDF/XML)</fullName>
+                <default>false</default>
+                <label>Mancata archiviazione documenti di fatturazione (PDF/XML)</label>
+            </value>
+            <value>
+                <fullName>mancata erogazione Bonus</fullName>
+                <default>false</default>
+                <label>mancata erogazione Bonus</label>
+            </value>
+            <value>
+                <fullName>Mancata rateizzazione</fullName>
+                <default>false</default>
+                <label>Mancata rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Mancato addebito con SII allineato</fullName>
+                <default>false</default>
+                <label>Mancato addebito con SII allineato</label>
+            </value>
+            <value>
+                <fullName>Mancato pagamento</fullName>
+                <default>false</default>
+                <label>Mancato pagamento</label>
+            </value>
+            <value>
+                <fullName>Misure EE</fullName>
+                <default>false</default>
+                <label>Misure EE</label>
+            </value>
+            <value>
+                <fullName>Misure GAS</fullName>
+                <default>false</default>
+                <label>Misure GAS</label>
+            </value>
+            <value>
+                <fullName>Modifica MRU BIDONE e/o periodicità mercato Retail e Business</fullName>
+                <default>false</default>
+                <label>Modifica MRU BIDONE e/o periodicità mercato Retail e Business</label>
+            </value>
+            <value>
+                <fullName>MPI Profilazione Utente-Anomalie</fullName>
+                <default>false</default>
+                <label>MPI Profilazione Utente-Anomalie</label>
+            </value>
+            <value>
+                <fullName>Permessi File Server rptcomfs.hdc.local</fullName>
+                <default>false</default>
+                <label>Permessi File Server rptcomfs.hdc.local</label>
+            </value>
+            <value>
+                <fullName>Phone collection esterna</fullName>
+                <default>false</default>
+                <label>Phone collection esterna</label>
+            </value>
+            <value>
+                <fullName>Piani di rientro</fullName>
+                <default>false</default>
+                <label>Piani di rientro</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita ma cliente insoddisfatto</fullName>
+                <default>false</default>
+                <label>Pratica gestita ma cliente insoddisfatto</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita ma problema non risolto</fullName>
+                <default>false</default>
+                <label>Pratica gestita ma problema non risolto</label>
+            </value>
+            <value>
+                <fullName>Pre check Consip</fullName>
+                <default>false</default>
+                <label>Pre check Consip</label>
+            </value>
+            <value>
+                <fullName>Preventivi</fullName>
+                <default>false</default>
+                <label>Preventivi</label>
+            </value>
+            <value>
+                <fullName>Probabile Reclamo</fullName>
+                <default>false</default>
+                <label>Probabile Reclamo</label>
+            </value>
+            <value>
+                <fullName>Problemi catalogo prodotti</fullName>
+                <default>false</default>
+                <label>Problemi catalogo prodotti</label>
+            </value>
+            <value>
+                <fullName>Problemi tecnici Sistemi</fullName>
+                <default>false</default>
+                <label>Problemi tecnici Sistemi</label>
+            </value>
+            <value>
+                <fullName>Rapporti con i Distributori e il Sistema Informativo Integrato (SII)</fullName>
+                <default>false</default>
+                <label>Rapporti con i Distributori e il Sistema Informativo Integrato (SII)</label>
+            </value>
+            <value>
+                <fullName>Recapito Bollette/Solleciti</fullName>
+                <default>false</default>
+                <label>Recapito Bollette/Solleciti</label>
+            </value>
+            <value>
+                <fullName>Reclamo su comportamento ADR</fullName>
+                <default>false</default>
+                <label>Reclamo su comportamento ADR</label>
+            </value>
+            <value>
+                <fullName>Report costi</fullName>
+                <default>false</default>
+                <label>Report costi</label>
+            </value>
+            <value>
+                <fullName>Report operativo da Normativa</fullName>
+                <default>false</default>
+                <label>Report operativo da Normativa</label>
+            </value>
+            <value>
+                <fullName>Report operativo ricorrente</fullName>
+                <default>false</default>
+                <label>Report operativo ricorrente</label>
+            </value>
+            <value>
+                <fullName>Report operativo una tantum</fullName>
+                <default>false</default>
+                <label>Report operativo una tantum</label>
+            </value>
+            <value>
+                <fullName>Reseller</fullName>
+                <default>false</default>
+                <label>Reseller</label>
+            </value>
+            <value>
+                <fullName>Riattivaz.fornitura</fullName>
+                <default>false</default>
+                <label>Riattivaz.fornitura</label>
+            </value>
+            <value>
+                <fullName>Richiesta informazioni su stato pratica</fullName>
+                <default>false</default>
+                <label>Richiesta informazioni su stato pratica</label>
+            </value>
+            <value>
+                <fullName>Richiesta visura</fullName>
+                <default>false</default>
+                <label>Richiesta visura</label>
+            </value>
+            <value>
+                <fullName>Rimozione marcatura CLEVER/RESONEGAST/K*</fullName>
+                <default>false</default>
+                <label>Rimozione marcatura CLEVER/RESONEGAST/K*</label>
+            </value>
+            <value>
+                <fullName>Rimozione marcatura PHONE*</fullName>
+                <default>false</default>
+                <label>Rimozione marcatura PHONE*</label>
+            </value>
+            <value>
+                <fullName>Rimozione marcatura su importo a credito</fullName>
+                <default>false</default>
+                <label>Rimozione marcatura su importo a credito</label>
+            </value>
+            <value>
+                <fullName>Ritiro posizione affidata ad ADR- cliente assistito</fullName>
+                <default>false</default>
+                <label>Ritiro posizione affidata ad ADR- cliente assistito</label>
+            </value>
+            <value>
+                <fullName>Ritorni evidenze MAI PARTITI</fullName>
+                <default>false</default>
+                <label>Ritorni evidenze MAI PARTITI</label>
+            </value>
+            <value>
+                <fullName>Salvaguardia</fullName>
+                <default>false</default>
+                <label>Salvaguardia</label>
+            </value>
+            <value>
+                <fullName>Scarti ribaltamento SF vs SBL (temporaneo)</fullName>
+                <default>false</default>
+                <label>Scarti ribaltamento SF vs SBL (temporaneo)</label>
+            </value>
+            <value>
+                <fullName>SD_Extrabilling massiva</fullName>
+                <default>false</default>
+                <label>SD_Extrabilling massiva</label>
+            </value>
+            <value>
+                <fullName>Segnalazione urgenza nel recupero del credito</fullName>
+                <default>false</default>
+                <label>Segnalazione urgenza nel recupero del credito</label>
+            </value>
+            <value>
+                <fullName>Solleciti di pratica</fullName>
+                <default>false</default>
+                <label>Solleciti di pratica</label>
+            </value>
+            <value>
+                <fullName>Sollecito pratica esistente</fullName>
+                <default>false</default>
+                <label>Sollecito pratica esistente</label>
+            </value>
+            <value>
+                <fullName>Sollecito reiterato</fullName>
+                <default>false</default>
+                <label>Sollecito reiterato</label>
+            </value>
+            <value>
+                <fullName>Sollecito rimborso</fullName>
+                <default>false</default>
+                <label>Sollecito rimborso</label>
+            </value>
+            <value>
+                <fullName>Sospens.fornitura</fullName>
+                <default>false</default>
+                <label>Sospens.fornitura</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Comunicazione cessazione Bonus fisico</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Comunicazione cessazione Bonus fisico</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Contestazione Importo Bonus erogato</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Contestazione Importo Bonus erogato</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Contestazione Importo Bonus stornato</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Contestazione Importo Bonus stornato</label>
+            </value>
+            <value>
+                <fullName>Sportello Consumatore: Contestazione mancata erogazione Bonus</fullName>
+                <default>false</default>
+                <label>Sportello Consumatore: Contestazione mancata erogazione Bonus</label>
+            </value>
+            <value>
+                <fullName>Stampa bollette</fullName>
+                <default>false</default>
+                <label>Stampa bollette</label>
+            </value>
+            <value>
+                <fullName>Storno non dovuto</fullName>
+                <default>false</default>
+                <label>Storno non dovuto</label>
+            </value>
+            <value>
+                <fullName>Supporto analisi survey</fullName>
+                <default>false</default>
+                <label>Supporto analisi survey</label>
+            </value>
+            <value>
+                <fullName>Switch Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Switch Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>TARI</fullName>
+                <default>false</default>
+                <label>TARI</label>
+            </value>
+            <value>
+                <fullName>TCP</fullName>
+                <default>false</default>
+                <label>TCP</label>
+            </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
+            <value>
+                <fullName>Verifica/modifica registrazione pagamenti</fullName>
+                <default>false</default>
+                <label>Verifica/modifica registrazione pagamenti</label>
+            </value>
+            <value>
+                <fullName>Verifica affidi legali</fullName>
+                <default>false</default>
+                <label>Verifica affidi legali</label>
+            </value>
+            <value>
+                <fullName>Verifica anomalie layout bollette</fullName>
+                <default>false</default>
+                <label>Verifica anomalie layout bollette</label>
+            </value>
+            <value>
+                <fullName>Verifica calcolo bollette mercato aziende Business</fullName>
+                <default>false</default>
+                <label>Verifica calcolo bollette mercato aziende Business</label>
+            </value>
+            <value>
+                <fullName>Verifica calcolo bollette mercato Retail e aziende Business</fullName>
+                <default>false</default>
+                <label>Verifica calcolo bollette mercato Retail e aziende Business</label>
+            </value>
+            <value>
+                <fullName>Verifica Canvass</fullName>
+                <default>false</default>
+                <label>Verifica Canvass</label>
+            </value>
+            <value>
+                <fullName>Verifica colonnine</fullName>
+                <default>false</default>
+                <label>Verifica colonnine</label>
+            </value>
+            <value>
+                <fullName>Verifica Documentazione</fullName>
+                <default>false</default>
+                <label>Verifica Documentazione</label>
+            </value>
+            <value>
+                <fullName>Verifica domiciliazione</fullName>
+                <default>false</default>
+                <label>Verifica domiciliazione</label>
+            </value>
+            <value>
+                <fullName>Verifica doppio addebito</fullName>
+                <default>false</default>
+                <label>Verifica doppio addebito</label>
+            </value>
+            <value>
+                <fullName>Verifica errore gestione</fullName>
+                <default>false</default>
+                <label>Verifica errore gestione</label>
+            </value>
+            <value>
+                <fullName>Verifica fatturazione elettronica</fullName>
+                <default>false</default>
+                <label>Verifica fatturazione elettronica</label>
+            </value>
+            <value>
+                <fullName>Verifica fatturazione TARI e TCP</fullName>
+                <default>false</default>
+                <label>Verifica fatturazione TARI e TCP</label>
+            </value>
+            <value>
+                <fullName>Verifica importo Bonus erogato</fullName>
+                <default>false</default>
+                <label>Verifica importo Bonus erogato</label>
+            </value>
+            <value>
+                <fullName>Verifica importo Bonus stornato</fullName>
+                <default>false</default>
+                <label>Verifica importo Bonus stornato</label>
+            </value>
+            <value>
+                <fullName>Verifica per accertamento Agenzia Entrate</fullName>
+                <default>false</default>
+                <label>Verifica per accertamento Agenzia Entrate</label>
+            </value>
+            <value>
+                <fullName>Verifica sospensione</fullName>
+                <default>false</default>
+                <label>Verifica sospensione</label>
+            </value>
+            <value>
+                <fullName>Verifica storni bancari</fullName>
+                <default>false</default>
+                <label>Verifica storni bancari</label>
+            </value>
+            <value>
+                <fullName>Verifica su crediti ceduti</fullName>
+                <default>false</default>
+                <label>Verifica su crediti ceduti</label>
+            </value>
+            <value>
+                <fullName>Verifiche contratti</fullName>
+                <default>false</default>
+                <label>Verifiche contratti</label>
+            </value>
+            <value>
+                <fullName>Verifiche estratto conto</fullName>
+                <default>false</default>
+                <label>Verifiche estratto conto</label>
+            </value>
+            <value>
+                <fullName>Verifiche SAP</fullName>
+                <default>false</default>
+                <label>Verifiche SAP</label>
+            </value>
+            <value>
+                <fullName>Verifiche stato utenze</fullName>
+                <default>false</default>
+                <label>Verifiche stato utenze</label>
+            </value>
+            <value>
+                <fullName>Volture/subentri/legale</fullName>
+                <default>false</default>
+                <label>Volture/subentri/legale</label>
+            </value>
+            <value>
+                <fullName>Welcome Letter</fullName>
+                <default>false</default>
+                <label>Welcome Letter</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Supporto layout bollette</controllingFieldValue>
+            <valueName>Stampa bollette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto layout bollette</controllingFieldValue>
+            <valueName>Verifica anomalie layout bollette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Errori di fatturazione con operandi/tariffe ENERGY E NON ENERGY</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Errori di fatturazione mercato Retail aziende Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Fatturazione elettronica XML_BI_VT_SD_RS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Fatturazione SD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Modifica MRU BIDONE e/o periodicità mercato Retail e Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Verifica calcolo bollette mercato Retail e aziende Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto fatturazione</controllingFieldValue>
+            <valueName>Verifica fatturazione TARI e TCP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto pagamenti</controllingFieldValue>
+            <valueName>Verifica/modifica registrazione pagamenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto pagamenti</controllingFieldValue>
+            <valueName>Verifica calcolo bollette mercato aziende Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto pagamenti</controllingFieldValue>
+            <valueName>Verifica domiciliazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto pagamenti</controllingFieldValue>
+            <valueName>Verifica storni bancari</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – sospensioni</controllingFieldValue>
+            <valueName>Verifica sospensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi legale</controllingFieldValue>
+            <valueName>Credito prescritto da chiudere a perdita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi legale</controllingFieldValue>
+            <valueName>Verifica affidi legali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – cessioni</controllingFieldValue>
+            <valueName>Verifica su crediti ceduti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi ADR</controllingFieldValue>
+            <valueName>Reclamo su comportamento ADR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi ADR</controllingFieldValue>
+            <valueName>Rimozione marcatura CLEVER/RESONEGAST/K*</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi ADR</controllingFieldValue>
+            <valueName>Rimozione marcatura PHONE*</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi ADR</controllingFieldValue>
+            <valueName>Rimozione marcatura su importo a credito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Credit Management – affidi ADR</controllingFieldValue>
+            <valueName>Ritiro posizione affidata ad ADR- cliente assistito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Bonus mancante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Comprensione voci invito a fatturare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Fidelizzazione mancante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Invito a fatturare non ricevuto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Mancato pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Storno non dovuto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Verifica Canvass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
+            <valueName>Verifica colonnine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Anomalia processo/sistema</controllingFieldValue>
+            <valueName>C_Malfunzionamento processi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Anomalia processo/sistema</controllingFieldValue>
+            <valueName>C_Malfunzionamento sistemi/funzionalità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Anomalia processo/sistema</controllingFieldValue>
+            <valueName>C_Post avvio progetti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Allineamenti Contrattuali richiesti dal Distributore Locale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>mancata erogazione Bonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Sportello Consumatore: Comunicazione cessazione Bonus fisico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Sportello Consumatore: Contestazione Importo Bonus erogato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Sportello Consumatore: Contestazione Importo Bonus stornato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Sportello Consumatore: Contestazione mancata erogazione Bonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Verifica importo Bonus erogato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Bonus Sociale</controllingFieldValue>
+            <valueName>Verifica importo Bonus stornato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Addebito su fornitura diversa da domestica residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Chiarimento su importo o numero rate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Contestazione addebito con dichiarazione di non detenzione/esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Mancata rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Mancato addebito con SII allineato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Sollecito rimborso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Verifica doppio addebito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto su Canone Rai</controllingFieldValue>
+            <valueName>Verifica per accertamento Agenzia Entrate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Assistenza procedurale e gestione pratiche</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Clienti senza fornitura, urgenza attività</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Comunicazioni urgenti Linea Diretta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Comunicazioni urgenti Supporto Agenzie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>MPI Profilazione Utente-Anomalie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Pratica gestita ma problema non risolto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Probabile Reclamo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Richiesta informazioni su stato pratica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Segnalazione urgenza nel recupero del credito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <valueName>Supporto analisi survey</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto e segnalazioni back office</controllingFieldValue>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Verifica errore gestione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto emissione SD</controllingFieldValue>
+            <valueName>SD_Extrabilling massiva</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Catalogo Prodotti</controllingFieldValue>
+            <valueName>Problemi catalogo prodotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <valueName>Amministrazione Assegnatore regole</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <valueName>Amministrazione Attività - campi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <valueName>Amministrazione Sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <valueName>Attività concordate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
+            <valueName>Permessi File Server rptcomfs.hdc.local</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Consip</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Famiglie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <valueName>Incongruenze SAP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <controllingFieldValue>Morosità Business</controllingFieldValue>
+            <valueName>Reseller</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Scarti ribaltamento SF vs SBL (temporaneo)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <valueName>Switch Ripristinatorio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto caricamenti contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Allineamento portafoglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Gestione attività di processo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Gestione Blocchi al Calcolo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Ritorni evidenze MAI PARTITI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Verifica Documentazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Verifiche contratti</controllingFieldValue>
+            <valueName>Verifiche SAP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione processi di Misura</controllingFieldValue>
+            <valueName>Misure EE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione processi di Misura</controllingFieldValue>
+            <valueName>Misure GAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <valueName>Default</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <valueName>FUI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <valueName>Salvaguardia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <valueName>Welcome Letter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rapporti con i distributori e SII</controllingFieldValue>
+            <valueName>Rapporti con i Distributori e il Sistema Informativo Integrato (SII)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <valueName>Report costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <valueName>Report operativo da Normativa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <valueName>Report operativo ricorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reporting</controllingFieldValue>
+            <valueName>Report operativo una tantum</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Agenzia</controllingFieldValue>
+            <valueName>Info andamento contrattuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Agenzia</controllingFieldValue>
+            <valueName>Info Bollette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Agenzia</controllingFieldValue>
+            <valueName>Info KO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Agenzia</controllingFieldValue>
+            <valueName>Invio PEC al DL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Agenzia</controllingFieldValue>
+            <valueName>Solleciti di pratica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Ambiente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Contatore chiuso - intervento straordinario</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Credito Morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Preventivi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Problemi tecnici Sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>Sollecito pratica esistente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>TARI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Front</controllingFieldValue>
+            <valueName>TCP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Analisi Reclamo Operatività CC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Cliente critico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Cliente senza servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Errori ambiente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Errori Tari</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Errori TCP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Pratica gestita ma cliente insoddisfatto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Sollecito reiterato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
+            <valueName>Verifiche contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
+            <valueName>Cessione credito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
+            <valueName>Clienti TOP Business/Grandi Condomini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
+            <valueName>Gestione cliente a portafoglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
+            <valueName>Phone collection esterna</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
+            <valueName>Piani di rientro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
+            <valueName>Volture/subentri/legale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità Business</controllingFieldValue>
+            <valueName>Default Verifiche</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità Business</controllingFieldValue>
+            <valueName>Pre check Consip</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità Business</controllingFieldValue>
+            <valueName>Riattivaz.fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità Business</controllingFieldValue>
+            <valueName>Sospens.fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Contestaz cliente a diffida legale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Copia documentazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Diffide da protocollo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Fatturazione spese legali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Richiesta visura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Verifica fatturazione elettronica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Verifiche estratto conto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto legale</controllingFieldValue>
+            <valueName>Verifiche stato utenze</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto verifica rimborsi Clienti</controllingFieldValue>
+            <valueName>Estremi rimborso con assegno FAD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto verifica rimborsi Clienti</controllingFieldValue>
+            <valueName>Estremi rimborso con bonifico bancario</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto verifica rimborsi Clienti</controllingFieldValue>
+            <valueName>Estremi rimborso con bonifico domiciliato postale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</controllingFieldValue>
+            <valueName>Comportamento della Banca (Bollettino, CBILL etc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica comportamento Banca, Istituti Finanziari e Carte di Credito</controllingFieldValue>
+            <valueName>Comportamento della Provider (Sisal, Lottomatica, Coop, etc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto documentale</controllingFieldValue>
+            <valueName>Acceso Piattaforme documentali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto documentale</controllingFieldValue>
+            <valueName>Mancata archiviazione documenti di fatturazione (PDF/XML)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto documentale</controllingFieldValue>
+            <valueName>Recapito Bollette/Solleciti</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

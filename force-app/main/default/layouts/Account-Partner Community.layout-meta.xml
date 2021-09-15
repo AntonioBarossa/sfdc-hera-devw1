@@ -2,9 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -140,49 +137,9 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Account.socialBonus</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.HDT_AccountStatement</actionName>
+            <actionName>Account.Escalation</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.HDT_AccountReadings</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_SendSms</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.HDT_PrintAccount</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.raiFee</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.cmor</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Account.Catalogo_Servizi</actionName>
@@ -220,15 +177,24 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.BUDGETED_COST</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <relatedList>RelatedAccountCampaignList</relatedList>
+    </relatedLists>
+        <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
         <fields>SAPContractCode__c</fields>
+        <fields>ServicePoint__c</fields>
+        <fields>BillingProfile__c</fields>
         <fields>CONTRACT.STATUS</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <relatedList>RelatedContractList</relatedList>
-    </relatedLists>
+    </relatedLists><!--End  HRAWRM-258   14-09-2021  -->
     <relatedLists>
         <excludeButtons>AddRelation</excludeButtons>
         <excludeButtons>MassAddToCampaign</excludeButtons>
@@ -264,9 +230,11 @@
         <fields>ContractAccountCode__c</fields>
         <fields>PaymentMethod__c</fields>
         <fields>BillSendingMethod__c</fields>
+        <fields>InvoicingAddressFormula__c</fields>
         <fields>InvoiceEmailAddress__c</fields>
         <fields>InvoiceCertifiedEmailAddress__c</fields>
         <fields>SendCertifiedEmailConsentDate__c</fields>
+     
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -294,7 +262,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002WGO1</masterLabel>
+        <masterLabel>00h1l000000Q6gI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import disableBotton from '@salesforce/apex/HDT_LC_ConfigurePaymentMethods.disableBotton';
 export default class hdtConfigurePaymentMethods extends LightningElement {
     @api saleRecord;
     @api accountId;
@@ -10,13 +11,15 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
 
     get disabledInput(){
         let result = false;
-        if(this.saleRecord.CurrentStep__c != this.currentStep){
+        disableBotton({idAcc:this.accountId,sale:this.saleRecord}).then(data =>{
+        if(data==true && this.saleRecord.CurrentStep__c != this.currentStep){
+
             result = true;
             this.isCloneButtonDisabled = true;
-        } else {
+        }else {
             result = false;
         }
-
+    });
         return result;
     }
 

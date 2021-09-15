@@ -14,9 +14,10 @@
                 var accountId;
                 var saleId;
                 var campaignId;
+                var campaignMemberId;
                 var campaignCommissioningId;
                 component.set('v.isCommunity', res);
-
+                console.log('*****' + res);
                 if (res){
 
                     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -45,6 +46,10 @@
                             campaignCommissioningId = testParam[1];
                             component.set("v.campaignCommissioningId", campaignCommissioningId);
                         }
+                        if (testParam[0] == 'c__campaignMemberId'){
+                            campaignMemberId = testParam[1];
+                            component.set("v.campaignMemberId", campaignMemberId);
+                        }
                         
                     }
                     
@@ -57,6 +62,11 @@
                     if(pageReference.state.c__campaignId !== undefined){
                         component.set("v.campaignId", pageReference.state.c__campaignId);
                         campaignId = pageReference.state.c__campaignId;
+                    }
+
+                    if(pageReference.state.c__campaignMemberId !== undefined){
+                        component.set("v.campaignMemberId", pageReference.state.c__campaignMemberId);
+                        campaignMemberId = pageReference.state.c__campaignMemberId;
                     }
 
                 }
@@ -93,6 +103,7 @@
                 var accountId;
                 var saleId;
                 var campaignId;
+                var campaignMemberId;
                 component.set('v.isCommunity', res);
 
                 if (res){
@@ -119,6 +130,10 @@
                             campaignId = testParam[1];
                             component.set("v.campaignId", campaignId);
                         }
+                        if (testParam[0] == 'c__campaignMemberId'){
+                            campaignMemberId = testParam[1];
+                            component.set("v.campaignMemberId", campaignMemberId);
+                        }
                         
                     }
                     
@@ -131,6 +146,10 @@
                     if(pageReference.state.c__campaignId !== undefined){
                         component.set("v.campaignId", pageReference.state.c__campaignId);
                         campaignId = pageReference.state.c__campaignId;
+                    }
+                    if(pageReference.state.c__campaignMemberId !== undefined){
+                        component.set("v.campaignMemberId", pageReference.state.c__campaignMemberId);
+                        campaignMemberId = pageReference.state.c__campaignMemberId;
                     }
 
                 }

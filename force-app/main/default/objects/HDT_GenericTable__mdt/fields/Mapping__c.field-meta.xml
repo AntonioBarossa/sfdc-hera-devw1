@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mapping__c</fullName>
+    <description>Mapping colonne --&gt; apiName. Da scrivere nel seguente formato.
+[
+ {
+ &quot;Object&quot; : &quot;objectApiName&quot;,
+  fields:[
+        {&quot;columnName&quot; : &quot;apiName&quot;},
+   ]
+  }
+]</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Mapping</label>
+    <length>131072</length>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

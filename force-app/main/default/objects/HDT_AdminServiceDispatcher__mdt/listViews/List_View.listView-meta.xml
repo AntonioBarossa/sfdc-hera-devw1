@@ -4,6 +4,7 @@
     <columns>MasterLabel</columns>
     <columns>DeveloperName</columns>
     <columns>NamespacePrefix</columns>
+    <columns>DistributorCode__c</columns>
     <columns>ServiceCode__c</columns>
     <columns>Commodity__c</columns>
     <columns>Type__c</columns>
@@ -11,4 +12,5 @@
     <columns>Active__c</columns>
     <filterScope>Everything</filterScope>
     <label>List View</label>
+    <language>en_US</language>
 </ListView>

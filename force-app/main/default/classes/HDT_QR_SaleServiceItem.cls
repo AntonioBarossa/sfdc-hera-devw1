@@ -65,12 +65,19 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Id,
         Opportunity__c,
         Opportunity__r.Sale__c,
+        Opportunity__r.Sale__r.Account__c,
         Opportunity__r.Name,
         Opportunity__r.CreatedDate,
         Quote__c,
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.Account__c,
+        ServicePoint__r.CommoditySector__c,
+        ServicePoint__r.MeterStatus__c,
+        ServicePoint__r.PlugPresence__c,
+        ServicePoint__r.PowerRequested__c,
+        ServicePoint__r.PowerContractual__c,
         ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
         ServicePoint__r.SupplyCity__c,
@@ -81,7 +88,119 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ORDER BY Opportunity__r.CreatedDate ASC
         ];
     }
+    public List<SaleServiceItem__c> getRecordsBySaleIdFilter(String saleId){
 
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Sale__r.Account__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.Account__c,
+        ServicePoint__r.CommoditySector__c,
+        ServicePoint__r.MeterStatus__c,
+        ServicePoint__r.PlugPresence__c,
+        ServicePoint__r.PowerRequested__c,
+        ServicePoint__r.PowerContractual__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c
+        FROM SaleServiceItem__c
+        WHERE Opportunity__r.Sale__c = :saleId
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        WITH SECURITY_ENFORCED
+        ORDER BY Opportunity__r.CreatedDate ASC
+        ];
+    }
+
+    public List<SaleServiceItem__c> getSaleByServicePoint(String servicepoint){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.PlugPresence__c,
+        ServicePoint__r.PowerRequested__c,
+        ServicePoint__r.PowerContractual__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c,
+        createdDate
+        FROM SaleServiceItem__c
+        WHERE ServicePoint__c = :servicepoint
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
+        ];
+    }
+    public List<SaleServiceItem__c> getSaleByServicePointFilter(String servicepoint){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.CommoditySector__c,
+        ServicePoint__r.PlugPresence__c,
+        ServicePoint__r.PowerRequested__c,
+        ServicePoint__r.PowerContractual__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c,
+        createdDate
+        FROM SaleServiceItem__c
+        WHERE ServicePoint__c = :servicepoint
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
+        ];
+    }
+    public List<SaleServiceItem__c> getSaleByServicePointFilterCode(String servicepointCode){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.CommoditySector__c,
+        ServicePoint__r.PlugPresence__c,
+        ServicePoint__r.PowerRequested__c,
+        ServicePoint__r.PowerContractual__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c,
+        createdDate
+        FROM SaleServiceItem__c
+        WHERE ServicePoint__r.ServicePointCode__c = :servicepointCode
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate DESC
+        ];
+    }
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get active records filtered by Opportunity__r.Sale__c

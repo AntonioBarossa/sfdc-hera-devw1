@@ -6,6 +6,11 @@
 */
 
 public inherited sharing class HDT_QR_Case {
+
+    public List<Case> getRecordByPracticeNumber(String caseNumber){
+        return [SELECT Order__r.Id,Asset.Id,Subscription__r.Id FROM Case
+        WHERE CaseNumber = :caseNumber WITH SECURITY_ENFORCED LIMIT 1];
+    }
     
     public Case getRecordById(String Id) {
         return [
@@ -17,6 +22,10 @@ public inherited sharing class HDT_QR_Case {
             AccountId,
             CaseNumber,
             HerokuPracticeCode__c,
+            /*** Sviluppo Gest Appuntamento */
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
+            /*** FINE */
             ContactId,
             ServicePoint__c,
             Contract__c,
@@ -43,6 +52,10 @@ public inherited sharing class HDT_QR_Case {
 
     public Case getParentCaseById(String caseId){
 
+        if (caseId == null) {
+            return null;
+        }
+
         return [SELECT Id,
         Type,
         Phase__c,
@@ -65,14 +78,129 @@ public inherited sharing class HDT_QR_Case {
     /*****Sviluppo per Campagne */
 
     public List<Case> getRecordCreatedYesterdayDifferentBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday ];
+        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c != : cluster AND createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     public List<Case> getRecordCreatedLastWeekEqualsBy(String cluster){
-        return [Select id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7];
+        return [Select Case.MotivatedResponseSendMode__c,Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
     }
 
+    public List<Case> getCaseModificaContratti(String podPdr){
+        return [Select Phase__c, CaseNumber from Case where ServicePointCode__c=:podPdr AND RecordType.DeveloperName='HDT_RT_GenericheAttivazioni' AND ServicePoint__c='' AND Type LIKE 'Modifica Contr Preattivazione%'  WITH SECURITY_ENFORCED ORDER BY Phase__c DESC ]; // aggiunti campi alla query
+    }
 
     /*** FIne Sviluppo per Campagne */
+
+    public List<Case> getChildCase(String parentId){
+        List<Case> childCases = new List<Case>();
+        try{
+            childCases = [SELECT Id,
+            CaseNumber,
+            Status,
+            Phase__c
+            FROM Case
+            WHERE ParentId = :parentId
+            WITH SECURITY_ENFORCED];
+        }catch(Exception e){
+            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return childCases;
+    }
+
+    public List<wrts_prcgvr__Activity__c> getCaseActivities(List<String> caseIds){
+
+        List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+        try{
+            activities = [SELECT Id,
+            OwnedByUser__c,
+            OwnerId,
+            wrts_prcgvr__Status__c,
+            wrts_prcgvr__ActivityTemplate__r.Name,
+            Status__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE wrts_prcgvr__Status__c = 'Not Started'
+            AND Case__c IN :caseIds
+            WITH SECURITY_ENFORCED
+            ];
+        }catch(Exception e){
+            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return activities;
+    }
+
+    public List<Case> getServicePointCaseWinBack(String servicePointId){
+        return [
+        SELECT 
+        Id,
+        Phase__c,
+        DistributorName__c
+        FROM Case
+        WHERE ServicePoint__c = :servicePointId
+        AND Type = 'Switch Out SII'
+        AND Status = 'In Lavorazione'
+        WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Case getNonReqContrCase(String relatedCase){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND RelatedCase__c = :relatedCase
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
+    }
+
+    public Case getNonReqContrOrder(String relatedOrder){
+        Case nonReqContr = new Case();
+        try{
+            nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            WHERE Type = 'Contratto Non Richiesto'
+            AND Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        } catch(Exception e){
+            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+        }
+        return nonReqContr;
+    }
+    public Case getCaseRelated(String relatedOrder){
+        Case nonReqContr = [SELECT Id,
+            Phase__c,
+            Type
+            FROM Case
+            where
+            Order__c = :relatedOrder
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+        
+        return nonReqContr;
+    }
+
+    public List<Case> getChildCasesReclamo(String note, String recordId)
+    {
+        List<String> childIds = note.split(';');
+        List<Case> childCases = new List<Case>();
+        try
+        {
+            childCases = [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+        }
+        catch(Exception e)
+        {
+            System.Debug('Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
+        }
+        return childCases;
+    }
 
 }

@@ -24,12 +24,24 @@
             <outputField>BillingStreetCode__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>IsWrongFiscalData__c</inputField>
+            <outputField>IsWrongFiscalData__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>StreetNumberExtension__c</inputField>
             <outputField>BillingStreetNumberExtension__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>IsAddressVerified__c</inputField>
+            <outputField>BillingIsAddressVerified__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>CustomerMarking__c</inputField>
             <outputField>CustomerMarking__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>IsMigrated__c</inputField>
+            <outputField>IsMigrated__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>ContactReason__c</inputField>
@@ -40,12 +52,28 @@
             <outputField>VATNumber__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>MobilePhonePrefix__c</inputField>
+            <outputField>MobilePhonePrefix__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>PhonePrefix__c</inputField>
+            <outputField>PhonePrefix__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>InterestProduct__c</inputField>
             <outputField>InterestProduct__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>Profession__c</inputField>
+            <outputField>Profession__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>Region__c</inputField>
             <outputField>BillingRegion__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Gender__c</inputField>
+            <outputField>Gender__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>CompanyOwner__c</inputField>
@@ -62,6 +90,14 @@
         <mappingFields>
             <inputField>FiscalCode__c</inputField>
             <outputField>FiscalCode__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>CompanyOwner__c</inputField>
+            <outputField>CompanyOwner__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Company__c</inputField>
+            <outputField>Company__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>DegreeOfStudies__c</inputField>

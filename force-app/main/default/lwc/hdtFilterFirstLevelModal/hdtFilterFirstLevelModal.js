@@ -35,7 +35,7 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
         });
 
         console.log('>>> INNER FILTER OBJ ' + JSON.stringify(this.filterObj));
-        console.log('>>> NEW COLUMNS ' + JSON.stringify(this.defaultFilterObj));
+        //console.log('>>> NEW COLUMNS ' + JSON.stringify(this.defaultFilterObj));
 
     }
 

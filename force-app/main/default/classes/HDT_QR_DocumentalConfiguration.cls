@@ -58,4 +58,71 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         return null;
     }
 
+    public static DocumentSendTracking__c getDocumentSendTrackingById(String recordId){
+
+        List<DocumentSendTracking__c> sends = [
+            SELECT Id, EnvelopeId__c
+            FROM DocumentSendTracking__c
+            WHERE Id = :recordId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (!sends.isEmpty()) {
+            return sends[0];
+        }
+
+        return null;
+    }
+
+    // Restituisce un oggetto DocumentalActivity__c o DocumentSendTracking__c a seconda dell'Id passato in input.
+    public static SObject getDocumentalObjectById(Id recordId){
+        if (String.isBlank(recordId)) {
+            return null;
+        }
+
+        if (recordId.getSobjectType() == DocumentalActivity__c.getSObjectType()) {
+            List<DocumentalActivity__c> activities = [
+                SELECT Id, EnvelopeId__c, CaseId__r.SignMode__c, OrderId__r.SignatureMethod__c
+                FROM DocumentalActivity__c
+                WHERE Id = :recordId
+                WITH SECURITY_ENFORCED
+            ];
+
+            if (!activities.isEmpty()) {
+                return activities[0];
+            }
+        } else if (recordId.getSobjectType() == DocumentSendTracking__c.getSObjectType()) {
+            List<DocumentSendTracking__c> sends = [
+                SELECT Id, EnvelopeId__c, Case__r.SignMode__c, Order__r.SignatureMethod__c
+                FROM DocumentSendTracking__c
+                WHERE Id = :recordId
+                WITH SECURITY_ENFORCED
+            ];
+
+            if (!sends.isEmpty()) {
+                return sends[0];
+            }
+        }
+
+        return null;
+    }
+
+    public static SObject getDocumentSendTracking(String transactionId){
+        List<DocumentSendTracking__c> toReturn = [SELECT Id,Case__c,Order__c FROM DocumentSendTracking__c WHERE EnvelopeId__c=:transactionId WITH SECURITY_ENFORCED];
+        if(!toReturn.isEmpty()){
+            return toReturn[0];
+        }else {
+            return null;
+        }
+    }
+
+    public static Order getParentOrder(String orderId){
+        List<Order> orders = [SELECT Id,ParentOrder__c FROM Order WHERE Id =:orderId WITH SECURITY_ENFORCED];
+        if(!orders.isEmpty()){
+            return orders[0];
+        }else {
+            return null;
+        }
+    }
+
 }

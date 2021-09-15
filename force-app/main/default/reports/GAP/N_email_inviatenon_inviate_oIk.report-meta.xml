@@ -100,9 +100,6 @@
         <field>et4ae5__IndividualEmailResult__c$et4ae5__SubjectLine__c</field>
     </columns>
     <columns>
-        <field>et4ae5__IndividualEmailResult__c$BounceType__c</field>
-    </columns>
-    <columns>
         <field>et4ae5__IndividualEmailResult__c$et4ae5__Tracking_As_Of__c</field>
     </columns>
     <columns>

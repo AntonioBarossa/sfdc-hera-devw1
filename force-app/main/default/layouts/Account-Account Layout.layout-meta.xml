@@ -117,14 +117,19 @@
             <fields>CONTRACT.CONTRACT_NUMBER</fields>
             <relatedList>RelatedContractList</relatedList>
         </relatedLists>
-        <relatedLists>
+                <!-- <relatedLists>
             <fields>CONTACT.FULL_NAME</fields>
             <fields>ACCCONRELATION.ROLES</fields>
             <relatedList>RelatedAccountContactRelationList</relatedList>
-        </relatedLists>
+        </relatedLists> -->
     </miniLayout>
     <platformActionList>
         <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Account.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
         <platformActionListItems>
             <actionName>Account.Catalogo_Servizi</actionName>
             <actionType>QuickAction</actionType>
@@ -140,9 +145,6 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>LogACall</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>NewTask</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>NewEvent</quickActionName>
@@ -165,14 +167,24 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.BUDGETED_COST</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <relatedList>RelatedAccountCampaignList</relatedList>
+    </relatedLists>
+    <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
+        <fields>SAPContractCode__c</fields>
+        <fields>ServicePoint__c</fields>
+        <fields>BillingProfile__c</fields>
+        <fields>CONTRACT.STATUS</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
-        <fields>CONTRACT.STATUS</fields>
         <relatedList>RelatedContractList</relatedList>
-    </relatedLists>
+    </relatedLists><!--End  HRAWRM-258   14-09-2021  -->
     <relatedLists>
         <fields>CONTACT.FULL_NAME</fields>
         <fields>ACCCONRELATION.ROLES</fields>
@@ -199,6 +211,7 @@
         <fields>ContractAccountCode__c</fields>
         <fields>ActivationDate__c</fields>
         <fields>Status__c</fields>
+        <fields>InvoicingAddressFormula__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -215,6 +228,34 @@
         <fields>ServicePointCode__c</fields>
         <fields>CommoditySector__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>ACTIVITY_UID__c</fields>
+        <fields>TODO_CD__c</fields>
+        <fields>EVT_STAT_CD__c</fields>
+        <fields>CREATED__c</fields>
+        <relatedList>SiebelActivity__x.TARGET_OU_ID_SF__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>X_CONT_CD__c</fields>
+        <fields>START_DT__c</fields>
+        <fields>END_DT__c</fields>
+        <relatedList>SiebelContract__x.SERV_ACCT_SALESFORCE__c</relatedList>
+        <sortField>END_DT__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>INS_PRODUCT__c</fields>
+        <fields>SR_NUM__c</fields>
+        <fields>ACT_OPEN_DT__c</fields>
+        <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
+        <sortField>ACT_OPEN_DT__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

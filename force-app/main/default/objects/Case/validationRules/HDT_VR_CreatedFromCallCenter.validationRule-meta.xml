@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_CreatedFromCallCenter</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( AND( ISNEW()  , RecordType.DeveloperName = &apos;HDT_RT_AltreInformative&apos; , $Permission.HDT_CP_CallCenter = false,  CreatedByCallCenter__c = true) , true, false)</errorConditionFormula>
+    <errorMessage>Permessi insufficienti per procedere</errorMessage>
+</ValidationRule>

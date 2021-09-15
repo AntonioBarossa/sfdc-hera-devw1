@@ -6,6 +6,8 @@
  */
 
 public with sharing class HDT_UTL_Utils {
+
+    private static HDT_QR_PermissionSet permissionSetQr = new HDT_QR_PermissionSet();
     
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
@@ -32,4 +34,67 @@ public with sharing class HDT_UTL_Utils {
 
         return result;
     }
+    /**​
+    * @author Enrico Capozzo (enrico.capozzo@webresults.it)​
+    * @date 15/04/2021
+    * @description HDT_UTL_Utils.codingSha256(...) – encodes the input string to Sha256
+    * @param stringToCoding String to encoding
+    * @return String EncodingUtil.convertToHex
+    */
+    public static String codingSha256(String stringToCoding){
+        System.debug('method codingSha256 - param : ' + stringToCoding);
+        String hashToString='';
+        if (String.isNotBlank(stringToCoding)) {
+            Blob targetBlob = Blob.valueOf(stringToCoding);
+            Blob hash = Crypto.generateDigest('SHA-256', targetBlob);
+            hashToString = EncodingUtil.convertToHex(hash);
+            //String hashString = EncodingUtil.base64Encode(hash);
+            System.debug('hashToString : '+hashToString);
+        }
+        return hashToString;
+    }
+
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 12/08/2021
+    * @description HDT_UTL_Utils.getCurrentUserRole() – Returns the DeveloperName of the user launching the class
+    * @return the DeveloperName of the user
+    */
+    @AuraEnabled
+    public static string getCurrentUserRole(){
+
+        String userId = System.UserInfo.getUserId();
+
+        return HDT_QR_UserQueries.getCurrentUser(userId).Userrole.DeveloperName;
+            
+    }
+
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 27/08/2021
+    * @description HDT_UTL_Utils.isAssignedCustomPermission() – Check if the current user has a specific Custom permission assigned
+    * @param custompermissionDeveloperName The developer name of the CustomPermission
+    * @return Boolean value (true = custom permission is assigned)
+    */
+    public Boolean isAssignedCustomPermission(String custompermissionDeveloperName) {
+
+        Boolean result = false;
+
+        List<CustomPermission> customPermissions = permissionSetQr.getCustomPermissionsByUserId(UserInfo.getUserId());
+
+        for (CustomPermission cmp : customPermissions) {
+            
+            if (cmp.DeveloperName.equals(customPermissionDeveloperName)) {
+                
+                result = true;
+                break;
+
+            }
+
+        }
+
+        return result;
+        
+    }
+  
 }

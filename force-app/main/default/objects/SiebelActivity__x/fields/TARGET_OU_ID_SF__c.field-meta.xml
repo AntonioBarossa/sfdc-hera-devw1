@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>TARGET_OU_ID_SF__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
     <description>TARGET_OU_ID_SF</description>
     <externalDeveloperName>TARGET_OU_ID_SF</externalDeveloperName>
     <externalId>false</externalId>
@@ -9,9 +8,10 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Reference Cliente Online</label>
+    <length>15</length>
+    <referenceTargetField>Account.RowIdSiebel__c</referenceTargetField>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Attività</relationshipLabel>
+    <relationshipLabel>Attività Siebel (Reference Cliente Online)</relationshipLabel>
     <relationshipName>SiebelActivity</relationshipName>
-    <required>false</required>
-    <type>Lookup</type>
+    <type>IndirectLookup</type>
 </CustomField>

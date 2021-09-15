@@ -9,6 +9,15 @@ public inherited sharing class HDT_QR_Contract {
 
     }
 
+    public List<Contract> getRecordsWithContractsByServicePointAndAccountId(String servicePointId, String accountId){
+
+        return [
+            SELECT 
+            Id, Status,AccountId,ServicePoint__c 
+            FROM Contract 
+            WHERE AccountId =: accountId AND ServicePoint__c=: servicePointId AND Status='Attivo'
+        ];
+    }
 
     public List<BillingProfile__c> getInd(String accountId) {
         contractSrv.checkReadAccess('Status__c,Account__c,InvoicingAddressFormula__c');
@@ -18,16 +27,25 @@ public inherited sharing class HDT_QR_Contract {
 		  
 	}
 
-    public Contract getSapContractCode(String code) {
+    public Contract getSapContractCode(String code,Boolean isSuperUser) {
         contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
         system.debug('code ******************** : ' + code);
+        system.debug('isSuperUser ******************** : ' + isSuperUser);
         String filter = 'Activated';
+        List<Contract> con= new List<Contract>();
         Contract c = new Contract();
-        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code AND Status=: filter WITH SECURITY_ENFORCED';
-        List<Contract> con = Database.query(query);
+        if(isSuperUser==true){
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code LIMIT 1';
+            con = Database.query(query);
+        }else{
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code AND Status=: filter WITH SECURITY_ENFORCED';
+            con = Database.query(query);
+        }
+
         if(con != null && con.size()> 0){
             c= con[0];
         }
+        system.debug('contract ******************** : ' + c);
         return c;
 	}
 
@@ -80,6 +98,34 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId									 
             AND Status IN ('Activated', 'Attivo')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+
+
+        /**	   
+    * @author Federico de Felice (federico.defelice@webresults.it)
+    * @description Get active records by accountId
+    * @param String accountId
+    * @return List<Contract>
+    */
+    public List<Contract> getTempNewActivationContractsByAccountId(String accountId){
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status'); 
+        return [
+            SELECT
+            Name,
+            AccountId,			
+            ContractNumber,
+            Status,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.SupplyAddress__c
+            FROM
+            Contract
+            WHERE AccountId = :accountId									 
+            AND Status IN ('Activated', 'Attivo')
+            AND SBQQ__Order__r.ProcessType__c = 'Temporanea - Nuova Attivazione'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -186,6 +232,15 @@ public inherited sharing class HDT_QR_Contract {
         AND Status = 'Attivo'
         WITH SECURITY_ENFORCED];
 
+    }
+
+    public Contract getContractAccountCompanyOwner(String contractId)
+    {
+        return [SELECT Account.CompanyOwner__c
+        FROM Contract
+        WHERE Id = :contractId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
     }
 
 }

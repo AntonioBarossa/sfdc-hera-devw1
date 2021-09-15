@@ -1,0 +1,248 @@
+<template>
+
+    <article class="slds-card">
+
+        <div class="slds-card__body slds-card__body_inner">
+            <article class="slds-card slds-card_boundary">
+                <div class="slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header-no-border">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                <lightning-icon class="slds-icon slds-icon_small" icon-name="standard:contact"
+                                    alternative-text="Approved" title="Approved"></lightning-icon>
+                                <span class="slds-assistive-text"></span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <a href="#" class="slds-card__header-link slds-truncate" title="Referenti">
+                                    <span>Referenti ({numberOfContacts})</span>
+                                </a>
+
+                            </h2>
+                        </div>
+                        <div class="slds-no-flex">
+                            <lightning-button label="Nuovo" title="Nuovo" onclick={buttonNew}></lightning-button>
+
+                        </div>
+                    </header>
+                </div>
+                <footer class="slds-card__footer">
+                    <a class="slds-card__footer-action" href="#">
+                        <span class="slds-assistive-text"></span>
+                    </a>
+                </footer>
+
+                <lightning-layout multiple-rows="true" pull-to-boundary="small">
+
+
+
+                    <template for:each={contacts} for:item="c">
+                        <lightning-layout-item  padding="around-small" key={c.Id} size="5">
+    
+    
+                            <c-hdt-contact-tab accountcontactrel={c}></c-hdt-contact-tab>
+                        </lightning-layout-item>
+    
+    
+                    </template>
+                </lightning-layout>
+
+            </article>
+        </div>
+
+    </article>
+    
+    <template if:true={showModal}>
+        <!-- <c-hdt-form-referente accountid={recordId} ></c-hdt-form-referente> -->
+
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <template if:true={spinner}>
+                    <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                    </lightning-spinner>
+               </template>
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Referente </h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                   
+                    <p><b>Referente</b></p>
+
+                    <lightning-card title="Informazioni Anagrafiche">
+
+                        <div class="slds-grid slds-grid_vertical">
+
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="firstName" label="Nome" required>
+                                    </lightning-input>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <template if:true={genderOptions.data}>
+                                        <lightning-combobox data-id="gender" name="gender" label="Sesso"
+                                            placeholder="Seleziona sesso" options={genderOptions.data.values}
+                                            value={gender}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="lastName" label="Cognome" required>
+                                    </lightning-input>
+                                </div>
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <lightning-input type="date" data-id="birthDate" name="birthDate" value={birthDate}
+                                        label="Data di nascita">
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required  max-length="16"	>
+                                    </lightning-input>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <lightning-input type="text" data-id="birthPlace" name="birthPlace"
+                                        label="Comune di nascita">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-combobox data-id="role" name="role" label="Ruolo"
+                                        placeholder="Seleziona Ruolo" options={roleOptions} required>
+                                    </lightning-combobox>
+                                </div>
+
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-button class="slds-form-element" name="calculateFiscalCode" type="submit"
+                                        label="Calcola Codice Fiscale" onclick={handleCalculation}></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-card>
+
+                    <lightning-card title="Indirizzi">
+                        <div class="slds-p-left_x-large slds-p-right_x-large">
+                            <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}>
+                            </c-hdt-target-object-address-fields>
+                        </div>
+
+                    </lightning-card>
+
+                    <lightning-card title="Contatti">
+
+                        <p class="slds-p-horizontal_small">Almeno un dato di contatto è obbligatorio</p>
+                        <div class="slds-col slds-grid">
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix"
+                                    label="Prefisso cellulare" placeholder="Seleziona prefisso"
+                                    value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions} required>
+                                </lightning-combobox>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                <lightning-input type="tel" data-id="mobilePhone" label="Cellulare">
+                                </lightning-input>
+                            </div>
+
+                        </div>
+                        <div class="slds-col slds-grid">
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-combobox data-id="phonePrefix" name="phonePrefix"
+                                    label="Prefisso telefono fisso" placeholder="Seleziona prefisso"
+                                    value={phonePrefixValue} options={phonePrefixOptions} required>
+                                </lightning-combobox>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso">
+                                </lightning-input>
+                            </div>
+
+                        </div>
+                        <div class="slds-col slds-grid">
+                            <div
+                                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-input type="email" data-id="email" label="Email">
+                                </lightning-input>
+                            </div>
+
+                        </div>
+                    </lightning-card>
+
+                    <lightning-card title="Studi e Professione">
+
+                        <div class="slds-col slds-grid">
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <template if:true={educationalOptions.data}>
+                                    <lightning-combobox data-id="education" name="education" label="Titolo di Studio"
+                                        placeholder="Seleziona il Titolo di Studio"
+                                        options={educationalOptions.data.values}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                <template if:true={professionOptions.data}>
+                                    <lightning-combobox data-id="profession" name="profession" label="Professione"
+                                        placeholder="Seleziona Professione" options={professionOptions.data.values}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </lightning-card>
+
+
+
+
+
+
+
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Annulla" title="Non-primary action" onclick={closeModal} ></lightning-button>
+                   
+                      
+           
+                    <lightning-button label="Salva" title="Non-primary action" onclick={handleSave} ></lightning-button>
+     
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+    </template>
+   
+
+
+
+
+</template>

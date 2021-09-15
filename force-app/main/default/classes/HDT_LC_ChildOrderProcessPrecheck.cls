@@ -33,84 +33,95 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams){
+    public static String next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams, ServiceRequest__c srRequest){
 
-        system.debug('extraParams: ' + extraParams);
+        String compatibility='';
+        ServiceRequest__c srvReq = new ServiceRequest__c();
+        srvReq.ServicePointCode__c= srRequest.ServicePointCode__c;
+        srvReq.Status__c= srRequest.Status__c;
+        srvReq.Order__c= srRequest.Order__c;
+        srvReq.CommoditySector__c= srRequest.CommoditySector__c;
+        srvReq.Type__c= srRequest.Type__c;
+        if(srRequest.ServicePoint__c != null){
+            srvReq.ServicePoint__c= srRequest.ServicePoint__c;
+        }else{
+            srvReq.Account__c= srRequest.Account__c;
+            srvReq.BillingProfile__c= srRequest.BillingProfile__c;
+        }
+        srvReq.ProcessType__c= srRequest.ProcessType__c;
+        HDT_SRV_ServiceRequest.createRecord(srvReq);
+        wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(srvReq);
         
-        String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
+        if(!result.incompatibilities.isEmpty()){
+            compatibility = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+            HDT_SRV_ServiceRequest.deleteRecord(srvReq);
+        }
+        if(compatibility == '' || compatibility == order.OrderNumber){
+            system.debug('extraParams: ' + extraParams);
 
-        //INIZIO SVILUPPI EVERIS
-        Order newOrder = new Order();    
-        //FINE SVILUPPI EVERIS
+            String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcessObject.get('recordType'));
 
-        String processType = selectedProcessObject.get('processType');
-        String processCode = selectedProcessObject.get('processCode');
-
-        switch on selectedProcessObject.get('recordType') {
             //INIZIO SVILUPPI EVERIS
-            when 'HDT_RT_Voltura'{
-                List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
-                processType = 'Voltura';
-                newOrder.Subprocess__c = 'Standard';
-                processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
-                newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
-                newOrder.ContractReference__c = contracts.size() > 0 
-                    ? contracts[0].Id
-                    : null;
-                String sapCode = contracts.size() > 0
-                    ? contracts[0].SAPContractCode__c
-                    : '';
-                try{
-                    String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(order.SAPImplantCode__c, sapCode);
-                    List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
-                    positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
-                            JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
-                    
-                    for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
-                        if(position.campo.equalsIgnoreCase('IMPOSTE')){
-                            String condition = position.valore;
-                            if(position.valore.equalsIgnoreCase('E_IMPOST')){
-                                condition = 'Imposta usi domestici';
-                            } 
-                            List<PicklistEntry> entryList =
-                            ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
-                            for(PicklistEntry entry : entryList){
-
-                                if(entry.getValue().containsIgnoreCase(condition)){
-                    
-                                    newOrder.ExciseEle__c = entry.getValue();                    
-                                }
-                            }
-                        }
-                    }
-                } catch(Exception e){
-                    System.debug('Arricchimento Dati fallito -> ' +e.getMessage());
-                } 
-
-
-                //newOrder = orderUtl.enrichOrder(newOrder);
-                //orderSrv.updateRecord(newOrder);
-            }
+            Order newOrder = new Order();    
             //FINE SVILUPPI EVERIS
-        }
 
-        switch on processType {
-            when 'Switch in Ripristinatorio	'{
-                HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+            String processType = selectedProcessObject.get('processType');
+            String processCode = selectedProcessObject.get('processCode');
+
+            switch on selectedProcessObject.get('recordType') {
+                //INIZIO SVILUPPI EVERIS
+                when 'HDT_RT_Voltura'{
+                    //@frpanico predefault "Processo", "Sottoprocesso", "Tipo Voltura", "Codice Causale", "Data Decorrenza", "Contratto", "Codice Contratto"
+                    List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
+                    processType = 'Voltura';
+                    newOrder.Subprocess__c = 'Standard';
+                    newOrder.VoltureType__c = 'Ordinaria';
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
+                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    newOrder.ContractReference__c = contracts.size() > 0 
+                        ? contracts[0].Id
+                        : null;
+                    String sapCode = contracts.size() > 0
+                        ? contracts[0].SAPContractCode__c
+                        : '';
+                    newOrder.SapContractCode__c = sapCode;
+                    //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
+                    newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
+                    //newOrder = orderUtl.enrichOrder(newOrder);
+                    //orderSrv.updateRecord(newOrder);
+                }
+                //FINE SVILUPPI EVERIS
             }
+
+            switch on processType {
+                when 'Switch in Ripristinatorio'{
+                    HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+                    newOrder.SignedDate__c = Date.today();
+                    newOrder.WaiverRightAfterthought__c = 'Si';
+                }
+                when 'Prima Attivazione'{
+                    processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                    processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                }
+            }
+
+            //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
+            newOrder.Id = orderId;
+            newOrder.RecordTypeId = recordTypeId;
+            newOrder.Step__c = 2;
+            newOrder.Deliberation__c = deliberate;
+            newOrder.ProcessType__c = processType;
+            newOrder.ProcessCode__c = processCode;
+            newOrder.Phase__c = 'Bozza';
+
+            //Logica Superficie Servita Start
+            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas' && selectedProcessObject.get('recordType') != 'HDT_RT_Voltura') ? 75 : null;
+            //Logica Superficie Servita End
+            orderSrv.updateRecord(newOrder);
+            //EVERIS 
         }
+        return compatibility;
 
-        //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
-        newOrder.Id = orderId;
-        newOrder.RecordTypeId = recordTypeId;
-        newOrder.Step__c = 2;
-        newOrder.Deliberation__c = deliberate;
-        newOrder.ProcessType__c = processType;
-        newOrder.ProcessCode__c = processCode;
-        newOrder.Phase__c = 'Bozza';
-
-        orderSrv.updateRecord(newOrder);
-        //EVERIS 
     }
 
     private static String getServicePointTypeFromOrder(String orderId) {
@@ -121,5 +132,66 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(order.ContractReference__r.ServicePoint__c, 'RecordType.DeveloperName');
 
         return servicePointList[0].RecordType.DeveloperName;
+    }
+
+    private static Order callDataEnrichment(String servicePointCode, String contractCode, Order newOrder)
+    {
+        try{
+            String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(servicePointCode, contractCode);
+            List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+            positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
+                    JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
+            
+            for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
+                //@frpanico Accise
+                if(position.campo.equalsIgnoreCase('IMPOSTE')){
+                    String condition = position.valore;
+                    if(position.valore.equalsIgnoreCase('E_IMPOST')){
+                        condition = 'Imposta usi domestici';
+                    } 
+                    List<PicklistEntry> entryListEle =
+                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
+                    for(PicklistEntry entry : entryListEle){
+
+                        if(entry.getValue().containsIgnoreCase(condition)){
+            
+                            newOrder.ExciseEle__c = entry.getValue();                    
+                        }
+                    }
+                    List<PicklistEntry> entryListGas =
+                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseGAS__c').getDescribe().getPicklistValues();
+                    for(PicklistEntry entry : entryListGas){
+
+                        if(entry.getValue().containsIgnoreCase(condition)){
+            
+                            newOrder.ExciseGAS__c = entry.getValue();                    
+                        }
+                    }
+                }
+                //@frpanico RateCategory
+                if(position.campo.equalsIgnoreCase('CATEGORIATARIFFA'))
+                {
+                    newOrder.RateCategory__c = position.valore;
+                }
+                //@frpanico Iva
+                if(position.campo.equalsIgnoreCase('ALIQUOTAIVA'))
+                {
+                    String condition = position.valore;
+                    List<PicklistEntry> entryList =
+                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('VAT__c').getDescribe().getPicklistValues();
+                    for(PicklistEntry entry : entryList){
+
+                        if(entry.getValue().containsIgnoreCase(condition)){
+            
+                            newOrder.VAT__c = entry.getValue();                    
+                        }
+                    }
+                }
+            }
+        } catch(Exception e){
+            System.debug('Arricchimento Dati fallito -> ' +e.getMessage());
+        } 
+
+        return newOrder;
     }
 }

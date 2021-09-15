@@ -149,11 +149,11 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Feminine</gender>
     <label>Matrice Agenti</label>
     <nameField>
@@ -162,7 +162,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Matrici Agenti</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <listViewButtons>Rapporto_Matrici_Agenti</listViewButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

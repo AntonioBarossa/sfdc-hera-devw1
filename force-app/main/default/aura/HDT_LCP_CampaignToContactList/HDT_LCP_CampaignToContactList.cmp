@@ -1,0 +1,8 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" access="global" >
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="lightning:tabClosed" action="{! c.onTabClosed }"/>
+    <c:hdtCampaignToContactList aura:id="hdtCampaignToAccountList" campaignType="layout" objectApiName="{!v.sObjectName}" entityId="{!v.recordId}" campaignCategory="OUT" campaignChannel=""></c:hdtCampaignToContactList>
+</aura:component>

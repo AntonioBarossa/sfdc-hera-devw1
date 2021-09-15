@@ -21,5 +21,6 @@
     }
     </aura:html> 
     <aura:handler name="init" action="{!c.init}" value="{!this}" /> 
+    <lightning:workspaceAPI aura:id="workspace" />
     <lightning:spinner variant="brand" size="medium" />
 </aura:component>

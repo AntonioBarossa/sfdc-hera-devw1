@@ -3,7 +3,7 @@
     <fullName>TotalResidue__c</fullName>
     <externalId>false</externalId>
     <label>Totale Residuo</label>
-    <summarizedField>DocumentSelected__c.Residue__c</summarizedField>
+    <summarizedField>DocumentSelected__c.DocumentResidue__c</summarizedField>
     <summaryForeignKey>DocumentSelected__c.Case__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
     <trackHistory>false</trackHistory>

@@ -9,6 +9,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api commodity;
     @api isRetroactive;
     @api isVolture;
+    @api isProcessReading;
     @api isVisible;
     @api allowSmallerReading = false;
     advanceError;
@@ -23,18 +24,22 @@ export default class HdtSelfReadingRegister extends LightningElement {
         {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
         {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:false}
+        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:false},
+        {id: 7, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
+        {id: 8, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
     ];
 
     registerObjGas = [
-        {id:1, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
-        {id:2, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
-        {id:3, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
-        {id:4, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
-        {id:5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:false},
-        {id:6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id:7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
-        {id:8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false}
+        {id: 1, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id: 2, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
+        {id: 3, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id: 4, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
+        {id: 5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:false},
+        {id: 6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id: 7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id: 8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
+        {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
     ];
 
     @track registerObj = [];
@@ -107,9 +112,9 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         }
 
-        if(!this.isRetroactive){
+        if(!this.isRetroactive && !this.isProcessReading){
 
-            var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
+            var index = this.registerObj.findIndex(p => p.name === 'readingDate');
 
             if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
 
@@ -137,6 +142,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
             this.isVisible = (this.rowObj.id <= readingObj.length);
         } else if (this.commodity === 'Gas') {
             this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
+        }
+
+        
+        // Per l'autolettura da processo la matricola deve poter essere inseribile da operatore.
+        if (this.isVisible === true) {
+            var indexSerialNumber = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
+            this.registerObj[indexSerialNumber].disabled = !this.isProcessReading;
         }
 
         var indexIn = readingObj.findIndex(p => p.register == this.rowObj.number);
@@ -203,21 +215,27 @@ export default class HdtSelfReadingRegister extends LightningElement {
     }
 
     @api
-    handleSave(){
+    handleSave(readingCustomerDate){
 
         try {
-            this.registerObj.forEach(element => {
+            if (!this.isProcessReading) {
+                this.registerObj.forEach(element => {
+                    if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+                        this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
+                    } 
+                });
+            } else if (this.rowObj.id === 'Meter') {
+                // Per l'autolettura da processo richiedo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
+                this.registerObj.forEach(element => {
+                    if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+                        this.advanceError = 'Impossibile procedere: il campo ' + element.label + ' deve essere valorizzato.';
+                    }
+                });
+            }
 
-                if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
-    
-                    this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
-    
-                } 
-    
-            });
+            const oldValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value);
+            const newValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value);
 
-            const oldValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value;
-            const newValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value;
             if (this.allowSmallerReading === false && newValue < oldValue) {
                 this.advanceError = 'Impossibile inserire una lettura inferiore alla precedente.';
             }
@@ -230,21 +248,20 @@ export default class HdtSelfReadingRegister extends LightningElement {
     
             } else{
     
-                console.log('Filling the Array: ' + this.registerObj + ' - ' + this.rowObj);
-    
+                console.log('Filling the Array: ' + JSON.stringify(this.registerObj) + ' - ' + JSON.stringify( this.rowObj));
+                let readingDateNew = this.isVisible ? readingCustomerDate : null;
+
                 this.registerRet = 
                     {
+                        ['ReadingDate'+this.rowObj.id+'__c']:readingDateNew, // usiamo la data lettura cliente su tutti i registri visibili.
                         ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingType')].value,
                         ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingBand')].value,
                         ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value,
                         ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value,
                         ['ReadingOldValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value,
-                        ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
-                        this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value
-                        : null,
-                        ['ReadingUnit'+this.rowObj.id+'__c']:this.commodity === 'Gas' ?
-                        this.registerObj[this.registerObj.findIndex(p => p.name === 'readingUnit')].value 
-                        : null
+                        ['ReadingRegister'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value,
+                        ['ReadingUnit'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingUnit')].value,
+                        ['ReadingDigitNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingDigitNumber')].value
                     };
     
                     console.log('Array filled with: ' + this.registerRet + ' keys: ' + Object.keys(this.registerRet));
@@ -268,7 +285,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('isRetroactive? '+this.isRetroactive);
 
-        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive){
+        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive && !this.isProcessReading){
             
             var indexReading = this.registerObj.findIndex(p => {
 
@@ -303,13 +320,14 @@ export default class HdtSelfReadingRegister extends LightningElement {
             }
 
         } else {
-
-            this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value = event.target.value; 
+            if (event.target.label.includes('Lettura')) {
+                this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value = event.target.value;
+            } else if (event.target.label.includes('Matricola')) {
+                this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value = event.target.value;
+            }
 
             this.advanceError = undefined;
-
             event.target.setCustomValidity("");
-
         }
 
         event.target.reportValidity();

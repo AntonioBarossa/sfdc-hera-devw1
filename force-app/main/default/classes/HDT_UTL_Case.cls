@@ -4,7 +4,10 @@ public inherited sharing class HDT_UTL_Case {
     @InvocableMethod(label='Predefault')
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
 
+        HDT_QR_Case caseQr = new HDT_QR_Case();
+
         List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
+        List<Case> childCases = new List<Case>();
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
 
         String cluster = inputs[0].cluster;
@@ -13,6 +16,8 @@ public inherited sharing class HDT_UTL_Case {
         String implantType = inputs[0].implantType;
         Decimal powerRequested = inputs[0].powerRequested;
         String salesCompany = inputs[0].salesCompany;
+        Case currentCase = inputs[0].currentCase;
+        String cancellationNote = inputs[0].cancellationNote;
         
 
         if(process == 'Voltura Tecnica'){
@@ -29,6 +34,30 @@ public inherited sharing class HDT_UTL_Case {
             output.option = calculateOption(implantType, powerRequested);
             output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
         } 
+        else if(process.equalsIgnoreCase('Compatibilita'))
+        {
+            try 
+            {
+                output.isCompatible = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);   
+            } 
+            catch (Exception e) 
+            {   
+                output.isCompatible = '';
+                System.debug('Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());    
+            }
+            
+        }
+        else if(process.equalsIgnoreCase('Contenitore'))
+        {
+            output.childCases = caseQr.getChildCasesReclamo(currentCase.Note__c, currentCase.Id);
+        }
+        else if(process.equalsIgnoreCase('Annullamento'))
+        {
+            Datetime nowDate = Datetime.now();
+            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+            output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
+            
+        }
 
         outputs.add(output);
 
@@ -51,6 +80,10 @@ public inherited sharing class HDT_UTL_Case {
         public Decimal powerRequested;
         @InvocableVariable
         public String salesCompany;
+        @InvocableVariable
+        public Case currentCase;
+        @InvocableVariable
+        public String cancellationNote;
 
 
     }
@@ -63,6 +96,12 @@ public inherited sharing class HDT_UTL_Case {
         public String option;
         @InvocableVariable
         public String salesCompanyCode;
+        @InvocableVariable
+        public String isCompatible;
+        @InvocableVariable
+        public List<Case> childCases;
+        @InvocableVariable
+        public String cancellationNote;
 
     }
 
@@ -167,7 +206,7 @@ public inherited sharing class HDT_UTL_Case {
 
                 }
                 when else{
-                    //No action needed
+                    result = '13V0000000';
                 }
             }
         }
@@ -176,6 +215,27 @@ public inherited sharing class HDT_UTL_Case {
 
     }
 
+    /**
+     * Crea una Activity PClick sotto un Case.
+     * recordId = id del Case
+     * description = testo libero da mostrare nell'activity
+     * type = nome del template PClick dell'activity da creare
+     */ 
+    public static void createActivity(String recordId, String description, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
+        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(listRecord.size()>0){
+            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Case__c = recordId;
+            activity.CausalError__c = description;
+            activity.wrts_prcgvr__Description__c = description;
+            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
+        }
+    }
 
 
 
