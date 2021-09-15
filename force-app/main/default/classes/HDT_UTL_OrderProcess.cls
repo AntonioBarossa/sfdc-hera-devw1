@@ -137,12 +137,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ));
             }
 
-            if (o1.Phase__c == 'Da Inviare') {
-                childOrdersDocValid.add(new Order(
-                    Id = o1.Id,
-                    phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
-            }
+            // if (o1.Phase__c == 'Da Inviare') {
+            //     childOrdersDocValid.add(new Order(
+            //         Id = o1.Id,
+            //         phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
+            //     ));
+            // }
         }
 
         if (!childOrdersDocValid.isEmpty()) {
