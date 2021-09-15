@@ -28,7 +28,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
-        for (String temp : staticResources.get(0).Body.toString().split(',')) {
+        for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
             if (temp.containsIgnoreCase('*')) {
                 temp=temp.remove('*'); 
                 mapRequiredByPosition.put(count,temp);

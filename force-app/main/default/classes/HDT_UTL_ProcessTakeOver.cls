@@ -19,17 +19,18 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         if (String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
          
             Integer count=0;
-            currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
+           // currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
+
             String typeField;
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
-                
-
                 // Controllo campi required
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');
                 // }
-
-                if ('null'.equalsIgnoreCase(tempField) || String.isBlank(tempField)) {
+                system.debug('mapHeaderByPosition :::::'+mapHeaderByPosition.get(count));
+                system.debug('Count '+count);
+                System.debug('mapOrderFields:::: '+mapOrderFields.get(mapHeaderByPosition.get(count)));
+                if (String.isBlank(tempField)) {
                     count++;
                     continue;
                 }
@@ -42,7 +43,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
                 // Creazione Account
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
-                    System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    System.debug('Acc column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
                     typeField=getTypeField('Account',mapAccountFields.get(mapHeaderByPosition.get(count)));
  
                    switch on typeField.toUpperCase() {
@@ -83,7 +84,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 //Fine Creazione Account
                 // Creazione Sales
                 else if(mapSaleFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('column N° :'+count+' FieldapiName : '+mapSaleFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    System.debug('Sale column N° :'+count+' FieldapiName : '+mapSaleFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
                     typeField=getTypeField('Sale__c',mapSaleFields.get(mapHeaderByPosition.get(count)));
                     switch on typeField.toUpperCase() {
                         when 'BOOLEAN'  {
@@ -112,6 +113,8 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // fine creazione sales
                 // start Service Point 
                 else if(mapServicePointFields.get(mapHeaderByPosition.get(count))!=null ){
+                    System.debug('serv column N° :'+count+' FieldapiName : '+mapServicePointFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
                     typeField=getTypeField('ServicePoint__c',mapServicePointFields.get(mapHeaderByPosition.get(count)));
                     switch on typeField.toUpperCase() {
                         when 'BOOLEAN'  {
@@ -137,7 +140,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 }
                 // Start Billing Profile
                 else if(mapBillingProfileFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('column N° :'+count+' FieldapiName : '+mapBillingProfileFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    System.debug('BIll column N° :'+count+' FieldapiName : '+mapBillingProfileFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
                     typeField=getTypeField('BillingProfile__c',mapBillingProfileFields.get(mapHeaderByPosition.get(count)));
 
                     switch on typeField.toUpperCase() {
@@ -166,7 +169,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // End Billing Profile;
                 // Start Order
                 else if(mapOrderFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    System.debug('ORD column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
                     typeField=getTypeField('Order',mapOrderFields.get(mapHeaderByPosition.get(count)));
 
                     switch on typeField.toUpperCase() {
@@ -189,6 +192,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                         when else {
                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),tempField);
                         }
+                    }
+                    if ('SelfCertificationConnection__c'.equalsIgnoreCase(mapOrderFields.get(mapHeaderByPosition.get(count)))) {
+                        currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),'Procura'.equalsIgnoreCase(tempField) ? '001':'Contratto firmato'.equalsIgnoreCase(tempField)?'002':null );
                     }
                 } // End Order
                 count++;
@@ -274,10 +280,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentOrder.AccountId           = currentProcess.currentAccount.Id;
         currentProcess.currentRequestItem.Account__c    = currentProcess.currentAccount.Id;
         listUpdateGeneric.add(currentProcess.currentSale)           ;
-        insert currentProcess.currentServicePoint;
-        //listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
-       // listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
-        //listUpdateGeneric.add(currentProcess.currentOrder)          ;
+       // insert currentProcess.currentServicePoint;
+        listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
+        listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
+        listUpdateGeneric.add(currentProcess.currentOrder)          ;
 
 
         if (listUpdateGeneric.size()>0) {
@@ -459,7 +465,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'Superficie Servita'                                    =>  'SurfaceServed__c'                               ,
             'Esclusione Deposito cauzionale'                        =>  'SecurityDepositExcluded__c'                     ,
             'Fatturazione Aggregata'                                =>  'AggregateBilling__c'                            ,
-            'IVA'                                                   =>  'VAT__c' 
+            'IVA'                                                   =>  'VAT__c'                                         ,
+            'OR_Date Inizio'                                        =>  'EffectiveDate'                                  ,
+            'OR_Status'                                             =>  'Status'    
         };
     } 
-}
+}//OR_Date Inizio,OR_Status
