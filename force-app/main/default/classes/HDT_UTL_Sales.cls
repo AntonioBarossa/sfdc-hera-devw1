@@ -258,7 +258,7 @@ public with sharing class HDT_UTL_Sales {
                     }*/
                 }
                 else if(ord.phase__c == 'In registrazione'){
-                    if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order' && DocSendingMethod__c == 'Posta Cartacea'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order' && ord.DocSendingMethod__c == 'Posta Cartacea'){
                         ord.phase__c = 'Plico  Firmato/Inviato';
                         ord.Status = 'Activated';
                         childToUpdate.add(ord);
