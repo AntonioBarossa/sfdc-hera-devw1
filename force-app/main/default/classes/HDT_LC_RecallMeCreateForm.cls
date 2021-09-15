@@ -20,7 +20,7 @@ public with sharing class HDT_LC_RecallMeCreateForm {
            );
            HDT_SRV_Lead.updateRecord(updateLead);
 
-        List<CampaignMemberLeadAssigment__c> listCampLeass = [Select id,agency__c from CampaignMemberLeadAssignment__c where InterestProduct__c = :interestProduct AND SourceAgency__c =:sourceAgency AND agency__c != null];
+        List<CampaignMemberLeadAssigment__c> listCampLeass = [Select id,agency__c from CampaignMemberLeadAssigment__c where InterestProduct__c = :interestProduct AND SourceAgency__c =:sourceAgency AND agency__c != null];
 
         if(listCampLeass != null && !listCampLeass.isEmpty()){
             campaignMember.agency__c = listCampLeass[0].agency__c;
