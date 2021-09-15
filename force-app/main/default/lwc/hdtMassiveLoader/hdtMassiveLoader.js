@@ -61,7 +61,7 @@ export default class HdtMassiveLoader extends LightningElement {
     massiveLoaderRecordId;
     fileName;
     contentVersionId;
-
+    reqName;
     navigateDisabled;
 
     get importFileFormat() {
@@ -237,9 +237,9 @@ export default class HdtMassiveLoader extends LightningElement {
 
                 var message = massiveLoaderImportSuccess + result.reqName;
                 console.log(message);
-
-                this.handleToastEvent(success + '!', message, 'success', 'sticky');
-
+                this.reqName=result.reqName;
+               // this.handleToastEvent(success + '!', message, 'success', 'sticky');
+                this.handleToastEventRedirect();
                 this.importDisabled = true;
                 
                 this.navigateDisabled = false;
@@ -313,6 +313,23 @@ export default class HdtMassiveLoader extends LightningElement {
         this.dispatchEvent(toastEvent);
 
     }
-    
+    handleToastEventRedirect(){
+
+        const event = new ShowToastEvent({
+            "title": "Success!",
+            "variant": 'success',
+            "mode": 'sticky',
+            "message": "Richiesta {0} creata! {1}!",
+            "messageData": [
+                'Salesforce',
+                {
+                    url:'/'+this.massiveLoaderRecordId,
+                    label:  this.reqName+ ' clicca qui'
+                }
+            ]
+        });
+        this.dispatchEvent(event);
+    }
+  
 
 }
