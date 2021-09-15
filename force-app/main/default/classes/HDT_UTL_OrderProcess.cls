@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@protonmail.ch)
+ * @date 12/03/2021
+ * @description HDT_UTL_OrderProcess Class
+ * @history Keltin Mesonjesi – 12/03/2021 – Created Class
+ */
+
 public inherited sharing  class HDT_UTL_OrderProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
