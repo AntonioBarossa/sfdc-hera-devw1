@@ -2,6 +2,22 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>orderToUpdate</name>
+        <label>orderToUpdate</label>
+        <locationX>1495</locationX>
+        <locationY>377</locationY>
+        <assignmentItems>
+            <assignToReference>orderRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updeteOrder</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>phaseAssignCase</name>
         <label>phaseAssignCase</label>
         <locationX>1085</locationX>
@@ -84,8 +100,8 @@
     <assignments>
         <name>phaseAssignOrder</name>
         <label>phaseAssignOrder</label>
-        <locationX>1205</locationX>
-        <locationY>180</locationY>
+        <locationX>1209</locationX>
+        <locationY>186</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -94,7 +110,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -110,7 +126,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -126,7 +142,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -142,7 +158,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -158,7 +174,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -174,7 +190,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -298,10 +314,10 @@
             <name>case_4</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>getActivity.Order__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -313,10 +329,10 @@
             <name>order_4</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>getActivity.Case__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -625,9 +641,9 @@
     <recordUpdates>
         <name>updeteOrder</name>
         <label>updeteOrder</label>
-        <locationX>1393</locationX>
-        <locationY>853</locationY>
-        <inputReference>getOrder</inputReference>
+        <locationX>1650</locationX>
+        <locationY>353</locationY>
+        <inputReference>orderRecord</inputReference>
     </recordUpdates>
     <start>
         <locationX>50</locationX>
@@ -636,13 +652,21 @@
             <targetReference>getActivity</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>activityId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>orderRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order</objectType>
     </variables>
     <variables>
         <name>parentObject</name>
