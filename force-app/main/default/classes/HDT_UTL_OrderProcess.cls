@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@protonmail.ch)
+ * @date 12/03/2021
+ * @description HDT_UTL_OrderProcess Class
+ * @history Keltin Mesonjesi – 12/03/2021 – Created Class
+ */
+
 public inherited sharing  class HDT_UTL_OrderProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -454,10 +461,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
+                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c) { //Fabiana 15/09/2021
+                    newOrder.SBQQ__Contracted__c=true; 
+                }
             }
-            if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c) {
-                newOrder.SBQQ__Contracted__c=true; 
-            }
+           
         }
         return newOrdersList;
     }
