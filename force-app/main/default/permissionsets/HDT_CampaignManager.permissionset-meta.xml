@@ -27644,6 +27644,10 @@
         <tab>standard-Campaign</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <tabSettings> <!--Matteo Tatti 15/09/2021-->
+        <tab>CampaignEligibilityGroup__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings> <!--Matteo Tatti 15/09/2021-->
     <tabSettings>
         <tab>standard-Case</tab>
         <visibility>Visible</visibility>
