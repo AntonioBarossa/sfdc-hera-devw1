@@ -1,0 +1,6 @@
+<aura:component implements= "lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" 
+                access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+</aura:component>
