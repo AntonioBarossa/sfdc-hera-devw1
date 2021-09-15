@@ -236,14 +236,14 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         }
         if (!String.isBlank(mapRequestFields.get('ANLAGE_ST'))) {
             switch on mapRequestFields.get('ANLAGE_ST'){
-                when 'A'{
+                when 'Open', 'Riatt. avviata per morosita'{
                     sp.MeterStatus__c = 'Attivo';
                 }
-                when 'I'{
+                when 'Impianto chiuso per morosita' {
                     sp.MeterStatus__c = 'Inattivo'; 
                 }
-                when else{
-                    sp.MeterStatus__c = 'Bozza';
+                when 'Interr. avviata per morosita' {
+                    sp.MeterStatus__c = 'Sospeso';
                 }
             }
         }
