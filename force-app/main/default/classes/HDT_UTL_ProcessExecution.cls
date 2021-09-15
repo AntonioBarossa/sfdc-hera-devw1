@@ -30,7 +30,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         Integer count=0;
         for (String temp : staticResources.get(0).Body.toString().split(',')) {
             if (temp.containsIgnoreCase('*')) {
-                temp=temp.remove('*');
+                temp=temp.remove('*'); 
                 mapRequiredByPosition.put(count,temp);
             }
             mapHeaderByPosition.put(count,temp);
@@ -49,7 +49,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public virtual void registryCreation(){
         System.debug('registryCreation');
     }
-    public virtual void postSalesCreation(){
+    public virtual void postSalesCreation(){ // creazione processo
         System.debug('postSalesCreation');
     }
     public virtual void finalUpdate(){

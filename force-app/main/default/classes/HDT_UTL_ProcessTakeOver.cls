@@ -237,7 +237,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             System.debug('Creazione Account');
             String expectedNewName = String.isBlank( currentProcess.currentAccount.FirstName__c) ?  currentProcess.currentAccount.LastName__c :  currentProcess.currentAccount.FirstName__c + ' ' +  currentProcess.currentAccount.LastName__c;
             currentProcess.currentAccount.Name=expectedNewName;
-            currentProcess.currentAccount.BillingIsAddressVerified__c=true; // TODO  verificare se implementare il servizio
+            currentProcess.currentAccount.BillingIsAddressVerified__c=true; // TODO  verificare se implementare il servizio ATOS
             System.debug('Silos : '+currentProcess.currentAccount.CompanyOwner__c);
             System.debug('Marcatura : '+currentProcess.currentAccount.CustomerMarking__c);
             System.debug('Categoria : '+currentProcess.currentAccount.Category__c);
@@ -273,10 +273,11 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentBillingProfile.Account__c = currentProcess.currentAccount.Id;
         currentProcess.currentOrder.AccountId           = currentProcess.currentAccount.Id;
         currentProcess.currentRequestItem.Account__c    = currentProcess.currentAccount.Id;
-        listUpdateGeneric.add(currentProcess.currentSale);
-        listUpdateGeneric.add(currentProcess.currentServicePoint);
-       // listUpdateGeneric.add(currentProcess.currentBillingProfile);
-       // listUpdateGeneric.add(currentProcess.currentOrder);
+        listUpdateGeneric.add(currentProcess.currentSale)           ;
+        insert currentProcess.currentServicePoint;
+        //listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
+       // listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
+        //listUpdateGeneric.add(currentProcess.currentOrder)          ;
 
 
         if (listUpdateGeneric.size()>0) {
@@ -337,42 +338,41 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
    
    private void mapFieldsObject(){
         mapAccountFields = new Map<String, String>{
-            'Nome'=>'FirstName__c',
-            'Cognome/Ragione Sociale'=>'LastName__c',
-            'Codice Fiscale'=>'FiscalCode__c',
-            'P.IVA'=>'VATNumber__c',
-            'BP'=>'BPSAPModel__c',
-            'Marcatura'=>'CustomerMarking__c',
-            'Categoria'=>'Category__c',
-            //'Ruolo'=>'role',
-            'Silos'=>'CompanyOwner__c',
+            'Nome'                                                  =>  'FirstName__c'                                  ,
+            'Cognome/Ragione Sociale'                               =>  'LastName__c'                                   ,
+            'Codice Fiscale'                                        =>  'FiscalCode__c'                                 ,
+            'P.IVA'                                                 =>  'VATNumber__c'                                  ,
+            'BP'                                                    =>  'BPSAPModel__c'                                 ,
+            'Marcatura'                                             =>  'CustomerMarking__c'                            ,
+            'Categoria'                                             =>  'Category__c'                                   ,
+            'Silos'                                                 =>  'CompanyOwner__c'                               ,
            // 'Barrato'=>'',
-            'Prefisso Cellulare'=>'MobilePhonePrefix__c',
-            'Cellulare'=>'MobilePhone__c',
-            'Prefisso telefono fisso'=>'PhonePrefix__c',
-            'Telefono fisso'=>'Phone',
-            'Altro Telefono'=>'OtherPhone__c',
-            'Email'=>'PrimaryEmail__c',
-            'FAX'=>'FAX__c',
-            'Data nascita'=>'BirthDate__c',
-            'Comune di nascita'=>'BirthProvince__c',
-            'Sesso'=>'Gender__c',
-            'Tipo di Account'=>'RecordTypeId',
-            'Titolo di studio'=>'DegreeOfStudies__c',
-            'Professione'=>'Profession__c',
+            'Prefisso Cellulare'                                    =>  'MobilePhonePrefix__c'                          ,
+            'Cellulare'                                             =>  'MobilePhone__c'                                ,
+            'Prefisso telefono fisso'                               =>  'PhonePrefix__c'                                ,
+            'Telefono fisso'                                        =>  'Phone'                                         ,
+            'Altro Telefono'                                        =>  'OtherPhone__c'                                 ,
+            'Email'                                                 =>  'PrimaryEmail__c'                               ,
+            'FAX'                                                   =>  'FAX__c'                                        ,
+            'Data nascita'                                          =>  'BirthDate__c'                                  ,
+            'Comune di nascita'                                     =>  'BirthProvince__c'                              ,
+            'Sesso'                                                 =>  'Gender__c'                                     ,
+            'Tipo di Account'                                       =>  'RecordTypeId'                                  ,
+            'Titolo di studio'                                      =>  'DegreeOfStudies__c'                            ,
+            'Professione'                                           =>  'Profession__c'                                 ,
             // indirizzo
-            'Nome Via [Residenziale/Sede Legale]'=>'BillingStreetName__c',
-            'Comune'=>'BillingCity',
-            'CAP'=>'BillingPostalCode',
-            'Stato'=>'BillingCountry',
-            'Provincia'=>'BillingState',
-            'Codice Via Stradario SAP'=>'BillingStreetCode__c',
-            'Estens.Civico'=>'BillingStreetNumberExtension__c',
-            'Civico'=>'BillingStreetNumber__c',
-            'Indirizzo Estero'=>'ShippingAddressIsForeign__c',
-            'Localita'=>'BillingPlace__c',
-            'Codice Localita'=>'BillingPlaceCode__c',
-            'Flag Verificato'=>'BillingIsAddressVerified__c'
+            'Nome Via [Residenziale/Sede Legale]'                   =>  'BillingStreetName__c'                          ,
+            'Comune'                                                =>  'BillingCity'                                   ,
+            'CAP'                                                   =>  'BillingPostalCode'                             ,
+            'Stato'                                                 =>  'BillingCountry'                                ,
+            'Provincia'                                             =>  'BillingState'                                  ,
+            'Codice Via Stradario SAP'                              =>  'BillingStreetCode__c'                          ,
+            'Estens.Civico'                                         =>  'BillingStreetNumberExtension__c'               ,
+            'Civico'                                                =>  'BillingStreetNumber__c'                        ,
+            'Indirizzo Estero'                                      =>  'ShippingAddressIsForeign__c'                   ,
+            'Localita'                                              =>  'BillingPlace__c'                               ,
+            'Codice Localita'                                       =>  'BillingPlaceCode__c'                           ,
+            'Flag Verificato'                                       =>  'BillingIsAddressVerified__c'
             // inserire domicilio
         };
         mapSaleFields = new Map<String, String>{
@@ -425,7 +425,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'IBAN'                                                  =>  'IBAN__c'                                       ,
             'Paese'                                                 =>  'IbanCountry__c'                                ,
             'CIN-IBAN'                                              =>  'IbanCIN_IBAN__c'                               ,
-            'CIN'                                                   =>  'IbanCIN__c '                                   ,
+            'CIN'                                                   =>  'IbanCIN__c'                                   ,
             'ABI'                                                   =>  'IbanABI__c'                                    ,
             'CAB'                                                   =>  'IbanCAB__c'                                    ,
             'Numero Conto'                                          =>  'IbanCodeNumber__c'                             ,
@@ -447,19 +447,19 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'Modalità invio doc'                                    =>  'DocSendingMethod__c'                            ,
             'Uso Energia'                                           =>  'UseTypeEnergy__c'                               ,
             'Mandato di Connessione'                                =>  'ConnectionMandate__c'                           ,
-            'Autocert.Contr.Connessione'                            =>  'SelfCertificationConnection__c '                ,
+            'Autocert.Contr.Connessione'                            =>  'SelfCertificationConnection__c'                 ,
             'Tipo di Connessione'                                   =>  'ConnectionType__c'                              ,
             'Opzione di distribuzione'                              =>  'RequestOption__c '                              ,
             'Recapito Telefonico'                                   =>  'PhoneNumber__c'                                 ,
             'Azione Commerciale'                                    =>  'CommercialAction__c'                            ,
             'Codice ISTAT/Ateco'                                    =>  'AtecoCode__c'                                   ,
             'Autocert.Istanza'                                      =>  'InstanceSelfCertification__c'                   ,
-            'Note per il DL'                                        =>  'CommentForDL__c '                               ,
+            'Note per il DL'                                        =>  'CommentForDL__c'                                ,
             'Convenzione/Associazione'                              =>  'ConventionAssociation__c'                       ,
             'Superficie Servita'                                    =>  'SurfaceServed__c'                               ,
             'Esclusione Deposito cauzionale'                        =>  'SecurityDepositExcluded__c'                     ,
             'Fatturazione Aggregata'                                =>  'AggregateBilling__c'                            ,
-            'IVA'                                                   =>  'AggregateBilling__c' 
+            'IVA'                                                   =>  'VAT__c' 
         };
     } 
 }
