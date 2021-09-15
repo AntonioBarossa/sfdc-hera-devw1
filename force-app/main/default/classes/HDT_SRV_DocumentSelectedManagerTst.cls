@@ -67,9 +67,8 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         
         Map<String,Object> priLevel = new Map<String,Object>();
         
-        priLevel.put('dataEmissione', Date.today());
-        priLevel.put('dataScadenza', Date.today().addDays(1));
-        priLevel.put('dataEmissione', Date.today());
+        priLevel.put('dataEmissione', null);
+        priLevel.put('dataScadenza', null);
         priLevel.put('numeroDocumento', 'Numero Documento');
         priLevel.put('numeroFattura', 'Numero Fattura');
         priLevel.put('contratto', 'CONTRATTO');//response.contractCode = contractCode;
