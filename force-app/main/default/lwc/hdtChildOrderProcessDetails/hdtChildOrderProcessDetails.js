@@ -694,8 +694,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
             else{
-                if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
-                    let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
+                //if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                   /* let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
                     let exciseFacilitation = this.template.querySelector("[data-id='FacilitationExcise__c']");
                     createActivityAccise({
                         flagAccise : this.template.querySelector("[data-id='FacilitationExcise__c']") === true,
@@ -711,8 +711,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         mode: 'sticky'
                         });
                         this.dispatchEvent(toastErrorMessageIvaAccise);
-                    });
-                }
+                    });*/
+                //}
             }
         }
         if(currentSectionName === 'fatturazione') {
