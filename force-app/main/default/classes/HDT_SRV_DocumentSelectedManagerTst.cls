@@ -10,7 +10,6 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     
     //TEST SETUP
     private static void mySetup(){
-        //TODO: POSSIBILE CHE VADA INSTALLATO PCLICK
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
@@ -18,6 +17,7 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
     
@@ -67,8 +67,8 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         
         Map<String,Object> priLevel = new Map<String,Object>();
         
-        priLevel.put('dataEmissione', null);
-        priLevel.put('dataScadenza', null);
+        priLevel.put('dataEmissione', '');
+        priLevel.put('dataScadenza', '');
         priLevel.put('numeroDocumento', 'Numero Documento');
         priLevel.put('numeroFattura', 'Numero Fattura');
         priLevel.put('contratto', 'CONTRATTO');//response.contractCode = contractCode;
