@@ -120,9 +120,9 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
             List<String> ibanValidationResult = HDT_UTL_ValidateIban.validateIban(new List<HDT_UTL_ValidateIban.HDT_UTL_FlowInputs>{ibanToValidate});
 
-            if (ibanValidationResult[0] == 'KO') {
-                throw new AuraHandledException('IBAN non valido');
-            }
+            // if (ibanValidationResult[0] == 'KO') { //HRAWRM-568 commented for now because the validation is not working as it should
+            //     throw new AuraHandledException('IBAN non valido');
+            // }
 
             billingProfile.IBAN__c = iban;
         }
