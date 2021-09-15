@@ -3,7 +3,7 @@
         component.find('notifLib').showToast({
             "variant": "error",
             "title": "Errore",
-            "message": "Attenzione, non è possibile creare record da questa vista",
+            "message": "Attenzione, non è possibile modificare record da questa vista",
             "mode": "sticky"
         });
 
@@ -22,10 +22,5 @@
             console.log(error);
         });
 
-        /*var homeEvt = $A.get("e.force:navigateToObjectHome");
-        homeEvt.setParams({
-            "scope": component.get("v.sObjectName")
-        });
-        homeEvt.fire();*/
     }
 })
