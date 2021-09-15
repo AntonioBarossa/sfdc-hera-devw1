@@ -293,6 +293,7 @@ public inherited sharing class HDT_QR_Order {
             Sale__c,
             CreatedDate,
             Step__c,
+            Sale__r.Channel__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             //INIZIO SVILUPPI EVERIS
