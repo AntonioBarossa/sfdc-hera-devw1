@@ -1,4 +1,5 @@
 public with sharing class HDT_SRV_DocumentSelectedManager {
+    
     @InvocableMethod(label='Manage Document Selected')
     public static List<HDT_WRP_DocumentSelectedResponse> execute(List<HDT_WRP_DocumentSelectedRequest> inputs){
         if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)) return null;
@@ -40,7 +41,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     }
 
     private static List<HDT_WRP_DocumentSelectedResponse> manageDocuments(List<HDT_WRP_DocumentSelectedRequest> inputs){
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) return null;
+        
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId))
+            return null;
+        
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
         try {
