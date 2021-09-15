@@ -20,6 +20,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
          
             Integer count=0;
             currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
+            String typeField;
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
                 
 
@@ -42,13 +43,30 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // Creazione Account
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
                     System.debug('column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-
-                    if ('ShippingAddressIsForeign__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count))) ||'BillingIsAddressVerified__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))   ) {
-                        System.debug('isverificato '+mapAccountFields.get(mapHeaderByPosition.get(count)));
-                        System.debug('isverificatotempField '+tempField);
-                        //currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
+                    typeField=getTypeField('Account',mapAccountFields.get(mapHeaderByPosition.get(count)));
+ 
+                   switch on typeField.toUpperCase() {
+                       when 'BOOLEAN'  {
+                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
+                       }
+                        when 'DOUBLE'  {
+                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+                        }
+                        when 'INTEGER'  {
+                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                        }
+                        when 'DATETIME'  {
+                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
+                        }
+                        when 'DATE'  {
+                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
+                        }
+                       when else {
+                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),tempField);
                     }
-                    else if('Tipo di Account'.equalsIgnoreCase(mapHeaderByPosition.get(count))){
+                   }
+            
+                    if('Tipo di Account'.equalsIgnoreCase(mapHeaderByPosition.get(count))){
                             // selezione recordtype Account 
                             if ('Business'.equalsIgnoreCase(tempField)) {
                                 currentProcess.currentAccount.put('RecordTypeId',recordTypeBus);
@@ -60,58 +78,119 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                                 throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' not valid!');
                             }
                     }
-                    else if('BirthDate__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))){
-                       currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                     
-                    }
-                    else {
-                        currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),tempField);
-                    } 
+                   
                 }
                 //Fine Creazione Account
                 // Creazione Sales
                 else if(mapSaleFields.get(mapHeaderByPosition.get(count))!=null ){
                     System.debug('column N° :'+count+' FieldapiName : '+mapSaleFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-
-                    currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),tempField);
+                    typeField=getTypeField('Sale__c',mapSaleFields.get(mapHeaderByPosition.get(count)));
+                    switch on typeField.toUpperCase() {
+                        when 'BOOLEAN'  {
+                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
+                        }
+                         when 'DOUBLE'  {
+                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+                         }
+                         when 'INTEGER'  {
+                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                         }
+                         when 'PHONE'  {
+                            currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Long.valueOf(tempField));
+                         }
+                         when 'DATETIME'  {
+                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
+                         }
+                         when 'DATE'  {
+                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
+                         }
+                        when else {
+                            currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),tempField);
+                        }
+                    }
                 }
+                // fine creazione sales
+                // start Service Point 
                 else if(mapServicePointFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('column N° :'+count+' FieldapiName : '+mapServicePointFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    typeField=getTypeField('ServicePoint__c',mapServicePointFields.get(mapHeaderByPosition.get(count)));
+                    switch on typeField.toUpperCase() {
+                        when 'BOOLEAN'  {
+                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
+                        }
+                         when 'DOUBLE'  {
+                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+                         }
+                         when 'INTEGER'  {
+                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                         }
 
-                    if ('ContractSigned__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count))) || 'Resident__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count))) 
-                    ||'SupplyAddessIsForeign__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count)))
-                    ) {
-                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
-                    }
-                    else if ('PowerContractual__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count)))) {
-                        System.debug('yuppi');
-                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                    }
-                    else if ('AnnualConsumption__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count)))||'PowerAvailable__c'.equalsIgnoreCase(mapServicePointFields.get(mapHeaderByPosition.get(count))) )                
-                     {
-                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-
-                    }
-                    else {
-                        currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
+                         when 'DATETIME'  {
+                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
+                         }
+                         when 'DATE'  {
+                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
+                         }
+                        when else {
+                            currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
+                        }
                     }
                 }
+                // Start Billing Profile
                 else if(mapBillingProfileFields.get(mapHeaderByPosition.get(count))!=null ){
                     System.debug('column N° :'+count+' FieldapiName : '+mapBillingProfileFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    typeField=getTypeField('BillingProfile__c',mapBillingProfileFields.get(mapHeaderByPosition.get(count)));
 
-                    currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),tempField);
+                    switch on typeField.toUpperCase() {
+                        when 'BOOLEAN'  {
+                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
+                        }
+
+                         when 'DOUBLE'  {
+                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+                         }
+                         when 'INTEGER'  {
+                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                         }
+
+                         when 'DATETIME'  {
+                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
+                         }
+                         when 'DATE'  {
+                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
+                         }
+                        when else {
+                            currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),tempField);
+                        }
+                    }
                 }
-
+                // End Billing Profile;
+                // Start Order
                 else if(mapOrderFields.get(mapHeaderByPosition.get(count))!=null ){
                     System.debug('column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    typeField=getTypeField('Order',mapOrderFields.get(mapHeaderByPosition.get(count)));
 
-                    if ('ContractSigned__c'.equalsIgnoreCase(mapAccountFields.get(mapHeaderByPosition.get(count)))) {
-                        currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),'true'.equalsIgnoreCase(tempField)?true:false);
+                    switch on typeField.toUpperCase() {
+                        when 'BOOLEAN'  {
+                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
+                        }
+                         when 'DOUBLE'  {
+                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+                         }
+                         when 'INTEGER'  {
+                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                         }
+
+                         when 'DATETIME'  {
+                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
+                         }
+                         when 'DATE'  {
+                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
+                         }
+                        when else {
+                            currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),tempField);
+                        }
                     }
-                    else {
-                        currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),tempField);
-                    }
-                }
+                } // End Order
                 count++;
             }
         }
