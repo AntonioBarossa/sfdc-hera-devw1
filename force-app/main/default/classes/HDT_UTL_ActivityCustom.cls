@@ -121,6 +121,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             res = true;
             Order ord = new Order();
             ord.id = act.order__c;
+            ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Registrazione validata  Firmato/Inviato';
             ord.status = 'Activated';
             orderSrv.updateRecord(ord);
@@ -141,6 +142,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
            // res = true;
             Order ord = new Order();
             ord.id = act.order__c;
+            ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Plico validato Firmato';
             ord.status = 'Activated';
             orderSrv.updateRecord(ord);
