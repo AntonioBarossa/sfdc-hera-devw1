@@ -42,7 +42,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
 
-        HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
+        // HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
 
         //Handle 'Plico validato Firmato' case for Order Dossier
         HDT_UTL_OrderProcess.orderPhaseManagementAfterUpdate(trigger.new,trigger.old);
