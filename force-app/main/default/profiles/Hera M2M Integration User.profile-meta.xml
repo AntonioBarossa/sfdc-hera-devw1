@@ -30224,6 +30224,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-Account Distributori</layout>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -33768,6 +33772,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>CampaignMemberLeadAssigment__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Interaction__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -33792,8 +33800,16 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>PercentageRulesForAssigningVisits__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>ScriptConfig__c</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>VisitAssignmentRules__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>

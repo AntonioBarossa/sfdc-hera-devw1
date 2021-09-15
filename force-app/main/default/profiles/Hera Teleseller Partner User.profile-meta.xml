@@ -29743,6 +29743,10 @@
         <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
     </layoutAssignments>
+      <layoutAssignments>
+        <layout>Account-Account Distributori</layout>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
@@ -31189,7 +31193,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -33519,6 +33523,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>CampaignMemberLeadAssigment__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>FUBProcessingItem__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -33545,6 +33553,10 @@
     <tabVisibilities>
         <tab>MassiveLoaderRequest__c</tab>
         <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PercentageRulesForAssigningVisits__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ScriptConfig__c</tab>
@@ -33661,6 +33673,10 @@
     <tabVisibilities>
         <tab>ServicePoint__c</tab>
         <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>VisitAssignmentRules__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>et4ae5__ExactTargetPhoenix</tab>
@@ -34004,7 +34020,7 @@
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
@@ -34048,7 +34064,7 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
@@ -34068,7 +34084,7 @@
         <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>RunReports</name>
     </userPermissions>
     <userPermissions>
