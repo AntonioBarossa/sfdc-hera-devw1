@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>Approved__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Note__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

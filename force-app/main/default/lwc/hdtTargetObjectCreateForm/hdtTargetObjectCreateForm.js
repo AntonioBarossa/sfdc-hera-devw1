@@ -388,7 +388,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
                 else if (element === 'Resident__c') {
                     console.log('entra in resident');
-                    if(this.recordTypeAccount == 'Residente'){
+                    if(this.recordTypeAccount == 'Residenziale'){
                         this.allSubmitedFields.Resident__c = true;
                         fieldsDataObject.push(
                             {
