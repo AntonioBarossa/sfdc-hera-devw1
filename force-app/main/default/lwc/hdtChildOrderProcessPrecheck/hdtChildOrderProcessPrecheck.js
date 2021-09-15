@@ -530,13 +530,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     return `${testoFinale}\n${elem}`;
                 }, result.errorDetails[0].code);
                 console.log(message);
-                let toastErrorMessage = new ShowToastEvent({
+                /*let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
                     message: message,
                     variant: 'warning', 
                     mode:'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(toastErrorMessage);*/
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
             

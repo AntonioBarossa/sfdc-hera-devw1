@@ -298,6 +298,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);
+        if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
+            HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
+        }
 
         if (order.ParentOrder__r.Status == 'Draft') {
             // order parent status = in lavorazione, phase = in lavorazione
