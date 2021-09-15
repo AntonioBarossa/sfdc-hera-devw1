@@ -12,6 +12,9 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
 
     sendToApex(bodyString){
         console.log('# sendToApex #');
+        //console.log('>>> TO SEND ' + bodyString);
+        //bodyString = '{"billNumber":"411911206203","channel":"SOL","date":"2019-11-29","type":"D66l7V","company":"1070"}';
+
         console.log('>>> TO SEND ' + bodyString);
         sendFileToPrint({body: bodyString})
         .then(result => {

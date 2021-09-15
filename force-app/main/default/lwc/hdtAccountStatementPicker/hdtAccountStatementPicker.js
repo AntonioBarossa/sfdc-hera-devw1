@@ -86,9 +86,9 @@ export default class HdtAccountStatementPicker extends LightningElement {
         getDocumentSelected({
             caseId:this.caseId
         }).then(data => {
-            console.log(JSON.parse(data));
-            console.log(data.length);
             if(data && data.length>0){
+                console.log(JSON.parse(data));
+                console.log(data.length);
                 this.documents = JSON.parse(data);
                 this.calculateAmounts(this.documents);
             }else{
@@ -438,7 +438,10 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
                 console.log('#CalculateAmount: DocumentResidue__c -> ' + document.DocumentResidue__c);
                 amount += document.Amount__c;
-                amountFee += document.TvFeeResidual__c;
+                if(document.TvFeeResidual__c !== null && document.TvFeeResidual__c !== undefined)
+                {
+                    amountFee += document.TvFeeResidual__c;
+                }
                 documentResidue += document.DocumentResidue__c;
             });
         }

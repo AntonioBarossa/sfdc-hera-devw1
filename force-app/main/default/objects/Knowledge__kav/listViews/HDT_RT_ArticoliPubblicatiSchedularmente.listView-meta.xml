@@ -8,7 +8,7 @@
     <columns>LAST_UPDATE</columns>
     <columns>LANGUAGE</columns>
     <columns>ToPublishDate__c</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>VALIDATION_STATUS_ENUM</field>
         <operation>equals</operation>
@@ -18,6 +18,10 @@
         <field>PUBLISH_STATUS</field>
         <operation>equals</operation>
         <value>1</value>
+    </filters>
+    <filters>
+        <field>ToPublishDate__c</field>
+        <operation>notEqual</operation>
     </filters>
     <label>Articoli con Pubblicazione Programmata</label>
 </ListView>

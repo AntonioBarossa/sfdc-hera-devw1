@@ -668,6 +668,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Sospensione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
             <controllingFieldValue>Notifiche</controllingFieldValue>
             <controllingFieldValue>Pagamenti</controllingFieldValue>
             <controllingFieldValue>Post Sales VAS</controllingFieldValue>

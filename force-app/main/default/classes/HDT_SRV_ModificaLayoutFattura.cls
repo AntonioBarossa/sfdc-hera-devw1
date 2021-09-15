@@ -73,7 +73,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
      
     }
 
-
+    /*
     private static HDT_WRP_GenericSapIntegration submitRequest(Id recordId){
 
         HDT_UTL_SapIntegrationInterface support = HDT_UTL_SapIntegrationAdapterFactory.getInstance('HDT_WS_GenericSapIntegrationAdapter');
@@ -89,6 +89,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         }
         return sapIntegration;
     }
+    */
 
     private static Case manageResponse(HttpResponse response, String caseId){
         Case caseToUpdate = new Case();
