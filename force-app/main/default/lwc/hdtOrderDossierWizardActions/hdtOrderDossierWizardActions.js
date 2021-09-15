@@ -2,6 +2,7 @@ import { LightningElement, api,wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import save from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save';
+import save2 from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save2';
 import cancel from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.cancel';
 import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isSaveDisabled';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
@@ -170,7 +171,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                 context: 'Order',
                 formParams: JSON.stringify(formParams)
             }).then(result => {
-                this.handleSave();
+                this.handleSave2();
             }).catch(error => {
                 this.showToast('Errore nell\'invio del documento al cliente.');
                 console.error(error);
@@ -183,6 +184,45 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     handleSave(){
         this.loading = true;
         save({orderParent: this.orderParentRecord}).then(data =>{
+            this.loading = false;
+
+            this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
+
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Order confermato con successo',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+            //this.sendDocumentFile();
+
+        }).catch(error => {
+            this.loading = false;
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: errorMessage,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    handleSave2(){
+        this.loading = true;
+        save2({orderParent: this.orderParentRecord,isPlicoSend:true}).then(data =>{
             this.loading = false;
 
             this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
