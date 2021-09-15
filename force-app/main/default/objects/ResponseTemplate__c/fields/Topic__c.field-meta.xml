@@ -31,9 +31,9 @@
                 <label>Contestazione disattivazione_cambio offerta</label>
             </value>
             <value>
-                <fullName>Contestazione volutra_subentro</fullName>
+                <fullName>Contestazione voltura_subentro</fullName>
                 <default>false</default>
-                <label>Contestazione volutra_subentro</label>
+                <label>Contestazione voltura_subentro</label>
             </value>
             <value>
                 <fullName>Contestazione Offerta_Promo_Bonus_Sconti</fullName>

@@ -3,13 +3,16 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     Map<String, String> usersEmail = new Map<String, String>();
     Map<wrts_prcgvr__Activity__c, User> activityOwner = new Map<wrts_prcgvr__Activity__c, User> ();
     public HDT_BA_SuspendedActivitiesEmailAlert() {
-        this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnedByUser__c FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND Status__c = 'Sospesa' WITH SECURITY_ENFORCED];
+        //old this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnedByUser__c FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND Status__c = 'Sospesa' WITH SECURITY_ENFORCED];
+        this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnerId, Owner.Name FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND Status__c = 'Sospesa' WITH SECURITY_ENFORCED]; //Marco Arci
         if (this.activities.size() > 0) {
             List<String> userNames = new List<String>();
             for (wrts_prcgvr__Activity__c act : this.activities) {
-                userNames.add(act.OwnedByUser__c);
+                //old userNames.add(act.OwnedByUser__c);
+                userNames.add(act.OwnerId); //Marco Arci
             }
-            List<User> users = [SELECT Id, Name, Email FROM User WHERE Name IN :userNames];
+            //old List<User> users = [SELECT Id, Name, Email FROM User WHERE Name IN :userNames];
+            List<User> users = [SELECT Id, Name, Email FROM User WHERE Id IN :userNames]; //Marco Arci
             for (User user : users) {
                 this.usersEmail.put(user.Name, user.Email);
             }
@@ -29,7 +32,8 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
         }
         for (wrts_prcgvr__Activity__c activity : scope) {
             Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage();
-            toAddresses.add(this.usersEmail.get(activity.OwnedByUser__c));
+            //old toAddresses.add(this.usersEmail.get(activity.OwnedByUser__c));
+            toAddresses.add(this.usersEmail.get(activity.Owner.Name)); //Marco Arci
             emailMsg.setToAddresses(toAddresses);
             emailMsg.setSubject('Attività sospesa');
             String emailBody = String.format('Gentile utente, <br/> ti segnaliamo che l’attività {0} ha raggiunto la data fine sospensione <br/>', new List<String>{activity.Name});

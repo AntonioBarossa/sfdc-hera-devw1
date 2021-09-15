@@ -694,8 +694,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
             else{
-                if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
-                    let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
+                //if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                   /* let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
                     let exciseFacilitation = this.template.querySelector("[data-id='FacilitationExcise__c']");
                     createActivityAccise({
                         flagAccise : this.template.querySelector("[data-id='FacilitationExcise__c']") === true,
@@ -711,8 +711,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         mode: 'sticky'
                         });
                         this.dispatchEvent(toastErrorMessageIvaAccise);
-                    });
-                }
+                    });*/
+                //}
             }
         }
         if(currentSectionName === 'fatturazione') {
@@ -1348,7 +1348,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     // )
                     new fieldData(
                         'Numero Contratto','ConfirmCustomerContract__c',
-                        this.order.ConfirmCustomerContract__c !== undefined, 
+                        true, 
                         false, true, '',''
                     ), 
                     new fieldData(
@@ -2052,7 +2052,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dateOrdine',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
+                // HRAWRM-461 15-09
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && this.order.ParentOrder__r.ContractSigned__c,
                 data: [
                     {
                         'label': 'Data Firma',
