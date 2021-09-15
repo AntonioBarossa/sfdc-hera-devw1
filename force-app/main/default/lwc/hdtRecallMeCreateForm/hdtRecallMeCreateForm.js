@@ -17,6 +17,7 @@ import {
     getPicklistValues
 } from 'lightning/uiObjectInfoApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { CloseActionScreenEvent } from 'lightning/actions';
 import SOURCE_AGENCY from '@salesforce/schema/Lead.SourceAgency__c';
 import INTEREST_PRODUCT from '@salesforce/schema/Lead.InterestProduct__c';
 import MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
@@ -121,14 +122,26 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 campaignId: campaignId,
                 mobilePhone: this.mobilePhone
             }).then(result => {
-                console.log(JSON.stringify(result));
-                this.showSpinner = false;
-                this.dispatchEvent(new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Campaign member created successfully!',
-                    variant: 'success'
-                }));
-                this.dispatchEvent(new CustomEvent('afterSave'));
+                if(result != null){
+                    console.log(JSON.stringify(result));
+                    this.showSpinner = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Campaign member created successfully!',
+                        variant: 'success'
+                    }));
+                    this.dispatchEvent(new CustomEvent('afterSave'));
+                }
+                else{
+                    console.log(JSON.stringify(result));
+                    this.showSpinner = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Warning',
+                        message: 'Manca la Configurazione per la coppia di valori inseriti',
+                        variant: 'warning'
+                    }));
+                    this.dispatchEvent(new CustomEvent('afterSave'));
+                }
             }).catch(err => {
                 console.log(JSON.stringify(err));
             });
