@@ -71,6 +71,7 @@
 
     <template if:true={showFilters} >
         <c-hdt-account-statement-filters
+            tab-code={tabCode}
             onclosemodal={closeModalHandler}
             onsetobjfilter={applyFilter}
         ></c-hdt-account-statement-filters>

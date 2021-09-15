@@ -151,12 +151,12 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
     * @description Getting list of Orders/Assets/Subscription
     * @author gabriele.rota@webresults.it | 2021-07-21 
-    * @param accountId 
+    * @param searchString 
     * @param key 
     * @return List<SObject> 
     **/
     @AuraEnabled
-    public static List<SObject> getFornitura(Id accountId, String key){
+    public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records;
 
         switch on key {
@@ -164,39 +164,41 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
                     WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Status='In Lavorazione' AND SBQQ__Quote__r.IsVAS__c = true
-                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'ORDERS_ELE'{
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
-                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'ASSETS_ACTIVATED'{
                 records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId WITH SECURITY_ENFORCED];
-            }
-            when 'ASSETS_ACTIVATED_VAS'{
-                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId
-                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
                 records = [SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:accountId WITH SECURITY_ENFORCED];
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED];
             }
-            when 'SUBS_VAS'{ 
-                /*records = [SELECT SBQQ__Contract__r.ContractNumber,
-                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Account__c=:accountId
-                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];*/
-                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE AccountId=:accountId AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS'];
+            //Segnalazioni VAS - START
+            when 'CONTRACTS_VAS'{ 
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
+                    WHERE AccountId=:searchString AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS' WITH SECURITY_ENFORCED];
             }
+            when 'SUBS_FROM_CONTRACT'{ 
+                records = [SELECT Name, SBQQ__ProductName__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_FROM_CONTRACT'{
+                records = [SELECT Name, Product2.Name
+                    FROM Asset WHERE Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            //Segnalazioni VAS - END
             when 'CONTRACT_ELE_ACTIVE'{
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
-                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId
+                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:searchString
                     AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
                     WITH SECURITY_ENFORCED];
             }

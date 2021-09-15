@@ -61,45 +61,52 @@ export default class hdtBillingProfileForm extends LightningElement {
                     let required = false;
 
                     switch (el) {
-                        case 'XMLType__c':
-                            value = 'Sintetico';
-                            console.log('XMLType__c default: ', value);
-                            break;
                         case 'IbanCountry__c':
                             value = 'IT';
                             disable = true;
                             break;
                         case 'IbanCIN_IBAN__c':
-                            value = '';
+                            value = this.cloneObject.IbanCIN_IBAN__c ?? '';
                             break;
                         case 'BillSendingMethod__c':
                             required = true;
+                            value = this.cloneObject.BillSendingMethod__c ?? '';
                             break;
                         case 'SubjectCode__c':
                             required = true;
+                            value = this.cloneObject.SubjectCode__c ?? '';
                             break;
                         case 'ElectronicInvoicingMethod__c':
                             required = true;
+                            value = this.cloneObject.ElectronicInvoicingMethod__c ?? '';
                             break;
                         case 'XMLType__c':
                             required = true;
+                            value = this.cloneObject.XMLType__c ?? '';
                             break;
                         case 'CIG__c':
                             required = true;
+                            value = this.cloneObject.CIG__c ?? '';
                             break;
                         case 'CUP__c':
                             required = true;
+                            value = this.cloneObject.CUP__c ?? '';
                             break;
                         case 'SubjectCodeStartDate__c':
                             required = true;
+                            value = this.cloneObject.SubjectCodeStartDate__c ?? '';
                             break;
                         case 'SignatoryType__c':
                             required = true;
+                            value = this.cloneObject.SignatoryType__c ?? '';
                             break;
                         case 'InvoiceEmailAddress__c':
                             required = false;
+                            value = this.cloneObject.InvoiceEmailAddress__c ?? '';
                             break;
                         default:
+                            console.log('clone value ' + el + ' : ' + this.cloneObject[el]);
+                            value = this.cloneObject[el] ?? '';
                             break;
                     }
                     switch (el) {
@@ -150,18 +157,26 @@ export default class hdtBillingProfileForm extends LightningElement {
                 data.fatturazioneElettronica.forEach(el => {
 
                     let required = false;
+                    let value = '';
 
                     switch (el) {
                         case 'ElectronicInvoicingMethod__c':
                             required = true;
+                            value = this.cloneObject.ElectronicInvoicingMethod__c ?? '';
+                            break;
+                        case 'XMLType__c':
+                            value = this.cloneObject.XMLType__c ?? 'Sintetico';
+                            console.log('XMLType__c default: ', value);
                             break;
                         default:
+                            value = this.cloneObject[el] ?? '';
                             break;
                     }
 
                     this.fatturazioneElettronicaFields.push({
                         fieldName: el,
-                        required: required
+                        required: required,
+                        value: value
                     });
                 });
 
@@ -195,19 +210,39 @@ export default class hdtBillingProfileForm extends LightningElement {
                 });
 
                 this.signatoryTypeIsVisible = this.tipologiaIntestatarioFields.length > 0;
+
+                if(this.cloneObject.SignatoryType__c !== undefined){
+                    // this.resetTipologiaIntestatario();
+                    this.tipologiaIntestatarioInit(this.cloneObject.SignatoryType__c);
+                    // this.template.querySelector('[data-name="SignatoryType__c"]').value = data.SignatoryType__c;
+                    // let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'SignatoryType__c');
+                    // this.tipologiaIntestatarioFields[indexOtherPayer].value = data.SignatoryType__c;
+                }
             }
+
+            
             
         }).catch(error => {
             this.loading = false;
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                // message: error.body.message,
-                message: 'Error',
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
-            // console.log('Errore: ',error.body.message);
+            console.log('Errore: ',JSON.stringify(error));
         });
     }
 
@@ -749,23 +784,23 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.handleGetFormFields(this.cloneObject.PaymentMethod__c);
             this.handleWrapAddressObjectReverse();
 
-            console.log('data.SignatoryType__c: ', this.cloneObject.SignatoryType__c);
-
-            // if(this.cloneObject.SignatoryType__c !== undefined){
-            //     // this.resetTipologiaIntestatario();
-            //     // this.tipologiaIntestatarioInit(data.SignatoryType__c);
-            //     // this.template.querySelector('[data-name="SignatoryType__c"]').value = data.SignatoryType__c;
-            //     // let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'SignatoryType__c');
-            //     // this.tipologiaIntestatarioFields[indexOtherPayer].value = data.SignatoryType__c;
-            // }
-
         }).catch(error => {
             this.loading = false;
 
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', error);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: error.body.message,
-                message: 'Error',
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });
@@ -802,11 +837,22 @@ export default class hdtBillingProfileForm extends LightningElement {
             }).catch(error => {
                 this.loading = false;
     
+                let errorMessage = '';
+
+                if (error.body.message !== undefined) {
+                    errorMessage = error.body.message;
+                } else if(error.message !== undefined){
+                    errorMessage = error.message;
+                } else if(error.body.pageErrors !== undefined){
+                    errorMessage = error.body.pageErrors[0].message;
+                }
+
+                console.log('Error: ', errorMessage);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    // message: error.body.message,
-                    message: 'Error',
-                    variant: 'error'
+                    message: errorMessage,
+                    variant: 'error',
+                    mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
             });

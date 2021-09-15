@@ -37,7 +37,7 @@ public with sharing class HDT_LC_RecallMe {
        req.idUser=idUser ;
        req.username= username;
        req.ecid= ecid;
-       req.token= token + '';
+      // req.token= token + '';
      //   String body = '{"startRange":"'+startRange+'", "token":"'+token+'","endRange":"'+endRange+'", "appointmentType":"'+appointmentType+'", "idUser":"'+idUser+'", "username":"'+username+'", "ecid":"'+ecid+'"}';
         HDT_WS_RecallMeResponse wsCall = (HDT_WS_RecallMeResponse)HDT_WS_RecallMe.postRecallMe(nomeApi, req);
         if (wsCall.status == 'success') {
