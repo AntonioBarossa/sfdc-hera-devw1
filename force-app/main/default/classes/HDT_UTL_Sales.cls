@@ -194,52 +194,62 @@ public with sharing class HDT_UTL_Sales {
 
     public static List<Order> validationActivityPhaseTransition(List<Order> orderNew){
         List<wrts_prcgvr__Activity__c> listActivityToCreate = new List<wrts_prcgvr__Activity__c>();
-        
+        List<Order> childToUpdate = new List<Order>();
         Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
       //  List<String> orderParentToActivityDocument = new List<String>();
         for(Order ord : orderNew){
             if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){
-                if(ord.phase__c = 'Plico da inviare'){
-                    if(ord.Sale__r.Channel__c = 'Teleselling Outbound' && ord.SignatureMethod__c = 'Vocal Order'){
+                if(ord.phase__c == 'Plico da inviare'){
+                    if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.phase__c = 'Registrazione da validare';
                         listActivityToCreate.add(instanceActVocalOrd(ord.accountid,ord.id,rt));
+                        childToUpdate.add(ord);
                     }
-                    else if(ord.Sale__r.Channel__c = 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.phase__c = 'Plico inviato da validare';
+                        childToUpdate.add(ord);
                     }
-                    else if((ord.Sale__r.Channel__c = 'Agenzie' || ord.Sale__r.Channel__c = 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
+                    else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                         ord.phase__c = 'Plico inviato da validare';
+                        childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if((ord.Sale__r.Channel__c = 'Agenzie' || ord.Sale__r.Channel__c = 'Business Agent') && ord.SignatureMethod__c == 'Cartacea' && DocSendingMethod__c == 'Stampa Cartacea'){
+                    else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && ord.SignatureMethod__c == 'Cartacea' && DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.phase__c = 'Plico Firmato da validare';
+                        childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if((ord.Sale__r.Channel__c = 'Teleselling Inbound' || ord.Sale__r.Channel__c = 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
+                    else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.phase__c = 'In registrazione';
+                        childToUpdate.add(ord);
                     }
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
                         
                     }*/
-                    else if(ord.Sale__r.Channel__c = 'Telefono' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if(ord.Sale__r.Channel__c == 'Telefono' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.phase__c = 'Plico inviato da firmare';
+                        childToUpdate.add(ord);
                     }
-                    else if((ord.Sale__r.Channel__c = 'HC Point' || ord.Sale__r.Channel__c = 'Sportello') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if((ord.Sale__r.Channel__c == 'HC Point' || ord.Sale__r.Channel__c == 'Sportello') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.phase__c = 'Plico inviato da firmare';
+                        childToUpdate.add(ord);
                     }
-                    else if((ord.Sale__r.Channel__c = 'HC Point' || ord.Sale__r.Channel__c = 'Sportello') && ord.SignatureMethod__c == 'Cartacea' && DocSendingMethod__c == 'Stampa Cartacea'){
+                    else if((ord.Sale__r.Channel__c == 'HC Point' || ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' && DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.phase__c = 'Plico Firmato da validare';
+                        childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
-                    else if(ord.Sale__r.Channel__c = 'Vendita Condomini' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if(ord.Sale__r.Channel__c == 'Vendita Condomini' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.phase__c = 'Plico inviato da firmare';
+                        childToUpdate.add(ord);
                     }
-                    else if(ord.Sale__r.Channel__c = 'Back office' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
+                    else if(ord.Sale__r.Channel__c == 'Back office' && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' ) ){
                         ord.phase__c = 'Plico inviato da firmare';
+                        childToUpdate.add(ord);
                     }
                     /*else if(ord.Sale__r.Channel__c = 'HC Point' && ord.SignatureMethod__c == 'Cartacea'){
                         ord.phase__c = 'Plico Firmato da validare';
@@ -247,13 +257,17 @@ public with sharing class HDT_UTL_Sales {
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }*/
                 }
-                else if(ord.phase__c = 'In registrazione'){
-                    if((ord.Sale__r.Channel__c = 'Teleselling Inbound' || ord.Sale__r.Channel__c = 'Telefono') && ord.SignatureMethod__c == 'Vocal Order' && DocSendingMethod__c == 'Posta Cartacea'){
+                else if(ord.phase__c == 'In registrazione'){
+                    if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order' && DocSendingMethod__c == 'Posta Cartacea'){
                         ord.phase__c = 'Plico  Firmato/Inviato';
                         ord.Status = 'Activated';
+                        childToUpdate.add(ord);
                     }
                 }
             }
+        }
+        if(childToUpdate != null && !childToUpdate.isEmpty()){
+            update childToUpdate;
         }
         if(listActivityToCreate != null && !listActivityToCreate.isEmpty()){
             insert listActivityToCreate;
