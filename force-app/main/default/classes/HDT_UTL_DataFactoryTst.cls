@@ -1834,6 +1834,108 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return CommercialCode;
 	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 13/09/2021
+     * @description createCity Method
+     * @history valere - 15/09/2021– Created method
+     */
+    public static List<City__c> createCity(Integer amount, Boolean doInsert,Boolean serviceEle,String sdv){
+		List<City__c> cityList=new List<City__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			City__c ct=new City__c();
+
+			ct.Name='Roma';
+			ct.BelfioreCode__c='Bt'+i;
+            ct.ServiceEle__c=serviceEle;
+            ct.SDV__c=sdv;
+
+			cityList.add(ct);
+
+		}
+
+		if (doInsert){
+
+			insert cityList;
+		}
+
+		return cityList;
+	}
+
+     /**
+     * @author Valere (valere@noeli-it.net)
+     * @date 13/09/2021
+     * @description createAccountBusiness Method
+     * @history valere - 15/09/2021– Created method
+     */
+    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, Map<String,String> params){
+
+		List<Account> accList=new List<Account>();
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_BUSINESS;
+
+		for (Integer i=0; i<amount; i++){
+			Decimal numCustomerCode = Decimal.valueOf(params.get('numCustomerCode')+i);
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			Account acc=new Account();
+
+			acc.RecordTypeId=rt;
+			acc.Name=params.get('nameStart')+i;
+			acc.CompanyOwner__c=params.get('companyOwner');
+			acc.CustomerMarking__c=params.get('customerMarking');
+			acc.Category__C=params.get('category');
+			acc.code__c=params.get('code');
+			acc.CustomerCode__c=params.get('customerCode');
+			acc.VATNumber__c=params.get('vatNumber');
+			acc.BillingCityCode__c='Roma';
+			acc.BillingStreetName__c='via roma';
+			acc.BillingStreetNumber__c='55';
+			acc.LastName__c=params.get('nameStart')+i;
+			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.BillingIsAddressVerified__c=true;
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+
+			accList.add(acc);
+
+		}
+
+		if (doInsert){
+
+			insert accList;
+		}
+
+		return accList;
+	}
+
+     /**
+     * @author Valere (valere@noeli-it.net)
+     * @date 13/09/2021
+     * @description createServicePoint Method
+     * @history valere - 15/09/2021– Created method
+     */
+    public static List<ServicePoint__c> createServicePoint(Integer amount, Boolean doInsert,String supplyCity,String distributor){
+
+		List<ServicePoint__c> servPointList=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+		for(ServicePoint__c sp:servPointList){
+			sp.SupplyProvince__c='AQ';
+			sp.GlobalMigrationKey__c='1123255';
+			sp.SupplyCity__c=supplyCity;
+			sp.CommoditySector__c='Energia Elettrica';
+			sp.Distributor__c=distributor;
+		}
+
+		if (doInsert){
+
+			insert servPointList;
+		}
+
+		return servPointList;
+	}
 	
 
 	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {

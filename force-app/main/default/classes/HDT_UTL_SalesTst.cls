@@ -8,9 +8,9 @@
 public class HDT_UTL_SalesTst {
     @TestSetup
     static void makeData(){
-        City__c city=createCity(1, true,true,'svd0')[0];
+        City__c city=HDT_UTL_DataFactoryTst.createCity(1, true,true,'svd0')[0];
 
-        Account acc0=createAccountBusiness(1, true,new Map<String,String>{
+        Account acc0=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true,new Map<String,String>{
             'companyOwner'=>'AAA-EBT',
             'customerMarking'=>'AAS Azienda',
             'customerCode'=>'0000000',
@@ -22,7 +22,7 @@ public class HDT_UTL_SalesTst {
         })[0];
         
         
-        Account acc1=createAccountBusiness(1, true,new Map<String,String>{
+        Account acc1=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true,new Map<String,String>{
             'companyOwner'=>'AAA-EBT',
             'customerMarking'=>'AAS Azienda',
             'customerCode'=>'00000001',
@@ -33,94 +33,9 @@ public class HDT_UTL_SalesTst {
         })[0];
         HDT_UTL_DataFactoryTst.createSale(1,true,acc0.Id,'Attiva');
         HDT_UTL_DataFactoryTst.createSale(1,true,acc1.Id,'Attiva');
-        createServicePoint(1, true,city.Name,acc0.Id);
+        HDT_UTL_DataFactoryTst.createServicePoint(1, true,city.Name,acc0.Id);
     }
     
-    public static List<City__c> createCity(Integer amount, Boolean doInsert,Boolean serviceEle,String sdv){
-		List<City__c> cityList=new List<City__c>();
-
-		for (Integer i=0; i<amount; i++){
-
-			City__c ct=new City__c();
-
-			ct.Name='Roma';
-			ct.BelfioreCode__c='Bt'+i;
-            ct.ServiceEle__c=serviceEle;
-            ct.SDV__c=sdv;
-
-			cityList.add(ct);
-
-		}
-
-		if (doInsert){
-
-			insert cityList;
-		}
-
-		return cityList;
-	}
-
-    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, Map<String,String> params){
-
-		List<Account> accList=new List<Account>();
-        HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
-		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_BUSINESS;
-
-		for (Integer i=0; i<amount; i++){
-			Decimal numCustomerCode = Decimal.valueOf(params.get('numCustomerCode')+i);
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
-			Account acc=new Account();
-
-			acc.RecordTypeId=rt;
-			acc.Name=params.get('nameStart')+i;
-			acc.CompanyOwner__c=params.get('companyOwner');
-			acc.CustomerMarking__c=params.get('customerMarking');
-			acc.Category__C=params.get('category');
-			acc.code__c=params.get('code');
-			acc.CustomerCode__c=params.get('customerCode');
-			acc.VATNumber__c=params.get('vatNumber');
-			acc.BillingCityCode__c='Roma';
-			acc.BillingStreetName__c='via roma';
-			acc.BillingStreetNumber__c='55';
-			acc.LastName__c=params.get('nameStart')+i;
-			acc.FiscalCode__c='SXSRLA45H28H501K';
-			acc.BillingIsAddressVerified__c=true;
-        	acc.IsWrongFiscalData__c = false;
-        	acc.BillingIsAddressVerified__c = true;
-			acc.CustomerCode__c = stringResult;
-
-			accList.add(acc);
-
-		}
-
-		if (doInsert){
-
-			insert accList;
-		}
-
-		return accList;
-	}
-
-    public static List<ServicePoint__c> createServicePoint(Integer amount, Boolean doInsert,String supplyCity,String distributor){
-
-		List<ServicePoint__c> servPointList=HDT_UTL_DataFactoryTst.createServicePoint(1, false);
-		for(ServicePoint__c sp:servPointList){
-			sp.SupplyProvince__c='AQ';
-			sp.GlobalMigrationKey__c='1123255';
-			sp.SupplyCity__c=supplyCity;
-			sp.CommoditySector__c='Energia Elettrica';
-			sp.Distributor__c=distributor;
-		}
-
-		if (doInsert){
-
-			insert servPointList;
-		}
-
-		return servPointList;
-	}
-
     @IsTest
     static void isTransitionNoUpTest(){
         Sale__c sale0=[SELECT Account__r.CompanyOwner__c,Account__r.Category__c FROM Sale__c WHERE  Account__r.code__c!=null LIMIT 1];
