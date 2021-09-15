@@ -69,6 +69,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     //Added variables to calculate Total Amount w and w/o Fee
     @track amountWoFee;
     @track amountWiFee;
+    @track documentResiudal;
 
     data = [];
     columns = columns;
@@ -85,9 +86,9 @@ export default class HdtAccountStatementPicker extends LightningElement {
         getDocumentSelected({
             caseId:this.caseId
         }).then(data => {
-            console.log(JSON.parse(data));
-            console.log(data.length);
             if(data && data.length>0){
+                console.log(JSON.parse(data));
+                console.log(data.length);
                 this.documents = JSON.parse(data);
                 this.calculateAmounts(this.documents);
             }else{
@@ -355,10 +356,11 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 }
             }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
+            console.log('ROW >>>' + JSON.stringify(row));
             var fields = {
                 'Name' : row.xblnr,
                 'DocumentNumber__c' : row.xblnr, 
-                'Bill__c' : row.boll, 
+                'Bill__c' : row.bollo, 
                 'Type__c' : row.tipoDocDesc,
                 'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
                 'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
@@ -428,21 +430,29 @@ export default class HdtAccountStatementPicker extends LightningElement {
 
         var amount = 0.0;
         var amountFee = 0.0;
+        let documentResidue = 0.0;
 
         if(documents){
             documents.forEach(document =>{
                 console.log('#CalculateAmount: Residue__c -> ' + document.Amount__c);
                 console.log('#CalculateAmount: TvFeeResidual__c -> ' + document.TvFeeResidual__c);
+                console.log('#CalculateAmount: DocumentResidue__c -> ' + document.DocumentResidue__c);
                 amount += document.Amount__c;
-                amountFee += document.TvFeeResidual__c;
+                if(document.TvFeeResidual__c !== null && document.TvFeeResidual__c !== undefined)
+                {
+                    amountFee += document.TvFeeResidual__c;
+                }
+                documentResidue += document.DocumentResidue__c;
             });
         }
 
         console.log('#CalculateAmount: amount -> ' + amount);
         console.log('#CalculateAmount: amountFee -> ' + amountFee);
+        console.log('#CalculateAmount: residue -> ' + documentResidue);
 
         this.amountWoFee = amount - amountFee;
         this.amountWiFee = amount;
+        this.documentResiudal = documentResidue;
 
     }
 

@@ -146,7 +146,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 			// OLD VALUE → acc.CustomerCode__c='1003616210';
         	acc.IsWrongFiscalData__c = false;
-        	acc.BillingIsAddressVerified__c = true;
 			acc.CustomerCode__c = stringResult;
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -1147,6 +1146,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return internalUser;
 	}
 
+	public static User createCommunityUser(Contact contact, String profileId ,Boolean doInsert) {
+        User communityUser = new User(
+                Alias = 'commuser',
+                FirstName = 'FirstName',
+                LastName = 'LastName',
+                Email = 'commuser@test.com',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'it',
+                LocaleSidKey = 'it',
+                ProfileId = profileId,
+                ContactId = contact.Id,
+                TimeZoneSidKey = 'Europe/Rome',
+                UserName = 'commuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+            insert communityUser;
+        }
+        return communityUser;
+    }
+
 	public static PermissionSetAssignment assignPermissionSet(User u, String permissionSet, Boolean doInsert){
 
 		PermissionSetAssignment psa=new PermissionSetAssignment(PermissionSetId=getPermissionSetId(permissionSet), AssigneeId=u.Id);
@@ -1817,4 +1836,88 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 	
 
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
+	}
+
+	public static List<CommercialCode__c> createCommCode(Integer amount, Boolean doInsert) {
+
+		List<CommercialCode__c> commCodeList = new List<CommercialCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommercialCode__c commCode = new CommercialCode__c(
+				Name = 'testCommCode'
+			);
+
+			commCodeList.add(commCode);
+		}
+
+		if (doInsert){
+
+			insert commCodeList;
+		}
+
+		return commCodeList;
+	}
+
+	public static List<MatriceRemiCode__c> createMatriceRemiCode(Integer amount, Boolean doInsert){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+
+			mRemiCode.RemiCode__c='test';
+
+			matriceRemiCode.add(mRemiCode);
+
+		}
+
+		if (doInsert){
+
+			insert matriceRemiCode;
+		}
+
+		return matriceRemiCode;
+}
+
+
+	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
+
+		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ServiceRequest__c sr = new ServiceRequest__c(
+				ProcessType__c = 'Alert'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+	}
+	return srList;
+}
 }

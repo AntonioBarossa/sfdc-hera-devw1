@@ -924,6 +924,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Annullamento_0</name>
+        <label>Annullamento?</label>
+        <locationX>5571</locationX>
+        <locationY>564</locationY>
+        <defaultConnector>
+            <targetReference>Annullamento_Prestazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annullare</defaultConnectorLabel>
+        <rules>
+            <name>Non_Annulare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BillingProfileSelezionato</targetReference>
+            </connector>
+            <label>Non Annulare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Avanzamaneto</name>
         <label>Avanzamento</label>
         <locationX>4924</locationX>
@@ -1067,6 +1092,38 @@
                 <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>BillingProfileSelezionato</name>
+        <label>BillingProfileSelezionato?</label>
+        <locationX>5614</locationX>
+        <locationY>683</locationY>
+        <defaultConnector>
+            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Selezionato</defaultConnectorLabel>
+        <rules>
+            <name>Selezionato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetBillingProfile_0</targetReference>
+            </connector>
+            <label>Selezionato</label>
         </rules>
     </decisions>
     <decisions>
@@ -2893,17 +2950,17 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>hdtBillingProfileScreen</name>
         <label>hdtBillingProfileScreen</label>
-        <locationX>5566</locationX>
-        <locationY>684</locationY>
+        <locationX>5476</locationX>
+        <locationY>644</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetBillingProfile_0</targetReference>
+            <targetReference>Annullamento_0</targetReference>
         </connector>
         <fields>
             <name>displaytestbilling</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Seleziona la bolletta di riferimento&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Selezionare il CA (non obbligatorio)&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2919,7 +2976,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>selectionType</name>
                 <value>
-                    <stringValue>BillingProfile</stringValue>
+                    <stringValue>BillingProfile_VarDom</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2938,6 +2995,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>searchVariant</name>
                 <value>
                     <stringValue>Label-Hidden</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nonReqSelection</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3909,7 +3972,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo_0</name>
-            <fieldText>&lt;p&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/p&gt;&lt;p&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3924,7 +3987,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo1</name>
-            <fieldText>&lt;p&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&lt;/span&gt;&quot;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4037,8 +4100,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>5291</locationX>
-        <locationY>1663</locationY>
+        <locationX>5437</locationX>
+        <locationY>1529</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4906,6 +4969,31 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <name>ProcessType</name>
             <value>
                 <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annullamento_Prestazione</name>
+        <label>Annullamento Prestazione</label>
+        <locationX>5707</locationX>
+        <locationY>562</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
     </subflows>

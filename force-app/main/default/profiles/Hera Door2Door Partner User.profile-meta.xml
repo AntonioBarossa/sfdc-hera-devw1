@@ -127,7 +127,6 @@
         <enabled>true</enabled>
         <name>AccountDataEnrichment__mdt</name>
     </customMetadataTypeAccesses>
-
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_AccountDataEnrichment__mdt</name>
@@ -175,6 +174,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_Dependant_Picklist_VAS__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_DistributorExceptionHC__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -2310,6 +2313,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Asset.PriceNetTotalDiscount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.PriceNetTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Asset.PriceNet__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2361,11 +2374,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.Quote__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Asset.Range__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4635,11 +4643,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.BillingStreetToponym__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.BlockType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4656,11 +4659,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CAWithOrWithoutSEPA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.CO__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4761,11 +4759,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CemeteryName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Cemetery__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4911,11 +4904,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.ComunicationMode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.ConcessionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5205,11 +5193,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.DistributorServiceCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.DistributorVatNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5321,11 +5304,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.EndValidityDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.EnergyService__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5580,17 +5558,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.InstallmentNumberRequired__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.InstallmentNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.InstallmentPlanNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5666,11 +5634,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.InvoicingStreetNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.InvoicingStreetToponym__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5795,22 +5758,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.ModeSendPaperlessCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.MotivatedResponseSendMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.MultiContractBill__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.NameBankOrPostOffice__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5936,11 +5889,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.PODPDRFormula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.PaidAmount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6220,11 +6168,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Reading__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.Readingtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6416,11 +6359,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Sie173Mark__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.SiebelAttributeData__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6467,11 +6405,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SignalType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SignatoryType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6705,11 +6638,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.TotalForInstallments__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case.TotalPaidCustomerToPay__c</field>
         <readable>true</readable>
@@ -6737,11 +6665,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.TotalToPay__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.TraceabilityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12699,6 +12622,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DocumentPackage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DocumentReceiptDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12755,6 +12683,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ExciseGAS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ExciseRate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13342,6 +13275,11 @@
         <field>Order.RecessSent__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Order.RegionalAdditional__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.RemiCode__c</field>
@@ -13855,6 +13793,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SurveySource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.TaxRate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15460,6 +15403,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ForExport__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.FreeVas__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28336,6 +28284,11 @@
         <field>wrts_prcgvr__Activity__c.ageing__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaActivityCode__c</field>
@@ -29805,6 +29758,10 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-Account Distributori</layout>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Partner Community</layout>
         <recordType>Account.HDT_RT_Business</recordType>
     </layoutAssignments>
@@ -30331,59 +30288,59 @@
         <layout>Info3GroupList__c-Lista Gruppo Info 3 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_CompetitivoScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_FaqScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_FormazioneScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_GenericoScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_Generico</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_GestionePraticheScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_GestionePratiche</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_NewsScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_News</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_PraticheDiScartoScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_PraticheDiScarto</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_SchedaComuneScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_SchedaComunce</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_Template</layout>
         <recordType>Knowledge__kav.HDT_RT_Template</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontPrincipaleScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingDiFrontSecondarioScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiPrincipaleScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <layout>Knowledge__kav-HDT_TroubleshootingReclamiSecondarioScrittore</layout>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-Acquisizione Lead Layout</layout>
@@ -30570,15 +30527,15 @@
         <layout>ScorecardMetric-Scorecard Metric Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
+        <layout>ServicePoint__c-Service Point Ele</layout>
         <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ServicePoint__c-Service Point Layout</layout>
+        <layout>ServicePoint__c-Service Point Gas</layout>
         <recordType>ServicePoint__c.HDT_RT_Gas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SocialPersona-Social Persona Layout</layout>
@@ -31247,7 +31204,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -32918,12 +32875,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.HDT_RT_Distributore</recordType>
-        <visible>true</visible>
+        <visible>false</visible><!--Matteo Bolzon Request HRAWRM-594  -->
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>false</default><!--Matteo Bolzon Request HRAWRM-594  -->
         <recordType>Account.HDT_RT_Partner</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
@@ -33633,6 +33590,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>CampaignMemberLeadAssigment__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>FUBProcessingItem__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -33663,6 +33624,10 @@
     <tabVisibilities>
         <tab>ScriptConfig__c</tab>
         <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PercentageRulesForAssigningVisits__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>QuoteManagement__c</tab>
@@ -33775,6 +33740,10 @@
     <tabVisibilities>
         <tab>ServicePoint__c</tab>
         <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>VisitAssignmentRules__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>et4ae5__ExactTargetPhoenix</tab>
@@ -34118,7 +34087,7 @@
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
@@ -34162,7 +34131,7 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
@@ -34182,17 +34151,17 @@
         <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>RunReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>SelectFilesFromSalesforce</name>
     </userPermissions>
-    <userPermissions>
+    <!-- <userPermissions>
         <enabled>true</enabled>
         <name>SendExternalEmailAvailable</name>
-    </userPermissions>
+    </userPermissions> --> <!-- commentato per deploy in UAT -->
     <userPermissions>
         <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>

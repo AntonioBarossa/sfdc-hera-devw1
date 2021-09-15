@@ -27,8 +27,8 @@ public with sharing class HDT_UTL_VasManagement {
     /**
     * @description Generates VAS deactivation request
     * @author gabriele.rota@webresults.it | 2021-07-12 
-    * @param orderId 
-    * @return HDT_WRP_VASActivationReq 
+    * @param caseId 
+    * @return HDT_WRP_VASDisactivationReq 
     **/
     public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
         Case currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
@@ -66,7 +66,7 @@ public with sharing class HDT_UTL_VasManagement {
             SBQQ__Quote__r.ListAmountVAT__c, SBQQ__Quote__r.TotalDiscountAmountVAT__c,
             (SELECT Quantity, PriceNet__c, PriceNetDiscounted__c, Percentage__c, VASBillingMode__c, SBQQ__RequiredBy__c, VasActivationDate__c,
                 DurationDay__c, PaymentMode__c, IVA__c,
-                Product2.Name, Product2.NumberRateMonthly__c
+                Product2.Name, Product2.NumberRateMonthly__c, Product2.DescriptionSAP__c
                 FROM OrderItems)
             FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED];
     }
@@ -87,11 +87,21 @@ public with sharing class HDT_UTL_VasManagement {
         return String.join(finalStrValues, ' ');
     }
 
+    /**
+    * @description Get company code from company name
+    * @author federico.defelice@webresults.it | 2021-07-13 
+    * @param salesCompany 
+    * @return String 
+    **/
     private static String getCompanyCode(String salesCompany){
         List<HDT_HeraCompany__mdt> companies = [select CompanyCode__c from HDT_HeraCompany__mdt where SalesCompany__c=:salesCompany WITH SECURITY_ENFORCED];
         return companies.isEmpty()? null : companies?.get(0)?.CompanyCode__c;
     }
 
+    /**
+    * @description Class for common fields of activation/deactivation requests
+    * @author gabriele.rota@webresults.it | 2021-07-13 
+    **/
     public virtual class HDT_WRP_VasReq extends HDT_WS_Request{
         String societa;
         String partner;
@@ -104,6 +114,11 @@ public with sharing class HDT_UTL_VasManagement {
         String keyServizio;
         Date dataCessazione;
 
+        /**
+        * @description Constructor with order
+        * @author gabriele.rota@webresults.it | 2021-07-13 
+        * @param currentOrder 
+        **/
         public HDT_WRP_VASReq(Order currentOrder) {
             societa = getCompanyCode(currentOrder.SalesCompany__c);
             //societa = currentOrder.SalesCompanyCode__c;
@@ -128,17 +143,31 @@ public with sharing class HDT_UTL_VasManagement {
             //dataCessazione = null
         }
 
+        /**
+        * @description Constructor with order and case
+        * @author gabriele.rota@webresults.it | 2021-07-13 
+        * @param currentOrder 
+        **/
         public HDT_WRP_VASReq(Order currentOrder, Case currentCase) {
             this(currentOrder);
             this.keyServizio = currentCase.CaseNumber;
         }
     }
 
+    /**
+    * @description Class for deactivation specific fields
+    * @author gabriele.rota@webresults.it | 2021-07-13 
+    **/
     public class HDT_WRP_VasDisactivationReq extends HDT_WRP_VASReq{
         String nrContrattoIp;
         String numDocRif;
         String statoPratica;
 
+        /**
+        * @description Constructor with order and case
+        * @author gabriele.rota@webresults.it | 2021-07-13 
+        * @param currentOrder 
+        **/
         public HDT_WRP_VASDisactivationReq(Order currentOrder, Case currentCase) {
             super(currentOrder, currentCase);
 
@@ -149,6 +178,10 @@ public with sharing class HDT_UTL_VasManagement {
         }
     }
 
+    /**
+    * @description Class for activation specific fields
+    * @author gabriele.rota@webresults.it | 2021-07-13 
+    **/
     public class HDT_WRP_VasActivationReq extends HDT_WRP_VASReq{
         
         String contractAccountSap;
@@ -177,6 +210,11 @@ public with sharing class HDT_UTL_VasManagement {
 
         List<HDT_WRP_VASActivationReqItem> items;
 
+        /**
+        * @description Constructor with order
+        * @author gabriele.rota@webresults.it | 2021-07-13 
+        * @param currentOrder 
+        **/
         public HDT_WRP_VASActivationReq(Order currentOrder) {
             super(currentOrder);
 
@@ -231,6 +269,10 @@ public with sharing class HDT_UTL_VasManagement {
         }
     }
 
+    /**
+    * @description Class for activation request items (loop on order items)
+    * @author gabriele.rota@webresults.it | 2021-07-13 
+    **/
     public class HDT_WRP_VasActivationReqItem{
         String ItemProdotto;
         Decimal Quantita;
@@ -238,8 +280,13 @@ public with sharing class HDT_UTL_VasManagement {
         Decimal PrezzoNettoScontato;
         Decimal PercentualeIva;
 
+        /**
+        * @description Constructor with order item
+        * @author gabriele.rota@webresults.it | 2021-07-13 
+        * @param currentOrder 
+        **/
         public HDT_WRP_VASActivationReqItem(OrderItem ordItem) {
-            ItemProdotto = ordItem.Product2?.Name.abbreviate(33).removeEnd('...');
+            ItemProdotto = ordItem.Product2?.DescriptionSAP__c?.abbreviate(33)?.removeEnd('...');
             Quantita = ordItem.Quantity;
             PrezzoNetto = ordItem.PriceNet__c;
             PrezzoNettoScontato = ordItem.PriceNetDiscounted__c;

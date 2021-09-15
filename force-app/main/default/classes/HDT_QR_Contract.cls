@@ -234,4 +234,13 @@ public inherited sharing class HDT_QR_Contract {
 
     }
 
+    public Contract getContractAccountCompanyOwner(String contractId)
+    {
+        return [SELECT Account.CompanyOwner__c
+        FROM Contract
+        WHERE Id = :contractId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+    }
+
 }
