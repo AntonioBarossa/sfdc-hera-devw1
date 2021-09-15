@@ -23,6 +23,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     filterString;
     mainTitle;
     sectionTitle;
+    checkboxCounter = 0;
 
     @track selectedIdList = [];
 
@@ -252,6 +253,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         } else {
             this.disableButton('confirmSelected', true);
         }
+
+        //this.checkboxCounter = this.selectedIdList.length.toString();
 
     }
 

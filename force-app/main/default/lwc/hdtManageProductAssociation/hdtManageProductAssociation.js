@@ -26,12 +26,11 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
         deleteTitleLabel: 'Rimozione massiva del Prodotto Opzione'
     };
 
-    enableCreate;
-    enableDelete;
+    enableCreate = false;
+    enableDelete = false;
 
     connectedCallback(){
-        console.log('#### productid > ' + this.productid);
-
+        console.log('>>> PRODUCT OPTION Id: ' + this.productid);
     }
 
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Family', 'Product2.Status__c'] })
@@ -40,13 +39,17 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
             console.log('>>> PRODUCT OPTION Family -> ' + data.fields.Family.value);
             console.log('>>> PRODUCT OPTION  status -> ' + data.fields.Status__c.value);
             
-            //var availableType = ['Bonus', 'Contributo', 'VAS', 'Promozione'];
-            var notAvailableType = [];
+            var notAvailableType = ['Offerta commerciale', 'VAS Prodotto', 'VAS Servizio'];
+            var availableStatusForCreation = ['In Sviluppo', 'Confermata', 'Vendibile', 'Scaduta'];
+            var availableStatusForDeletion = ['In Sviluppo', 'Confermata'];
 
-            notAvailableType.push('Offerta commerciale');
-            notAvailableType.push('VAS Prodotto');
-            notAvailableType.push('VAS Servizio');
+            if(availableStatusForCreation.includes(data.fields.Status__c.value)){
+                this.enableCreate = true;
+            }
 
+            if(availableStatusForDeletion.includes(data.fields.Status__c.value)){
+                this.enableDelete = true;
+            }
 
             if(notAvailableType.includes(data.fields.Family.value)){
                 this.showError = true;
@@ -55,14 +58,10 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
                 this.showWelcom = true;
             }
 
-            this.enableCreate = true;
-            this.enableDelete = true;
-
         } else if (error) {
             for(var key in error){
                 console.log('# Error -> ' + key + ' - ' + error[key]);
             }
-            
         }
     }
 
