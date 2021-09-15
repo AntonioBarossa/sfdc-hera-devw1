@@ -333,12 +333,12 @@
             <value>
                 <fullName>Validazione Vocal Order</fullName>
                 <default>false</default>
-                <label>Validazione Documentale</label>
+                <label>Validazione Vocal Order</label>
             </value>
             <value>
                 <fullName>Documenti non validati</fullName>
                 <default>false</default>
-                <label>Validazione Documentale</label>
+                <label>Documenti non validati</label>
             </value>
         </valueSetDefinition>
     </valueSet>
