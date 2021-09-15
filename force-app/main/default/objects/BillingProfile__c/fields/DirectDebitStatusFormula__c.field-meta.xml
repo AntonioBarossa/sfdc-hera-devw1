@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>IF(TEXT(PaymentMethod__c) = &apos;RID&apos;, &apos;Attivo&apos;, &apos;&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>BillingProfile__c</label>
+    <label>Stato Domiciliazione</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
