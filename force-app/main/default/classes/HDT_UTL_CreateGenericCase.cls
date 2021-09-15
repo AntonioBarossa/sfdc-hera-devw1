@@ -23,7 +23,8 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'DistributorNote__c',
                 'Type',
                 'Subprocess__c',
-                'RecordTypeId'
+                'RecordTypeId',
+                'ServiceRequestID__c'
             };
         Case childCase = new Case();
         

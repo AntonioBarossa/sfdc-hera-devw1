@@ -28279,6 +28279,11 @@
         <field>wrts_prcgvr__Activity__c.ageing__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaActivityCode__c</field>
@@ -29743,6 +29748,10 @@
         <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
     </layoutAssignments>
+      <layoutAssignments>
+        <layout>Account-Account Distributori</layout>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
@@ -31189,7 +31198,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -34016,7 +34025,7 @@
         <name>CreateCustomizeFilters</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
@@ -34060,7 +34069,7 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
@@ -34080,7 +34089,7 @@
         <name>RunFlow</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>RunReports</name>
     </userPermissions>
     <userPermissions>
