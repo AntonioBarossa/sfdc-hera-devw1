@@ -234,8 +234,18 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('VERTRAG'))) {
             sp.SAPContractCode__c = mapRequestFields.get('VERTRAG');
         }
-        if (!String.isBlank(mapRequestFields.get('VERTRAG_ST'))) {
-            sp.MeterStatus__c = mapRequestFields.get('VERTRAG_ST');
+        if (!String.isBlank(mapRequestFields.get('ANLAGE_ST'))) {
+            switch on mapRequestFields.get('ANLAGE_ST'){
+                when 'Open', 'Riatt. avviata per morosita'{
+                    sp.MeterStatus__c = 'Attivo';
+                }
+                when 'Impianto chiuso per morosita' {
+                    sp.MeterStatus__c = 'Inattivo'; 
+                }
+                when 'Interr. avviata per morosita' {
+                    sp.MeterStatus__c = 'Sospeso';
+                }
+            }
         }
         sp.Status__c='Impianto compl. in funzione';
         updateServicePoint();
