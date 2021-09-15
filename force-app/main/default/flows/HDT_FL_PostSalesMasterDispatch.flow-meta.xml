@@ -2792,7 +2792,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_RT_Annullamento.Id</elementReference>
+                <elementReference>Get_RT_Annullamento_0.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
