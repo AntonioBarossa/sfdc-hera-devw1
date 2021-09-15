@@ -9,6 +9,16 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     
     
     //TEST SETUP
+    private static void mySetup(){
+        //TODO: POSSIBILE CHE VADA INSTALLATO PCLICK
+        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+    }
     
     
     
@@ -16,6 +26,19 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     
     //execute
     //TODO: SPEZZARE METODO IN PIù METODI. TROPPO COMPLESSO TESTARE IN UN COLPO SOLO.
+    
+            
+        //TODO: REIMPIEGARE IN METODI FUTURI PER AUMENTO COPERTURA TEST
+        
+        /*
+        AccountStatementFilter__c asf_2 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
+        asf_2.Context__c = 'InstallmentsView';
+        
+        AccountStatementFilter__c asf_3 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
+        //asf_3.Context__c = 'InstallmentsView';
+        */
+    
+    //manageDocuments - EC1L
     private static void executeTest() {
         
         //DEBUG
@@ -23,117 +46,96 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         System.debug(debugString);
         
         //SETUP
-        
-        //INSERIRE SETUP FINO A CREAZIONE CASE.
-        //POSSIBILE CHE VADA INSTALLATO PCLICK
-        
-        
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
+        BillingProfile__c bpf = [SELECT Id, ContractAccountCode__c FROM BillingProfile__c];
         
         AccountStatementFilter__c asf_1 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
         asf_1.Context__c = 'EC1L';
-
-        //DocumentSelected__c
-        /*
-
-        //TODO: PER PRIMO E SECONDO LIVELLO CERCARE DI ADEGUARSI A UN RECORD ESISTENTE COME SUGGERITO.
         
-        [
-            {
-                //"codiceCliente":"1005421319",
-                "contoContrattuale":"200008265851",
-                //"classeConto":"Z001",
-                "dataEmissione":"19/12/2018",
-                "dataScadenza":"16/01/2019",
-                "dilazione":"NO",
-                //"idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000001",
-                "importo":"212.92",
-                "modalitaPagamento":"BOLLETTINO",
-                //"modalitaPagamentoCA":"bollettino postale",
-                "numeroBollettino":"4201708006748191",
-                "numeroFattura":"0000411810736024",
-                //"rateizzato":"SI",
-                "residuo":"140.0",
-                "societa":"Hera Comm S.p.A.",
-                //"sollecitato":"NO",
-                "tipoDocumento":"CALCOLO CONTRATTI ATTIVI",
-                "totaleCopertina":"212.92",
-                //"loginId":"0-1",
-                "secondoLivelloInformativo":[
-                    {
-                        "contratto":"3016591573",
-                        //"dataEmissionePianoRata":"15/01/2019",
-                        //"dataRegistrazione":"19/12/2018",
-                        //"documento":"104002246842",
-                        "importo":"71.16",
-                        //"pianoRate":"500002431609",
-                        //"residuo":"0.0",
-                        //"scadenza":"2019-01-16",
-                        //"settoreMerceologico":"Energia elettrica",
-                        "testoDettaglio":"CALCOLO CONTRATTI ATTIVI",
-                        "tipoDocumento":"2F",
-                        //"idSecondoLivelloSAP":"00000000000000000000000000000000000000000000000001"
-                    },
-                    {
-                        "contratto":"3016959569",
-                        //"dataEmissionePianoRata":"15/01/2019",
-                        //"dataRegistrazione":"19/12/2018",
-                        //"documento":"104002246842",
-                        "importo":"68.83",
-                        //"pianoRate":"500002431609",
-                        //"residuo":"0.0",
-                        //"scadenza":"2019-01-16",
-                        //"settoreMerceologico":"Gas",
-                        "testoDettaglio":"CALCOLO CONTRATTI ATTIVI",
-                        "tipoDocumento":"2F",
-                        //"idSecondoLivelloSAP":"00000000000000000000000000000000000000000000000002"
-                    },
-                    {
-                        "contratto":"3016959569",
-                        //"dataEmissionePianoRata":"15/01/2019",
-                        //"dataRegistrazione":"19/12/2018",
-                        //"documento":"104002246842",
-                        "importo":"0.01",
-                        //"pianoRate":"500002431609",
-                        //"residuo":"0.0",
-                        //"scadenza":"2019-01-16",
-                        //"settoreMerceologico":"Gas",
-                        "testoDettaglio":"CALCOLO CONTRATTI ATTIVI",
-                        "tipoDocumento":"2F",
-                        //"idSecondoLivelloSAP":"00000000000000000000000000000000000000000000000003"
-                    }
-                ],
-                //"id":"00000000000000000000000000000000000000000000000001"
-            }
-        ]
         
-        Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
-        List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
-        Map<String, Object> secondoLivello = (Map<String, Object>) secondoLivelloList[0];
+        //PREPARAZIONE REQUEST (INPUTS)
         
-        */
+        Map<String,Object> secLevel = new Map<String,Object>();
+        //secLevel.put('contratto', '');    //response.contractCode = contractCode;
+        secLevel.put('testoDettaglio', 'Testo Dettaglio');
+        secLevel.put('tipoDocumento', 'VR');
+        secLevel.put('importo', 5.5);
         
-        AccountStatementFilter__c asf_2 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
-        asf_2.Context__c = 'InstallmentsView';
         
-        AccountStatementFilter__c asf_3 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
-        //asf_3.Context__c = 'InstallmentsView';
+        Map<String,Object> priLevel = new Map<String,Object>();
         
-        insert new List<AccountStatementFilter__c>{asf_1, asf_2, asf_3};
+        priLevel.put('dataEmissione', Date.today());
+        priLevel.put('dataScadenza', Date.today().addDays(1));
+        priLevel.put('dataEmissione', Date.today());
+        priLevel.put('numeroDocumento', 'Numero Documento');
+        priLevel.put('numeroFattura', 'Numero Fattura');
+        priLevel.put('contratto', 'CONTRATTO');//response.contractCode = contractCode;
+        priLevel.put('contoContrattuale', bpf.ContractAccountCode__c);
+        priLevel.put('modalitaPagamento', 'Metodo Pagamento');
+        priLevel.put('residuo', 10.5);
+        priLevel.put('importo', 109.5);
+        priLevel.put('societa', 'HERA COMM');
+        priLevel.put('totaleCopertina', 20.5);
+        priLevel.put('numeroBollettino', 'Numero Bollettino');
+        priLevel.put('tipoDocumento', 'Tipo Documento');
+        priLevel.put('dilazione', 'Dilazione');
+        priLevel.put('modalitaPagamento', 'Modalità Pagamento');
+        priLevel.put('nome', true);
+        priLevel.put('nome', true);
+        
+        List<Object> secondoLivello = new List<Object>{secLevel};
+        priLevel.put('secondoLivelloInformativo', secondoLivello);
+        
+        //STRINGIFY
+        List<Object> myObj = new List<Object>{priLevel};
+        asf_1.DocumentSelected__c = JSON.serialize(myObj);
+        
+        insert asf_1;
+        
         
         
         List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest> inputs;
         inputs = new List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest>();
-
         
         //TESTING
         //manageDocuments
         HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest input;
         input = new HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest();
-        input.recordId = recordId;
-        input.method = 'manageDocuments';
-        input.caseId = '';
+        
+        input.method = 'manageDocuments';   //TODO: TESTARE TUTTE LE ALTERNATIVE
+        input.recordId = asf_1.Id;
+        input.caseId = myCase.Id;
+        input.createDocuments = true;
+        
+        //input.contesto = 'EC1Level';      //TODO: TESTARE ELSE
+        
+        inputs.add(input);
         
         //ASF 1 - manageDocuments
+        
+        
+        //TESTING
+        List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedResponse> resultList;
+        resultList = HDT_SRV_DocumentSelectedManager.execute(inputs);
+        HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedResponse result = resultList[0];
+        
+        
+        //RETRIEVING DATA
+        
+        //DocumentSelected__c
+        DocumentSelected__c docResult = [SELECT Id, Name FROM DocumentSelected__c];
+        
+        //CASE UPDATED
+        Case caseResult = [SELECT Id FROM Case];
+        
+        
+        //ASSERTS
+        System.assertEquals('Numero Fattura', docResult.Name);
+        
+        System.assertEquals(caseResult.Id, result.caseRecord.Id);
+        System.assertEquals('CONTRATTO', result.contractCode);
+        System.assertEquals('Testo Dettaglio', result.tipoDocumento);
         
         
         //ASF 2 - manageDocumentsCreditViews
@@ -152,5 +154,36 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         
         
     }
+    
+    
+    
+    //manageDocuments - InstallmentsView / EC7
+    
+    
+    
+    
+    //manageDocuments - else (null)
+    
+    
+    
+    
+    //manageDocumentsInformative - EC1Level / NoteVarIva
+    
+    
+    
+    
+    //manageDocumentsInformative - else (manageDocumentsCreditViews)
+    
+    
+    
+    
+    //manageDocumentsPaperless - 
+    
+    
+    
+    
+    //else (return null)
+    
+    
     
 }

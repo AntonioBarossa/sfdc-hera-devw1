@@ -2,10 +2,14 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     
     @InvocableMethod(label='Manage Document Selected')
     public static List<HDT_WRP_DocumentSelectedResponse> execute(List<HDT_WRP_DocumentSelectedRequest> inputs){
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)) return null;
+        
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)) 
+            return null;
+        
         String method = inputs[0].method;
         String context = '';
         String queryString = 'SELECT Id,Context__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+        
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
         switch on method{
             when 'manageDocuments' {
@@ -47,6 +51,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
+        
         try {
             HDT_QR_BillingProfile bpQueryHandler = new HDT_QR_BillingProfile();
             String queryString = 'SELECT Id,Context__c,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
@@ -69,8 +74,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             String numeroDocumento = (String) primolivello.get('numeroDocumento');
             String numeroFattura = (String) primolivello.get('numeroFattura');
+            
             String contractCode = (String) secondoLivello.get('contratto') != null? (String) secondoLivello.get('contratto'):(String) primolivello.get('contratto');
             String tipoDocumento = (String) secondoLivello.get('testoDettaglio');
+            
             String contoContrattuale = (String) primolivello.get('contoContrattuale');
             BillingProfile__c billingProfile = bpQueryHandler.getRecordByContractAccount(contoContrattuale);
             if (billingProfile != null) {
@@ -83,8 +90,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.DocumentAmount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
-            caseRecord.SalesCompany__c = (String) primolivello.get('societa');
+            
             System.debug('società ' + (String) primolivello.get('societa'));
+            caseRecord.SalesCompany__c = (String) primolivello.get('societa');
+            
             caseRecord.Id = inputs[0].caseId;
             //caseRecord.ReadType__c = (String) secondoLivello.get('importo'); --> Richiamare WS ad hoc
             
@@ -96,15 +105,18 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                 List<DocumentSelected__c> documentList = new List<DocumentSelected__c>();
                 for(Object singleRecord : primoLivelloList){
                     DocumentSelected__c singleDocument = new DocumentSelected__c();
+                    
                     primolivello = (Map<String, Object>) singleRecord;
                     secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
+                    
                     numeroDocumento = (String) primolivello.get('numeroDocumento') != null? (String) primolivello.get('numeroDocumento'):(String) primolivello.get('documento');
                     numeroFattura = (String) primolivello.get('numeroFattura');
+                    
+                    singleDocument.DocumentNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
                     Double totaleCopertina = Double.valueOf(primolivello.get('totaleCopertina'));
                     Double importo = Double.valueOf(primolivello.get('importo'));
-                    singleDocument.DocumentNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
                     singleDocument.Bill__c = (String) primolivello.get('numeroBollettino');
                     singleDocument.Type__c = (String) primolivello.get('tipoDocumento');
                     singleDocument.IssueDate__c = dataEmissione;
@@ -118,6 +130,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
+                    
                     if(String.isNotBlank(numeroFattura)){
                         singleDocument.Name = numeroFattura;
                     }else if(String.isNotBlank(numeroDocumento)) {
