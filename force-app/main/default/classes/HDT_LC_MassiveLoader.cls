@@ -227,7 +227,8 @@ public with sharing class HDT_LC_MassiveLoader {
                             }
                         }
                         massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
-
+                        list <MassiveLoaderRequest__c> lrequest=[SELECT Id,Name  FROM MassiveLoaderRequest__c WHERE Id=:massiveLoaderRequestId LIMIT 1];
+                        response.put('reqName',lrequest.get(0).Name );
 
                         response.put('error', false);
 

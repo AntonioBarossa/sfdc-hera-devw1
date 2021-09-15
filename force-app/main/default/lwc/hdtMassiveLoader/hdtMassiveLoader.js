@@ -235,7 +235,7 @@ export default class HdtMassiveLoader extends LightningElement {
 
             if (result.error == false) {
 
-                var message = massiveLoaderImportSuccess + this.massiveLoaderRecordId;
+                var message = massiveLoaderImportSuccess + result.reqName;
                 console.log(message);
 
                 this.handleToastEvent(success + '!', message, 'success', 'sticky');
@@ -305,6 +305,7 @@ export default class HdtMassiveLoader extends LightningElement {
         const toastEvent = new ShowToastEvent({
             title: title,
             message: message,
+            
             variant: variant,
             mode: mode
         });
@@ -312,5 +313,6 @@ export default class HdtMassiveLoader extends LightningElement {
         this.dispatchEvent(toastEvent);
 
     }
+    
 
 }

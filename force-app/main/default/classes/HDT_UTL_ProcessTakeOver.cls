@@ -4,6 +4,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     private Map<String, String> mapServicePointFields;
     private Map<String, String> mapBillingProfileFields;
     private Map<String, String> mapOrderFields;
+    private Map<String, String> mapOrderItemFields;
        //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
@@ -196,7 +197,36 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                     if ('SelfCertificationConnection__c'.equalsIgnoreCase(mapOrderFields.get(mapHeaderByPosition.get(count)))) {
                         currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),'Procura'.equalsIgnoreCase(tempField) ? '001':'Contratto firmato'.equalsIgnoreCase(tempField)?'002':null );
                     }
+                    
                 } // End Order
+                // Start OrderItem
+                else if(mapOrderItemFields.get(mapHeaderByPosition.get(count))!=null ){
+                    System.debug('ORD_ITEM column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+                    typeField=getTypeField('OrderItem',mapOrderItemFields.get(mapHeaderByPosition.get(count)));
+
+                    switch on typeField.toUpperCase() {
+                        when 'BOOLEAN'  {
+                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
+                        }
+                         when 'DOUBLE'  {
+                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
+                         }
+                         when 'INTEGER'  {
+                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
+                         }
+
+                         when 'DATETIME'  {
+                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
+                         }
+                         when 'DATE'  {
+                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
+                         }
+                        when else {
+                            currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),tempField);
+                        }
+                    }
+                    
+                } // End OrderItem
                 count++;
             }
         }
@@ -285,11 +315,12 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             }
         }
 
-        currentProcess.currentSale.Account__c           = currentProcess.currentAccount.Id;
-        currentProcess.currentServicePoint.Account__c   = currentProcess.currentAccount.Id;
-        currentProcess.currentBillingProfile.Account__c = currentProcess.currentAccount.Id;
-        currentProcess.currentOrder.AccountId           = currentProcess.currentAccount.Id;
-        currentProcess.currentRequestItem.Account__c    = currentProcess.currentAccount.Id;
+        currentProcess.currentSale.Account__c                       = currentProcess.currentAccount.Id;
+        currentProcess.currentServicePoint.Account__c               = currentProcess.currentAccount.Id;
+        currentProcess.currentBillingProfile.Account__c             = currentProcess.currentAccount.Id;
+        currentProcess.currentOrder.AccountId                       = currentProcess.currentAccount.Id;
+        currentProcess.currentRequestItem.Account__c                = currentProcess.currentAccount.Id;
+        currentProcess.currentOrderItem.SBQQ__ShippingAccount__c    = currentProcess.currentAccount.Id;
         listUpdateGeneric.add(currentProcess.currentSale)           ;
         listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
         listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
@@ -298,6 +329,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
         if (listUpdateGeneric.size()>0) {
             upsert listUpdateGeneric;
+            System.debug('OrderId:'+currentProcess.currentOrder.Id);
         }
 
     }
@@ -472,5 +504,17 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'OR_Date Inizio'                                        =>  'EffectiveDate'                                  ,
             'OR_Status'                                             =>  'Status'    
         };
+        mapOrderItemFields=new Map<String, String>{
+            'Descrizione Offerta'                                   =>  'ProductName__c'                                 ,
+            'Modalità di Pagamento'                                 =>  'PaymentMode__c'                                 ,
+            'Modalità invio Belletta'                               =>  'SendingBillMode__c'                             ,
+            'Contributi'                                            =>  'DescriptionSAPBonusContributo__c'               ,
+            'Superficie MQ'                                         =>  'Surface__c'                                     ,
+            'Numero Occupanti'                                      =>  'OccupantsNumber__c'                             ,
+            'Proprietario'                                          =>  'OwnerAC__c'                                     ,
+            'Tipo Abitazione'                                       =>  'DwellingType__c'                                ,
+            'Mantieni Analisi Consumi'                              =>  'KeepConsumptionsAnalysis__c'                    ,
+            'VAS - Data attivazione'                                =>  'VasActivationDate__c'
+        };
     } 
-}//OR_Date Inizio,OR_Status
+}

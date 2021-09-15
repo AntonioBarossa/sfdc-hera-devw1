@@ -85,6 +85,7 @@ public String getTypeField(String objName,String fieldApiName){
       public MassiveLoaderRequestItem__c  currentRequestItem            ;
       public AccountContactRelation       currentAccountContactRelation ;
       public Sale__c                      currentSale                   ;
+      public OrderItem                    currentOrderItem              ;
       public String                       role ;
 
 
@@ -92,6 +93,7 @@ public String getTypeField(String objName,String fieldApiName){
             currentAccount                  =   new  Account                     ();
             currentPrimaryContact           =   new  Contact                     ();
             currentOrder                    =   new  Order                       ();
+            currentOrderItem                =   new OrderItem                    ();
             currentContract                 =   new  Contract                    ();
             currentQuote                    =   new  Quote                       ();
             currentCase                     =   new  Case                        ();
