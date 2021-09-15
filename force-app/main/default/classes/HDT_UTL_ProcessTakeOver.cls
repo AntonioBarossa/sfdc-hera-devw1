@@ -5,6 +5,8 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     private Map<String, String> mapBillingProfileFields;
     private Map<String, String> mapOrderFields;
     private Map<String, String> mapOrderItemFields;
+    private List<SObject> listUpdateGeneric ;
+
        //final String PROCESS_NAME='Subentro';
 
    public  HDT_UTL_ProcessTakeOver(){
@@ -28,9 +30,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');
                 // }
-                system.debug('mapHeaderByPosition :::::'+mapHeaderByPosition.get(count));
-                system.debug('Count '+count);
-                System.debug('mapOrderFields:::: '+mapOrderFields.get(mapHeaderByPosition.get(count)));
+              
                 if (String.isBlank(tempField)) {
                     count++;
                     continue;
@@ -278,7 +278,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     }
 
     public override void registryCreation(){
-        List<SObject> listUpdateGeneric = new List<SObject>();
+        listUpdateGeneric = new List<SObject>();
         if (currentProcess.currentAccount!=null &&currentProcess.currentAccount.Id==null ) {
             // solo se non esiste
             System.debug('Creazione Account');
@@ -324,18 +324,27 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         listUpdateGeneric.add(currentProcess.currentSale)           ;
         listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
         listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
-        listUpdateGeneric.add(currentProcess.currentOrder)          ;
+       // listUpdateGeneric.add(currentProcess.currentOrder)          ;
 
 
-        if (listUpdateGeneric.size()>0) {
-            upsert listUpdateGeneric;
-            System.debug('OrderId:'+currentProcess.currentOrder.Id);
-        }
+       
 
     }
 
     public override void finalUpdate(){
         System.debug('finalUpdate');
+        if (listUpdateGeneric.size()>0) {
+            upsert listUpdateGeneric;
+            currentProcess.currentOrder.ServicePoint__c   = currentProcess.currentServicePoint.id   ;
+            currentProcess.currentOrder.BillingProfile__c = currentProcess.currentBillingProfile.id ;
+            insert currentProcess.currentOrder                                                      ;
+
+            System.debug('OrderId:'+currentProcess.currentOrder.Id)                                             ;
+            currentProcess.currentOrderItem.OrderId             = currentProcess.currentOrder.Id                ;
+            currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id       ;
+            currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id         ;
+            insert currentProcess.currentOrderItem                                                              ;
+        }
         update currentProcess.currentRequestItem;
     }
 
@@ -505,7 +514,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'OR_Status'                                             =>  'Status'    
         };
         mapOrderItemFields=new Map<String, String>{
-            'Descrizione Offerta'                                   =>  'ProductName__c'                                 ,
+        //  'Descrizione Offerta'                                   =>  'ProductName__c'                                 ,
             'Modalità di Pagamento'                                 =>  'PaymentMode__c'                                 ,
             'Modalità invio Belletta'                               =>  'SendingBillMode__c'                             ,
             'Contributi'                                            =>  'DescriptionSAPBonusContributo__c'               ,
