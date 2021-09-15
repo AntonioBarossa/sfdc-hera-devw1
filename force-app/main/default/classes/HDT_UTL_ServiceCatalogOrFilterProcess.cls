@@ -547,13 +547,13 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         
         if(method == 'Piano Rateizzazione'){
             HDT_QR_Case caseQr = new HDT_QR_Case();
-            String accountId = sb.get('Account__c');
+            String accountId = (String)sb.get('Account__c');
             List<Case> listCase = caseQr.getCaseByAccountid(accountId,'Storno Rateizzazione');
             if(listCase != null && !listCase.isEmpty()){
                 res = true;
             }
             else{
-                String s = sb.get('IsInstallment__c');
+                String s = (String)sb.get('IsInstallment__c');
                 if(s == 'false'){
                     res = true;
                 }
