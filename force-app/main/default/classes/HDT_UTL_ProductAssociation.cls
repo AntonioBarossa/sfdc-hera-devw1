@@ -56,7 +56,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         }
 
         queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
-        //queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
+        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
         
         //if(!String.isEmpty(filterProduct.Family)){
         //    queryString += ',\'' + filterProduct.Family + '\'';

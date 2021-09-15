@@ -1,6 +1,6 @@
 public inherited sharing class HDT_SRV_ProductAssociation {
 
-    public static Integer batchLimit = 1;
+    public static Integer batchLimit = 10;
 
     public static Object getProductList(String filterString, String optionalSkuId, String dmlContext, Boolean usePagination, String pageNumber){
 
