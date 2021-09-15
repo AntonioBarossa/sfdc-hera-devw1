@@ -235,7 +235,8 @@ public inherited sharing class HDT_QR_Order {
             OutgoingCreditCheckResult__c,
             IncomingCreditCheckResult__c,
             CreditCheckDescription__c,
-            DocumentPackage__c
+            DocumentPackage__c,
+            IsCloned__c                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -292,6 +293,7 @@ public inherited sharing class HDT_QR_Order {
             Sale__c,
             CreatedDate,
             Step__c,
+            Sale__r.Channel__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             //INIZIO SVILUPPI EVERIS

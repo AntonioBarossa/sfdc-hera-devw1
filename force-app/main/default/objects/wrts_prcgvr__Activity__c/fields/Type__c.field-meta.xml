@@ -320,6 +320,26 @@
                 <default>false</default>
                 <label>KO Fornitore</label>
             </value>
+            <value>
+                <fullName>Approvazione Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Approvazione Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Validazione Documentale</fullName>
+                <default>false</default>
+                <label>Validazione Documentale</label>
+            </value>
+            <value>
+                <fullName>Validazione Vocal Order</fullName>
+                <default>false</default>
+                <label>Validazione Vocal Order</label>
+            </value>
+            <value>
+                <fullName>Documenti non validati</fullName>
+                <default>false</default>
+                <label>Documenti non validati</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
