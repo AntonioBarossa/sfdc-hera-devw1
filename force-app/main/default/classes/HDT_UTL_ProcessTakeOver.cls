@@ -207,6 +207,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         */
         makeContact();
         List<Account> lAccount=new List<Account>();
+        List<ServicePoint__c> listServicePoint=new List<ServicePoint__c>();
         if (currentProcess.currentAccount!=null && 
         String.isNotBlank(currentProcess.currentAccount.CompanyOwner__c)
         &&
@@ -231,8 +232,18 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             if (listContact!=null && listContact.size()>0) {
                 currentProcess.currentPrimaryContact.Id=listContact.get(0).Id;
             }
-            
         }
+        // Start Controllo Service Point
+        if (String.isNotBlank(currentProcess.currentServicePoint.Name)) {
+            currentProcess.currentServicePoint.ServicePointCode__c=currentProcess.currentServicePoint.Name;
+            listServicePoint=qrSerPoint.getRecordByCode(currentProcess.currentServicePoint.ServicePointCode__c);
+            if (listServicePoint!=null &&listServicePoint.size()>0 ) {
+                // se esiste il Service Point
+                currentProcess.currentServicePoint.Id=listServicePoint.get(0).Id;
+            }
+        }
+        // Fine controllo Service Point
+
        
     }
 
@@ -261,7 +272,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             listUpdateGeneric.add(currentProcess.currentPrimaryContact);
 
         }
-
+        
         if(currentProcess.role!=null){
             System.debug('currentProcess.currentAccount.id '+currentProcess.currentAccount.id);
             System.debug('currentProcess.currentPrimaryContact.Id '+currentProcess.currentPrimaryContact.Id);
@@ -280,7 +291,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentOrder.AccountId           = currentProcess.currentAccount.Id;
         currentProcess.currentRequestItem.Account__c    = currentProcess.currentAccount.Id;
         listUpdateGeneric.add(currentProcess.currentSale)           ;
-       // insert currentProcess.currentServicePoint;
         listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
         listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
         listUpdateGeneric.add(currentProcess.currentOrder)          ;
@@ -392,6 +402,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             'Campagna Commissioning'                                =>  'CommissioningCampaign__c'
         };
         mapServicePointFields=new Map<String, String>{  
+            'SP_Codice POD/PDR'                                     =>  'Name'                                          ,
             'Servizio'                                              =>  'CommoditySector__c'                            ,
             'Distributore'                                          =>  'Distributor__c'                                ,
             'Tipo Fornitura'                                        =>  'SupplyType__c'                                 ,

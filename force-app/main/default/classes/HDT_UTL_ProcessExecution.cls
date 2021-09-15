@@ -1,9 +1,10 @@
 public without sharing virtual class HDT_UTL_ProcessExecution {
-    public static HDT_QR_StaticResource staticResourceQr       = new HDT_QR_StaticResource();
-    public HDT_QR_Account qrAcc                                = new HDT_QR_Account();
-    public static HDT_QR_AccountContactRelation accoContRelQr  = new HDT_QR_AccountContactRelation();
-    public static HDT_QR_Contact qrCont                        = new HDT_QR_Contact();
-    public HDT_WRP_ProcessEntities currentProcess;
+    public static HDT_QR_StaticResource         staticResourceQr        = new HDT_QR_StaticResource()           ;
+    public HDT_QR_Account                       qrAcc                   = new HDT_QR_Account()                  ;
+    public HDT_QR_ServicePoint                  qrSerPoint              = new HDT_QR_ServicePoint()             ;
+    public static HDT_QR_AccountContactRelation accoContRelQr           = new HDT_QR_AccountContactRelation()   ;
+    public static HDT_QR_Contact                qrCont                  = new HDT_QR_Contact()                  ;
+    public HDT_WRP_ProcessEntities              currentProcess;
 
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
@@ -49,8 +50,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public virtual void registryCreation(){
         System.debug('registryCreation');
     }
-    public virtual void postSalesCreation(){ // creazione processo
-        System.debug('postSalesCreation');
+    public virtual void makeProcess(){ // creazione processo
+        System.debug('makeProcess');
     }
     public virtual void finalUpdate(){
         System.debug('finalUpdate');
@@ -60,7 +61,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         checks();
         getRecords();
         registryCreation();
-        postSalesCreation();
+        makeProcess();
         finalUpdate();
 
     }
