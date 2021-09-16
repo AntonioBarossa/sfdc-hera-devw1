@@ -72,12 +72,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String companyDesc = '';
         String city = '';
         String distributorName = '';
+        String commodity = '';
         switch on context {
             when 'Order' {
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
                 city = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyCity__c', 0, inputs, formParams);
-                distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorFormula__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                distributorName = HDT_UTL_DocumentalManagement.getValue('Order', 'DistributorFormula__c', 0, inputs, formParams);
+                commodity = HDT_UTL_DocumentalManagement.getValue('Order', 'CommodityFormula__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
                     List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
                     if (distributorList != null && distributorList.size()>0) {
@@ -91,7 +93,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
                 city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
                 distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorName__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
                     List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
                     if (distributorList != null && distributorList.size()>0) {
@@ -831,7 +834,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 // Importo indennizzo, se necessario.
                 if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
                     record.add(indemnityDueSendResponse);
-                } else if (boxType == '2' && indemnityDueBillingCorrectionDecimal > 0) {
+                } else if ((boxType == '2' || boxType == '8') && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
                 } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
@@ -880,7 +883,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         // Emissione rettifica prevista e scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && expiredCorrection) {
-            boxType = '2';
+            boxType = '8';
         }
         // Emissione rettifica prevista ma non scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
