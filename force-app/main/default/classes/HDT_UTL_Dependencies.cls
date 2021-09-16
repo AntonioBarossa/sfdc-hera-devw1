@@ -20,11 +20,11 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per la gestione del processo di sequenzializzazione
     * @date 13/07/2021
     * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
     * @param2 Map<Id, sObject> mappa degli oggetti con i vecchi valori
     * @param3 String tipology : tipologia process Case|Order
-    * @return void
     */
     public static void processSequentializationBefore(Map<Id,SObject> newSObjectMap,Map<Id,SObject> oldSObjectMap, String tipology){
         
@@ -105,9 +105,10 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per l'individuazione dei processi da sequnzializzare
     * @date 13/07/2021
     * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
-    * @return void
+    * @return Mappa dei processi da aggiornare
     */
     public static Map<String, List<SObject>> sequentialization(List<ServiceRequest__c> incomingProcesses){
 
@@ -153,6 +154,7 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per la restituzione dell'elenco dei processi da sequnzializzare
     * @date 13/07/2021
     * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
     * @param2 Map<String,List<List<String>>> mappa delle dipendence
@@ -275,11 +277,11 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per l'aggiornamento dei processi da sequnzializzare
     * @date 13/07/2021
     * @param1 List<ServiceRequest__c> serviceRequestsToBeSequenced
     * @param2 List<Order> ordersToBeUpdated
     * @param3 List<Case> casesToBeUpdated
-    * @return void
     */
     public static void updateProcesses(List<ServiceRequest__c> serviceRequestsToBeSequenced){
         
