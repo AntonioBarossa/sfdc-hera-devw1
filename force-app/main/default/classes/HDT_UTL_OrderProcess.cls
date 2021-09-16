@@ -156,9 +156,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderSrv.updateRecords(childOrdersDocValid);
         }
         
-        // if (!ordersQualityOkUpdate.isEmpty()) {
-        //     orderSrv.updateRecords(ordersQualityOkUpdate);
-        // }
+        if (!ordersQualityOkUpdate.isEmpty()) {
+            orderSrv.updateRecords(ordersQualityOkUpdate);
+        }
         
         List<Order> ordersHeroku = new List<Order>();
         List<Order> ordersSiebel = new List<Order>();
