@@ -2,6 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 
 export default class HdtPaperCampaignFields extends LightningElement {
     @api paperRecordId;
+    @api reqrec;  // Start HRAWRM-621 16/09/2021
     @track campaignName;
 
     handleFormLoad() {
