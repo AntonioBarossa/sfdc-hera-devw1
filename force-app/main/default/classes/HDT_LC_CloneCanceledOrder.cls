@@ -13,25 +13,35 @@ public with sharing class HDT_LC_CloneCanceledOrder {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
+    /**
+    * @description Check if the order can be cloned and clone it if allowed
+    * @author gabriele.rota@webresults.it | 2021-09-16 
+    * @param orderId  
+    **/
     @AuraEnabled
-    public static Boolean isCloneAllowed(Id orderId){
-        Boolean permissionCheck = FeatureManagement.checkPermission(CLONE_PERMISSION);
+    public static void cloneOrder(Id orderId){
+
+        if (!FeatureManagement.checkPermission(CLONE_PERMISSION)) {
+            throw new AuraHandledException('L\'Utenza non è abilitata alla funzionalità Clona');
+        }
 
         Order currentOrder = [SELECT CancellationRequestDate__c FROM Order WHERE Id = :orderId WITH SECURITY_ENFORCED LIMIT 1];
-        Boolean dateCheck = (currentOrder.CancellationRequestDate__c!=null &&
+        Boolean isStillValid = (currentOrder.CancellationRequestDate__c!=null &&
             currentOrder.CancellationRequestDate__c.daysBetween(Date.today())<=CANCELLATION_EXPIRE_DAYS);
 
-        return (permissionCheck && dateCheck);
-    }
+        if (!isStillValid) {
+            throw new AuraHandledException('È possibile clonare gli Ordini solo nei primi '+CANCELLATION_EXPIRE_DAYS+' giorni dall\'annullamento');
+        }
 
-    @AuraEnabled
-    public static Id cloneOrder(Id orderId){
-        Order currentOrder = new Order(Id=orderId);
         currentOrder.Phase__c = 'Bozza';
         currentOrder.Status = 'In Lavorazione';
         currentOrder.IsCloned__c = true;
         currentOrder.IncomingCreditCheckResult__c = null;
-        orderSrv.updateRecord(currentOrder);
-        return orderId;
+
+        try {
+            orderSrv.updateRecord(currentOrder);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }
