@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 13/07/2021
+* @description Class HDT_QR_ComfortQualityCall
+* @history Keltin Mesonjesi – 13/07/2021 – Created class
+*/
 public inherited sharing class HDT_QR_ComfortQualityCall {
     
     public static List<ComfortQualityCall__c> getRecordByOrderParams(Order order){
