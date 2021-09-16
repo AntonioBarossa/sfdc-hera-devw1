@@ -7,17 +7,20 @@ public class HDT_SRV_DocumentalManagement{
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driver = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
 		Map<String,Object> driverPayloadMap = new Map<String,Object>();
 		List<Map<String,Object>> driverPayloadListMap = new List<Map<String,Object>>();
+		
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver3');
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
+		
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
 		List<Map<String,List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList,documentalContext);
 		formParamsMap.put('Contesto',context);
+		
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], driverStructure,formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
@@ -33,6 +36,7 @@ public class HDT_SRV_DocumentalManagement{
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
+		
 		body = composeJson(recordId, driverPayloadListMap,formParamsMap,recordObjectsListMap[0]);
 		System.debug('Body ' + body);
 		return body;
