@@ -55,7 +55,7 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         input.method = 'Test';   //TODO: TESTARE TUTTE LE ALTERNATIVE
         inputs.add(inputs);
         
-        Object result = HDT_SRV_DocumentSelectedManager.execute(inputs);
+        result = HDT_SRV_DocumentSelectedManager.execute(inputs);
         
         //ASSERTS
         System.assertEquals(null, result);
