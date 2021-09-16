@@ -253,9 +253,13 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     }
 
     private static List<HDT_WRP_DocumentSelectedResponse> manageDocumentsPaperless(List<HDT_WRP_DocumentSelectedRequest> inputs){
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) return null;
+        
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) 
+            return null;
+        
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
+        
         try {
             HDT_QR_BillingProfile bpQueryHandler = new HDT_QR_BillingProfile();
             String queryString = 'SELECT Id,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
@@ -323,7 +327,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         responseList.add(response);
         return responseList;
     }
-
+    
+    @TestVisible
     private static Date formatDate(String inputDate){
         if(inputDate==null || String.isBlank(inputDate)) return null;
         List<String> listString = inputDate.split('/');
@@ -332,7 +337,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         String yyyy = listString[2];
         return Date.valueOf(yyyy+'-'+mm+'-'+gg);
     }
-
+    
+    @TestVisible
     private static Double calculateRaiFee(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
         try {
@@ -352,7 +358,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             return null;
         }
     }
-
+    
+    @TestVisible
     private static String getRiferimentoFattura(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
         try {
@@ -370,7 +377,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             return null;
         }
     }
-
+    
+    
     public static List<SObject> getDocumentsSelected(Id caseId){
         String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, TvFeeResidual__c, DocumentResidue__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
         String objectName = 'DocumentSelected__c';
