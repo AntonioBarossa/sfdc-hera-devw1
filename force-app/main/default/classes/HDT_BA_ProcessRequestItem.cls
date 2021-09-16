@@ -27,8 +27,15 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
         Type t = Type.forName(selectedProcess.ApexClass__c);
         HDT_UTL_ProcessExecution cls = (HDT_UTL_ProcessExecution)t.newInstance();
         cls.setMassiveLoaderRequestItem(massiveItem);
-        cls.execute();
+        
+        try {
+            cls.execute();
+        } catch (Exception e) {
+            massiveItem.Status__c   = 'Errore'          ;
+            massiveItem.StatusDescription__c    = e.getMessage()    ;
+            update massiveItem;
 
+        }
     }
     public void finish(Database.BatchableContext bc){
         System.debug('HDT_BA_ProcessRequestItem finish ');
