@@ -75,9 +75,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
     }   
      
-    public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
+    // public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
         
-    }
+    // }
 
     public static void orderPhaseManagementAfterUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
 
