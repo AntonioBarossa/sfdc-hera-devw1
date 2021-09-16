@@ -607,8 +607,6 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         System.assertEquals('Numero Fattura', docResult.Name);
         
         System.assertEquals(caseResult.Id, result.caseRecord.Id);
-        System.assertEquals('CONTRATTO', result.contractCode);
-        System.assertEquals('Testo Dettaglio', result.tipoDocumento);
         
     }
     
