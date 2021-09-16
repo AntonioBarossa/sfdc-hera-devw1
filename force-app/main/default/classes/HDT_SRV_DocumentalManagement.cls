@@ -1,6 +1,11 @@
 public class HDT_SRV_DocumentalManagement{
-	 
+	
 	public static String generateRequest(String recordId, String context, String formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generateRequest';
+		System.debug(debugString + ' - recordId:' + recordId + ' - context: ' + context + ' - formParams: ' + formParams);
+		
 		String payload = '';
 		String body = '';
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driver = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
