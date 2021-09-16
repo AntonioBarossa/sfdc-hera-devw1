@@ -1985,6 +1985,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Plico Firmato da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Registrazione validata  Firmato%2FInviato</fullName>
             <default>false</default>
         </values>
