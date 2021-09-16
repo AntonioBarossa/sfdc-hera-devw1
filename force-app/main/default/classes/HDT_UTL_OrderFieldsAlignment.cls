@@ -163,7 +163,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.ExciseGas__c =  mapAcciseGas.get(servicePoint.ExciseGas__c) != null ? mapAcciseGas.get(servicePoint.ExciseGas__c) : mapAcciseGas.get('ALTRO');
 
             if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') //HRAWRM-498
-                && servicePoint.SupplyType__c == 'Non Domestico') {
+                && servicePoint.SupplyType__c != 'A-Domestico') {
 
                     if(orderToUpdate.VAT__c == 'Iva 22% (Cod. 02)'){
                         orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
@@ -172,7 +172,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
 
             } else if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') 
-                && servicePoint.SupplyType__c == 'Domestico') {
+                && servicePoint.SupplyType__c == 'A-Domestico') {
                 orderToUpdate.ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
             }
         } 
