@@ -208,6 +208,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id         ;
            // insert currentProcess.currentOrderItem                                                              ;
         }
+        currentProcess.currentRequestItem.Status__c=constant.MASSIVLOADER_STATUS_CHIUSO;
         update currentProcess.currentRequestItem;
     }
 
@@ -217,20 +218,20 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
    * @description mapping Contact by Account
    **/
    private void makeContact(){
-        currentProcess.currentPrimaryContact.DegreeOfStudies__c                 =  currentProcess.currentAccount.DegreeOfStudies__c                  ;
-        currentProcess.currentPrimaryContact.CompanyOwner__c                    =  currentProcess.currentAccount.CompanyOwner__c                     ;
-        currentProcess.currentPrimaryContact.LastName                           =  currentProcess.currentAccount.LastName__c                         ;
-        currentProcess.currentPrimaryContact.Gender__c                          =  currentProcess.currentAccount.Gender__c                           ;
-        currentProcess.currentPrimaryContact.FirstName                          =  currentProcess.currentAccount.FirstName__c                        ;
-        currentProcess.currentPrimaryContact.Birthdate                          =  currentProcess.currentAccount.BirthDate__c                        ;
-        currentProcess.currentPrimaryContact.FiscalCode__c                      =  currentProcess.currentAccount.FiscalCode__c                       ;
-        currentProcess.currentPrimaryContact.Birthcity__c                       =  currentProcess.currentAccount.BirthProvince__c                    ;
-        currentProcess.currentPrimaryContact.MobilePhonePrefix__c               =  currentProcess.currentAccount.MobilePhonePrefix__c                ;
-        currentProcess.currentPrimaryContact.Phone                              =  currentProcess.currentAccount.Phone                               ;
-        currentProcess.currentPrimaryContact.MobilePhone                        =  currentProcess.currentAccount.MobilePhone__c                      ;
-        currentProcess.currentPrimaryContact.Email                              =  currentProcess.currentAccount.PrimaryEmail__c                     ;
-        currentProcess.currentPrimaryContact.PhonePrefix__c                     =  currentProcess.currentAccount.PhonePrefix__c                      ;
-        currentProcess.currentPrimaryContact.Fax                                =  currentProcess.currentAccount.FAX__c                              ;                       
+        currentProcess.currentPrimaryContact.DegreeOfStudies__c                 = currentProcess.currentAccount.DegreeOfStudies__c                   ;
+        currentProcess.currentPrimaryContact.CompanyOwner__c                    = currentProcess.currentAccount.CompanyOwner__c                      ;
+        currentProcess.currentPrimaryContact.LastName                           = currentProcess.currentAccount.LastName__c                          ;
+        currentProcess.currentPrimaryContact.Gender__c                          = currentProcess.currentAccount.Gender__c                            ;
+        currentProcess.currentPrimaryContact.FirstName                          = currentProcess.currentAccount.FirstName__c                         ;
+        currentProcess.currentPrimaryContact.Birthdate                          = currentProcess.currentAccount.BirthDate__c                         ;
+        currentProcess.currentPrimaryContact.FiscalCode__c                      = currentProcess.currentAccount.FiscalCode__c                        ;
+        currentProcess.currentPrimaryContact.Birthcity__c                       = currentProcess.currentAccount.BirthProvince__c                     ;
+        currentProcess.currentPrimaryContact.MobilePhonePrefix__c               = currentProcess.currentAccount.MobilePhonePrefix__c                 ;
+        currentProcess.currentPrimaryContact.Phone                              = currentProcess.currentAccount.Phone                                ;
+        currentProcess.currentPrimaryContact.MobilePhone                        = currentProcess.currentAccount.MobilePhone__c                       ;
+        currentProcess.currentPrimaryContact.Email                              = currentProcess.currentAccount.PrimaryEmail__c                      ;
+        currentProcess.currentPrimaryContact.PhonePrefix__c                     = currentProcess.currentAccount.PhonePrefix__c                       ;
+        currentProcess.currentPrimaryContact.Fax                                = currentProcess.currentAccount.FAX__c                               ;                       
         currentProcess.currentPrimaryContact.Profession__c                      = currentProcess.currentAccount.Profession__c                        ;             
         currentProcess.currentPrimaryContact.MailingCity                        = currentProcess.currentAccount.BillingCity                          ;           
         currentProcess.currentPrimaryContact.MailingCityCode__c                 = currentProcess.currentAccount.BillingCityCode__c                   ;                  

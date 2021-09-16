@@ -4,6 +4,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public HDT_QR_ServicePoint                  qrSerPoint              = new HDT_QR_ServicePoint()             ;
     public static HDT_QR_AccountContactRelation accoContRelQr           = new HDT_QR_AccountContactRelation()   ;
     public static HDT_QR_Contact                qrCont                  = new HDT_QR_Contact()                  ;
+    public HDT_UTL_Constants                    constant                = new HDT_UTL_Constants()               ;
     public HDT_WRP_ProcessEntities              currentProcess;
 
     //public  MassiveLoaderRequestItem__c varRequestItem;
@@ -119,7 +120,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             currentAccount                  =   new  Account                     ();
             currentPrimaryContact           =   new  Contact                     ();
             currentOrder                    =   new  Order                       ();
-            currentOrderItem                =   new OrderItem                    ();
+            currentOrderItem                =   new  OrderItem                   ();
             currentContract                 =   new  Contract                    ();
             currentQuote                    =   new  Quote                       ();
             currentCase                     =   new  Case                        ();
