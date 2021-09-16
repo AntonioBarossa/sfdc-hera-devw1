@@ -156,9 +156,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderSrv.updateRecords(childOrdersDocValid);
         }
         
-        if (!ordersQualityOkUpdate.isEmpty()) {
-            orderSrv.updateRecords(ordersQualityOkUpdate);
-        }
+        // if (!ordersQualityOkUpdate.isEmpty()) {
+        //     orderSrv.updateRecords(ordersQualityOkUpdate);
+        // }
         
         List<Order> ordersHeroku = new List<Order>();
         List<Order> ordersSiebel = new List<Order>();
@@ -181,7 +181,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
         );
         if(!vasOrdersToUpdate.isEmpty()){
-            system.enqueueJob(new HDT_SRV_SalesManager.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
+            system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
         }
 
         insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
