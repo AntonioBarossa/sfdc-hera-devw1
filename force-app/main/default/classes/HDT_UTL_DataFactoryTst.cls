@@ -2138,4 +2138,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return visitAssigRulesList;
 	}
+
+	public static List<BlackList__c> createBlacklist (Integer amount, Boolean doInsert) {
+
+		List<BlackList__c> blacklistList = new List<BlackList__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BlackList__c blacklist = new BlackList__c(
+				Name='testBlacklist',
+				Domain__c='testDomain',
+				Pod__c='testPOD'
+			);
+
+			blacklistList.add(blacklist);
+		}
+
+		if (doInsert){
+
+			insert blacklistList;
+		}
+
+		return blacklistList;
+	}
 }
