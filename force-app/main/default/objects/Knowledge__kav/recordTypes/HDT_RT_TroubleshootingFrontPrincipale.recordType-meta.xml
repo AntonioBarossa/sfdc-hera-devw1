@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_TroubleshootingFrontPrincipale</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Knowledge_Compact_Layout</compactLayoutAssignment>
     <description>Articolo troubleshooting front principale</description>
     <label>Troubleshooting Front Principale</label>
     <picklistValues>

@@ -25,6 +25,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaDataDecorrenza</name>
+        <label>AssegnaDataDecorrenza</label>
+        <locationX>1602</locationX>
+        <locationY>1292</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EffectiveDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaInputCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>841</locationX>
@@ -142,14 +158,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaInputCase</targetReference>
+            <targetReference>AssegnaDataDecorrenza</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
-        <locationX>1106</locationX>
-        <locationY>1113</locationY>
+        <locationX>1479</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Order__c</assignToReference>
             <operator>Assign</operator>
@@ -181,6 +197,9 @@
         <assignmentItems>
             <assignToReference>GetInputCase.RateCategory__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedRecord_0.RateCategory__c</elementReference>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetInputCase.BillingProfile__c</assignToReference>
@@ -235,7 +254,7 @@
             <assignToReference>GetInputCase.Contract__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetRelatedRecord_0.ContractReference__c</elementReference>
+                <elementReference>OrderContractId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -260,7 +279,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaInputCase</targetReference>
+            <targetReference>AssegnaDataDecorrenza</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -747,8 +766,8 @@
     <decisions>
         <name>Case_Order</name>
         <label>Case/Order?</label>
-        <locationX>1106</locationX>
-        <locationY>873</locationY>
+        <locationX>1089</locationX>
+        <locationY>856</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen</targetReference>
         </defaultConnector>
@@ -839,6 +858,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>CodiceContrattoNullo</name>
+        <label>CodiceContrattoNullo?</label>
+        <locationX>1228</locationX>
+        <locationY>1048</locationY>
+        <defaultConnector>
+            <targetReference>GetContract</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Nullo</defaultConnectorLabel>
+        <rules>
+            <name>Nullo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRelatedRecord_0.SapContractCode__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaDataDecorrenza</targetReference>
+            </connector>
+            <label>Nullo</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Data_Decorrenza_Inferiore</name>
         <label>Data Decorrenza Inferiore?</label>
         <locationX>1502</locationX>
@@ -869,7 +913,7 @@
         <locationX>1448</locationX>
         <locationY>478</locationY>
         <defaultConnector>
-            <targetReference>Input_Screen</targetReference>
+            <targetReference>AssegnaDataDecorrenza</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Riprendi</defaultConnectorLabel>
         <rules>
@@ -1043,6 +1087,28 @@
                  TEXT({!GetRelatedCase.Type}) = &quot;Recesso per Rifiuto Voltura&quot;,
                  TEXT({!GetRelatedCase.Type}) = &quot;Risoluzione No Disalimentabile&quot;
      ),&quot;SG04&quot;,&quot;SW07&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>EffectiveDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+     DAY({!$Flow.CurrentDate}) &lt;= 10, 
+     IF(
+        MONTH({!$Flow.CurrentDate} ) = 12,
+        DATE( YEAR( {!$Flow.CurrentDate}), 12, 31 ),
+        DATE( YEAR( {!$Flow.CurrentDate} ), MONTH ( {!$Flow.CurrentDate}) + 1, 1 ) - 1 
+      ),
+     IF(
+        MONTH({!NextMonthDate}) = 12,
+        DATE( YEAR( {!NextMonthDate}), 12, 31 ),
+        DATE( YEAR( {!NextMonthDate}), MONTH ( {!NextMonthDate}) + 1, 1 ) - 1 
+       )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>NextMonthDate</name>
+        <dataType>Date</dataType>
+        <expression>DATE( YEAR({!$Flow.CurrentDate}), MONTH({!$Flow.CurrentDate}) + 1, DAY({!$Flow.CurrentDate}))</expression>
     </formulas>
     <formulas>
         <name>OrderAccise</name>
@@ -1253,6 +1319,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetContract</name>
+        <label>GetContract</label>
+        <locationX>1319</locationX>
+        <locationY>887</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValori_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SAPContractCode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRelatedRecord_0.SapContractCode__c</elementReference>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <outputAssignments>
+            <assignToReference>OrderContractId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCase</name>
         <label>GetInputCase</label>
         <locationX>1591</locationX>
@@ -1343,7 +1432,7 @@
         <locationY>993</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValori_0</targetReference>
+            <targetReference>CodiceContrattoNullo</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1401,8 +1490,8 @@
     <screens>
         <name>ErrorScreen</name>
         <label>ErrorScreen</label>
-        <locationX>1370</locationX>
-        <locationY>993</locationY>
+        <locationX>1367</locationX>
+        <locationY>700</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -1779,6 +1868,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OrderContractId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
