@@ -35,8 +35,9 @@
              boolean myValue = testMthod.evaluate(argsMap);
          System.debug('myValue++++++' +myValue);
 
-             System.assertEquals(True,myValue,'Value is ServiceUser');
-             System.assertNotEquals(False,myValue,'Paolo is not the value that return'); 
+             System.assertEquals(True,myValue,'HDT_UTL_ServiceCatalogProfileCriteria.evaluate user was not identified as ServiceUser');
+             System.assertNotEquals(False,myValue,'HDT_UTL_ServiceCatalogProfileCriteria.evaluate user should have been indentified as ServiceUser');
+
          Test.stopTest();
                       
 
@@ -50,8 +51,10 @@
          Map<String,String> argsMap = new Map<String,String>{'method' =>'CommunityUser'};
        boolean returnValue = testMthod.evaluate(argsMap);
          System.debug('returnValue' +returnValue);
-          System.assertEquals(False,returnValue,'Claudia is not the value that return');
-          System.assertNotEquals(True,returnValue,'Value is CommunityUser'); 
+
+          System.assertEquals(False,returnValue,'HDT_UTL_ServiceCatalogProfileCriteria.evaluate user was no identified as CommunityUser');
+          System.assertNotEquals(True,returnValue,'HDT_UTL_ServiceCatalogProfileCriteria.evaluate user should have been indentified as CommunityUser'); 
+
         Test.stopTest(); 
                   
 
