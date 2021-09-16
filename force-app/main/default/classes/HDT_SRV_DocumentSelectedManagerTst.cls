@@ -53,7 +53,7 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         input = new HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest();
         
         input.method = 'Test';   //TODO: TESTARE TUTTE LE ALTERNATIVE
-        inputs.add(inputs);
+        inputs.add(input);
         
         result = HDT_SRV_DocumentSelectedManager.execute(inputs);
         
