@@ -18,16 +18,22 @@
             <layoutItems>
                 <field>Language</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <field>ProblemType__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <field>SalesCompany__c</field>
             </layoutItems>
             <layoutItems>
                 <field>PublicLink__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <field>LastModifiedById</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
