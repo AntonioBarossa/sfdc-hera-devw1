@@ -238,7 +238,8 @@ public inherited sharing class HDT_QR_Order {
             IncomingCreditCheckResult__c,
             CreditCheckDescription__c,
             DocumentPackage__c,
-            IsCloned__c                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
+            IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
+            RegionalAdditional__c                            //@frpanico 16/09/21 
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -804,5 +805,11 @@ public inherited sharing class HDT_QR_Order {
 
     public List<Order> getOrderForComfort(String id){
         return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+    }
+
+    //@frpanico getExciseTranscode
+    public HDT_ExciseTranscode__mdt getExciseTranscode(String exciseString)
+    {
+        return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];
     }
 }
