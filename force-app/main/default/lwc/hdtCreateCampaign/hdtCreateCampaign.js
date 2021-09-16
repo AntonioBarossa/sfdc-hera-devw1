@@ -8,6 +8,7 @@ import USER_ID from '@salesforce/user/Id';
 export default class HdtCreateCampaign extends LightningElement {
     @api recordId;
     objectApiName = 'Campaign';
+    requiredShippingMethods=false;  // Start HRAWRM-621 16/09/2021
     @track reitekFieldRequired = false;
     @track startDateFieldRequired = false;
     @track easyRequired=false;
@@ -152,6 +153,17 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignMemberAssignmentRequired = false;
         }
     }
+    // Start HRAWRM-621 16/09/2021
+    checkRequiredShippingMethods(category,channel){
+
+        if ( category === 'Campagna Outbound' && channel==='Cartaceo' ) {
+            this.requiredShippingMethods=true;
+        }
+        else{
+            this.requiredShippingMethods=false;
+        }
+    }
+    // End HRAWRM-621 16/09/2021
 
     handleChangeProcessType(event){
         let processType = event.detail.value;
@@ -174,7 +186,8 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignCommercialCodeFields = (event.detail.value === 'Bolletta' || this.template.querySelector('.categoryField > lightning-input-field').value === 'Campagna Marketing Cloud' || this.template.querySelector('.categoryField > lightning-input-field').value === 'Campagna CRM') ? true : false;
         }
         this.paperCampaignFields = event.detail.value.includes('Cartaceo') ? true : false;
-
+        let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value
+        this.checkRequiredShippingMethods(categoryField,event.detail.value);  // Start HRAWRM-621 16/09/2021
         //reset fields
 
     }

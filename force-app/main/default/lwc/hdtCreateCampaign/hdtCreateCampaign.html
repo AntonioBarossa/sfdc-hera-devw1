@@ -228,7 +228,7 @@
                     <template if:true={paperCampaignFields}>
                         <lightning-input-field field-name="PaperCampaignParameter__c"
                             class="slds-hide paperCampaignParameterField"></lightning-input-field>
-                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId}
+                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId} reqrec={requiredShippingMethods}
                             onrecordsubmitted={handleRecordSubmitted} onerroroccurred={handleErrorOccurred}>
                         </c-hdt-paper-campaign-fields>
                     </template>
