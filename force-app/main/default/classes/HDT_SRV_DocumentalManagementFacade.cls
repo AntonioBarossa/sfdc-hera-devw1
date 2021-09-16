@@ -2,10 +2,6 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
     
     public static String getBase64(String recordId, String context, String formParams){
         
-		//DEBUG
-		String debugString = 'HDT_SRV_DocumentalManagementFacade - getBase64';
-		System.debug(debugString + ' - recordId:' + recordId + ' - context: ' + context + ' - formParams: ' + formParams);
-		
         String baseSixtyFour = '';
         String body='';
         String result='';
