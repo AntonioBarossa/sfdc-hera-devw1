@@ -60,6 +60,56 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
     }
 
+    @AuraEnabled
+    public static void save2(Order orderParent,boolean isPlicoSend){
+
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        List<Order> ordersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+
+        // if (orderParent.ContractSigned__c == false) {
+        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+        if(isPlicoSend){
+            orderToUpdate.Phase__c = 'Plico da inviare';
+        }
+        else{
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+        }
+        // }
+
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
+
+        for (Order childOrd : childOrders) {
+            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
+                ordersToUpdate.add(
+                    new Order(
+                        Id = childOrd.Id,
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    )
+                );
+            }
+        }
+        
+        ordersToUpdate.add(orderToUpdate);
+
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
+            }
+        }
+
+        orderSrv.updateRecords(ordersToUpdate);
+
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/02/2021

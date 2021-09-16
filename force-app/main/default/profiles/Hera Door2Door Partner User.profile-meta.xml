@@ -3158,6 +3158,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>BillingProfile__c.DirectDebitStatusFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BillingProfile__c.DivergentSubject__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4409,6 +4414,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMemberLeadAssigment__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMemberLeadAssigment__c.InterestProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMemberLeadAssigment__c.SourceAgency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33248,6 +33263,11 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>NewsNotificationCenter__c.HDT_RT_Default</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_Attivazione</recordType>
         <visible>true</visible>
@@ -34091,6 +34111,10 @@
         <name>CreateCustomizeReports</name>
     </userPermissions>
     <userPermissions>
+        <enabled>false</enabled>
+        <name>CreateReportInLightning</name>
+    </userPermissions>
+    <userPermissions>
         <enabled>true</enabled>
         <name>CreateTopics</name>
     </userPermissions>
@@ -34105,6 +34129,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EditKnowledge</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>EditMyReports</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -34141,6 +34169,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>MassInlineEdit</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>false</enabled>
+        <name>NewReportBuilder</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

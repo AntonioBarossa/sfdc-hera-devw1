@@ -202,5 +202,9 @@ public inherited sharing class HDT_QR_Case {
         }
         return childCases;
     }
+    public List<Case> getCaseByAccountid(String accountid, string type)
+    {
+        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type = :type AND isClosed = false WITH SECURITY_ENFORCED];
+    }
 
 }

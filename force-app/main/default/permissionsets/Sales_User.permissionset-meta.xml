@@ -1352,11 +1352,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.CO__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.CaliberAvailable__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1378,11 +1373,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.CemeteryName__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Cemetery__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1557,11 +1547,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.DistributorServiceCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Distributor__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1702,11 +1687,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.InstallmentPlanNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.IsClosedOnCreate</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1748,16 +1728,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Mobile__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.ModeSendPaperlessCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.NameBankOrPostOffice__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2123,11 +2093,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.TotalCover__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.TotalForInstallments__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

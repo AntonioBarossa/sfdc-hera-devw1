@@ -3232,6 +3232,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>BillingProfile__c.DirectDebitStatusFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BillingProfile__c.DivergentSubject__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4488,6 +4493,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMemberLeadAssigment__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMemberLeadAssigment__c.InterestProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>CampaignMemberLeadAssigment__c.SourceAgency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35871,6 +35886,11 @@
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>NewsNotificationCenter__c.HDT_RT_Default</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

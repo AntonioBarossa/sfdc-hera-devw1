@@ -1311,15 +1311,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     true, true, '',''
                 ),
                 {
-                    'label': 'Tipo Apparechiatura',
-                    'apiname': 'MeterType__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
                     'label': 'Tipo Voltura',
                     'apiname': 'VoltureType__c',
                     'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
@@ -2053,7 +2044,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 // HRAWRM-461 15-09
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && this.order.ParentOrder__r.ContractSigned__c,
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && this.order.ParentOrder__r.ContractSigned__c == true,
                 data: [
                     {
                         'label': 'Data Firma',
