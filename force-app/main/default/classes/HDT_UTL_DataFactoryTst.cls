@@ -2028,8 +2028,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return matriceRemiCode;
-}
-
+	}
 
 	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
 
@@ -2047,7 +2046,96 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		if (doInsert){
 
 			insert srList;
+		}
+
+		return srList;
 	}
-	return srList;
-}
+	
+	public static List<SurveyResponse__c> createSurveyResponse(Integer amount, Boolean doInsert) {
+
+		List<SurveyResponse__c> srList = new List<SurveyResponse__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyResponse__c sr = new SurveyResponse__c(
+				Name = 'testName'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
+
+	public static List<RateCategory__c> createRateCategoty(Integer amount, Boolean doInsert) {
+
+		List<RateCategory__c> rateCatList = new List<RateCategory__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			RateCategory__c rateCat = new RateCategory__c(
+				Commodity__c='testCommodity',
+				Name='testName',
+				CalculatedValue__c='123',
+				ProductName__c='testProduct',
+				Fornitura__c='testFornitura',
+				DistributorCode__c='testDistCode'
+			);
+
+		rateCatList.add(rateCat);
+		}
+
+		if (doInsert){
+
+			insert rateCatList;
+		}
+	return rateCatList;
+	}
+
+	public static List<SurveyCRM__c> createSurveyCrm (Integer amount, Boolean doInsert) {
+
+		List<SurveyCRM__c> surveyCrmList = new List<SurveyCRM__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyCRM__c surveyCrm = new SurveyCRM__c(
+				Name = 'testName'
+			);
+
+			surveyCrmList.add(surveyCrm);
+		}
+
+		if (doInsert){
+
+			insert surveyCrmList;
+		}
+
+		return surveyCrmList;
+	}
+
+	public static List<VisitAssignmentRules__c> createVisitAssignmentRules (Integer amount, Boolean doInsert) {
+
+		List<VisitAssignmentRules__c> visitAssigRulesList = new List<VisitAssignmentRules__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VisitAssignmentRules__c visitAssigRule = new VisitAssignmentRules__c(
+				Name = 'testName'
+			);
+
+			visitAssigRulesList.add(visitAssigRule);
+		}
+
+		if (doInsert){
+
+			insert visitAssigRulesList;
+		}
+
+		return visitAssigRulesList;
+	}
 }

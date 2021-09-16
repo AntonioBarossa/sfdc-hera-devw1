@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@protonmail.ch)
+ * @date 12/03/2021
+ * @description HDT_UTL_OrderProcess Class
+ * @history Keltin Mesonjesi – 12/03/2021 – Created Class
+ */
+
 public inherited sharing  class HDT_UTL_OrderProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
@@ -99,11 +106,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         set<Order> filtered = new set<Order>();
         //List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
         List<String> ordersParent = new List<String>();//getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
-        List<Order> ordersFullList = orderQr.getRecordsByIds(olistd);
+        List<Order> ordersFullList2 = orderQr.getRecordsByIds(olistd);
         List<String> onlyString = new List<String>();
         List<Order> ordersQualityOkUpdate = new List<Order>();
+
+
+        List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
+
+
         for(Order o : ordersFullList){
-            if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && o.Phase__c == 'Documentazione Gestita') {
+            if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
             }
             if(o.phase__c == 'Documentazione Validata'){
@@ -164,7 +176,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
         Map<Id, String> vasOrdersToUpdate = 
-            updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Comunicazione Motore VAS');
+            updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
         vasOrdersToUpdate.putAll(
             updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
         );
@@ -449,10 +461,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
+                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c) { //Fabiana 15/09/2021
+                    newOrder.SBQQ__Contracted__c=true; 
+                }
             }
-            if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c) {
-                newOrder.SBQQ__Contracted__c=true; 
-            }
+           
         }
         return newOrdersList;
     }
