@@ -33,7 +33,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body,context);
         }catch(Exception ex){
-            System.debug(ex.getMessage());
+            System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }
     }
 
