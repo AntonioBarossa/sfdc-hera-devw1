@@ -9,8 +9,22 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     
     
-    
     //TEST SETUP
+    //TODO: SETUP DEVE CONTENERE FINO A ORDINE PERCHé USATO DA CUSTOM METADATA Documentale_Context5
+    private static void mySetup(){
+        
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+        
+        //NOTA: CUSTOM METADATA RIPORTA ANCHE RELATION RELATIVE AI TIPI:
+        
+        //OrderItems
+        //Account
+        //Contact__r
+        //SaleBy__r
+        //ParentOrder__r
+        
+    }
     
     
     
@@ -24,6 +38,44 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         
         
         //SETUP
+        Order myOrder = [SELECT Id FROM Order];
+        
+        
+        //TODO: SCORPORARE IN UTILITY DI CREAZIONE OGGETTO AD HOC
+        
+        //docRecord
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord docRecord;
+        docRecord = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord();
+        //fields docRecord
+        
+        
+        //docSection
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection docSection;
+        docSection = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection();
+        
+        //fields docSection
+        docSection.records = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord>{docRecord};
+
+        
+        //docStructure
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docStructure;
+        docStructure = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure();
+        
+        //fields docStructure
+        docStructure.sections = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection>{docSection};
+        
+        
+        
+        
+        //Documento Docstructure
+        Document myDocByContext = new Document();
+        myDocByContext.name = 'DocumentazioneAnticipata';
+        myDocByContext.Body = Blob.valueOf(docStructure);
+        
+        //Documento Driver3
+        Document myDocByContext = new Document();
+        myDocByContext.name = 'Driver3';
+        myDocByContext.Body = Blob.valueOf(docStructure);//TODO: POSSIBILE SI DEBBA SCORPORARE IN UN SECONDO ITEM
         
         
         
@@ -33,9 +85,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         Map<String,Object> formParams = new Map<String,Object>();
         String formParamsJSON = JSON.serialize(formParams);
         
+        String orderId = myOrder.Id;
+        
         
         //TESTING
-        HDT_SRV_DocumentalManagementFacade.sendDocument('', context, formParamsJSON);
+        HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
         
         
         //RETRIEVING DATA
