@@ -544,22 +544,30 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
 
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
-        System.debug('******:22 - ' + sb);
+        
         if(method == 'PianoRateizzazione'){
             HDT_QR_Case caseQr = new HDT_QR_Case();
-            String accountId = (String)sb.get('Account__c');
-            List<Case> listCase = caseQr.getCaseByAccountid(accountId,'Storno Rateizzazione');
-            if(listCase != null && !listCase.isEmpty()){
-                res = true;
-            }
-            else{
-                String s = (String)sb.get('IsInstallment__c');
-                if(s == 'false'){
+            String accountFilterId = (String)sb.get('Id');
+            System.debug('****1:' + sb);
+            System.debug('****2:' + accountFilterId);
+            List<AccountStatementFilter__c> act = HDT_QR_AccountStatement.getFilter(accountFilterId);
+            if(act != null && !act.isEmpty()){
+                List<Case> listCase = caseQr.getCaseByAccountid(act[0].Account__c,'Storno Rateizzazione');
+                if(listCase != null && !listCase.isEmpty()){
                     res = true;
                 }
                 else{
-                    res = false;
+                    //String s = (String)sb.get('IsInstallment__c');
+                    if(act[0].IsInstallment__c == false){
+                        res = true;
+                    }
+                    else{
+                        res = false;
+                    }
                 }
+            }
+            else{
+                res = false;
             }
         }
         else if(mapAccountStatementFilter.get(method) != null){
