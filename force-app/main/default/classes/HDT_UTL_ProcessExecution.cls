@@ -66,12 +66,38 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
-public String getTypeField(String objName,String fieldApiName){
-    String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
-    System.debug('*** fieldTypeName = ' + fieldTypeName);   
-    return fieldTypeName;
-}
+    public String getTypeField(String objName,String fieldApiName){
+        String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
+        System.debug('fieldTypeName: ' + fieldTypeName);   
+        return fieldTypeName;
+    }
 
+    public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
+
+        String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
+        System.debug(String.valueOf(sObj.getSObjectType())+' column N° :'+position+' FieldapiName : '+mapSobjField.get(mapHeaderByPosition.get(position))+'  HeaderName : '+mapHeaderByPosition.get(position) + ' FieldValue : '+value );
+
+        switch on typeField.toUpperCase() {
+            when 'BOOLEAN'  {
+                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));
+            }
+             when 'DOUBLE'  {
+                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Decimal.valueOf(value));
+             }
+             when 'INTEGER'  {
+                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Integer.valueOf(value));
+             }
+             when 'DATETIME'  {
+                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Datetime.valueOf(value));
+             }
+             when 'DATE'  {
+                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Date.valueOf(value));
+             }
+            when else {
+                sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),value);
+            }
+        }
+    }
 
    public class HDT_WRP_ProcessEntities{
       public Account                      currentAccount                ;

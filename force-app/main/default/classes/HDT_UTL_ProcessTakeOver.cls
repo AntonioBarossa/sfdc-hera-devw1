@@ -37,37 +37,15 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 }
                 // Start AccountContactRelation
                 if ( 'Ruolo'.equalsIgnoreCase(mapHeaderByPosition.get(count))) {
-
                     currentProcess.role=tempField;
                 }
                 // fine AccountContactRelation
 
                 // Creazione Account
                 if (mapAccountFields.get(mapHeaderByPosition.get(count))!=null) {
-                    System.debug('Acc column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-                    typeField=getTypeField('Account',mapAccountFields.get(mapHeaderByPosition.get(count)));
- 
-                   switch on typeField.toUpperCase() {
-                       when 'BOOLEAN'  {
-                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
-                       }
-                        when 'DOUBLE'  {
-                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-                        }
-                        when 'INTEGER'  {
-                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                        }
-                        when 'DATETIME'  {
-                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
-                        }
-                        when 'DATE'  {
-                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                        }
-                       when else {
-                            currentProcess.currentAccount.put(mapAccountFields.get(mapHeaderByPosition.get(count)),tempField);
-                    }
-                   }
-            
+                   // System.debug('Acc column N° :'+count+' FieldapiName : '+mapAccountFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
+
+                    mapTypeField(currentProcess.currentAccount,mapAccountFields,count,tempField);
                     if('Tipo di Account'.equalsIgnoreCase(mapHeaderByPosition.get(count))){
                             // selezione recordtype Account 
                             if ('Business'.equalsIgnoreCase(tempField)) {
@@ -83,117 +61,29 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                    
                 }
                 //Fine Creazione Account
+
                 // Creazione Sales
                 else if(mapSaleFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('Sale column N° :'+count+' FieldapiName : '+mapSaleFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-                    typeField=getTypeField('Sale__c',mapSaleFields.get(mapHeaderByPosition.get(count)));
-                    switch on typeField.toUpperCase() {
-                        when 'BOOLEAN'  {
-                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
-                        }
-                         when 'DOUBLE'  {
-                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-                         }
-                         when 'INTEGER'  {
-                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                         }
-                         when 'PHONE'  {
-                            currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Long.valueOf(tempField));
-                         }
-                         when 'DATETIME'  {
-                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
-                         }
-                         when 'DATE'  {
-                             currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                         }
-                        when else {
-                            currentProcess.currentSale.put(mapSaleFields.get(mapHeaderByPosition.get(count)),tempField);
-                        }
-                    }
+                    mapTypeField(currentProcess.currentSale,mapSaleFields,count,tempField);
+
                 }
                 // fine creazione sales
+
                 // start Service Point 
                 else if(mapServicePointFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('serv column N° :'+count+' FieldapiName : '+mapServicePointFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-
-                    typeField=getTypeField('ServicePoint__c',mapServicePointFields.get(mapHeaderByPosition.get(count)));
-                    switch on typeField.toUpperCase() {
-                        when 'BOOLEAN'  {
-                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
-                        }
-                         when 'DOUBLE'  {
-                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-                         }
-                         when 'INTEGER'  {
-                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                         }
-
-                         when 'DATETIME'  {
-                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
-                         }
-                         when 'DATE'  {
-                             currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                         }
-                        when else {
-                            currentProcess.currentServicePoint.put(mapServicePointFields.get(mapHeaderByPosition.get(count)),tempField);
-                        }
-                    }
+                   mapTypeField(currentProcess.currentServicePoint,mapServicePointFields,count,tempField);
                 }
                 // Start Billing Profile
+
                 else if(mapBillingProfileFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('BIll column N° :'+count+' FieldapiName : '+mapBillingProfileFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-                    typeField=getTypeField('BillingProfile__c',mapBillingProfileFields.get(mapHeaderByPosition.get(count)));
-
-                    switch on typeField.toUpperCase() {
-                        when 'BOOLEAN'  {
-                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
-                        }
-
-                         when 'DOUBLE'  {
-                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-                         }
-                         when 'INTEGER'  {
-                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                         }
-
-                         when 'DATETIME'  {
-                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
-                         }
-                         when 'DATE'  {
-                             currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                         }
-                        when else {
-                            currentProcess.currentBillingProfile.put(mapBillingProfileFields.get(mapHeaderByPosition.get(count)),tempField);
-                        }
-                    }
+                    mapTypeField(currentProcess.currentBillingProfile,mapBillingProfileFields,count,tempField);
                 }
                 // End Billing Profile;
+
                 // Start Order
                 else if(mapOrderFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('ORD column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-                    typeField=getTypeField('Order',mapOrderFields.get(mapHeaderByPosition.get(count)));
-
-                    switch on typeField.toUpperCase() {
-                        when 'BOOLEAN'  {
-                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
-                        }
-                         when 'DOUBLE'  {
-                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-                         }
-                         when 'INTEGER'  {
-                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                         }
-
-                         when 'DATETIME'  {
-                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
-                         }
-                         when 'DATE'  {
-                             currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                         }
-                        when else {
-                            currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),tempField);
-                        }
-                    }
+                    mapTypeField(currentProcess.currentOrder,mapOrderFields,count,tempField);
+                    
                     if ('SelfCertificationConnection__c'.equalsIgnoreCase(mapOrderFields.get(mapHeaderByPosition.get(count)))) {
                         currentProcess.currentOrder.put(mapOrderFields.get(mapHeaderByPosition.get(count)),'Procura'.equalsIgnoreCase(tempField) ? '001':'Contratto firmato'.equalsIgnoreCase(tempField)?'002':null );
                     }
@@ -201,31 +91,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 } // End Order
                 // Start OrderItem
                 else if(mapOrderItemFields.get(mapHeaderByPosition.get(count))!=null ){
-                    System.debug('ORD_ITEM column N° :'+count+' FieldapiName : '+mapOrderFields.get(mapHeaderByPosition.get(count))+'  HeaderName : '+mapHeaderByPosition.get(count) + ' FieldValue : '+tempField );
-                    typeField=getTypeField('OrderItem',mapOrderItemFields.get(mapHeaderByPosition.get(count)));
-
-                    switch on typeField.toUpperCase() {
-                        when 'BOOLEAN'  {
-                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Boolean.valueOf(tempField));
-                        }
-                         when 'DOUBLE'  {
-                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Decimal.valueOf(tempField));
-                         }
-                         when 'INTEGER'  {
-                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Integer.valueOf(tempField));
-                         }
-
-                         when 'DATETIME'  {
-                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Datetime.valueOf(tempField));
-                         }
-                         when 'DATE'  {
-                             currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),Date.valueOf(tempField));
-                         }
-                        when else {
-                            currentProcess.currentOrderItem.put(mapOrderItemFields.get(mapHeaderByPosition.get(count)),tempField);
-                        }
-                    }
-                    
+                    mapTypeField(currentProcess.currentOrderItem,mapOrderItemFields,count,tempField);                 
                 } // End OrderItem
                 count++;
             }
@@ -343,7 +209,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             currentProcess.currentOrderItem.OrderId             = currentProcess.currentOrder.Id                ;
             currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id       ;
             currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id         ;
-         // insert currentProcess.currentOrderItem                                                              ;
+           // insert currentProcess.currentOrderItem                                                              ;
         }
         update currentProcess.currentRequestItem;
     }

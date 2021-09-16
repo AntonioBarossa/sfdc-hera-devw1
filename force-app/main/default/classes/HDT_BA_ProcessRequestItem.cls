@@ -1,5 +1,6 @@
 public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchable<SObject>, Database.Stateful,Database.AllowsCallouts {
     private id idLoaderRequest;
+
     private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
 
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
@@ -46,6 +47,7 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
             HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listmsr.get(0).id); 
             Id batchprocessid = Database.executeBatch(processReq,1);
         }
+
         
 
 
