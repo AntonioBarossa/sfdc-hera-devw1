@@ -544,8 +544,8 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
 
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
-        
-        if(method == 'Piano Rateizzazione'){
+        System.debug('******:22 - ' + sb);
+        if(method == 'PianoRateizzazione'){
             HDT_QR_Case caseQr = new HDT_QR_Case();
             String accountId = (String)sb.get('Account__c');
             List<Case> listCase = caseQr.getCaseByAccountid(accountId,'Storno Rateizzazione');
