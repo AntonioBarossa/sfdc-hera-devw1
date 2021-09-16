@@ -42,6 +42,24 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         //ASSERTS
         System.assertEquals(null, result);
         
+        
+        //TESTING return null last switch else
+        List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest> inputs;
+        inputs = new List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest>();
+        
+        //TESTING
+        //manageDocuments
+        HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest input;
+        input = new HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest();
+        
+        input.method = 'Test';   //TODO: TESTARE TUTTE LE ALTERNATIVE
+        inputs.add(inputs);
+        
+        Object result = HDT_SRV_DocumentSelectedManager.execute(inputs);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
     }
     
     
@@ -111,12 +129,10 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest input;
         input = new HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest();
         
-        input.method = 'manageDocuments';   //TODO: TESTARE TUTTE LE ALTERNATIVE
+        input.method = 'manageDocuments';
         input.recordId = asf_1.Id;
         input.caseId = myCase.Id;
         input.createDocuments = true;
-        
-        //input.contesto = 'EC1Level';      //TODO: TESTARE ELSE
         
         inputs.add(input);
         
