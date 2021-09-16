@@ -187,6 +187,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         }
                     }
                 }
+                //@frpanico CodiceAteco
+                if(position.campo.equalsIgnoreCase('CODICE_ATECO'))
+                {
+                    newOrder.AtecoCode__c = position.valore;
+                }
+                //@frpanico AddizionaleRegionale
+                if(position.campo.equalsIgnoreCase('ADDIZIONALEREGIONALE'))
+                {
+                    try
+                    {
+                        newOrder.RegionalAdditional__c = Decimal.valueOf(position.valore);
+                    }
+                    catch(Exception e)
+                    {
+                        System.debug('Exception : ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    }
+                }
             }
         } catch(Exception e){
             System.debug('Arricchimento Dati fallito -> ' +e.getMessage());

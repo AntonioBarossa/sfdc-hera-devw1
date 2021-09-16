@@ -56,6 +56,11 @@
                 <default>false</default>
                 <label>Sportello Amministratori Condominio</label>
             </value>
+            <value>
+                <fullName>Tutti</fullName>
+                <default>false</default>
+                <label>Tutti</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
