@@ -11,6 +11,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -290,6 +291,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
 
         if (lastStepData != null) {
+
             for (String lastStepField : lastStepData.keySet()) {
                 system.debug('keltin - lastStepField: ' + lastStepField);
                 system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
@@ -299,6 +301,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.put(lastStepField, date.valueOf(dateString));
                 } else {
                     orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                }
+            }
+
+            if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
+                List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+                if (docsIvaAccise.isEmpty()) {
+                    throw new AuraHandledException('Caricare documento per iva e accise');
                 }
             }
         }
