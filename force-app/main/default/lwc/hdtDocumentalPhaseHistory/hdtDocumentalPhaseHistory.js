@@ -123,7 +123,12 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
                     if(resultParsed.result === '000'){
                         const base64 = resultParsed.base64;
                         this.showSpinner = false;
-                        this.showPdfFromBase64(base64);
+                        try{
+                            this.showPdfFromBase64(base64);
+                        }catch(error){
+                            console.log('errore nella conversione in PDF...');
+                            console.error(error);
+                        }
                     }else{
                         this.showSpinner = false;
                         this.showMessage('Attenzione',resultParsed.message,'error');
