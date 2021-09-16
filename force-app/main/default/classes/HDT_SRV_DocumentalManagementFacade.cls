@@ -10,7 +10,8 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String message;
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-        try{     
+        
+        try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             documentalResponse = HDT_SRV_DocumentalManagement.executeCalloutRequest(body,context);
             baseSixtyFour = documentalResponse.deliverPackageResponse.composedDocument;
