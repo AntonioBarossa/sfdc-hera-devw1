@@ -46,7 +46,7 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     
     
     //manageDocuments - EC1L
-    
+    //NB: VIENE TESTATO ANCHE getDocumentsSelected PER CONVENIENZA
     @isTest
     private static void executeTest_manageDocuments_EC1L() {
         
@@ -144,6 +144,18 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         System.assertEquals(caseResult.Id, result.caseRecord.Id);
         System.assertEquals('CONTRATTO', result.contractCode);
         System.assertEquals('Testo Dettaglio', result.tipoDocumento);
+        
+        //TESTING A CATENA DI getDocumentsSelected
+        List<SObject> resultGDS = HDT_SRV_DocumentSelectedManager.getDocumentsSelected(caseResult.Id);
+        
+        //ASSERTS
+        System.assertEquals(1, resultGDS.size());
+        
+        DocumentSelected__c docSel = (DocumentSelected__c) resultGDS[0];
+        System.assertEquals('Numero Bollettino', docSel.Bill__c);
+        System.assertEquals('Tipo Documento', docSel.Type__c);
+        System.assertEquals(10.5, docSel.DocumentResidue__c);
+        
         
     }
     
@@ -681,12 +693,6 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         System.assertEquals('Riferimento Fattura', result);
         
     }
-    
-    
-    //getDocumentsSelected
-    //TODO: TESTING
-    
-    
     
     
 }
