@@ -166,7 +166,7 @@
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Gestione Iva e Accise</rightValue>
+                        <rightValue>Iva e Accise da validare</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
@@ -366,7 +366,7 @@
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Gestione Iva e Accise</rightValue>
+                        <rightValue>Iva e Accise da validare</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
