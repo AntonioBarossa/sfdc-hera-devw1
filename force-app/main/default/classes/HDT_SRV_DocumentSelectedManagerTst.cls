@@ -25,26 +25,14 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     //TESTS
     
     //execute
-    //TODO: SPEZZARE METODO IN PIù METODI. TROPPO COMPLESSO TESTARE IN UN COLPO SOLO.
-    
-            
-        //TODO: REIMPIEGARE IN METODI FUTURI PER AUMENTO COPERTURA TEST
-        
-        /*
-        AccountStatementFilter__c asf_2 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
-        asf_2.Context__c = 'InstallmentsView';
-        
-        AccountStatementFilter__c asf_3 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
-        //asf_3.Context__c = 'InstallmentsView';
-        */
     
     //manageDocuments - EC1L
     
     @isTest
-    private static void executeTest() {
+    private static void executeTest_EC1L() {
         
         //DEBUG
-        String debugString = TEST_NAME + ' - executeTest';
+        String debugString = TEST_NAME + ' - executeTest_EC1L';
         System.debug(debugString);
         
         //SETUP
@@ -138,6 +126,142 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         System.assertEquals('CONTRATTO', result.contractCode);
         System.assertEquals('Testo Dettaglio', result.tipoDocumento);
         
+    }
+    
+    
+    //TODO: SPEZZARE METODO IN PIù METODI. TROPPO COMPLESSO TESTARE IN UN COLPO SOLO.
+    
+            
+        //TODO: REIMPIEGARE IN METODI FUTURI PER AUMENTO COPERTURA TEST
+        
+        /*
+        
+        AccountStatementFilter__c asf_3 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
+        //asf_3.Context__c = 'InstallmentsView';
+        
+        
+        
+                
+        //ASF 2 - manageDocumentsCreditViews
+        
+        
+        //ASF 3 - null
+        
+        
+        
+        
+        //manageDocumentsInformative
+        //inputs contesto - 'EC1Level','NoteVarIva' - else
+
+        
+        //manageDocumentsPaperless
+        
+        
+        
+        */
+    
+    
+    
+    //manageDocuments - InstallmentsView / EC7
+    
+    @isTest
+    private static void executeTest_InstallmentsView() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - executeTest_InstallmentsView';
+        System.debug(debugString);
+        
+        //SETUP
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
+        BillingProfile__c bpf = [SELECT Id, ContractAccountCode__c FROM BillingProfile__c];
+        
+        AccountStatementFilter__c asf_1 = new AccountStatementFilter__c();//FILTRO ESTRATTO CONTO
+        asf_1.Context__c = 'InstallmentsView';
+        
+        
+        //PREPARAZIONE REQUEST (INPUTS)
+        
+        Map<String,Object> secLevel = new Map<String,Object>();
+        //secLevel.put('contratto', '');    //response.contractCode = contractCode;
+        secLevel.put('testoDettaglio', 'Testo Dettaglio');
+        secLevel.put('tipoDocumento', 'VR');
+        secLevel.put('importo', 5.5);
+        
+        
+        Map<String,Object> priLevel = new Map<String,Object>();
+        
+        priLevel.put('dataEmissione', '');
+        priLevel.put('dataScadenza', '');
+        priLevel.put('numeroDocumento', 'Numero Documento');
+        priLevel.put('docOriginario', 'Numero Fattura');
+        priLevel.put('contratto', 'CONTRATTO');//response.contractCode = contractCode;
+        priLevel.put('contoContrattuale', bpf.ContractAccountCode__c);
+        priLevel.put('modalitaPagamento', 'Metodo Pagamento');
+        priLevel.put('residuo', 10.5);
+        priLevel.put('importo', 109.5);
+        priLevel.put('societa', 'HERA COMM');
+        priLevel.put('totaleCopertina', 20.5);
+        priLevel.put('numeroBollettino', 'Numero Bollettino');
+        priLevel.put('tipoDocumento', 'Tipo Documento');
+        priLevel.put('dilazione', 'Dilazione');
+        priLevel.put('modalitaPagamento', 'Modalità Pagamento');
+        priLevel.put('nome', true);
+        priLevel.put('nome', true);
+        
+        List<Object> secondoLivello = new List<Object>{secLevel};
+        priLevel.put('secondoLivelloInformativoF2', secondoLivello);
+        
+        //STRINGIFY
+        List<Object> myObj = new List<Object>{priLevel};
+        asf_1.DocumentSelected__c = JSON.serialize(myObj);
+        
+        insert asf_1;
+        
+        
+        
+        List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest> inputs;
+        inputs = new List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest>();
+        
+        //TESTING
+        //manageDocuments
+        HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest input;
+        input = new HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedRequest();
+        
+        input.method = 'manageDocuments';   //TODO: TESTARE TUTTE LE ALTERNATIVE
+        input.recordId = asf_1.Id;
+        input.caseId = myCase.Id;
+        input.createDocuments = true;
+        
+        //input.contesto = 'EC1Level';      //TODO: TESTARE ELSE
+        
+        inputs.add(input);
+        
+        //ASF 1 - manageDocuments
+        
+        
+        //TESTING
+        List<HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedResponse> resultList;
+        resultList = HDT_SRV_DocumentSelectedManager.execute(inputs);
+        HDT_SRV_DocumentSelectedManager.HDT_WRP_DocumentSelectedResponse result = resultList[0];
+        
+        
+        //RETRIEVING DATA
+        
+        //DocumentSelected__c
+        DocumentSelected__c docResult = [SELECT Id, Name FROM DocumentSelected__c];
+        
+        //CASE UPDATED
+        Case caseResult = [SELECT Id FROM Case];
+        
+        
+        //ASSERTS
+        System.assertEquals('Numero Fattura', docResult.Name);
+        
+        System.assertEquals(caseResult.Id, result.caseRecord.Id);
+        System.assertEquals('CONTRATTO', result.contractCode);
+        System.assertEquals(false, result.hasPartiteNonFatturate);
+        
         
         //ASF 2 - manageDocumentsCreditViews
         
@@ -155,11 +279,6 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         
         
     }
-    
-    
-    
-    //manageDocuments - InstallmentsView / EC7
-    
     
     
     
@@ -185,6 +304,9 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     
     //else (return null)
     
+    
+    //getRiferimentoFattura
+    //TODO: METTERLO TESTVISIBLE
     
     
 }

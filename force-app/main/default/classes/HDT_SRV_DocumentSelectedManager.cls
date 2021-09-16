@@ -156,9 +156,13 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     }
 
     private static List<HDT_WRP_DocumentSelectedResponse> manageDocumentsCreditViews(List<HDT_WRP_DocumentSelectedRequest> inputs){
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) return null;
+        
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) 
+            return null;
+        
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
+        
         try {
             HDT_QR_BillingProfile bpQueryHandler = new HDT_QR_BillingProfile();
             String queryString = 'SELECT Id,Context__c,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
