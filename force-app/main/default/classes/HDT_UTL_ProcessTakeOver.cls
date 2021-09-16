@@ -22,11 +22,8 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         if (String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
          
             Integer count=0;
-           // currentProcess.currentRequestItem.Data__c= currentProcess.currentRequestItem.Data__c.replace(',,',',null,' );
-
-            String typeField;
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
-                // Controllo campi required
+                //! Controllo campi required
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');
                 // }
@@ -222,8 +219,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
    private void makeContact(){
         currentProcess.currentPrimaryContact.DegreeOfStudies__c                 =  currentProcess.currentAccount.DegreeOfStudies__c                  ;
         currentProcess.currentPrimaryContact.CompanyOwner__c                    =  currentProcess.currentAccount.CompanyOwner__c                     ;
-        //currentProcess.currentPrimaryContact.Company__c                       =               
-        //currentProcess.currentPrimaryContact.AccountId                        =               
         currentProcess.currentPrimaryContact.LastName                           =  currentProcess.currentAccount.LastName__c                         ;
         currentProcess.currentPrimaryContact.Gender__c                          =  currentProcess.currentAccount.Gender__c                           ;
         currentProcess.currentPrimaryContact.FirstName                          =  currentProcess.currentAccount.FirstName__c                        ;
