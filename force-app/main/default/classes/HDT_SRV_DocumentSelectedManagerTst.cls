@@ -639,7 +639,7 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
         Date result = HDT_SRV_DocumentSelectedManager.formatDate(inputDate);
         
         //ASSERTS
-        System.assertEquals(Date.valueOf(2020+'-'+09+'-'+10), result);
+        System.assertEquals(Date.valueOf(2021+'-'+09+'-'+10), result);
         
         
     }
