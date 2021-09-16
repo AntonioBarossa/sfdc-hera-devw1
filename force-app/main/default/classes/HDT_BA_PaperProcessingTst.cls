@@ -1,8 +1,8 @@
 /**
  * @author Fabricio Petkevicius Nunes (fabricio.nunes@engdb.com.br)
- * @date 08/09/2021
+ * @date 15/09/2021
  * @description HDT_BA_PaperProcessing Test Classes
- * @history Luis Bispo – 08/09/2021 – Created class
+ * @history Fabricio Petkevicius Nunes – 15/09/2021 – Created class
  */
 @isTest
 public with sharing class HDT_BA_PaperProcessingTst{
@@ -53,14 +53,18 @@ public with sharing class HDT_BA_PaperProcessingTst{
 			                                     WHERE Status__c='Bozza'
 			                                     LIMIT 1];
 
-            HDT_BA_PaperProcessing bc=new HDT_BA_PaperProcessing(tPaperProcessing.Id);
+			HDT_BA_PaperProcessing bc=new HDT_BA_PaperProcessing(tPaperProcessing.Id);
 
 			DataBase.executeBatch(bc);
 
 			Test.stopTest();
 
-			System.assert(bc!=null);
-			System.assertNotEquals(null, bc, 'HDT_BA_PaperProcessing is null');
+			ContentDocumentLink tDocLink=[SELECT Id, LinkedEntityId
+			                              FROM ContentDocumentLink
+			                              WHERE LinkedEntityId=:tPaperProcessing.Id];
+
+			System.assertEquals(true, tDocLink.Id!=null, 'ContentDocumentLink not created');
+			System.assertNotEquals(false, tDocLink.Id!=null);
 		}
 	}
 }
