@@ -133,52 +133,22 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
      */
     @AuraEnabled
     public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
-       System.debug('getExternalCustomer');
-        
+        System.debug('getExternalCustomer');
+        //>>>START marco.arci@webresults.it Code Review
+        Map<String,String> toQuery = new Map<String,String>();
         List <HDT_LC_Customer> wrapperToreturn = new List <HDT_LC_Customer>();
  
-        if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
+        if (!String.isBlank(searchKey) && searchKey.length() > 5) {
 
             List<String> marcaturePermesse = getMarcatureFromRole();
             // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
             if(marcaturePermesse == null){
                 return wrapperToreturn;
             }
-            String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
-            if(filterby=='Codice Fiscale'){
-                queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
-            }else if(filterby=='Partita Iva'){
-                queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
-            }else if(filterby=='Codice Cliente'){
-                queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
-            }     
-            // filtro marcatura
-            // queryStoricizzati += getQueryMarcaturaString(marcaturePermesse, 'SiebelCustomer__x');
-            if (marcaturePermesse.size() > 0){
-                queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
-            }
-            if (sortBy != null && sortDirection != null ) {
-                queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
-            }
-            List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) ); 
-
-            String queryNonStoricizzati = 'select Id, FirstName__c,LastName__c  , FiscalCode__c ,VATNumber__c, CustomerCode__c FROM Account ';   
-            if(filterby=='Codice Fiscale'){
-                queryNonStoricizzati +=' WHERE FiscalCode__c = :searchKey';
-            }else if(filterby=='Partita Iva'){
-                queryNonStoricizzati += ' WHERE VATNumber__c = :searchKey';
-            }else if(filterby=='Codice Cliente'){
-                queryNonStoricizzati += ' WHERE CustomerCode__c = :searchKey';
-            }     
-            // filtro marcatura
-            if (marcaturePermesse.size() > 0){
-                queryNonStoricizzati += ' AND CustomerMarking__c = :marcaturePermesse ';
-            }
-            if (sortBy != null && sortDirection != null ) {
-                queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
-            } 
-            List<Account> listAccount =  Database.query( String.escapeSingleQuotes(queryNonStoricizzati) );
-          
+            toQuery = getExternalCustomerMapQuery(sortBy,sortDirection,filterby,marcaturePermesse);
+            List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(toQuery.get('listSiebelCustomer')) ); 
+            List<Account> listAccount =  Database.query( String.escapeSingleQuotes(toQuery.get('listAccount')) );
+            //>>>END marco.arci@webresults.it Code Review
 
             for(SiebelCustomer__x siebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
@@ -211,4 +181,75 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         System.debug('wrapperToreturn: '+wrapperToreturn);
         return wrapperToreturn;
     }
+
+    //>>>START marco.arci@webresults.it Code Review
+    /**
+     * @author Marco Arci (marco.arci@webresults.it) Code Review
+     * @description HDT_LC_StoricizzazioneCliente.getExternalCustomerMapQuery
+     * param1 sortBy - String
+     * param2 sortDirection - String
+     * param3 filterby - String
+     * param4 marcaturePermesse - List<String>
+     * @return Map<string,string>
+     */
+    public static Map<string,string> getExternalCustomerMapQuery(String sortBy, String sortDirection, String filterby, List<String> marcaturePermesse) {
+        Map<String,String> toQuery = new Map<String,String>();
+        String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
+        /*
+        if(filterby=='Codice Fiscale'){
+            queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
+        }else if(filterby=='Partita Iva'){
+            queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
+        }else if(filterby=='Codice Cliente'){
+            queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
+        }  
+        */   
+        queryStoricizzati += (filterby=='Codice Fiscale') ? ' WHERE TAX_IDEN_NUM__c = :searchKey' : (
+                                (filterby=='Partita Iva') ? ' WHERE VAT_REGN_NUM__c = :searchKey' : (
+                                (filterby=='Codice Cliente') ? ' WHERE OU_NUM__c = :searchKey' : ''));
+        // filtro marcatura
+        // queryStoricizzati += getQueryMarcaturaString(marcaturePermesse, 'SiebelCustomer__x');
+        /*
+        if (marcaturePermesse.size() > 0){
+            queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
+        }
+        if (sortBy != null && sortDirection != null ) {
+            queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
+        }
+        */
+        queryStoricizzati += (marcaturePermesse.size() > 0) ? ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ' : '' ;
+        queryStoricizzati += (sortBy != null && sortDirection != null ) ? ' ORDER BY ' + sortBy + ' ' + sortDirection : '' ;
+
+        toQuery.put('listSiebelCustomer',queryStoricizzati);
+
+
+        String queryNonStoricizzati = 'select Id, FirstName__c,LastName__c  , FiscalCode__c ,VATNumber__c, CustomerCode__c FROM Account ';   
+        /*
+        if(filterby=='Codice Fiscale'){
+            queryNonStoricizzati +=' WHERE FiscalCode__c = :searchKey';
+        }else if(filterby=='Partita Iva'){
+            queryNonStoricizzati += ' WHERE VATNumber__c = :searchKey';
+        }else if(filterby=='Codice Cliente'){
+            queryNonStoricizzati += ' WHERE CustomerCode__c = :searchKey';
+        }     
+        */
+        queryNonStoricizzati += (filterby=='Codice Fiscale') ? ' WHERE FiscalCode__c = :searchKey' : (
+                                (filterby=='Partita Iva') ? ' WHERE VATNumber__c = :searchKey' : (
+                                (filterby=='Codice Cliente') ? ' WHERE CustomerCode__c = :searchKey' : ''));
+        // filtro marcatura2
+        /*
+        if (marcaturePermesse.size() > 0){
+            queryNonStoricizzati += ' AND CustomerMarking__c = :marcaturePermesse ';
+        }
+        if (sortBy != null && sortDirection != null ) {
+            queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
+        } 
+        */
+        queryNonStoricizzati += (marcaturePermesse.size() > 0) ? ' AND CustomerMarking__c = :marcaturePermesse ' : '';
+        queryNonStoricizzati += (sortBy != null && sortDirection != null ) ? ' ORDER BY ' + sortBy + ' ' + sortDirection : '';
+        
+        toQuery.put('listAccount',queryNonStoricizzati);
+        return toQuery;
+    }
+    //>>>END marco.arci@webresults.it Code Review
 }
