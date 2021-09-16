@@ -70,13 +70,14 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         //Documento Docstructure
         Document myDocByContext = new Document();
         myDocByContext.name = 'DocumentazioneAnticipata';
-        myDocByContext.Body = Blob.valueOf(docStructure);
+        myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocByContext;
         
         //Documento Driver3
-        Document myDocByContext = new Document();
-        myDocByContext.name = 'Driver3';
-        myDocByContext.Body = Blob.valueOf(docStructure);//TODO: POSSIBILE SI DEBBA SCORPORARE IN UN SECONDO ITEM
-        
+        Document myDocDriver3 = new Document();
+        myDocDriver3.name = 'Driver3';
+        myDocDriver3.Body = Blob.valueOf(JSON.serialize(docStructure));//TODO: POSSIBILE SI DEBBA SCORPORARE IN UN SECONDO ITEM
+        insert myDocDriver3;
         
         
         //PREPARAZIONE ARGOMENTI
