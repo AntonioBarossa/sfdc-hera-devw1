@@ -21,7 +21,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         String selectQuery = '';
 
         if(objRes.isAccessible()){
-            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c ' + queryString;
+            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c ' + queryString;
             System.debug('>>> queryString: ' + selectQuery);
 
             prodList = Database.query(selectQuery);
@@ -47,6 +47,10 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
         return productOptionList;
 
+    }
+
+    public static Id getCustomNotificationTypeId(){
+        return [SELECT Id FROM CUstomNotificationType LIMIT 1].Id;
     }
 
     //public static void getJobStatus(){

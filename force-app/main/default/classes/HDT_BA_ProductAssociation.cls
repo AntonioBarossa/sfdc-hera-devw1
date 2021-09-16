@@ -5,12 +5,14 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
     public String batchType = '';
     public List<String> idList;
     public String filterString;
+    public Integer errorCounter;
 
     public HDT_BA_ProductAssociation(String type, SBQQ__ProductOption__c prodOptToClone, List<String> productIdList, String filter){
         productOptionToClone = prodOptToClone;
         idList = productIdList;
         batchType = type;
         filterString = filter;
+        errorCounter = 0;
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
@@ -59,6 +61,7 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
             if(errorData.size() > 0){
                 insertResult.success = false;
                 insertResult.message = 'Error during product option insert';
+                errorCounter += errorData.size();
             } else {
                 insertResult.success = true;
                 //insertResult.message = 'No product option record found';
@@ -68,7 +71,20 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
     }
 
     public void finish(Database.BatchableContext bc){
-        //METHOD TO SEND EMAIL NOTIFICATION
+        ////METHOD TO SEND EMAIL NOTIFICATION
+        HDT_WRP_ProductAssociation.HDT_WRP_Notification notification;
+        notification = new HDT_WRP_ProductAssociation.HDT_WRP_Notification();
+        notification.targetId = productOptionToClone.SBQQ__OptionalSKU__c;
+        notification.userId = Userinfo.getUserId();
+        notification.title = Label.ProdOptAssociationNotification_Title;
+
+        if(errorCounter > 0){
+            notification.body = 'Attenzione, si sono verificati [' + String.valueOf(errorCounter) + '] errori';
+        } else {
+            notification.body = Label.ProdOptAssociationNotification_Body;
+        }
+        
+        HDT_UTL_ProductAssociation.sendCustomNotification(notification);
     }
 
 }

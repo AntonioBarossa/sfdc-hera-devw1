@@ -79,27 +79,30 @@ public inherited sharing class HDT_UTL_ProductAssociation {
             when 'select' {
                 //run batch for selected record -> recordList > 0
 
-                if(recordList.size() < 1){
+                if(recordList.size() < 10){
                     // NO BATCH NEEDED, YOU CAN UPDATE HERE
                     HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertReult = HDT_SRV_ProductAssociation.associateProductOption(productOptionToClone, recordList);
 
                     if(insertReult.success){
-                        respRunBatchObj.message = 'L\'associazione è stata eseguita correttamente';
+                        respRunBatchObj.success = true;
+                        respRunBatchObj.message = Label.ProdOptAssociationSuccessCreate;
                     } else {
+                        respRunBatchObj.success = false;
                         respRunBatchObj.message = insertReult.message;
                     }
                     
                 } else {
                     HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, recordList, '');
                     Id batchId = Database.executeBatch(createAssociationBatch);
-                    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+                    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
+                    respRunBatchObj.success = true;
                 }
             }	
             //when 'all' {
             //    //run batch for all Product2 record -> recordList == 0
             //    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), '');
             //    Id batchId = Database.executeBatch(createAssociationBatch);
-            //    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            //    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
             //}
             when 'filter' {
                 //run batch for all Product2 using where condition
@@ -109,11 +112,10 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                 
                 HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), queryString);
                 Id batchId = Database.executeBatch(createAssociationBatch);
-                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+                respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
+                respRunBatchObj.success = true;
             }
         }
-
-        respRunBatchObj.success = true;
 
         return respRunBatchObj;
     }
@@ -128,7 +130,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
             when 'select' {
                 //run batch for selected record -> recordList > 0
 
-                if(recordList.size() < 2){
+                if(recordList.size() < 10){
                     // NO BATCH NEEDED, YOU CAN DELETE HERE
                     List<SBQQ__ProductOption__c> productOptionToDelete;
                     productOptionToDelete = HDT_QR_ProductAssociation.getProductOptionByOptionalSkuAndConfiguredSku(productOptionToDelete, optionalSkuId, recordList);
@@ -138,13 +140,19 @@ public inherited sharing class HDT_UTL_ProductAssociation {
              
                     if(objRes.isDeletable ()){
                         try{
-
                             List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
                             errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
 
-                            respRunBatchObj.message = 'L\'associazione è stata eliminata correttamente';
+                            if(errorData.size() > 0){
+                                respRunBatchObj.success = false;
+                                respRunBatchObj.message = 'Si sono verificati [' + String.valueOf(errorData.size()) + '] errori.';
+                            } else {
+                                respRunBatchObj.success = true;
+                                respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
+                            }
 
                         } catch(Exception ex){
+                            respRunBatchObj.success = false;
                             respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
                         }
                         
@@ -153,14 +161,15 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                 } else {
                     HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, recordList, '');
                     Id batchId = Database.executeBatch(deleteAssociationBatch);
-                    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+                    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
+                    respRunBatchObj.success = true;
                 }
             }	
             //when 'all' {
             //    //run batch for all Product2 record -> recordList == 0
             //    HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), '');
             //    Id batchId = Database.executeBatch(deleteAssociationBatch);
-            //    respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+            //    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
             //}
             when 'filter' {
                 //run batch for all Product2 using where condition
@@ -170,13 +179,29 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
                 HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), queryString);
                 Id batchId = Database.executeBatch(deleteAssociationBatch);
-                respRunBatchObj.message = 'Il batch è stato lanciato correttamente';
+                respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
+                respRunBatchObj.success = true;
             }
         }
 
-        respRunBatchObj.success = true;
-
         return respRunBatchObj;
+    }
+
+    public static void sendCustomNotification(HDT_WRP_ProductAssociation.HDT_WRP_Notification notificationWrp){
+        //Userinfo.getUserId()
+        try{
+            Id typeId = HDT_QR_ProductAssociation.getCustomNotificationTypeId();
+            Messaging.CustomNotification notification = new Messaging.CustomNotification();
+            notification.setTitle(notificationWrp.title);
+            notification.setBody(notificationWrp.body);
+            notification.setSenderId(notificationWrp.userId);
+            notification.setNotificationTypeId(typeId);
+            notification.setTargetId(notificationWrp.targetId);
+            notification.send(new Set<String> {notificationWrp.userId});
+        } catch(Exception ex){
+            System.debug('>>> somethig goes wrong with comunication: ' + ex.getMessage() + ' [' + String.valueOf(ex.getLineNumber()) + ']');
+        }
+
     }
 
     public static List<String> getFamilyList(){

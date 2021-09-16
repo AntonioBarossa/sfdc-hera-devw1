@@ -3,10 +3,28 @@ import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProduc
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+//Custom labels
+import cProdOptAssociationCreateTitle from '@salesforce/label/c.ProdOptAssociationCreateTitle';
+import cProdOptAssociationDeleteTitle from '@salesforce/label/c.ProdOptAssociationDeleteTitle';
+import cProdOptAssociationDeleteSection from '@salesforce/label/c.ProdOptAssociationDeleteSection';
+import cProdOptAssociationCreateSection from '@salesforce/label/c.ProdOptAssociationCreateSection';
+import cProdOptAssociationConfirmSelection from '@salesforce/label/c.ProdOptAssociationConfirmSelection';
+import cProdOptAssociationClose from '@salesforce/label/c.ProdOptAssociationClose';
+import cProdOptAssociationCloseDeleteBody from '@salesforce/label/c.ProdOptAssociationCloseDeleteBody';
+import cProdOptAssociationCloseCreateBody from '@salesforce/label/c.ProdOptAssociationCloseCreateBody';
+import cProdOptAssociationConfimSelectBody from '@salesforce/label/c.ProdOptAssociationConfimSelectBody';
+import cProdOptAssociationConfirmFilterTitle from '@salesforce/label/c.ProdOptAssociationConfirmFilterTitle';
+import cProdOptAssociationConfirmFilterDeleteBody from '@salesforce/label/c.ProdOptAssociationConfirmFilterDeleteBody';
+import cProdOptAssociationConfirmFilterCreateBody from '@salesforce/label/c.ProdOptAssociationConfirmFilterCreateBody';
+import cProdOptAssociationConfimSelectBodyDelete from '@salesforce/label/c.ProdOptAssociationConfimSelectBodyDelete';
+import cProdOptAssociationResultText from '@salesforce/label/c.ProdOptAssociationResultText';
+import cProdOptAssociationNoResultText from '@salesforce/label/c.ProdOptAssociationNoResultText';
+
 const columns = [
     { label: 'Codice prodotto', fieldName: 'ProductCode' },
     { label: 'Versione', fieldName: 'Version__c' },
     { label: 'Nome Prodotto', fieldName: 'Name' },
+    { label: 'Servizio', fieldName: 'Service__c' },
     { label: 'Descrizione prodotto', fieldName: 'DescriptionSAP__c' },
     { label: 'Famiglia di prodotti', fieldName: 'Family'},
     { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'}
@@ -28,13 +46,13 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     @track selectedIdList = [];
 
     label = {
-        confirmSelectedTitle: '',
+        confirmSelectedTitle: cProdOptAssociationConfirmSelection,
         confirmSelectedBody: '',
-        closeTitle: '',
+        closeTitle: cProdOptAssociationClose,
         closeBody: '',
-        confirmAllTitle: '',
-        confirmAllBody: '',
-        confirmFilterTitle: '',
+        //confirmAllTitle: '',
+        //confirmAllBody: '',
+        confirmFilterTitle: cProdOptAssociationConfirmFilterTitle,
         confirmFilterBody: ''
     };
     illustrationMessage;
@@ -76,33 +94,23 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     connectedCallback(){
         console.log('>>> PRODUCT OPTION OBJ: ' + this.productOptionObj);
 
-        this.illustrationMessage = 'I risultati verranno mostrati qui';
+        this.illustrationMessage = cProdOptAssociationResultText;
         this.page = 1;
 
         switch (this.dmlContext) {
             case 'delete':
-                this.mainTitle = 'Rimozione Massiva del prodotto opzione';
-                this.sectionTitle = 'Da questi elementi puoi eliminare il prodotto opzione';
-                this.label.confirmSelectedTitle = 'Conferma i prodotti selezionati';
-                this.label.confirmSelectedBody = 'Attenzione! il prodotto opzione verrà rimosso da tutti i prodotti selezionati.';
-                this.label.closeTitle = 'Chiudi la ricerca';
-                this.label.closeBody = 'Attenzione! Vuoi annullare la rimozione dell\'opzione prodotto?';
-                this.label.confirmAllTitle = 'Conferma tutti prodotti a sistema';
-                this.label.confirmAllBody = 'Attenzione! In questo modo l\'opzione verrà eliminata da tutti i prodotti a catalogo, vuoi procedere?';
-                this.label.confirmFilterTitle = 'Conferma tutti prodotti ottenuti dal filtro';
-                this.label.confirmFilterBody = 'Attenzione! In questo modo l\'opzione verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?';
+                this.mainTitle = cProdOptAssociationDeleteTitle;
+                this.sectionTitle = cProdOptAssociationDeleteSection;
+                this.label.confirmSelectedBody = cProdOptAssociationConfimSelectBodyDelete;
+                this.label.closeBody = cProdOptAssociationCloseDeleteBody;
+                this.label.confirmFilterBody = cProdOptAssociationConfirmFilterDeleteBody;
                 break;
             case 'insert':
-                this.mainTitle = 'Associazione Massiva del prodotto opzione';
-                this.sectionTitle = 'Su questi elementi puoi associare il prodotto opzione';
-                this.label.confirmSelectedTitle = 'Conferma i prodotti selezionati';
-                this.label.confirmSelectedBody = 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.';
-                this.label.closeTitle = 'Chiudi la ricerca';
-                this.label.closeBody = 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?';
-                this.label.confirmAllTitle = 'Conferma tutti prodotti a sistema';
-                this.label.confirmAllBody = 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?';
-                this.label.confirmFilterTitle = 'Conferma tutti prodotti ottenuti dal filtro';
-                this.label.confirmFilterBody = 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?';
+                this.mainTitle = cProdOptAssociationCreateTitle;
+                this.sectionTitle = cProdOptAssociationCreateSection;
+                this.label.confirmSelectedBody = cProdOptAssociationConfimSelectBody;
+                this.label.closeBody = cProdOptAssociationCloseCreateBody;
+                this.label.confirmFilterBody = cProdOptAssociationConfirmFilterCreateBody;
         }
 
     }
@@ -146,8 +154,13 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
             if(result.success){
 
+                console.log('>>> RESULT SUCCESS');
+
                 if(result.prodList.length===0){
-                    this.illustrationMessage = 'Non è stato trovato nessun prodotto';
+                    console.log('>>> NO DATA');
+                    this.data = [];
+                    this.showResultTable = false;
+                    this.illustrationMessage = cProdOptAssociationNoResultText;
                 } else {
                     console.log('>>> RECORD RETRIEVED: ' + result.prodList.length);
                     this.data = result.prodList;

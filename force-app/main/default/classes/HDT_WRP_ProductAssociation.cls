@@ -22,4 +22,11 @@ public inherited sharing class HDT_WRP_ProductAssociation {
         @AuraEnabled public String message;
     }
 
+    public class HDT_WRP_Notification {
+        public String targetId;
+        public Id userId;
+        public String body;
+        public String title; 
+    }
+
 }
