@@ -2162,4 +2162,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return blacklistList;
 	}
+
+	public static List<ComfortQualityCall__c> createComfortQualityCall (Integer amount, Boolean doInsert) {
+
+		List<ComfortQualityCall__c> comfQualityCallList = new List<ComfortQualityCall__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ComfortQualityCall__c comQualityCall = new ComfortQualityCall__c(
+				ComfortDocSendingChannel__c='Posta Cartacea'
+			);
+
+			comfQualityCallList.add(comQualityCall);
+		}
+
+		if (doInsert){
+
+			insert comfQualityCallList;
+		}
+
+		return comfQualityCallList;
+	}
 }
