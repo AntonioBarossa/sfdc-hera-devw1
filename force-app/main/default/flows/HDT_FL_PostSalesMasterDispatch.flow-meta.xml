@@ -2792,7 +2792,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_RT_Annullamento.Id</elementReference>
+                <elementReference>Get_RT_Annullamento_0.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -7591,6 +7591,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_0</name>
@@ -7640,6 +7644,10 @@
         <outputAssignments>
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -7691,6 +7699,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_0_0_0</name>
@@ -7740,6 +7752,10 @@
         <outputAssignments>
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -7791,6 +7807,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_Autolettura_0</name>
@@ -7840,6 +7860,10 @@
         <outputAssignments>
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -7891,6 +7915,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_Fatturazione_0_0</name>
@@ -7940,6 +7968,10 @@
         <outputAssignments>
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -7991,6 +8023,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_Notifiche</name>
@@ -8040,6 +8076,10 @@
         <outputAssignments>
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -8091,6 +8131,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0</name>
@@ -8141,6 +8185,10 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0_0</name>
@@ -8190,6 +8238,10 @@
         <outputAssignments>
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
         </outputAssignments>
     </subflows>
     <subflows>

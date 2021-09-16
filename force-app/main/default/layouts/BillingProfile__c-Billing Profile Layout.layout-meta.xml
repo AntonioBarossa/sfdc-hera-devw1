@@ -55,6 +55,18 @@
                 <behavior>Edit</behavior>
                 <field>InvoicingStreetCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ElectronicInvoiceCertifiedEmailAddress__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AccountClassCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IBAN__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -109,6 +121,10 @@
                 <behavior>Edit</behavior>
                 <field>IbanCodeNumber__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -137,6 +153,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>InvoicingCityCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CareOf__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

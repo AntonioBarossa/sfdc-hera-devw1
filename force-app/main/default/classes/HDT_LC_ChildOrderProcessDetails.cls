@@ -57,52 +57,62 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
             Order oldOrder = orderQr.getRecordById(order.Id);
-            //Commentato finche non viene creato campo a DM
-            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true){
-                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
+            //@frpanico check "Cambio contatore non registrato"
+            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
+            {
+                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
+                {                
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 }
-            } else if(order.EffectiveDate__c != null){
-
-                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
-
-                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva'))){
-
+            }
+            //@frpanico check "Tipo Voltura"
+            if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
+            {
+                throw new AuraHandledException('Valorizzare campi obbligatori');
+            }
+            //@frpanico check "Data Decorrenza"
+            if(order.EffectiveDate__c != null)
+            {
+                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
+                {
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
+                    {
                         throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-
-                    } else{
-                        
+                    }
+                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 10, 31))
+                    {
+                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/10/2015');
+                    }
+                    else
+                    {    
                         order.RetroactiveDate__c = order.EffectiveDate__c;
                         order.Subprocess__c = 'Retroattiva';
-
                     }
-                } else {
-
+                } 
+                else 
+                {
                     order.RetroactiveDate__c = null;
                     order.Subprocess__c = 'Standard';
-
                 }
-
-            } else if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false){
-
+            } 
+            //@frpanico check "Voltura con Autolettura"
+            if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
+            {
                 order.Subprocess__c = 'Con Autolettura';
-
-            } else if(order.VoltureType__c != null && (order.VoltureType__c.containsIgnoreCase('In Continuità') || order.VoltureType__c.containsIgnoreCase('Recupero'))
-                && oldOrder.ServicePoint__r.CommoditySector__c.containsIgnoreCase('Energia Elettrica')){
-                    throw new AuraHandledException('Impossibile selezionare il valore \"' + order.VoltureType__c + '\"');
-            } //else if((order.VoltureType__c == null || order.VoltureType__c == '') && (order.Step__c == 4 || order.Step__c == 8)){
-            //         throw new AuraHandledException('Valorizzare Campi Obbligatori');
-            // }
-
-            if(readingDate != null && (isReading != null && isReading == true)){
-
+            }
+            //@frpanico valorizzazione "Data Lettura"
+            if(readingDate != null && (isReading != null && isReading == true))
+            {
                 order.ReadingCustomerDate__c = readingDate;
-
-            }if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c)){
-                throw new AuraHandledException('Valorizzare campi obbligatori');
             }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
+
+        //02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni
+        Order orderFull = orderQr.getRecordById(order.Id);
+        if (orderFull.IsCloned__c && orderFull.Phase__c=='Bozza') {
+            order.Phase__c = 'Documentazione Validata';
+        }
 
         exeChecks(order);
 

@@ -71,22 +71,37 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String context = (String) formParams.get('Contesto');
         String companyDesc = '';
         String city = '';
+        String distributorName = '';
+        String commodity = '';
         switch on context {
             when 'Order' {
-                companyDesc = 'Hera Comm S.p.A.';
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
                 city = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyCity__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                distributorName = HDT_UTL_DocumentalManagement.getValue('Order', 'DistributorFormula__c', 0, inputs, formParams);
+                commodity = HDT_UTL_DocumentalManagement.getValue('Order', 'CommodityFormula__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    companyDesc = 'Hera Comm S.p.A.';
+                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                    if (distributorList != null && distributorList.size()>0) {
+                        companyDesc = 'Hera Comm S.p.A.';
+                    } else {
+                        companyDesc = 'Hera Comm Marche';
+                    }
                 }
             }
             when 'Case'{
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
                 city = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyCity__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorName__c', 0, inputs, formParams);
+                commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    companyDesc = 'Hera Comm S.p.A.';
+                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                    if (distributorList != null && distributorList.size()>0) {
+                        companyDesc = 'Hera Comm S.p.A.';
+                    } else {
+                        companyDesc = 'Hera Comm Marche';
+                    }
                 }
             }
             when 'Account'{
@@ -754,6 +769,31 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
         }
 
+        // Info allegati al reclamo, se presenti.
+        HDT_QR_CaseValidations docQueryHandler = new HDT_QR_CaseValidations();
+        List<ContentDocumentLink> docList = docQueryHandler.getDocumentByCaseId(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', 0, inputs, formParams));
+        if (!docList.isEmpty()) {
+            payloadSection += emptyLine;
+            String[] record = new List<String>();
+            record.add('00310');
+            record.add('120');
+            record.add('Insieme a questa lettera le inviamo i documenti indicati qui sotto:');
+            record.add(endLine);
+            payloadSection += String.join(record, div);
+
+            for (Integer i = 0; i < docList.size(); i++) {
+                ContentDocumentLink doc = docList[0];
+                if (doc.ContentDocument != null) {
+                    record = new List<String>();
+                    record.add('00310');
+                    record.add('120');
+                    record.add(String.valueOf(i + 1) + ') ' + doc.ContentDocument.title);
+                    record.add(endLine);
+                    payloadSection += String.join(record, div);
+                }
+            }
+        }
+
         // Info sulle date ricezione del reclamo (incluse sempre nella sezione 310|120)
         for (Integer i = 0; i < 4; i++) {
             payloadSection += emptyLine;
@@ -777,7 +817,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Boolean indemnityConfirmed = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityConfirmed__c', 0, inputs, formParams));
             String indemnityMotivation = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityMotivation__c', 0, inputs, formParams);
             String indemnityDueSendResponse = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueSendResponse__c', 0, inputs, formParams);
+            Decimal indemnityDueSendResponseDecimal = String.isNotBlank(indemnityDueSendResponse) ? Decimal.valueOf(indemnityDueSendResponse) : 0;
             String indemnityDueBillingCorrection = HDT_UTL_DocumentalManagement.getValue('Case', 'IndemnityDueBilllingCorrection__c', 0, inputs, formParams);
+            Decimal indemnityDueBillingCorrectionDecimal = String.isNotBlank(indemnityDueBillingCorrection) ? Decimal.valueOf(indemnityDueBillingCorrection) : 0;
             String correctionRight = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionRight__c', 0, inputs, formParams);
             String correctionDocumentEmissionDate = HDT_UTL_DocumentalManagement.getValue('Case', 'CorrectionDocumentEmissionDay__c', 0, inputs, formParams);
             Boolean expiredCorrection = indemnityDueBillingCorrection != null;
@@ -786,16 +828,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add('00310');
             record.add('130');
             // Calcolo tipologia di indennizzo attesa da Engage1.
-            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate);
+            String boxType = calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponseDecimal);
             if (String.isNotBlank(boxType)) {
                 record.add(boxType);
                 // Importo indennizzo, se necessario.
-                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0) {
+                if ((boxType == '1' || boxType == '5') && indemnityDueSendResponseDecimal > 0) {
                     record.add(indemnityDueSendResponse);
-                } else if (boxType == '2' && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                } else if ((boxType == '2' || boxType == '8') && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(''); // campo vuoto per l'indemnityDueSendResponse, l'indemnityDueBillingCorrection deve stare in seconda posizione.
                     record.add(indemnityDueBillingCorrection);
-                } else if (boxType == '4' && indemnityDueSendResponse != null && Decimal.valueOf(indemnityDueSendResponse) > 0 && indemnityDueBillingCorrection != null && Decimal.valueOf(indemnityDueBillingCorrection) > 0) {
+                } else if (boxType == '4' && indemnityDueSendResponse != null && indemnityDueSendResponseDecimal > 0 && indemnityDueBillingCorrectionDecimal > 0) {
                     record.add(indemnityDueSendResponse);
                     record.add(indemnityDueBillingCorrection);
                 }
@@ -808,7 +850,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         return payloadSection;
     }
 
-    public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate) {
+    public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate, Decimal indemnityDueSendResponse) {
         String boxType = '';
 
         // Emissione rettifica non prevista, indennizzo per solo ritardo nella risposta
@@ -819,8 +861,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && !expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
             boxType = '1';
         }
+        // Emissione rettifica prevista e scaduta, indennizzo per sola rettifica
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate) && indemnityDueSendResponse == 0) {
+            boxType = '2';
+        }
         // Emissione rettifica prevista e scaduta, indennizzi per ritardo nella risposta e nella rettifica
-        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate)) {
+        else if (complaintClassification == 'Reclamo Scritto' && indemnityConfirmed && correctionRight == 'Si' && expiredCorrection && String.isNotBlank(correctionDocumentEmissionDate) && indemnityDueSendResponse > 0) {
             boxType = '4';
         }
         // Emissione rettifica prevista ma data emissione ancora non presente e ho superato lo SLA, indennizzo per solo ritardo nella risposta + avviso eventuale indennizzo rettifica
@@ -837,7 +883,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         // Emissione rettifica prevista e scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && expiredCorrection) {
-            boxType = '2';
+            boxType = '8';
         }
         // Emissione rettifica prevista ma non scaduta
         else if (complaintClassification == 'Rettifica Doppia Fatturazione' && correctionRight == 'Si' && String.isNotBlank(correctionDocumentEmissionDate) && !expiredCorrection) {
@@ -849,6 +895,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             boxType = '6';
         }
 
+        System.debug('calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
+        System.debug('calculateIndemnityBox boxType output: ' + boxType);
         return boxType;
     }
 

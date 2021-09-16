@@ -324,7 +324,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         //EVERIS: Aggiunta variabile Order
         next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
-            if(data != ''){
+            if(data != '' && data != this.order.OrderNumber){
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Processo incompatibile!',
@@ -454,7 +454,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         } else {
             console.log('enter with value');
             this.options = [];
-            this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
+            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? "Prima Attivazione" : this.order.ProcessType__c;
+            this.options.push({label: label, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
             this.checkCompatibilityProcess();
@@ -528,13 +529,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
                     return `${testoFinale}\n${elem}`;
                 }, result.errorDetails[0].code);
-                let toastErrorMessage = new ShowToastEvent({
+                console.log(message);
+                /*let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
                     message: message,
                     variant: 'warning', 
                     mode:'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(toastErrorMessage);*/
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
             

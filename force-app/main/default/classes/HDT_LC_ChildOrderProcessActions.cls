@@ -194,6 +194,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
             //EVERIS: Aggiunto caso Voltura
             when 'HDT_RT_Voltura'{
+                System.debug('Order ' + order);
+                HDT_QR_Order orderQr = new HDT_QR_Order();
+                HDT_QR_Contract contractQr = new HDT_QR_Contract();
+                Order currentOrder = orderQr.getRecordById(order.Id);
+                Contract contractReference = new Contract();
+                try
+                {
+                    contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                }
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -221,6 +234,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
+                //@frpanico logica if reseller --> Esportazione VS Siebel
+                if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                {
+                    orderToUpdate.Phase__c = 'Esportazione VS Siebel';
+                }
+                //@frpanico TODO: calcolo logiche Aliquote/Addiz.
+                
             }
         }
         
@@ -271,13 +291,24 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         if (lastStepData != null) {
             for (String lastStepField : lastStepData.keySet()) {
-                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                system.debug('keltin - lastStepField: ' + lastStepField);
+                system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
+
+                if (lastStepField == 'EffectiveDate__c') {
+                    String dateString = String.valueOf(lastStepData.get(lastStepField));
+                    orderToUpdate.put(lastStepField, date.valueOf(dateString));
+                } else {
+                    orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                }
             }
         }
         
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);
+        if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
+            HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
+        }
 
         if (order.ParentOrder__r.Status == 'Draft') {
             // order parent status = in lavorazione, phase = in lavorazione

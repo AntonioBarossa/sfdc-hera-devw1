@@ -295,7 +295,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>VASGift__c</field>
+                <field>FreeVas__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

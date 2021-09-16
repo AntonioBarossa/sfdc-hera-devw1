@@ -578,13 +578,15 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             }
         }).catch(error => {
             this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+            if (error !== undefined && error.body !== undefined) {
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
         });
     }
 
