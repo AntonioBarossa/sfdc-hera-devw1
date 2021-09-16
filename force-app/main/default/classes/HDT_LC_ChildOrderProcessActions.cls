@@ -198,7 +198,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 HDT_QR_Order orderQr = new HDT_QR_Order();
                 HDT_QR_Contract contractQr = new HDT_QR_Contract();
                 Order currentOrder = orderQr.getRecordById(order.Id);
-                Contract contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                Contract contractReference = new Contract();
+                try
+                {
+                    contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                }
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -227,7 +235,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
                 //@frpanico logica if reseller --> Esportazione VS Siebel
-                if(contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
                 {
                     orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                 }

@@ -146,7 +146,7 @@ public inherited sharing class HDT_QR_Knowledge {
         customNotification = [SELECT Id
         FROM CustomNotificationType
         WHERE DeveloperName = 'HDT_NewsNotification'
-        WITH SECURITY_ENFORCED
+        //WITH SECURITY_ENFORCED
         LIMIT 1];
 
         return customNotification;
