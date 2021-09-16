@@ -4,7 +4,11 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     Map<wrts_prcgvr__Activity__c, User> activityOwner = new Map<wrts_prcgvr__Activity__c, User> ();
     public HDT_BA_SuspendedActivitiesEmailAlert() {
         //old this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnedByUser__c FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND Status__c = 'Sospesa' WITH SECURITY_ENFORCED];
-        this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnerId, Owner.Name FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY AND Status__c = 'Sospesa' WITH SECURITY_ENFORCED]; //Marco Arci
+        this.activities = [SELECT Id, Name, SuspensionDueDate__c, Status__c, OwnerId, Owner.Name 
+                           FROM wrts_prcgvr__Activity__c WHERE SuspensionDueDate__c = TODAY 
+                           AND Status__c = 'Sospesa' 
+                           AND RecordType.DeveloperName = 'HDT_RT_Scarto'
+                           WITH SECURITY_ENFORCED]; //Marco Arci
         if (this.activities.size() > 0) {
             List<String> userNames = new List<String>();
             for (wrts_prcgvr__Activity__c act : this.activities) {
