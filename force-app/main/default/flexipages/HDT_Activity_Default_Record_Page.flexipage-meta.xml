@@ -87,9 +87,23 @@
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
