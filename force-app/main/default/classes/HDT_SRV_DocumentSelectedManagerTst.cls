@@ -612,11 +612,81 @@ public with sharing class HDT_SRV_DocumentSelectedManagerTst {
     
     
     
-    //else (return null)
+    //formatDate
+    @isTest
+    private static void formatDateTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - formatDateTest';
+        System.debug(debugString);
+        
+        //SETUP
+        String inputDate = '10/09/2021';
+        
+        //TESTING
+        Date result = HDT_SRV_DocumentSelectedManager.formatDate(inputDate);
+        
+        //ASSERTS
+        System.assertEquals(Date.valueOf(2020+'-'+09+'-'+10), result);
+        
+        
+    }
+
     
     
     //getRiferimentoFattura
-    //TODO: METTERLO TESTVISIBLE
+    @isTest
+    private static void getRiferimentoFatturaTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - getRiferimentoFatturaTest';
+        System.debug(debugString);
+        
+        //NULL TESTING
+        String result = HDT_SRV_DocumentSelectedManager.getRiferimentoFattura(null);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
+        
+        //EMPTY TESTING
+        Map<String,Object> secLevel = new Map<String,Object>();
+        //secLevel.put('contratto', '');    //response.contractCode = contractCode;
+        secLevel.put('riferimentoFattura', '');
+        
+        List<Object> secondoLivelloList = new List<Object>{secLevel};
+        
+        //TESTING
+        result = HDT_SRV_DocumentSelectedManager.getRiferimentoFattura(secondoLivelloList);
+        
+        //ASSERTS
+        System.assertEquals('', result);
+        
+        
+        
+        //NORMAL TESTING
+        secLevel = new Map<String,Object>();
+        //secLevel.put('contratto', '');    //response.contractCode = contractCode;
+        secLevel.put('testoDettaglio', 'Testo Dettaglio');
+        secLevel.put('tipoDocumento', 'VR');
+        secLevel.put('importo', 5.5);
+        secLevel.put('riferimentoFattura', 'Riferimento Fattura');
+        
+        secondoLivelloList = new List<Object>{secLevel};
+        
+        //TESTING
+        result = HDT_SRV_DocumentSelectedManager.getRiferimentoFattura(secondoLivelloList);
+        
+        //ASSERTS
+        System.assertEquals('Riferimento Fattura', result);
+        
+    }
+    
+    
+    //getDocumentsSelected
+    //TODO: TESTING
+    
+    
     
     
 }
