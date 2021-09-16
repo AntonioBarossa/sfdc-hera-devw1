@@ -541,10 +541,10 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         }
         return res;
     }
-
+ 
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
-        
+        //fix
         if(method == 'PianoRateizzazione'){
             HDT_QR_Case caseQr = new HDT_QR_Case();
             String accountFilterId = (String)sb.get('Id');
