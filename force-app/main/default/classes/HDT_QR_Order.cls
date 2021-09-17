@@ -10,7 +10,7 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 05/01/2020
     * @description Get list of records by Sale__c.Id
-    * @param String saleId – Sale__c.Id
+    * @param saleId – Sale__c.Id
     * @return List<Order>
     */
     public List<Order> getRecordBySale(String saleId){
@@ -31,6 +31,12 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
             ];
     }
+
+    /**
+    * @description Get orders records
+    * @param orderId
+    * @return Map<Id, Order> 
+    */
     public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
@@ -49,8 +55,8 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 06/01/2020
     * @description Get list of records by Sale__c.Id and filtered by recordTypeId
-    * @param String saleId – Sale__c.Id
-    * @param String recordTypeId
+    * @param saleId – Sale__c.Id
+    * @param recordTypeId
     * @return List<Order>
     */
     public List<Order> getRecordBySaleFilterRecordTypeId(String saleId, String recordTypeId){
@@ -87,7 +93,7 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
     * @description Get record by record Id
-    * @param String orderId
+    * @param orderId
     * @return Order
     */
     public Order getRecordById(String orderId){
@@ -246,9 +252,20 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description Get order by Id
+    * @param id
+    * @return Order
+    */
     public Order getOrderbyId(String id){
         return [Select id,FriendCode__c from Order Where id = :id][0];
     }
+
+    /**
+    * @description getOrderByIdForSalesCallout
+    * @param id
+    * @return List<Order>
+    */
     public List<Order> getOrderByIdForSalesCallout(String id){
         return [
             SELECT 
@@ -267,7 +284,7 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
     * @description Get records by IDs
-    * @param List<String> orderIds
+    * @param orderIds - List<String>
     * @return List<Order>
     */
     public List<Order> getRecordsByIds(List<String> orderIds){
@@ -403,7 +420,7 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
     * @description Get child records by parent order Id
-    * @param String parentOrderId
+    * @param parentOrderId - String
     * @return List<Order>
     */
     public List<Order> getChildOrdersByParentId(String parentOrderId){
@@ -454,7 +471,7 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
     * @description Get child records by list of parent Order Ids
-    * @param String parentOrderId
+    * @param parentOrderIds - List<String>
     * @return List<Order>
     */
     public List<Order> getChildOrdersByParentIds(List<String> parentOrderIds){
@@ -482,7 +499,7 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 20/02/2020
     * @description Get child records by parent order Id without status filtering
-    * @param String parentOrderId
+    * @param parentOrderId - String
     * @return List<Order>
     */
     public List<Order> getChildOrdersByParentIdAllStatus(String parentOrderId){
@@ -530,8 +547,8 @@ public inherited sharing class HDT_QR_Order {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 11/01/2021
     * @description Get record by id and filter status
-    * @param String orderId
-    * @param String status
+    * @param orderId - String
+    * @param status - String
     * @return List<Order>
     */
     public List<Order> getRecordByIdFilterStatus(String orderId, String status){
@@ -549,7 +566,7 @@ public inherited sharing class HDT_QR_Order {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get active records by accountId
-    * @param String accountId
+    * @param accountId - String
     * @return List<Order>
     */
     public List<Order> getActiveRecordsByAccountId(String accountId){
@@ -573,6 +590,12 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getRecordsByAccountId
+    * @param accountId - String
+    * @return List<Order>
+    */
     public List<Order> getRecordsByAccountId(String accountId){
         return [
             SELECT
@@ -594,6 +617,11 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description getActiveRecordsByAccountIdNotParent
+    * @param accountId - String
+    * @return List<Order>
+    */
     public List<Order> getActiveRecordsByAccountIdNotParent(String accountId){
         return [
             SELECT
@@ -616,6 +644,11 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description getRecordsForVasSelection
+    * @param accountId - String
+    * @return List<Order>
+    */
     public List<Order> getRecordsForVasSelection(String accountId){
         return [
             SELECT
@@ -651,6 +684,11 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description getRecordsNotActivated
+    * @param accountId - String
+    * @return List<Order>
+    */
     public List<Order> getRecordsNotActivated(String accountId){
         return [
             SELECT
@@ -686,13 +724,29 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description getRecordByOrderNumber
+    * @param orderNumber - String
+    * @return List<Order>
+    */
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
+
+    /**
+    * @description getRecordByOrderNumber
+    * @param recordId - String
+    * @return List<Order>
+    */
     public List<Order> getRecordByOrderId(String recordId){
         return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
+    /**
+    * @description getRecordsByOrdersIdsBulk
+    * @param orderIds - String
+    * @return List<Order>
+    */
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){
         return [
             SELECT
@@ -706,6 +760,10 @@ public inherited sharing class HDT_QR_Order {
     }
 
     //INIZIO SVILUPPI EVERIS
+    /**
+    * @description getRoleNameByRoleId
+    * @return String
+    */
     public String getRoleNameByRoleId(){
 
         String userId = UserInfo.getUserId();
@@ -717,6 +775,11 @@ public inherited sharing class HDT_QR_Order {
         LIMIT 1].UserRole.Name;
     }
 
+    /**
+    * @description getDates
+    * @param recordId - String
+    * @return Order
+    */
     public Order getDates(String recordId){
         return [SELECT Id, EffectiveDate__c, RetroactiveDate__c,ServicePoint__c,BillingProfile__c
         FROM Order
@@ -725,25 +788,43 @@ public inherited sharing class HDT_QR_Order {
         LIMIT 1];
     }
 
-    public List<Order> getRecordsByIdWithFields(List<String> Ids, String fields) {
-        String query = 'SELECT '+ fields +
-                ' From Order where Id IN :Ids';
-        List<Order> orders = Database.query(query);
+    /**
+    * @description getRecordsByIdWithFields
+    * @param ids - List<String>
+    * @param fields - String
+    * @return List<Order>
+    */
+    public List<Order> getRecordsByIdWithFields(List<String> ids, String fields) {
+
+        List<Order> orders = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' From Order where Id IN :Ids');
 
         return orders;
     }
     
     //FINE SVILUPPI EVERIS
-
+    /**
+    * @description getOrderCreatedYesterday
+    * @return List<Order>
+    */
     public List<order> getOrderCreatedYesterday(){
         return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday];
     }
 
+    /**
+    * @description getRecordTypesDeveloperNameById
+    * @param id - List<String>
+    * @return String
+    */
     public static String getRecordTypesDeveloperNameById(Id id){
         String devName = [SELECT DeveloperName FROM RecordType WHERE id = :id].DeveloperName;
         return devName;
     }
-	
+
+    /**
+    * @description getOrderForComfortQualityResult
+    * @param parentOrderId - String
+    * @return List<Order>
+    */
     public List<order> getOrderForComfortQualityResult(String parentOrderId){
         return [SELECT 
             Id,
@@ -768,6 +849,13 @@ public inherited sharing class HDT_QR_Order {
         WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getOrderByUsernamePassword
+    * @param username - String
+    * @param password - String
+    * @return List<Order>
+    */
     public List<Order>  getOrderByUsernamePassword(String username, String password) {
         HDT_LC_CanaleIVRNoShare qrs = new HDT_LC_CanaleIVRNoShare();
         
@@ -776,6 +864,11 @@ public inherited sharing class HDT_QR_Order {
     
     }
 	
+    /**
+    * @description getChildOrdersDocumentalActivityByParentId
+    * @param parentOrderId - String
+    * @return List<Order>
+    */
 	public List<Order> getChildOrdersDocumentalActivityByParentId(String parentOrderId){
         return [
             SELECT 
@@ -790,6 +883,11 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description getOrderForActiveMonitoringCheck
+    * @param id - String
+    * @return List<Order>
+    */
     public List<Order> getOrderForActiveMonitoringCheck(String id){
         return [
             Select 
@@ -803,11 +901,21 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @description getOrderForComfort
+    * @param id - String
+    * @return List<Order>
+    */
     public List<Order> getOrderForComfort(String id){
         return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode
+    /**
+    * @description getExciseTranscode
+    * @param exciseString - String
+    * @return HDT_ExciseTranscode__mdt
+    */
     public HDT_ExciseTranscode__mdt getExciseTranscode(String exciseString)
     {
         return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];

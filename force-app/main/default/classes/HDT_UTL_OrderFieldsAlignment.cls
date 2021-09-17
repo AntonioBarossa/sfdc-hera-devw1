@@ -1,3 +1,7 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @description HDT_UTL_OrderFieldsAlignment – Align Order fields with Service Point, Account, Billing Profile
+*/
 public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
@@ -367,6 +371,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
     }
 
+    /**
+    * @description getRecordsByIdWithFields
+    * @param implantType - String
+    * @param powerContractual - Decimal
+    * @return String
+    */
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
 
         String result = '';
@@ -415,6 +425,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         return result;
     }
 
+    /**
+    * @description alignFields
+    * @param order - Order
+    */
     public static void alignFields(Order order) {
 
         Order orderToUpdate = new Order();
@@ -444,8 +458,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 //only for Bonus
                 orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
                 orderToUpdate.BillingProfile__c=mixedData.billProf;
-                if(orderToUpdate.BillingProfile__c!=null)
+                if(orderToUpdate.BillingProfile__c!=null){
                     alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
+                }
             }
         }
 

@@ -20,7 +20,7 @@ public inherited sharing class HDT_LC_SaleActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale as draft
-     * @param Sale__c sale
+     * @param sale
      */
     @AuraEnabled
     public static void saveDraft(Sale__c sale){
@@ -30,7 +30,8 @@ public inherited sharing class HDT_LC_SaleActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale
-     * @param Sale__c sale
+     * @param sale
+     * @param campaignMemberId
      */
     @AuraEnabled
     public static void save(Sale__c sale, String campaignMemberId){
@@ -178,7 +179,11 @@ public inherited sharing class HDT_LC_SaleActions {
         }
     }
 
-
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Save sale backup
+     * @param sale
+     */
     @AuraEnabled
     public static void saveBackup(Sale__c sale){
         
@@ -283,8 +288,8 @@ public inherited sharing class HDT_LC_SaleActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale
-     * @param Sale__c sale
-     * @param String CancellationReason__c
+     * @param sale
+     * @param cancellationReason
      */
     @AuraEnabled
     public static void cancel(Sale__c sale, String cancellationReason){

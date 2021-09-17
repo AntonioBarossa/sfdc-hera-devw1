@@ -20,10 +20,9 @@ public inherited sharing class HDT_QR_Account {
     public Account getRecordById(String id, String fields){
 
         accountSrv.checkReadAccess(fields);
-        String query = 'SELECT '+ fields +
-                ' FROM Account WHERE Id = :id WITH SECURITY_ENFORCED';
 
-        List<Account> accountsList = Database.query(query);
+        List<Account> accountsList = Database.query('SELECT '+ String.escapeSingleQuotes(fields) +
+        ' FROM Account WHERE Id = :id WITH SECURITY_ENFORCED'); //HRAWRM-588_code_review_1342
         
         Account account = new Account();
 
@@ -36,9 +35,8 @@ public inherited sharing class HDT_QR_Account {
 
     public List<Account> getRecordsById(List<String> accountIdList, String fields){
         accountSrv.checkReadAccess(fields);
-        String query = 'SELECT '+ fields +
-                ' From Account where id IN :accountIdList';
-        List<Account> accounts = Database.query(query);
+        List<Account> accounts = Database.query('SELECT '+ String.escapeSingleQuotes(fields) +
+        ' From Account where id IN :accountIdList'); //HRAWRM-588_code_review_1344
 
         return accounts;
     }

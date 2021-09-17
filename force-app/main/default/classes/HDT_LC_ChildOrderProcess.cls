@@ -14,7 +14,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize order process component
-    * @param String orderId
+    * @param orderId
     * @return Map<String, Object>
     */
     @AuraEnabled
@@ -65,9 +65,9 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize order process component
-    * @param String orderId
-    * @param String processo - Dropdown selection for child order process
-    * @param String parentOrderId
+    * @param orderId
+    * @param processo - Dropdown selection for child order process
+    * @param parentOrderId
     */
     @AuraEnabled
     public static void saveOption(String orderId,String processo,String parentOrderId) {//Reference: String ordineVendita
@@ -82,19 +82,10 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         //Reference: List<Ordine_di_Vendita__c> ordvenLis = [Select id,stato__c from Ordine_di_Vendita__c Where id = :ordineVendita and (stato__c = 'Bozza' OR stato__c = 'Sospeso')];
         List<Order> ordvenLis = orderQr.getRecordByIdFilterStatus(parentOrderId, 'Draft');
-
-        if(!ordvenLis.isEmpty()) {
-            // ordvenLis[0].Status = 'In Lavorazione';
-            // orderSrv.updateRecord(ordvenLis[0]);
-        }
         
         // ord.Status = 'In Lavorazione' ;
 
        	// Reference: if(!rList.isEmpty()) {
-        if(recordTypeId != '') {
-            // Reference: ord.RecordTypeId = rList[0].id;
-            // ord.RecordTypeId = recordTypeId;
-        }
 
         // orderSrv.updateRecord(ord);
     }
@@ -102,7 +93,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Refresh order
-    * @param String orderId
+    * @param orderId
     * @return Order
     */
     @AuraEnabled
