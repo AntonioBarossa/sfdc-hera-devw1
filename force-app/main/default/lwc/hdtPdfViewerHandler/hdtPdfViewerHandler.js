@@ -14,6 +14,7 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
         console.log('# sendToApex #');
         //console.log('>>> TO SEND ' + bodyString);
         //bodyString = '{"billNumber":"411911206203","channel":"SOL","date":"2019-11-29","type":"D66l7V","company":"1070"}';
+        //bodyString = '{"billNumber":"411709832686","channel":"CRM","date":"2017-12-09","type":"D66l7V","company":"1070"}';
 
         console.log('>>> TO SEND ' + bodyString);
         sendFileToPrint({body: bodyString})
@@ -77,15 +78,16 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
                     console.log(err.message);
                 }
 
-                this.downloadComplete();
-
             } else {
                 toastObj.title = 'Errore!';
-                toastObj.message = result.message;
+                //toastObj.message = result.message;
+                toastObj.message = 'Bolletta non disponibile';
                 toastObj.variant = 'warning';
             }
         
-            this.spinner = false;
+            //this.spinner = false;
+
+            this.downloadComplete();
 
             this.dispatchEvent(
                 new ShowToastEvent({

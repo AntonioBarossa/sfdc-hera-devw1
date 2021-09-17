@@ -114,15 +114,30 @@ export default class HdtLastBill extends LightningElement {
 
     openFile(){
         console.log('>>> visualbolletta - showSingleBill');
+
+        if(this.message){
+            return;
+        }
+
         this.pdfSpinner = true;
+
         //const date = selected.dataEmissione.split("/");
 
+        //var docInvoiceObj = {
+        //    billNumber: this.billNumber.replace(/^0+/, ''),
+        //    channel: 'SOL',
+        //    date: '2021-09-17',//date[2] + '-' + date[1] + '-' + date[0],
+        //    type: 'Bolletta',
+        //    company: '1070'--->selected.societa
+        //}
+
+        //test mock
         var docInvoiceObj = {
-            billNumber: '411911206203',//this.billNumber,
+            billNumber: '411911206203',
             channel: 'SOL',
-            date: '2019-11-29',//date[2] + '-' + date[1] + '-' + date[0],
-            type: 'D66l7V',//'Bolletta',
-            company: '1070'//selected.societa
+            date: '2019-11-29',
+            type: 'D66l7V',
+            company: '1070'
         }
 
         this.sendPrint(docInvoiceObj);
