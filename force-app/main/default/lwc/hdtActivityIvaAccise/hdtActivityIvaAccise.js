@@ -18,6 +18,8 @@ export default class HdtActivityIvaAccise extends LightningElement {
     @api tentativi = 0;
     @api showIva = false;
     @api showAccise = false;
+    @api isDisabledField = false;
+    @api predefaultv;
     @api loaded = false;
     @api acciseOptions =[
         {label:"Elettrico", value:"Elettrico"},
@@ -80,6 +82,7 @@ export default class HdtActivityIvaAccise extends LightningElement {
                     this.dateConfirm = today.toISOString();
                     this.act.CompletationDateDocument__c = today.toISOString();
                     updateRecord({ fields: { Id: this.recordId } });
+                    this.isDisabledField = true;
             }
             else{
                 const event = new ShowToastEvent({
@@ -142,11 +145,27 @@ export default class HdtActivityIvaAccise extends LightningElement {
     connectedCallback() {
         getActivity({recordId : this.recordId}).then(response =>{
             this.act = response;
+            if(response.wrts_prcgvr__Status__c == 'Completed'){
+                this.isDisabledField = true;
+                this.dateConfirm = response.CompletationDateDocument__c;
+            }
             this.tentativi = this.act.NumberOfAttempt__c;
             console.log('*****:' + JSON.stringify(response));
             console.log('*****:' + (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false );
             this.showIva = (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false ;
             this.showAccise = (response.Order__r != null && response.Order__r != undefined && response.Order__r.FacilitationExcise__c != null && response.Order__r.FacilitationExcise__c != undefined) ? response.Order__r.FacilitationExcise__c : false ;
+            if(this.showAccise){
+                this.predefaultv = (response.Order__r != null && response.Order__r != undefined && response.Order__r.ServicePoint__r != undefined && response.Order__r.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' ? 'Elettrico' : 'Gas');
+                if((response.Order__r != null && response.Order__r != undefined && response.Order__r.ServicePoint__r != undefined && response.Order__r.ServicePoint__r.CommoditySector__c == 'Energia Elettrica')){
+                    this.isAcciseGas = false;
+                    this.isAcciseEle = true;
+                }
+                else{
+                    this.isAcciseGas = true;
+                    this.isAcciseEle = false;
+                
+                }
+            }
             this.isSuspend = response.wrts_prcgvr__Status__c == 'Sospeso' ? true : false;
             this.loaded = true;
         });

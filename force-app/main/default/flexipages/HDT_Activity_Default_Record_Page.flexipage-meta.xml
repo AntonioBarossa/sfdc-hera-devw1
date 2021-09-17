@@ -248,16 +248,10 @@
             <componentInstance>
                 <componentName>hdtActivityIvaAccise</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Iva e Accise da validare</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
