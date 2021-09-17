@@ -129,6 +129,14 @@ public with sharing class HDT_UTL_Constants {
     public final String CASE_RECORDTYPEID_MOROSITA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
 
+    // Order RecordType Riattivazione Non Morose
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE = 'HDT_RT_RiattivazioniNonMorose';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE).getRecordTypeId();
+
+
     // Order RecordType Connessione Con Attivazione
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE = 'HDT_RT_ConnessioneConAttivazione';
