@@ -42,7 +42,8 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
     }
 
     public void execute(Database.BatchableContext bc, List<Product2> chunkList){
-        List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
+
+        /*List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         SBQQ__ProductOption__c newRecord;
         for(Product2 product : chunkList){
             newRecord = new SBQQ__ProductOption__c();
@@ -66,6 +67,17 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
                 insertResult.success = true;
                 //insertResult.message = 'No product option record found';
             }
+        }*/
+
+        List<String> recordList = new List<String>();
+        for(Product2 product : chunkList){
+            recordList.add(product.Id);
+        }
+        HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult;
+        insertResult = HDT_SRV_ProductAssociation.associateProductOption(productOptionToClone, recordList);
+
+        if(insertResult.errorData.size() > 0){
+            errorCounter += insertResult.errorData.size();
         }
 
     }

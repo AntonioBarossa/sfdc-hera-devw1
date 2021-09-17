@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import getFieldSet from '@salesforce/apex/HDT_LC_ProductAssociation.getFieldSet';
 import { deleteRecord } from 'lightning/uiRecordApi';
 
 export default class HdtProductOptionEditForm extends LightningElement {
@@ -7,15 +8,60 @@ export default class HdtProductOptionEditForm extends LightningElement {
     @api optionalSkuId;
     productOptionId;
     productOptionObj;
+    spinner = true;
 
-    fieldsList = [
-        'SBQQ__Number__c', 'SBQQ__Quantity__c',
-        'SBQQ__QuantityEditable__c', 'SBQQ__Selected__c',
-        'SBQQ__Feature__c', 'SBQQ__Type__c'
-    ];
+    fieldsList = [];
+    //  'SBQQ__Number__c',
+    //  'SBQQ__Quantity__c',
+    //  'SBQQ__QuantityEditable__c',
+    //  'SBQQ__Selected__c',
+    //  'SBQQ__Feature__c',
+    //  'SBQQ__Type__c'
+    //];
+
+    connectedCallback(){
+      this.getFieldSetList();
+    }
+
+    getFieldSetList(){
+      getFieldSet({fieldSetName: 'Bonus_EE'})
+      .then(result => {
+          console.log('>>> GET FIELD SET LIST');
+          console.log('>>> ' + JSON.stringify(result));
+
+          if(result.length>0){
+
+            result.forEach((fieldApiName) => {
+              this.fieldsList.push(fieldApiName);
+            });
+
+            this.spinner = false;
+          } else {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                  title: 'Errore nel recupero dei dati',
+                  message: error.message,
+                  variant: 'error',
+              }),
+          );
+          }
+
+      })
+      .catch(error => {
+          console.log('# getFieldSet #');
+          this.dispatchEvent(
+              new ShowToastEvent({
+                  title: 'Error while retriving fieldset',
+                  message: error.message,
+                  variant: 'error',
+              }),
+          );
+      });
+    }
 
     handleLoad(event){
         console.log('>>>> handleLoad ');
+        //this.spinner = false;
     }
 
     handleSubmit(event){

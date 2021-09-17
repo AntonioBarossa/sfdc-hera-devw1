@@ -3,6 +3,7 @@ public inherited sharing class HDT_WRP_ProductAssociation {
     public class HDT_WRP_InsertResult {
         public Boolean success;
         public String message;
+        public List<HDT_WRP_LineError> errorData;
     }
 
     public class HDT_WRP_LineError{

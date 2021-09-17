@@ -24,11 +24,11 @@ public without sharing class HDT_BA_DeleteProductAssociation implements Database
                 // 1 - RUN BATCH FOR SELECTED SBQQ__ProductOption__c LIST
                 queryString += 'WHERE SBQQ__ConfiguredSKU__c IN :idListToDelete AND SBQQ__OptionalSKU__c = :optionalSkuIdToDelete';
             }
-            when 'all' {
-                // 2 - RUN BATCH FOR ALL SBQQ__ProductOption__c
-                List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
-                queryString += 'WHERE SBQQ__OptionalSKU__c = :optionalSkuIdToDelete';
-            }
+            //when 'all' {
+            //    // 2 - RUN BATCH FOR ALL SBQQ__ProductOption__c
+            //    List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
+            //    queryString += 'WHERE SBQQ__OptionalSKU__c = :optionalSkuIdToDelete';
+            //}
             when 'filter' {
                 // 3 - RUN BATCH FOR SBQQ__ProductOption__c TO FILTER WITH WHERE CONDITION
 

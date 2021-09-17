@@ -5,11 +5,19 @@ public class HDT_ProductAssociationTst {
     static void setup() {
 
         List<Product2> productList = new List<Product2>();
+        Product2 productOption0 = new Product2();
+        productOption0.Name = 'alreadyOptioned';
+        productOption0.Status__c = 'In Sviluppo';
+        productOption0.Family = 'Punto Fornitura';
+        productOption0.IsActive = true;
+        productList.add(productOption0);
+
         Product2 productOption = new Product2();
         productOption.Name = 'productOptionExample';
         productOption.Status__c = 'In Sviluppo';
         productOption.Family = 'Punto Fornitura';
         productOption.IsActive = true;
+
         productList.add(productOption);
 
         for(Integer i=0; i<20; i++){
@@ -23,6 +31,11 @@ public class HDT_ProductAssociationTst {
 
         insert productList;
 
+    }
+
+    @isTest
+    public static void getFieldSet(){
+        List<String> fieldSetList = HDT_LC_ProductAssociation.getFieldSet('Bonus_EE');
     }
 
     @isTest
@@ -107,6 +120,25 @@ public class HDT_ProductAssociationTst {
     @isTest
     public static void runProductOptionAssociation_delete(){
 
+        List<SBQQ__ProductOption__c> prodOptionList = new List<SBQQ__ProductOption__c>();
+        Id prodOptionalId = [SELECT Id FROM Product2 WHERE Name = 'alreadyOptioned' LIMIT 1].Id;
+
+        for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta commerciale']){
+            SBQQ__ProductOption__c prodOption = new SBQQ__ProductOption__c();
+            prodOption.SBQQ__ConfiguredSKU__c = p.Id;//[SELECT Id FROM Product2 WHERE Family = 'Offerta commerciale' LIMIT 1].Id;
+            prodOption.SBQQ__OptionalSKU__c = prodOptionalId;
+            prodOption.SBQQ__Number__c = 1;
+            prodOption.SBQQ__Quantity__c = null;
+            prodOption.SBQQ__QuantityEditable__c = false;
+            prodOption.SBQQ__Selected__c = false;
+            prodOption.SBQQ__Feature__c = null;
+            prodOption.SBQQ__Type__c = 'Component';
+            prodOptionList.add(prodOption);
+        }
+
+        insert prodOptionList;
+        System.debug('>>> TEST Prod Option list size: ' + prodOptionList.size());
+
         String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Punto Fornitura' LIMIT 1].Id;
 
         SBQQ__ProductOption__c prodOptionWrp = new SBQQ__ProductOption__c();
@@ -120,7 +152,7 @@ public class HDT_ProductAssociationTst {
         String productOptionObj = JSON.serialize(prodOptionWrp);
         
         List<String> recordList = new List<String>();
-        String offerId = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
+        String offerId = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' AND Name = 'offertaExample_1' LIMIT 1].Id;
         recordList.add(offerId);
 
         String executionType = 'select';
@@ -138,7 +170,8 @@ public class HDT_ProductAssociationTst {
         String dmlContext = 'delete';
 
         //test confirm selection button
-        HDT_LC_ProductAssociation.runProductOptionAssociation('', productOptionObj, recordList, executionType, filterString, dmlContext);
+        //Id productOptionIdToDelete = [SELECT Id FROM SBQQ__ProductOption__c LIMIT 1].Id;
+        HDT_LC_ProductAssociation.runProductOptionAssociation(prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
 
         //test batch
         executionType = 'filter';
@@ -153,7 +186,7 @@ public class HDT_ProductAssociationTst {
         prodWrp2.CategoryFamily__c = null;
         filterString = JSON.serialize(prodWrp2);
         
-        HDT_LC_ProductAssociation.runProductOptionAssociation('', productOptionObj, recordList, executionType, filterString, dmlContext);
+        HDT_LC_ProductAssociation.runProductOptionAssociation(prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
 
     }
 

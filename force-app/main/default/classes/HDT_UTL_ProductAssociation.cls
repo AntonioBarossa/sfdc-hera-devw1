@@ -187,6 +187,14 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         return respRunBatchObj;
     }
 
+    public static Map<String, Integer> createNumberProductOptionMap(AggregateResult[] results){
+        Map<String, Integer> numberMap = new Map<String, Integer>();
+        for (AggregateResult ar : results) {
+            numberMap.put(String.valueOf(ar.get('SBQQ__ConfiguredSKU__c')), Integer.valueOf(ar.get('expr0')));
+        }
+        return numberMap;
+    }
+
     public static void sendCustomNotification(HDT_WRP_ProductAssociation.HDT_WRP_Notification notificationWrp){
         //Userinfo.getUserId()
         try{

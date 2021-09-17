@@ -2,6 +2,29 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Integer batchLimit = 10;
 
+    public static List<String> getFieldSet(String fieldSetName){
+        List<String> fieldSetList = new List<String>();
+        try{
+            //List<Schema.FieldSetMember> fieldSetMembers;
+            //fieldSetMembers = ((SObject)Type.forName('SBQQ__ProductOption__c').newInstance()).getSObjectType().getDescribe().FieldSets.getMap().get(fieldSetName).getFields();
+            //for(Schema.FieldSetMember s : fieldSetMembers) {
+            //    fieldSetList.add(String.valueOf(s.getFieldPath()));
+            //}
+
+            fieldSetList.add('SBQQ__Number__c');
+            fieldSetList.add('SBQQ__Quantity__c');
+            fieldSetList.add('SBQQ__QuantityEditable__c');
+            fieldSetList.add('SBQQ__Selected__c');
+            fieldSetList.add('SBQQ__Feature__c');
+            fieldSetList.add('SBQQ__Type__c');
+
+        } catch(Exception ex){
+            System.debug('>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');
+        }
+
+        return fieldSetList;
+    }
+
     public static Object getProductList(String filterString, String optionalSkuId, String dmlContext, Boolean usePagination, String pageNumber){
 
         System.debug('>>> filterString: ' + filterString);
@@ -46,6 +69,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Object runProductOptionAssociation(String optionalSkuId, String productOptionObj, List<String> recordList, String executionType, String filterString, String dmlContext){
         
+        System.debug('>>> optionalSkuId: ' + optionalSkuId);
         System.debug('>>> productOptionObj: ' + productOptionObj);
         System.debug('>>> recordList: ' + recordList);
         System.debug('>>> executionType: ' + executionType);
@@ -74,8 +98,16 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static HDT_WRP_ProductAssociation.HDT_WRP_InsertResult associateProductOption(SBQQ__ProductOption__c productOptionToClone, List<String> recordList){
 
-        List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult = new HDT_WRP_ProductAssociation.HDT_WRP_InsertResult();
+
+        AggregateResult[] results = HDT_QR_ProductAssociation.getCountFromProductOption(recordList);
+        Map<String, Integer> optionIdToNumber;
+
+        if(results.size()>0){
+            optionIdToNumber = HDT_UTL_ProductAssociation.createNumberProductOptionMap(results);
+        }
+
+        List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         
         if(productOptionToClone != null){
             SBQQ__ProductOption__c newRecord;
@@ -83,13 +115,20 @@ public inherited sharing class HDT_SRV_ProductAssociation {
                 newRecord = new SBQQ__ProductOption__c();
                 newRecord = productOptionToClone.clone(false, true, false, false);
                 newRecord.SBQQ__ConfiguredSKU__c = productId;
+
+                if(optionIdToNumber != null && optionIdToNumber.containsKey(productId)){
+                    newRecord.SBQQ__Number__c = optionIdToNumber.get(productId) + 1;
+                } else {
+                    newRecord.SBQQ__Number__c = 1;
+                }
+
                 productOptionList.add(newRecord);
             }
             System.debug('>>> record to insert: ' + String.valueOf(productOptionList));
-            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
-            errorData = databaseInsert(productOptionList, errorData);
+            insertResult.errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
+            insertResult.errorData = databaseInsert(productOptionList, insertResult.errorData);
 
-            if(errorData.size() > 0){
+            if(insertResult.errorData.size() > 0){
                 insertResult.success = false;
                 insertResult.message = 'Error during product option insert';
             } else {

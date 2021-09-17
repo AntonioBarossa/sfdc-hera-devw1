@@ -49,6 +49,21 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
     }
 
+    public static AggregateResult[] getCountFromProductOption(List<String> recordIdList){
+        //RETRIEVE Number in porduct option for each product2
+        AggregateResult[] results = [
+            SELECT SBQQ__ConfiguredSKU__c, count(Id)
+            FROM SBQQ__ProductOption__c
+            WHERE SBQQ__ConfiguredSKU__c IN :recordIdList
+            WITH SECURITY_ENFORCED
+            GROUP BY SBQQ__ConfiguredSKU__c
+        ];
+        //for (AggregateResult ar : results) {
+        //    System.debug(ar);
+        //}
+        return results;
+    }
+
     public static Id getCustomNotificationTypeId(){
         return [SELECT Id FROM CUstomNotificationType LIMIT 1].Id;
     }
