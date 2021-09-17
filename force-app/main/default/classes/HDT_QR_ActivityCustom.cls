@@ -46,6 +46,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             status__c,
             wrts_prcgvr__Status__c,
             order__c,
+            order__r.ServicePoint__r.CommoditySector__c,
             order__r.FacilitationExcise__c,
             order__r.VATfacilitationFlag__c,
             Contact__c,
