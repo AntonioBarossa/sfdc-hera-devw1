@@ -49,7 +49,6 @@ public inherited sharing class HDT_LC_CloneArticle {
         return insertedArticle.Id;
 
 
-
     }
 
 }

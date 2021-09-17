@@ -111,10 +111,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> ordersQualityOkUpdate = new List<Order>();
 
 
-        List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
+       // List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
 
 
-        for(Order o : ordersFullList){
+        for(Order o : ordersFullList2){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
             }
