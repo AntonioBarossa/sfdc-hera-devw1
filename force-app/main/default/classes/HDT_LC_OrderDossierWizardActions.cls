@@ -28,7 +28,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         // if (orderParent.ContractSigned__c == false) {
         //     orderToUpdate.Phase__c = 'Documentazione da inviare';
         // } else {
-            orderToUpdate.Phase__c = 'Documentazione da validare';
+            orderToUpdate.Phase__c = 'Plico da inviare'; 
         // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
