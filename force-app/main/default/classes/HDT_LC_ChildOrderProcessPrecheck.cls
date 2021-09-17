@@ -91,6 +91,24 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     //orderSrv.updateRecord(newOrder);
                 }
                 //FINE SVILUPPI EVERIS
+                //@frpanico 16/09/21 same predefaul logic needs to be applied to "Voltura con Switch"
+                //@frpanico check on processCode
+                when 'HDT_RT_VolturaConSwitch'
+                {
+                    List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
+                    processType = 'Voltura con Switch';
+                    newOrder.Subprocess__c = 'Standard';
+                    newOrder.VoltureType__c = 'Ordinaria';
+                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    newOrder.ContractReference__c = contracts.size() > 0 
+                        ? contracts[0].Id
+                        : null;
+                    String sapCode = contracts.size() > 0
+                        ? contracts[0].SAPContractCode__c
+                        : '';
+                    newOrder.SapContractCode__c = sapCode;
+                    newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
+                }
             }
 
             switch on processType {
@@ -185,6 +203,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             
                             newOrder.VAT__c = entry.getValue();                    
                         }
+                    }
+                }
+                //@frpanico CodiceAteco
+                if(position.campo.equalsIgnoreCase('CODICE_ATECO'))
+                {
+                    newOrder.AtecoCode__c = position.valore;
+                }
+                //@frpanico AddizionaleRegionale
+                if(position.campo.equalsIgnoreCase('ADDIZIONALEREGIONALE'))
+                {
+                    try
+                    {
+                        newOrder.RegionalAdditional__c = Decimal.valueOf(position.valore);
+                    }
+                    catch(Exception e)
+                    {
+                        System.debug('Exception : ' + e.getMessage() + ' at line: ' + e.getLineNumber());
                     }
                 }
             }
