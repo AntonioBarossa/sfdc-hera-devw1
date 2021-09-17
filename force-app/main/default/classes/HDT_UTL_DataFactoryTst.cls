@@ -8,7 +8,7 @@
 
 public with sharing class HDT_UTL_DataFactoryTst{
 
-	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
 
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
 	public static void pClickInstance(){
@@ -449,7 +449,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			servPoint.Name='testServicePoint'+i;
 			servPoint.ServicePointCode__c='testServicePointCode';
-
+			servPoint.RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
 			servPointList.add(servPoint);
 		}
