@@ -72,7 +72,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         
         Document myDocByContext = new Document();
         myDocByContext.name = 'DocumentazioneAnticipata';
-        myDocByContext.FolderId = '';
+        myDocByContext.FolderId = folderId;
         myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
         insert myDocByContext;
         
