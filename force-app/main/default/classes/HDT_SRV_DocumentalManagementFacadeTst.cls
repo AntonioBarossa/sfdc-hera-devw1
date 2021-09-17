@@ -90,7 +90,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         
         
         //TESTING
-        HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
+        String result = HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
         
         
         //RETRIEVING DATA
