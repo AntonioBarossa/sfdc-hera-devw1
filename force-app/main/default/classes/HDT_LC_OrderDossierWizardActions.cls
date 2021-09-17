@@ -26,9 +26,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         );
 
         // if (orderParent.ContractSigned__c == false) {
-        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
+            orderToUpdate.Phase__c = 'Documentazione da inviare';
         // } else {
-            orderToUpdate.Phase__c = 'Plico da inviare'; 
+         //   orderToUpdate.Phase__c = 'Plico da inviare'; 
         // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
@@ -74,7 +74,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         //     orderToUpdate.Phase__c = 'Documentazione da inviare';
         // } else {
         if(isPlicoSend){
-            orderToUpdate.Phase__c = 'Plico da inviare';
+          //  orderToUpdate.Phase__c = 'Plico da inviare';
+          orderToUpdate.Phase__c = 'Documentazione da validare';
         }
         else{
             orderToUpdate.Phase__c = 'Documentazione da validare';
