@@ -5,7 +5,7 @@
  * @last modified on  : 2021-08-02
  * @last modified by  : gabriele.rota@webresults.it
 **/
-public with sharing class HDT_LC_CloneCanceledOrder {
+public without sharing class HDT_LC_CloneCanceledOrder {
 
     private static final String CLONE_PERMISSION = 'HDT_CP_CloneCanceledOrder';
     private static final Integer CANCELLATION_EXPIRE_DAYS = 60;
@@ -33,12 +33,18 @@ public with sharing class HDT_LC_CloneCanceledOrder {
             throw new AuraHandledException('È possibile clonare gli Ordini solo nei primi '+CANCELLATION_EXPIRE_DAYS+' giorni dall\'annullamento');
         }
 
-        currentOrder.Phase__c = 'Bozza';
-        currentOrder.Status = 'In Lavorazione';
-        currentOrder.IsCloned__c = true;
-        currentOrder.IncomingCreditCheckResult__c = null;
-
         try {
+            currentOrder.Phase__c = 'Bozza';
+            currentOrder.Status = 'In Lavorazione';
+            currentOrder.IsCloned__c = true;
+            currentOrder.IncomingCreditCheckResult__c = null;
+
+            currentOrder.Step__c = 2;
+            List<ServiceRequest__c> servRequests = [SELECT Id FROM ServiceRequest__c WHERE Order__c=:orderId WITH SECURITY_ENFORCED];
+            if (!servRequests.isEmpty()) {
+                HDT_UTL_DatabaseService.deleteSObject(servRequests);
+            }
+
             orderSrv.updateRecord(currentOrder);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
