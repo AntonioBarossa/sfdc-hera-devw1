@@ -198,7 +198,7 @@ public with sharing class HDT_UTL_Sales {
         Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
       //  List<String> orderParentToActivityDocument = new List<String>();
         for(Order ord : orderNew){
-            if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier'){
+            if(ord.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && ord.TecnicalPhase__c != null){
                 if(ord.phase__c == 'Plico da inviare'){
                     if(ord.Sale__r.Channel__c == 'Teleselling Outbound' && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.TecnicalPhase__c = 'Registrazione da validare';
