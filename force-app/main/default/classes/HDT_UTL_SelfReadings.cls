@@ -164,6 +164,8 @@ public inherited sharing class HDT_UTL_SelfReadings {
             }
             when 'KO' {
                 c.Phase__c = 'Check preliminari KO';
+                String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
+                c.Description = nowDateFormat + ': '  + request.outcomeDescription;
             }
             when else {
                 c.Phase__c = 'Attesa check preliminari';

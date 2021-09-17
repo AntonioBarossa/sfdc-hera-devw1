@@ -226,36 +226,4 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         }
     }
 
-    /**
-    * @description Class for updating multiple orders in queueable context
-    * @author federico.defelice@webresults.it | 2021-07-12 
-    **/
-    public class HDT_QBL_BulkUpdate implements Queueable {
-        private Map<Id, String> vasOrdersToUpdate {get;set;}
-
-        /**
-        * @description Constructor with Order Id => Phase map
-        * @author federico.defelice@webresults.it | 2021-07-12 
-        * @param vasOrdersToUpdate  
-        **/
-        public HDT_QBL_BulkUpdate(Map<Id, String> vasOrdersToUpdate){
-            this.vasOrdersToUpdate=vasOrdersToUpdate;
-        }
-
-        /**
-        * @description Updating orders
-        * @author federico.defelice@webresults.it | 2021-07-12 
-        * @param context  
-        **/
-        public void execute(QueueableContext context){
-            List<Order> childOrdersToUpdate= new List<Order>();
-            for(Id ordId : vasOrdersToUpdate.keySet() ){
-                childOrdersToUpdate.add(
-                    new Order(Id=ordId, Phase__c=vasOrdersToUpdate.get(ordId))
-                );
-            }
-            new HDT_SRV_Order().updateRecords(childOrdersToUpdate);
-        }
-    }
-
 }

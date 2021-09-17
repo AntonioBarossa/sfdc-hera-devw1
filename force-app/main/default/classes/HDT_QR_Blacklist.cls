@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 16/06/2021
+* @description HDT_QR_Blacklist
+* @history Lorenzo – 16/06/2021 – created class
+*/
 public with sharing class HDT_QR_Blacklist {
 
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();

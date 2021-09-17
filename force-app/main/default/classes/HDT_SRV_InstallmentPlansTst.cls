@@ -62,6 +62,41 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         System.Assert(testCaseUpd.InstallmentAmount__c != null);
         System.assertEquals(false, testCaseUpd.CutomerAssisted__c);
     }
+
+    @isTest
+    static void predefaultInstallmentsValuesTstWithFakeResp()
+    {
+        Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];
+        Account testAccount = [SELECT Id, CustomerCode__c FROM Account LIMIT 1];
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_InstallmentPlansTstMock());
+        List<HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs> inputs = new List<HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs>();
+        HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs input = new HDT_SRV_InstallmentPlans.HDT_UTL_FlowInputs();
+        input.recordId = testCase.Id;
+        input.accountId = testAccount.Id;
+        input.customerCode = testAccount.CustomerCode__c;
+        input.totalToPay = testCase.TotalToPay__c;
+        inputs.add(input);
+        HDT_SRV_InstallmentPlans.predefaultInstallmentsValues(inputs);
+        Test.stopTest();
+        Case testCaseUpd = [SELECT Id, 
+        SuspensionInThePastTwelveMonths__c,
+        ExistingInstallmentsPlanNumber__c,
+        CAWithOrWithoutSEPA__c,
+        ExpirationDate__c,
+        AmountToPayInInstallments__c,
+        InstallmentAmount__c,
+        Amount__c,
+        CutomerAssisted__c
+        FROM Case
+        LIMIT 1];
+        System.assertEquals(false, testCaseUpd.SuspensionInThePastTwelveMonths__c);
+        System.Assert(testCaseUpd.ExpirationDate__c != null);
+        System.Assert(testCaseUpd.AmountToPayInInstallments__c != null);
+        System.Assert(testCaseUpd.InstallmentAmount__c != null);
+        System.assertEquals(false, testCaseUpd.CutomerAssisted__c);
+    }
+
     @isTest
     static void createRequestBody()
     {
@@ -149,4 +184,18 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         System.Assert(output.errorMessage != '' && output.errorMessage != null);
     
     }
+
+    public class HDT_SRV_InstallmentPlansTstMock implements HttpCalloutMock {
+        // Implement this interface method
+        public HTTPResponse respond(HTTPRequest request) {
+            // Create a fake response
+            HttpResponse response = new HttpResponse();
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":[{"contoContrattuale":"200010530499","classeConto":"Z001","codiceCliente":"1002732959","societa":"HeraCommS.p.A.","dataEmissione":"31/08/2021","dataScadenza":"20/01/2022","podPdr":"IT001E56328467","importo":"0.0","residuo":"17.0","modalitaPagamento":"bollettinopostale","documento":"500002727012","bloccoAlSollecito":"B-PG-BLOCCOAVVISORICEVUTODALCL.AVVENUTOPAG","tipoDocumento":"RATE","contratto":"3020211479","settoreMerceologico":"Energiaelettrica","tipoTransazione":"EC1","idPrimoLivelloSAP":"00000000000000000000000000000000000000000000000001","oraIncassoRealTime":"00:00:00","loginId":"0-1","secondoLivelloInformativoF2":[]}]}');
+            response.setStatusCode(200);
+            response.setStatus('OK');
+            return response; 
+        }
+    }
+
 }
