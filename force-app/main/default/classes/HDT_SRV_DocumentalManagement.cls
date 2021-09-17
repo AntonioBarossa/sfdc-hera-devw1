@@ -29,7 +29,6 @@ public class HDT_SRV_DocumentalManagement{
 		formParamsMap.put('Contesto', context);
 		System.debug(debugString + ' - Superato blocco 3');
 		
-		//TODO: PROSEGUIRE TESTING.
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], driverStructure, formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure, formParamsMap);
@@ -52,6 +51,7 @@ public class HDT_SRV_DocumentalManagement{
 		
 		body = composeJson(recordId, driverPayloadListMap,formParamsMap,recordObjectsListMap[0]);
 		System.debug('Body ' + body);
+		
 		return body;
 	}
 
@@ -529,6 +529,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 		return signInfo;
 	}
+	
 	private static List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> generateDriver(Map<String,List<sObject>> inputs, HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations, Map<String,Object> formParams){
 		
 		//DEBUG
@@ -547,6 +548,7 @@ public class HDT_SRV_DocumentalManagement{
 			List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord> records = singleSection.records;
 
 			for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord : records){
+				
 				String expression = singleRecord.expression!=null?singleRecord.expression:'';
 				String classString = singleRecord.classString!=null?singleRecord.classString:'';
 				String methodString = singleRecord.methodString!=null?singleRecord.methodString:'';
@@ -603,6 +605,7 @@ public class HDT_SRV_DocumentalManagement{
 		Map<String,String> context = new Map<String,String>();
 		Map<String,String> iteratorContext = new Map<String,String>();
 		Integer countRecords = 1;
+		
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
 			String iterative = singleSection.iterative;
 			String recordType = singleSection.recordType;
@@ -614,6 +617,7 @@ public class HDT_SRV_DocumentalManagement{
 			}else{
 				countRecords = 1;
 			}
+			
 			for(Integer i = 0; i< countRecords; i++){
 				payloadArray = new List<String>();
 				payloadArray.add(recordType);
