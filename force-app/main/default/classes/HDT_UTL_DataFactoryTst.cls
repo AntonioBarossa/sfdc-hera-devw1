@@ -2142,30 +2142,30 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
 
-		List<MassiveLoaderRequest__c> MassiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
 
 		for(Integer i=0; i<amount; i++){
 
-			MassiveLoaderRequest__c MassiveLoaderRequest = new MassiveLoaderRequest__c();
+			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
 
-			MassiveLoaderRequest.ProcessType__c = 'SwitchIn';
-			MassiveLoaderRequest.Status__c = 'In Lavorazione';
-			MassiveLoaderRequest.TotalRequest__c = 2;
-			MassiveLoaderRequest.RequestOK__c = 2;
-			MassiveLoaderRequest.RequestKO__c = 0;
-			MassiveLoaderRequest.Phase__c = 'File in elaborazione';
-			MassiveLoaderRequest.Priority__c = 1;
+			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
+			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.TotalRequest__c = 2;
+			massiveLoaderRequest.RequestOK__c = 2;
+			massiveLoaderRequest.RequestKO__c = 0;
+			massiveLoaderRequest.Phase__c = 'File in elaborazione';
+			massiveLoaderRequest.Priority__c = 1;
 
 
-			MassiveLoaderRequestList.add(MassiveLoaderRequest);
+			massiveLoaderRequestList.add(massiveLoaderRequest);
 		}
 
 		if (doInsert){
 
-			insert MassiveLoaderRequestList;
+			insert massiveLoaderRequestList;
 		}
 
-		return MassiveLoaderRequestList;
+		return massiveLoaderRequestList;
 
 	}
 
