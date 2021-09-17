@@ -20,8 +20,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         @AuraEnabled public String value;
         /**
          * @description HDT_LC_Link
-         * param label - String
-         * param value - String
+         * @param label - String
+         * @param value - String
          */
         public HDT_LC_Link(String label, String value){
             this.label = label;
@@ -36,37 +36,44 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
     public class HDT_LC_Customer {
         
         /**
-         * @description name - String variable
+         * @description name - String
+         * @return String
          */
         @AuraEnabled public String nome {get;set;}
 
         /**
-         * @description codiceFiscale - String variable
+         * @description codiceFiscale - String
+         * @return String
          */
         @AuraEnabled public String codiceFiscale {get;set;}
 
         /**
-         * @description iVA - String variable
+         * @description iVA - String
+         * @return String
          */
         @AuraEnabled public String iVA {get;set;}
 
         /**
-         * @description codiceCliente - String variable
+         * @description codiceCliente - String
+         * @return String 
          */
         @AuraEnabled public String codiceCliente {get;set;}
 
         /**
-         * @description id - String variable
+         * @description id - String
+         * @return String
          */
         @AuraEnabled public String id {get;set;}
 
         /**
-         * @description isStoricizzato - String variable
+         * @description isStoricizzato - String
+         * @return String
          */
         @AuraEnabled public String isStoricizzato {get;set;}
 
         /**
-         * @description nomeProprio - String variable
+         * @description nomeProprio - String
+         * @return String
          */
         @AuraEnabled public String nomeProprio {get;set;}
         
@@ -103,10 +110,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
      * @description HDT_LC_StoricizzazioneCliente.getMarcatureFromRole - La funzione restituisce la lista 
      *                                                                   di marcature consentite in base al 
      *                                                                     role dell'account in uso attualmente
-     * param1 searchKey - String
-     * param2 sortBy - String
-     * param3 sortDirection - String
-     * param4 filterby - String
+     * @param searchKey - String
+     * @param sortBy - String
+     * @param sortDirection - String
+     * @param filterby - String
      * @return null -> il role non è presente nella mappa, nessu risultato consentito
      * @return List<String> vuoto: l'utente non ha alcun filtro
      * @return List<String> popolato: la query verrà filtrata per le marcature restituite
@@ -125,10 +132,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
     
     /**
      * @description HDT_LC_StoricizzazioneCliente.getExternalCustomer
-     * param1 searchKey - String
-     * param2 sortBy - String
-     * param3 sortDirection - String
-     * param4 filterby - String
+     * @param searchKey - String
+     * @param sortBy - String
+     * @param sortDirection - String
+     * @param filterby - String
      * @return List<HDT_LC_Customer>
      */
     @AuraEnabled
