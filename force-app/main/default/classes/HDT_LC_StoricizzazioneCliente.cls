@@ -97,7 +97,7 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                         ){
                         this.nome	        = nome;	
                         this.codiceFiscale	= codiceFiscale;	
-                        this.iva	        = ova;
+                        this.iva	        = iva;
                         this.codiceCliente	= codiceCliente;
                         this.id	            = id;
                         this.isStoricizzato = isStoricizzato;
