@@ -68,8 +68,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         
         
         //Documento Docstructure
+        Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  = :'DocumentalPayloadAdministration' LIMIT 1].Id;
+        
         Document myDocByContext = new Document();
         myDocByContext.name = 'DocumentazioneAnticipata';
+        myDocByContext.FolderId = '';
         myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
         insert myDocByContext;
         
