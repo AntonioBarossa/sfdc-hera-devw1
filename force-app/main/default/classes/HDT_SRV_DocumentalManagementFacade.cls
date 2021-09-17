@@ -40,10 +40,10 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
-            System.debug(debugString + ' - Superato blocco 3');
+            System.debug(debugString + ' - Superato generateRequest');
             
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body,context);
-            System.debug(debugString + ' - Superato blocco 3');
+            System.debug(debugString + ' - Superato executeCalloutRequestFuture');
             
         }catch(Exception ex){
             System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
