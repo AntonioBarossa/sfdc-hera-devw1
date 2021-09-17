@@ -26,25 +26,29 @@ public class HDT_SRV_DocumentalManagement{
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
 		List<Map<String,List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList,documentalContext);
-		formParamsMap.put('Contesto',context);
+		formParamsMap.put('Contesto', context);
 		System.debug(debugString + ' - Superato blocco 3');
 		
 		//TODO: PROSEGUIRE TESTING.
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
-			driver = generateDriver(recordObjectsListMap[i], driverStructure,formParamsMap);
-			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
+			driver = generateDriver(recordObjectsListMap[i], driverStructure, formParamsMap);
+			payload = generatePayload(recordObjectsListMap[i], payloadStructure, formParamsMap);
+			
 			if(context.equalsIgnoreCase('EC')){
 				payload += generatePayloadEstrattoConto(formParamsMap);
 			}else if(context.equalsIgnoreCase('GC')){
 				payload += generatePayloadGestioneCredito(formParamsMap);
 			}
+			
 			Blob payloadBlob = Blob.valueOf(payload);
 			payload = EncodingUtil.base64Encode(payloadBlob);
 			System.debug('Paylod ' + payload);
+			
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
+		System.debug(debugString + ' - Superato blocco 4');
 		
 		body = composeJson(recordId, driverPayloadListMap,formParamsMap,recordObjectsListMap[0]);
 		System.debug('Body ' + body);
@@ -525,12 +529,19 @@ public class HDT_SRV_DocumentalManagement{
 		}
 		return signInfo;
 	}
-	private static List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> generateDriver(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations,Map<String,Object> formParams){
+	private static List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> generateDriver(Map<String,List<sObject>> inputs, HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations, Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generateDriver';
+		System.debug(debugString);
+		
 		List<Map<String,String>> driverListMap = new List<Map<String,String>>();
 		Map<String,String> driverMap = new Map<String,String>();
 		String value = '';
+		
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver driver = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver();
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driverList = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
+		
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
 			
 			List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord> records = singleSection.records;
@@ -578,6 +589,11 @@ public class HDT_SRV_DocumentalManagement{
 	}
 	
 	private static String generatePayload(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations,Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generatePayload';
+		System.debug(debugString);
+		
 		String[] payloadArray = new List<String>();
 		String payload = '';
 		Boolean recordNull = true;
@@ -666,6 +682,11 @@ public class HDT_SRV_DocumentalManagement{
 		*/
 
 	public static String generatePayloadEstrattoConto(Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generatePayloadEstrattoConto';
+		System.debug(debugString);
+		
 		String payload = '';
 		String div='|';
 		String fineRiga='\n';
@@ -861,6 +882,11 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 */
 	public static String generatePayloadGestioneCredito(Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generatePayloadGestioneCredito';
+		System.debug(debugString);
+		
 		String payload = '';
 		String div='|';
 		String fineRiga='\n';
