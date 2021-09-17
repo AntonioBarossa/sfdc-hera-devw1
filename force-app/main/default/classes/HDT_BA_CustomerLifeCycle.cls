@@ -1,18 +1,22 @@
 public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable<SObject> {
-    private static Set<String> energyCommodities = new Set<String> {'Energia Elettrica', 'Gas'};
-    private static Map<String,Integer> statusWeight = new Map<String,Integer> {
+    private static final Map<String,Integer> STATUS_WEIGHT_MAP = new Map<String,Integer> {
         'LOST' => 7,
         'LEAVING' => 6,
         'USAGE' => 5,
         'GROWTH' => 4,
         'ENGAGEMENT' => 3,
         'WELCOME' => 2,
-        'ONBOARDING' => 1
+        'ONBOARDING' => 1,
+        null => 0
     };
-    private static Date today = Date.today();
+    private static final Set<String> ENERGY_COMMODITIES = new Set<String> {
+        'Energia Elettrica',
+        'Gas'
+    };
+    private static final Date TODAY = Date.today();
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT' +
+        String query = 'SELECT ' +
                 'Id,' +
                 'ActiveServicesEle__c,' +
                 'ActiveServicesGas__c,' +
@@ -27,7 +31,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
                 'CustomerLifeCycleVAS__c,' +
                 'CustomerLifeCycleWaste__c,' +
                 'CustomerLifeCycleWater__c' +
-            'FROM Account'
+            ' FROM Account'
         ;
         return Database.getQueryLocator(query);
     }
@@ -35,8 +39,8 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
     public void execute(Database.BatchableContext BC, List<SObject> scope) {
         Map<Id, Account> accountMap = new Map<Id, Account>((List<Account>) scope);
         Map<Id, Account> processedAccountMap = new Map<Id, Account>();
-        Map<Id, Case> caseMap = new Map<Id, Case>();
 
+        Map<Id, Case> caseMap = new Map<Id, Case>();
         for(Case c : [SELECT Id, Contract__c, CancellationRequestDate__c FROM Case WHERE Contract__r.AccountId IN :accountMap.keySet() AND Cluster__c = 'Disattivazioni' AND Status != 'Closed' ORDER BY CreatedDate ASC]) {
             caseMap.put(c.Contract__c, c);
         }
@@ -47,14 +51,17 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         for(Contract contract : [
             SELECT
                 Id,
+                AccountId,
                 (SELECT Id FROM Assets__r WHERE Product2.family = 'VAS Prodotto'),
                 (SELECT Id FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.family in ('VAS Fatturabili','VAS Servizio')),
                 CustomerSignedDate,
                 ActivatedDate,
+                StartDate,
                 EndDate,
                 ServicePoint__r.CommoditySector__c
             FROM Contract
             WHERE
+                StartDate != null AND
                 AccountId IN :accountMap.keySet() AND
                 ServicePoint__r.CommoditySector__c IN ('Energia Elettrica','Gas','Teleriscaldamento','Acqua','Ambiente')
             ORDER BY AccountId, CreatedDate DESC
@@ -64,28 +71,27 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
                 account = processedAccountMap.get(contract.AccountId);
             } else {
                 account = new Account(
-                    Id = contract.AccountId
+                    Id = contract.AccountId,
+                    ActiveServicesEle__c = 0,
+                    ActiveServicesGas__c = 0
                 );
                 processedAccountMap.put(contract.AccountId, account);
             }
-
-            if(contract.EndDate >= today) {
+            if(contract.EndDate != null && contract.EndDate <= TODAY) {
                 status = 'LOST';
-            } else if(isEnergy(commodity) && (caseMap.get(contract.Id).CancellationRequestDate__c <= today)) {
+            } else if(isEnergy(commodity) && caseMap.get(contract.Id) != null && (caseMap.get(contract.Id).CancellationRequestDate__c <= TODAY)) {
                 status = 'LEAVING';
-            } else if(!isEnergy(commodity) && (contract.StartDate.addDays(60) <= today) && (today < contract.EndDate)) {
+            } else if(!isEnergy(commodity) && (contract.StartDate.addDays(60) <= TODAY) && (contract.EndDate != null) && (TODAY < contract.EndDate)) {
                 status = 'USAGE';
-            } else if(isEnergy(commodity) && (contract.StartDate.addYears(2) <= today || hasMultipleContracts(account, commodity))) {
+            } else if(isEnergy(commodity) && (contract.StartDate.addYears(2) <= TODAY || hasMultipleContracts(account, commodity))) {
                 status = 'GROWTH';
-            } else if(isEnergy(commodity) && contract.StartDate.addYears(1) <= today && today < contract.StartDate.addYears(2)) {
+            } else if(isEnergy(commodity) && contract.StartDate.addYears(1) <= TODAY && TODAY < contract.StartDate.addYears(2)) {
                 status = 'ENGAGEMENT';
-            } else if(contract.StartDate <= today && today <= contract.StartDate.addDays(isEnergy(commodity) ? 365 : 60)) {
+            } else if(contract.StartDate <= TODAY && TODAY <= contract.StartDate.addDays(isEnergy(commodity) ? 365 : 60)) {
                 status = 'WELCOME';
-            } else if (contract.CustomerSignedDate <= today && today < contract.StartDate) {
+            } else if (contract.CustomerSignedDate <= TODAY && TODAY < contract.StartDate) {
                 status = 'ONBOARDING';
             }
-
-            // if(isVas(contract) && )
 
             switch on commodity {
                 when 'Energia Elettrica' {
@@ -107,7 +113,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
 
             if(
                 isVas(contract) &&
-                (String.isBlank(account.CustomerLifeCycleVAS__c) || statusWeight.get(account.CustomerLifeCycleVAS__c) < statusWeight.get(status))
+                (String.isBlank(account.CustomerLifeCycleVAS__c) || STATUS_WEIGHT_MAP.get(account.CustomerLifeCycleVAS__c) < STATUS_WEIGHT_MAP.get(status))
             ) {
                 account.CustomerLifeCycleVAS__c = status;
             }
@@ -127,23 +133,23 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
                 ) {
                     processedAccountMap.remove(originalAccount.Id);
                 } else {
-                    if(statusWeight.get(processedAccount.CustomerLifeCycleEle__c) >= statusWeight.get(processedAccount.CustomerLifeCycleGas__c)) {
+                    if(STATUS_WEIGHT_MAP.get(processedAccount.CustomerLifeCycleEle__c) >= STATUS_WEIGHT_MAP.get(processedAccount.CustomerLifeCycleGas__c)) {
                         status = processedAccount.CustomerLifeCycleEle__c;
                     } else {
                         status = processedAccount.CustomerLifeCycleGas__c;
                     }
-                    if(statusWeight.get(status) >= statusWeight.get(processedAccount.CustomerLifeCycleVAS__c)) {
+                    if(STATUS_WEIGHT_MAP.get(status) >= STATUS_WEIGHT_MAP.get(processedAccount.CustomerLifeCycleVAS__c)) {
                         processedAccount.CustomerLifeCycleEnergy__c = status;
                     } else {
                         processedAccount.CustomerLifeCycleEnergy__c = processedAccount.CustomerLifeCycleVAS__c;
                     }
 
-                    if(statusWeight.get(processedAccount.CustomerLifeCycleTLR__c) >= statusWeight.get(processedAccount.CustomerLifeCycleWaste__c)) {
+                    if(STATUS_WEIGHT_MAP.get(processedAccount.CustomerLifeCycleTLR__c) >= STATUS_WEIGHT_MAP.get(processedAccount.CustomerLifeCycleWaste__c)) {
                         status = processedAccount.CustomerLifeCycleTLR__c;
                     } else {
                         status = processedAccount.CustomerLifeCycleWaste__c;
                     }
-                    if(statusWeight.get(status) >= statusWeight.get(processedAccount.CustomerLifeCycleWater__c)) {
+                    if(STATUS_WEIGHT_MAP.get(status) >= STATUS_WEIGHT_MAP.get(processedAccount.CustomerLifeCycleWater__c)) {
                         processedAccount.CustomerLifeCycleNonEnergy__c = status;
                     } else {
                         processedAccount.CustomerLifeCycleNonEnergy__c = processedAccount.CustomerLifeCycleWater__c;
@@ -159,7 +165,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
     }
 
     private Boolean isEnergy(String commodity) {
-        return energyCommodities.contains(commodity);
+        return ENERGY_COMMODITIES.contains(commodity);
     }
 
     private Boolean isVas(Contract contract) {

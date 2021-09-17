@@ -75,9 +75,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
     }   
      
-    public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
+    // public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
         
-    }
+    // }
 
     public static void orderPhaseManagementAfterUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
 
@@ -111,10 +111,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> ordersQualityOkUpdate = new List<Order>();
 
 
-        List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
+       // List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
 
 
-        for(Order o : ordersFullList){
+        for(Order o : ordersFullList2){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
             }
@@ -156,9 +156,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             orderSrv.updateRecords(childOrdersDocValid);
         }
         
-        if (!ordersQualityOkUpdate.isEmpty()) {
-            orderSrv.updateRecords(ordersQualityOkUpdate);
-        }
+        // if (!ordersQualityOkUpdate.isEmpty()) {
+        //     orderSrv.updateRecords(ordersQualityOkUpdate);
+        // }
         
         List<Order> ordersHeroku = new List<Order>();
         List<Order> ordersSiebel = new List<Order>();
