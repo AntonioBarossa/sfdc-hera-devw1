@@ -29,6 +29,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>SalesCompany__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContractReference__c</field>
             </layoutItems>
             <layoutItems>
