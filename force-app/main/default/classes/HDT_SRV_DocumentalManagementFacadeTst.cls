@@ -94,10 +94,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         Order myOrder = [SELECT Id FROM Order];
         String orderId = myOrder.Id;
         
+        //TODO: IMPLEMENT MOCK
         
         //TESTING
+        Test.startTest();
         HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
-        
+        Test.stopTest();
         
         //RETRIEVING DATA
         
@@ -153,5 +155,27 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     
     
+    //HTTP MOCKS
+    public class HDT_SRV_DocumentalManagementFacade_HTTP_MOCK implements HttpCalloutMock {
+        
+        global HTTPResponse respond(HTTPRequest request) {
+            
+            //TODO: IMPLEMENT
+            return new HttpResponse();
+            /*
+            HttpResponse response = new HttpResponse();
+            String body = request.getBody();
+            HDT_WRP_DocumentalRequest requestWrp = (HDT_WRP_DocumentalRequest) JSON.deserialize(body, HDT_WRP_DocumentalRequest.class);
+            String requestId = requestWrp.deliverPackageRequest.requestId;
+            String responseStr = '{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": {"deliverPackageResponse":{"serviceList":[{"attachmentList":[{"signature":"0","mandatory":"0","version":"21_09","type":"ATT","code":"MOD_H40"},{"signature":"0","mandatory":"0","version":"21_09","type":"ATT","code":"MOD_I40"},{"signature":"0","mandatory":"0","version":"21_09","type":"ATT","code":"MOD_ALL_TEC"}],"serviceId":"'+requestId+'"}],"message":"Composizione eseguita con successo. Totale pagine: 8","result":"000","archive":null,"packageIds":"Aa71teQHAl","requestId":"'+requestId+'","composedDocument":"JVBERi0xLjcKJeLjz9MKNSAwIG9iago"}}}';
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(responseStr);
+            response.setStatusCode(200);
+            response.setStatus('OK');
+            return response;
+            */
+            
+        }
+    }
     
 }

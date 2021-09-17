@@ -29,7 +29,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         return JSON.serialize(resultMap);
     }
 
-    public static void sendDocument(String recordId,String context,String formParams){
+    public static void sendDocument(String recordId, String context, String formParams){
         
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocument';
@@ -42,7 +42,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             System.debug(debugString + ' - Superato generateRequest');
             
-            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body,context);
+            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
             System.debug(debugString + ' - Superato executeCalloutRequestFuture');
             
         }catch(Exception ex){

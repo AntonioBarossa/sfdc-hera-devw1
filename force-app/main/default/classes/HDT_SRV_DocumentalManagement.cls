@@ -49,7 +49,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 		System.debug(debugString + ' - Superato blocco 4');
 		
-		body = composeJson(recordId, driverPayloadListMap,formParamsMap,recordObjectsListMap[0]);
+		body = composeJson(recordId, driverPayloadListMap, formParamsMap, recordObjectsListMap[0]);
 		System.debug('Body ' + body);
 		
 		return body;
@@ -212,9 +212,12 @@ public class HDT_SRV_DocumentalManagement{
 
 	@future(callout=true)
 	public static void executeCalloutRequestFuture(String body, String context){
+		
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		
 		manageResponse(documentalResponse, context);
+		
 	}
 	
 	public static HDT_WRP_DocumentalResponse executeCalloutRequest(String body,String context){
@@ -430,6 +433,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 	private static String composeJson(String recordId, List<Map<String,Object>> driverPayloadListMap,Map<String,Object> formParams,Map<String,List<sObject>> inputs){
+		
 		HDT_WRP_DocumentalRequest documentalRequest = new HDT_WRP_DocumentalRequest();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest sPackageRequest = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest();
@@ -438,6 +442,7 @@ public class HDT_SRV_DocumentalManagement{
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		String parsedContext = '';
 		String processNumber = '';
+		
 		try{
 			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
 				parsedContext = 'Case';
