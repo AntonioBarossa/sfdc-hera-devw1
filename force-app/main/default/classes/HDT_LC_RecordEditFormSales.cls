@@ -118,12 +118,6 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static void saveDraft(String caseId, String accountId, Map<String,Object> caseob){
         try {
             Case cs= new Case(Id=caseId);
-            List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,Phase__c');
-            if(caseList != null && !caseList.isEmpty() && caseList[0].Phase__c == 'Bozza'){
-                cs.phase__c = 'In Lavorazione';
-                cs.status = 'In Lavorazione';
-            }
-           // Case cs= new Case(Id=caseId);
 
             if(caseob.containsKey('OperationSubType__c')){
                 cs.put('OperationSubType__c',String.valueOf(caseob.get('OperationSubType__c')));
