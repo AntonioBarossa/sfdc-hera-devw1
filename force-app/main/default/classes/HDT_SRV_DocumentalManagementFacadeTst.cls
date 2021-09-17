@@ -79,6 +79,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         //Documento Driver3
         Document myDocDriver3 = new Document();
         myDocDriver3.name = 'Driver3';
+        myDocDriver3.FolderId = folderId;
         myDocDriver3.Body = Blob.valueOf(JSON.serialize(docStructure));//TODO: POSSIBILE SI DEBBA SCORPORARE IN UN SECONDO ITEM
         insert myDocDriver3;
         
