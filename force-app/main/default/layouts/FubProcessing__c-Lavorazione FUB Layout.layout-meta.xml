@@ -11,6 +11,10 @@
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
+            <layoutItems><!--Matteo Tatti 17/09/2021-->
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
