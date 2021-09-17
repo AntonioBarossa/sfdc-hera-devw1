@@ -3,10 +3,10 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
 //INIZIO SVILUPPI EVERIS
 import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
+import init from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.init';
 import { getRecord, getFieldValue, updateRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
@@ -64,6 +64,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
+    userProfile;
     get orderWithData(){
         return { ...this.order, ...this.sectionDataToSubmit };
     }
@@ -1338,7 +1339,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     //    required, disabled, processVisibility, value
                     // )
                     new fieldData(
-                        'Numero Contratto','ConfirmCustomerContract__c',
+                        'Numero Contratto','ContractReference__c',
                         true, 
                         false, true, '',''
                     ), 
@@ -1830,7 +1831,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'VATfacilitationFlag__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.userProfile === 'Hera Teleseller Partner User',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1839,7 +1840,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'FacilitationExcise__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.userProfile === 'Hera Teleseller Partner User',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -2226,10 +2227,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     
-    connectedCallback(){
+    async connectedCallback(){
         //EVERIS
         console.log('Details Callback Start');
         //EVERIS
+
+        let initData = await init();
+        console.log('initData: ' + JSON.stringify(initData));
+
+        this.userProfile = initData.userProfile;
 
         this.title = 'Processo di ' + this.order.RecordType.Name;
         this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
@@ -2288,32 +2294,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }else{
             tipoDoc = 'MODULISTICA_B12';
         }
-        var formParams = {     
-            mode : 'Print',
-            Archiviato : 'Y',
-            TipoPlico:tipoDoc,
-            sendMode:'Sportello'
-        };
-        sendAdvanceDocumentation({
-            recordId: this.order.Id,
-            context: 'DocumentazioneAnticipata',
-            formParams: JSON.stringify(formParams)
-        }).then(result => {
-            const event = new ShowToastEvent({
-                title: 'Successo',
-                message: 'Documentazione inviata',
-                variant: 'success',
-            });
-            this.dispatchEvent(event);
-        }).catch(error => {
-            const event = new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Non è stato possibile inviare la documentazione al cliente',
-                variant: 'error',
-            });
-            this.dispatchEvent(event);
-            console.error(error);
-        });
+
+        this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
+        this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
+
+
     }
 
     retryEsitiCreditCheck(){        

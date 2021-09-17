@@ -15,13 +15,19 @@
             <layoutItems>
                 <field>ToPublishDate__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <field>Language</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <field>PublicLink__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <field>LastModifiedById</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -105,6 +111,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>EditDraftKnowledgeArticleVersion</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>DeleteArchiveKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>1</sortOrder>
@@ -118,11 +129,6 @@
             <actionName>CreateDraftFromOnlineKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>EditDraftKnowledgeArticleVersion</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>DeleteDraftKnowledgeArticleVersion</actionName>
