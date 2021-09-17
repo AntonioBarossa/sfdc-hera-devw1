@@ -38,7 +38,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         
         
         //SETUP
-        Order myOrder = [SELECT Id FROM Order];
+        mySetup();
         
         
         //TODO: SCORPORARE IN UTILITY DI CREAZIONE OGGETTO AD HOC
@@ -86,11 +86,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         Map<String,Object> formParams = new Map<String,Object>();
         String formParamsJSON = JSON.serialize(formParams);
         
+        
+        Order myOrder = [SELECT Id FROM Order];
         String orderId = myOrder.Id;
         
         
         //TESTING
-        String result = HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
+        HDT_SRV_DocumentalManagementFacade.sendDocument(orderId, context, formParamsJSON);
         
         
         //RETRIEVING DATA
@@ -110,13 +112,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     
     //sendAdvanceDocumentation
-    
+    /*
     @isTest
     private static void sendAdvanceDocumentation() {
         //MOCK TEST
         
     }
-    
+    */
     
     
     //getSignSendMode

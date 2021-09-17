@@ -30,11 +30,21 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
     }
 
     public static void sendDocument(String recordId,String context,String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocument';
+		System.debug(debugString);
+        
         String body='';
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+        
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
+            System.debug(debugString + ' - Superato blocco 3');
+            
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body,context);
+            System.debug(debugString + ' - Superato blocco 3');
+            
         }catch(Exception ex){
             System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }
