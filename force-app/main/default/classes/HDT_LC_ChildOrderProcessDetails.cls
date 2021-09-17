@@ -14,6 +14,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+
+    @AuraEnabled
+    public static Map<String,Object> init(String Id){
+        Map<String,Object> result = new Map<String,Object>();
+
+        List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+
+        result.put('userProfile', user[0].Profile.Name);
+
+        return result;
+    }
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update order process step
@@ -108,6 +122,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
+        //02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni
+        Order orderFull = orderQr.getRecordById(order.Id);
+        if (orderFull.IsCloned__c && orderFull.Phase__c=='Bozza') {
+            order.Phase__c = 'Documentazione Validata';
+        }
+
         exeChecks(order);
 
         orderSrv.updateRecord(order);
@@ -133,6 +153,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
         }
         //Check RequestOption__c (Opzione di Distribuzione) END
+
+        //Check iva e accise docs START
+        if (order.VATfacilitationFlag__c || order.FacilitationExcise__c) {
+            List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+            if (docsIvaAccise.isEmpty()) {
+                throw new AuraHandledException('Caricare documento per iva e accise');
+            }
+        }
+        //Check iva e accise docs END
     }
 
 

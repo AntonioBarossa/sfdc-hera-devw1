@@ -96,7 +96,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         expiredCorrection = True;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('2', boxType);
+        System.assertEquals('8', boxType);
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
         indemnityConfirmed = False;

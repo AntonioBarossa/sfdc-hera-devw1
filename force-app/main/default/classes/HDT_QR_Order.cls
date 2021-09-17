@@ -103,6 +103,8 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.CompanyOwner__c,
             Sale__r.SalesContact__c,
+            SalesContact__r.Email,
+            SalesContact__r.MobilePhone,
             SwitchOutDate__c,
             Vat__c,
             ExciseGas__c,
@@ -235,7 +237,9 @@ public inherited sharing class HDT_QR_Order {
             OutgoingCreditCheckResult__c,
             IncomingCreditCheckResult__c,
             CreditCheckDescription__c,
-            DocumentPackage__c
+            DocumentPackage__c,
+            IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
+            RegionalAdditional__c                            //@frpanico 16/09/21 
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -292,6 +296,7 @@ public inherited sharing class HDT_QR_Order {
             Sale__c,
             CreatedDate,
             Step__c,
+            Sale__r.Channel__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             //INIZIO SVILUPPI EVERIS
@@ -800,5 +805,11 @@ public inherited sharing class HDT_QR_Order {
 
     public List<Order> getOrderForComfort(String id){
         return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+    }
+
+    //@frpanico getExciseTranscode
+    public HDT_ExciseTranscode__mdt getExciseTranscode(String exciseString)
+    {
+        return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];
     }
 }
