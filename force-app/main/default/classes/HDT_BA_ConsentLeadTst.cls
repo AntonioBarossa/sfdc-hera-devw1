@@ -104,13 +104,8 @@ public class HDT_BA_ConsentLeadTst {
             insert contacts2;
         
         
-        
-            HDT_WebServiceConfiguration__c wsConf=new HDT_WebServiceConfiguration__c();
-            wsConf.name='CampagenDmDmpData';
-            wsConf.Endpoint__c='https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files';
-            wsConf.Method__c='POST';
-            wsConf.User__c='MulesoftSalesforceUser';
-            insert wsConf;
+            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('CampagenDmDmpData','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
+            
         }
 	}
     
