@@ -1,4 +1,7 @@
 <template>
+    <template if:false={loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
     <template if:false={isSuspend}>
         <template if:true={showAccise}>
         <div class="slds-grid slds-grid_vertical">
@@ -279,7 +282,7 @@
         <div class="slds-grid slds-grid_vertical">
             <div class="slds-col slds-grid">
                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                        <lightning-input type="Number" name="NumeroContatti" label="Numero Contatti"
+                        <lightning-input type="Number" onchange={getValuePhone} name="NumeroContatti" label="Numero Contatti"
                         value={act.NumberOfAttempt__c} 
                         >
                         </lightning-input>
