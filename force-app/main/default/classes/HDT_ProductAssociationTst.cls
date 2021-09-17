@@ -29,7 +29,17 @@ public class HDT_ProductAssociationTst {
     public static void getProductList(){
         
         String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Punto Fornitura' LIMIT 1].Id;
-        String filterString = '{"Name":"emplate Offerta ","DescriptionSAP__c":"HERA ","ProductCode":"TEMPLATE_OFF_NON_DOM_EE","Version__c":"v1","Status__c":"In Sviluppo","TypeOffer__c":"Scaffale","CategoryFamily__c":"A.R.E.R.A"}';
+
+        Product2 prodWrp = new Product2();
+        prodWrp.Name = 'template Offerta';
+        prodWrp.DescriptionSAP__c = 'HERA';
+        prodWrp.ProductCode = 'TEMPLATE_OFF_NON_DOM_EE';
+        prodWrp.Version__c = 'v1';
+        prodWrp.Status__c = 'In Sviluppo';
+        prodWrp.TypeOffer__c = 'Scaffale';
+        prodWrp.CategoryFamily__c = 'A.R.E.R.A';
+        String filterString = JSON.serialize(prodWrp);
+        
         HDT_LC_ProductAssociation.getProductList(filterString, optionalSkuId, 'insert', false, '1');
 
         //test try catch error
@@ -45,14 +55,33 @@ public class HDT_ProductAssociationTst {
     public static void runProductOptionAssociation_create(){
 
         String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Punto Fornitura' LIMIT 1].Id;
-        String productOptionObj = '{"SBQQ__OptionalSKU__c":"' + optionalSkuId + '","SBQQ__Number__c":"3","SBQQ__Quantity__c":null,"SBQQ__QuantityEditable__c":false,"SBQQ__Selected__c":false,"SBQQ__Feature__c":null,"SBQQ__Type__c":"Component"}';
+        
+        SBQQ__ProductOption__c prodOptionWrp = new SBQQ__ProductOption__c();
+        prodOptionWrp.SBQQ__OptionalSKU__c = optionalSkuId;
+        prodOptionWrp.SBQQ__Number__c = 3;
+        prodOptionWrp.SBQQ__Quantity__c = null;
+        prodOptionWrp.SBQQ__QuantityEditable__c = false;
+        prodOptionWrp.SBQQ__Selected__c = false;
+        prodOptionWrp.SBQQ__Feature__c = null;
+        prodOptionWrp.SBQQ__Type__c = 'Component';
+        String productOptionObj = JSON.serialize(prodOptionWrp);
         
         List<String> recordList = new List<String>();
         String offerId = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
         recordList.add(offerId);
 
         String executionType = 'select';
-        String filterString = '{"Name":null,"DescriptionSAP__c":null,"ProductCode":"","Version__c":null,"Status__c":"In Sviluppo","TypeOffer__c":null,"CategoryFamily__c":null}';
+
+        Product2 prodWrp = new Product2();
+        prodWrp.Name = null;
+        prodWrp.DescriptionSAP__c = null;
+        prodWrp.ProductCode = '';
+        prodWrp.Version__c = null;
+        prodWrp.Status__c = 'In Sviluppo';
+        prodWrp.TypeOffer__c = null;
+        prodWrp.CategoryFamily__c = null;
+        String filterString = JSON.serialize(prodWrp);
+
         String dmlContext = 'insert';
 
         //test confirm selection button
@@ -60,7 +89,17 @@ public class HDT_ProductAssociationTst {
 
         //test batch
         executionType = 'filter';
-        filterString = '{"Name":null,"DescriptionSAP__c":null,"ProductCode":"","Version__c":null,"Status__c":"In Sviluppo","TypeOffer__c":null,"CategoryFamily__c":null}';
+
+        Product2 prodWrp2 = new Product2();
+        prodWrp2.Name = null;
+        prodWrp2.DescriptionSAP__c = null;
+        prodWrp2.ProductCode = '';
+        prodWrp2.Version__c = null;
+        prodWrp2.Status__c = 'In Sviluppo';
+        prodWrp2.TypeOffer__c = null;
+        prodWrp2.CategoryFamily__c = null;
+        filterString = JSON.serialize(prodWrp2);
+
         HDT_LC_ProductAssociation.runProductOptionAssociation('', productOptionObj, recordList, executionType, filterString, dmlContext);
 
     }
@@ -69,14 +108,33 @@ public class HDT_ProductAssociationTst {
     public static void runProductOptionAssociation_delete(){
 
         String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Punto Fornitura' LIMIT 1].Id;
-        String productOptionObj = '{"SBQQ__OptionalSKU__c":"' + optionalSkuId + '","SBQQ__Number__c":"3","SBQQ__Quantity__c":null,"SBQQ__QuantityEditable__c":false,"SBQQ__Selected__c":false,"SBQQ__Feature__c":null,"SBQQ__Type__c":"Component"}';
+
+        SBQQ__ProductOption__c prodOptionWrp = new SBQQ__ProductOption__c();
+        prodOptionWrp.SBQQ__OptionalSKU__c = optionalSkuId;
+        prodOptionWrp.SBQQ__Number__c = 3;
+        prodOptionWrp.SBQQ__Quantity__c = null;
+        prodOptionWrp.SBQQ__QuantityEditable__c = false;
+        prodOptionWrp.SBQQ__Selected__c = false;
+        prodOptionWrp.SBQQ__Feature__c = null;
+        prodOptionWrp.SBQQ__Type__c = 'Component';
+        String productOptionObj = JSON.serialize(prodOptionWrp);
         
         List<String> recordList = new List<String>();
         String offerId = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
         recordList.add(offerId);
 
         String executionType = 'select';
-        String filterString = '{"Name":null,"DescriptionSAP__c":null,"ProductCode":"","Version__c":null,"Status__c":"In Sviluppo","TypeOffer__c":null,"CategoryFamily__c":null}';
+
+        Product2 prodWrp = new Product2();
+        prodWrp.Name = null;
+        prodWrp.DescriptionSAP__c = null;
+        prodWrp.ProductCode = '';
+        prodWrp.Version__c = null;
+        prodWrp.Status__c = 'In Sviluppo';
+        prodWrp.TypeOffer__c = null;
+        prodWrp.CategoryFamily__c = null;
+        String filterString = JSON.serialize(prodWrp);
+
         String dmlContext = 'delete';
 
         //test confirm selection button
@@ -84,7 +142,17 @@ public class HDT_ProductAssociationTst {
 
         //test batch
         executionType = 'filter';
-        filterString = '{"Name":null,"DescriptionSAP__c":null,"ProductCode":"","Version__c":null,"Status__c":"In Sviluppo","TypeOffer__c":null,"CategoryFamily__c":null}';
+
+        Product2 prodWrp2 = new Product2();
+        prodWrp2.Name = null;
+        prodWrp2.DescriptionSAP__c = null;
+        prodWrp2.ProductCode = '';
+        prodWrp2.Version__c = null;
+        prodWrp2.Status__c = 'In Sviluppo';
+        prodWrp2.TypeOffer__c = null;
+        prodWrp2.CategoryFamily__c = null;
+        filterString = JSON.serialize(prodWrp2);
+        
         HDT_LC_ProductAssociation.runProductOptionAssociation('', productOptionObj, recordList, executionType, filterString, dmlContext);
 
     }
