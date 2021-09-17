@@ -418,14 +418,18 @@ public class HDT_SRV_DocumentalManagement{
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
+			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
+			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
-					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,recordId, response.deliverPackageResponse.packageIds,processRecord);
-					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
+					String msg = response.deliverPackageResponse.message;
+					String pkgId = response.deliverPackageResponse.packageIds;
+					HDT_UTL_DocumentalManagement.createDocumentSendTracking(msg, recordId, pkgId, processRecord);
+					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response, context);
 				}
 			}
 		}catch(Exception ex){

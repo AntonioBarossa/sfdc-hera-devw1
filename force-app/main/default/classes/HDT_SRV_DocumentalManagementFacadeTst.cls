@@ -6,7 +6,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
-    
+    private static Order testOrder;
     
     
     //TEST SETUP
@@ -92,9 +92,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         
         
         Order myOrder = [SELECT Id FROM Order];
+        testOrder = myOrder;
         String orderId = myOrder.Id;
         
-        //TODO: IMPLEMENT MOCK
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagementFacade_HTTP_MOCK());
         
         //TESTING
         Test.startTest();
@@ -158,22 +160,59 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     //HTTP MOCKS
     public class HDT_SRV_DocumentalManagementFacade_HTTP_MOCK implements HttpCalloutMock {
         
-        global HTTPResponse respond(HTTPRequest request) {
+        public HTTPResponse respond(HTTPRequest request) {
             
-            //TODO: IMPLEMENT
-            return new HttpResponse();
-            /*
             HttpResponse response = new HttpResponse();
-            String body = request.getBody();
-            HDT_WRP_DocumentalRequest requestWrp = (HDT_WRP_DocumentalRequest) JSON.deserialize(body, HDT_WRP_DocumentalRequest.class);
-            String requestId = requestWrp.deliverPackageRequest.requestId;
-            String responseStr = '{"status": "success","correlationId": "92293250-df3b-11eb-a73c-0200a41fc6da","timestamp": "2021-07-07T17:54:13","data": {"deliverPackageResponse":{"serviceList":[{"attachmentList":[{"signature":"0","mandatory":"0","version":"21_09","type":"ATT","code":"MOD_H40"},{"signature":"0","mandatory":"0","version":"21_09","type":"ATT","code":"MOD_I40"},{"signature":"0","mandatory":"0","version":"21_09","type":"ATT","code":"MOD_ALL_TEC"}],"serviceId":"'+requestId+'"}],"message":"Composizione eseguita con successo. Totale pagine: 8","result":"000","archive":null,"packageIds":"Aa71teQHAl","requestId":"'+requestId+'","composedDocument":"JVBERi0xLjcKJeLjz9MKNSAwIG9iago"}}}';
+            
+            //HDT_WRP_DocumentalResponseAttachment
+            //è di fatto 1:1 DocumentalEnvelopeAttachment__c
+            HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment attach;
+            attach = new HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment();
+            attach.code = 'Attachment Code';
+            attach.type = '';
+            attach.version = '1.0';
+            attach.mandatory = '1';
+            attach.signature = '';
+            
+            
+            //HDT_WRP_DocumentalResponseServiceItem
+            HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem servItem;
+            servItem = new HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem();
+            servItem.serviceId = '';//recordId
+            servItem.attachId = '';
+            servItem.attachName = '';
+            servItem.attachVersion = '';
+            servItem.attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>{attach};
+            
+            
+            //HDT_WRP_DocumentalResponseRoot
+            HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseRoot docRoot;
+            docRoot = new HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseRoot();
+            docRoot.requestId = testOrder.Id;
+            docRoot.composedDocument = '';
+            docRoot.packageIds = 'ID_Tracking_Envelope_ID';
+            docRoot.archive = 'Y';
+            docRoot.result = '000';
+            docRoot.message = '';//Pare non sia utilizzato.
+            docRoot.serviceList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>{servItem};
+            
+            
+            //HDT_WRP_DocumentalResponse
+            HDT_WRP_DocumentalResponse docRes = new HDT_WRP_DocumentalResponse();
+            docRes.responseCode = 200;//è IL VERO response.setStatusCode
+            docRes.responseStatus = 'Success';//è IL VERO response.setStatus
+            docRes.deliverPackageResponse = docRoot;
+            
+            Map<String, Object> responseBodyMap = new Map<String, Object>();
+            responseBodyMap.put('data', docRes);
+            
             response.setHeader('Content-Type', 'application/json');
-            response.setBody(responseStr);
+            response.setBody(JSON.serialize(responseBodyMap));
             response.setStatusCode(200);
             response.setStatus('OK');
+            
             return response;
-            */
+            
             
         }
     }

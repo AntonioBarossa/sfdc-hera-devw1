@@ -89,14 +89,22 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			return null;
 		}
 	}
+	
 	public static void createDocumentEnvelopeAttachment(HDT_WRP_DocumentalResponse response, String context){
+		
+		//DEBUG
+		String debugString = 'HDT_UTL_DocumentalManagement - createDocumentEnvelopeAttachment';
+		System.debug(debugString);
+		
 		try {
 			String recordId;
 			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem> serviceItemList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>();
 			serviceItemList.addAll(response.deliverPackageResponse.serviceList);
+			
 			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
 			List<Order> orderList = new List<Order>();
+			
 			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
 				recordId = (Id) serviceItem.serviceId;
 				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
@@ -118,11 +126,14 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					envelopeList.add(envelope);
 				}
 			}
+			
 			if(envelopeList.size()>0){
 				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
+				System.debug(debugString + ' - result: '+ result);
 			}
 			if(orderList.size()>0){
 				Boolean resultOrder = HDT_UTL_DatabaseService.updateSObject(orderList);
+				System.debug(debugString + ' - resultOrder: '+ resultOrder);
 			}
 			
 		} catch (Exception ex) {
@@ -139,7 +150,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
@@ -166,8 +177,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
-
-	public static sObject getProcessRecord(String requestId, String context){
+	
+	//SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
+	public static SObject getProcessRecord(String requestId, String context){
 		String fieldString = '';
 		String fromString = '';
 		String whereString = '';
@@ -193,10 +205,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
 		return toReturnList[0];
 	}
-	public static void createDocumentSendTracking(String message, Id requestId, String envelopeId,sObject processRecord){
+	
+	public static void createDocumentSendTracking(String message, Id requestId, String envelopeId, SObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentSendTracking__c documentalSendTracking = new DocumentSendTracking__c ();
+			
 			switch on sObjName {
 				when 'Case' {
 					documentalSendTracking.Case__c = (Id) requestId;
@@ -217,14 +231,16 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 			}
+			
 			documentalSendTracking.SendDate__c = Date.today();
 			documentalSendTracking.EnvelopeId__c = envelopeId;
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
+			
 		} catch (Exception ex) {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,sObject processRecord){
+	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,SObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
@@ -248,7 +264,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	public static void createLandRegistryData(Id requestId,sObject processRecord){
+	public static void createLandRegistryData(Id requestId,SObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			if (sObjName != 'Order'){
