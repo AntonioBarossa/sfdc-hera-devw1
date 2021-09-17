@@ -1949,7 +1949,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Plico  Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione da validare</fullName>
             <default>false</default>
         </values>
         <values>

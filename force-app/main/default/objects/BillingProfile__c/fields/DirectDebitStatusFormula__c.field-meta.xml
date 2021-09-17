@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DirectDebitStatusFormula__c</fullName>
+    <description>Campo tecnico per integrazione SOL.</description>
+    <externalId>false</externalId>
+    <formula>IF(TEXT(PaymentMethod__c) = &apos;RID&apos;, &apos;Attivo&apos;, &apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Stato Domiciliazione</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

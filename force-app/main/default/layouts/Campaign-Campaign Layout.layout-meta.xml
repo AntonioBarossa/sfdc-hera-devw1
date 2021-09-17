@@ -260,6 +260,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>PaperCampaignParameter__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
         </layoutColumns>
@@ -301,13 +305,23 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <!--Start HRAWRM-625 16/09/2021-->
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <relatedList>Campaign.OriginalCampaign__c</relatedList>
+    </relatedLists>
+      <!--End HRAWRM-625 16/09/2021-->
     <relatedLists>
         <fields>MEMBER_TYPE</fields>
         <fields>STATUS</fields>
         <fields>FIRST_NAME</fields>
         <fields>LAST_NAME</fields>
-        <fields>TITLE</fields>
-        <fields>COMPANY</fields>
+        <fields>PhoneNumber__c</fields>
+        <fields>Agency__c</fields>
+        <fields>ExcludeFub__c</fields>
+        <fields>OutcomeFub__c</fields>
         <relatedList>RelatedCampaignMemberList</relatedList>
     </relatedLists>
     <relatedLists>

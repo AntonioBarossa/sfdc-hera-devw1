@@ -233,12 +233,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             String beneficiaryType = getFieldValue(fields, 'AccountholderTypeBeneficiary__c');
             BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
             String reason = getFieldValue(fields, 'Reason__c');
-            if(billingProfile.PaymentMethod__c != 'RID' && !(reason.equalsIgnoreCase('Domiciliazione non attiva')) && caseType == 'Variazione Domiciliazione'){
+            if(billingProfile.PaymentMethod__c != 'RID' && reason != null && !(reason.equalsIgnoreCase('Domiciliazione non attiva')) && caseType == 'Variazione Domiciliazione'){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Billing Profile non domiciliati è possibile inseire soltanto \'Domiciliazione Non Attiva\''));
-            }else{
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }
-        
             if(!String.isEmpty(fiscalCode)){
                 string outcome = validateFiscalCode(fiscalCode);
                 if(!String.isEmpty(outcome))

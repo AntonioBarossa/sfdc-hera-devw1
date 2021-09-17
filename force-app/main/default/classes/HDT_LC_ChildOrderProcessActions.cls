@@ -11,6 +11,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -198,7 +199,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 HDT_QR_Order orderQr = new HDT_QR_Order();
                 HDT_QR_Contract contractQr = new HDT_QR_Contract();
                 Order currentOrder = orderQr.getRecordById(order.Id);
-                Contract contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                Contract contractReference = new Contract();
+                try
+                {
+                    contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                }
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -227,11 +236,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
                 //@frpanico logica if reseller --> Esportazione VS Siebel
-                if(contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
                 {
                     orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                 }
-                //@frpanico TODO: calcolo logiche Aliquote/Addiz.
+
                 
             }
         }
@@ -282,6 +291,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
 
         if (lastStepData != null) {
+
             for (String lastStepField : lastStepData.keySet()) {
                 system.debug('keltin - lastStepField: ' + lastStepField);
                 system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
@@ -293,11 +303,82 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
                 }
             }
+
+            if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
+                List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+                if (docsIvaAccise.isEmpty()) {
+                    throw new AuraHandledException('Caricare documento per iva e accise');
+                }
+            }
+        }
+
+        //@frpanico 16/09/21 logic for IVA, Accise and Addiz. Regionale for Voltura and Voltura con Switch
+        if(order.RecordType.DeveloperName == 'HDT_RT_Voltura' || order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch')
+        {
+            //@frpanico query for currentRecord
+            Order currentOrder = orderQr.getRecordById(order.Id);
+            //@frpanico VAT check
+            //@frpanico if VAT is null or blank ExciseRate and RegionalAdditional must be zero
+            if(orderToUpdate.VAT__c != null)
+            {
+                if(orderToUpdate.VAT__c == '')
+                {
+                    orderToUpdate.ExciseRate__c = 0.0;
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                }
+            }
+            else if(currentOrder.VAT__c == null)
+            {
+                orderToUpdate.ExciseRate__c = 0.0;
+                orderToUpdate.RegionalAdditional__c = 0.0;
+            }
+            //@frpanico ExciseEle check
+            //@frpanico if ExciseEle is null or blank VAT__c and RegionalAdditional must be blank and zero
+            //@frpanico if ExciseEle is not null nor blank, ExciseRate value's got from HDT_ExciseTranscode__mdt
+            if(orderToUpdate.ExciseEle__c != null)
+            {
+                if(orderToUpdate.ExciseEle__c == '')
+                {
+                    orderToUpdate.VAT__C = '';
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                    orderToUpdate.ExciseRate__c = 0.0;
+                }
+                else 
+                {
+                    HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                    exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                    orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+                }
+            }
+            else if(currentOrder.ExciseEle__c == null)
+            {
+                orderToUpdate.VAT__C = '';
+                orderToUpdate.RegionalAdditional__c = 0.0;
+                orderToUpdate.ExciseRate__c = 0.0;
+            }
+            else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
+            {
+                HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+            }
+            //@frpanico RegionalAdditional Check
+            //@frpanico if RegionalAdditional is null VAT and ExciseRate must be blank and zero
+            if(currentOrder.RegionalAdditional__c == null)
+            {
+                orderToUpdate.VAT__C = '';
+                orderToUpdate.RegionalAdditional__c = 0.0;
+                orderToUpdate.ExciseRate__c = 0.0;
+            }
         }
         
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);
+        if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
+            HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
+        }
 
         if (order.ParentOrder__r.Status == 'Draft') {
             // order parent status = in lavorazione, phase = in lavorazione
