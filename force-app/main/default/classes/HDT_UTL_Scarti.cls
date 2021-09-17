@@ -47,6 +47,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 	*/
 
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 10/09/2021
+    * @description evaluate - method dell'intefaccia di pclick
+    * @param args - Object
+    * @return boolean
+    */
 	global boolean evaluate(Object args){
 		Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
@@ -72,6 +79,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return null;
 	}
 
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/08/2021
+    * @description HDT_UTL_Scarti.HDT_UTL_FlowInputs - Wrapper FlowInputs
+    */
     public class HDT_UTL_FlowInputs{
         @InvocableVariable
         public String methodName;
@@ -81,6 +93,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         public String templateName;
     }
 
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/08/2021
+    * @description HDT_UTL_Scarti.HDT_UTL_FlowOutputs - Wrapper FlowOutputs
+    */
     public class HDT_UTL_FlowOutputs{
         @InvocableVariable
         public String esito;
@@ -632,25 +649,37 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
         }
         for(wrts_prcgvr__Activity__c activity2: inputData){
+            activity2.Account__c = (activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)) ? accIdsPerBPcode.get(activity2.BPCode__c) : activity2.Account__c;
+            /*
             if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)){
                 activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
             }
+            */
             if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
                 if('CanoneRAI'.equalsIgnoreCase(activity2.Type__c)){
+                    activity2.RecordTypeId = (activity2.RecordTypeId != rtScarto.Id) ? rtScarto.Id : activity2.RecordTypeId;
+                    /*
                     if(activity2.RecordTypeId != rtScarto.Id){
                         activity2.RecordTypeId = rtScarto.Id;
                     }
+                    */
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(CANONERAITEMPLATENAME); 
                 }else if('Bonussociale'.equalsIgnoreCase(activity2.Type__c)){
+                    activity2.RecordTypeId = (activity2.RecordTypeId != rtScarto.Id) ? rtScarto.Id : activity2.RecordTypeId;
+                    /*
                     if(activity2.RecordTypeId != rtScarto.Id){ 
                         activity2.RecordTypeId = rtScarto.Id;
                     }
+                    */
                     activity2.wrts_prcgvr__ActivityTemplate__c=mapActivityTemplates.get(BONUSSOCIALETEMPLATENAME); 
                 }
             }
+            activity2.RecordTypeId = (activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id) ? rtScarto.Id : activity2.RecordTypeId;
+            /*
             if(activity2.RecordTypeDevName__c == 'HDT_RT_Scarto' && activity2.RecordTypeId != rtScarto.Id){
                 activity2.RecordTypeId = rtScarto.Id;
             }
+            */
         }
         System.debug('setLookupFields end' + inputData);
         return inputData;
