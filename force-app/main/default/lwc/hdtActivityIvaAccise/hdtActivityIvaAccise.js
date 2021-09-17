@@ -147,6 +147,7 @@ export default class HdtActivityIvaAccise extends LightningElement {
             this.act = response;
             if(response.wrts_prcgvr__Status__c == 'Completed'){
                 this.isDisabledField = true;
+                this.dateConfirm = response.CompletationDateDocument__c;
             }
             this.tentativi = this.act.NumberOfAttempt__c;
             console.log('*****:' + JSON.stringify(response));
