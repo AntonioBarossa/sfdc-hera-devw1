@@ -28,8 +28,8 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
             };
     
             if(result.success){
-                toastObj.title = 'Great Success!';
-                toastObj.message = 'The selected record have been printed!';
+                toastObj.title = 'Successo!';
+                toastObj.message = 'Il documento è stato recuperato correttamente';
                 toastObj.variant = 'success';
 
 
@@ -77,9 +77,10 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
                     console.log(err.message);
                 }
 
+                this.downloadComplete();
 
             } else {
-                toastObj.title = 'Something goes wrong!';
+                toastObj.title = 'Errore!';
                 toastObj.message = result.message;
                 toastObj.variant = 'warning';
             }
@@ -132,4 +133,14 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
         this.blob = null;
         this.blobURL = URL.revokeObjectURL();
     }
+
+    downloadComplete(){
+        const downloadComplete = new CustomEvent("downloadcomplete", {
+            detail:  ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(downloadComplete);   
+    }
+
 }

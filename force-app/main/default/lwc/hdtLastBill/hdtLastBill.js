@@ -27,6 +27,7 @@ export default class HdtLastBill extends LightningElement {
     @track energy = false;
     @track gas = false;
     @track spinner = true;
+    pdfSpinner = false;
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS})
     wireAccount({data, error}) {
@@ -113,7 +114,7 @@ export default class HdtLastBill extends LightningElement {
 
     openFile(){
         console.log('>>> visualbolletta - showSingleBill');
-
+        this.pdfSpinner = true;
         //const date = selected.dataEmissione.split("/");
 
         var docInvoiceObj = {
@@ -142,4 +143,9 @@ export default class HdtLastBill extends LightningElement {
         });*/
 
     }
+
+    downloadComplete(){
+        this.pdfSpinner = false;
+    }
+
 }
