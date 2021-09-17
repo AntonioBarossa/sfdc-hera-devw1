@@ -291,6 +291,7 @@ public inherited sharing class HDT_QR_Order {
             SignatureMethod__c,
             DocSendingMethod__c,
             Sale__c,
+            TecnicalPhase__c,
             CreatedDate,
             Step__c,
             Sale__r.Channel__c,
