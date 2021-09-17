@@ -2138,4 +2138,35 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return visitAssigRulesList;
 	}
+
+	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
+
+		List<MassiveLoaderRequest__c> MassiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			MassiveLoaderRequest__c MassiveLoaderRequest = new MassiveLoaderRequest__c();
+
+			MassiveLoaderRequest.ProcessType__c = 'SwitchIn';
+			MassiveLoaderRequest.Status__c = 'In Lavorazione';
+			MassiveLoaderRequest.TotalRequest__c = 2;
+			MassiveLoaderRequest.RequestOK__c = 2;
+			MassiveLoaderRequest.RequestKO__c = 0;
+			MassiveLoaderRequest.Phase__c = 'File in elaborazione';
+			MassiveLoaderRequest.Priority__c = 1;
+
+
+			MassiveLoaderRequestList.add(MassiveLoaderRequest);
+		}
+
+		if (doInsert){
+
+			insert MassiveLoaderRequestList;
+		}
+
+		return MassiveLoaderRequestList;
+
+	}
+
+	
 }
