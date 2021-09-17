@@ -2140,6 +2140,35 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return visitAssigRulesList;
 	}
 
+	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
+
+		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
+
+			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
+			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.TotalRequest__c = 2;
+			massiveLoaderRequest.RequestOK__c = 2;
+			massiveLoaderRequest.RequestKO__c = 0;
+			massiveLoaderRequest.Phase__c = 'File in elaborazione';
+			massiveLoaderRequest.Priority__c = 1;
+
+
+			massiveLoaderRequestList.add(massiveLoaderRequest);
+		}
+
+		if (doInsert){
+
+			insert massiveLoaderRequestList;
+		}
+
+		return massiveLoaderRequestList;
+
+	}
+
 	public static List<BlackList__c> createBlacklist (Integer amount, Boolean doInsert) {
 
 		List<BlackList__c> blacklistList = new List<BlackList__c>();
@@ -2183,4 +2212,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return comfQualityCallList;
 	}
+
+
+	public static List<BrandSalesCompany__c> createBrandSalesCompany (Integer amount, Boolean doInsert) {
+
+		List<BrandSalesCompany__c> brandSalesCoList = new List<BrandSalesCompany__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BrandSalesCompany__c brandSaleCo = new BrandSalesCompany__c(
+				Name = 'testName'
+			);
+
+			brandSalesCoList.add(brandSaleCo);
+		}
+
+		if (doInsert){
+
+			insert brandSalesCoList;
+		}
+
+		return brandSalesCoList;
+	}
+
 }
