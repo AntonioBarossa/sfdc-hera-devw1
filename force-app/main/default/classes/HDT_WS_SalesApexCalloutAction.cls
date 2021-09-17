@@ -271,8 +271,10 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
                                 ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
                             }
-                            else{
-                                //ord.HerokuPracticeCode__c = responseService.responses[0].header.requestId;
+                            else if( (ID) obj.get('RecordTypeId') == Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId()){
+                                //BonusESconti
+                                ord.HerokuPracticeCode__c = responseService.responses[0].header.requestId;
+                                ord.TecnicalPhase__c = 'Comunicazione verso Heroku OK';
                             }
                         }
                         else{
