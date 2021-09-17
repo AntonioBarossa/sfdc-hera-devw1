@@ -814,7 +814,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.order.ServicePoint__c !== undefined ? this.order.ServicePoint__r.Account__c : '',
                 diffObjApi: 'Order',
                 diffRecordId: this.order.Id,
-                processVisibility: this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.Account__c !== this.order.AccountId && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'),
+                //@frpanico 17/09/21 added "Voltura con Switch" condition
+                processVisibility: this.order.ServicePoint__c !== undefined 
+                    && this.order.ServicePoint__r.Account__c !== this.order.AccountId 
+                    && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                    || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                    || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0)),
                 data: [
                     //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
@@ -854,6 +859,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 readingButton:true,
+                //@frpanico 17/09/21 added "Voltura con Switch" condition
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0),
                 data:[
@@ -2257,6 +2263,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
        //EVERIS
+       //@frpanico 17/09/2021 added "Voltura Con Switch" condition
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
