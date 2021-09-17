@@ -1832,7 +1832,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'VATfacilitationFlag__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.userProfile === 'Hera Teleseller Partner User',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1841,7 +1841,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'FacilitationExcise__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.userProfile === 'Hera Teleseller Partner User',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
                         'value': '',
                         'processVisibility': ''
                     },
