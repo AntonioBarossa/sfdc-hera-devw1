@@ -1,3 +1,9 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 17/09/2021
+ * @description HDT_TRH_Order Test Class
+ * @history Keltin Mesonjesi – 17/09/2021 – Created Class
+ */
 public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){}
