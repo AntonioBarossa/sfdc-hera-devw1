@@ -35,8 +35,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @track activityId;
     @track startCallDateTime;
     @track endCallDateTime;
-    @track startWaitingTime;
-    @track endWaitingTime;
+    @track waitingTime;
+    @track callDuration;
 
     iconName = '';
     agentStatus = '';
@@ -94,13 +94,15 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         switch (eventType) {
             case 'CONNECTIONCLEARED':
                 console.log("*****DentroConnection");
-                this.endCallDateTime = Date.now();
-                if (this.activityId != null) {
-                    this.trackActivity('updatectivity');
-                }
                 this.toolbarAttributes = event.detail.eventObj;
                 this.uuid = this.toolbarAttributes.id;
                 callData = event.detail.CallData;
+                this.endCallDateTime = this.toolbarAttributes.endTime;
+                this.callDuration = (parseInt(this.toolbarAttributes.time_duration_sec) / 60).toFixed(2); // convert in minutes
+                this.waitingTime = (parseInt(this.toolbarAttributes.waitingTime) / 60).toFixed(2); // convert in minutes
+                if (this.activityId != null) {
+                    this.trackActivity('updatectivity');
+                }
                 let ecid2 = window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID");
                 this.ecid = ecid2;
                 console.log('*********ConnectionCleared:2' + ecid2);
@@ -171,16 +173,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 break;
             case 'ESTABLISHED':
                 console.log('*******INSIDE_ESTABLISHED');
-                this.startCallDateTime = Date.now();
+                this.startCallDateTime = event.detail.eventObj.startTime;
                 this.trackActivity('createActivity');
-                break;
-            case 'HELD':
-                console.log('*******INSIDE_HELD');
-                this.startWaitingTime = Date.now();
-                break;
-            case 'RETRIEVED':
-                console.log('*******INSIDE_RETRIEVED');
-                this.endWaitingTime = Date.now();
                 break;
             default:
                 break;
@@ -278,11 +272,9 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
 
     trackActivity(action) {
         if (action == 'createActivity') {
-            //sostituire i valori
-            let callStaredtDateTime = this.startCallDateTime; //unix format 
             let registrationLinkVo;
             createActivity({
-                startCall: callStaredtDateTime,
+                startCall: this.startCallDateTime,
                 clientNumber: this.numberToCall,
                 registrationLink: registrationLinkVo,
                 ecid: this.ecid,
@@ -295,14 +287,11 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             });
 
         } else if (action == 'updatectivity') {
-            let callEndedDateTime = this.endCallDateTime;
-            let callDurationTime = ((this.endCallDateTime - this.startCallDateTime)/1000/60).toFixed(2); // timediff in minutes
-            let callWaitingTime = ((this.endWaitingTime - this.startWaitingTime)/1000/60).toFixed(2); // timediff in minutes
             updateActivity({
                 activityId: this.activityId,
-                endCall: callEndedDateTime,
-                callDuration: callDurationTime,
-                waitingTime: callWaitingTime
+                endCall: this.endCallDateTime,
+                callDuration: this.callDuration,
+                waitingTime: this.waitingTime
             }).then(data => {
                 console.log('updateActivity --- ' + JSON.stringify(data));
             }).catch(err => {
