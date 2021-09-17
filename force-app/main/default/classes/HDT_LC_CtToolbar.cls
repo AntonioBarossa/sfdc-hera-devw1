@@ -65,7 +65,7 @@ public with sharing class HDT_LC_CtToolbar {
         activity.StartDate__c = Date.newInstance(sdt.year(),sdt.month(),sdt.day()); 
         activity.Type__c = 'Chiamata outbound';
         activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
-        activity.ClientNumber__c = '';
+        activity.ClientNumber__c = clientNumber;
         activity.RecordingLink__c = registrationLink;
         activity.Ecid__c = ecid;
         if (cm.ContactId != null) {
