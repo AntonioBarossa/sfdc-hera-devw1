@@ -2183,4 +2183,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return comfQualityCallList;
 	}
+
+	public static List<BrandSalesCompany__c> createBrandSalesCompany (Integer amount, Boolean doInsert) {
+
+		List<BrandSalesCompany__c> brandSalesCoList = new List<BrandSalesCompany__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BrandSalesCompany__c brandSaleCo = new BrandSalesCompany__c(
+				Name = 'testName'
+			);
+
+			brandSalesCoList.add(brandSaleCo);
+		}
+
+		if (doInsert){
+
+			insert brandSalesCoList;
+		}
+
+		return brandSalesCoList;
+	}
 }
