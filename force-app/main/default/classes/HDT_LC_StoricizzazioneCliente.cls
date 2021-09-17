@@ -79,13 +79,13 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         
         /**
          * @description HDT_LC_Customer
-         * param nome - String
-         * param codiceFiscale - String
-         * param iva - String
-         * param codiceCliente - String
-         * param id - String
-         * param isStoricizzato - String
-         * param nomeProprio - String
+         * @param nome - String
+         * @param codiceFiscale - String
+         * @param iva - String
+         * @param codiceCliente - String
+         * @param id - String
+         * @param isStoricizzato - String
+         * @param nomeProprio - String
          */
         public HDT_LC_Customer(String nome,
                         String codiceFiscale,
@@ -193,10 +193,10 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
     /**
      * @author Marco Arci (marco.arci@webresults.it) Code Review
      * @description HDT_LC_StoricizzazioneCliente.getExternalCustomerMapQuery
-     * param1 sortBy - String
-     * param2 sortDirection - String
-     * param3 filterby - String
-     * param4 marcaturePermesse - List<String>
+     * @param sortBy - String
+     * @param sortDirection - String
+     * @param filterby - String
+     * @param marcaturePermesse - List<String>
      * @return Map<string,string>
      */
     public static Map<string,string> getExternalCustomerMapQuery(String sortBy, String sortDirection, String filterby, List<String> marcaturePermesse) {
