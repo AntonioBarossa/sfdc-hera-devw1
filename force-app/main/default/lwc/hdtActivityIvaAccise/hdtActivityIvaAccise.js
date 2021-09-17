@@ -18,6 +18,7 @@ export default class HdtActivityIvaAccise extends LightningElement {
     @api tentativi = 0;
     @api showIva = false;
     @api showAccise = false;
+    @api predefaultv;
     @api loaded = false;
     @api acciseOptions =[
         {label:"Elettrico", value:"Elettrico"},
@@ -147,6 +148,18 @@ export default class HdtActivityIvaAccise extends LightningElement {
             console.log('*****:' + (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false );
             this.showIva = (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false ;
             this.showAccise = (response.Order__r != null && response.Order__r != undefined && response.Order__r.FacilitationExcise__c != null && response.Order__r.FacilitationExcise__c != undefined) ? response.Order__r.FacilitationExcise__c : false ;
+            if(this.showAccise){
+                this.predefaultv = (response.Order__r != null && response.Order__r != undefined && response.Order__r.ServicePoint__r != undefined && response.Order__r.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' ? 'Elettrico' : 'Gas');
+                if((response.Order__r != null && response.Order__r != undefined && response.Order__r.ServicePoint__r != undefined && response.Order__r.ServicePoint__r.CommoditySector__c == 'Energia Elettrica')){
+                    this.isAcciseGas = false;
+                    this.isAcciseEle = true;
+                }
+                else{
+                    this.isAcciseGas = true;
+                    this.isAcciseEle = false;
+                
+                }
+            }
             this.isSuspend = response.wrts_prcgvr__Status__c == 'Sospeso' ? true : false;
             this.loaded = true;
         });
