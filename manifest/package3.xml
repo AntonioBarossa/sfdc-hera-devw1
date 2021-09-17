@@ -1,123 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Contract_Record_Page</members>
-        <members>Contract_Record_Page1</members>
+        <members>Account_Service_Console</members>
         <members>HDT_Activity_Default_Record_Page</members>
-        <members>HDT_KnowledgeGeneralPage</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Knowledge__kav.HDT_RT_Competitivo</members>
-        <members>Knowledge__kav.HDT_RT_FAQ</members>
-        <members>Knowledge__kav.HDT_RT_Formazione</members>
-        <members>Knowledge__kav.HDT_RT_Generico</members>
-        <members>Knowledge__kav.HDT_RT_GestionePratiche</members>
-        <members>Knowledge__kav.HDT_RT_News</members>
-        <members>Knowledge__kav.HDT_RT_PraticheDiScarto</members>
-        <members>Knowledge__kav.HDT_RT_SchedaComunce</members>
-        <members>Knowledge__kav.HDT_RT_Template</members>
-        <members>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</members>
-        <members>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</members>
-        <members>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</members>
-        <members>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</members>
-        <members>NewsNotificationCenter__c.HDT_RT_Default</members>
-        <name>RecordType</name>
+        <members>HDT_ExciseTranscode__mdt</members>
+        <members>wrts_prcgvr__Activity__c</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>ResponseTemplate__c</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>Campaign-Campaign Layout</members>
-        <members>Case-HDT_Annullamento</members>
-        <members>Knowledge__kav-HDT_CompetitivoScrittore</members>
-        <members>Knowledge__kav-HDT_FaqScrittore</members>
-        <members>Knowledge__kav-HDT_FormazioneScrittore</members>
-        <members>Knowledge__kav-HDT_GenericoScrittore</members>
-        <members>Knowledge__kav-HDT_GestionePraticheScrittore</members>
-        <members>Knowledge__kav-HDT_NewsScrittore</members>
-        <members>Knowledge__kav-HDT_PraticheDiScartoScrittore</members>
-        <members>Knowledge__kav-HDT_SchedaComuneScrittore</members>
-        <members>Knowledge__kav-HDT_Template</members>
-        <members>Knowledge__kav-HDT_TroubleshootingDiFrontPrincipaleScrittore</members>
-        <members>Knowledge__kav-HDT_TroubleshootingDiFrontSecondarioScrittore</members>
-        <members>Knowledge__kav-HDT_TroubleshootingReclamiPrincipaleScrittore</members>
-        <members>Knowledge__kav-HDT_TroubleshootingReclamiSecondarioScrittore</members>
-        <members>OrderItem-SBQQ__CPQ Order Product Layout</members>
-        <members>PaperCampaignParameter__c-Parametri Campagna Cartacea Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>Knowledge__kav.Knowledge_Compact_Layout</members>
-        <name>CompactLayout</name>
-    </types>
-    <types>
-        <members>HDT_BA_CustomerLifeCycle</members>
-        <members>HDT_BA_CustomerLifeCycleTst</members>
-        <members>HDT_BA_PaperProcessing</members>
-        <members>HDT_BA_PaperProcessingTst</members>
-        <members>HDT_BA_SuspendedActivitiesEmailAlert</members>
-        <members>HDT_LC_AccountDataEnrichmentTst</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ChildOrderProcessDetails</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_CloneArticle</members>
-        <members>HDT_LC_CustomLookupControllerTst</members>
-        <members>HDT_LC_OfferConfiguratorControllerTst</members>
-        <members>HDT_LC_SellingWizardControllerTst</members>
-        <members>HDT_QR_Blacklist</members>
-        <members>HDT_QR_BlacklistTst</members>
-        <members>HDT_QR_ComfortQualityCall</members>
-        <members>HDT_QR_ComfortQualityCallTst</members>
-        <members>HDT_QR_ContentDocumentLink</members>
-        <members>HDT_QR_DistributorPointCode</members>
-        <members>HDT_QR_DistributorPointCodeTst</members>
-        <members>HDT_QR_FiltriProcessi</members>
-        <members>HDT_QR_FiltriProcessiTst</members>
-        <members>HDT_QR_Knowledge</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_PayloadManagement</members>
-        <members>HDT_QR_ServiceRequestTst</members>
-        <members>HDT_QR_Variations</members>
-        <members>HDT_SRV_AccountStatementReadingCheckTst</members>
-        <members>HDT_SRV_CreateGenericCaseTst</members>
-        <members>HDT_SRV_DocumentalManagementFacade</members>
-        <members>HDT_SRV_InstallmentPlansTst</members>
-        <members>HDT_SRV_SalesManager</members>
-        <members>HDT_SRV_SapPostSalesManager</members>
-        <members>HDT_TRH_CampaignMember</members>
-        <members>HDT_TRH_CampaignMemberTst</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_TRH_Subscription</members>
-        <members>HDT_TRH_SubscriptionTst</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_PayloadManagementTst</members>
-        <members>HDT_UTL_PrClickDoubleTransaction</members>
-        <members>HDT_UTL_SelfReadings</members>
-        <members>HDT_UTL_ServiceCatalogProfileCriteriaTst</members>
-        <members>HDT_UTL_VariationsTst</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Knowledge__kav.FrontOffice__c</members>
-        <members>Knowledge__kav.OfferedService__c</members>
-        <members>NewsNotificationCenter__c.EntryChannel__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>hdtAccountStatementDetailViewer</members>
-        <members>hdtAccountStatementViewer</members>
+        <members>hdtActivityIvaAccise</members>
         <members>hdtChildOrderProcessDetails</members>
+        <members>hdtCommercialRiassignButton</members>
         <members>hdtCreateCampaign</members>
-        <members>hdtLastBill</members>
-        <members>hdtModuloInformativoModal</members>
+        <members>hdtDocumentActivityValidation</members>
+        <members>hdtGeneralInfo</members>
         <members>hdtPaperCampaignFields</members>
-        <members>hdtUploadDocuments</members>
+        <members>hdtRequestVisitD2DLead</members>
+        <members>hdtVOActivityValidation</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -132,21 +34,132 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>Knowledge__kav.HDT_ApprovazioneArticoloNonSchedulato</members>
-        <members>Knowledge__kav.HDT_ApprovazioneArticoloSchedulato</members>
-        <name>ApprovalProcess</name>
-    </types>
-    <types>
-        <members>HDT_ColumnsFirstLevel.EC8_RiferimentoFattura</members>
-        <members>HDT_ColumnsFirstLevel.npi_Importo</members>
-        <members>HDT_ColumnsSecondLevel.npi_DataEmissione</members>
-        <members>HDT_UserInputFlow.Annullamento_Contratto_Non_Richiesto</members>
-        <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneContrattoNonRichiesto</members>
+        <members>HDT_FL_GestioneVotiveModena</members>
         <members>HDT_FL_Risottometti_Pratica</members>
+        <members>HDT_FL_SupplySelection</members>
         <name>Flow</name>
+    </types>
+    <types>
+        <members>ServicePoint__c.HDT_ServicePointName</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>HDT_ExciseTranscode__mdt.HDT_Excises</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>NewsNotificationCenter__c.HDT_RT_Default</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>CampaignMemberLeadAssigment__c-Assegnazione Campaign Member su base Lea Layout</members>
+        <members>FubProcessing__c-Lavorazione FUB Layout</members>
+        <members>HDT_ExciseTranscode__mdt-Transcodifica Accise Layout</members>
+        <members>Order-Cambio Offerta</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Order-Order Layout</members>
+        <members>Order-Prima attivazione con modifica</members>
+        <members>Order-Prima attivazione</members>
+        <members>Order-Subentro</members>
+        <members>ServicePoint__c-Service Point Ele</members>
+        <members>ServicePoint__c-Service Point Gas</members>
+        <members>ServicePoint__c-Service Point Layout</members>
+        <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_EditCompatibility</members>
+        <members>HDT_EditReports</members>
+        <members>HDT_ViewReports</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_ConsentLeadTst</members>
+        <members>HDT_BA_Dependencies</members>
+        <members>HDT_LC_ActivityIvaAccise</members>
+        <members>HDT_LC_BillingProfileForm</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_DownloadAttachmentAzure</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_SaleServiceContainer</members>
+        <members>HDT_LC_StoricizzazioneCliente</members>
+        <members>HDT_QR_AccountStatement</members>
+        <members>HDT_QR_ActivityCustom</members>
+        <members>HDT_QR_MassiveLoaderRequestTst</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_ServiceRequest</members>
+        <members>HDT_QR_SolContractVas</members>
+        <members>HDT_SRV_BpCaVariationFacadeTst</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_SRV_SolContractVas</members>
+        <members>HDT_TRH_Case</members>
+        <members>HDT_TRH_Contract</members>
+        <members>HDT_TRH_Order</members>
+        <members>HDT_UTL_CaseProcess</members>
+        <members>HDT_UTL_CaseTst</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_Dependencies</members>
+        <members>HDT_UTL_GestAppAutomaticCreation</members>
+        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
+        <members>HDT_UTL_MatrixCompatibility</members>
+        <members>HDT_UTL_OrderFieldsAlignmentTst</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_ServiceCatalogOrFilterProcess</members>
+        <members>HDT_UTL_ServiceTwentySix</members>
+        <members>HDT_UTL_SwtichInProcess</members>
+        <members>HDT_WRP_SolContractVas</members>
+        <members>HDT_WS_InboundSol</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>HDT_ExciseTranscode__mdt.Active__c</members>
+        <members>HDT_ExciseTranscode__mdt.ExciseString__c</members>
+        <members>HDT_ExciseTranscode__mdt.Excise__c</members>
+        <members>NewsNotificationCenter__c.EntryChannel__c</members>
+        <members>Order.Phase__c</members>
+        <members>User.FiscalCode__c</members>
+        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_RequestVisitD2DLead</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>HDT_ExciseTranscode.Config1</members>
+        <members>HDT_ExciseTranscode.Config10</members>
+        <members>HDT_ExciseTranscode.Config11</members>
+        <members>HDT_ExciseTranscode.Config12</members>
+        <members>HDT_ExciseTranscode.Config13</members>
+        <members>HDT_ExciseTranscode.Config14</members>
+        <members>HDT_ExciseTranscode.Config15</members>
+        <members>HDT_ExciseTranscode.Config16</members>
+        <members>HDT_ExciseTranscode.Config17</members>
+        <members>HDT_ExciseTranscode.Config18</members>
+        <members>HDT_ExciseTranscode.Config19</members>
+        <members>HDT_ExciseTranscode.Config2</members>
+        <members>HDT_ExciseTranscode.Config20</members>
+        <members>HDT_ExciseTranscode.Config21</members>
+        <members>HDT_ExciseTranscode.Config22</members>
+        <members>HDT_ExciseTranscode.Config23</members>
+        <members>HDT_ExciseTranscode.Config24</members>
+        <members>HDT_ExciseTranscode.Config25</members>
+        <members>HDT_ExciseTranscode.Config26</members>
+        <members>HDT_ExciseTranscode.Config27</members>
+        <members>HDT_ExciseTranscode.Config28</members>
+        <members>HDT_ExciseTranscode.Config29</members>
+        <members>HDT_ExciseTranscode.Config3</members>
+        <members>HDT_ExciseTranscode.Config4</members>
+        <members>HDT_ExciseTranscode.Config5</members>
+        <members>HDT_ExciseTranscode.Config6</members>
+        <members>HDT_ExciseTranscode.Config7</members>
+        <members>HDT_ExciseTranscode.Config8</members>
+        <members>HDT_ExciseTranscode.Config9</members>
+        <name>CustomMetadata</name>
     </types>
     <version>49</version>
 </Package>

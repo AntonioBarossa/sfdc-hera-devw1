@@ -34,7 +34,7 @@ public inherited sharing class HDT_QR_Order {
     public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
-            Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
+            Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
             CommercialProduct__c  
             FROM Order 
@@ -238,7 +238,8 @@ public inherited sharing class HDT_QR_Order {
             IncomingCreditCheckResult__c,
             CreditCheckDescription__c,
             DocumentPackage__c,
-            IsCloned__c                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
+            IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
+            RegionalAdditional__c                            //@frpanico 16/09/21 
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -293,6 +294,7 @@ public inherited sharing class HDT_QR_Order {
             SignatureMethod__c,
             DocSendingMethod__c,
             Sale__c,
+            TecnicalPhase__c,
             CreatedDate,
             Step__c,
             Sale__r.Channel__c,
@@ -804,5 +806,11 @@ public inherited sharing class HDT_QR_Order {
 
     public List<Order> getOrderForComfort(String id){
         return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+    }
+
+    //@frpanico getExciseTranscode
+    public HDT_ExciseTranscode__mdt getExciseTranscode(String exciseString)
+    {
+        return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];
     }
 }

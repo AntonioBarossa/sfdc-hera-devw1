@@ -65,7 +65,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //return a list of 'operando' ordered by  Occurrence__c
         return [ select SapCode__c, Field__c, Occurrence__c, ProductFamily__c, (SELECT SapCode__c, Field__c FROM Service26Configs__r )
                     FROM Service26Config__c WHERE 
-                    Type__c='Operando' AND ProductFamily__c IN :productFamilies AND Type__c =:serviceType 
+                    Type__c='Operando' AND ProductFamily__c IN :productFamilies AND Servizio__c =:serviceType 
                     WITH SECURITY_ENFORCED ORDER BY Occurrence__c ASC
             ];
     }
@@ -83,6 +83,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
         HDT_WRP_DtoServiceTwentySix dto = new HDT_WRP_DtoServiceTwentySix(order);
 
+        system.debug('1 '+order.OrderItems.size());
         List<OrderItem> items = order.OrderItems;
         if(items.isEmpty()){
             return dto;
@@ -90,6 +91,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             /* [SELECT Order.CommodityFormula__c, Product2.Family, Order.OrderNumber, Order.ServiePointCode__c, 
                 Order.HerokuPracticeCode__c, Order.SupplyType__c, Order.SupplyTypeTechnical__c, Order.ActivationMode__c
             FROM OrderItem WHERE OrderId=:OrderId WITH SECURITY_ENFORCED]; */
+        system.debug('2');
 
         Map<String, List<OrderItem>> familyToOccurrencies = new Map<String, List<OrderItem>>();
         //this map is used to connect a family to a list of items. 
@@ -98,14 +100,19 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //the size of each list is the number of occurence that family has
         for(OrderItem item : items){
             if(!familyToOccurrencies.containsKey(item.Product2.Family)){
+                system.debug('3');
                 familyToOccurrencies.put(item.Product2.Family, new List<OrderItem>());
             }
             familyToOccurrencies.get(item.Product2.Family).add(item);
         }
+        system.debug(order.CommodityFormula__c);
+        system.debug(familyToOccurrencies.keyset());
+
         List<Service26Config__c> configs = getConfigs(order.CommodityFormula__c, familyToOccurrencies.keyset());
         //getting list of configurationObjects, they contains only the families we are interested but 
         //They may have more occurrence than we need
         if(!configs.isEmpty()){
+            system.debug('4');
             dto.elements=getPositions(configs, familyToOccurrencies);
         }
         return dto;
@@ -122,17 +129,19 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         Map<String, List<Service26Config__c>> familyToOperando = new Map<String, List<Service26Config__c>>(); 
         //this map key gonna be a clean set of families to the corresponding operandos, ordered by occurrency asc 
         //The for loop below populate familyOperando Map, list of all products id to query and all fields to query
+        system.debug('5a');
         for(Service26Config__c operando : configs){
             if(!familyToOperando.containsKey(operando.ProductFamily__c)){
                 familyToOperando.put(operando.ProductFamily__c, new List<Service26Config__c>());
             }
             familyToOperando.get(operando.ProductFamily__c).add(operando);
             if(operando.Occurrence__c==1){
+                system.debug('5b');
                 for(orderItem item : familyToOccurrencies.get(operando.ProductFamily__c)){
                     productIds.add(item.Product2Id);
                 }
                 for(Service26Config__c position : Operando.Service26Configs__r){
-                    if(prodFields.contains(Position.Field__c.toLowerCase())){
+                    if(prodFields.contains(Position.Field__c?.toLowerCase())){
                         fieldsToQuery.add(Position.Field__c);
                     }
                 }

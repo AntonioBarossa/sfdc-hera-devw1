@@ -854,14 +854,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 readingButton:true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0),
                 data:[
                     //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
                     new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
-                    new fieldData('','NotRegisteredMeterCase__c',this.typeVisibility('both'),false,false,'',''),
+                    new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
@@ -1831,7 +1832,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'VATfacilitationFlag__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.userProfile === 'Hera Teleseller Partner User',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1840,7 +1841,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'FacilitationExcise__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.userProfile === 'Hera Teleseller Partner User',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -2257,7 +2258,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
        //EVERIS
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
+            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
+            || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
             console.log('IsVolture--> '+this.isVolture);
             console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
             console.log('Details Callback End');

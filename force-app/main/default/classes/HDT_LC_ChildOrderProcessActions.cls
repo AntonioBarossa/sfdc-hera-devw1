@@ -240,7 +240,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 {
                     orderToUpdate.Phase__c = 'Esportazione VS Siebel';
                 }
-                //@frpanico TODO: calcolo logiche Aliquote/Addiz.
+
                 
             }
         }
@@ -310,6 +310,66 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if (docsIvaAccise.isEmpty()) {
                     throw new AuraHandledException('Caricare documento per iva e accise');
                 }
+            }
+        }
+
+        //@frpanico 16/09/21 logic for IVA, Accise and Addiz. Regionale for Voltura and Voltura con Switch
+        if(order.RecordType.DeveloperName == 'HDT_RT_Voltura' || order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch')
+        {
+            //@frpanico query for currentRecord
+            Order currentOrder = orderQr.getRecordById(order.Id);
+            //@frpanico VAT check
+            //@frpanico if VAT is null or blank ExciseRate and RegionalAdditional must be zero
+            if(orderToUpdate.VAT__c != null)
+            {
+                if(orderToUpdate.VAT__c == '')
+                {
+                    orderToUpdate.ExciseRate__c = 0.0;
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                }
+            }
+            else if(currentOrder.VAT__c == null)
+            {
+                orderToUpdate.ExciseRate__c = 0.0;
+                orderToUpdate.RegionalAdditional__c = 0.0;
+            }
+            //@frpanico ExciseEle check
+            //@frpanico if ExciseEle is null or blank VAT__c and RegionalAdditional must be blank and zero
+            //@frpanico if ExciseEle is not null nor blank, ExciseRate value's got from HDT_ExciseTranscode__mdt
+            if(orderToUpdate.ExciseEle__c != null)
+            {
+                if(orderToUpdate.ExciseEle__c == '')
+                {
+                    orderToUpdate.VAT__C = '';
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                    orderToUpdate.ExciseRate__c = 0.0;
+                }
+                else 
+                {
+                    HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                    exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                    orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+                }
+            }
+            else if(currentOrder.ExciseEle__c == null)
+            {
+                orderToUpdate.VAT__C = '';
+                orderToUpdate.RegionalAdditional__c = 0.0;
+                orderToUpdate.ExciseRate__c = 0.0;
+            }
+            else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
+            {
+                HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+            }
+            //@frpanico RegionalAdditional Check
+            //@frpanico if RegionalAdditional is null VAT and ExciseRate must be blank and zero
+            if(currentOrder.RegionalAdditional__c == null)
+            {
+                orderToUpdate.VAT__C = '';
+                orderToUpdate.RegionalAdditional__c = 0.0;
+                orderToUpdate.ExciseRate__c = 0.0;
             }
         }
         
