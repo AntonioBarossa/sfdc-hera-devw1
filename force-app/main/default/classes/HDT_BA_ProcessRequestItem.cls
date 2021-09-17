@@ -42,11 +42,22 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
         System.debug('HDT_BA_ProcessRequestItem finish ');
         MassiveLoaderRequest__c oldReq=new MassiveLoaderRequest__c(id=idLoaderRequest,Status__c=constantsUtl.MASSIVLOADER_STATUS_CHIUSO,Phase__c=constantsUtl.MASSIVLOADER_PHASE_FILEPROCESSATO);
         update oldReq;
-        List<MassiveLoaderRequest__c> listmsr = [SELECT Id FROM MassiveLoaderRequest__c WHERE Status__c=:constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE ORDER BY CreatedDate DESC LIMIT 10];
-        if (listmsr!=null && listmsr.size()>0 ) {
-            HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listmsr.get(0).id); 
-            Id batchprocessid = Database.executeBatch(processReq,1);
+        // Creazione file RequestItem in Errore 
+        List<MassiveLoaderRequestItem__c> listErrorReq =[SELECT Id,Name,Data__c, Status__c,StatusDescription__c  from MassiveLoaderRequestItem__c WHERE Status__c ='Errore' AND MassiveLoaderRequest__c =:idLoaderRequest ];
+        if (listErrorReq!=null && listErrorReq.size()>0) {
+            HDT_BA_ErrorRequestItem batch = new HDT_BA_ErrorRequestItem(idLoaderRequest);
+            Database.executebatch(batch,1000);
         }
+      
+
+
+
+
+        // List<MassiveLoaderRequest__c> listmsr = [SELECT Id FROM MassiveLoaderRequest__c WHERE Status__c=:constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE ORDER BY CreatedDate DESC LIMIT 10];
+        // if (listmsr!=null && listmsr.size()>0 ) {
+        //     HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listmsr.get(0).id); 
+        //     Id batchprocessid = Database.executeBatch(processReq,1);
+        // }
 
         
 
