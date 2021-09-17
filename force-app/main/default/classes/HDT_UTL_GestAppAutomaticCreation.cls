@@ -28,21 +28,24 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
         SObject obj = (sObject) argsMap.get('sender');
         String idObject = (String)obj.get('Id');
         HDT_QR_Order orderQr= new HDT_QR_Order();
-        Order ord = orderQr.getRecordById(idObject);
-        if('Gas'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c) && mapDistributorProcess.get(method) != null ){
-            boolean isAtoa = mapDistributorProcess.get(method).get(ord.ServicePoint__r.distributor__r.name) != null ? true : false;
-            id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
-            wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
-            w.order__c = ord.id;
-            w.Distributor__c = ord.servicePoint__r.distributor__c;
-            w.account__c = ord.AccountId;
-            w.contact__c = ord.Sale__r.SalesContact__c ;
-            w.isAtoa__c = isAtoa;
-            w.recordtypeid = rec;
-            w.status__c = 'Creata';
+        List<Order> ordList = [Select id,Sale__r.SalesContact__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject];
+        if(ordList != null && !ordList.isEmpty()){
+            Order ord = ordList[0];
+            if('Gas'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c) && mapDistributorProcess.get(method) != null ){
+                boolean isAtoa = mapDistributorProcess.get(method).get(ord.ServicePoint__r.distributor__r.name) != null ? true : false;
+                id rec = rcQr.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
+                wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
+                w.order__c = ord.id;
+                w.Distributor__c = ord.servicePoint__r.distributor__c;
+                w.account__c = ord.AccountId;
+                w.contact__c = ord.Sale__r.SalesContact__c ;
+                w.isAtoa__c = isAtoa;
+                w.recordtypeid = rec;
+                w.status__c = 'Creata';
 
-            actSrv.createRecord(w);
+                actSrv.createRecord(w);
 
+            }
         }
 
         return true;
