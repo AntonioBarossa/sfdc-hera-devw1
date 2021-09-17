@@ -93,7 +93,7 @@ export default class HdtCreateCampaign extends LightningElement {
         console.log('campReq' +campReq);
         this.reqPrioritycheck(campReq);
         this.checkRequiredShippingMethods(categoryField,channelField,this.statusField);  // Start HRAWRM-621 16/09/2021
-
+        this.checkEndDateMethods(categoryField,this.statusField); // Start HRAWRM-625
         if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
             this.easyRequired=true;
         }
@@ -170,7 +170,15 @@ export default class HdtCreateCampaign extends LightningElement {
         console.log('requiredShippingMethods:'+this.requiredShippingMethods);
     }
     // End HRAWRM-621 16/09/2021
-
+    checkEndDateMethods(category,status){
+        if ( category == 'Campagna Contenitore' && status!='Bozza') {
+            this.reqEndDate=true;
+        }
+        else{
+            this.reqEndDate=false;
+        }
+        console.log('reqEndDate:'+this.reqEndDate);
+    }
     handleChangeProcessType(event){
         let processType = event.detail.value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
