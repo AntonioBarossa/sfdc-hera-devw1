@@ -527,9 +527,9 @@
     </quickActionList>
     <relatedLists>
         <fields>ExternalId</fields>
+        <fields>DESC_TEXT__c</fields>
         <fields>ATTR_NAME__c</fields>
         <fields>X_EXPIRY_DATE__c</fields>
-        <fields>DATA_TYPE_CD__c</fields>
         <relatedList>SiebelContractAttribute__x.ASSET_ID__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -538,7 +538,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002V5G0</masterLabel>
+        <masterLabel>00h3N000002YavL</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
