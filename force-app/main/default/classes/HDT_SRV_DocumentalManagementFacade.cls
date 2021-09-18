@@ -63,13 +63,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
      
 
     public static String getSignSendMode(String processType, String source){
-        String configurationJSON = '';
+        String configurationJson = '';
         try{
-            configurationJSON = HDT_SRV_DocumentalManagement.getSignModeConfiguration(processType, source);
+            configurationJson = HDT_SRV_DocumentalManagement.getSignModeConfiguration(processType, source);
         }catch(Exception ex){
-            configurationJSON = ex.getMessage();
+            configurationJson = ex.getMessage();
         }
-        return configurationJSON;
+        return configurationJson;
     }
 
     public static String getInfoAccountStatement(String accountId){
