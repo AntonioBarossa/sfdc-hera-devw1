@@ -64,7 +64,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @track tipoAttivitaOptions2 =
     [
         {label:"Posta Cartacea", value:"Posta Cartacea"},
-        {label:"Email", value:"Email"}
+        {label:"Email", value:"E-Mail"}
     ];
 
     @track columns = [
