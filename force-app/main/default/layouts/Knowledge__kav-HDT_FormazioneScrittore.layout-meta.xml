@@ -15,16 +15,22 @@
             <layoutItems>
                 <field>ToPublishDate__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>FormationDocumentationType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <field>Language</field>
             </layoutItems>
             <layoutItems>
-                <field>FormationDocumentationType__c</field>
+                <field>PublicLink__c</field>
             </layoutItems>
             <layoutItems>
-                <field>PublicLink__c</field>
+                <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <field>LastModifiedById</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

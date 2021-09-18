@@ -254,4 +254,23 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
     }
+
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per il collegamento dell'oggetto tecnico serviceRequest al case di riferimento
+    * @date 16/09/2021
+    * @param1 List<Case> lista dei cases inseriti
+    */
+    public static void linkServiceRequestToCase(List<Case> newCasesList){
+        List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
+        for (Case cs: newCasesList){
+            
+            if(!String.isEmpty(cs.ServiceRequestID__c)){
+                ServiceRequest__c sReq = new ServiceRequest__c(Id= cs.ServiceRequestID__c);
+                sReq.Case__c = cs.Id;
+                sReqToUpdate.add(sReq);
+            }
+        }
+        HDT_SRV_ServiceRequest.updateRecord(sReqToUpdate);
+    }
 }

@@ -305,6 +305,14 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <!--Start HRAWRM-625 16/09/2021-->
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <relatedList>Campaign.OriginalCampaign__c</relatedList>
+    </relatedLists>
+      <!--End HRAWRM-625 16/09/2021-->
     <relatedLists>
         <fields>MEMBER_TYPE</fields>
         <fields>STATUS</fields>
