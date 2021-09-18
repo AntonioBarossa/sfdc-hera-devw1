@@ -239,7 +239,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckDescription__c,
             DocumentPackage__c,
             IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
-            RegionalAdditional__c                            //@frpanico 16/09/21 
+            RegionalAdditional__c,                            //@frpanico 16/09/21 
+            isTransition__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
