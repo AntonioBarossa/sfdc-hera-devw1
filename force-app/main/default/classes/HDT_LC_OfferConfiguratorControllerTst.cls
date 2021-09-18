@@ -2,7 +2,7 @@
 public class HDT_LC_OfferConfiguratorControllerTst {
 
     /*
-        HDT_LC_OfferConfiguratorController  76%
+        HDT_LC_OfferConfiguratorController  82%
         HDT_LC_OfferConfiguratorCtrlHelper  81%
         HDT_WRP_TechnicalOffer              0% 
         HDT_QR_TechnicalOffer               82%
@@ -11,7 +11,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         
     @testSetup
     static void setup() {
-        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(2, false);
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(3, false);
 
         productList[0].ProductCode = 'pCode01';
         productList[0].Version__c = '01V1';
@@ -20,6 +20,11 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         productList[1].ProductCode = 'pCode02';
         productList[1].Version__c = '01V1';
         productList[1].Family = '';
+
+        productList[2].ProductCode = 'pCode03';
+        productList[2].Version__c = '01V1';
+        productList[2].Family = Label.HDT_ProductFamilyTrigger;
+        productList[2].Status__c = 'Confermata';
 
         insert productList;
 
@@ -91,12 +96,66 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer responseTecOffer;
 
         Product2 p = [
-            SELECT Id
+            SELECT Id, ProductCode, Version__c
             FROM Product2
-            WHERE ProductCode <> 'pCode02'
+            WHERE ProductCode = 'pCode01'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
+
+        Product2 p2 = [
+            SELECT Id, ProductCode, Version__c 
+            FROM Product2
+            WHERE ProductCode = 'pCode02'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        Product2 p3 = [
+            SELECT Id, ProductCode, Version__c 
+            FROM Product2
+            WHERE ProductCode = 'pCode03'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        RateTemplate__c rate = [
+            SELECT Id
+            FROM RateTemplate__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1    
+        ];
+
+        TechnicalOffer__c technicalOffer = new TechnicalOffer__c();
+        technicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
+        technicalOffer.NameExternalId__c = technicalOffer.Name;
+        technicalOffer.Product__c = p.Id;
+        technicalOffer.RateCategory__c = rate.Id;
+        insert technicalOffer;
+
+        List<TechnicalOfferItem__c> techOffeItems = new List<TechnicalOfferItem__c>();
+        TechnicalOfferItem__c tecOffItem = new TechnicalOfferItem__c();
+        tecOffItem.TechnicalOffer__c = technicalOffer.Id;
+        tecOffItem.Type__c = 'PDISCNT';
+        tecOffItem.Definition__c = 'DESCR ES_ADG_GO';
+        tecOffItem.G__c = false;
+        tecOffItem.V__c = false;
+        tecOffItem.M__c = false;
+        tecOffItem.S__c = null;
+        tecOffItem.Operand__c = 'ES_ADG_GO';
+        tecOffItem.FareType__c = 'TEST';
+        tecOffItem.FareTypeValue__c = 'TEST';
+        tecOffItem.InfoGroup__c = 'TEST';
+        tecOffItem.InfoGroupValue__c = 'TEST';
+        tecOffItem.NumericValue__c = '0.00001';
+        tecOffItem.Flag__c = false;
+        tecOffItem.PriceCode__c = 'TEST';
+        tecOffItem.PriceCodeValue__c = 'TEST';
+        tecOffItem.DiscountCode__c = 'TEST';
+        tecOffItem.DiscountCodeValue__c = 'TEST';
+        tecOffItem.StringValue__c = 'TEST';
+        techOffeItems.add(tecOffItem);
+        insert techOffeItems;
 
         Test.startTest();
         responseTecOffer = HDT_LC_OfferConfiguratorController.getExistingOffer(p.Id);
@@ -107,19 +166,20 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         //Product with Family = ''
 
-        Product2 p2 = [
-            SELECT Id, ProductCode, Version__c 
-            FROM Product2
-            WHERE ProductCode = 'pCode02'
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
-
         responseTecOffer = HDT_LC_OfferConfiguratorController.getExistingOffer(p2.Id);
 
         System.assertEquals(false, responseTecOffer.success, 'success != true');
         System.assert(!String.isBlank(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage == null');
         System.assert(Label.HDT_OfferConfig_OfferType.equals(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage != Label.HDT_OfferConfig_OfferType');
+
+
+        //Product with Status != Label.HDT_InDevelopment
+
+        responseTecOffer = HDT_LC_OfferConfiguratorController.getExistingOffer(p3.Id);
+
+        System.assertEquals(true, responseTecOffer.success, 'success != true');
+        System.assert(String.isBlank(responseTecOffer.errorMessage), 'responseTecOffer.errorMessage != null');
+        System.assert(responseTecOffer.data != null, 'data == null');
 
         Test.stopTest();
     }
@@ -131,6 +191,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Product2 p = [
             SELECT Id, ProductCode, Version__c
             FROM Product2
+            WHERE ProductCode = 'pCode01'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
@@ -201,6 +262,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Product2 p = [
             SELECT Id, ProductCode, Version__c
             FROM Product2
+            WHERE ProductCode = 'pCode01'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
@@ -332,6 +394,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Product2 p = [
             SELECT Id, ProductCode, Version__c
             FROM Product2
+            WHERE ProductCode = 'pCode01'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
@@ -408,6 +471,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Product2 p = [
             SELECT Id, ProductCode, Version__c
             FROM Product2
+            WHERE ProductCode = 'pCode01'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
@@ -458,6 +522,7 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         Product2 p = [
             SELECT Id, ProductCode, Version__c
             FROM Product2
+            WHERE ProductCode = 'pCode01'
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];

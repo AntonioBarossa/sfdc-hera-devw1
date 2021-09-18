@@ -26048,6 +26048,13 @@
         <field>TechnicalOffer__c.Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <!--SFDC-OIG/OIM 17/09/2021-->
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FiscalCode__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
         <field>User.CreatorGroup__c</field>
@@ -32574,9 +32581,9 @@
 		<allowDelete>true</allowDelete>
 		<allowEdit>true</allowEdit>
 		<allowRead>true</allowRead>
-		<modifyAllRecords>false</modifyAllRecords>
+		<modifyAllRecords>true</modifyAllRecords>
 		<object>ServiceRequest__c</object>
-		<viewAllRecords>false</viewAllRecords>
+		<viewAllRecords>true</viewAllRecords>
 	</objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -33562,6 +33569,11 @@
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>NewsNotificationCenter__c.HDT_RT_Default</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
