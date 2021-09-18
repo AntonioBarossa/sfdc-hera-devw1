@@ -1,3 +1,9 @@
+/**
+* @author Luca Molino (luca.molino@dunegroup.it)
+* @date 07/02/2021
+* @description HDT_QR_FiltriProcessi for Test Classes
+* @history Luca Molino – 07/02/2021 – Created class
+*/
 public with sharing class HDT_QR_FiltriProcessi {
     
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
