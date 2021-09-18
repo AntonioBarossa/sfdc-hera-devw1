@@ -153,6 +153,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     }
                 }
+
+                //18/09/2021 gabriele.rota@webresults.it - Package B Attivazioni
+                if (order.IsCloned__c) {
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                }
             }
             when 'HDT_RT_Attivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {

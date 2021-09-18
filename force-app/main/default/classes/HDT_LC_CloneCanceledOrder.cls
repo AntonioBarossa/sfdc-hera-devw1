@@ -37,9 +37,16 @@ public without sharing class HDT_LC_CloneCanceledOrder {
             currentOrder.Phase__c = 'Bozza';
             currentOrder.Status = 'In Lavorazione';
             currentOrder.IsCloned__c = true;
-            currentOrder.IncomingCreditCheckResult__c = null;
-
             currentOrder.Step__c = 2;
+            
+            currentOrder.IncomingCreditCheckResult__c = null;
+            currentOrder.CreditCheckDescription__c = null;
+            currentOrder.EffectiveDate__c = null;
+            currentOrder.DateSentToSII__c = null;
+            currentOrder.MaxAfterthoughtDate__c = null;
+            currentOrder.WizardCompletedDate__c = null;
+            currentOrder.PrecheckResultSII__c = null;
+
             List<ServiceRequest__c> servRequests = [SELECT Id FROM ServiceRequest__c WHERE Order__c=:orderId WITH SECURITY_ENFORCED];
             if (!servRequests.isEmpty()) {
                 HDT_UTL_DatabaseService.deleteSObject(servRequests);
@@ -49,5 +56,20 @@ public without sharing class HDT_LC_CloneCanceledOrder {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
+    }
+
+    @AuraEnabled
+    public static map<string,object> controllerInit(String saleId){
+        return HDT_LC_ProcessesContainer.controllerInit(saleId);
+    }
+
+    @AuraEnabled
+    public static map<string,object> controllerInitRedirect(String orderId){
+        return HDT_LC_ProcessesContainer.controllerInitRedirect(orderId);
+    }
+
+    @AuraEnabled
+    public static Map<String, Object> isCommunity(){
+        return HDT_LC_ProcessesContainer.isCommunity();
     }
 }
