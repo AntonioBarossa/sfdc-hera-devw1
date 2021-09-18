@@ -596,6 +596,51 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getRecordsByAccountIdCopContratto(String accountId,boolean contractSigned){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            AND Status != 'Draft'
+            AND ContractSigned__c = :contractSigned
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordsByAccountIdCopContrattoSignatureMethod(String accountId,String signatureMethod){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            AND Status != 'Draft'
+            AND SignatureMethod__c = :signatureMethod
+            WITH SECURITY_ENFORCED
+        ];
+    }
     public List<Order> getActiveRecordsByAccountIdNotParent(String accountId){
         return [
             SELECT
