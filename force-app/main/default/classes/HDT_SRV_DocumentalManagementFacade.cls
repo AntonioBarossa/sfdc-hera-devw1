@@ -99,7 +99,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         try{
             SObject documentalObject = HDT_QR_DocumentalConfiguration.getDocumentalObjectById(recordId);
             String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
-            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject);
+            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
             postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
             baseSixtyFour = postelResponse.content;
             resultMap.put('outcome','OK');
