@@ -1,11 +1,14 @@
 import { LightningElement, api, track , wire} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
+import cancelCase from '@salesforce/apex/HDT_LC_RecordEditFormSales.cancelCase';
+import getActivity from '@salesforce/apex/HDT_LC_RecordEditFormSales.getActivity';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getParent from '@salesforce/apex/HDT_LC_CopiaContratto.getAccountOrder';
 import getChild from '@salesforce/apex/HDT_LC_CopiaContratto.getOrderChild';
 import confirmAction2 from '@salesforce/apex/HDT_LC_CopiaContratto.confirmAction';
-
+import confirmAction2Draft from '@salesforce/apex/HDT_LC_CopiaContratto.confirmActionDraft';
+import getListRecords from '@salesforce/apex/HDT_LC_ContactSelection.getListRecords';
 
 export default class HdtCopiaContratto extends NavigationMixin(LightningElement){
     @api processtype;
@@ -13,13 +16,23 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @api recordid;
     @api accountId;
     @api saveButton;
+    @api tipoAtt;
+    @api tiposen;
+    @api orderIdPre;
+    @api selectedOrderValue;
+    @api ismessagevisible = false;
     @api showOrder = false;
     @api cancelButton;
+    @api typeDefaltValue;
+    @api selectedSend;
     @api draftButton;
+    @api isdonedocument = false;
     @api selectedrowchild = [];
     @api acceptedFormats = ['.pdf', '.png'];
     @api statoApp = 'Nessuna Richiesta Inviata';
     @api saveInDraft;
+    @api isinboundchannel = false;
+    @api showParentList = false;
     @api ordersList = [];
     @api orderChildList = [];
     @api typeActivity = false;
@@ -48,9 +61,13 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         {label:"Sportello", value:"Sportello"},
         {label:"Inbound", value:"Inbound"}
     ];
+    @track tipoAttivitaOptions2 =
+    [
+        {label:"Posta Cartacea", value:"Posta Cartacea"},
+        {label:"Email", value:"Email"}
+    ];
 
     @track columns = [
-        {label: 'Name', fieldName: 'Name', type: 'text'},
         {label: 'Order Number', fieldName: 'OrderNumber', type: 'text'},
         {label: 'Status', fieldName: 'Status', type: 'text'}        
     ];
@@ -60,30 +77,55 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     ];
 
     connectedCallback(){
-
-        this.getOrderParent();
+        getActivity({caseId: this.recordid}).then(result => {
+            console.log("resu" + JSON.stringify(result));
+            this.accountId = result.c.AccountId;
+            this.typeDefaltValue = result.c.CopyType__c;
+            this.tipoCopia = result.c.CopyType__c;
+            this.orderIdPre = result.c.Order__c;
+            this.selectedSend = result.c.SendMode__c;
+            this.selectedActivity = result.c.Channel__c;
+            if(result.c.channel__c == 'Sportello'){
+                this.showButtonPreview = true;
+                this.isinboundchannel = false;
+            }
+            else{
+                this.showButtonPreview = false;
+                this.isinboundchannel = true;
+            }
+            if(result.c.CopyType__c != null && result.c.CopyType__c != undefined){
+                this.getOrderParent(result.c.CopyType__c);
+            }
+        });
+       // this.getOrderParent();
 
     }
 
     changeValueTipo(event){
         this.tipoCopia = event.detail.value;
         console.log('*****:' + event.detail.value);
-        if(event.detail.value == 'Copia della registrazione'){
-            console.log('Try:Copia');
-            this.selectedrowchild = this.orderChildList;
-            this.showChildList2 = false;
-            this.typeActivity = true;
-            this.showButtonPreview = false;
-        }
-        else{
-            this.showChildList2 = true;
-            this.typeActivity = false;
-            this.showButtonPreview = true;
-        }
+        this.showParentList = false;
+        this.showChildList2 = false;
+        this.showChildList = false;
+
+        this.getOrderParent(event.detail.value);
+
     }
 
     changeValueTipoAttivita(event){
         this.selectedActivity = event.detail.value;
+        if(event.detail.value == 'Sportello'){
+            this.showButtonPreview = true;
+            this.isinboundchannel = false;
+        }
+        else{
+            this.showButtonPreview = false;
+            this.isinboundchannel = true;
+        }
+    }
+
+    changeValueTipoAttivita2(event){
+        this.selectedSend = event.detail.value;
     }
 
     selectedRowHandler(event){
@@ -93,7 +135,22 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         getChild({orderId : event.detail.selectedRows[0].Id}).then(response =>{
             this.orderChildList = response;
             this.showChildList = true;
-            
+            if(this.tipoCopia == 'Copia della registrazione'){
+                console.log('Try:Copia');
+                this.selectedrowchild = this.orderChildList;
+                this.showChildList2 = false;
+                this.ismessagevisible = true;
+                this.typeActivity = true;
+                //this.showButtonPreview = false;
+                //this.isinboundchannel = false;
+            }
+            else{
+                this.showChildList2 = true;
+                this.ismessagevisible = false;
+                this.typeActivity = false;
+               // this.showButtonPreview = false;
+                //this.isinboundchannel = true;
+            }
         });
 
 
@@ -166,9 +223,55 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
        // this.isPrintButtonDisabled = false;
     }
 
-    getOrderParent(){
-        getParent({accountId : this.accountId}).then(response =>{
-            this.ordersList = response;
+    getOrderParent(type){
+        console.log('***ACC:' + this.accountId);
+        getParent({accountId : this.accountId,tipo : type}).then(response =>{
+            if(response != null && response.length != 0){
+                this.ordersList = response;
+                console.log('*****1:' +JSON.stringify(response));
+                this.showParentList = true;
+                for(var i=0; response.length; i++){
+                    console.log('*****2:' + this.orderIdPre);
+                    console.log('*****22:' + response[i].Id);
+                    if(this.orderIdPre == response[i].Id){
+                        console.log('*****3');
+                        var lis = [];
+                        lis.push(response[i].Id);
+                        this.selectedOrderValue = lis;
+                        this.selectedOrder = response[i];
+                        getChild({orderId : response[i].Id}).then(response =>{
+                            this.orderChildList = response;
+                            this.showChildList = true;
+                            if(this.tipoCopia == 'Copia della registrazione'){
+                                console.log('Try:Copia');
+                                this.selectedrowchild = this.orderChildList;
+                                this.showChildList2 = false;
+                                this.ismessagevisible = true;
+                                this.typeActivity = true;
+                                //this.showButtonPreview = false;
+                                //this.isinboundchannel = false;
+                            }
+                            else{
+                                this.showChildList2 = true;
+                                this.ismessagevisible = false;
+                                this.typeActivity = false;
+                               // this.showButtonPreview = false;
+                                //this.isinboundchannel = true;
+                            }
+                        });
+                    }
+                }
+                console.log('*****4');
+                this.showParentList = true;
+            }
+            else{
+                const event = new ShowToastEvent({
+                    message: 'Ordini non Trovati per il Tipo Selezionato',
+                    variant: 'warning',
+                    mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+            }
         });
 
 
@@ -176,7 +279,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     handleConfirm(){
 
-        if(this.tipoCopia != 'Copia della registrazione' && (this.selectedActivity === undefined ||  this.selectedActivity == null || this.selectedActivity == '')){
+        if(this.tipoCopia != 'Copia della registrazione' && (this.selectedActivity === undefined ||  this.selectedActivity == null || this.selectedActivity == '' || (this.selectedActivity == 'Inbound' && (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ))){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
                 variant: 'error',
@@ -184,39 +287,110 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 });
                 this.dispatchEvent(event);
         }else{
-            confirmAction2({
-                caseId : this.recordid,
-                accountId : this.accountId,
-                orderParentId : this.selectedOrder.Id,
-                tipoAttivita : this.selectedActivity,
-                tipoFirma : this.tipoCopia
-            }).then(response =>{
-                if(response == null || response == ''){
-                    const event = new ShowToastEvent({
-                        message: 'Puoi Continuare la lavorazione in autonomia',
-                        variant: 'success',
-                        mode: 'dismissable'
-                        });
-                        this.dispatchEvent(event);
-                }
-                else{
-                    const event = new ShowToastEvent({
-                        message: 'è stata creata la seguente activity :' + response    ,
-                        variant: 'warning',
-                        mode: 'dismissable'
-                        });
-                        this.dispatchEvent(event);
-                }
-                const closeclickedevt = new CustomEvent('closeaction');
-            });
-        }
-
-
-
-
-
+                confirmAction2({
+                    caseId : this.recordid,
+                    accountId : this.accountId,
+                    orderParentId : this.selectedOrder.Id,
+                    tipoAttivita : this.selectedActivity,
+                    tipoFirma : this.tipoCopia,
+                    tipoSend : this.selectedSend
+                }).then(response =>{
+                    if(response == null || response == ''){
+                        const event = new ShowToastEvent({
+                            message: 'Puoi Continuare la lavorazione in autonomia',
+                            variant: 'success',
+                            mode: 'dismissable'
+                            });
+                            this.dispatchEvent(event);
+                            this[NavigationMixin.Navigate]({
+                                type: 'standard__recordPage',
+                                attributes: {
+                                    recordId: this.recordid,
+                                    objectApiName: 'Case',
+                                    actionName: 'view'
+                                }
+                            });
+                        const closeclickedevt = new CustomEvent('closeaction');
+                        this.dispatchEvent(closeclickedevt); 
+                    }
+                    else if(response == 'NoDocumenti'){
+                        const event = new ShowToastEvent({
+                            message: 'Allega il Documento per Continuare' ,
+                            variant: 'warning',
+                            mode: 'dismissable'
+                            });
+                            this.dispatchEvent(event);
+                    }
+                    else{
+                        const event = new ShowToastEvent({
+                            message: 'è stata creata la seguente activity :' + response    ,
+                            variant: 'warning',
+                            mode: 'dismissable'
+                            });
+                            this.dispatchEvent(event);
+                            this[NavigationMixin.Navigate]({
+                                type: 'standard__recordPage',
+                                attributes: {
+                                    recordId: this.recordid,
+                                    objectApiName: 'Case',
+                                    actionName: 'view'
+                                }
+                            });
+                        const closeclickedevt = new CustomEvent('closeaction');
+                        this.dispatchEvent(closeclickedevt); 
+                    }
+                });
+            }
     }
 
+    handleConfirmDraft(){
+
+        console.log('*****:' + this.tipoCopia);
+        confirmAction2Draft({
+            caseId : this.recordid,
+            accountId : this.accountId,
+            orderParentId : this.selectedOrder.Id,
+            tipoAttivita : this.selectedActivity,
+            tipoFirma : this.tipoCopia,
+            tipoSend : this.selectedSend
+                }).then(response =>{
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: this.recordid,
+                            objectApiName: 'Case',
+                            actionName: 'view'
+                        }
+                    });
+                        const closeclickedevt = new CustomEvent('closeaction');
+                        this.dispatchEvent(closeclickedevt); 
+        });
+    
+    }
+
+    handleAnnull(){
+        cancelCase({caseId: this.recordid}).then(result => {
+            console.log(result);
+            const event = new ShowToastEvent({
+                message: 'Case Annullato!',
+                variant: 'success',
+                mode: 'dismissable'
+                });
+                this.dispatchEvent(event);
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: this.recordid,
+                        objectApiName: 'Case',
+                        actionName: 'view'
+                    }
+                });
+                    const closeclickedevt = new CustomEvent('closeaction');
+                    this.dispatchEvent(closeclickedevt); 
+            }).catch(error => {
+                console.log(error);
+            });
+    }
 
 
 

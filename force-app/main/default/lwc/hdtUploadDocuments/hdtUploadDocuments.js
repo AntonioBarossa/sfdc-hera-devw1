@@ -6,6 +6,7 @@ export default class HdtUploadDocuments extends LightningElement {
     @api title; //modal title
     @api acceptedFormats; //configure accepted formats
     visible = false;
+    @api isDone = false;
 
     //handle modal open event
     handleOpenModal(){
@@ -19,6 +20,7 @@ export default class HdtUploadDocuments extends LightningElement {
 
     //handle upload finished event
     handleUploadFinished(event) {
+        this.isdone = true;
         const toastSuccessMessage = new ShowToastEvent({
             title: 'Successo',
             message: 'Documento caricato con successo',
@@ -26,6 +28,7 @@ export default class HdtUploadDocuments extends LightningElement {
         });
         this.dispatchEvent(toastSuccessMessage);
         this.visible = false;
+       // this.isdone = true;
     }
 
     connectedCallback(){
