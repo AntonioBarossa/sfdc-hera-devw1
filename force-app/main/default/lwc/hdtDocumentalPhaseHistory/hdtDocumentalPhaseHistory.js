@@ -6,10 +6,18 @@ import getParentOrderId from '@salesforce/apex/HDT_LC_DocumentalPhaseHistory.get
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 
 const columns  = [
-    { label: 'Origine', fieldName: 'OldValue' },
-    { label: 'Destinazione', fieldName: 'NewValue'},
-    { label: 'Data', fieldName: 'CreatedDate', type: 'date' }
-    ];
+    { label: 'Da', fieldName: 'OldValue' },
+    { label: 'A', fieldName: 'NewValue'},
+    { label: 'Data', fieldName: 'CreatedDate', type: 'date',
+      typeAttributes:{
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    }
+];
 
 export default class HdtDocumentalPhaseHistory extends NavigationMixin(LightningElement) {
     @api recordId;
