@@ -24,7 +24,7 @@
                 <field>IbanCIN_IBAN__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>BankAgency__c</field>
             </layoutItems>
             <layoutItems>
@@ -46,6 +46,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>InvoicingStreetCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IBAN__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -72,6 +76,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>OtherPayer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AccountClassCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Contact__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -168,6 +180,14 @@
                 <behavior>Readonly</behavior>
                 <field>InvoicingPlace__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>InvoicingCityCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CareOf__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -184,11 +204,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>InvoicingPostalCode__c</field>
+                <field>InvoicingStreetNumberExtension__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>InvoicingCityCode__c</field>
+                <field>InvoicingPostalCode__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -283,7 +303,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62P</masterLabel>
+        <masterLabel>00h3N000002SmK5</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

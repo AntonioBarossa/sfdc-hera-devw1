@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 29/07/2021
+* @description HDT_QR_MatriceRemiCode
+* @history Lorenzo – 29/07/2021 – created class
+*/
+
 public with sharing class HDT_QR_MatriceRemiCode {
     
     public static List<MatriceRemiCode__c> getAllRecord(){

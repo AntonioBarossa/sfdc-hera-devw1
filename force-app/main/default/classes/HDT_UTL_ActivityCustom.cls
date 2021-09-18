@@ -8,9 +8,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
+    private static HDT_QR_Recordtype rtQr = new HDT_QR_Recordtype();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
-
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 18/06/2021
@@ -47,10 +48,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             activityCustomSrv.updateRecord(s);
             Case c = caseQr.getRecordById(s.case__c);
             c.phase__c	='In Lavorazione';
-            caseSrv.updateRecord(c);
+            update c;
+           // caseSrv.updateRecord(c);
             return true;
         }
         catch(Exception e){
+            system.debug(e);
             return false;
         }
     }
@@ -107,6 +110,64 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         system.debug('HDT_UTL_ActivityCustom - recordTypeId: ' + recordTypeId);
 
         return recordTypeId;
+    }
+    @AuraEnabled
+    public static boolean validaActivityVocal(String recordid, String validazione){
+        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdAccise(recordid);
+        act.validation__c = validazione;
+        boolean res = false;
+        if(validazione == 'Si'){
+            act.wrts_prcgvr__status__c = 'Completed';
+            res = true;
+            Order ord = new Order();
+            ord.id = act.order__c;
+            ord.DocumentPackage__c = 'Validato';
+            ord.phase__c = 'Registrazione validata  Firmato/Inviato';
+            ord.status = 'Activated';
+            orderSrv.updateRecord(ord);
+        }
+        activityCustomSrv.updateRecord(act);
+
+        return res;
+        //update act;
+    }
+    @AuraEnabled
+    public static String validaActivityDocument(String recordid, String validazione){
+        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdAccise(recordid);
+        
+        act.validation__c = validazione;
+        String res = '';
+        if(validazione == 'Si'){
+            act.wrts_prcgvr__status__c = 'Completed';
+           // res = true;
+            Order ord = new Order();
+            ord.id = act.order__c;
+            ord.DocumentPackage__c = 'Validato';
+            ord.phase__c = 'Plico validato Firmato';
+            ord.status = 'Activated';
+            orderSrv.updateRecord(ord);
+        }
+        else{
+            Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+            List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Validazione Documentale');
+            if(actCusList != null && !actCusList.isEmpty()){
+                if(actCusList[0].wrts_prcgvr__status__c == 'Completed'){
+                    act.wrts_prcgvr__status__c = 'Completed';
+                    res = 'NoApprovata';
+                }
+                else{
+                    res = 'NonChiusa';
+                }
+            }
+            else {
+                wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'));
+                activityCustomSrv.createRecord(act2);
+                res = 'Creata';
+            }    
+         }
+        activityCustomSrv.updateRecord(act);
+        return res;
+        //update act;
     }
     
 }

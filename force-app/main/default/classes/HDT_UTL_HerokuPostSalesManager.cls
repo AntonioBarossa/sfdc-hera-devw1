@@ -259,6 +259,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String description = recordCase.Description != null?recordCase.Description:'';
                 currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
             }
+            if(reqWrp.requestMap.get('ANNOTAZIONI') != null && reqWrp.requestMap.get('ANNOTAZIONI') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI') + '\n' + description;
+            }
             if(reqWrp.requestMap.get('COD_CAUSALE') != null && reqWrp.requestMap.get('COD_CAUSALE') != ''){
                 currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
             }
@@ -283,8 +287,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.TechnicalFeasibility__c = false;
                 }
             }
-            if(nextPhase != null && nextPhase.equalsIgnoreCase('Pratica Riclassificata') && reqWrp.requestMap.get('NOTE') != null){
-                currentCase.ComplexCategory__c = reqWrp.requestMap.get('NOTE');
+            if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
+                String note = recordCase.Note__c != null?recordCase.Note__c:'';
+                currentCase.Note__c =  nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE') + '\n' + note;
             }
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
                 try{

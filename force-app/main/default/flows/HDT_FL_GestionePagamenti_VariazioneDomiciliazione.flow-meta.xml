@@ -123,7 +123,7 @@
         <name>AssegnaFase_0_0_0_0</name>
         <label>AssegnaFase</label>
         <locationX>2162</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -146,7 +146,7 @@
         <name>AssegnaFase_0_0_0_0_0</name>
         <label>AssegnaFase</label>
         <locationX>2954</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -169,7 +169,7 @@
         <name>AssegnaFase_0_0_0_0_0_0</name>
         <label>AssegnaFase</label>
         <locationX>842</locationX>
-        <locationY>3446</locationY>
+        <locationY>3686</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +206,7 @@
         <name>AssegnaFase_0_0_0_0_0_0_0</name>
         <label>AssegnaFase</label>
         <locationX>1634</locationX>
-        <locationY>3446</locationY>
+        <locationY>3686</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -243,7 +243,7 @@
         <name>AssegnaFase_0_0_0_0_0_0_0_0</name>
         <label>AssegnaFase</label>
         <locationX>2426</locationX>
-        <locationY>3326</locationY>
+        <locationY>3566</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -285,7 +285,7 @@
             <assignToReference>GetCaseAggiornato.Iban__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Iban</elementReference>
+                <elementReference>UpperIban</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -295,8 +295,45 @@
                 <elementReference>IbanIsForeign</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCINFormula</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Iban</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaVariabiliSottoscrittore</name>
+        <label>AssegnaVariabiliSottoscrittore</label>
+        <locationX>1601</locationX>
+        <locationY>2510</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseCFSott</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseNomeSott</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryLastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseCognomeSott</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseSottoscrittore</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -391,7 +428,7 @@
         <name>ABI_Uguale</name>
         <label>ABI Uguale?</label>
         <locationX>380</locationX>
-        <locationY>2966</locationY>
+        <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale</targetReference>
         </defaultConnector>
@@ -431,7 +468,7 @@
         <name>ABI_Uguale_0</name>
         <label>ABI Uguale?</label>
         <locationX>1436</locationX>
-        <locationY>2966</locationY>
+        <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale_0</targetReference>
         </defaultConnector>
@@ -592,11 +629,11 @@
         <name>AvanzamentoDocumentale</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>710</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <defaultConnector>
             <targetReference>CalcolaCodiceCausale</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
         <rules>
             <name>ConfermaDocumentale</name>
             <conditionLogic>or</conditionLogic>
@@ -604,27 +641,20 @@
                 <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Annulla_Prestazione_0_0_0</targetReference>
             </connector>
-            <label>Conferma</label>
+            <label>Annulla</label>
         </rules>
     </decisions>
     <decisions>
         <name>AvanzamentoDocumentale_0</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>1766</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0</targetReference>
         </defaultConnector>
@@ -656,7 +686,7 @@
         <name>AvanzamentoDocumentale_0_0</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>2492</locationX>
-        <locationY>2966</locationY>
+        <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -688,7 +718,7 @@
         <name>AvanzamentoDocumentale_0_0_0</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>3086</locationX>
-        <locationY>2966</locationY>
+        <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -745,7 +775,7 @@
         <name>Iban_Uguale</name>
         <label>Iban Uguale?</label>
         <locationX>2294</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <defaultConnector>
             <targetReference>CalcolaCodiceCausale_0_0</targetReference>
         </defaultConnector>
@@ -885,7 +915,7 @@
         <name>Quale_tipo_di_Variazione</name>
         <label>Quale tipo di Variazione?</label>
         <locationX>1733</locationX>
-        <locationY>2726</locationY>
+        <locationY>2966</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale_0_0_0</targetReference>
         </defaultConnector>
@@ -1065,12 +1095,37 @@
     <formulas>
         <name>ItalianIbanFormula</name>
         <dataType>String</dataType>
-        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;{!GetCaseAggiornato.IbanCIN__c}&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
+        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;UPPER({!GetCaseAggiornato.IbanCIN__c})&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione - Italiano&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
+        <expression>IF({!IbanIsForeign} = false, &quot;Variazione Domiciliazione&quot;,&quot;Variazione Domiciliazione - Estero&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCaseCFSott</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCaseCognomeSott</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseSottoscrittore.BankAccountSignatoryLastName__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCaseNomeSott</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseSottoscrittore.BankAccountSignatoryFirstName__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCINFormula</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseAggiornato.IbanCIN__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperIban</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!Iban})</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_VariazioneDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Variazione Domiciliazione</label>
@@ -1097,7 +1152,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>3326</locationY>
+        <locationY>3566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase_0_0_0_0_0_0</targetReference>
@@ -1139,7 +1194,7 @@
         <name>CalcolaCodiceCausale_0</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>1634</locationX>
-        <locationY>3326</locationY>
+        <locationY>3566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase_0_0_0_0_0_0_0</targetReference>
@@ -1181,7 +1236,7 @@
         <name>CalcolaCodiceCausale_0_0</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>2426</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase_0_0_0_0_0_0_0_0</targetReference>
@@ -1265,7 +1320,7 @@
         <name>GetAbiCode</name>
         <label>GetAbiCode</label>
         <locationX>380</locationX>
-        <locationY>2846</locationY>
+        <locationY>3086</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ABI_Uguale</targetReference>
@@ -1300,7 +1355,7 @@
         <name>GetAbiCode_0</name>
         <label>GetAbiCode</label>
         <locationX>1436</locationX>
-        <locationY>2846</locationY>
+        <locationY>3086</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ABI_Uguale_0</targetReference>
@@ -1356,7 +1411,7 @@
         <name>GetCaseAggiornato2</name>
         <label>GetCaseAggiornato2</label>
         <locationX>1733</locationX>
-        <locationY>2606</locationY>
+        <locationY>2846</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quale_tipo_di_Variazione</targetReference>
@@ -1381,6 +1436,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase_00</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseSottoscrittore</name>
+        <label>GetCaseSottoscrittore</label>
+        <locationX>1601</locationX>
+        <locationY>2390</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaVariabiliSottoscrittore</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1425,10 +1501,20 @@
         <inputReference>GetCaseAggiornatoNonBozza</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>AggiornaCaseSottoscrittore</name>
+        <label>AggiornaCaseSottoscrittore</label>
+        <locationX>1601</locationX>
+        <locationY>2630</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato2</targetReference>
+        </connector>
+        <inputReference>GetCaseSottoscrittore</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>842</locationX>
-        <locationY>3566</locationY>
+        <locationY>3806</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -1438,7 +1524,7 @@
         <name>Passa_a_Da_Inviare_0</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>1634</locationX>
-        <locationY>3566</locationY>
+        <locationY>3806</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1448,7 +1534,7 @@
         <name>Passa_a_Da_Inviare_0_0</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>2426</locationX>
-        <locationY>3446</locationY>
+        <locationY>3686</locationY>
         <connector>
             <targetReference>Loading_Screen_0_0</targetReference>
         </connector>
@@ -1458,21 +1544,21 @@
         <name>Passa_a_Elaborazione_Manuale_0_0</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>2162</locationX>
-        <locationY>3326</locationY>
+        <locationY>3566</locationY>
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Elaborazione_Manuale_0_0_0</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>2954</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <screens>
         <name>Alert_Contattare_Banca</name>
         <label>Alert Contattare Banca</label>
         <locationX>50</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1541,7 +1627,7 @@
         <name>Alert_Contattare_Banca_0</name>
         <label>Alert Contattare Banca</label>
         <locationX>1106</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1610,7 +1696,7 @@
         <name>Alert_Iban_Obsoleto</name>
         <label>Alert Iban Obsoleto</label>
         <locationX>314</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1679,7 +1765,7 @@
         <name>Alert_Iban_Obsoleto_0</name>
         <label>Alert Iban Obsoleto</label>
         <locationX>1370</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1748,7 +1834,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>842</locationX>
-        <locationY>3686</locationY>
+        <locationY>3926</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1779,7 +1865,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>1634</locationX>
-        <locationY>3686</locationY>
+        <locationY>3926</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1810,7 +1896,7 @@
         <name>Loading_Screen_0_0</name>
         <label>Loading Screen</label>
         <locationX>2426</locationX>
-        <locationY>3566</locationY>
+        <locationY>3806</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1872,7 +1958,7 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>710</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1917,7 +2003,7 @@
         <name>Screen_Documentale_0</name>
         <label>Screen Documentale</label>
         <locationX>1766</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1962,7 +2048,7 @@
         <name>Screen_Documentale_0_0</name>
         <label>Screen Documentale</label>
         <locationX>2492</locationX>
-        <locationY>2846</locationY>
+        <locationY>3086</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2007,7 +2093,7 @@
         <name>Screen_Documentale_0_0_0</name>
         <label>Screen Documentale</label>
         <locationX>3086</locationX>
-        <locationY>2846</locationY>
+        <locationY>3086</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2176,7 +2262,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Variazione Domiciliazione</stringValue>
+                    <elementReference>ProcessTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2599,7 +2685,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>GetCaseAggiornato2</targetReference>
+            <targetReference>GetCaseSottoscrittore</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0</name>
@@ -2764,7 +2850,7 @@
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>578</locationX>
-        <locationY>3326</locationY>
+        <locationY>3566</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2789,7 +2875,7 @@
         <name>Annulla_Prestazione_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1898</locationX>
-        <locationY>3326</locationY>
+        <locationY>3566</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2814,7 +2900,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>2690</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2839,7 +2925,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>3218</locationX>
-        <locationY>3086</locationY>
+        <locationY>3326</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2864,7 +2950,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>50</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2889,7 +2975,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>314</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2914,7 +3000,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2939,7 +3025,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1370</locationX>
-        <locationY>3206</locationY>
+        <locationY>3446</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

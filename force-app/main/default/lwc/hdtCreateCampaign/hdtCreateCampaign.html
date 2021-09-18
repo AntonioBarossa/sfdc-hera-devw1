@@ -62,7 +62,7 @@
                             </lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small endDate">
-                            <lightning-input-field field-name="EndDate"></lightning-input-field>
+                            <lightning-input-field field-name="EndDate" required={reqEndDate}></lightning-input-field>
                         </div>
                     </div>
                     <div class="slds-grid">
@@ -228,7 +228,7 @@
                     <template if:true={paperCampaignFields}>
                         <lightning-input-field field-name="PaperCampaignParameter__c"
                             class="slds-hide paperCampaignParameterField"></lightning-input-field>
-                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId}
+                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId} reqrec={requiredShippingMethods}
                             onrecordsubmitted={handleRecordSubmitted} onerroroccurred={handleErrorOccurred}>
                         </c-hdt-paper-campaign-fields>
                     </template>

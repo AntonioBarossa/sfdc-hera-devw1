@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_Default</fullName>
+    <active>true</active>
+    <description>RecordType Default</description>
+    <label>Default</label>
+    <picklistValues>
+        <picklist>Cluster__c</picklist>
+        <!-- <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values> -->
+        <values>
+            <fullName>Annullamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche VAS</fullName>
+            <default>false</default>
+        </values>
+        <!-- <values>
+            <fullName>HERA</fullName>
+            <default>false</default>
+        </values> -->
+        <values>
+            <fullName>Indennizzi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifiche Anagrafiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PostSales VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EntryChannel__c</picklist>
+        <values>
+            <fullName>Agenti D2D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back-office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Center Inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL e App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello Amministratori Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teleselling Outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tutti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Role__c</picklist>
+        <values>
+            <fullName>Back Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front Office AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front Office HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front Office MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front Office Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

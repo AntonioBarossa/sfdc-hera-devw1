@@ -80,6 +80,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Map<String, Schema.RecordTypeInfo> activityRtInfos = ((SObject)Type.forName('Schema','wrts_prcgvr__Activity__c').newInstance()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName();
         Id rtOldCustomer = activityRTInfos.get('HDT_RT_KoPrecedeteCliente').getRecordTypeId();
         Id rtNewCustomer = activityRTInfos.get('HDT_RT_CreditCheckKO').getRecordTypeId();
+        Set<Id> oldCustOrderIds = new Set<Id>();
+
+        for(Order o : orderMap.get('oldCustomer')){
+            oldCustOrderIds.add(o.id);
+        }
+        Map<id, Order> ordersToGetOldCustomer = new Map<Id,Order>([SELECT AccountId, ServicePoint__r.Account__c FROM Order WHERE ID IN :oldCustOrderIds ]);
 
         for(String typeCustomer : orderMap.keyset()){
             for(Order order : orderMap.get(typeCustomer)){
@@ -89,6 +95,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                     activity.RecordTypeId = rtOldCustomer;                     
                     activity.CreditCheckResults__c = order.OutgoingCreditCheckResult__c;
                     activity.Account__c = order.ServicePoint__r.Account__c; 
+                    activity.OldCustomerAccount__c=ordersToGetOldCustomer.get(order.Id).ServicePoint__r?.Account__c;
                 }
                         
                 if(typeCustomer == 'newCustomer'){ // Nuovo cliente // entrante

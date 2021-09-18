@@ -1,5 +1,15 @@
+/**
+ * @description HDT_LC_DownloadAttachmentAzure
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
+
 public with sharing class HDT_LC_DownloadAttachmentAzure {
-    
+
+    /**
+     * @description HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink
+     * param rId - String
+     * @return String
+     */
     @AuraEnabled
     public static String getUrlNameDocumentLink(String rId){
         try {

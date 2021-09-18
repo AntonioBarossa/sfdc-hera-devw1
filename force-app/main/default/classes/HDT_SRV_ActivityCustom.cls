@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 28/05/2021
+* @description HDT_SRV_ActivityCustom
+* @history Lorenzo – 28/05/2021 – created class
+*/
 public inherited sharing class HDT_SRV_ActivityCustom {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();

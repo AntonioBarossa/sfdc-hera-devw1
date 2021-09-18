@@ -1,18 +1,36 @@
 @isTest
 global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
+    
+    
     global HTTPResponse  respond(HTTPRequest request){
         String endpoint = request.getEndpoint();
+        System.debug('HDT_WS_PostSalesTstMock - respond');
         System.debug(endpoint);
         //Arricchimento Dati
         if(endpoint.equalsIgnoreCase('ArricchimentoDatiTemp')){
             return creaEnrichResposne(request);
         //Pagamenti
-        }else if(endpoint.containsIgnoreCase('HDT_')){
+        }else if(endpoint.equalsIgnoreCase('Callout:GetEnvelopePostel')){
+            return creaPostelResponse(request);
+        }else if(endpoint.containsIgnoreCase('HDT_PaymentCommunication')){
             return creaPaymentsResponse(request);
-        }else{
+        }else if(endpoint.containsIgnoreCase('Credit')){
+            return creaCreditViewsResponse(request);
+        }else if(endpoint.containsIgnoreCase('HDT_AccountBalance')){
+            return creaAccountBalanceResponse(request);
+        }else if(endpoint.containsIgnoreCase('Callout:CheckLastReading')){
+            return creaCheckLastReadingsResponse(request);
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura')){
+            return creaModificaLayoutFatturaResponse(request);
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_null')){
+            return creaModificaLayoutFatturaResponseNull(request);
+        }else if(endpoint.equalsIgnoreCase('Callout:ModificaLayoutFattura_notOK')){
+            return creaModificaLayoutFatturaResponseNotOK(request);
+        } else{
             return creaRicResponse(request);
         }
     }
+    
     public static HttpResponse creaRicResponse(HTTPRequest request){
         HttpResponse response = new HttpResponse();
         String recordId = '';
@@ -49,7 +67,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
-
+    
     public static HttpResponse creaEnrichResposne(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
@@ -73,7 +91,7 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         response.setStatus('OK');
         return response;
     }
-
+    
     public static HttpResponse creaPaymentsResponse(HttpRequest request){
         HttpResponse response = new HttpResponse();
         String body = request.getBody();
@@ -86,6 +104,147 @@ global class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         return response;
     }
 
+    public static HttpResponse creaPostelResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaPostelResponse');
+        HttpResponse response = new HttpResponse();
+        String body = request.getBody();
+        //successResponse
+        
+        /*
+        public Integer responseCode;
+        public String responseStatus;
+        public String content;
+        */
+        
+        String bodyResponse = '{"status": "success","correlationId": "eb9117b0-04e1-11ec-89bb-06c8ff345e9a","timestamp": "2021-08-24T15:48:13","data": {"responseCode": "200","responseStatus": "Test","content": "Test Content"}}';
+        
+        return response;
+    }
+    
+    
+    public static HttpResponse creaCreditViewsResponse(HttpRequest request){
+        HttpResponse response = new HttpResponse();
+        String bodyResponse = '{"status": "success","correlationId": "b40f74a0-0cd2-11ec-9bbe-06c86cee6034","timestamp": "2021-09-03T18:19:28",'
+        +'"data": [{"contoContrattuale": "200008284449","codiceCliente": "1002647967","dataEmissione": "31/08/2021","dataScadenza": "20/10/2021",'
+        +'"importo": "32.0","residuo": "32.0","documento": "500002727014","contratto": "3016825235","settoreMerceologico": "Energia elettrica",'
+        +'"tipoTransazione": "EC4","idPrimoLivelloSAP": "00000000000000000000000000000000000000000000000001","oraIncassoRealTime": "00:00:00",'
+        +'"loginId": "0-1","secondoLivelloInformativoF2": [{"riferimentoFattura": "0000411903129942","societa": "Hera Comm S.p.A.","contratto": "3016825235",'
+        +'"settoreMerceologico": "Energia elettrica","dataEmissione": "03/04/2019","dataScadenza": "23/04/2019","importo": "64.22","totaleCopertina": "0.0",'
+        +'"idSecondoLivelloSAP": "00000000000000000000000000000000000000000000000001"}]},'
+        +'{"contoContrattuale": "200008284449","codiceCliente": "1002647967","dataEmissione": "31/08/2021","dataScadenza": "20/10/2021","importo": "116.0",'
+        +'"residuo": "0.0","documento": "500002727015","contratto": "3016598437","settoreMerceologico": "Gas","tipoTransazione": "EC4",'
+        +'"idPrimoLivelloSAP": "00000000000000000000000000000000000000000000000002","oraIncassoRealTime": "00:00:00","loginId": "0-1","secondoLivelloInformativoF2": ['
+        +'{"riferimentoFattura": "0000431900252295","societa": "Hera Comm Marche","contratto": "3016598437","settoreMerceologico": "Gas","dataEmissione": "03/04/2019",'
+        +'"dataScadenza": "23/04/2019","importo": "233.89","totaleCopertina": "0.0","idSecondoLivelloSAP": "00000000000000000000000000000000000000000000000001"}]}]}';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
 
+    public static HttpResponse creaAccountBalanceResponse(HttpRequest request){
+        HttpResponse response = new HttpResponse();
+        String bodyResponse = '{"status": "failed","correlationId": "c5fb0140-0fc8-11ec-9bbe-06c86cee6034","timestamp": "2021-09-07T12:45:54","errorDetails": [{'
+        +'"code": "HTTP:INTERNAL_SERVER_ERROR","message": "HTTP POST on resource \'http://isudbq.service.intra:8121/sap/bc/srt/rfc/sap/z_ws_saldo_bp/150/z_ws_saldo_bp/z_ws_saldo_bp\''
+        +' failed: internal server error (500).","additionalInfo": "HTTP POST on resource \'http://isudbq.service.intra:8121/sap/bc/srt/rfc/sap/z_ws_saldo_bp/150/z_ws_saldo_bp/z_ws_saldo_bp\''
+        +' failed: internal server error (500)."}]}';
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(500);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaCheckLastReadingsResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaCheckLastReadingsResponse');
+        HttpResponse response = new HttpResponse();
+        
+        String bodyResponse = 'Response_Body_Test_Success';
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponse(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponse');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+        wrpDATA.rds = 'rds';
+        wrpDATA.attivita = 'Esito OK da SAP';
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = wrpDATA;
+        
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponseNull(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponseNull');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = null;//TARGET
+        
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
+    
+    public static HttpResponse creaModificaLayoutFatturaResponseNotOK(HttpRequest request){
+        
+        System.debug('HDT_WS_PostSalesTstMock - creaModificaLayoutFatturaResponseNotOK');
+        HttpResponse response = new HttpResponse();
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+        wrpDATA.rds = 'rds';
+        wrpDATA.attivita = 'Test';//TARGET
+        
+        HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+        bodyResp.status = 'TST_Status';
+        bodyResp.correlationId = 'TST_CorrelId';
+        bodyResp.timestamp = 'TST_TimeStamp';
+        bodyResp.data = wrpDATA;
+        
+        String bodyResponse = JSON.serialize(bodyResp);
+        
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody(bodyResponse);
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        return response;
+    }
     
 }

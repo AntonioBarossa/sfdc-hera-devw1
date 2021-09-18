@@ -1,6 +1,7 @@
 import  SaleVas  from 'c/hdtSaleVas';
 import { api, track } from 'lwc';
 import getTempNuovaAttivazContracts from '@salesforce/apex/HDT_LC_SaleVas.getTempNuovaAttivazContracts';
+import getOrdersListNotActive from '@salesforce/apex/HDT_LC_SaleVas.getOrdersListNotActive';
 
 export default class HdtSelezioneFornituraFlow extends SaleVas {
     @api accountId;
@@ -27,6 +28,7 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
         {label: 'Tipo', fieldName: 'Type', type: 'text'},
         {label: 'Numero Ordine', fieldName: 'OrderNumber', type: 'text'},
         {label: 'Processo', fieldName: 'ProcessType__c', type: 'text'},
+        {label: 'Status', fieldName: 'Status', type: 'text'},
         {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
         {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
     ];
@@ -78,6 +80,30 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
         });
     }
 
+    handleOrdersList(){
+        this.isLoading = true;
+        getOrdersListNotActive({accountId:this.accountId}).then(data =>{
+            this.isLoading = false;
+            // this.ordersList = data;
+            
+            if(data.length > 0){
+                this.createTable(data);
+            } else {
+                this.showEmptyOrdersMessage = true;
+            }
+
+        }).catch(error => {
+            this.isLoading = false;
+            // this.isModalVisible = false;
+            console.log('Error: ', error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
 
 
 

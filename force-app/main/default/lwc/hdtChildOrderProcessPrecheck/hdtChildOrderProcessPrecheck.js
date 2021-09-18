@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
+import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 
 
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
@@ -26,6 +27,30 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     @track processesReference = [];
     value;
     serviceRequest;
+    creditCheckFields = [];
+    creditCheckResult = {};
+
+    get isNotBillable(){
+        return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
+    }
+    get isBillable(){
+        return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && this.order.IsBillableVas__c;
+    }
+
+    get isCreditCheckVisible(){
+        return this.order.Step__c >= 2 && 
+        (
+            this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
+                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
+        );
+    }
 
     get disabledNext(){
         let result = true;
@@ -299,7 +324,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         //EVERIS: Aggiunta variabile Order
         next({order: this.order,orderId: this.order.Id, selectedProcessObject: this.selectedProcessObject, deliberate: this.deliberation, extraParams: extraParams, srRequest: this.serviceRequest}).then(data =>{
-            if(data != ''){
+            if(data != '' && data != this.order.OrderNumber){
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Processo incompatibile!',
@@ -336,9 +361,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_ConnessioneConAttivazione, HDT_RT_TemporaneaNuovaAtt, HDT_RT_Voltura, 
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
+         console.log('****12');
         if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
             this.callCreditCheckSAP();
         }
+        console.log('****13');
         
 
         let extraParams = {};
@@ -350,12 +377,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
             extraParams['switchInRipristinatorio'] = 'true';
         }
-
+        console.log('****1');
         if (this.showDeliberation === true) {
+            console.log('****2');
             if (this.deliberation !== '') {
+                console.log('****4');
                 this.goToNextStep(extraParams);
                 this.disabledDeliberation = true;
             } else {
+                console.log('****5');
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Devi compilare il campo delibera.',
@@ -365,6 +395,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             }
         } else {
+            console.log('****3');
             this.goToNextStep(extraParams);
         }
 
@@ -423,13 +454,62 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         } else {
             console.log('enter with value');
             this.options = [];
-            this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
+            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? "Prima Attivazione" : this.order.ProcessType__c;
+            this.options.push({label: label, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
             this.checkCompatibilityProcess();
         }
 
+        this.creditCheckFields = [
+            {
+                'label': 'Esito credit Check Entrante',
+                'apiname': 'IncomingCreditCheckResult__c',
+                'typeVisibility': this.typeVisibility('both'),
+                'required': false,
+                'disabled': true,
+                'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
+                'processVisibility': ''
+            },
+            {
+                'label': 'Esito credit Check Uscente',
+                'apiname': 'OutgoingCreditCheckResult__c',
+                'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && (!this.isNotBillable),
+                'required': false,
+                'disabled': true,
+                'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
+                'processVisibility': ''
+            },
+            {
+                'label': 'Descrizione esito',
+                'apiname': 'CreditCheckDescription__c',
+                'typeVisibility': this.typeVisibility('both'),
+                'required': false,
+                'disabled': true,
+                'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
+                'processVisibility': ''
+            }
+        ];
+
         console.log('CallBack end');
+    }
+
+    typeVisibility(type){
+        let result = true;
+        if(this.order !== undefined && this.order.ServicePoint__c !== undefined){
+            switch (type) {
+                case 'ele':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Ele';
+                    break;
+                case 'gas':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
+                    break
+                default:
+                    result = true;
+                    break;
+            }
+        }
+        return result;
     }
 
     // START @Picchiri 07/06/21 Credit Check
@@ -446,13 +526,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             console.log(JSON.parse(JSON.stringify(result)));
 
             if(result.status == 'failed'){
-                let toastErrorMessage = new ShowToastEvent({
+                let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
+                    return `${testoFinale}\n${elem}`;
+                }, result.errorDetails[0].code);
+                console.log(message);
+                /*let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
-                    message: result.errorDetails[0].code + ' ' + JSON.stringify(result.errorDetails[0].message),
+                    message: message,
                     variant: 'warning', 
-                    mode:'dismissible'
+                    mode:'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(toastErrorMessage);*/
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
             
@@ -478,7 +562,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     getRequest(){ 
         var typeOfCommodity = 'ENERGIAELETTRICA';
-        var companyName = null;
+        let companyName = this.order.Account.FirstName__c? `${this.order.Account.FirstName__c} ${this.order.Account.LastName__c}` : this.order.Account.LastName__c;
+        let companyGroup;
         var secondaryCustomerId = null;
         var bpType = null;
         var operation = null;
@@ -495,7 +580,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             }
         }
         if(this.order.SalesCompany__c !== undefined){
-            companyName = this.order.SalesCompany__c;
+            companyGroup = this.order.SalesCompany__c;
         }
         if(this.order.Account.VATNumber__c !== undefined){
             secondaryCustomerId = this.order.Account.VATNumber__c;
@@ -530,7 +615,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
-            companyName:companyName,//this.order.SalesCompany__c
+            companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c,
             secondaryCustomerId:secondaryCustomerId,
             bpClass:bpClass,
@@ -538,13 +623,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             bpType:bpType,
             customerType:"CT0", //da definire campo SF con business            
             operation:operation,
-            companyGroup:companyName,
+            companyGroup:companyGroup,//this.order.SalesCompany__c
             market:market,
             offerType:offerType,
             details:[{
                 commodity:typeOfCommodity
             }]		
         }
+        console.log("this.2"); 
 
         if(this.selectedProcessObject.recordType !== 'HDT_RT_VAS'){
             data["address"] = this.order.ServicePoint__r.SupplyStreetName__c;
@@ -554,29 +640,36 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
             data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumptionStandardM3__c;
         }
-        
+        console.log("this.3"); 
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            
-            if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
-                fiscalData = this.order.ServicePoint__r.Account__r.FiscalCode__c;
-            }else if(this.order.ServicePoint__r.Account__r.VATNumber__c != null){
-                fiscalData = this.order.ServicePoint__r.Account__r.VATNumber__c;
+        if(this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura'){
+            console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
+            console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
+            if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
+                console.log("this.32:"); 
+                fiscalData = this.order.ServicePoint__r?.Account__r?.FiscalCode__c;
+            }else if(this.order.ServicePoint__r?.Account__r?.VATNumber__c != null){
+                console.log("this.33:"); 
+                fiscalData = this.order.ServicePoint__r?.Account__r?.VATNumber__c;
             }
+            console.log("this.34"); 
             
-            data["bpAlternative"] = this.order.ServicePoint__r.Account__r.CustomerCode__c;
-            data["alternativeCustomerId"] = fiscalData;            
+            data["bpAlternative"] = this.order.ServicePoint__r?.Account__r?.CustomerCode__c;
+            data["alternativeCustomerId"] = fiscalData;
         }
+        console.log("this.4"); 
 
         return data; 
     }
     // END @Picchiri 07/06/21 Credit Check
     checkCompatibilityProcess(){
         this.loaded = false;
+        console.log('**********:12' + this.order.AccountId);
         let sRequest= {
             'servicePoint': this.order.ServicePoint__c,
             'servicePointCode': this.order.ServicePoint__r?.ServicePointCode__c,
             'status': this.order.Status,
+            'account' : this.order.AccountId,
             'order': this.order.Id,
             'commoditySector': this.order.ServicePoint__r?.CommoditySector__c,
             'type': 'Order',
@@ -586,7 +679,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             sRequest["isBillableVas"]=this.order.IsBillableVas__c;
         }
         checkCompatibility({servReq: sRequest}).then(data =>{
-            if(data.compatibility == ''){
+            if(data.compatibility == '' || data.compatibility == this.order.OrderNumber){
                 this.applySelectionLogic(this.selectedProcessObject);
                 this.serviceRequest= data.ServiceRequest;
             }else{
@@ -606,5 +699,116 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             this.loaded = true;
         });
+    }
+
+    applyCreditCheckLogic(fieldName){    
+        console.log('applyCreditCheckLogic order----->' + JSON.parse(JSON.stringify(this.order)));
+        if(this.order.RecordType.DeveloperName !== undefined ){
+            switch (this.order.RecordType.DeveloperName) {
+                case 'HDT_RT_Subentro':
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
+                        return '';
+                    }
+                    else if (fieldName === 'OutgoingCreditCheckResult__c') {
+                        return '';
+                    }
+                    break;
+                case 'HDT_RT_Attivazione':
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
+                        return '';
+                    }
+                    break;
+                case 'HDT_RT_AttivazioneConModifica':
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
+                        return '';
+                    }
+                    break;
+                case 'HDT_RT_SwitchIn': 
+                    if (fieldName === 'IncomingCreditCheckResult__c') {                        
+                        return '';
+                    }
+                    if (fieldName === 'CreditCheckDescription__c') {                        
+                        return '';
+                    }                    
+                    break;
+                case 'HDT_RT_VAS':
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
+                        return '';
+                    }
+                    break;
+                case 'HDT_RT_Voltura':
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
+                        return '';
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    async retryEsitiCreditCheck(){        
+
+        try {
+            this.loaded = false;
+            this.creditCheckResult = await retrieveOrderCreditCheck({idOrder: this.order.Id});
+            this.loaded = true;
+
+            console.log('this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
+
+            for(let j = 0;  j < this.creditCheckFields.length; j++){
+                if(this.creditCheckFields[j].apiname == 'IncomingCreditCheckResult__c'){
+                    this.creditCheckFields[j].value = this.creditCheckResult['IncomingCreditCheckResult__c']
+                }
+                else if(this.creditCheckFields[j].apiname == 'OutgoingCreditCheckResult__c'){
+                    this.creditCheckFields[j].value = this.creditCheckResult['OutgoingCreditCheckResult__c'];
+                }
+                else if (this.creditCheckFields[j].apiname == 'CreditCheckDescription__c'){
+                    this.creditCheckFields[j].value = this.creditCheckResult['CreditCheckDescription__c'];
+                }
+            }
+          } catch(err) {
+            console.log(err);
+        }
+        
+    }
+
+    @api
+    async executeCreditCheckPoll(){
+        console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - START');
+
+        const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
+            setTimeout(() => {
+                cb();
+                resolve();
+            }, timeout);
+        });
+
+        let count = 1;
+        let time = 18000;
+
+        console.log('executePoll - this.order.IncomingCreditCheckResult__c: ' + JSON.stringify(this.order.IncomingCreditCheckResult__c));
+        console.log('executePoll - this.order.OutgoingCreditCheckResult__c: ' + JSON.stringify(this.order.OutgoingCreditCheckResult__c));
+        console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
+        console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
+
+        while(count <= 5
+            && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
+            && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
+            ){
+
+            if (count > 1) {
+                time = 3000;
+            }
+
+            await setAsyncTimeout(() => {
+                this.retryEsitiCreditCheck();
+            }, time);
+
+            console.log('OK poll! ' + count + ' ' + time);
+            count++;
+        }
+
+        console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - END');
     }
 }

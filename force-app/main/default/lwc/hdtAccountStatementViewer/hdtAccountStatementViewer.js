@@ -1083,8 +1083,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
                             break;
                         case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
+                            filterValue = currentFilter[key].value.toLowerCase();
+                            tableValueToFilter = item[key].toLowerCase();
                     }
 
                     switch (currentFilter[key].operator) {
@@ -1452,11 +1452,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
         console.log('>>> dataEmissione: ' + selected.dataEmissione);
 
+        const date = selected.dataEmissione.split("/");
+
         var docInvoiceObj = {
             billNumber: selected.contoContrattuale,
             channel: 'CRM',
-            date: selected.dataEmissione,
-            documentType: 'Bolletta',
+            //date: selected.dataEmissione,
+            date: date[2] + '-' + date[1] + '-' + date[0],
+            type: 'Bolletta',
             company: selected.societa
         }
 

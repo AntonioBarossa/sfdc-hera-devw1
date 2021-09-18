@@ -179,6 +179,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
      * Transcodifica il tipo di piano rata inserito su SFDC nel codice attesa da SAP.
      * Input richiesti: tipo piano rata e applicazione interessi.
      */
+    @TestVisible
     private String transcodeInstallmentPlan(String typeInstallmentPlan, Boolean applyInterests) {
         if (typeInstallmentPlan == null) {
             return '';
@@ -249,7 +250,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
         String fineTuningCriteria = '';
         String fineTuningRule = '';
-        if(errorMessage.indexOf(fieldLabel) > -1){
+        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('Domiciliato')){
             //Skip 
         } else {
             if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){

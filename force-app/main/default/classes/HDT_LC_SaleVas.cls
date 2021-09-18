@@ -27,6 +27,8 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param String accountId
      * @param Sale sale
      */
+
+     
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
@@ -49,13 +51,56 @@ public inherited sharing class HDT_LC_SaleVas {
         //HDT_UTL_Sales.isTransitionNoUp()
         //System.debug('*****MAVUOIANNA:'+ transitionlist);
         //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        wrapReturn wrpRes = new wrapReturn();
+
+
+
+
         if(HDT_UTL_Sales.isTransitionNoUp(sal)){
             check = false;
+            wrpRes.messRes = 'transitorio';
         }
 
+        wrpRes.res = check;
 
         System.debug('*****VUOIANNA2:' + check);
         return check;
+    }
+    @AuraEnabled
+    public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
+        Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
+        boolean check = true;
+        //HDT_UTL_Sales.isTransitionNoUp()
+        //System.debug('*****MAVUOIANNA:'+ transitionlist);
+        //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
+        String com = comune.toUpperCase();
+        wrapReturn wrpRes = new wrapReturn();
+        if(tipologia == 'VAS stand alone'){
+            List<City__c> listCity = HDT_QR_City.getRecordByComune(com);
+            if(listCity != null && !listCity.isEmpty() && listCity[0].Province__c != null){
+                String provin = listCity[0].Province__c;
+                Set<String> stabbedData = new Set<String>{'AQ', 'CH', 'PE', 'TE', 'AN', 'AP', 'FM', 'MC', 'PU'};//province abbruzzo e marche
+                if(!stabbedData.contains(provin)){
+                    check = false;
+                    wrpRes.messRes = 'transitorio';
+                }
+            }
+            else{
+                check = false;
+                wrpRes.messRes = 'city';
+            }
+        }
+        if(HDT_UTL_Sales.isTransitionNoUp(sal)){
+            check = false;
+            wrpRes.messRes = 'transitorio';
+        }
+        wrpRes.res = check;
+        System.debug('*****VUOIANNA2:' + check);
+        return wrpRes;
+    }
+    public class wrapReturn{
+        @AuraEnabled public boolean res = true;
+        @AuraEnabled public string messRes {get;set;}
     }
 
     /**
@@ -70,7 +115,12 @@ public inherited sharing class HDT_LC_SaleVas {
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
-
+    @AuraEnabled
+    public static List<Order> getOrdersListNotActive(String accountId){
+        //Orders with status "Draft" or "In Lavorazione"
+        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
+        return orderQr.getRecordsNotActivated(accountId);
+    }
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
@@ -101,12 +151,12 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
     * @description Getting list of Orders/Assets/Subscription
     * @author gabriele.rota@webresults.it | 2021-07-21 
-    * @param accountId 
+    * @param searchString 
     * @param key 
     * @return List<SObject> 
     **/
     @AuraEnabled
-    public static List<SObject> getFornitura(Id accountId, String key){
+    public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records;
 
         switch on key {
@@ -114,38 +164,41 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
                     WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Status='In Lavorazione' AND SBQQ__Quote__r.IsVAS__c = true
-                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'ORDERS_ELE'{
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
-                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'ASSETS_ACTIVATED'{
                 records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId WITH SECURITY_ENFORCED];
-            }
-            when 'ASSETS_ACTIVATED_VAS'{
-                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId
-                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
                 records = [SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:accountId WITH SECURITY_ENFORCED];
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED];
             }
-            when 'SUBS_VAS'{ 
-                records = [SELECT SBQQ__Contract__r.ContractNumber,
-                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Account__c=:accountId
-                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
+            //Segnalazioni VAS - START
+            when 'CONTRACTS_VAS'{ 
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
+                    WHERE AccountId=:searchString AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS' WITH SECURITY_ENFORCED];
             }
+            when 'SUBS_FROM_CONTRACT'{ 
+                records = [SELECT Name, SBQQ__ProductName__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_FROM_CONTRACT'{
+                records = [SELECT Name, Product2.Name
+                    FROM Asset WHERE Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            //Segnalazioni VAS - END
             when 'CONTRACT_ELE_ACTIVE'{
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
-                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId
+                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:searchString
                     AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
                     WITH SECURITY_ENFORCED];
             }

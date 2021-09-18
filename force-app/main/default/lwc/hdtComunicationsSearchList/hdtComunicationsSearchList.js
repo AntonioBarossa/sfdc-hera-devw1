@@ -48,7 +48,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         billNumber: '',
         channel: '',
         date: '',
-        documentType: '',
+        type: '',
         company: ''
     };
     recordValue;
@@ -251,14 +251,18 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         this.docInvoiceObj.billNumber = selected[0].envelopeId;
         this.docInvoiceObj.channel = 'CRM';
-        this.docInvoiceObj.date = selected[0].issueDate;
-        this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
+
+        const date = selected[0].issueDate.split(" ");
+
+        this.docInvoiceObj.date = date[0];
+        this.docInvoiceObj.type = this.muleRequest.documentCategory;
 
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
     }
 
     sendToApex(bodyString){
         console.log('# closeModal #');
+        console.log('>>> BODY > ' + bodyString);
         const sendToApex = new CustomEvent("printpdf", {
             detail: {obj: bodyString}
         });

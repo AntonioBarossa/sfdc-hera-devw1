@@ -1076,6 +1076,11 @@
         <field>CampaignEasyCIM__c.MacroActivity__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
+        <editable>true</editable>
+        <field>CampaignMember.isWsBollettaInvoked__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!--UAT Lorenzo 09/09/2021 -->
     <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.Agency__c</field>
@@ -2916,6 +2921,13 @@
         <field>ContactPointPhone.Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
+        <!--Start HRAWRM-251 08/09/2021 -->
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>Contract.CommercialProduct__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <!--Start HRAWRM-251 08/09/2021 -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.ExciseEle__c</field>
@@ -4144,6 +4156,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.DocumentLow80__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.DocumentPackage__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

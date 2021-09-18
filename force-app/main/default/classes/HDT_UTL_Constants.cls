@@ -59,12 +59,26 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
 
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT = 'HDT_RT_DistributorAppointment';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
+
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
     @AuraEnabled
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
+
+    //Order RecordType Default
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_CAMBIO_OFFERTA = 'HDT_RT_CambioOfferta';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_CAMBIO_OFFERTA =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_CAMBIO_OFFERTA).getRecordTypeId();
 
     //Order RecordType Voltura
     @AuraEnabled
@@ -190,6 +204,14 @@ public with sharing class HDT_UTL_Constants {
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
+    
+    //Knowledge Article Record Types
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ = 'HDT_RT_FAQ';
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPEID_FAQ =
+    Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByDeveloperName().get(KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ).getRecordTypeId();
+    
 
      
     //Custom Permissions

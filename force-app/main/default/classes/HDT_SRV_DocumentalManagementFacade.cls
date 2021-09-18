@@ -33,7 +33,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body,context);
         }catch(Exception ex){
-            System.debug(ex.getMessage());
+            System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }
     }
 
@@ -173,13 +173,19 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String status;
         String envelopeId;
         String transactionId;
+        String outcome;
         try {
             if(requestBody != null){
                 status = requestBody.status;
                 envelopeId = requestBody.envelopeId;
+                outcome = requestBody.outcome;
                 transactionId = HDT_SRV_DocumentalManagement.getTransactionId(envelopeId);
                 SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
-                HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody);
+                if (outcome == 'KO'){
+                    HDT_SRV_DocumentalManagement.logDocusignError(recordToUpdate, requestBody);
+                } else {
+                    HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody);
+                }
             }
         } catch (Exception ex) {
             System.debug('Error in method handleDocusignNotify ' + ex.getMessage());

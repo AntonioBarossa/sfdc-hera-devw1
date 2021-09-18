@@ -19,7 +19,9 @@ public inherited sharing class HDT_QR_CaseValidations {
         AlternativeAddress__c,
         AccountId,
         Account.CustomerMarking__c,
-        ContactId
+        ContactId,
+        Contract__r.StartDate,
+        ClientCategory__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
@@ -34,7 +36,7 @@ public inherited sharing class HDT_QR_CaseValidations {
 
         try{
 
-            attachedDocument = [SELECT Id 
+            attachedDocument = [SELECT Id, ContentDocument.Title
             FROM ContentDocumentLink 
             WHERE LinkedEntityId = :recordId 
             WITH SECURITY_ENFORCED];
