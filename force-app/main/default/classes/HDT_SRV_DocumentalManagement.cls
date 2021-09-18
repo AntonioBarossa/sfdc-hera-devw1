@@ -1073,7 +1073,9 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			List<HDT_WRP_SignModeConfiguration> signSendConfigurationList = new List<HDT_WRP_SignModeConfiguration>();
 			HDT_WRP_SignModeConfiguration signSendConfiguration = new HDT_WRP_SignModeConfiguration();
 			List<HDT_SignModeSettings__mdt> signModeSettingsList = HDT_QR_DocumentalConfiguration.getSignModeSettings(processType,source);
+			System.debug('signModeSettingsList: ' + signModeSettingsList);
 			for(HDT_SignModeSettings__mdt singleRecord : signModeSettingsList){
+				System.debug('processing sign mode: ' + singleRecord.SignMode__c);
 				sendMode = new Map<String,String>();
 				signMode = new Map<String,String>();
 				signSendConfiguration = new HDT_WRP_SignModeConfiguration();
@@ -1081,17 +1083,20 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				signMode.put('value', singleRecord.SignMode__c);
 				signSendConfiguration.signMode = new Map<String,String>(signMode);
 				if(singleRecord.SendMode1__c != null && singleRecord.SendMode1__c != ''){
+					System.debug('adding send mode: ' + singleRecord.SendMode1__c);
 					sendMode.put('label',singleRecord.SendMode1__c);
 					sendMode.put('value',singleRecord.SendMode1__c);
 					Map<String,String> prova = new Map<String,String>(sendMode);
 					signSendConfiguration.sendMode.add(prova);
 				}
 				if(singleRecord.SendMode2__c != null && singleRecord.SendMode2__c != ''){
+					System.debug('adding send mode: ' + singleRecord.SendMode2__c);
 					sendMode.put('label',singleRecord.SendMode2__c);
 					sendMode.put('value',singleRecord.SendMode2__c);
 					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
 				}
 				if(singleRecord.SendMode3__c != null && singleRecord.SendMode3__c != ''){
+					System.debug('adding send mode: ' + singleRecord.SendMode3__c);
 					sendMode.put('label',singleRecord.SendMode3__c);
 					sendMode.put('value',singleRecord.SendMode3__c);
 					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
