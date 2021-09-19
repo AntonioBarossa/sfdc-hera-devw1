@@ -90,14 +90,14 @@ public class HDT_WS_HerokuAddressSearch {
         @AuraEnabled public String streetCode {get;set;}
         @AuraEnabled public String houseNumCode {get;set;}       
     }
-    public class HDT_WS_PrestazioneReqObjVer2{
-        @AuraEnabled public String city1 {get;set;}
-        @AuraEnabled public String street {get;set;}
-        @AuraEnabled public String houseNum1 {get;set;}
-        @AuraEnabled public String modality {get;set;}
-        @AuraEnabled public String cityCode {get;set;}
-        @AuraEnabled public String streetCode {get;set;}
-        @AuraEnabled public String houseNumCode {get;set;}       
+    public class HDT_WS_PrestazioneReqObjVerMassive{
+        public String city1 {get;set;}
+        public String street {get;set;}
+        public String houseNum1 {get;set;}
+        public String modality {get;set;}
+        public String cityCode {get;set;}
+        public String streetCode {get;set;}
+        public String houseNumCode {get;set;}       
     }
     
     
