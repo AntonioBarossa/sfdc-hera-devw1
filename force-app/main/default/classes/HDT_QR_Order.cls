@@ -444,7 +444,8 @@ public inherited sharing class HDT_QR_Order {
             Phase__c,
             ComfortCallDaysDue__c,
             QualityCall__c,
-            QualityCallUnique__c
+            QualityCallUnique__c,
+            Contact__r.Email
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
