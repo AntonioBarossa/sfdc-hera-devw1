@@ -30,7 +30,7 @@ public with sharing class HDT_SRV_SolContractVas {
             singleVas.ownerAccountId = accountId;
             singleVas.herVincoloVas = '0';
             singleVas.herVersioneVas = vasProduct.Version__c;
-            singleVas.herProfile = vasProduct.SBQQ__OptionalSKU__r.Version__c;
+            singleVas.herProfile = vasProduct.SBQQ__ConfiguredSKU__r.Version__c;
             singleVas.herNomeVas = vasProduct.SBQQ__ProductName__c;
             singleVas.herDurataVas = '999999';
             singleVas.herCodOfferta = offerCode;

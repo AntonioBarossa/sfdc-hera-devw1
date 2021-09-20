@@ -6,10 +6,18 @@ import getParentOrderId from '@salesforce/apex/HDT_LC_DocumentalPhaseHistory.get
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 
 const columns  = [
-    { label: 'Origine', fieldName: 'OldValue' },
-    { label: 'Destinazione', fieldName: 'NewValue'},
-    { label: 'Data', fieldName: 'CreatedDate', type: 'date' }
-    ];
+    { label: 'Da', fieldName: 'OldValue' },
+    { label: 'A', fieldName: 'NewValue'},
+    { label: 'Data', fieldName: 'CreatedDate', type: 'date',
+      typeAttributes:{
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    }
+];
 
 export default class HdtDocumentalPhaseHistory extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -123,7 +131,12 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
                     if(resultParsed.result === '000'){
                         const base64 = resultParsed.base64;
                         this.showSpinner = false;
-                        this.showPdfFromBase64(base64);
+                        try{
+                            this.showPdfFromBase64(base64);
+                        }catch(error){
+                            console.log('errore nella conversione in PDF...');
+                            console.error(error);
+                        }
                     }else{
                         this.showSpinner = false;
                         this.showMessage('Attenzione',resultParsed.message,'error');
