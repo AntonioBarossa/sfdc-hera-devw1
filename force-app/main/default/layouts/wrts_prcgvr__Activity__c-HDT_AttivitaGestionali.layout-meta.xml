@@ -39,6 +39,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Quote__c</field> <!-- UAT Cocetta  20/09/2021 -->
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ServicePointCode__c</field>
             </layoutItems>
             <layoutItems>

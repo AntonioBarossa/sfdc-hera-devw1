@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account_Service_Console</members>
         <members>HDT_Activity_Default_Record_Page</members>
+        <members>HDT_General_Case_Record_Page</members>
+        <members>HDT_Order_Default</members>
+        <members>HDT_Scarti</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>HDT_ExciseTranscode__mdt</members>
-        <members>wrts_prcgvr__Activity__c</members>
-        <name>CustomObject</name>
+        <members>DiscardAnnullmentRule__c</members>
+        <members>Script_Tester</members>
+        <name>CustomTab</name>
     </types>
     <types>
-        <members>hdtActivityIvaAccise</members>
+        <members>HDT_CancellationReason</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>Account</members>
+        <name>Workflow</name>
+    </types>
+    <types>
+        <members>hdtAccountDocumentSignatureManager</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtActivityDetail</members>
+        <members>hdtCampaignNewOverride</members>
+        <members>hdtChildOrderProcessActions</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtCommercialRiassignButton</members>
-        <members>hdtCreateCampaign</members>
-        <members>hdtDocumentActivityValidation</members>
-        <members>hdtGeneralInfo</members>
-        <members>hdtPaperCampaignFields</members>
-        <members>hdtRequestVisitD2DLead</members>
-        <members>hdtVOActivityValidation</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtCopiaContratto</members>
+        <members>hdtDocumentSignatureManager</members>
+        <members>hdtDocumentalPhaseHistory</members>
+        <members>hdtLastBill</members>
+        <members>hdtModuloInformativoModal</members>
+        <members>hdtPdfViewerHandler</members>
+        <members>hdtRecallMeCreateForm</members>
+        <members>hdtShowOriginalDocument</members>
+        <members>hdtUploadDocuments</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -34,131 +51,136 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneVotiveModena</members>
         <members>HDT_FL_Risottometti_Pratica</members>
-        <members>HDT_FL_SupplySelection</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>ServicePoint__c.HDT_ServicePointName</members>
-        <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>HDT_ExciseTranscode__mdt.HDT_Excises</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>NewsNotificationCenter__c.HDT_RT_Default</members>
-        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Account.HDT_RT_Other</members>
+        <members>Order.HDT_RT_SwitchIn</members>
         <name>RecordType</name>
     </types>
     <types>
+        <members>Account-Account Distributori</members>
         <members>CampaignMemberLeadAssigment__c-Assegnazione Campaign Member su base Lea Layout</members>
-        <members>FubProcessing__c-Lavorazione FUB Layout</members>
-        <members>HDT_ExciseTranscode__mdt-Transcodifica Accise Layout</members>
+        <members>Case-HDT_Domiciliazione</members>
+        <members>Case-HDT_GestionePrivacy</members>
+        <members>Case-HDT_PianoRateizzazione</members>
+        <members>Case-HDT_PreventiviEle</members>
+        <members>Case-HDT_PreventiviGas</members>
+        <members>Case-HDT_Rimborso</members>
+        <members>Case-HDT_VerificheEle</members>
+        <members>Case-HDT_VerificheGas</members>
+        <members>DocumentalEnvelopeAttachment__c-Allegato Plico Documentale Layout</members>
         <members>Order-Cambio Offerta</members>
+        <members>Order-Dossier</members>
+        <members>Order-HDT_PraticaInVolo</members>
         <members>Order-HDT_Voltura</members>
-        <members>Order-Order Layout</members>
         <members>Order-Prima attivazione con modifica</members>
         <members>Order-Prima attivazione</members>
         <members>Order-Subentro</members>
-        <members>ServicePoint__c-Service Point Ele</members>
-        <members>ServicePoint__c-Service Point Gas</members>
-        <members>ServicePoint__c-Service Point Layout</members>
+        <members>Order-Switch in</members>
+        <members>Order-VAS</members>
+        <members>SiebelContact__x-SiebelContact Layout</members>
+        <members>SiebelContract__x-SiebelContract Layout</members>
+        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
         <members>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_EditCompatibility</members>
-        <members>HDT_EditReports</members>
-        <members>HDT_ViewReports</members>
+        <members>HDT_ApexClasses</members>
+        <members>HDT_CloneCanceledOrder</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_BA_ConsentLeadTst</members>
-        <members>HDT_BA_Dependencies</members>
-        <members>HDT_LC_ActivityIvaAccise</members>
-        <members>HDT_LC_BillingProfileForm</members>
+        <members>HDT_LC_ActivityDetail</members>
+        <members>HDT_LC_CambioUso</members>
+        <members>HDT_LC_CanaleIVRNoShare</members>
         <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_DownloadAttachmentAzure</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_CloneCanceledOrder</members>
+        <members>HDT_LC_CopiaContratto</members>
+        <members>HDT_LC_LastBill</members>
         <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_SaleServiceContainer</members>
+        <members>HDT_LC_RecallMeCreateForm</members>
+        <members>HDT_LC_RecordEditFormSales</members>
+        <members>HDT_LC_ScriptTesterController</members>
         <members>HDT_LC_StoricizzazioneCliente</members>
-        <members>HDT_QR_AccountStatement</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_MassiveLoaderRequestTst</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_CaseValidations</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_ServiceRequest</members>
-        <members>HDT_QR_SolContractVas</members>
-        <members>HDT_SRV_BpCaVariationFacadeTst</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_SRV_SolContractVas</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_Contract</members>
-        <members>HDT_TRH_Order</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CaseTst</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_Dependencies</members>
-        <members>HDT_UTL_GestAppAutomaticCreation</members>
-        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
-        <members>HDT_UTL_MatrixCompatibility</members>
-        <members>HDT_UTL_OrderFieldsAlignmentTst</members>
+        <members>HDT_SRV_DocumentalManagement</members>
+        <members>HDT_SRV_DocumentalManagementFacade</members>
+        <members>HDT_SRV_HerokuPostSalesManagerTst</members>
+        <members>HDT_SRV_ModificaLayoutFattura</members>
+        <members>HDT_SRV_ModificaLayoutFatturaTst</members>
+        <members>HDT_SRV_SalesManager</members>
+        <members>HDT_UTL_ActivityCustom</members>
+        <members>HDT_UTL_CaseCancellationTst</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_UTL_CheckDocumentSelectedTst</members>
+        <members>HDT_UTL_ComboboxOptionsFactoryTst</members>
+        <members>HDT_UTL_DocumentalManagement</members>
+        <members>HDT_UTL_ElectronicInvoicing</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_NotifVas</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
         <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
         <members>HDT_UTL_Sales</members>
+        <members>HDT_UTL_Scarti</members>
         <members>HDT_UTL_ServiceCatalogOrFilterProcess</members>
         <members>HDT_UTL_ServiceTwentySix</members>
         <members>HDT_UTL_SwtichInProcess</members>
-        <members>HDT_WRP_SolContractVas</members>
-        <members>HDT_WS_InboundSol</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_WS_CreditCheckRequest</members>
+        <members>HDT_WS_DocumentalInboundIntegration</members>
+        <members>HDT_WS_DocumentalIntegration</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_ExciseTranscode__mdt.Active__c</members>
-        <members>HDT_ExciseTranscode__mdt.ExciseString__c</members>
-        <members>HDT_ExciseTranscode__mdt.Excise__c</members>
-        <members>NewsNotificationCenter__c.EntryChannel__c</members>
-        <members>Order.Phase__c</members>
-        <members>User.FiscalCode__c</members>
-        <members>wrts_prcgvr__Activity__c.Type__c</members>
+        <members>Account.Commodity__c</members>
+        <members>ContactPointPhone.TelephoneNumberCertificationsContacts__c</members>
+        <members>DocumentalEnvelopeAttachment__c.AttachmentCode__c</members>
+        <members>DocumentalEnvelopeAttachment__c.Case__c</members>
+        <members>DocumentalEnvelopeAttachment__c.Order__c</members>
+        <members>Order.isPreDocumentationToSend__c</members>
+        <members>Product2.ProductDescFormula__c</members>
+        <members>SiebelRds__x.ATTRIB_16__c</members>
+        <members>SiebelRds__x.ATTRIB_18__c</members>
+        <members>SiebelRds__x.ATTRIB_20__c</members>
+        <members>SiebelRds__x.ATTRIB_21__c</members>
+        <members>SiebelRds__x.ATTRIB_24__c</members>
+        <members>SiebelRds__x.X_ATTRIB_92__c</members>
+        <members>SiebelRds__x.X_IMPORTO_DOCUMENTO__c</members>
+        <members>SiebelRds__x.X_IMPORT_RATE_SUCC__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_MAX__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_MIN__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_SCONTO__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_TOTALE_NO_IVA__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_TOTALE_SCONTATO__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_TOTALE__c</members>
+        <members>SiebelRds__x.X_VAS_IMPORTO_TOT_SCONT_NO_IVA__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_RequestVisitD2DLead</members>
+        <members>HDT_LCP_ChildOrderProcess</members>
+        <members>HDT_LCP_CloneCanceledOrder</members>
+        <members>HDT_LCP_ResumeCommercialBonus</members>
+        <members>HDT_LCP_ScriptTester</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>HDT_ExciseTranscode.Config1</members>
-        <members>HDT_ExciseTranscode.Config10</members>
-        <members>HDT_ExciseTranscode.Config11</members>
-        <members>HDT_ExciseTranscode.Config12</members>
-        <members>HDT_ExciseTranscode.Config13</members>
-        <members>HDT_ExciseTranscode.Config14</members>
-        <members>HDT_ExciseTranscode.Config15</members>
-        <members>HDT_ExciseTranscode.Config16</members>
-        <members>HDT_ExciseTranscode.Config17</members>
-        <members>HDT_ExciseTranscode.Config18</members>
-        <members>HDT_ExciseTranscode.Config19</members>
-        <members>HDT_ExciseTranscode.Config2</members>
-        <members>HDT_ExciseTranscode.Config20</members>
-        <members>HDT_ExciseTranscode.Config21</members>
-        <members>HDT_ExciseTranscode.Config22</members>
-        <members>HDT_ExciseTranscode.Config23</members>
-        <members>HDT_ExciseTranscode.Config24</members>
-        <members>HDT_ExciseTranscode.Config25</members>
-        <members>HDT_ExciseTranscode.Config26</members>
-        <members>HDT_ExciseTranscode.Config27</members>
-        <members>HDT_ExciseTranscode.Config28</members>
-        <members>HDT_ExciseTranscode.Config29</members>
-        <members>HDT_ExciseTranscode.Config3</members>
-        <members>HDT_ExciseTranscode.Config4</members>
-        <members>HDT_ExciseTranscode.Config5</members>
-        <members>HDT_ExciseTranscode.Config6</members>
-        <members>HDT_ExciseTranscode.Config7</members>
-        <members>HDT_ExciseTranscode.Config8</members>
-        <members>HDT_ExciseTranscode.Config9</members>
+        <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <members>HDT_SignModeSettings.Cartacea_Default</members>
+        <members>HDT_SignModeSettings.OTP_Coopresenza_Default</members>
+        <members>HDT_SignModeSettings.OTP_Remoto_Default</members>
+        <members>HDT_SignModeSettings.VO_Privacy_Telefono_Inbound</members>
+        <members>HDT_SignModeSettings.VO_Privacy_Telefono_Outbound</members>
+        <members>HDT_SignModeSettings.VO_Vendita_Telefono_Inbound</members>
+        <members>HDT_SignModeSettings.VO_Vendita_Telefono_Outbound</members>
+        <members>HDT_SignModeSettings.VO_Vendita_Teleselling</members>
+        <members>HDT_UserInputFlow.Pagamenti_Richiesta_Domiciliazione_2</members>
+        <members>HDT_UserInputFlow.Pagamenti_Variazione_Domiciliazione</members>
+        <members>HDT_UserInputFlow.Variazioni_Modifica_Layout_Dettaglio</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>
