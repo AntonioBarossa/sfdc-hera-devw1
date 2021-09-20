@@ -10,7 +10,6 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     
     //TEST SETUP
-    //TODO: SETUP DEVE CONTENERE FINO A ORDINE PERCHé USATO DA CUSTOM METADATA Documentale_Context5
     private static void mySetup(){
         
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
