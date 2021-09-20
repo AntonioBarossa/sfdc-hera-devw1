@@ -16,19 +16,29 @@ public class HDT_SRV_DocumentalManagement{
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		System.debug(debugString + ' - Superato blocco 1');
 		
+		//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver3');
+		
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
 		System.debug(debugString + ' - Superato blocco 2');
 		
+		//Viene estratto un Custom Metadata apposito identificato dal documentalContext. 
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
-		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
+		
+		//Formula una serie di query Strings dove vengono estratti l'oggetto interessato dal processo e numerosi Childs di varia natura, secondo quanto indicato nei Custom Metadata
+		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig, recordId); 
+		
+		//Esegue le query che ha formulato nel passaggio precedente
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
-		List<Map<String,List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList,documentalContext);
+		
+		//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
+		List<Map<String, List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList, documentalContext);
 		formParamsMap.put('Contesto', context);
 		System.debug(debugString + ' - Superato blocco 3');
 		
+		//sub-processing della lista di mappe realizzata al punto precedente.
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], driverStructure, formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure, formParamsMap);
@@ -582,18 +592,18 @@ public class HDT_SRV_DocumentalManagement{
 				String payloadField = singleRecord.payloadField!=null?singleRecord.payloadField:'';
 
 				if(expression != null && expression != ''){
-					value = HDT_UTL_DocumentalManagement.calculateExpression(inputs,expression,formParams);
+					value = HDT_UTL_DocumentalManagement.calculateExpression(inputs, expression, formParams);
 				}
 				//Nel caso in cui l'espressione ritorna $ deve essere ereditato il valore da uno dei controlli sotto
 				if((expression != null && expression != '' && value == '$') || expression == ''){
 					if(classString != null && classString != '' && methodString != null && methodString != ''){
-						value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString,methodString,inputs,formParams);
+						value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString, methodString, inputs, formParams);
 					}else if(separetor != null && separetor != ''){
 							//TODO Implentare getConcatValue
 							value = HDT_UTL_DocumentalManagement.getConcatValueFromObject(inputs,singleRecord);
 							value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 					}else{
-						value = HDT_UTL_DocumentalManagement.getValueFromObject(inputs,singleRecord,0,formParams);
+						value = HDT_UTL_DocumentalManagement.getValueFromObject(inputs, singleRecord, 0, formParams);
 						value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 					}
 					if(value == '' && defaultVal != null && defaultVal != ''){

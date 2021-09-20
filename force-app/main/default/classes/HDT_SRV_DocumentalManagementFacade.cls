@@ -28,7 +28,14 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }
         return JSON.serialize(resultMap);
     }
+    
+    /*
+    Invia Documento
 
+    recordId: id record di cui si vuole [GESTIRE] la documentazione.
+    context: utilizzato per determinare contesto documentale
+    formParams: (serializzato) mappa di parametri utilizzata in vari punti.
+    */
     public static void sendDocument(String recordId, String context, String formParams){
         
 		//DEBUG
@@ -50,18 +57,28 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }
     }
 
-    public static void sendDocumentAsync(String recordId,String context,String formParams){
+    public static void sendDocumentAsync(String recordId, String context, String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocumentAsync';
+		System.debug(debugString);
+        
         System.enqueueJob(new HDT_QBL_DocumentalManagement(recordId,context,formParams));
     }
 
-    public static void sendAdvanceDocumentation(String recordId,String context,String formParams){
+    public static void sendAdvanceDocumentation(String recordId, String context, String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendAdvanceDocumentation';
+		System.debug(debugString);
+        
         String baseSixtyFour = '';
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
         String tipoPlico = (String) formParamsMap.get('TipoPlico');
         String result = '';
         try{
-            baseSixtyFour = getBase64(recordId,context,formParams);
+            baseSixtyFour = getBase64(recordId, context, formParams);
             Map<String,Object> respMap = (Map<String,Object>) JSON.deserializeUntyped(baseSixtyFour);
             baseSixtyFour = (String) respMap.get('base64');
             result = (String) respMap.get('result');

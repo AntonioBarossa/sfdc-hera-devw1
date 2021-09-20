@@ -33,8 +33,9 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     @isTest
     public static void sendDocumentTest(){
         
-        //DEBUG
-        
+		//DEBUG
+		String debugString = TEST_NAME + ' - sendDocument';
+		System.debug(debugString);
         
         //SETUP
         mySetup();
@@ -47,6 +48,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         docRecord = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord();
         //fields docRecord
         
+        //TODO: IMPLEMENT
+        docRecord.field1 = '';
+		docRecord.field2 = '';
+		docRecord.field3 = '';
+		docRecord.field4 = '';
         
         //docSection
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection docSection;
@@ -86,7 +92,10 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         //PREPARAZIONE ARGOMENTI
         String context = 'DocumentazioneAnticipata';//se non lo è, cambia codice
         
+        //TODO: METTERE VALORI DENTRO formParams
         Map<String,Object> formParams = new Map<String,Object>();
+        
+        
         String formParamsJSON = JSON.serialize(formParams);
         
         
@@ -115,17 +124,49 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     
     //sendDocumentAsync
+    @isTest
+    public static void sendDocumentAsyncTest(){
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - sendDocumentAsyncTest';
+		System.debug(debugString);
+        
+        
+        //SETUP
+        //mySetup();
+        
+        //TODO: DI BASE è STESSO TEST DI SOPRA, SOLO CHE SI OCCUPA DI FARE LA PRIMA PARTE E BASTA (?)
+        //TODO: VERIFICARE TESTABILITà, PERCHé VIENE SIA MESSO IN CODA UN JOB CHE PREPARATA UNA FUTURE.
+        
+    }
     
     
     
     //sendAdvanceDocumentation
-    /*
+    
     @isTest
     private static void sendAdvanceDocumentation() {
-        //MOCK TEST
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - sendAdvanceDocumentation';
+		System.debug(debugString);
+        
+        //SETUP
+        //TODO: PLANNING
+        
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        String TipoPlico = 'PLACEHOLDER';
+        formParams.put('TipoPlico', TipoPlico);
+        
+        String formParamsJSON = JSON.serialize(formParams);
+        
+        //TESTING
+        //HDT_SRV_DocumentalManagementFacade.sendAdvanceDocumentation(String recordId, String context, formParamsJSON);
         
     }
-    */
+    
     
     
     //getSignSendMode

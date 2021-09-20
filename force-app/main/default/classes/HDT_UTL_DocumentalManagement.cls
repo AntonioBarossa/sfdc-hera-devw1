@@ -1,5 +1,5 @@
 public inherited sharing class HDT_UTL_DocumentalManagement {
-	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList,String context){
+	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		switch on context {
 			when 'Context1' {
@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
 			when 'Case'{
-				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
+				fieldString = 'Id, AccountId,SendMode__c, Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
 				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
@@ -335,73 +335,84 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	}
 
 	
+	//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){
+		
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>();
+		
 		for(Order singleOrder : (List<Order>) recordsList){
 			mapStringObjectRecords = new Map<String,List<sObject>>();
 			
 			List<OrderItem> orderItemList = new List<OrderItem>();
 			List<OrderItem> orderItemVasList = new List<OrderItem>();
+			
 			//USER
 			User seller = (User) singleOrder.SaleBy__r;
 			List<User> userList = new List<User>();
 			userList.add(seller);
-			mapStringObjectRecords.put('Seller' ,userList);
+			mapStringObjectRecords.put('Seller', userList);
+			
 			//ACCOUNT
 			Account account = (Account) singleOrder.Account;
 			List<Account> accountList = new List<Account>();
 			accountList.add(account);
-			mapStringObjectRecords.put('Account' ,accountList);
+			mapStringObjectRecords.put('Account', accountList);
+			
 			//CONTACT
 			Contact contact = (Contact) singleOrder.Contact__r;
 			List<Contact> contactList = new List<Contact>();
 			contactList.add(contact);
-			mapStringObjectRecords.put('PrimaryContact' ,contactList);
+			mapStringObjectRecords.put('PrimaryContact', contactList);
+			
 			//PARENT ORDER
 			Order parentOrder = (Order) singleOrder.ParentOrder__r;
 			List<sObject> parentOrderList = new List<sObject>();
 			parentOrderList.add(parentOrder);
-			mapStringObjectRecords.put('ParentOrder' , parentOrderList);
+			mapStringObjectRecords.put('ParentOrder', parentOrderList);
+			
 			//SINGLE ORDER
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
-			mapStringObjectRecords.put('Order' , orderList);
+			mapStringObjectRecords.put('Order', orderList);
 			
-			
-			mapStringObjectRecords.put('Account' ,accountList);
-			for(OrderItem singleOrderItem : (List<OrderItem>)  singleOrder.OrderItems){
+			//PROCESSING ORDER ITEMS
+			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){
 				orderItemList = new List<OrderItem>();
 				String family = singleOrderItem.ProductFamily__c;
 				if(family == 'Offerta commerciale'){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemCommercialOffer' ,orderItemList);
+					mapStringObjectRecords.put('ItemCommercialOffer', orderItemList);
 				}else if(family == 'VAS Prodotto' || family == 'VAS Servizio'){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ParentItemVAS' ,orderItemList);
+					mapStringObjectRecords.put('ParentItemVAS', orderItemList);
 				}else if(family.equalsIgnoreCase('VAS Opzione servizio') || family.equalsIgnoreCase('VAS Opzione prodotto') || family.equalsIgnoreCase('VAS Fatturabili')){
 					orderItemVasList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemVAS' ,orderItemVasList);
+					mapStringObjectRecords.put('ItemVAS', orderItemVasList);
 				}else if(family.indexOf('Bonus') > -1){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemBonus' ,orderItemList);
+					mapStringObjectRecords.put('ItemBonus', orderItemList);
 				}else if(family.indexOf('Promozione') > -1){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemPromotion' ,orderItemList);
+					mapStringObjectRecords.put('ItemPromotion', orderItemList);
 				}
 			}
+			
 			toReturn.add(new Map<String,List<sObject>>(mapStringObjectRecords));
 		}
+		
 		return toReturn;
 	}
-
+	
+	//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 	public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure getDocumentalConfiguration(String context){
 		List<Document> documentList = HDT_QR_DocumentalConfiguration.getDocumentByContext(context);
-		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(documentList[0].body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration;
+		configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(documentList[0].body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
 		return configuration;
 	}
 
-    public static String manageAmountDot(String valString){
+  public static String manageAmountDot(String valString){
 		String res = valString;
 		Integer df = valString.indexOf('.');
 		String intero = '';
@@ -411,7 +422,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}else{
 				intero=valString.substring(0,df);
 			}
-			String  dec=valString.substring(df+1,valString.length());
+			String dec=valString.substring(df+1,valString.length());
 			if(dec.length()==1){
 				dec=dec+'0';
 			}
@@ -427,7 +438,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return res;
 	}
 
-    
+  
 	public static String removeSpecialChar (String text){
 		text = text.replaceAll('[à]','a\'');
 		text = text.replaceAll('[èé]','e\'');
@@ -449,8 +460,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		text = text.replaceAll('Í','I\'');
 		text = text.replaceAll('[’‘“”]','\'');
 		text = text.replaceAll('·', '-');
-		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
-		text = text.replaceAll('\u2026', '...');  // 2026 = carattere unicode "horizontal ellipsis"
+		text = text.replaceAll('\u00A0', ' '); // 00A0 = carattere unicode "No-Break Space"
+		text = text.replaceAll('\u2026', '...'); // 2026 = carattere unicode "horizontal ellipsis"
 
 		return text;
 	}
@@ -468,8 +479,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static Integer getChildCount(String objectString, Map<String,List<sObject>> inputs){
 		return inputs.get(objectString)?.size();
 	}
-	public static String getValue(String objectString, String fieldString, Integer index,Map<String,List<sObject>> inputs,Map<String,Object> formParams){
-        String retVal = '';
+	public static String getValue(String objectString, String fieldString, Integer index, Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+    String retVal = '';
 		try {
 			if(inputs.get(objectString) != null && inputs.get(objectString).size()>0 && inputs.get(objectString)[0] != null){
 				if(inputs.get(objectString)[index].get(fieldString) != null){
@@ -479,25 +490,25 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				retVal = String.valueOf(formParams.get(fieldString));
 			}
 		} catch (Exception ex) {
-			System.debug(objectString + ' ' + fieldString +' '+ index+ ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
+			System.debug(objectString + ' ' + fieldString +' '+ index + ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
 		}
-        return retVal;
-    }
-	public static String getValueFromObject(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord, Integer index,Map<String,Object> formParams){
+    return retVal;
+  }
+	public static String getValueFromObject(Map<String,List<sObject>> inputs, HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord, Integer index,Map<String,Object> formParams){
 		String result = '';
 		if(singleRecord.object1 != null && singleRecord.object1 != '' && singleRecord.field1 != null){
-            result = getValue(singleRecord.object1,singleRecord.field1,index,inputs,formParams);
+      result = getValue(singleRecord.object1, singleRecord.field1, index, inputs, formParams);
 		}
 
 		if(result == '' && singleRecord.object2 != null && singleRecord.object2 != '' && singleRecord.field2 != null){
-			result = getValue(singleRecord.object2,singleRecord.field2,index,inputs,formParams);
+			result = getValue(singleRecord.object2, singleRecord.field2, index, inputs, formParams);
 		}
 
 		if(result == '' && singleRecord.object3 != null && singleRecord.object3 != '' && singleRecord.field3 != null){
-            result = getValue(singleRecord.object3,singleRecord.field3,index,inputs,formParams);
+      result = getValue(singleRecord.object3, singleRecord.field3, index, inputs, formParams);
 		}
 		if(result == '' && singleRecord.object4 != null && singleRecord.object4 != '' && singleRecord.field4 != null){
-            result = getValue(singleRecord.object4,singleRecord.field4,index,inputs,formParams);
+      result = getValue(singleRecord.object4, singleRecord.field4, index, inputs, formParams);
 		}
 
 		if(result != null && result != ''){
@@ -545,8 +556,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String resultToReturn = '';
 		String jolly = '';
 		Integer i = 0;
+		
 		//System.debug('expression ' + expression);
-        expressionArray = expression.split('\\|');
+    	expressionArray = expression.split('\\|');
+		
 		//System.debug('expressionArray ' + expressionArray);
 		try{
 			if(expressionArray.size()>0){
@@ -634,8 +647,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}catch(Exception ex){
 			System.debug('for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
 		}
-        return resultToReturn;
+		
+    	return resultToReturn;
 	}
+	
 	public static String getDocumentalContext(String context){
 		switch on context {
 			when 'Order' {
@@ -661,6 +676,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 		}
 	}
+	
 	// Calcola lo Stato Documento da mandare a EngageOne per le stampe della vista Gestione Credito.
 	public static String calculateDocumentStatusGc(String ufficioIncassi, Double residuo, Boolean ordineDiPagamento){
 		String statoDocumento = '';
@@ -725,6 +741,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			return 'Da accreditare';
 		}
 		
-		return '';  // Non dovrebbe mai accadere.
+		return ''; // Non dovrebbe mai accadere.
 	}
 }

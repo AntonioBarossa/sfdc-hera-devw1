@@ -43,6 +43,7 @@ public class HDT_UTL_IntegrationObject{
 		return new Map<String,String>{'queryString' => queryString, 'parentObject' => jsonStructure.objectName};
 	}
 	
+	//esegue query generica ed estrae campo indicato da jsonField formattandolo come HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject
 	public static HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject getIntegrationObjectConfiguration(String objectName, String fields, String conditions, String jsonField){
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject toReturn = new HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject();
 		List<sObject> configurationRecord = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, conditions);
