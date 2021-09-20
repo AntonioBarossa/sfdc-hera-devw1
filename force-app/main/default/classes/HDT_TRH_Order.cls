@@ -38,6 +38,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         
     }
     public override void afterUpdate() {
+        HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
         //Execute creation Activities 
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkSaveActivityContext(null);

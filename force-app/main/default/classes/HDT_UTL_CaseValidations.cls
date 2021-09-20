@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
                 result = validateModificaDatiContatto(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
-                result = validateModificaDatiRecapito(fields);
+                result = validateModificaDatiRecapito(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Modifica Dati Fiscali') {
                 result = validateModificaDatiFiscali(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Variazione Gruppo IVA') {
@@ -69,7 +69,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Unificazione/Separazione BP-CA-Bolletta') {
 
-            result = validateUnificazioneSeparazione(fields);
+            result = validateUnificazioneSeparazione(fields, currentCase);
 
         }else if(caseType == 'Votive Modena Contestazione Fattura' || caseType.equalsIgnoreCase('Spostamento Votive Modena')){
 
@@ -406,7 +406,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    private String validateModificaDatiRecapito(String fields) {
+    private String validateModificaDatiRecapito(String fields, Case currentCase) {
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         String modInvioBolletta = getFieldValue(fields, 'BillSendingMethod__c');
@@ -431,6 +431,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             electronicInvoicing.certifiedEmail = pecFatturazioneElettronica;
             electronicInvoicing.officeCode = codiceUfficio;
             electronicInvoicing.xmlType = tipoXml;
+            electronicInvoicing.accountRecordTypeName = currentCase.Account.RecordType.DeveloperName;
 
             String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
             if (!String.isEmpty(electronicInvoicingError)) {
@@ -936,9 +937,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     // Validazione campi Billing Profile per processo Unificazione/Separazione CA
-    private String validateUnificazioneSeparazione(String fields) {
+    private String validateUnificazioneSeparazione(String fields, Case currentCase) {
 
-        return validateModificaDatiRecapito(fields);
+        return validateModificaDatiRecapito(fields, currentCase);
 
     }
 

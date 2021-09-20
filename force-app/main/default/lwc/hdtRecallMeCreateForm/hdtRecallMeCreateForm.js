@@ -96,7 +96,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
     }
 
     handleSubmit(event) {
-
+        this.showSpinner=true; //HRAWRM-640 20/09/2021
         let sourceAgency = this.template.querySelector('[data-id = "agencyField"]').value;
         let interestProduct = this.template.querySelector('[data-id = "interestProductField"]').value;
         let campaignId = this.template.querySelector('[data-id = "campaignOutboundField"]').value;
@@ -113,6 +113,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 variant: 'error'
             }));
             this.dispatchEvent(new CustomEvent('afterSave'));
+            this.showSpinner=false; //HRAWRM-640 20/09/2021
         }
          else {
             createCampaignMemberFromLead({
@@ -131,6 +132,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                         variant: 'success'
                     }));
                     this.dispatchEvent(new CustomEvent('afterSave'));
+                    this.showSpinner=false; //HRAWRM-640 20/09/2021
                 }
                 else{
                     console.log(JSON.stringify(result));
@@ -141,6 +143,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                         variant: 'warning'
                     }));
                     this.dispatchEvent(new CustomEvent('afterSave'));
+                    this.showSpinner=false; //HRAWRM-640 20/09/2021
                 }
             }).catch(err => {
                 console.log(JSON.stringify(err));
