@@ -28661,6 +28661,21 @@
         <field>wrts_prcgvr__ActivityTemplate__c.wrts_prcgvr__Subject__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions> <!--Email 20/09/2021-->
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CalledNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CallingNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Queue__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!--Email 20/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ageing__c</field>
