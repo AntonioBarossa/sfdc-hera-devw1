@@ -33,7 +33,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         Id objectId = (Id) sender.get('Id');
 
         switch on method{
-            when 'activation', 'deactivation'{
+            when 'activation', 'deactivation', 'service26' {
                 if(system.isQueueable()){
                     asyncCalloutFuture(objectId, method);
                 }else{
@@ -95,6 +95,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
                 newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
                 vasStatus = isSuccess?null:res.errorDetails;
+            }
+            when 'service26' {
+                res = HDT_SRV_ServiceTwentySix.callService26(sobjectId);
             }
         }
 
