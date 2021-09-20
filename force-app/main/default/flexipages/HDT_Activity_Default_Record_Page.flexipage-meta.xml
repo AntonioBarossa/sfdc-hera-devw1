@@ -112,18 +112,23 @@
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Approvazione Bonus Commerciale</rightValue>
+                                    <rightValue>Approvazione Offerte</rightValue><!-- UAT Cocetta  20/09/2021 -->
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND (2 OR 3)</booleanFilter> <!-- UAT Cocetta  20/09/2021 -->
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Approvazione Offerte</rightValue> <!-- UAT Cocetta  20/09/2021 -->
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
