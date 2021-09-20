@@ -54,9 +54,13 @@ public with sharing class HDT_SRV_EmailMessageTst {
 		String debugString = TEST_NAME + ' - checkEmailSenderTest';
 		System.debug(debugString);
         
+        //SETUP
+        mySetup();
         Case myCase = [SELECT Id FROM Case];
         
+        
         //TESTING FAILURE
+        
         EmailMessage m_fail = new EmailMessage();
         m_fail.fromAddress = UserInfo.getUserEmail();
         m_fail.parentId = myCase.Id;
@@ -79,7 +83,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         
         
         //REGULAR TESTING
-        //SETUP
+        
         EmailMessage m1 = new EmailMessage();
         m1.fromAddress = 'Pugnialio@Controfiletti.it';
         m1.parentId = myCase.Id;
