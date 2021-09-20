@@ -15,13 +15,21 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         
-        //NOTA: CUSTOM METADATA RIPORTA ANCHE RELATION RELATIVE AI TIPI:
+        /*
         
-        //OrderItems
-        //Account
-        //Contact__r
-        //SaleBy__r
-        //ParentOrder__r
+        NOTA: CUSTOM METADATA RIPORTA ANCHE RELATION RELATIVE AI TIPI:
+        
+        OrderItems
+        Account
+        Contact__r
+        SaleBy__r
+        ParentOrder__r
+        
+        Questi tipi sono coinvolti in una serie di query che raccolgono tutte le informazioni che orbitano intorno all'ordine,
+        e vengono processati poi all'interno dei metodi richiamati dal metodo generateRequest 
+        della classe HDT_SRV_DocumentalManagement.
+        
+        */
         
     }
     
@@ -41,7 +49,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         mySetup();
         
         
-        //TODO: SCORPORARE IN UTILITY DI CREAZIONE OGGETTO AD HOC
+        //TODO: ESTRARRE E REALIZZARE METODO/UTILITY DI CREAZIONE OGGETTO HDT_WRP_DocumentalStructure AD HOC
         
         //docRecord
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord docRecord;
@@ -81,19 +89,20 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
         insert myDocByContext;
         
-        //Documento Driver3
+        //Documento Driver3 - NOTA: CONSIGLIABILE CORREGGERE CON docStructure DISTINTA RISPETTO A myDocByContext.
         Document myDocDriver3 = new Document();
         myDocDriver3.name = 'Driver3';
         myDocDriver3.FolderId = folderId;
-        myDocDriver3.Body = Blob.valueOf(JSON.serialize(docStructure));//TODO: POSSIBILE SI DEBBA SCORPORARE IN UN SECONDO ITEM
+        myDocDriver3.Body = Blob.valueOf(JSON.serialize(docStructure));
         insert myDocDriver3;
         
         
         //PREPARAZIONE ARGOMENTI
         String context = 'DocumentazioneAnticipata';//se non lo è, cambia codice
         
-        //TODO: METTERE VALORI DENTRO formParams
+        
         Map<String,Object> formParams = new Map<String,Object>();
+        //TODO: COMPLETARE MAPPA formParams. Struttura è complicata.
         
         
         String formParamsJSON = JSON.serialize(formParams);
@@ -135,7 +144,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
         //SETUP
         //mySetup();
         
-        //TODO: DI BASE è STESSO TEST DI SOPRA, SOLO CHE SI OCCUPA DI FARE LA PRIMA PARTE E BASTA (?)
+        //TODO: DI BASE TESTING DI QUESTO METODO è ANALOGO AL TEST DI sendDocument.
         //TODO: VERIFICARE TESTABILITà, PERCHé VIENE SIA MESSO IN CODA UN JOB CHE PREPARATA UNA FUTURE.
         
     }
