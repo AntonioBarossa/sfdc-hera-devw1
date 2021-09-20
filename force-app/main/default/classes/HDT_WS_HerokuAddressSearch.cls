@@ -57,7 +57,7 @@ public class HDT_WS_HerokuAddressSearch {
         }
 	}
     public class HDT_WS_HerokuAddressSearchRequestMass extends HDT_WS_Request{
-        @AuraEnabled public HDT_WS_PrestazioneReqObjVer prestazione{get;set;}
+        public HDT_WS_PrestazioneReqObjVerMassive prestazione;
         public HDT_WS_HerokuAddressSearchRequestMass(String city1,String street,String houseNum1,String modality){
             this.prestazione = new HDT_WS_PrestazioneReqObjVerMassive();
             this.prestazione.city1 = city1;
