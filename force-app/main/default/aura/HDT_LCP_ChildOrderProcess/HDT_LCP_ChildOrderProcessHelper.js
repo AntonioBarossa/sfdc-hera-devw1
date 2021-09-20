@@ -220,7 +220,12 @@
                 },
                 focus: true
             }).then(function(response2){
+                console.log("refresh", response2);
                 workspaceAPI.closeTab({tabId: focusedTab});
+                workspaceAPI.refreshTab({
+                    tabId: response2,
+                    includeAllSubtabs: true
+                });
                 $A.get('e.force:refreshView').fire();
             })
             .catch(function(error) {

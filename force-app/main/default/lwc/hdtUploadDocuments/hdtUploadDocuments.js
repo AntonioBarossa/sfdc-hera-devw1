@@ -10,6 +10,7 @@ export default class HdtUploadDocuments extends LightningElement {
     @api acceptedFormats; //configure accepted formats
     @api description; //description to identify file purpose
     visible = false;
+    @api isDone = false;
 
     //handle modal open event
     handleOpenModal(){
@@ -23,6 +24,7 @@ export default class HdtUploadDocuments extends LightningElement {
 
     //handle upload finished event
     handleUploadFinished(event) {
+        this.isdone = true;
         const toastSuccessMessage = new ShowToastEvent({
             title: 'Successo',
             message: 'Documento caricato con successo',
@@ -30,6 +32,7 @@ export default class HdtUploadDocuments extends LightningElement {
         });
         this.dispatchEvent(toastSuccessMessage);
         this.visible = false;
+
 
 
         let uploadedFile = event.detail.files[0];
@@ -53,7 +56,6 @@ export default class HdtUploadDocuments extends LightningElement {
                         console.log('hdtUploadDocument - updateRecord - error: ' + JSON.stringify(error));
                     });
         }
-
     }
 
     connectedCallback(){

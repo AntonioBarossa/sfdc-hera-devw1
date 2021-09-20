@@ -239,8 +239,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
 
+        
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        if(!orderOld.isTransition__c){
+            changeCustomerMarking(account);
+        }
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         String customerName = null;
         String customerLastName = null;
@@ -450,12 +454,27 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
 
         orderSrv.updateRecord(orderToUpdate);
-
-        if (order.ServicePoint__c != null) {
+        //LG 2009 Concetta Richiesta disattivazione da ROOM
+        /*if (order.ServicePoint__c != null) {
             servicePointSrv.updateRecord(new ServicePoint__c(
                 Id = order.ServicePoint__c,
                 PowerRequested__c = null
             ));
+        }*/
+    }
+
+    private static void changeCustomerMarking(Account account){
+        Map<String, String> customerMarkingTranscode = 
+                new  Map<String, String>{
+                    'Persona fisica'=> 'D1 - ',
+                    'Azienda' => 'D3 - ',
+                    'Parti comuni' => 'D4 - '
+                };
+
+        String appendix = customerMarkingTranscode.get(account.customerMarking__c);
+        if(String.isNotBlank(appendix)){
+            account.customerMarking__c = appendix+account.customerMarking__c;
+            accountSrv.updateRecord(account);
         }
     }
 

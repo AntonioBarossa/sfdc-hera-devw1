@@ -269,7 +269,7 @@ public with sharing class HDT_UTL_NotifVas {
     * @param targetRecord 
     **/
     private static void populateFieldsFromRequest(Map<String, String> requestMap, SObject targetRecord) {
-        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_MOTORE_VAS') );
+        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_VAS') );
         targetRecord.put('VasStatus__c', requestMap.get('STATO_PRATICA') );
         targetRecord.put('VasStatusDescription__c', requestMap.get('ESITO') );
         targetRecord.put('VasPolicyNumber__c', requestMap.get('NUMERO_POLIZZA') );
