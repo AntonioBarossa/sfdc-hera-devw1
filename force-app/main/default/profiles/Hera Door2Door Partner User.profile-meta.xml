@@ -476,6 +476,11 @@
         <field>Order.RateCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.isPreDocToSend__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Order.SwitchOutDate__c</field>
