@@ -64,7 +64,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
-    userProfile;
+    loginChannel;
     get orderWithData(){
         return { ...this.order, ...this.sectionDataToSubmit };
     }
@@ -1832,7 +1832,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'VATfacilitationFlag__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1841,7 +1841,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'FacilitationExcise__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -2236,7 +2236,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let initData = await init();
         console.log('initData: ' + JSON.stringify(initData));
 
-        this.userProfile = initData.userProfile;
+        this.loginChannel = initData.loginChannel;
 
         this.title = 'Processo di ' + this.order.RecordType.Name;
         this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
