@@ -9,6 +9,7 @@ import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProces
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
+import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 //FINE SVILUPPI EVERIS
 import createActivityAccise from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.createActivityAccise'
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
@@ -2297,10 +2298,40 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             tipoDoc = 'MODULISTICA_B12';
         }
 
-        this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
-        this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
-
-
+        if (this.loginChannel === 'Sportello') {
+            this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
+            this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
+        } else {
+            this.loading = true;
+            var formParams = {     
+                mode : 'Print',
+                Archiviato : 'Y',
+                TipoPlico: tipoDoc,
+                sendMode:'Sportello'
+            };
+            sendAdvanceDocumentation({
+                recordId: this.order.Id,
+                context: 'DocumentazioneAnticipata',
+                formParams: JSON.stringify(formParams)
+            }).then(result => {
+                this.loading = false;
+                const event = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Documentazione inviata',
+                    variant: 'success',
+                });
+                this.dispatchEvent(event);
+            }).catch(error => {
+                this.loading = false;
+                const event = new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non è stato possibile inviare la documentazione al cliente',
+                    variant: 'error',
+                });
+                this.dispatchEvent(event);
+                console.error(error);
+            });
+        }
     }
 
     retryEsitiCreditCheck(){        

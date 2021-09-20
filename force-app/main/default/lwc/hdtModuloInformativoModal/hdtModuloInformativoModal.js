@@ -5,6 +5,7 @@ import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendD
 import { updateRecord } from 'lightning/uiRecordApi';
 import PHONE_NUMBER_FIELD from '@salesforce/schema/Order.PhoneNumber__c';
 import ID_ORDER_FIELD from '@salesforce/schema/Order.Id';
+import IS_PRE_DOC_TO_SEND from '@salesforce/schema/Order.isPreDocToSend__c';
 
 export default class HdtModuloInformativoModal extends LightningElement {
 
@@ -20,13 +21,9 @@ export default class HdtModuloInformativoModal extends LightningElement {
     showSms = false;
     get moduloInformativoSendTypeOptions() {
         let options = [
-            { label: 'Email', value: 'Email' }
+            { label: 'Email', value: 'Email' },
+            { label: 'Stampa', value: 'Stampa' }
         ];
-
-        if (this.order.Channel__c === 'Sportello') {
-            options.push({ label: 'Stampa', value: 'Stampa' });
-            options.push({ label: 'SMS', value: 'SMS' });
-        }
 
         return options;
     }
@@ -126,6 +123,18 @@ export default class HdtModuloInformativoModal extends LightningElement {
                 variant: 'success',
             });
             this.dispatchEvent(event);
+            const fields = {};
+                fields[ID_ORDER_FIELD.fieldApiName] = this.order.Id;
+                fields[IS_PRE_DOC_TO_SEND.fieldApiName] = true;
+                const recordInput = { fields };
+
+                updateRecord(recordInput)
+                    .then(() => {
+                        console.log('hdtModuloInformatioModal - updateRecord - OK!');
+                    })
+                    .catch(error => {
+                        console.log('hdtModuloInformatioModal - updateRecord - error: ' + JSON.stringify(error));
+                    });
         }).catch(error => {
             this.loading = false;
             const event = new ShowToastEvent({
@@ -165,6 +174,18 @@ export default class HdtModuloInformativoModal extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                const fields = {};
+                fields[ID_ORDER_FIELD.fieldApiName] = this.order.Id;
+                fields[IS_PRE_DOC_TO_SEND.fieldApiName] = true;
+                const recordInput = { fields };
+
+                updateRecord(recordInput)
+                    .then(() => {
+                        console.log('hdtModuloInformatioModal - updateRecord - OK!');
+                    })
+                    .catch(error => {
+                        console.log('hdtModuloInformatioModal - updateRecord - error: ' + JSON.stringify(error));
+                    });
             }).catch(error => {
                 this.loading = false;
                 const event = new ShowToastEvent({
