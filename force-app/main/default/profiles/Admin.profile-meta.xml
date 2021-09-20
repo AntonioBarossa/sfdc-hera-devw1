@@ -28362,7 +28362,7 @@
         <field>TechnicalOffer__c.UnitTerminationTime__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <fieldPermissions> 
         <editable>true</editable>
         <field>TechnicalOffer__c.UnitTimeExtension__c</field>
         <readable>true</readable>

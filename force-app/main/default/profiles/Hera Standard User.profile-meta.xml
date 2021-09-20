@@ -26079,7 +26079,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>User.CreatorGroup__c</field>
+        <field>User.CreatorGroup__c</field> 
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -25901,8 +25901,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>User.CreatorGroup__c</field>
-        <readable>true</readable>
+        <field>User.CreatorGroup__c</field> 
+        <readable>true</readable> 
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

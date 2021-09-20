@@ -2,9 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Commodity__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(CONTAINS(Name, &apos;-13R&apos;)&amp;&amp; (RecordType.DeveloperName==&apos;HDT_RT_Distributore&apos;),
+    <formula>IF(CONTAINS(Code__c, &apos;13D&apos;)&amp;&amp; (RecordType.DeveloperName==&apos;HDT_RT_Distributore&apos;),
 							&apos;Ele&apos;, 
-							        IF(CONTAINS(Name, &apos;-10R&apos;)&amp;&amp; (RecordType.DeveloperName==&apos;HDT_RT_Distributore&apos;),
+							        IF(CONTAINS(Code__c, &apos;10D&apos;)&amp;&amp; (RecordType.DeveloperName==&apos;HDT_RT_Distributore&apos;),
 							        &apos;Gas&apos;,
 											         &apos;&apos;))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

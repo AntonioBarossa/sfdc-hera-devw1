@@ -14,7 +14,7 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.BPSAPModel__c</field>
-        <readable>true</readable>
+        <readable>true</readable> 
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

@@ -26411,7 +26411,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>TechnicalOffer__c.Version__c</field>
-        <readable>true</readable>
+        <readable>true</readable> 
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
