@@ -675,7 +675,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                   AND Status__c != 'Chiusa']; 
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
                 singleActivity.Status__c='Chiusa';
-                singleActivity.wrts_prcgvr__Status__c='Completed';
+                singleActivity.wrts_prcgvr__Status__c='Chiusa';
             }
             update toUpdateActivities;
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
@@ -685,7 +685,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         AND Status__c != 'Chiusa'];
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
                 singleActivity.Status__c='Chiusa';
-                singleActivity.wrts_prcgvr__Status__c='Completed';
+                singleActivity.wrts_prcgvr__Status__c='Chiusa';
             }
             update toUpdateActivities; 
         }    
