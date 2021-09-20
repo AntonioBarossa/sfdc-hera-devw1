@@ -698,7 +698,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.Commodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25899,10 +25899,17 @@
         <field>TechnicalOffer__c.Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <!--SFDC-OIG/OIM 17/09/2021-->
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FiscalCode__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
-        <field>User.CreatorGroup__c</field>
-        <readable>true</readable>
+        <field>User.CreatorGroup__c</field> 
+        <readable>true</readable> 
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

@@ -11,7 +11,7 @@ public with sharing class HDT_QR_SolContractVas {
     public static List<SObject> getProductOptionVas(Set<String> offerSet){
         if(offerSet.size()==0)return null;
         if(SBQQ__ProductOption__c.SObjectType.getDescribe().isAccessible()){
-            return [SELECT Id,SBQQ__ConfiguredSKU__r.ProductCode,Version__c,SBQQ__OptionalSKU__r.Version__c, SBQQ__ProductName__c from SBQQ__ProductOption__c where SBQQ__ProductName__c ='Analisi Consumi' AND SBQQ__ConfiguredSKU__r.ProductCode in:offerSet WITH SECURITY_ENFORCED];
+            return [SELECT Id,SBQQ__ConfiguredSKU__r.ProductCode,Version__c,SBQQ__ConfiguredSKU__r.Version__c, SBQQ__ProductName__c from SBQQ__ProductOption__c where SBQQ__ProductName__c ='Analisi Consumi' AND SBQQ__ConfiguredSKU__r.ProductCode in:offerSet WITH SECURITY_ENFORCED];
         }else {
             return null;
         }

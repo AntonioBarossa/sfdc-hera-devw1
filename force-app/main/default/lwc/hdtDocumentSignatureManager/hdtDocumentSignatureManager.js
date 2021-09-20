@@ -96,8 +96,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     processType: this.processType,
                     source: this.source,
                 }).then(result => {
+                    console.log('getSignSendMode result ' + result);
                     var resultJSON = JSON.parse(result);
-                    console.log(resultJSON);
                     var signMode = [];
                     var sendMode = [];
                     var signSendMode;
@@ -211,7 +211,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         try{
             var modFirma = this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value;
             var modSpedizione = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value;
-            console.log('mod sped' + modSpedizione);
+            console.log('modalità firma: ' + modFirma);
+            console.log('modalità spedizione: ' + modSpedizione);
+            if (modFirma == null){
+                modFirma = '';
+            }
+            if (modSpedizione == null){
+                modSpedizione = '';
+            }
             if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
                 this.emailRequired = true;
                 this.phoneRequired = true;

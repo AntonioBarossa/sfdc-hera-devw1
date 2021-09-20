@@ -76,13 +76,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
      
 
     public static String getSignSendMode(String processType, String source){
-        String configurationJSON = '';
+        String configurationJson = '';
         try{
-            configurationJSON = HDT_SRV_DocumentalManagement.getSignModeConfiguration(processType, source);
+            configurationJson = HDT_SRV_DocumentalManagement.getSignModeConfiguration(processType, source);
         }catch(Exception ex){
-            configurationJSON = ex.getMessage();
+            configurationJson = ex.getMessage();
         }
-        return configurationJSON;
+        return configurationJson;
     }
 
     public static String getInfoAccountStatement(String accountId){
@@ -112,7 +112,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         try{
             SObject documentalObject = HDT_QR_DocumentalConfiguration.getDocumentalObjectById(recordId);
             String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
-            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject);
+            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
             postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
             baseSixtyFour = postelResponse.content;
             resultMap.put('outcome','OK');
