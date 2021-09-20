@@ -649,11 +649,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     public static void annullaPratica(Id objectId){
         if(Schema.Case.SObjectType == objectId.getSobjectType()){
-            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato',CancellationReason__c='Gestione Scarto');
+            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato', Status='Closed', CancellationReason__c='Gestione Scarto');
             /*eventuali modifiche*/
             update caseRecord;
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato',CancellationReason__c='Gestione Scarto');
+            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato', Status='Activated', CancellationReason__c='Gestione Scarto');
             /*eventuali modifiche*/
             update orderRecord;
         }
