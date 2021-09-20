@@ -54,7 +54,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
 		String debugString = TEST_NAME + ' - checkEmailSenderTest';
 		System.debug(debugString);
         
-        Case myCase = [SELECT Id, Name FROM Case];
+        Case myCase = [SELECT Id FROM Case];
         
         //TESTING FAILURE
         EmailMessage m_fail = new EmailMessage();
