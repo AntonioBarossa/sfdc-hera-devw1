@@ -96,6 +96,11 @@ public with sharing class HDT_UTL_SwtichInProcess {
             effDate = order.EffectiveDate__c;
         }
 
+        //18/09/2021 - gabriele.rota@webresults.it - Fix Data Completamento Wizard vuota
+        if (order.WizardCompletedDate__c==null) {
+            order.WizardCompletedDate__c = Date.today();
+        }
+
         Date dateSentToSii= null;
         if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
 

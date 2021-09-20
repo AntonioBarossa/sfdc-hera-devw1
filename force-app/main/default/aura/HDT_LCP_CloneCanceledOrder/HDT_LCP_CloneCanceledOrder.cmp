@@ -12,6 +12,9 @@
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <lightning:navigation aura:id="navService"/>
+
     <h2 class="slds-text-heading_medium slds-text-align_center">Clona Ordine</h2>
     <div class="slds-is-relative" style="height: 150px">
         <aura:if isTrue="{!v.isLoading}">
