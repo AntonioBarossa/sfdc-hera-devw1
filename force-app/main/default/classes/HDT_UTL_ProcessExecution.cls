@@ -5,8 +5,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public static HDT_QR_AccountContactRelation accoContRelQr           = new HDT_QR_AccountContactRelation()   ;
     public static HDT_QR_Contact                qrCont                  = new HDT_QR_Contact()                  ;
     public HDT_UTL_Constants                    constant                = new HDT_UTL_Constants()               ;
-    public HDT_WRP_ProcessEntities              currentProcess;
-
+    public HDT_WRP_ProcessEntities              currentProcess                                                  ;
+    
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
     public  Map<Integer, String> mapHeaderByPosition; 
@@ -99,6 +99,24 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             }
         }
     }
+    public  HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse verifyAccountAddress(){
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
+            currentProcess.currentAccount.BillingCity,
+            currentProcess.currentAccount.BillingStreet,
+            currentProcess.currentAccount.BillingStreetNumber__c
+        );
+        return resp;
+       
+    }
+    // public HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse> rs,String city,String street,String number){
+    //     Integer matchingPoints=0;
+    //     Integer elementNumber=0;
+    //     for (HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse tempRes : rs) {
+    //         tempRes.body
+    //     }
+
+    // }
+
 
    public class HDT_WRP_ProcessEntities{
       public Account                      currentAccount                ;

@@ -25,8 +25,8 @@ public class HDT_WS_HerokuAddressSearch {
         
         return res;
     }  
-    public static HDT_WS_HerokuAddressSearchResponse callServiceMass(String city1,String street,String houseNum1,String modality){  
-        HDT_WS_HerokuAddressSearchRequestMass req = new HDT_WS_HerokuAddressSearchRequestMass(city1,street,houseNum1,modality);
+    public static HDT_WS_HerokuAddressSearchResponse callServiceMass(String city1,String street,String houseNum1){  
+        HDT_WS_HerokuAddressSearchRequestMass req = new HDT_WS_HerokuAddressSearchRequestMass(city1,street,houseNum1);
         HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
         return res;
     }
@@ -58,12 +58,12 @@ public class HDT_WS_HerokuAddressSearch {
 	}
     public class HDT_WS_HerokuAddressSearchRequestMass extends HDT_WS_Request{
         public HDT_WS_PrestazioneReqObjVerMassive prestazione;
-        public HDT_WS_HerokuAddressSearchRequestMass(String city1,String street,String houseNum1,String modality){
+        public HDT_WS_HerokuAddressSearchRequestMass(String city1,String street,String houseNum1){
             this.prestazione = new HDT_WS_PrestazioneReqObjVerMassive();
             this.prestazione.city1 = city1;
             this.prestazione.street = street;
             this.prestazione.streetCode = houseNum1;
-            this.prestazione.modality = modality; 
+            this.prestazione.modality = 'M'; 
         }
 	}
     public class HDT_WS_HerokuAddressSearchResponse extends HDT_WS_Response{
