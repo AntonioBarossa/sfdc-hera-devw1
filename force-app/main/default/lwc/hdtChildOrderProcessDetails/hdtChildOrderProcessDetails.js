@@ -1036,7 +1036,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Recapito telefonico',
                     'apiname': 'DisconnectibilityPhone__c', //3
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': false, // 24/08/2021 
+                    'required': true,  // 24/08/2021  richiesto false // 20/09/2021 richiesto true
                     //'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', // 24/08/2021 richiesto durante i test
                     'disabled': true,
                     'value': '',
