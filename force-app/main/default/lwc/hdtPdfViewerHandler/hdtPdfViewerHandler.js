@@ -16,7 +16,7 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
         //bodyString = '{"billNumber":"411911206203","channel":"SOL","date":"2019-11-29","type":"D66l7V","company":"1070"}';
         //bodyString = '{"billNumber":"411709832686","channel":"CRM","date":"2017-12-09","type":"D66l7V","company":"1070"}';
 
-        console.log('>>> TO SEND ' + bodyString);
+        console.log('>>> BODY TO RETRIEVE PDF ' + bodyString);
         sendFileToPrint({body: bodyString})
         .then(result => {
             console.log('# save success #');
