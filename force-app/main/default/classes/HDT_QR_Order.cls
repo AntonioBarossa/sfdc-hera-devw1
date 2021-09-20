@@ -105,6 +105,7 @@ public inherited sharing class HDT_QR_Order {
             Sale__r.SalesContact__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
+            Sale__r.Channel__c,
             SwitchOutDate__c,
             Vat__c,
             ExciseGas__c,
