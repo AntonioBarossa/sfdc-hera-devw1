@@ -5,7 +5,7 @@ import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendD
 import { updateRecord } from 'lightning/uiRecordApi';
 import PHONE_NUMBER_FIELD from '@salesforce/schema/Order.PhoneNumber__c';
 import ID_ORDER_FIELD from '@salesforce/schema/Order.Id';
-import IS_PRE_DOC_TO_SEND from '@salesforce/schema/Order.isPreDocToSend__c';
+import IS_PRE_DOC_TO_SEND from '@salesforce/schema/Order.isPreDocumentationToSend__c';
 
 export default class HdtModuloInformativoModal extends LightningElement {
 

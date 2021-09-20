@@ -478,7 +478,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.isPreDocToSend__c</field>
+        <field>Order.isPreDocumentationToSend__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
