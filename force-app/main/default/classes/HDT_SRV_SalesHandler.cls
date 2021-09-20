@@ -250,6 +250,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
+                            when 'Dati discordanti'{
+                                ord.phase__c = mapRequestFields.get('FASE');
+                            }
                             when 'Completata' {
 
                                 Boolean redirectPreventivo = false;

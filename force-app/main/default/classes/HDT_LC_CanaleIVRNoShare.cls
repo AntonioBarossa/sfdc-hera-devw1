@@ -31,7 +31,7 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
             SObject documentalObject = getDocumentalObjectById(recordId);
             System.debug('showOriginalDocument - documentalObject: ' + documentalObject);
             String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
-            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject);
+            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
             postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
             baseSixtyFour = postelResponse.content;
             resultMap.put('outcome','OK');

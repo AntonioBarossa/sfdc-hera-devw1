@@ -111,4 +111,35 @@ export default class HdtLastBill extends LightningElement {
         });
     }
 
+    openFile(){
+        console.log('>>> visualbolletta - showSingleBill');
+
+        //const date = selected.dataEmissione.split("/");
+
+        var docInvoiceObj = {
+            billNumber: '411911206203',//this.billNumber,
+            channel: 'SOL',
+            date: '2019-11-29',//date[2] + '-' + date[1] + '-' + date[0],
+            type: 'D66l7V',//'Bolletta',
+            company: '1070'//selected.societa
+        }
+
+        this.sendPrint(docInvoiceObj);
+    }
+
+    sendPrint(docInvoice){
+        this.template.querySelector("c-hdt-pdf-viewer-handler").sendPrintFromParent(JSON.stringify(docInvoice));
+        /*getCompanyCode({companyName: docInvoice.company})
+        .then(result => {
+            console.log('>>> getCompanyCode ' + result);
+            
+            docInvoice.company = result;
+            this.template.querySelector("c-hdt-pdf-viewer-handler").sendPrintFromParent(JSON.stringify(docInvoice));
+
+        }).catch(error => {
+            this.error.show = true;
+            this.error.message = 'CATCH ERROR MESSAGE';
+        });*/
+
+    }
 }
