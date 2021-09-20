@@ -395,7 +395,33 @@ public class HDT_SRV_DocumentalManagement{
 				HDT_UTL_DatabaseService.updateSObject(individualRecord);
 			}else{
 				//in caso di order aggiornare privacy individual
-				//ricercare contatto primario dell'account, ricercare l'individual e aggiornare flag
+				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
+					String privacyVersion;
+					String privacyCompany;
+					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
+						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
+							privacyVersion = singleAttachment.Version__c;
+						}
+					}
+					if(singleRadio.selected.equalsIgnoreCase('true')){
+						String value = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+						if(singleRadio.groupName.indexOf('radio1') > -1){
+							individualRecord.MarketingPrivacy__c = value;
+							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
+							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
+							individualRecord.ProfilingPrivacy__c = value;
+							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
+							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+						}
+					}
+				}
+				try {
+					HDT_UTL_DatabaseService.updateSObject(individualRecord);
+				}catch(Exception ex){
+					System.debug('Errore DML: ' + ex.getMessage());
+				}
 			}
 			
 		}
