@@ -128,4 +128,5 @@ public with sharing class HDT_SRV_EmailMessage {
             Boolean result = HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         }
     }
+    
 }
