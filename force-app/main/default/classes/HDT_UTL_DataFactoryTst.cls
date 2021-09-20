@@ -2213,4 +2213,180 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return comfQualityCallList;
 	}
 
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 20/09/2021
+	 */
+	public static List<ServicePoint__c> createServicePoint(Integer amount, Boolean doInsert, Map<String,Object> params){
+
+		List<ServicePoint__c> servPointList=new List<ServicePoint__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ServicePoint__c servPoint=new ServicePoint__c();
+
+			servPoint.Name='testServicePoint'+i;
+			servPoint.ServicePointCode__c='Code';
+			servPoint.MeterStatus__c=(String)params.get('meterStatus');
+			servPoint.Account__c=(String)params.get('accountId');
+			servPoint.PlugPresence__c=(String)params.get('plugPresence');
+			servPoint.PowerRequested__c =(Integer)params.get('powerRequested');
+			servPoint.CommoditySector__c = (String)params.get('commoditySector');
+			servPoint.RecordTypeId=(String)params.get('recordTypeId');
+			servPointList.add(servPoint);
+		}
+
+		if (doInsert){
+			insert servPointList;
+		}
+
+		return servPointList;
+	}
+
+
+	/**
+	* @author Valere (valere@noeli-it.net)
+	* @date 20/09/2021
+	*/
+	public static List<wrts_prcgvr__Activity__c> createActivityCustom(Integer amount, Boolean doInsert,Map<String,Object> params){
+
+		List<wrts_prcgvr__Activity__c> activityCustomList=new List<wrts_prcgvr__Activity__c>();
+
+		for (Integer i=0; i<amount; i++){
+			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
+			actCustom.Account__c=(String)params.get('accountId');
+			actCustom.Type__c=(String)params.get('type');
+			actCustom.Status__c=(String)params.get('status');
+			actCustom.ServicePointCode__c=(String)params.get('servicePointCode');
+			activityCustomList.add(actCustom);
+		}
+
+		if (doInsert){
+			insert activityCustomList;
+		}
+
+		return activityCustomList;
+	}
+
+	/**
+	* @author Valere (valere@noeli-it.net)
+	* @date 20/09/2021
+	*/
+	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase,Map<String,Object> params){
+
+		HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+		List<Order> orderList=new List<Order>();
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
+		for (Integer i=0; i<amount; i++){
+			Order ord=new Order();
+			ord.RecordTypeId=rt;
+			ord.Name='testOrderName'+i;
+			ord.Status='Draft';
+			ord.EffectiveDate=Date.today();
+			ord.AccountId=accId;
+			ord.EstimateAmount__c=1000;
+			ord.PowerQuote__c=1000;
+			ord.AdministrativeBurden__c=1;
+			ord.EstimatedVAT__c=1;
+			ord.ValidityDateEstimate__c=Date.today().addDays(30);
+			ord.Phase__c=phase;
+			ord.CIAccoutn__c='Richiesto';
+			ord.QuickQuote__c='Richiesto';
+			ord.ChamberCommerceRegistration__c='Richiesto';
+			ord.Instance326__c='Richiesto';
+			ord.DocumentLow80__c='Richiesto';
+			ord.AutorizationVolturaThirdTrader__c='Richiesto';
+			ord.ContractSigned__c=true;
+			ord.SignedDate__c=Date.today();
+			ord.SignatureMethod__c='Vocal Order';
+			ord.DocSendingMethod__c='E-mail';
+			ord.servicePoint__c=(String)params.get('servicePoint');
+			ord.powerRequested__c=(Integer)params.get('powerRequested');
+			ord.SBQQ__Quote__c=(String)params.get('SBQQ__Quote');
+			orderList.add(ord);
+		}
+
+		if (doInsert){
+			insert orderList;
+		}
+
+		return orderList;
+	}
+
+	/**
+	* @author Valere (valere@noeli-it.net)
+	* @date 20/09/2021
+	*/
+	public static List<Sale__c> createSale(Integer amount, Boolean doInsert,  Map<String,Object> params){
+
+		List<Sale__c> salesList=new List<Sale__c>();
+
+		for (Integer i=0; i<amount; i++){
+			Sale__c sale=new Sale__c();
+			sale.Name='testSaleName'+i;
+			sale.Status__c=(String)params.get('status');
+			sale.Account__c=(String)params.get('accountId');
+			sale.isTransition__c=(boolean)params.get('transition');
+			salesList.add(sale);
+		}
+
+		if (doInsert){
+			insert salesList;
+		}
+
+		return salesList;
+	}
+
+	/**
+	* @author Valere (valere@noeli-it.net)
+	* @date 20/09/2021
+	*/
+	public static List<Opportunity> createOpportunity(Integer amount, Boolean doInsert, Map<String,Object> params){
+
+		List<Opportunity> oppList=new List<Opportunity>();
+
+		for (Integer i=0; i<amount; i++){
+			Opportunity opp=new Opportunity();
+			opp.Name='testOpportunity'+i;
+			opp.CloseDate=Date.today().addDays(30);
+			opp.StageName='Negotiation';
+			opp.Sale__c=(String)params.get('sale');
+			oppList.add(opp);
+		}
+
+		if (doInsert){
+			insert oppList;
+		}
+
+		return oppList;
+	}
+
+	/**
+	* @author Valere (valere@noeli-it.net)
+	* @date 20/09/2021
+	*/
+	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Map<String,Object> params) {
+
+		List<SBQQ__Quote__c> quoteList=new List<SBQQ__Quote__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Quote__c quote=new SBQQ__Quote__c();
+			quote.SBQQ__Type__c=(String)params.get('type');
+			quote.OrderReference__c=(String)params.get('orderId');
+			quote.SBQQ__Opportunity2__c=(String)params.get('opportunityId');
+			quote.Sale__c=(String)params.get('saleId');
+			quote.AllowChangeUse__c=(Boolean)params.get('allowChangeUse');
+			quote.AmendmentAllowed__c=(Boolean)params.get('amendmentAllowed');
+			quote.SBQQ__Primary__c=(Boolean)params.get('SBQQ__Primary');
+			quoteList.add(quote);
+		}
+
+		if (doInsert){
+			insert quoteList;
+		}
+
+		return quoteList;
+	}
+
 }
