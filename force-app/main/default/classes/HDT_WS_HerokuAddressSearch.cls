@@ -26,7 +26,7 @@ public class HDT_WS_HerokuAddressSearch {
         return res;
     }  
     public static HDT_WS_HerokuAddressSearchResponse callServiceMass(String city1,String street,String houseNum1,String modality){  
-        HDT_WS_HerokuAddressSearchRequestMass req = new HDT_WS_HerokuAddressSearchRequestMass(modality,cityCode,streetCode,houseNumCode);
+        HDT_WS_HerokuAddressSearchRequestMass req = new HDT_WS_HerokuAddressSearchRequestMass(city1,street,houseNum1,modality);
         HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
         return res;
     }
