@@ -69,26 +69,33 @@ public with sharing class HDT_SRV_EmailMessage {
             manageEmailCase(mapEmailCase);
         }
     }
-
-    private static void manageEmailCase(Map<SObject,Id> params){
+    
+    //params: mappa EmailMessage ---> Parent Id (Case)
+    private static void manageEmailCase(Map<SObject, Id> params){
+        
         HDT_QR_Case caseQr = new HDT_QR_Case();
-        List<Id> caseIdList = params.values();
-        String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName,Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
-        List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         Map<Id,Case> mapIdCase = new Map<Id,Case>();
         List<Case> caseToUpdate = new List<Case>();
         List<Case> caseList = (List<Case>) recordList;
         Case parentRecord = new Case();
+        
+        List<Id> caseIdList = params.values();
+        String idString = String.join( new List<Id>(caseIdList) , '\',\'');
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName,Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
+        List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
+        
         try{
             parentRecord = caseQr.getParentCaseById(caseList[0].ParentId);
             System.debug('###Found Records --> ' + parentRecord);
-        } catch(Exception e){
+        } catch (Exception e) {
             System.debug(e.getMessage());
         }
+        
         for(Case single : (List<Case>)recordList){
             mapIdCase.put(single.Id, single);
         }
+        
+        //TODO: OPPORTUNO CAMBIARE DA "==" A METODO .EQUALS() DI STRING.
         for (SObject emailObj : params.keySet()) {
             EmailMessage email = (EmailMessage) emailObj;
             if(email.Incoming){
