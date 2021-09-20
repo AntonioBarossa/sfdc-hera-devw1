@@ -24,7 +24,13 @@ public class HDT_WS_HerokuAddressSearch {
         HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
         
         return res;
-    }    
+    }  
+    public static HDT_WS_HerokuAddressSearchResponse callServiceMass(String city1,String street,String houseNum1,String modality){  
+        HDT_WS_HerokuAddressSearchRequestMass req = new HDT_WS_HerokuAddressSearchRequestMass(modality,cityCode,streetCode,houseNumCode);
+        HDT_WS_HerokuAddressSearchResponse res = (HDT_WS_HerokuAddressSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('VerifIndirizzo', req,HDT_WS_HerokuAddressSearchResponse.class);
+        return res;
+    }
+
     public class HDT_WS_HerokuAddressSearchRequestCom extends HDT_WS_Request{
         @AuraEnabled public HDT_WS_PrestazioneReqObj prestazione{get;set;}
         public HDT_WS_HerokuAddressSearchRequestCom(String city){
@@ -48,6 +54,16 @@ public class HDT_WS_HerokuAddressSearch {
             this.prestazione.cityCode = cityCode;
             this.prestazione.streetCode = streetCode;
             this.prestazione.houseNumCode = houseNumCode; 
+        }
+	}
+    public class HDT_WS_HerokuAddressSearchRequestMass extends HDT_WS_Request{
+        @AuraEnabled public HDT_WS_PrestazioneReqObjVer prestazione{get;set;}
+        public HDT_WS_HerokuAddressSearchRequestMass(String city1,String street,String houseNum1,String modality){
+            this.prestazione = new HDT_WS_PrestazioneReqObjVerMassive();
+            this.prestazione.city1 = city1;
+            this.prestazione.street = street;
+            this.prestazione.streetCode = houseNum1;
+            this.prestazione.modality = modality; 
         }
 	}
     public class HDT_WS_HerokuAddressSearchResponse extends HDT_WS_Response{
