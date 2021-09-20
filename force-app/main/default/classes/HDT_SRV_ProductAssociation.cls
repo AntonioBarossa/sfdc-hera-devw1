@@ -11,12 +11,15 @@ public inherited sharing class HDT_SRV_ProductAssociation {
             //    fieldSetList.add(String.valueOf(s.getFieldPath()));
             //}
 
-            fieldSetList.add('SBQQ__Number__c');
-            fieldSetList.add('SBQQ__Quantity__c');
-            fieldSetList.add('SBQQ__QuantityEditable__c');
-            fieldSetList.add('SBQQ__Selected__c');
-            fieldSetList.add('SBQQ__Feature__c');
+            //fieldSetList.add('SBQQ__Feature__c');
             fieldSetList.add('SBQQ__Type__c');
+            fieldSetList.add('SBQQ__Quantity__c');           
+            fieldSetList.add('SBQQ__MinQuantity__c');
+            fieldSetList.add('SBQQ__MaxQuantity__c');
+            fieldSetList.add('SBQQ__Discount__c');
+            fieldSetList.add('SBQQ__DiscountAmount__c');
+            fieldSetList.add('SBQQ__Selected__c');
+            fieldSetList.add('SBQQ__QuantityEditable__c');
 
         } catch(Exception ex){
             System.debug('>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');
@@ -102,9 +105,27 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
         AggregateResult[] results = HDT_QR_ProductAssociation.getCountFromProductOption(recordList);
         Map<String, Integer> optionIdToNumber;
+        List<Product2> prod2list;
+        List<SBQQ__ProductFeature__c> productFeatureList;
+        Map<Id, Id> skuIdFeatureIdMap;
 
         if(results.size()>0){
             optionIdToNumber = HDT_UTL_ProductAssociation.createNumberProductOptionMap(results);
+        }
+
+        System.debug('>>> OptionalSKU ' + productOptionToClone.SBQQ__OptionalSKU__c);
+
+        prod2list = HDT_QR_ProductAssociation.getProductOption2recordBySkuId(prod2list, productOptionToClone.SBQQ__OptionalSKU__c);
+
+        System.debug('>>> prod2listsize ' + prod2list.size());
+        System.debug('>>> family ' + prod2list[0].Family);
+
+        skuIdFeatureIdMap = new Map<Id, Id>();
+
+        if(prod2list != null && prod2list.size() > 0){
+            productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
+            System.debug('>>> productFeatureList ' + productFeatureList.size());
+            skuIdFeatureIdMap = HDT_UTL_ProductAssociation.generateSkuIdFeatureIdMap(productFeatureList, skuIdFeatureIdMap);
         }
 
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
@@ -120,6 +141,10 @@ public inherited sharing class HDT_SRV_ProductAssociation {
                     newRecord.SBQQ__Number__c = optionIdToNumber.get(productId) + 1;
                 } else {
                     newRecord.SBQQ__Number__c = 1;
+                }
+
+                if(skuIdFeatureIdMap.containsKey(productId)){
+                    newRecord.SBQQ__Feature__c = skuIdFeatureIdMap.get(productId);
                 }
 
                 productOptionList.add(newRecord);

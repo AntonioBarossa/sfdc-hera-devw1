@@ -31,6 +31,18 @@ public class HDT_ProductAssociationTst {
 
         insert productList;
 
+        List<SBQQ__ProductFeature__c> featureList = new List<SBQQ__ProductFeature__c>();
+
+        for(Product2 p : productList){
+            SBQQ__ProductFeature__c feature = new SBQQ__ProductFeature__c();
+            feature.Name = 'Punto Fornitura';
+            feature.SBQQ__ConfiguredSKU__c = p.Id;
+            feature.SBQQ__Number__c = 1;
+            featureList.add(feature);
+        }
+
+        insert featureList;
+
     }
 
     @isTest

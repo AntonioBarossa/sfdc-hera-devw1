@@ -68,6 +68,30 @@ public inherited sharing class HDT_QR_ProductAssociation {
         return [SELECT Id FROM CUstomNotificationType LIMIT 1].Id;
     }
 
+    public static List<SBQQ__ProductFeature__c> productFeatureListByFamily(List<SBQQ__ProductFeature__c> productFeatureList, List<String> configSkuList, String familyName){
+        productFeatureList = new List<SBQQ__ProductFeature__c>();
+        productFeatureList = [
+            SELECT Id, Name, SBQQ__ConfiguredSKU__c
+            FROM SBQQ__ProductFeature__c
+            WHERE SBQQ__ConfiguredSKU__c IN :configSkuList
+            AND Name = :familyName
+            WITH SECURITY_ENFORCED
+        ];
+        return productFeatureList;
+    }
+
+    public static List<Product2> getProductOption2recordBySkuId(List<Product2> prod2list, Id confSkuId){
+        prod2list = new List<Product2>();
+        prod2list = [
+            SELECT Id, Family
+            FROM Product2
+            WHERE Id = :confSkuId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+        return prod2list;
+    }
+
     //public static void getJobStatus(){
     //    AsyncApexJob job = [SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors FROM AsyncApexJob WHERE ID = '' ];
     //}

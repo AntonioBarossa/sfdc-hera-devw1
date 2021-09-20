@@ -212,6 +212,13 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
     }
 
+    public static Map<Id, Id> generateSkuIdFeatureIdMap(List<SBQQ__ProductFeature__c> productFeatureList, Map<Id, Id> skuIdFeatureIdMap){
+        for(SBQQ__ProductFeature__c productFeature : productFeatureList){
+            skuIdFeatureIdMap.put(productFeature.SBQQ__ConfiguredSKU__c, productFeature.Id);
+        }
+        return skuIdFeatureIdMap;
+    }
+
     public static List<String> getFamilyList(){
         List<String> sl = new List<String>();
         sl.add('Offerta commerciale');

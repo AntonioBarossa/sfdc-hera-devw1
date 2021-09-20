@@ -66,10 +66,11 @@ export default class HdtProductOptionEditForm extends LightningElement {
 
     handleSubmit(event){
       console.log('>>>> handleSubmit ');
-      //event.preventDefault();
-      //let fields = event.detail.fields; 
+      event.preventDefault();
+      let fields = event.detail.fields; 
       //console.log(JSON.stringify(fields));
-      //this.template.querySelector('lightning-record-edit-form').submit(fields);
+      fields.SBQQ__Number__c = 1;
+      this.template.querySelector('lightning-record-edit-form').submit(fields);
     }
 
     handleSuccess(event) {
