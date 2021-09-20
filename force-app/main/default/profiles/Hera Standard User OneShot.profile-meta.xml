@@ -7783,6 +7783,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ContactPointPhone.TelephoneNumberCertificationsContacts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ContactPointTypeConsent.DataUsePurposeId</field>
         <readable>true</readable>
