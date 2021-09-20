@@ -62,7 +62,7 @@ public class HDT_WS_HerokuAddressSearch {
             this.prestazione = new HDT_WS_PrestazioneReqObjVerMassive();
             this.prestazione.city1 = city1;
             this.prestazione.street = street;
-            this.prestazione.streetCode = houseNum1;
+            this.prestazione.houseNum1 = houseNum1;
             this.prestazione.modality = 'M'; 
         }
 	}
@@ -111,9 +111,9 @@ public class HDT_WS_HerokuAddressSearch {
         public String street {get;set;}
         public String houseNum1 {get;set;}
         public String modality {get;set;}
-        public String cityCode {get;set;}
-        public String streetCode {get;set;}
-        public String houseNumCode {get;set;}       
+      //  public String cityCode {get;set;}
+     //   public String streetCode {get;set;}
+      //  public String houseNumCode {get;set;}       
     }
     
     

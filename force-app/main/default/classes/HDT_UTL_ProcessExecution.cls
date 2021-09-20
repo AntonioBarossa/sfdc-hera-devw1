@@ -102,7 +102,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public  HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse verifyAccountAddress(){
         HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
             currentProcess.currentAccount.BillingCity,
-            currentProcess.currentAccount.BillingStreet,
+            currentProcess.currentAccount.BillingStreetName__c,
             currentProcess.currentAccount.BillingStreetNumber__c
         );
         return resp;
