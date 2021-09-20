@@ -8,6 +8,8 @@ import USER_ID from '@salesforce/user/Id';
 export default class HdtCreateCampaign extends LightningElement {
     @api recordId;
     objectApiName = 'Campaign';
+    reqEndDate=false;
+    requiredShippingMethods=false;  // Start HRAWRM-621 16/09/2021
     @track reitekFieldRequired = false;
     @track startDateFieldRequired = false;
     @track easyRequired=false;
@@ -90,6 +92,8 @@ export default class HdtCreateCampaign extends LightningElement {
         let campReq = this.template.querySelector("lightning-input-field[data-id=req]").value
         console.log('campReq' +campReq);
         this.reqPrioritycheck(campReq);
+        this.checkRequiredShippingMethods(categoryField,channelField,this.statusField);  // Start HRAWRM-621 16/09/2021
+        this.checkEndDateMethods(categoryField,this.statusField); // Start HRAWRM-625
         if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
             this.easyRequired=true;
         }
@@ -152,7 +156,29 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignMemberAssignmentRequired = false;
         }
     }
-
+    // Start HRAWRM-621 16/09/2021
+    checkRequiredShippingMethods(category,channel,status){
+        console.log('category: '+category);
+        console.log('channel: '+channel);
+        console.log('status: '+status);
+        if ( category == 'Campagna Outbound' && channel=='Cartaceo' && status!='Bozza') {
+            this.requiredShippingMethods=true;
+        }
+        else{
+            this.requiredShippingMethods=false;
+        }
+        console.log('requiredShippingMethods:'+this.requiredShippingMethods);
+    }
+    // End HRAWRM-621 16/09/2021
+    checkEndDateMethods(category,status){
+        if ( category == 'Campagna Contenitore' && status!='Bozza') {
+            this.reqEndDate=true;
+        }
+        else{
+            this.reqEndDate=false;
+        }
+        console.log('reqEndDate:'+this.reqEndDate);
+    }
     handleChangeProcessType(event){
         let processType = event.detail.value;
         let categoryField = this.template.querySelector('.categoryField > lightning-input-field') != null ? this.template.querySelector('.categoryField > lightning-input-field').value : '';
@@ -174,7 +200,8 @@ export default class HdtCreateCampaign extends LightningElement {
             this.campaignCommercialCodeFields = (event.detail.value === 'Bolletta' || this.template.querySelector('.categoryField > lightning-input-field').value === 'Campagna Marketing Cloud' || this.template.querySelector('.categoryField > lightning-input-field').value === 'Campagna CRM') ? true : false;
         }
         this.paperCampaignFields = event.detail.value.includes('Cartaceo') ? true : false;
-
+        let categoryField=this.template.querySelector('.categoryField > lightning-input-field').value
+        this.checkRequiredShippingMethods(categoryField,event.detail.value,this.statusField);  // Start HRAWRM-621 16/09/2021
         //reset fields
 
     }

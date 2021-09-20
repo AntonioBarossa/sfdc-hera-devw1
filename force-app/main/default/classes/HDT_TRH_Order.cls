@@ -32,6 +32,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         
     }
     public override void afterUpdate() {
+        HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
         //Execute creation Activities 
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkSaveActivityContext(null);
@@ -42,7 +43,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
 
-        HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
+        // HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
 
         //Handle 'Plico validato Firmato' case for Order Dossier
         HDT_UTL_OrderProcess.orderPhaseManagementAfterUpdate(trigger.new,trigger.old);
@@ -54,6 +55,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         // START @Picchiri Credit Check 04.06.21
         HDT_UTL_OrderProcess.creditCheckManager2(trigger.newMap,trigger.oldMap);
         // END @Picchiri Credit Check 04.06.21
+
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
     }
 
     //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Orders at a time.

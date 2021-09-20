@@ -343,15 +343,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 logicFields += ','+currString;
             }
 			//END>>>modifica modifica marco.arci@webresults.it
+            system.debug('logicFields: '+logicFields);
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
-                //system.debug('logicFields: '+logicFields);
                 String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
-                //system.debug('queryString: '+queryString);
+                system.debug('queryString: '+queryString);
                 List<Case> parentCase = Database.query(queryString);
                 if(!parentCase.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
                         if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
-                            && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)))){
+                            && String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
                             outcome = true;
                             break;
                         }
@@ -360,11 +360,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
+                system.debug('queryString: '+queryString);
                 List<Order> parentOrder = Database.query(queryString);
                 if(!parentOrder.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
                         if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
-                            && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)))){
+                            && String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
                             outcome = true;
                             break;
                         }
