@@ -2139,4 +2139,78 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return visitAssigRulesList;
 	}
+
+	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
+
+		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
+
+			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
+			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.TotalRequest__c = 2;
+			massiveLoaderRequest.RequestOK__c = 2;
+			massiveLoaderRequest.RequestKO__c = 0;
+			massiveLoaderRequest.Phase__c = 'File in elaborazione';
+			massiveLoaderRequest.Priority__c = 1;
+
+
+			massiveLoaderRequestList.add(massiveLoaderRequest);
+		}
+
+		if (doInsert){
+
+			insert massiveLoaderRequestList;
+		}
+
+		return massiveLoaderRequestList;
+
+	}
+
+	public static List<BlackList__c> createBlacklist (Integer amount, Boolean doInsert) {
+
+		List<BlackList__c> blacklistList = new List<BlackList__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BlackList__c blacklist = new BlackList__c(
+				Name='testBlacklist',
+				Domain__c='testDomain',
+				Pod__c='testPOD'
+			);
+
+			blacklistList.add(blacklist);
+		}
+
+		if (doInsert){
+
+			insert blacklistList;
+		}
+
+		return blacklistList;
+	}
+
+	public static List<ComfortQualityCall__c> createComfortQualityCall (Integer amount, Boolean doInsert) {
+
+		List<ComfortQualityCall__c> comfQualityCallList = new List<ComfortQualityCall__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ComfortQualityCall__c comQualityCall = new ComfortQualityCall__c(
+				ComfortDocSendingChannel__c='Posta Cartacea'
+			);
+
+			comfQualityCallList.add(comQualityCall);
+		}
+
+		if (doInsert){
+
+			insert comfQualityCallList;
+		}
+
+		return comfQualityCallList;
+	}
+
 }
