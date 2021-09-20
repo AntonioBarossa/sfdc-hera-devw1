@@ -1,6 +1,8 @@
 <template>
 
-    <c-hdt-pdf-viewer-handler ></c-hdt-pdf-viewer-handler>
+    <c-hdt-pdf-viewer-handler
+        ondownloadcomplete={closeMainSpinner}
+    ></c-hdt-pdf-viewer-handler>
 
     <template if:true={showAcctStmt} >
         <c-hdt-acct-stmt-type-choise
