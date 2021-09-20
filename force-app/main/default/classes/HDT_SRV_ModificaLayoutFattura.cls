@@ -54,7 +54,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         if(response != null){
             currentCase = manageResponse(response, recordId);
         }else{
-            currentCase.Phase__c = 'Errore Lavorazione SAP';
+            currentCase.TecnicalPhase__c = 'Errore Lavorazione SAP';
         }
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
@@ -73,7 +73,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
      
     }
 
-
+    /*
     private static HDT_WRP_GenericSapIntegration submitRequest(Id recordId){
 
         HDT_UTL_SapIntegrationInterface support = HDT_UTL_SapIntegrationAdapterFactory.getInstance('HDT_WS_GenericSapIntegrationAdapter');
@@ -89,6 +89,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         }
         return sapIntegration;
     }
+    */
 
     private static Case manageResponse(HttpResponse response, String caseId){
         Case caseToUpdate = new Case();
@@ -97,13 +98,13 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         if(responseBody.data != null){
 
             if(responseBody.data.attivita == 'Esito OK da SAP'){
-                caseToUpdate.Phase__c = 'Completata';
+                caseToUpdate.TecnicalPhase__c = 'Completata';
             } else {
-                caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+                caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
             }
 
         } else {
-            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+            caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
         }
         return caseToUpdate;
     }

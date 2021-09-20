@@ -6,10 +6,10 @@
             <div class="slds-grid">
                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                     <lightning-input-field field-name="Name" class="slds-hide nameField"></lightning-input-field>
-                    <lightning-input-field field-name="LetterType__c" class="obb" required="true"></lightning-input-field>
+                    <lightning-input-field field-name="LetterType__c" class="obb" required={reqrec}></lightning-input-field>
                 </div>
                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                    <lightning-input-field field-name="CostCenter__c" class="obb" required="true"></lightning-input-field>
+                    <lightning-input-field field-name="CostCenter__c" class="obb" required={reqrec}></lightning-input-field>
                 </div>
             </div>
             <div class="slds-grid">
@@ -25,7 +25,7 @@
                     <lightning-input-field field-name="Aggregation__c"></lightning-input-field>
                 </div>
                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                    <lightning-input-field field-name="ShippingMode__c"></lightning-input-field>
+                    <lightning-input-field field-name="ShippingMode__c" class="obb" required={reqrec}></lightning-input-field>
                 </div>
             </div>
             <div class="slds-grid">

@@ -1,3 +1,9 @@
+ /**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 04/06/21
+* @description HDT_TRH_User
+* @history Sabina Levonja – 04/06/21 – created class
+*/
 public inherited sharing class HDT_TRH_User extends HDT_TRH_TriggerHandler{
 
     public static HDT_QR_Contact contactQr= new HDT_QR_Contact();

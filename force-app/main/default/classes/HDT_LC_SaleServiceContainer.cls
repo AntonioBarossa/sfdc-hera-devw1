@@ -50,8 +50,8 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         Map<String,String> extraParams = new Map<String,String>();
 
         if (hasUsoEnergiaChangedForEle(sale.Account__c, servicePoint, oldServicePoint)) {
-            List<SaleServiceItem__c> linkedContracts = saleServiceItemQr.getRecordsWithContractsByServicePointAndAccount(servicePoint.Id, sale.Account__c);
-            String contractReference = linkedContracts[0].Quote__r.ContractReference__c;
+            List<Contract> linkedContracts = contractQr.getRecordsWithContractsByServicePointAndAccountId(servicePoint.Id, sale.Account__c);
+            String contractReference = linkedContracts[0].id;
             extraParams.put('AllowChangeUse__c', 'true');
             extraParams.put('contractReference', contractReference);
         }

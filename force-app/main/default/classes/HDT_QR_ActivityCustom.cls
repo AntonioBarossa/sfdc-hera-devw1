@@ -46,6 +46,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             status__c,
             wrts_prcgvr__Status__c,
             order__c,
+            order__r.ServicePoint__r.CommoditySector__c,
             order__r.FacilitationExcise__c,
             order__r.VATfacilitationFlag__c,
             Contact__c,
@@ -54,7 +55,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
             ageing__c, 
             isDenominazioneIncongruente__c,
             isIva10Module__c, 
-            isIvaActivityCode__c, 
+            isIvaActivityCode__c,
+            isAcciseContractualPower__c,
+            isAcciseExclusionType__c,
+            isAcciseCopyTechnicalRelation__c, 
+            isAcciseExclusionModuleAccise__c,
             isIvaAnagrafici__c, 
             isIvaAtecoCode__c, 
             isIvaCopyDocument__c, 
@@ -112,6 +117,20 @@ public inherited sharing class HDT_QR_ActivityCustom {
             wrts_prcgvr__status__c
             FROM wrts_prcgvr__Activity__c
             WHERE Case__c= :caseId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public static List<wrts_prcgvr__Activity__c> getRecordByOrderIdAndType(String orderId,String type) {
+        return [
+            SELECT
+            
+            Id,
+            Approved__c,
+            Name,
+            wrts_prcgvr__status__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Order__c= :orderId
+            AND type__c = :type
             WITH SECURITY_ENFORCED
         ];
     }

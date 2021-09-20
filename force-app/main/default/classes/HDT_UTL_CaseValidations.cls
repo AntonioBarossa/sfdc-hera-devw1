@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
                 result = validateModificaDatiContatto(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
-                result = validateModificaDatiRecapito(fields);
+                result = validateModificaDatiRecapito(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Modifica Dati Fiscali') {
                 result = validateModificaDatiFiscali(fields, currentCase);
             } else if (currentCase.Subprocess__c == 'Variazione Gruppo IVA') {
@@ -69,7 +69,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Unificazione/Separazione BP-CA-Bolletta') {
 
-            result = validateUnificazioneSeparazione(fields);
+            result = validateUnificazioneSeparazione(fields, currentCase);
 
         }else if(caseType == 'Votive Modena Contestazione Fattura' || caseType.equalsIgnoreCase('Spostamento Votive Modena')){
 
@@ -196,23 +196,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
         
         
-        } else if(caseType == 'Variazione Domiciliazione'){
-            
-            BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
-            String reason = getFieldValue(fields, 'Reason__c');
-
-
-            if(billingProfile.PaymentMethod__c != 'RID' && !(reason.equalsIgnoreCase('Domiciliazione non attiva'))){
-                
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Billing Profile non domiciliati è possibile inseire soltanto \'Domiciliazione Non Attiva\''));
-
-            }else{
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
-            }
-        
-        
         }else if (caseType == 'Blocco Sollecito/Interessi'){
 
             String blockType = getFieldValue(fields, 'BlockType__c');
@@ -246,7 +229,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
         }else if(caseType == 'Richiesta Domiciliazione' || caseType == 'Attivazione Click&Pay' || caseType == 'Variazione Domiciliazione')
         {
-            string fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
+            String fiscalCode =  getFieldValue(fields, 'BankAccountSignatoryFiscalCode__c');
+            String beneficiaryType = getFieldValue(fields, 'AccountholderTypeBeneficiary__c');
+            BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
+            String reason = getFieldValue(fields, 'Reason__c');
+            if(billingProfile.PaymentMethod__c != 'RID' && reason != null && !(reason.equalsIgnoreCase('Domiciliazione non attiva')) && caseType == 'Variazione Domiciliazione'){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Billing Profile non domiciliati è possibile inseire soltanto \'Domiciliazione Non Attiva\''));
+            }
             if(!String.isEmpty(fiscalCode)){
                 string outcome = validateFiscalCode(fiscalCode);
                 if(!String.isEmpty(outcome))
@@ -257,13 +246,43 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                 }
-            } else {
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }
-        }else{
-
+            else if(!String.isEmpty(beneficiaryType))
+            {
+                System.debug('Payments_BeneficiaryType ' + beneficiaryType);
+                System.debug('Payments_ClientCategory ' + currentCase.ClientCategory__c);
+                if(beneficiaryType.equalsIgnoreCase('Rappresentante Legale') && 
+                    (currentCase.ClientCategory__c.equalsIgnoreCase('Famiglie')
+                    || currentCase.ClientCategory__c.equalsIgnoreCase('Parti Comuni')
+                    || currentCase.ClientCategory__c.equalsIgnoreCase('Ditta Individuale')
+                    )
+                )
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare la tipologia \"'
+                    + beneficiaryType +'\" per la categoria \"'
+                    + currentCase.ClientCategory__c+'\"'));
+                }
+                else if(beneficiaryType.equalsIgnoreCase('Stesso Sottoscrittore') 
+                && !currentCase.ClientCategory__c.equalsIgnoreCase('Famiglie')
+                && !currentCase.ClientCategory__c.equalsIgnoreCase('Parti Comuni')
+                && !currentCase.ClientCategory__c.equalsIgnoreCase('Ditta Individuale')
+                )
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare la tipologia \"'
+                    + beneficiaryType +'\" per la categoria \"'
+                    + currentCase.ClientCategory__c+'\"'));
+                //STESSO SOTTOSCRITTORE  per non famiglie, Parti Comuni o ditta individuale
+                //Rappresentante Legale per Famiglie, Parti Comuni o ditta individuale
+                } else {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                }
+            }else{
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
+            }
+        }
+        else
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
         }
 
         return result;
@@ -387,7 +406,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    private String validateModificaDatiRecapito(String fields) {
+    private String validateModificaDatiRecapito(String fields, Case currentCase) {
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         String modInvioBolletta = getFieldValue(fields, 'BillSendingMethod__c');
@@ -412,6 +431,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             electronicInvoicing.certifiedEmail = pecFatturazioneElettronica;
             electronicInvoicing.officeCode = codiceUfficio;
             electronicInvoicing.xmlType = tipoXml;
+            electronicInvoicing.accountRecordTypeName = currentCase.Account.RecordType.DeveloperName;
 
             String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
             if (!String.isEmpty(electronicInvoicingError)) {
@@ -917,9 +937,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     // Validazione campi Billing Profile per processo Unificazione/Separazione CA
-    private String validateUnificazioneSeparazione(String fields) {
+    private String validateUnificazioneSeparazione(String fields, Case currentCase) {
 
-        return validateModificaDatiRecapito(fields);
+        return validateModificaDatiRecapito(fields, currentCase);
 
     }
 

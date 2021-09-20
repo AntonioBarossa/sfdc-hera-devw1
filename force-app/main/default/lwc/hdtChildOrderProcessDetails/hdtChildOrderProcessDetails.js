@@ -3,10 +3,10 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
 //INIZIO SVILUPPI EVERIS
 import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
+import init from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.init';
 import { getRecord, getFieldValue, updateRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
-import sendAdvanceDocumentation from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendAdvanceDocumentation';
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 import EFFECTIVE_DATE from '@salesforce/schema/Order.EffectiveDate__c';
 //FINE SVILUPPI EVERIS
@@ -64,6 +64,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
+    userProfile;
     get orderWithData(){
         return { ...this.order, ...this.sectionDataToSubmit };
     }
@@ -694,8 +695,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
             else{
-                if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
-                    let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
+                //if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true || this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                   /* let vatFacilitation = this.template.querySelector("[data-id='VATfacilitationFlag__c']");
                     let exciseFacilitation = this.template.querySelector("[data-id='FacilitationExcise__c']");
                     createActivityAccise({
                         flagAccise : this.template.querySelector("[data-id='FacilitationExcise__c']") === true,
@@ -711,8 +712,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         mode: 'sticky'
                         });
                         this.dispatchEvent(toastErrorMessageIvaAccise);
-                    });
-                }
+                    });*/
+                //}
             }
         }
         if(currentSectionName === 'fatturazione') {
@@ -813,7 +814,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 recordId: this.order.ServicePoint__c !== undefined ? this.order.ServicePoint__r.Account__c : '',
                 diffObjApi: 'Order',
                 diffRecordId: this.order.Id,
-                processVisibility: this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.Account__c !== this.order.AccountId && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'),
+                //@frpanico 17/09/21 added "Voltura con Switch" condition
+                processVisibility: this.order.ServicePoint__c !== undefined 
+                    && this.order.ServicePoint__r.Account__c !== this.order.AccountId 
+                    && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                    || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
+                    || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0)),
                 data: [
                     //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
@@ -853,14 +859,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 readingButton:true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
+                //@frpanico 17/09/21 added "Voltura con Switch" condition
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0),
                 data:[
                     //@frpanico 09/09/21 utilizzato oggetto per snellire il codice dove possibile
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
                     new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
-                    new fieldData('','NotRegisteredMeterCase__c',this.typeVisibility('both'),false,false,'',''),
+                    new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
@@ -1034,7 +1042,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Recapito telefonico',
                     'apiname': 'DisconnectibilityPhone__c', //3
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': false, // 24/08/2021 
+                    'required': false,  // 24/08/2021  richiesto false 
                     //'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', // 24/08/2021 richiesto durante i test
                     'disabled': true,
                     'value': '',
@@ -1200,7 +1208,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Recapito telefonico',
                     'apiname': 'PhoneNumber__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
+                    'required': true,// 20/09/2021 richiesto true
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
@@ -1310,15 +1318,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
                     true, true, '',''
                 ),
-                {
-                    'label': 'Tipo Apparechiatura',
-                    'apiname': 'MeterType__c',
-                    'typeVisibility': this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt') ,
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
                 {
                     'label': 'Tipo Voltura',
                     'apiname': 'VoltureType__c',
@@ -1839,7 +1838,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'VATfacilitationFlag__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -1848,7 +1847,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'apiname': 'FacilitationExcise__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.Channel__c === 'Teleselling Inbound' || this.order.Channel__c === 'Teleselling Outbound' || this.order.Channel__c === 'Telefono',
                         'value': '',
                         'processVisibility': ''
                     },
@@ -2052,7 +2051,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dateOrdine',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta') && this.order.ParentOrder__r.ContractSigned__c,
+                // HRAWRM-461 15-09
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && this.order.ParentOrder__r.ContractSigned__c == true,
                 data: [
                     {
                         'label': 'Data Firma',
@@ -2234,10 +2234,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     
-    connectedCallback(){
+    async connectedCallback(){
         //EVERIS
         console.log('Details Callback Start');
         //EVERIS
+
+        let initData = await init();
+        console.log('initData: ' + JSON.stringify(initData));
+
+        this.userProfile = initData.userProfile;
 
         this.title = 'Processo di ' + this.order.RecordType.Name;
         this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
@@ -2258,8 +2263,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
        //EVERIS
+       //@frpanico 17/09/2021 added "Voltura Con Switch" condition
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
+            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
+            || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
             console.log('IsVolture--> '+this.isVolture);
             console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
             console.log('Details Callback End');
@@ -2296,32 +2303,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }else{
             tipoDoc = 'MODULISTICA_B12';
         }
-        var formParams = {     
-            mode : 'Print',
-            Archiviato : 'Y',
-            TipoPlico:tipoDoc,
-            sendMode:'Sportello'
-        };
-        sendAdvanceDocumentation({
-            recordId: this.order.Id,
-            context: 'DocumentazioneAnticipata',
-            formParams: JSON.stringify(formParams)
-        }).then(result => {
-            const event = new ShowToastEvent({
-                title: 'Successo',
-                message: 'Documentazione inviata',
-                variant: 'success',
-            });
-            this.dispatchEvent(event);
-        }).catch(error => {
-            const event = new ShowToastEvent({
-                title: 'Attenzione',
-                message: 'Non è stato possibile inviare la documentazione al cliente',
-                variant: 'error',
-            });
-            this.dispatchEvent(event);
-            console.error(error);
-        });
+
+        this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
+        this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
+
+
     }
 
     retryEsitiCreditCheck(){        
