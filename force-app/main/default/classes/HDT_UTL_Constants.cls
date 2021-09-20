@@ -230,6 +230,18 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final string USERROLE_DEVELOPERNAME_BACKOFFICE = 'HDT_BackOffice';
 
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_FRONTOFFICE_AAAEBT = 'HDT_FrontOffice_AAAEBT';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_FRONTOFFICE_MMS = 'HDT_FrontOffice_MMS';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_FRONTOFFICE_RESELLER = 'HDT_FrontOffice_Reseller';
+
     //Other
     @AuraEnabled
     public final string QUOTE_PROFILEFIELD_SALESFORCECPQADMIN = 'Amministratore CPQ';
