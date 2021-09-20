@@ -20,9 +20,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     public static Map<String,Object> init(String Id){
         Map<String,Object> result = new Map<String,Object>();
 
-        List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+        User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
 
-        result.put('userProfile', user[0].Profile.Name);
+        result.put('loginChannel', user.LoginChannel__c);
 
         return result;
     }
