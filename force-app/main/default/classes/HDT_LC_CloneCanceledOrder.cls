@@ -5,7 +5,7 @@
  * @last modified on  : 2021-08-02
  * @last modified by  : gabriele.rota@webresults.it
 **/
-public without sharing class HDT_LC_CloneCanceledOrder {
+public inherited sharing class HDT_LC_CloneCanceledOrder {
 
     private static final String CLONE_PERMISSION = 'HDT_CP_CloneCanceledOrder';
     private static final Integer CANCELLATION_EXPIRE_DAYS = 60;
