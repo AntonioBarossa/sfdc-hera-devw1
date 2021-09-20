@@ -39,7 +39,7 @@ public class HDT_WS_HTTPServiceCall {
             System.debug('************ERROR SEND Request');
             System.debug('************:' + e.getMessage());
         }
-		System.debug('***********:response:' + r);
+		//System.debug('***********:response:' + r);
         return resp;
         
     }

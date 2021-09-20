@@ -154,7 +154,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             System.debug('Partita iva : '+currentProcess.currentAccount.VATNumber__c);
             System.debug('BillingIsAddressVerified__c : '+currentProcess.currentAccount.BillingIsAddressVerified__c);
             System.debug('IsWrongFiscalData__c : '+currentProcess.currentAccount.IsWrongFiscalData__c);
-            verifyAccountAddress();
+            //verifyAccountAddress();
             System.debug('vf Address '+   verifyAccountAddress());
             insert currentProcess.currentAccount;
             currentProcess.currentPrimaryContact.AccountId=currentProcess.currentAccount.id;
