@@ -7,4 +7,5 @@
     <label>Modulo da inviare</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
+    
 </CustomField>
