@@ -79,7 +79,9 @@ public with sharing class HDT_SRV_EmailMessageTst {
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail', 'Bozza', rt, 'HDT_RT_Morosita');
         
+        
         //TESTING
+		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkEmailSender(emailList);
         
     }
@@ -112,6 +114,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta parere', 'Bozza', rt, 'HDT_RT_Morosita');
         
         //TESTING
+		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkEmailSender(emailList);
         
     }
@@ -119,6 +122,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
     
     
     //checkIncomingEmails
+    
     
     
 }
