@@ -28,7 +28,7 @@ public with sharing class HDT_UTL_CasePrivacyValidationsTst {
         myIndividual.MarketingPrivacy__c = 'Non espresso';
         myIndividual.ProfilingPrivacy__c = 'Non espresso';
         String recordId = myIndividual.Id;
-        String fields = JSON.serialize(myIndividualList);
+        String fields = JSON.serialize(myIndividual);
 
         //TESTING
         Test.startTest();
