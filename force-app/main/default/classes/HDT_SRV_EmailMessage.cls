@@ -2,6 +2,11 @@ public with sharing class HDT_SRV_EmailMessage {
     
     //DEBUG
     public static final String CLASS_NAME = 'HDT_SRV_EmailMessage';
+    
+    //DATA
+    public static final String TYPE_1 = 'Dichiarazione di intento';
+    public static final String TYPE_2 = 'Comunicazione di Fallimento';
+    public static final String TYPE_3 = 'Richiesta Parere';
 
     public HDT_SRV_EmailMessage() {
 
@@ -97,7 +102,7 @@ public with sharing class HDT_SRV_EmailMessage {
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName,Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         List<Case> caseList = (List<Case>) recordList;
         
@@ -118,14 +123,12 @@ public with sharing class HDT_SRV_EmailMessage {
             
             if(email.Incoming){
                 Case caseRecord = mapIdCase.get(email.ParentId);
-                System.debug(debugString + ' - case type: ' + caseRecord.Type);
+                System.debug(debugString + ' - Incoming Mail, case type: ' + caseRecord.Type);
                 
-                if(caseRecord.Type == 'Comunicazione di Fallimento'
-                || caseRecord.Type == 'Dichiarazione di intento'
-                || caseRecord.Type == 'Richiesta Parere'){
+                if(TYPE_1.equalsIgnoreCase(caseRecord.Type) || TYPE_2.equalsIgnoreCase(caseRecord.Type) || TYPE_3.equalsIgnoreCase(caseRecord.Type)){
                         caseRecord.Phase__c = 'Risposta Ricevuta';
                         //Gestione avanzamento ParentCase di Reclamo
-                        if(caseRecord.Type == 'Richiesta Parere'){
+                        if(TYPE_3.equals(caseRecord.Type)){
                             System.debug(debugString + ' - ### Inside Parere Condition ###');
                             caseRecord.Phase__c = 'Completata';
                             if(parentRecord != null){
@@ -140,12 +143,10 @@ public with sharing class HDT_SRV_EmailMessage {
                 
             } else {
                 Case caseRecord = mapIdCase.get(email.ParentId);
-                System.debug(debugString + ' - case type: ' + caseRecord.Type);
+                System.debug(debugString + ' - NOT incoming Mail, case type: ' + caseRecord.Type);
                 
-                if(caseRecord.Type == 'Comunicazione di Fallimento'
-                || caseRecord.Type == 'Dichiarazione di intento'
-                || caseRecord.Type == 'Richiesta Parere'){
-                    if(caseRecord.type == 'Richiesta Parere'){
+                if(TYPE_1.equalsIgnoreCase(caseRecord.Type) || TYPE_2.equalsIgnoreCase(caseRecord.Type) || TYPE_3.equalsIgnoreCase(caseRecord.Type)){
+                    if(TYPE_3.equalsIgnoreCase(caseRecord.Type)){
                         caseRecord.Phase__c = 'In attesa risposta parere';
                     } else {
                         caseRecord.Phase__c = 'In attesa risposta Mail';
