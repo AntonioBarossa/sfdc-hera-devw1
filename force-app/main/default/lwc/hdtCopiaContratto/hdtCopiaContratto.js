@@ -10,6 +10,15 @@ import confirmAction2 from '@salesforce/apex/HDT_LC_CopiaContratto.confirmAction
 import confirmAction2Draft from '@salesforce/apex/HDT_LC_CopiaContratto.confirmActionDraft';
 import getListRecords from '@salesforce/apex/HDT_LC_ContactSelection.getListRecords';
 
+class fieldData{
+    constructor(label, apiname, required, disabled, value) {
+        this.label = label;
+        this.apiname=apiname;
+        this.required=required;
+        this.disabled=disabled;
+        this.value=value;
+    }
+}
 export default class HdtCopiaContratto extends NavigationMixin(LightningElement){
     @api processtype;
     @api objectName = 'Case';
@@ -45,6 +54,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @api selectedOrder;
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
+    @track ordChild;
     @track selectedOperationType;
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
@@ -71,10 +81,35 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         {label: 'Order Number', fieldName: 'OrderNumber', type: 'text'},
         {label: 'Status', fieldName: 'Status', type: 'text'}        
     ];
-    @track columnsChild = [
-        {label: 'Order Number', fieldName: 'OrderNumber', type: 'text'},
-        {label: 'Status', fieldName: 'Status', type: 'text'}        
-    ];
+
+
+
+    get columnsChild(){
+        return [
+            ...this.columns, 
+            {label: 'Pod/Pdr', fieldName: 'ServicePointCode__c', type: 'text'}
+        ]
+    }
+    @track caseRecord;
+
+    @track mapFields = [{apiname:"CustomerName__c"}, {apiname:"CustomerLastName__c"}];
+
+    showSingleRow;
+
+    get isSendEmail(){
+        return this.selectedSend=="E-Mail";
+    }
+
+    get isCartacea(){
+        return this.selectedSend=="Posta Cartacea";
+    }
+
+    get selectedParentAsList(){
+        return [this.selectedOrder];
+    }
+    get selectedParentAsListRow(){
+        return [this.selectedOrder.Id];
+    }
 
     connectedCallback(){
         getActivity({caseId: this.recordid}).then(result => {
@@ -85,6 +120,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
             this.orderIdPre = result.c.Order__c;
             this.selectedSend = result.c.SendMode__c;
             this.selectedActivity = result.c.Channel__c;
+            this.caseRecord = {Id : this.recordid, AccountId : this.accountId};
             if(result.c.channel__c == 'Sportello'){
                 this.showButtonPreview = true;
                 this.isinboundchannel = false;
@@ -101,9 +137,42 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     }
 
+    get firstRowChild(){
+        console.log("sel row Child")
+        console.log(this.selectedrowchild?.length ? null : this.selectedrowchild[0])
+        if(!this.selectedrowchild?.length)  return null;
+        if(!this.selectedrowchild[0].Contact__r) this.selectedrowchild[0].Contact__r={Email : ""};
+        return this.selectedrowchild[0];
+    }
+
+    get isRec(){
+        return this.tipoCopia == "Copia della registrazione";
+    }
+
+    getMapFields(){
+        let mFields = new Map();
+        //    constructor(label, apiname, required, disabled, value) {
+        mFields.set("Copia contratto firmato",
+            [
+                new fieldData(null, "CustomerName__c" ),
+                new fieldData(null, "CustomerLastName__c" ),
+                new fieldData(null, "CustomerFiscalCode__c" ),
+                new fieldData(null, "CustomerVATNumber__c" )
+                
+            ]
+        )
+        this.mapFields = mFields.get(this.tipoCopia);
+    }
+
+    get isFirmato(){
+        return this.tipoCopia == "Copia contratto firmato";
+    }
+
     changeValueTipo(event){
         this.tipoCopia = event.detail.value;
+        //this.getMapFields();
         console.log('*****:' + event.detail.value);
+        this.selectedOrder = null;
         this.showParentList = false;
         this.showChildList2 = false;
         this.showChildList = false;
@@ -128,11 +197,34 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
         this.selectedSend = event.detail.value;
     }
 
+
+    catchFieldsToSave(Case){
+
+        this.template.querySelectorAll("lightning-input-field")?.forEach(elem=>{
+            if(elem.getAttribute("data-id")!=null){
+                Case[elem.getAttribute("data-id")]= elem.value;
+            }
+        });
+        console.log(Case);
+        let address = this.getAddress();
+        if(address){
+            this.saveAddress(address, Case);
+        }
+        return Case;
+    }
+
     selectedRowHandler(event){
         console.log('********:' + JSON.stringify(event.detail.selectedRows));
         this.selectedOrder = event.detail.selectedRows[0];
+        this.showSingleRow=true;
+        if(!this.selectedOrder){
+            this.showChildList = false;
+            this.selectedOrderValue = null;
+            return;
+        }
 
         getChild({orderId : event.detail.selectedRows[0].Id}).then(response =>{
+            response.forEach(elem=>elem.ServicePointCode__c=elem?.ServicePoint__r?.ServicePointCode__c);
             this.orderChildList = response;
             this.showChildList = true;
             if(this.tipoCopia == 'Copia della registrazione'){
@@ -155,8 +247,10 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
 
     }
-    handlePreview(){
+    handlePreview(event){
         try{
+            let previewButton = event.target;
+            previewButton.disabled=true;
             
            // this.loading = true;
             var formParams = {
@@ -212,6 +306,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                     this.showMessage('Attenzione','Errore nella composizione del plico','error');
                 }
                // this.isPrintButtonDisabled = false;
+               previewButton.disabled=false;
             })
             .catch(error => {
                // this.loading = false;
@@ -223,6 +318,10 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
        // this.isPrintButtonDisabled = false;
     }
 
+    selectChild(event){
+        this.ordChild  = event.detail.selectedRows[0];
+    }
+
     getOrderParent(type){
         console.log('***ACC:' + this.accountId);
         getParent({accountId : this.accountId,tipo : type}).then(response =>{
@@ -230,7 +329,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 this.ordersList = response;
                 console.log('*****1:' +JSON.stringify(response));
                 this.showParentList = true;
-                for(var i=0; response.length; i++){
+                for(var i=0; i<response.length; i++){
                     console.log('*****2:' + this.orderIdPre);
                     console.log('*****22:' + response[i].Id);
                     if(this.orderIdPre == response[i].Id){
@@ -238,8 +337,10 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                         var lis = [];
                         lis.push(response[i].Id);
                         this.selectedOrderValue = lis;
+                        this.showSingleRow=true;
                         this.selectedOrder = response[i];
                         getChild({orderId : response[i].Id}).then(response =>{
+                            response.forEach(elem=>elem.ServicePointCode__c=elem?.ServicePoint__r?.ServicePointCode__c);
                             this.orderChildList = response;
                             this.showChildList = true;
                             if(this.tipoCopia == 'Copia della registrazione'){
@@ -279,6 +380,8 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     handleConfirm(){
 
+        console.log('*****:' + this.tipoCopia);
+        let Case = this.catchFieldsToSave({Id: this.recordid});
         if(this.tipoCopia != 'Copia della registrazione' && (this.selectedActivity === undefined ||  this.selectedActivity == null || this.selectedActivity == '' || (this.selectedActivity == 'Inbound' && (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ))){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
@@ -288,7 +391,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 this.dispatchEvent(event);
         }else{
                 confirmAction2({
-                    caseId : this.recordid,
+                    c : Case,
                     accountId : this.accountId,
                     orderParentId : this.selectedOrder.Id,
                     tipoAttivita : this.selectedActivity,
@@ -346,8 +449,9 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     handleConfirmDraft(){
 
         console.log('*****:' + this.tipoCopia);
+        let Case = this.catchFieldsToSave({Id: this.recordid});
         confirmAction2Draft({
-            caseId : this.recordid,
+            c : Case,
             accountId : this.accountId,
             orderParentId : this.selectedOrder.Id,
             tipoAttivita : this.selectedActivity,
@@ -366,6 +470,95 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                         this.dispatchEvent(closeclickedevt); 
         });
     
+    }
+
+
+    validateAddress(address) {
+        console.log('validateAddress START');
+        let errorMessages = [];
+        let concatAddressErrorFields = '';
+
+        //Validate address
+        if(!address['Indirizzo Estero']){
+            console.log('entra in if ind estero');
+            if (!address['Flag Verificato']) {
+                console.log('entra in flag verificato false ');
+                //this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
+                errorMessages.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
+            }
+        } else {
+            console.log('entra in else ind estero ');
+
+            if (address['Stato'] === undefined || address['Stato'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
+            }
+            if (address['Provincia'] === undefined || address['Provincia'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Provincia, ');
+            }
+            if (address['Comune'] === undefined || address['Comune'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Comune, ');
+            }
+            if (address['Via'] === undefined || address['Via'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Via, ');
+            }
+            if (address['Civico'] === undefined || address['Civico'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Civico, ');
+            }
+            if (address['CAP'] === undefined || address['CAP'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
+            }
+            if (concatAddressErrorFields !== '') {
+                errorMessages.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
+            }
+        }        
+
+        if (errorMessages.length==0) {
+            return {
+                isValid: true
+            };
+        }
+        else {
+            return {
+                isValid: false,
+                errorMessage: errorMessages.join("; ")
+            };
+        }
+    }
+
+    saveAddress(address, Case) {
+        let validity = this.validateAddress(address);
+        if (validity.isValid) {
+            this.populateCase(address, Case);
+        }
+        return validity;
+    }
+
+    populateCase(address, Case){
+        Case["InvoicingStreetName__c"] = address['Via'];
+        Case["InvoicingCity__c"] = address['Comune'];
+        Case["InvoicingPostalCode__c"] = address['CAP'];
+        Case["InvoicingCountry__c"] = address['Stato'];
+        Case["InvoicingProvince__c"] = address['Provincia'];
+        Case["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico'];
+        Case["InvoicingStreetNumber__c"] = address['Civico'];
+        Case["InvoicingPlace__c"] = address['Localita'];
+    }
+
+    getAddress() {
+        let address = this.template.querySelector('c-hdt-target-object-address-fields')?.handleAddressFields();
+        if (address?.['Stato']=='Italy' || address?.['Stato']=='Italia'){
+            address['Stato']=='ITALIA';
+        }
+        return address;
+    }
+
+    takeFormData(event){
+        if(event.target.fieldName !== undefined){
+            this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
+        }
+        if(event.target.name !== undefined){
+            this.sectionDataToSubmit[event.target.name] = event.target.value;
+        }
     }
 
     handleAnnull(){

@@ -29,13 +29,14 @@ public with sharing class HDT_LC_CopiaContratto {
     }
 
     @AuraEnabled
-    public static string confirmAction(String caseId,String accountId,String orderParentId,String tipoAttivita,String tipoFirma,String tipoSend){
+    public static string confirmAction(Case c,String accountId,String orderParentId,String tipoAttivita,String tipoFirma,String tipoSend){
         
         Id recTypeId= null;
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-        case c = new case();
+        //case c = new case();
         String res = '';
-        c.id = caseId;
+        String caseId = c.Id;
+        //c.id = caseId;
         c.CopyType__c = tipoFirma;
         c.Channel__c = tipoAttivita;
         c.sendmode__c = tipoSend; 
@@ -80,13 +81,13 @@ public with sharing class HDT_LC_CopiaContratto {
         return res;
     }
     @AuraEnabled
-    public static string confirmActionDraft(String caseId,String accountId,String orderParentId,String tipoAttivita,String tipoFirma,String tipoSend){
+    public static string confirmActionDraft(Case c,String accountId,String orderParentId,String tipoAttivita,String tipoFirma,String tipoSend){
         
         Id recTypeId= null;
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-        case c = new case();
+        //case c = new case();
         String res = '';
-        c.id = caseId;
+        //c.id = caseId;
         c.CopyType__c = tipoFirma;
         c.sendmode__c = tipoSend; 
         c.Channel__c = tipoAttivita;
