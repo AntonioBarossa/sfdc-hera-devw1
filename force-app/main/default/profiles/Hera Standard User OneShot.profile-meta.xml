@@ -29391,9 +29391,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__ActivityTemplate__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -34594,7 +34594,7 @@
         <name>EnableNotifications</name>
     </userPermissions>
     <userPermissions>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>

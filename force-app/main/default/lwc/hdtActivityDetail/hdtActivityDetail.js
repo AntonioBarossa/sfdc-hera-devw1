@@ -58,8 +58,8 @@ export default class HdtActivityDetail extends NavigationMixin(LightningElement)
             let activityObj = this.objectList.find(curObj => curObj.api == 'wrts_prcgvr__Activity__c');
             if(activityObj){
                 let tempList = this.objectList;
-                let firstObj = tempList[0];
-                tempList.push(firstObj);
+                //let firstObj = tempList[0];
+                //tempList.push(firstObj);
                 tempList.splice(tempList.indexOf(activityObj), 1);
                 tempList.splice(0, 0, activityObj);
                 this.objectList = tempList;
