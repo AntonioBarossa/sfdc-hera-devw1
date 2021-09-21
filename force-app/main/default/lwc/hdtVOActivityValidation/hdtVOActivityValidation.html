@@ -5,11 +5,11 @@
    <!-- <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>-->
     <lightning-layout>
         <lightning-layout-item padding="horizontal-large" size="12">
-            <lightning-record-edit-form record-id={recordid} object-api-name="wrts_prcgvr__Activity__c">
+            <lightning-record-edit-form record-id={recordId} object-api-name="wrts_prcgvr__Activity__c">
                 <div class="slds-grid slds-wrap slds-m-top_small">
-                    <lightning-input-field required onchange={handleDataCollection}
-                        class="slds-size_1-of-3" field-name="validation__c" data-id="validation__c" data-name="validation__c"
-                        variant="label-stacked"  value={channelValue}></lightning-input-field>
+                    <lightning-input-field required
+                        class="slds-size_1-of-3" field-name="Validation__c" data-id="Validation__c" data-name="Validation__c"
+                        variant="label-stacked" ></lightning-input-field>
                 </div>
             </lightning-record-edit-form>
         </lightning-layout-item>
