@@ -20,7 +20,7 @@ export default class HdtPaperCampaignFields extends LightningElement {
             }
         });
         console.log(notValid);
-        if (notValid.length > 0) {
+        if (notValid.length > 0 && this.reqrec==true) {
             let msg = "Completa tutti i campi obbligatori";
             this.dispatchEvent(new CustomEvent('erroroccurred', { detail: { msg } }));
         } else {
