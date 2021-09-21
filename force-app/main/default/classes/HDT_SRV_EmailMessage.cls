@@ -76,13 +76,13 @@ public with sharing class HDT_SRV_EmailMessage {
         HDT_QR_Case caseQr = new HDT_QR_Case();
         Map<Id,Case> mapIdCase = new Map<Id,Case>();
         List<Case> caseToUpdate = new List<Case>();
-        List<Case> caseList = (List<Case>) recordList;
         Case parentRecord = new Case();
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
         String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName,Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
+        List<Case> caseList = (List<Case>) recordList;
         
         try{
             parentRecord = caseQr.getParentCaseById(caseList[0].ParentId);
