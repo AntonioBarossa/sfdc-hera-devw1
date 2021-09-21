@@ -541,11 +541,6 @@
                 <label>In registrazione</label>
             </value>
             <value>
-                <fullName>Registrazione da validare</fullName>
-                <default>false</default>
-                <label>Registrazione da validare</label>
-            </value>
-            <value>
                 <fullName>Plico Firmato da validare</fullName>
                 <default>false</default>
                 <label>Plico Firmato da validare</label>

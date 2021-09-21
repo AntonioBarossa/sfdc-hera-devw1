@@ -205,13 +205,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 HDT_QR_Contract contractQr = new HDT_QR_Contract();
                 Order currentOrder = orderQr.getRecordById(order.Id);
                 Contract contractReference = new Contract();
-                try
+                if(currentOrder.ContractReference__c != null)
                 {
-                    contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
-                }
-                catch(Exception e)
-                {
-                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    try
+                    {
+                        contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                    }
+                    catch(Exception e)
+                    {
+                        System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    }
                 }
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
@@ -365,7 +368,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
             {
                 HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
-                exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                exciseTranscode = orderQr.getExciseTranscode(currentOrder.ExciseEle__c);
                 orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
             }
             //@frpanico RegionalAdditional Check
