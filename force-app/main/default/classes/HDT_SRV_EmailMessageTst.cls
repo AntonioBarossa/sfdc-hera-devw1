@@ -76,7 +76,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         
         List<EmailMessage> emailList = new List<EmailMessage>{m1};
         
-        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
+        Id rt = constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
         
         
@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         
         List<EmailMessage> emailList = new List<EmailMessage>{m1};
         
-        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
+        Id rt = constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta parere', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
         
         //TESTING
