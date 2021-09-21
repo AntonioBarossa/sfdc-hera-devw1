@@ -67,10 +67,11 @@ public with sharing class HDT_SRV_EmailMessageTst {
         
         Boolean caught = false;
         
-        //TODO: NON COMPRESA NATURA DI ADDERROR in porzione di codice in questione
-        //try{
-            HDT_SRV_EmailMessage.checkEmailSender(new List<EmailMessage>{m_fail});
-            /*
+        HDT_SRV_EmailMessage.checkEmailSender(new List<EmailMessage>{m_fail});
+        
+        try{
+            insert m_fail;
+            
         } catch (Exception e) {
             System.debug(debugString + ' - exception message: ' + e.getMessage());
             System.debug(debugString + ' - exception Type: ' + e.getTypeName());
@@ -78,10 +79,9 @@ public with sharing class HDT_SRV_EmailMessageTst {
             caught = true;
             
         }
-        */
         
         //ASSERTS
-        //System.assert(caught);
+        System.assert(caught);
         
         
         
