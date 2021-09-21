@@ -636,6 +636,7 @@ export default class HdtGeneralInfo extends LightningElement {
         let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
         if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
             this.channelValue = 'Sportello';
+            this.ChannelSelection = 'Sportello';
             this.channelDisabled = true;
             handleAutomaticAgentAssign ({Channel:'Sportello',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
@@ -658,6 +659,7 @@ export default class HdtGeneralInfo extends LightningElement {
         }
         else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound' || this.saleRecord.CreatedBy.LoginChannel__c == 'Teleselling ') {
             this.channelValue = 'Teleselling Outbound';
+            this.ChannelSelection = 'Teleselling Outbound';
             this.channelDisabled = true;
             handleAutomaticAgentAssign ({Channel:'Teleselling Outbound',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
@@ -680,6 +682,7 @@ export default class HdtGeneralInfo extends LightningElement {
         }
         else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound' || this.saleRecord.CreatedBy.LoginChannel__c == 'Teleselling ') {
             this.channelValue = 'Teleselling Inbound';
+            this.ChannelSelection = 'Teleselling Inbound';
             this.channelDisabled = true;
             handleAutomaticAgentAssign ({Channel:'Teleselling Inbound',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
