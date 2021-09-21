@@ -19,7 +19,7 @@
                 <field>DistributorNameFormula__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ServicePointCode__c</field>
             </layoutItems>
         </layoutColumns>
@@ -225,6 +225,13 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>CommercialProduct__c</fields><!--HRAWRM-251 17/09/2021 -->
+        <fields>SAPContractCode__c</fields><!--HRAWRM-251 17/09/2021 -->
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>Contract.ServicePoint__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
