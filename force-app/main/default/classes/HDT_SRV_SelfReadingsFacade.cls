@@ -6,7 +6,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
         Map<String,Object> arg = new Map<String,Object>();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        String method = (String) argsMap.get('method');
+        String method = (String) argsMap.get('method');//NOTA: PARAMETRO NON UTILIZZATO
         SObject obj = (SObject) argsMap.get('sender');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
@@ -47,7 +47,7 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
         return response;
     }
 
-    private static HDT_WRP_GenericSapIntegration submitRequest(String recordId,String requestType) {
+    private static HDT_WRP_GenericSapIntegration submitRequest(String recordId, String requestType) {
        
         HDT_UTL_SapIntegrationInterface support = HDT_UTL_SapIntegrationAdapterFactory.getInstance('HDT_WS_SelfReadingsIntegrationAdapter');
         HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
