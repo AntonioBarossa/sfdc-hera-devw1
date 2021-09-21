@@ -4,9 +4,31 @@
     <description>Campo dell&apos;oggetto padre da utilizzare per il controllo sulla causale di annullamento</description>
     <externalId>false</externalId>
     <label>Campo controllante</label>
-    <length>255</length>
     <required>true</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>ParentObject__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>DiscardDescription__c</fullName>
+                <default>false</default>
+                <label>DiscardDescription__c</label>
+            </value>
+            <value>
+                <fullName>DiscardReason__c</fullName>
+                <default>false</default>
+                <label>DiscardReason__c</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>DiscardDescription__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>DiscardReason__c</valueName>
+        </valueSettings>
+    </valueSet>
 </CustomField>
