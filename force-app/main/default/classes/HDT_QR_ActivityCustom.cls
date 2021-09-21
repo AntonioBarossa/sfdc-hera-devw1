@@ -100,6 +100,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
         ];
+        
     }
 
     @AuraEnabled
