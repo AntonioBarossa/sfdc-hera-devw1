@@ -146,7 +146,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         List<EmailMessage> emailList = new List<EmailMessage>{m1};
         
         Id rt = constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
-		HDT_UTL_DataFactoryTst.newPhaseTransition('Risposta Parere Ricevuta', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Risposta Ricevuta', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
         
         //TESTING
 		System.debug(debugString + ' - Inizio testing');

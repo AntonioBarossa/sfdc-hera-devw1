@@ -136,6 +136,7 @@ public with sharing class HDT_SRV_EmailMessage {
                                 System.debug(debugString + ' - ### Inside Parent Condition ###');
                                 parentRecord.Phase__c = 'Risposta Parere Ricevuta';
                                 caseToUpdate.add(parentRecord);
+                                System.debug(debugString + ' - ### adding parentRecord --> ' + parentRecord);
                             }
                         }
                 }
