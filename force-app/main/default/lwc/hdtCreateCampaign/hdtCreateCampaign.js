@@ -9,6 +9,7 @@ export default class HdtCreateCampaign extends LightningElement {
     @api recordId;
     objectApiName = 'Campaign';
     reqEndDate=false;
+    varRecurringCampaign=false;
     requiredShippingMethods=false;  // Start HRAWRM-621 16/09/2021
     @track reitekFieldRequired = false;
     @track startDateFieldRequired = false;
@@ -93,7 +94,8 @@ export default class HdtCreateCampaign extends LightningElement {
         console.log('campReq' +campReq);
         this.reqPrioritycheck(campReq);
         this.checkRequiredShippingMethods(categoryField,channelField,this.statusField);  // Start HRAWRM-621 16/09/2021
-        this.checkEndDateMethods(categoryField,this.statusField); // Start HRAWRM-625
+        
+        this.checkEndDateMethods(this.varRecurringCampaign,this.statusField); // Start HRAWRM-625
         if ( this.statusField!='Bozza' && channelField=='Telefonico Outbound' ) {
             this.easyRequired=true;
         }
@@ -170,14 +172,16 @@ export default class HdtCreateCampaign extends LightningElement {
         console.log('requiredShippingMethods:'+this.requiredShippingMethods);
     }
     // End HRAWRM-621 16/09/2021
-    checkEndDateMethods(category,status){
-        if ( category == 'Campagna Contenitore' && status!='Bozza') {
+    checkEndDateMethods(recurr,status){
+
+        if ( recurr==true && status!='Bozza') {
             this.reqEndDate=true;
         }
         else{
             this.reqEndDate=false;
         }
         console.log('reqEndDate:'+this.reqEndDate);
+        console.log('recurr:'+this.recurr);
     }
     handleChangeProcessType(event){
         let processType = event.detail.value;
@@ -245,6 +249,8 @@ export default class HdtCreateCampaign extends LightningElement {
 
     handleRecurringCampaignChange(event) {
         this.recurringCampaignFieldsRequired = (event.detail.checked === true && this.statusField !== 'Bozza') ? true : false;
+        this.varRecurringCampaign=event.detail.checked;
+        this.checkEndDateMethods(this.varRecurringCampaign,this.statusField);
     }
 
     handleChangeAssignmentTye(event) {
