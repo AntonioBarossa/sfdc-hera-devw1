@@ -15,7 +15,7 @@ public with sharing class HDT_LC_CambioUso {
             c.ServicePointType__c = tipoImpianto;
             c.Resident__c = residente;
             c.Note__c = note;
-            c.phase__c = 'In Lavorazione';
+            c.phase__c = 'Da Inviare';
             c.status = 'In Lavorazione';
             caseSrv.updateRecord(c);
             

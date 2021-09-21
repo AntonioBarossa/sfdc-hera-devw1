@@ -2,6 +2,22 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>activityToUpdate</name>
+        <label>activityToUpdate</label>
+        <locationX>1929</locationX>
+        <locationY>587</locationY>
+        <assignmentItems>
+            <assignToReference>toUpdateActivity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getActivity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateActivity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>caseToUpdate</name>
         <label>caseToUpdate</label>
         <locationX>1602</locationX>
@@ -15,6 +31,22 @@
         </assignmentItems>
         <connector>
             <targetReference>updateCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>closeActivity</name>
+        <label>closeActivity</label>
+        <locationX>1830</locationX>
+        <locationY>587</locationY>
+        <assignmentItems>
+            <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>activityToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -571,17 +603,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>updateActivity</name>
+        <label>updateActivity</label>
+        <locationX>2046</locationX>
+        <locationY>586</locationY>
+        <inputReference>toUpdateActivity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateCase</name>
         <label>updateCase</label>
-        <locationX>1727</locationX>
-        <locationY>718</locationY>
+        <locationX>1719</locationX>
+        <locationY>687</locationY>
+        <connector>
+            <targetReference>closeActivity</targetReference>
+        </connector>
         <inputReference>getCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updeteOrder</name>
         <label>updeteOrder</label>
-        <locationX>1717</locationX>
-        <locationY>479</locationY>
+        <locationX>1683</locationX>
+        <locationY>481</locationY>
+        <connector>
+            <targetReference>closeActivity</targetReference>
+        </connector>
         <inputReference>orderRecord</inputReference>
     </recordUpdates>
     <start>
@@ -621,5 +666,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>toUpdateActivity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
     </variables>
 </Flow>

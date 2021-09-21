@@ -465,7 +465,9 @@
         <fields>LAST_NAME__c</fields>
         <fields>FST_NAME__c</fields>
         <fields>SOC_SECURITY_NUM__c</fields>
+        <fields>X_COMP_ADDR__c</fields>
         <fields>EMAIL_ADDR__c</fields>
+        <fields>COUNTRY__c</fields>
         <fields>X_RAG_SOCIALE__c</fields>
         <relatedList>SiebelContact__x.PARTY_ID__c</relatedList>
     </relatedLists>
