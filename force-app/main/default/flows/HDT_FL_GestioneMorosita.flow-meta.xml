@@ -68,6 +68,13 @@
                 <elementReference>GetCreatedCase.Contact.MobilePhone</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCreatedCase.CompetentOffice__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetChildSospensione.CompetentOffice__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCreatedCase_0</targetReference>
         </connector>
