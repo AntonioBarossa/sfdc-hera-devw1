@@ -9,7 +9,11 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     private static boolean fail_WS_1 = false;
     private static boolean fail_WS_2 = false;
     
+    
+    
     //TODO: RICORDARSI DI TESTARE LE selfReadings AL COMPLETO.
+    
+    
     
     //TEST SETUP
     //TODO: POSSIBILE CHE DEBBA ESSERE USATO CASE CON TIPO AD HOC RELATIVO ALLE LETTURE
@@ -59,8 +63,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
-        //INSTALLARE PHASE ENABLE 'Inviata a SAP' E ALTERNATIVE SE NECESSARIO IN ALTRI TESTS.
-        
+        //PHASE ENABLE
+        String rtName =  constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
+        String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
@@ -72,7 +78,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, Phase FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
         System.assert('Inviata a SAP'.equalsIgnoreCase(myUpdatedCase.Phase__c));
