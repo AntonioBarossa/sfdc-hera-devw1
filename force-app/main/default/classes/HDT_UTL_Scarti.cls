@@ -332,20 +332,32 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                 AND ActivityType__c = :activityType];
 		
         if(!rules.isEmpty()){
-            String logicFields = '';
             //START>>>modifica marco.arci@webresults.it
-            set<string> logicFieldsSet = new set<String>();
+            String logicFieldsC = '';
+            String logicFieldsO = '';
+            set<string> logicFieldsSetCase = new set<String>();
+            set<string> logicFieldsSetOrder = new set<String>();
             for(DiscardAnnullmentRule__c curRule : rules){
-                logicFieldsSet.add(curRule.ControllingField__c);
-                logicFieldsSet.add(curRule.ProcessField__c);
+                if('Case'.equalsIgnoreCase(curRule.ParentObject__c)){
+                    logicFieldsSetCase.add(curRule.ControllingField__c);
+                    logicFieldsSetCase.add(curRule.ProcessField__c);
+                }else if('Order'.equalsIgnoreCase(curRule.ParentObject__c)){
+                    logicFieldsSetOrder.add(curRule.ControllingField__c);
+                    logicFieldsSetOrder.add(curRule.ProcessField__c);
+                }
             }
-            for(string currString : logicFieldsSet){
-                logicFields += ','+currString;
+            for(string currStringC : logicFieldsSetCase){
+                logicFieldsC += ','+currStringC;
+            }
+            for(string currStringO : logicFieldsSetOrder){
+                logicFieldsO += ','+currStringO;
             }
 			//END>>>modifica modifica marco.arci@webresults.it
-            system.debug('logicFields: '+logicFields);
+            system.debug('logicFields: '+logicFieldsC);
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
-                String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
+                //START>>>modifica marco.arci@webresults.it
+                String queryString = 'SELECT Id' + logicFieldsC + ' FROM Case WHERE Id = \'' + recordId + '\'';
+                //END>>>modifica modifica marco.arci@webresults.it
                 system.debug('queryString: '+queryString);
                 List<Case> parentCase = Database.query(queryString);
                 if(!parentCase.isEmpty()){
@@ -359,7 +371,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
-                String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
+                //START>>>modifica marco.arci@webresults.it
+                String queryString = 'SELECT Id' + logicFieldsO + ' FROM Order WHERE Id = \'' + recordId + '\'';
+                //END>>>modifica modifica marco.arci@webresults.it
                 system.debug('queryString: '+queryString);
                 List<Order> parentOrder = Database.query(queryString);
                 if(!parentOrder.isEmpty()){
