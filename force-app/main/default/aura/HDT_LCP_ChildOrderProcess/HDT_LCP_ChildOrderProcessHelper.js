@@ -147,11 +147,13 @@
 
     redirectToComponent : function(component,accountId,venditaId,orderParent){
         var checkprocess = component.get("c.isCommunity");
-
+        var navService = component.find("navService");
+        console.log('*********check');
         checkprocess.setCallback(this, function (response) {
             var state = response.getState();
             if (state == 'SUCCESS') {
-                let community = response.getValue();
+                let community = response.getReturnValue();
+                console.log('*******2:' + JSON.stringify(community));
                 if (community != null && community.isCommunity == true) {
                             
                     var pageReference = {
