@@ -6,6 +6,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static String myType = 'Comunicazione di Fallimento';
     
     
     //TEST SETUP
@@ -20,7 +21,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         
         //MANAGING CASE
         Case myCase = caseList[0];
-        myCase.Type = 'Comunicazione di Fallimento';
+        myCase.Type = myType;
         insert myCase;
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
@@ -52,12 +53,15 @@ public with sharing class HDT_SRV_EmailMessageTst {
         
     }
     
+    
+    
     //checkEmailSender
+    ///TESTING - Comunicazione di Fallimento
     @isTest
-    private static void checkEmailSenderTest() {
+    private static void checkEmailSenderTest_ComFall() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - checkEmailSenderTest';
+		String debugString = TEST_NAME + ' - checkEmailSenderTest_ComFall';
 		System.debug(debugString);
         
         //SETUP
@@ -65,34 +69,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         Case myCase = [SELECT Id FROM Case];
         
         
-        //TESTING FAILURE
-        
-        EmailMessage m_fail = new EmailMessage();
-        m_fail.fromAddress = UserInfo.getUserEmail();
-        m_fail.parentId = myCase.Id;
-        
-        Boolean caught = false;
-        
-        HDT_SRV_EmailMessage.checkEmailSender(new List<EmailMessage>{m_fail});
-        
-        try{
-            insert m_fail;
-            
-        } catch (Exception e) {
-            System.debug(debugString + ' - exception message: ' + e.getMessage());
-            System.debug(debugString + ' - exception Type: ' + e.getTypeName());
-            System.debug(debugString + ' - exception stacktrace string: ' + e.getStackTraceString());
-            caught = true;
-            
-        }
-        
-        //ASSERTS
-        System.assert(caught);
-        
-        
-        
-        //REGULAR TESTING - Comunicazione di Fallimento
-        
+        //TESTING
         EmailMessage m1 = new EmailMessage();
         m1.fromAddress = 'Pugnialio@Controfiletti.it';
         m1.parentId = myCase.Id;
@@ -106,6 +83,40 @@ public with sharing class HDT_SRV_EmailMessageTst {
         HDT_SRV_EmailMessage.checkEmailSender(emailList);
         
     }
+    
+    
+    ///TESTING - Richiesta Parere
+    @isTest
+    private static void checkEmailSenderTest_Richiesta() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - checkEmailSenderTest_Richiesta';
+		System.debug(debugString);
+        
+        //SETUP
+        myType = 'Richiesta Parere';
+        
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
+        
+        
+        //TESTING - Richiesta Parere
+        
+        EmailMessage m1 = new EmailMessage();
+        m1.fromAddress = 'Pugnialio@Controfiletti.it';
+        m1.parentId = myCase.Id;
+        
+        List<EmailMessage> emailList = new List<EmailMessage>{m1};
+        
+        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
+		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta parere', 'Bozza', rt, 'HDT_RT_Morosita');
+        
+        //TESTING
+        HDT_SRV_EmailMessage.checkEmailSender(emailList);
+        
+    }
+    
+    
     
     //checkIncomingEmails
     
