@@ -9,7 +9,7 @@
  * -----
  */
 
-public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
+public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
@@ -39,10 +39,21 @@ public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_F
     public class HDT_WRP_ScriptOutput{
         @AuraEnabled public string sectionLabel;
         @AuraEnabled public string sectionText;
+        @AuraEnabled public String type;
+        @AuraEnabled public List<HDT_WRP_ScriptDecision> decisions;
+    }
+
+    public class HDT_WRP_ScriptDecision{
+        @AuraEnabled public String label;
+        @AuraEnabled public Integer targetPage;
     }
 
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
         ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
+        return getScriptPagesFromScript(process, recordId);
+    }
+
+    protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId){
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         system.debug('fields to query '+allFieldsToQuery);
@@ -88,6 +99,31 @@ public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_F
         HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
         sectionWrapper.sectionLabel=section.SectionLabel__c+additionalLabel;
         sectionWrapper.sectionText=formatText(section.textScript__c, record);
+
+        if (section.isSet('ScriptType__c')) {
+            sectionWrapper.type = (String)section.get('ScriptType__c');
+        }
+
+        List<HDT_WRP_ScriptDecision> decisions = new List<HDT_WRP_ScriptDecision>();
+        List<Schema.SObjectField> decisionFields = new List<Schema.SObjectField>{
+            ScriptConfig__c.LabelOption1__c,
+            ScriptConfig__c.LabelOption2__c,
+            ScriptConfig__c.LabelOption3__c
+        };
+        for (Schema.SObjectField decisionField:decisionFields) {
+            if (section.isSet(decisionField)) {
+                String decision = (String)section.get(decisionField);
+                if (String.isNotBlank(decision)) {
+                    List<String> decisionSplit = decision.split('::');
+                    HDT_WRP_ScriptDecision dec = new HDT_WRP_ScriptDecision();
+                    dec.label = decisionSplit[0];
+                    dec.targetPage = Integer.valueOf( decisionSplit[1] );
+                    decisions.add(dec);
+                }
+            }
+        }
+        sectionWrapper.decisions = decisions;
+
         return sectionWrapper;
     }
 
