@@ -32,7 +32,7 @@ const columns = [
 
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
-    @api productOptionId;
+    //@api productOptionId;
     @api optionalSkuId;
     @api productOptionObj;
     @api dmlContext;

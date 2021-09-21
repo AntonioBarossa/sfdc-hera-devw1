@@ -2,11 +2,10 @@ import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 
-export default class HdtManageProductAssociation extends NavigationMixin(LightningElement) {
+export default class HdtManageRuleAssociation extends NavigationMixin(LightningElement) {
 
     @api recordid;
-    //productOptionId;
-    productOptionObj;
+    configurationRuleObj;
     showWelcom = false;
     showSearchOffer = false;
     showCreateRecord = false;
@@ -22,48 +21,30 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     label = {
         mainTitle: 'Associazione',
-        associationTitleLabel: 'Associazione massiva del Prodotto Opzione',
-        deleteTitleLabel: 'Rimozione massiva del Prodotto Opzione'
+        associationTitleLabel: 'Associazione massiva della Product Rule',
+        deleteTitleLabel: 'Rimozione massiva della Product Rule'
     };
 
     enableCreate = false;
     enableDelete = false;
 
     connectedCallback(){
-        console.log('>>> PRODUCT OPTION Id: ' + this.recordid);
+        console.log('>>> RULE Id: ' + this.recordid);
+        this.enableCreate = true;
+        this.enableDelete = true;
+        this.showWelcom = true;
     }
 
-    @wire(getRecord, { recordId: '$recordid', fields: ['Product2.Family', 'Product2.Status__c'] })
-    wiredProduct({ error, data }) {
-        if (data) {
-            console.log('>>> PRODUCT OPTION Family -> ' + data.fields.Family.value);
-            console.log('>>> PRODUCT OPTION  status -> ' + data.fields.Status__c.value);
-            
-            var notAvailableType = ['Offerta commerciale', 'VAS Prodotto', 'VAS Servizio'];
-            var availableStatusForCreation = ['In Sviluppo', 'Confermata', 'Vendibile', 'Scaduta'];
-            var availableStatusForDeletion = ['In Sviluppo', 'Confermata'];
+    //@wire(getRecord, { recordId: '$recordid', fields: ['Product2.Family', 'Product2.Status__c'] })
+    //wiredProduct({ error, data }) {
+    //    if (data) {
 
-            if(availableStatusForCreation.includes(data.fields.Status__c.value)){
-                this.enableCreate = true;
-            }
-
-            if(availableStatusForDeletion.includes(data.fields.Status__c.value)){
-                this.enableDelete = true;
-            }
-
-            if(notAvailableType.includes(data.fields.Family.value)){
-                this.showError = true;
-                this.errorMessage = 'Questa funzionalità è riservata a Bonus, Contributi, VAS, Promozioni';
-            } else {
-                this.showWelcom = true;
-            }
-
-        } else if (error) {
-            for(var key in error){
-                console.log('# Error -> ' + key + ' - ' + error[key]);
-            }
-        }
-    }
+    //    } else if (error) {
+    //        for(var key in error){
+    //            console.log('# Error -> ' + key + ' - ' + error[key]);
+    //        }
+    //    }
+    //}
 
     handleClick(event){
         console.log('### recordid -> ' + this.recordid);
@@ -106,13 +87,9 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     }
 
-    saveRecord(event){
-        //console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionId);
-        //this.productOptionId = event.detail.productOptionId;
-        
-        console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionObj);
-        this.productOptionObj = event.detail.productOptionObj;
-
+    saveRecord(event){        
+        console.log('>>> RECORD CONFIGURED -> ' + event.detail.configurationRuleObj);
+        this.configurationRuleObj = event.detail.configurationRuleObj;
         this.showCreateRecord = false;
         this.showSearchTable = true;
     }

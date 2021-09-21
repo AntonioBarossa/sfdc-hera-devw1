@@ -1,5 +1,4 @@
 <template>
-
     <template if:true={showError} >
         <c-hdt-error-modal-message
             header={errorHeader}
@@ -26,21 +25,14 @@
 
     <!--<div if:true={showCreateRecord} ></div>-->
     <template if:true={showCreateRecord} >
-        <c-hdt-product-option-edit-form
-            optional-sku-id={recordid}
+        <c-hdt-product-rule-edit-form
+            rule-id={recordid}
             oncloseeditform={closeEditForm}
             onsaverecord={saveRecord}
-        ></c-hdt-product-option-edit-form>
+        ></c-hdt-product-rule-edit-form>
     </template>
 
     <template if:true={showSearchTable} >
-        <c-hdt-product-association-search-table
-            dml-context={dmlContext}
-            optional-sku-id={recordid}
-            product-option-obj={productOptionObj}
-            onclosemodal={closeModal}
-        ></c-hdt-product-association-search-table>
-        <!--product-option-id={productOptionId}-->
+        <p>SEARCH TABLE</p>
     </template>
-
 </template>

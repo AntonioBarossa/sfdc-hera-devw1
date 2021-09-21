@@ -9,7 +9,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         if(objRes.isAccessible()){
             selectQuery = 'SELECT count() ' + queryString;
         }
-
+        System.debug('>>> queryString: ' + selectQuery);
         return Database.countQuery(selectQuery);
     }
 
