@@ -42,10 +42,18 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static boolean cambiaphaseComm(string recordId,string causale){
         try{
             HDT_QR_Case caseQr = new HDT_QR_Case();
+            wrts_prcgvr__Activity__c sToCreate = new wrts_prcgvr__Activity__c();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
+            sToCreate.account__c = s.account__c;
+            sToCreate.case__c = s.case__c;
+            sToCreate.recordtypeid = s.recordtypeid;
+            sToCreate.approved__c = causale;
+            sToCreate.type__c = 'Contratti/Bonus Commerciale';
             s.wrts_prcgvr__status__c = 'Completed';
             s.approved__c = causale;
+
             activityCustomSrv.updateRecord(s);
+            activityCustomSrv.createRecord(sToCreate);
             Case c = caseQr.getRecordById(s.case__c);
             c.phase__c	='In Lavorazione';
             update c;
@@ -122,7 +130,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = act.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Registrazione validata  Firmato/Inviato';
+            ord.phase__c = 'Documentazione Gestita';
             ord.status = 'Activated';
             orderSrv.updateRecord(ord);
         }
@@ -143,7 +151,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = act.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Plico validato Firmato';
+            ord.phase__c = 'Documentazione Gestita';
             ord.status = 'Activated';
             orderSrv.updateRecord(ord);
         }

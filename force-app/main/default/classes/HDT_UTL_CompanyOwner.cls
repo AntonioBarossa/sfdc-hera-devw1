@@ -4,7 +4,6 @@
  * @description HDT_UTL_CompanyOwner Classes
  * @history Sabina Levonja 04/06/2021 – Created class
  */
-
 public inherited sharing class HDT_UTL_CompanyOwner {
 
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
