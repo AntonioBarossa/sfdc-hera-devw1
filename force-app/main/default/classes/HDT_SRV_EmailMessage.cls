@@ -65,6 +65,7 @@ public with sharing class HDT_SRV_EmailMessage {
         Map<SObject,Id> mapEmailCase = new Map<SObject,Id>();
         Id parentId;
         String objectName='';
+        
         for(EmailMessage email : emailList){
             parentId = email.parentId;
             if(parentId != null){
@@ -117,7 +118,7 @@ public with sharing class HDT_SRV_EmailMessage {
             mapIdCase.put(single.Id, single);
         }
         
-        //TODO: OPPORTUNO CAMBIARE DA "==" A METODO .EQUALS() DI STRING.
+        //
         for (SObject emailObj : params.keySet()) {
             EmailMessage email = (EmailMessage) emailObj;
             

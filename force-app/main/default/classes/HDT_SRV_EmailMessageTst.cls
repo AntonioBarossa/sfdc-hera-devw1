@@ -122,7 +122,34 @@ public with sharing class HDT_SRV_EmailMessageTst {
     
     
     //checkIncomingEmails
-    
-    
+    @isTest
+    private static void checkIncomingEmails() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - checkIncomingEmails';
+		System.debug(debugString);
+        
+        //SETUP
+        
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
+        
+        
+        //TESTING - Richiesta Parere
+        
+        EmailMessage m1 = new EmailMessage();
+        m1.fromAddress = 'Pugnialio@Controfiletti.it';
+        m1.parentId = myCase.Id;
+        
+        List<EmailMessage> emailList = new List<EmailMessage>{m1};
+        
+        //
+        
+        
+        //TESTING
+		System.debug(debugString + ' - Inizio testing');
+        HDT_SRV_EmailMessage.checkIncomingEmails(emailList);
+        
+    }
     
 }
