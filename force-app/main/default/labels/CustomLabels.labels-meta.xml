@@ -771,4 +771,32 @@
         <shortDescription>ProdOptAssociationNoResultText</shortDescription>
         <value>Non è stato trovato nessun prodotto</value>
     </labels>
+    <labels>
+        <fullName>ChooseAssOperation_JobIsRunning</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_JobIsRunning</shortDescription>
+        <value>E' in corso un processo di creazione/rimozione di prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_CreateIsAvailable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_CreateIsAvailable</shortDescription>
+        <value>Puoi associare i prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_DeleteIsAvailable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_DeleteIsAvailable</shortDescription>
+        <value>Puoi eliminare i prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_StatusError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_StatusError</shortDescription>
+        <value>Lo stato del prodotto opzione non è compatibile</value>
+    </labels>
 </CustomLabels>

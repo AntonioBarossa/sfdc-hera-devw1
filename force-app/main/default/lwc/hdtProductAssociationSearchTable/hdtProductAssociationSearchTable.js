@@ -62,14 +62,13 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     data = [];
     columns = columns;
     fieldsList = [
+        'ProductCode',
+        'Version__c',
         'Name',
         'DescriptionSAP__c',
-        'ProductCode',
-        //'Family',
-        'Version__c',
+        'CategoryFamily__c',
         'Status__c',
-        'TypeOffer__c',
-        'CategoryFamily__c'
+        'TypeOffer__c'
     ];
     showResultTable = false;
     

@@ -1,6 +1,11 @@
 public inherited sharing class HDT_LC_ProductAssociation {
 
     @AuraEnabled
+    public static Object getAsyncApexJob(){
+        return HDT_SRV_ProductAssociation.getAsyncApexJob();
+    }
+
+    @AuraEnabled
     public static List<String> getFieldSet(String fieldSetName){
         return HDT_SRV_ProductAssociation.getFieldSet(fieldSetName);
     }

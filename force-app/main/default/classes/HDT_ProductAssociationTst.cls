@@ -12,6 +12,13 @@ public class HDT_ProductAssociationTst {
         productOption0.IsActive = true;
         productList.add(productOption0);
 
+        Product2 productOptionStandard = new Product2();
+        productOptionStandard.Name = 'standardOption';
+        productOptionStandard.Status__c = 'In Sviluppo';
+        productOptionStandard.Family = 'Bonus Eur/kWh';
+        productOptionStandard.IsActive = true;
+        productList.add(productOptionStandard);
+
         Product2 productOption = new Product2();
         productOption.Name = 'productOptionExample';
         productOption.Status__c = 'In Sviluppo';
@@ -30,6 +37,24 @@ public class HDT_ProductAssociationTst {
         }
 
         insert productList;
+
+        List<SBQQ__ProductOption__c> prodOptionList = new List<SBQQ__ProductOption__c>();
+        Id prodOptionalId = [SELECT Id FROM Product2 WHERE Name = 'standardOption' LIMIT 1].Id;
+
+        for(Product2 p : productList){
+            SBQQ__ProductOption__c prodOption = new SBQQ__ProductOption__c();
+            prodOption.SBQQ__ConfiguredSKU__c = p.Id;
+            prodOption.SBQQ__OptionalSKU__c = prodOptionalId;
+            prodOption.SBQQ__Number__c = 1;
+            prodOption.SBQQ__Quantity__c = null;
+            prodOption.SBQQ__QuantityEditable__c = false;
+            prodOption.SBQQ__Selected__c = false;
+            prodOption.SBQQ__Feature__c = null;
+            prodOption.SBQQ__Type__c = 'Component';
+            prodOptionList.add(prodOption);
+        }
+
+        insert prodOptionList;
 
         List<SBQQ__ProductFeature__c> featureList = new List<SBQQ__ProductFeature__c>();
 
@@ -200,6 +225,11 @@ public class HDT_ProductAssociationTst {
         
         HDT_LC_ProductAssociation.runProductOptionAssociation(prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
 
+    }
+
+    @isTest
+    public static void getAsyncApexJob(){
+        HDT_LC_ProductAssociation.getAsyncApexJob();
     }
 
 }

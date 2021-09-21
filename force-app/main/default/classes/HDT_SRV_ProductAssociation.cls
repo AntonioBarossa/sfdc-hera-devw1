@@ -2,24 +2,28 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Integer batchLimit = 10;
 
+    public static Object getAsyncApexJob(){
+        List<AsyncApexJob> asyncApexJobList = HDT_QR_ProductAssociation.getJobStatus();
+        return asyncApexJobList.size();
+    }
+
     public static List<String> getFieldSet(String fieldSetName){
         List<String> fieldSetList = new List<String>();
         try{
-            //List<Schema.FieldSetMember> fieldSetMembers;
-            //fieldSetMembers = ((SObject)Type.forName('SBQQ__ProductOption__c').newInstance()).getSObjectType().getDescribe().FieldSets.getMap().get(fieldSetName).getFields();
-            //for(Schema.FieldSetMember s : fieldSetMembers) {
-            //    fieldSetList.add(String.valueOf(s.getFieldPath()));
-            //}
+            List<Schema.FieldSetMember> fieldSetMembers;
+            fieldSetMembers = ((SObject)Type.forName('SBQQ__ProductOption__c').newInstance()).getSObjectType().getDescribe().FieldSets.getMap().get(fieldSetName).getFields();
+            for(Schema.FieldSetMember s : fieldSetMembers) {
+                fieldSetList.add(String.valueOf(s.getFieldPath()));
+            }
 
-            //fieldSetList.add('SBQQ__Feature__c');
-            fieldSetList.add('SBQQ__Type__c');
-            fieldSetList.add('SBQQ__Quantity__c');           
-            fieldSetList.add('SBQQ__MinQuantity__c');
-            fieldSetList.add('SBQQ__MaxQuantity__c');
-            fieldSetList.add('SBQQ__Discount__c');
-            fieldSetList.add('SBQQ__DiscountAmount__c');
-            fieldSetList.add('SBQQ__Selected__c');
-            fieldSetList.add('SBQQ__QuantityEditable__c');
+            //fieldSetList.add('SBQQ__Type__c');
+            //fieldSetList.add('SBQQ__Quantity__c');           
+            //fieldSetList.add('SBQQ__MinQuantity__c');
+            //fieldSetList.add('SBQQ__MaxQuantity__c');
+            //fieldSetList.add('SBQQ__Discount__c');
+            //fieldSetList.add('SBQQ__DiscountAmount__c');
+            //fieldSetList.add('SBQQ__Selected__c');
+            //fieldSetList.add('SBQQ__QuantityEditable__c');
 
         } catch(Exception ex){
             System.debug('>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');

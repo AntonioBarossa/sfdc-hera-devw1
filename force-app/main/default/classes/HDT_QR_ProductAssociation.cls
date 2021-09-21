@@ -50,17 +50,20 @@ public inherited sharing class HDT_QR_ProductAssociation {
     }
 
     public static AggregateResult[] getCountFromProductOption(List<String> recordIdList){
-        //RETRIEVE Number in porduct option for each product2
-        AggregateResult[] results = [
-            SELECT SBQQ__ConfiguredSKU__c, count(Id)
-            FROM SBQQ__ProductOption__c
-            WHERE SBQQ__ConfiguredSKU__c IN :recordIdList
-            WITH SECURITY_ENFORCED
-            GROUP BY SBQQ__ConfiguredSKU__c
-        ];
-        //for (AggregateResult ar : results) {
-        //    System.debug(ar);
-        //}
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        AggregateResult[] results;
+
+        if(objRes.isAccessible()){
+            results = [
+                SELECT SBQQ__ConfiguredSKU__c, count(Id)
+                FROM SBQQ__ProductOption__c
+                WHERE SBQQ__ConfiguredSKU__c IN :recordIdList
+                WITH SECURITY_ENFORCED
+                GROUP BY SBQQ__ConfiguredSKU__c
+            ];
+        }
         return results;
     }
 
@@ -70,48 +73,50 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
     public static List<SBQQ__ProductFeature__c> productFeatureListByFamily(List<SBQQ__ProductFeature__c> productFeatureList, List<String> configSkuList, String familyName){
         productFeatureList = new List<SBQQ__ProductFeature__c>();
-        productFeatureList = [
-            SELECT Id, Name, SBQQ__ConfiguredSKU__c
-            FROM SBQQ__ProductFeature__c
-            WHERE SBQQ__ConfiguredSKU__c IN :configSkuList
-            AND Name = :familyName
-            WITH SECURITY_ENFORCED
-        ];
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductFeature__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+        if(objRes.isAccessible()){
+            productFeatureList = [
+                SELECT Id, Name, SBQQ__ConfiguredSKU__c
+                FROM SBQQ__ProductFeature__c
+                WHERE SBQQ__ConfiguredSKU__c IN :configSkuList
+                AND Name = :familyName
+                WITH SECURITY_ENFORCED
+            ];
+        }
         return productFeatureList;
     }
 
     public static List<Product2> getProductOption2recordBySkuId(List<Product2> prod2list, Id confSkuId){
         prod2list = new List<Product2>();
-        prod2list = [
-            SELECT Id, Family
-            FROM Product2
-            WHERE Id = :confSkuId
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('Product2');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+        if(objRes.isAccessible()){
+            prod2list = [
+                SELECT Id, Family
+                FROM Product2
+                WHERE Id = :confSkuId
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+        }
         return prod2list;
     }
 
-    //public static void getJobStatus(){
-    //    AsyncApexJob job = [SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors FROM AsyncApexJob WHERE ID = '' ];
-    //}
-
-    //public static SBQQ__ProductOption__c getProductOptionRecordById(Id productOptionId){
-    //    
-    //    SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
-    //    Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-    //    String selectQuery = '';
-
-    //    if(objRes.isAccessible()){
-
-    //        return [
-    //            SELECT Id, SBQQ__Number__c,SBQQ__OptionalSKU__c
-    //            FROM SBQQ__ProductOption__c
-    //            WHERE Id = :productOptionId
-    //        ];
-    //    } else {
-    //        return null;
-    //    }
-    //}
+    public static List<AsyncApexJob> getJobStatus(){
+        List<AsyncApexJob> jobList = new List<AsyncApexJob>();
+        jobList = [
+            SELECT ExtendedStatus, ApexClass.name, MethodName, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors
+            FROM AsyncApexJob
+            WHERE CompletedDate = today
+            AND ApexClass.name IN ('HDT_BA_DeleteProductAssociation', 'HDT_BA_ProductAssociation')
+            AND Status NOT IN ('Aborted', 'Completed', 'Failed')
+        ];
+        return jobList;
+    }
 
 }
