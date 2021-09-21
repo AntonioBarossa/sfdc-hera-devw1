@@ -6,6 +6,7 @@
     <aura:attribute name='orderPod' type="String"/>
     <aura:attribute name='selectedValue' type='String' default="Prima Attivazione"/>
     <aura:attribute name='precheck' type='String' default=""/>
+    <aura:attribute name='isCommunity' type='Boolean' default="false"/>
 	<aura:attribute name='compatibilita' type='String' default=""/>
     <aura:attribute name="openModale" type="Boolean" default="false"/>
     <aura:attribute name="recordtypeOrder" type="String"/>
