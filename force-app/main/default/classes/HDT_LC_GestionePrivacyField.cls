@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 07/05/2021
+* @description HDT_LC_GestionePrivacyField
+* @history Lorenzo – 07/05/2021 – created class
+*/
 public with sharing class HDT_LC_GestionePrivacyField {
 
     @AuraEnabled
