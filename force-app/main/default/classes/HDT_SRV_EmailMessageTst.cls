@@ -21,6 +21,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         //MANAGING CASE
         Case myCase = caseList[0];
         myCase.Type = 'Comunicazione di Fallimento';
+        insert myCase;
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
