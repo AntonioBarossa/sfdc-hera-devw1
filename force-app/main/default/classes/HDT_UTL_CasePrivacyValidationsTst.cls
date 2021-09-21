@@ -1,4 +1,5 @@
-@isTest
+//classe di test per classe DEPRECATA
+/*@isTest
 public with sharing class HDT_UTL_CasePrivacyValidationsTst {
 
     
@@ -49,4 +50,4 @@ public with sharing class HDT_UTL_CasePrivacyValidationsTst {
     }
 
 
-}
+}*/
