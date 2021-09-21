@@ -6,10 +6,13 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static boolean fail_WS_1 = false;
+    private static boolean fail_WS_2 = false;
     
-    
+    //TODO: RICORDARSI DI TESTARE LE selfReadings AL COMPLETO.
     
     //TEST SETUP
+    //TODO: POSSIBILE CHE DEBBA ESSERE USATO CASE CON TIPO AD HOC RELATIVO ALLE LETTURE
     private static void mySetup(){
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
@@ -56,16 +59,23 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
+        //INSTALLARE PHASE ENABLE 'Inviata a SAP' E ALTERNATIVE SE NECESSARIO IN ALTRI TESTS.
+        
+        
         //TESTING
+        Test.startTest();
+        
         HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(args);
         
-        //RETRIEVING DATA
+        Test.stopTest();
         
+        //RETRIEVING DATA
+        Case myUpdatedCase = [SELECT Id, Phase FROM Case];
         
         //ASSERTS
-        
+        System.assert('Inviata a SAP'.equalsIgnoreCase(myUpdatedCase.Phase__c));
         
     }
     
@@ -102,8 +112,19 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
                 response.setStatusCode(200);
                 response.setStatus('OK');
                 
-            } else {
+            } else if(request.getEndpoint().equalsIgnoreCase('Callout:SendReadings')){
                 
+                //DEBUG
+                System.debug('myWebServiceMock - SendReadings');
+                
+                //PREPARING RESPONSE
+                Map<String, Object> body = new Map<String, Object>();//EMPTY BODY PER CODE 200 o 201
+                
+                //HTTP RESPONSE
+                response.setHeader('Content-Type', 'application/json');
+                response.setBody(JSON.serialize(body));
+                response.setStatusCode(200);
+                response.setStatus('OK');
                 
             }
             
