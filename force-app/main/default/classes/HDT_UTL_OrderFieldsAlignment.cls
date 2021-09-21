@@ -454,13 +454,13 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
 
         orderSrv.updateRecord(orderToUpdate);
-
-        if (order.ServicePoint__c != null) {
+        //LG 2009 Concetta Richiesta disattivazione da ROOM
+        /*if (order.ServicePoint__c != null) {
             servicePointSrv.updateRecord(new ServicePoint__c(
                 Id = order.ServicePoint__c,
                 PowerRequested__c = null
             ));
-        }
+        }*/
     }
 
     private static void changeCustomerMarking(Account account){

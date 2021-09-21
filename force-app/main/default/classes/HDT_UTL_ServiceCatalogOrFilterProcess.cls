@@ -6,6 +6,11 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Fatturazione'}
         },
+    'CambioUsoFittizio' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione','Variazioni','Generiche Attivazioni','Canone Rai'}
+        },
     'AnnullamentoContratti' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
