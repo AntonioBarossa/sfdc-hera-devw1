@@ -10,8 +10,8 @@ public inherited sharing class HDT_QR_Account {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get Account by Id
-     * @param String id
-     * @param String Fields
+     * @param id
+     * @param fields
      * @return Account account
      */
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
@@ -33,6 +33,12 @@ public inherited sharing class HDT_QR_Account {
         return account;
     }
 
+    /**
+     * @description getRecordsById
+     * @param accountIdList
+     * @param fields
+     * @return List<Account>
+     */
     public List<Account> getRecordsById(List<String> accountIdList, String fields){
         accountSrv.checkReadAccess(fields);
         List<Account> accounts = Database.query('SELECT '+ String.escapeSingleQuotes(fields) +
@@ -41,7 +47,11 @@ public inherited sharing class HDT_QR_Account {
         return accounts;
     }
 
-
+    /**
+     * @description getBillingAddressAccount
+     * @param accountId
+     * @return Account
+     */
     public Account getBillingAddressAccount(String accountId){
         contractSrv.checkReadAccess('Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c');
         Account ac = new Account();
@@ -52,6 +62,11 @@ public inherited sharing class HDT_QR_Account {
         return ac;
     }
     
+    /**
+     * @description getAccountByDistributorKey
+     * @param globalKeyId
+     * @return Account
+     */
     public Account getAccountByDistributorKey(String globalKeyId){
         contractSrv.checkReadAccess('Id,Code__c');
         Account ac = new Account();
@@ -67,6 +82,11 @@ public inherited sharing class HDT_QR_Account {
         return ac;
     }
 
+    /**
+     * @description getAccountByFiscalCode
+     * @param fiscalCode
+     * @return List<Account>
+     */
     public List<Account> getAccountByFiscalCode(String fiscalCode) {
         return [
             SELECT
@@ -77,6 +97,10 @@ public inherited sharing class HDT_QR_Account {
         ];
     }
 
+    /**
+     * @description getAllAccounts
+     * @return List<Account>
+     */
     public List<Account> getAllAccounts() {
         return [ SELECT Id, Name
                  FROM Account 
@@ -84,6 +108,11 @@ public inherited sharing class HDT_QR_Account {
                  LIMIT 10000 ];
     }
 
+    /**
+     * @description getAccountByVat
+     * @param vat
+     * @return List<Account>
+     */
     public List<Account> getAccountByVat(String vat) {
         return [
             SELECT
@@ -94,6 +123,12 @@ public inherited sharing class HDT_QR_Account {
         ];
     }
 
+    /**
+     * @description getAccountByFiscalCodeAndVat
+     * @param fiscalCode
+     * @param vat
+     * @return List<Account>
+     */
     public List<Account> getAccountByFiscalCodeAndVat(String fiscalCode, String vat){
         return [
             SELECT
@@ -104,6 +139,12 @@ public inherited sharing class HDT_QR_Account {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+     * @description getAccountById
+     * @param id
+     * @return List<Account>
+     */
     public List<Account> getAccountById(String id){
         return [
             SELECT

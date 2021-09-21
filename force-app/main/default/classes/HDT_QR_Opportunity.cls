@@ -9,7 +9,7 @@ public inherited sharing class HDT_QR_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Counts all records
-     * @param String Sale__c.Id
+     * @param saleId
      * @return Integer
      */
 
@@ -21,41 +21,35 @@ public inherited sharing class HDT_QR_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get Opportunities by Sale__c filtered by StageName
-     * @param String Sale__c.Id
-     * @param String fields
-     * @param String stageNameFilter
+     * @param saleId
+     * @param fields
+     * @param stageNameFilter
      * @return List<Opportunity>
      */
     public List<Opportunity> getRecordsBySaleFilterStageName(String saleId, String fields, String stageNameFilter){
-        
-        String query = 'SELECT '+ fields +
 
-                ' FROM Opportunity WHERE Sale__c = :saleId AND StageName = :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC';
-        return Database.query(query);
+        return Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Opportunity WHERE Sale__c = :saleId AND StageName = :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC');
 
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get Opportunities by Sale__c filtered by StageName
-     * @param String Sale__c.Id
-     * @param String fields
-     * @param String stageNameFilter
+     * @param saleId
+     * @param fields
+     * @param stageNameFilter
      * @return List<Opportunity>
      */
     public List<Opportunity> getRecordsBySaleFilterStageNameNotVas(String saleId, String fields, String stageNameFilter){
         
-        String query = 'SELECT '+ fields +
-
-                ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.IsVAS__c = null AND StageName != :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC';
-        return Database.query(query);
+        return Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.IsVAS__c = null AND StageName != :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC');
 
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get record by Id
-     * @param String opportunityId
+     * @param opportunityId
      * @return Opportunity
      */
     public Opportunity getRecordById(String opportunityId){
@@ -77,8 +71,8 @@ public inherited sharing class HDT_QR_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get record by Id and filtered by status
-     * @param String opportunityId
-     * @param String status
+     * @param opportunityId
+     * @param status
      * @return Opportunity
      */
     public Opportunity getRecordByIdFilterStatus(String opportunityId, String status){
@@ -100,9 +94,8 @@ public inherited sharing class HDT_QR_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get records by Sale and filtered by type VAS
-     * @param String opportunityId
-     * @param String status
-     * @return Opportunity
+     * @param saleId
+     * @return List<Opportunity>
      */
     public List<Opportunity> getRecordsBySaleFilteredVas(String saleId){
         return [
@@ -125,6 +118,12 @@ public inherited sharing class HDT_QR_Opportunity {
         ];
     }
 
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description getRecordByQuote
+     * @param quoteId
+     * @return List<Opportunity>
+     */
     public List<Opportunity> getRecordByQuote(String quoteId){
         return [
             SELECT
