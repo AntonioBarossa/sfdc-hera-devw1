@@ -56,6 +56,42 @@ public with sharing class HDT_SRV_EmailMessageTst {
     
     
     //checkEmailSender
+    ///TESTING ADDERROR
+    @isTest
+    private static void checkEmailSenderTest_addErrorTest() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - checkEmailSenderTest_addErrorTest';
+		System.debug(debugString);
+        
+        //SETUP
+        
+        //TESTING
+        EmailMessage m1 = new EmailMessage();
+        m1.fromAddress = UserInfo.getUserEmail();
+        
+        List<EmailMessage> emailList = new List<EmailMessage>{m1};
+        
+        //TESTING
+		System.debug(debugString + ' - Inizio testing');
+        HDT_SRV_EmailMessage.checkEmailSender(emailList);
+        
+        Boolean caught = false;
+        try{
+            insert emailList;
+            
+        } catch (Exception e) {
+            System.debug(debugString + ' - Exception: ' + e.getMessage());
+            caught = true;
+            
+        }
+        
+        //ASSERTS
+        System.assert(caught);
+        
+    }
+    
+    
     ///TESTING - Comunicazione di Fallimento
     @isTest
     private static void checkEmailSenderTest_ComFall() {
@@ -184,6 +220,19 @@ public with sharing class HDT_SRV_EmailMessageTst {
         //TESTING
 		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkIncomingEmails(emailList);
+        
+    }
+    
+    //EMPTY CONSTRUCTOR TEST
+    @isTest
+    private static void constructorTest(){
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - constructorTest';
+		System.debug(debugString);
+        
+        //TESTING
+        HDT_SRV_EmailMessage test = new HDT_SRV_EmailMessage();
         
     }
     
