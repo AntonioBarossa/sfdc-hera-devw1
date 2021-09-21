@@ -5,6 +5,15 @@
 * @history Keltin Mesonjesi – 04/06/2021 – Created class
 */
 public inherited sharing class HDT_QR_ActivityCustom {
+    
+    /**
+    * @description getRecordByTypeAndStatusAndAccountAndServicePoint
+    * @param type
+    * @param status
+    * @param accountId
+    * @param servicePointCode
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePoint(String type, String status, String accountId, String servicePointCode) {
         return [
             SELECT
@@ -22,6 +31,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    /**
+    * @description getRecordById
+    * @param activityId
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
         return [
             SELECT
@@ -38,6 +52,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getRecordByIdAccise
+    * @param activityId
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static wrts_prcgvr__Activity__c getRecordByIdAccise(String activityId) {
         return [
             SELECT
@@ -89,6 +109,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getRecordByIdS
+    * @param activityId
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     @AuraEnabled
     public static wrts_prcgvr__Activity__c getRecordByIdS(String activityId) {
         return [
@@ -103,10 +129,16 @@ public inherited sharing class HDT_QR_ActivityCustom {
             AppointmentDate__c
             FROM wrts_prcgvr__Activity__c
             WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
             limit 1
         ];
     }
 
+    /**
+    * @description getRecordByCaseId
+    * @param caseId
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseId(String caseId) {
         return [
             SELECT
@@ -120,6 +152,13 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getRecordByOrderIdAndType
+    * @param orderId
+    * @param type
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordByOrderIdAndType(String orderId,String type) {
         return [
             SELECT
@@ -134,6 +173,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getRecordByCaseIdList
+    * @param caseId
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordByCaseIdList(List<String> caseId) {
         return [
             SELECT
@@ -147,6 +192,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getRecordByOrderLine
+    * @param quoteLine
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordByOrderLine(List<String> quoteLine) {
         return [
             SELECT
@@ -162,6 +213,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    /**
+    * @description getRecordByOwnerId
+    * @param ownerIdList
+    * @return List<wrts_prcgvr__Activity__c>
+    */
     public static List<wrts_prcgvr__Activity__c> getRecordByOwnerId(List<String> ownerIdList) {
         return [
             SELECT
@@ -180,6 +236,9 @@ public inherited sharing class HDT_QR_ActivityCustom {
     /**
      * @author alessandro.picchiri@eng.it
      * @date 25/06/2021     
+     * @description getActivityListCrediCheck
+     * @param orderSetId
+     * @return List<wrts_prcgvr__Activity__c>
     */
     public static List<wrts_prcgvr__Activity__c> getActivityListCrediCheck(Set<Id> orderSetId){
         List<wrts_prcgvr__Activity__c> actList = [SELECT Id,
@@ -212,9 +271,16 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                              Order__r.Account.RecordType.DeveloperName                                                             
                                                        FROM wrts_prcgvr__Activity__c 
                                                        WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
-                                                                and Status__c = 'Creata' and Order__c IN :orderSetId];
+                                                                and Status__c = 'Creata' and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
 
         return actList;}
+
+        /**
+         * @description getRejectedActivities
+         * @param activityIds
+         * @param recTypeId
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRejectedActivities(Set<Id> activityIds, Id recTypeId) {
                return [
                    SELECT
@@ -228,7 +294,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
                    WITH SECURITY_ENFORCED
                ];
            }
-
+        
+        /**
+         * @description getActivityByRecordId
+         * @param activityId
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getActivityByRecordId(String activityId){
             return [
                 SELECT Id,
@@ -254,7 +325,13 @@ public inherited sharing class HDT_QR_ActivityCustom {
                 WITH SECURITY_ENFORCED
             ];
         }
-    
+        
+        /**
+         * @description getRecordByParentIds
+         * @param ids
+         * @param recordTypeId
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRecordByParentIds(Set<String> ids , Id recordTypeId){
             return [SELECT 
                     Id,
@@ -269,6 +346,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
                 ];
         }
 
+        /**
+         * @description getRecordScartoDiscordante
+         * @param servicePoint
+         * @param accountid
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRecordScartoDiscordante(string servicePoint,string accountid){
             return [SELECT 
                     Id,
@@ -288,6 +371,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
                 ];
         }
 
+        /**
+         * @description getRecordByOrderAndQuality
+         * @param orderid
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRecordByOrderAndQuality(String orderid){
             return [SELECT 
                     Id,
@@ -304,6 +392,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
             ];
         }
 
+        /**
+         * @description getRecordByOrderListAndQuality
+         * @param orderList
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRecordByOrderListAndQuality(List<Id> orderList){
             return [SELECT 
                     Id,
@@ -321,6 +414,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
             ];
         }
 
+        /**
+         * @description getRecordByOrderListAndQuality
+         * @param orderList
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRecordByOrderListAndQuality(Set<String> orderList){
             return [SELECT 
                     Id,
@@ -338,6 +436,11 @@ public inherited sharing class HDT_QR_ActivityCustom {
             ];
         }
 
+        /**
+         * @description getRecordsForCancelQualityNoResult
+         * @param idlist
+         * @return List<wrts_prcgvr__Activity__c>
+        */
         public static List<wrts_prcgvr__Activity__c> getRecordsForCancelQualityNoResult(List<Id> idlist){
             return [SELECT 
                     Id,

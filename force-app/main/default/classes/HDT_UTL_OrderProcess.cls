@@ -12,7 +12,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
+    /**
+     * @description checkSatisfationIndex
+     * @param newMap
+     * @param oldMap
+     */
     public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
         for(Order newOrder : (List<Order>) newMap.values()) {
@@ -24,9 +30,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ));
             }
         }
-        update accountsToUpdate;
+
+        accountSrv.updateRecords(accountsToUpdate);
     }
 
+    /**
+     * @description salesProcessManagementBefore
+     * @param newOrderList
+     * @param oldOrderList
+     */
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
 
         /*Transitorio
@@ -78,7 +90,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     // public static void salesProcessManagementAfter(list<Order> newOrderList,List<Order> oldOrderList){
         
     // }
-
+    
+    /**
+     * @description orderPhaseManagementAfterUpdate
+     * @param newOrdersList
+     * @param oldOrdersList
+     */
     public static void orderPhaseManagementAfterUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
 
         Map<String,Order> orderMapNewToOld = new Map<String,Order>();
@@ -220,7 +237,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
 
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
-    // Ricalcolo delle date
+    /**
+     * @description Ricalcolo delle date
+     * @param newOrdersList
+     * @param oldOrdersList
+     */
     public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) { 
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> newOrdersList : ' + JSON.serializePretty(newOrdersList));
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
@@ -266,7 +287,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         
         if(!orderList.isEmpty()){
-            update orderList;
+            orderSrv.updateRecords(orderList);
         }        
 
     }
@@ -461,6 +482,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         orderSrv.updateRecords(childOrdersToUpdate);
     }
+
+    /**
+     * @description updatePhase
+     * @param newOrdersList
+     * @param oldOrdersList
+     * @return List<Order>
+     */
     public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
         Map<String,Order> orderMapOld = new Map<String,Order>();
         List<Order> ordersToUpdate = new List<Order>();        
@@ -485,8 +513,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
 
    /**
-   * @description 
-   * HRDTR-00_HRAWRM-638
+   * @description  HRDTR-00_HRAWRM-638
+   * @param listOrder
    **/
    public static void overturningFields(List<Order> listOrder ){
     List<SObject> listObjToUpdate = new List<SObject>();
@@ -570,7 +598,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
 
 
-    // FIX METODO DEFELICE
+    /**
+     * @description  FIX METODO DEFELICE
+     * @param newOrdersMap
+     * @param oldOrdersMap
+     **/
     public static void creditCheckManager2(Map<Id,SObject>  newOrdersMap, Map<Id,SObject> oldOrdersMap) {
         system.debug('start creditCheckManager2');
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
@@ -620,7 +652,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }        
     // FINE @Picchiri Credit check Date 04.06.21
 
-    // @Picchiri 16.06.21 chiamata Mulesoft // Lista di ordini per nuovo cliente dove si è ricevuto un ok dopo un ko
+    /**
+     * @description  @Picchiri 16.06.21 chiamata Mulesoft // Lista di ordini per nuovo cliente dove si è ricevuto un ok dopo un ko
+     * @param orderList
+     **/
     public static void creditCheckPhaseManager(List<Order> orderList){ 
 
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();        
@@ -717,8 +752,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
     }
 
-    // @Picchiri sbiancamento esito e causale credit check all'interno dell'ordine. 
-    // Per risottomissione credit check
+    /**
+     * @description  @Picchiri sbiancamento esito e causale credit check all'interno dell'ordine. Per risottomissione credit check
+     * @param mapIdToOrderClean
+     * @param mapIdToOrderUpdate
+     * @return Map<Id,Order>
+     **/
     public static Map<Id,Order> cleanCreditCheckOnOrder(Map<Id,Order> mapIdToOrderClean,Map<Id,Order> mapIdToOrderUpdate) {
         Map<Id,Order> mapIdToOrderUpdateTmp = new Map<Id,Order>();
 
@@ -736,6 +775,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
     // FINE @Picchiri Credit check Date 15.06.21
 
+    /**
+     * @description  manageCancellationProcess
+     * @param orderList
+     * @param orderOldMapd
+     * @return Boolean
+     **/
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
 		Order orderNew = orderList[0];
 		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
@@ -778,6 +823,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     
     // }
     // // FINE @Picchiri Credit check Date 15.06.21
+        
+        /**
+         * @description  updateServiceRequest
+         * @param newOrdersList
+         * @param oldOrdersList
+         **/
         public static void updateServiceRequest(List<Order> newOrdersList, List<Order> oldOrdersList){
             Map<String,Order> mapOrder = new Map<String,Order>();
             Map<String,String> orderStatuses= new Map<String,String>();
