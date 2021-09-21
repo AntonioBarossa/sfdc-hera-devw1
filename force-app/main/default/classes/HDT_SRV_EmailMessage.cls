@@ -138,8 +138,8 @@ public with sharing class HDT_SRV_EmailMessage {
                             }
                         }
                 }
-                System.debug(debugString + ' - ### Case To Update --> ' + caseToUpdate);
                 caseToUpdate.add(caseRecord);
+                System.debug(debugString + ' - ### adding caseRecord --> ' + caseRecord);
                 
             } else {
                 Case caseRecord = mapIdCase.get(email.ParentId);
@@ -152,11 +152,12 @@ public with sharing class HDT_SRV_EmailMessage {
                         caseRecord.Phase__c = 'In attesa risposta Mail';
                     }
                 }
-                System.debug(debugString + ' - ### Case To Update --> ' + caseToUpdate);
                 caseToUpdate.add(caseRecord);
+                System.debug(debugString + ' - ### adding caseRecord --> ' + caseRecord);
             }
         }
         
+        System.debug(debugString + ' - ### Case To Update --> ' + caseToUpdate);
         if(caseToUpdate.size()>0){
             Boolean result = HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         }
