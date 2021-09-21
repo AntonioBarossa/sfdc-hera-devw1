@@ -190,6 +190,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 		}
 		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
+		System.debug('Query: ' + queryString);
 		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
 		return toReturnList[0];
 	}

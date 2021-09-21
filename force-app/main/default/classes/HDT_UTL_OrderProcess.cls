@@ -110,11 +110,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> onlyString = new List<String>();
         List<Order> ordersQualityOkUpdate = new List<Order>();
 
+//**** AGGIUNTA Validazione Documentale LG 2009 FF */
+        List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
 
-       // List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
 
-
-        for(Order o : ordersFullList2){
+        for(Order o : ordersFullList){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
             }

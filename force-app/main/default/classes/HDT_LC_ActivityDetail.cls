@@ -7,6 +7,7 @@
 public with sharing class HDT_LC_ActivityDetail {
     class HDT_WRP_ObjectFieldData{
         @AuraEnabled public Id objectId {get; set;}
+        @AuraEnabled public String objectName {get; set;}//>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
         @AuraEnabled public list<wrts_prcgvr__DynamicField__c> fieldList {get; set;}
 
         HDT_WRP_ObjectFieldData(){}
@@ -20,7 +21,9 @@ public with sharing class HDT_LC_ActivityDetail {
         list<wrts_prcgvr__FieldsTemplate__c> fieldsTemplate = new list<wrts_prcgvr__FieldsTemplate__c>();
         list<wrts_prcgvr__DynamicSection__c> dynamicSection = new list<wrts_prcgvr__DynamicSection__c>();
 
-        list<wrts_prcgvr__Activity__c> activity = [SELECT Id, wrts_prcgvr__ActivityTemplate__c, Order__c, Case__c FROM wrts_prcgvr__Activity__c WHERE Id=:idActivity]; 
+        list<wrts_prcgvr__Activity__c> activity = [SELECT Id, Name, wrts_prcgvr__ActivityTemplate__c, Order__c, Order__r.OrderNumber, Case__c, Case__r.CaseNumber //>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
+                                                    FROM wrts_prcgvr__Activity__c 
+                                                    WHERE Id=:idActivity]; 
         if(activity!=null && !activity.isEmpty() && activity[0].wrts_prcgvr__ActivityTemplate__c!=null){
             activityTemplate = [SELECT Id, wrts_prcgvr__FieldsTemplate__c FROM wrts_prcgvr__ActivityTemplate__c WHERE Id=:activity[0].wrts_prcgvr__ActivityTemplate__c];
         }
@@ -57,11 +60,14 @@ public with sharing class HDT_LC_ActivityDetail {
                     HDT_WRP_ObjectFieldData wrp = new HDT_WRP_ObjectFieldData();
                     if(field.wrts_prcgvr__ObjectName__c=='wrts_prcgvr__Activity__c'){
                         wrp.objectId = (Id)activity[0].get('id');
+                        wrp.objectName = (String)activity[0].get('Name');//>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
                     }else{
                         if(  field.wrts_prcgvr__ObjectName__c=='Order'){
                             wrp.objectId = (Id)activity[0].get('Order__c');
+                            wrp.objectName = (String)activity[0].Order__r.OrderNumber;//>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
                         }else if(field.wrts_prcgvr__ObjectName__c=='Case'){
                             wrp.objectId = (Id)activity[0].get('Case__c');
+                            wrp.objectName = (String)activity[0].Case__r.CaseNumber;//>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
                         }
                     }
                     wrp.fieldList = new list<wrts_prcgvr__DynamicField__c>();
@@ -72,6 +78,7 @@ public with sharing class HDT_LC_ActivityDetail {
             }
             system.debug(JSON.serializePretty(objectFields));
         }
+        system.debug(JSON.serializePretty(objectFields));
         return objectFields;
     }
 }
