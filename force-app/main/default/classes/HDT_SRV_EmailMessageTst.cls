@@ -17,7 +17,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseDocumentale(1, false, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
         //MANAGING CASE
         Case myCase = caseList[0];
@@ -77,7 +77,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         List<EmailMessage> emailList = new List<EmailMessage>{m1};
         
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
-		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail', 'Bozza', rt, 'HDT_RT_Morosita');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
         
         
         //TESTING
@@ -111,7 +111,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         List<EmailMessage> emailList = new List<EmailMessage>{m1};
         
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
-		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta parere', 'Bozza', rt, 'HDT_RT_Morosita');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta parere', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
         
         //TESTING
 		System.debug(debugString + ' - Inizio testing');
