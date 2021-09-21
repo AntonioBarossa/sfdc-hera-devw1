@@ -24,6 +24,9 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //TESTS
     
+    //TODO: IMPLEMENTARE ANCHE CASI CON RESPONSE CODE DIVERSO DA 200 E 201
+    
+    
     ///CheckAutolettura
     @isTest
     private static void executeTest() {
@@ -50,6 +53,9 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         String args = JSON.serialize(argsMap);
         
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
         //TESTING
         HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
@@ -64,6 +70,46 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     }
     
     ///InvioLettureForzato
+    
+    
+    
+    //WEBSERVICE MOCKS
+    
+    public class myWebServiceMock implements HTTPCalloutMock{
+        
+        public HTTPResponse respond(HTTPRequest request){
+            
+            //DEBUG
+            System.debug('myWebServiceMock - respond');
+            HttpResponse response = new HttpResponse();
+            
+            //CheckAutolettura
+            if(request.getEndpoint().equalsIgnoreCase('Callout:SelfReadingsCheck')){
+                
+                //DEBUG
+                System.debug('myWebServiceMock - SelfReadingsCheck');
+                
+                //PREPARING RESPONSE
+                Map<String, Object> data = new Map<String, Object>();
+                data.put('message', 'data fuori finestra acquisibile');
+                
+                Map<String, Object> body = new Map<String, Object>();
+                body.put('data', data);
+                
+                //HTTP RESPONSE
+                response.setHeader('Content-Type', 'application/json');
+                response.setBody(JSON.serialize(body));
+                response.setStatusCode(200);
+                response.setStatus('OK');
+                
+            } else {
+                
+                
+            }
+            
+            return response;
+        }
+    }
     
     
 }
