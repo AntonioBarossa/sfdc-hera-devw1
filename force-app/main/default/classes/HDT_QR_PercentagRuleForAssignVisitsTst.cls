@@ -16,16 +16,19 @@ public class HDT_QR_PercentagRuleForAssignVisitsTst {
         string id = [SELECT id,name FROM PercentageRulesForAssigningVisits__c limit 1].id;
         PercentageRulesForAssigningVisits__c pf = HDT_QR_PercentageRulesForAssigningVisits.getRecordById(id);
         system.assertEquals('pfTest',pf.name);
+        system.assertNotEquals(null,pf.name,'because the name value of this record has been provided');
     }
     @isTest
     static void getRecordsByVisitAssignmentRulesTest(){
          string id = [SELECT id,name FROM VisitAssignmentRules__c limit 1].id;
        PercentageRulesForAssigningVisits__c[] pfList = HDT_QR_PercentageRulesForAssigningVisits.getRecordsByVisitAssignmentRules(id);
         system.assertEquals(1,pfList.size());
+        system.assertNotEquals(0,pfList.size(),'because we have inserted a PercentageRulesForAssigningVisits__c record linked to the assignment rule whose we are passing the id');
     }
      @isTest
     static void getDefaultValueTest(){
        PercentageRulesForAssigningVisits__c[] pfList = HDT_QR_PercentageRulesForAssigningVisits.getDefaultValue();
         system.assertEquals(1,pfList.size());
+        system.assertNotEquals(0,pfList.size(),'we have 1 record with the default value');
     }
 }
