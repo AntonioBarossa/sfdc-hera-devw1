@@ -122,15 +122,48 @@ public with sharing class HDT_SRV_EmailMessageTst {
     
     
     //checkIncomingEmails
+    
+    ///Comunicazione fallimento
     @isTest
-    private static void checkIncomingEmails() {
+    private static void checkEmailSenderTest_Comunicazione() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - checkIncomingEmails';
+		String debugString = TEST_NAME + ' - checkEmailSenderTest_Comunicazione';
 		System.debug(debugString);
         
         //SETUP
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
         
+        
+        //TESTING - Comunicazione fallimento
+        
+        EmailMessage m1 = new EmailMessage();
+        m1.fromAddress = 'Pugnialio@Controfiletti.it';
+        m1.parentId = myCase.Id;
+        m1.Incoming = true;
+        
+        List<EmailMessage> emailList = new List<EmailMessage>{m1};
+        
+        Id rt = constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Risposta Parere Ricevuta', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
+        
+        //TESTING
+		System.debug(debugString + ' - Inizio testing');
+        HDT_SRV_EmailMessage.checkIncomingEmails(emailList);
+        
+    }
+    
+    ///Richiesta Parere
+    @isTest
+    private static void checkIncomingEmails_Richiesta() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - checkIncomingEmails_Richiesta';
+		System.debug(debugString);
+        
+        //SETUP
+        myType = 'Richiesta Parere';
         mySetup();
         Case myCase = [SELECT Id FROM Case];
         
@@ -140,10 +173,12 @@ public with sharing class HDT_SRV_EmailMessageTst {
         EmailMessage m1 = new EmailMessage();
         m1.fromAddress = 'Pugnialio@Controfiletti.it';
         m1.parentId = myCase.Id;
+        m1.Incoming = true;
         
         List<EmailMessage> emailList = new List<EmailMessage>{m1};
         
-        //
+        Id rt = constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_DocCopiaContratto');
         
         
         //TESTING
