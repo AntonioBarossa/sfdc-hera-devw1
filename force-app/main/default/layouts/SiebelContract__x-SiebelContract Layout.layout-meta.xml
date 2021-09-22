@@ -172,6 +172,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ASSET_NUM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>X_SD_DOC_NUM__c</field>
             </layoutItems>
         </layoutColumns>
@@ -190,10 +194,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IMPIANTO_ATTRIB_34__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ASSET_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

@@ -363,7 +363,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (!mainItems.isEmpty()) {
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
-            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.Name;
+            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
             orderToUpdate.VASType__c=mainItems[0].Product2.Family;
             orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name.abbreviate(30);
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
