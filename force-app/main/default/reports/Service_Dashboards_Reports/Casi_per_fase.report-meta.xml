@@ -25,10 +25,13 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
-        <field>Case.ServicePointCode__c</field>
+        <field>Case.PODPDRFormula__c</field>
     </columns>
     <columns>
         <field>CASE_NUMBER</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
         <field>Case.DistributorName__c</field>
@@ -50,6 +53,9 @@
     </columns>
     <columns>
         <field>Case.DiscardDescription__c</field>
+    </columns>
+    <columns>
+        <field>LAST_UPDATEONLY</field>
     </columns>
     <filter>
         <criteriaItems>
