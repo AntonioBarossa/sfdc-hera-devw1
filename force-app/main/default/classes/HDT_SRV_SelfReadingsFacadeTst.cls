@@ -79,7 +79,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
-        System.assert('Inviata a SAP'.equalsIgnoreCase(myUpdatedCase.Phase__c));
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
         
     }
     
