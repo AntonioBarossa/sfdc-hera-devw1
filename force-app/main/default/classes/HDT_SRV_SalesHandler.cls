@@ -172,7 +172,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
-                                ord.DiscardReason__c = fieldValueResponse.get('DES_ERR_AEEG');
+                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                             }
                             when 'Esito OK da DL' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
