@@ -606,7 +606,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		
 		List<Case> caseList=new List<Case>();
 		
-		String rtId=utlConstants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+		String rtId=utlConstants.CASE_RECORDTYPEID_AUTOLETTURA;
 
 		for (Integer i=0; i<amount; i++){
 
