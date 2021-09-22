@@ -93,7 +93,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
    public static void generateUsernameAndPassword(String parentOrder){
 
       //List<Order> orderList = orderQr.getChildOrdersByParentId(parentOrder);
-      Order ordChild = [Select id,ServicePoint__r.ServicePointCode__c,ServicePoint__r.Account__r.BirthDate__c,parentOrder__c,Account.customerMarking__c,sale__r.Channel__c,SignatureMethod__c from order where id = :parentOrder.id];
+      Order ordChild = [Select id,ServicePoint__r.ServicePointCode__c,ServicePoint__r.Account__r.BirthDate__c,parentOrder__c,Account.customerMarking__c,sale__r.Channel__c,SignatureMethod__c from order where id = :parentOrder];
       order ordParent = [select id,Username__c,Account.customerMarking__c,SignatureMethod__c,sale__r.Channel__c from order where id = :ordChild.parentOrder__c];
       if (ordChild != null && ordParent != null && ordParent.Username__c == null && ordParent.Account.customerMarking__c == 'Famiglie' && ordParent.SignatureMethod__c == 'Vocal Order' && ordParent.sale__r.Channel__c == 'Teleselling Outbound'){
 
