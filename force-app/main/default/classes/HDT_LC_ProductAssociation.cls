@@ -27,7 +27,7 @@ public inherited sharing class HDT_LC_ProductAssociation {
         if(objType.equalsIgnoreCase('SBQQ__ProductOption__c')){
             obj = HDT_SRV_ProductAssociation.runProductOptionAssociation(childRecordId, junctionObj, recordList, executionType, filterString, dmlContext);
         } else if(objType.equalsIgnoreCase('SBQQ__ConfigurationRule__c')){
-            //obj = runProductOptionAssociation.runProductOptionAssociation(childRecordId, junctionObj, recordList, executionType, filterString, dmlContext);
+            obj = HDT_SRV_RuleAssociation.runProductOptionAssociation(childRecordId, junctionObj, recordList, executionType, filterString, dmlContext);
         }
         return obj;
     }

@@ -69,7 +69,7 @@ public with sharing class HDT_UTL_RuleAssociation {
 
     public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj createProductRuleAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String confRuleObj, List<String> recordList, String executionType, String filterString, String findMethod){
         
-        System.debug('>>> createProductOptionAssociation');
+        System.debug('>>> createProductRuleAssociation');
 
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
@@ -81,7 +81,7 @@ public with sharing class HDT_UTL_RuleAssociation {
 
                 if(recordList.size() < 10){
                     // NO BATCH NEEDED, YOU CAN UPDATE HERE
-                    HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertReult;// = HDT_SRV_ProductAssociation.associateProductRule(configurationRuleToClone, recordList);
+                    HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertReult = HDT_SRV_RuleAssociation.associateProductRule(configurationRuleToClone, recordList);
 
                     if(insertReult.success){
                         respRunBatchObj.success = true;
@@ -116,7 +116,7 @@ public with sharing class HDT_UTL_RuleAssociation {
 
     public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj deleteProductRuleAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String ruleId, List<String> recordList, String executionType, String filterString, String findMethod){
         
-        System.debug('>>> deleteProductOptionAssociation');
+        System.debug('>>> deleteProductRuleAssociation');
         
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
@@ -127,7 +127,7 @@ public with sharing class HDT_UTL_RuleAssociation {
                 if(recordList.size() < 10){
                     // NO BATCH NEEDED, YOU CAN DELETE HERE
                     List<SBQQ__ConfigurationRule__c> productRuleToDelete;
-                    //productRuleToDelete = HDT_QR_ProductAssociation.getProductOptionByOptionalSkuAndConfiguredSku(productRuleToDelete, ruleId, recordList);
+                    productRuleToDelete = HDT_QR_ProductAssociation.getConfigurationRuleByProductIdAndRuleId(productRuleToDelete, ruleId, recordList);
 
                     SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ConfigurationRule__c');
                     Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -135,7 +135,7 @@ public with sharing class HDT_UTL_RuleAssociation {
                     if(objRes.isDeletable ()){
                         try{
                             List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
-                            //errorData = HDT_SRV_ProductAssociation.deleteProductOption(productRuleToDelete, errorData);
+                            errorData = HDT_SRV_RuleAssociation.deleteProductRule(productRuleToDelete, errorData);
 
                             if(errorData.size() > 0){
                                 respRunBatchObj.success = false;

@@ -33,7 +33,6 @@ public inherited sharing class HDT_SRV_RuleAssociation {
     }
 
     //************
-    /*
     public static Object runProductOptionAssociation(String ruleId, String confRuleObj, List<String> recordList, String executionType, String filterString, String dmlContext){
         
         System.debug('>>> ruleId: ' + ruleId);
@@ -67,55 +66,43 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
         HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult = new HDT_WRP_ProductAssociation.HDT_WRP_InsertResult();
 
-        //AggregateResult[] results = HDT_QR_ProductAssociation.getCountFromProductOption(recordList);
-        //Map<String, Integer> optionIdToNumber;
         List<Product2> prod2list;
         List<SBQQ__ProductFeature__c> productFeatureList;
-        Map<Id, Id> skuIdFeatureIdMap;
+        Map<Id, Id> productIdFeatureIdMap;
 
-        //if(results.size()>0){
-        //    optionIdToNumber = HDT_UTL_ProductAssociation.createNumberProductOptionMap(results);
+        System.debug('>>> PRODUCT ID: ' + configurationRuleToClone.SBQQ__Product__c);
+
+        //prod2list = HDT_QR_ProductAssociation.getProductOption2recordBySkuId(prod2list, configurationRuleToClone.SBQQ__Product__c);
+//
+        //System.debug('>>> prod2listsize ' + prod2list.size());
+        //System.debug('>>> family ' + prod2list[0].Family);
+
+        productIdFeatureIdMap = new Map<Id, Id>();
+
+        //if(prod2list != null && prod2list.size() > 0){
+        //    productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
+        //    System.debug('>>> productFeatureList ' + productFeatureList.size());
+        //    productIdFeatureIdMap = HDT_UTL_ProductAssociation.generateSkuIdFeatureIdMap(productFeatureList, productIdFeatureIdMap);
         //}
 
-        System.debug('>>> OptionalSKU ' + configurationRuleToClone.SBQQ__OptionalSKU__c);
-
-        prod2list = HDT_QR_ProductAssociation.getProductOption2recordBySkuId(prod2list, configurationRuleToClone.SBQQ__OptionalSKU__c);
-
-        System.debug('>>> prod2listsize ' + prod2list.size());
-        System.debug('>>> family ' + prod2list[0].Family);
-
-        skuIdFeatureIdMap = new Map<Id, Id>();
-
-        if(prod2list != null && prod2list.size() > 0){
-            productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
-            System.debug('>>> productFeatureList ' + productFeatureList.size());
-            skuIdFeatureIdMap = HDT_UTL_ProductAssociation.generateSkuIdFeatureIdMap(productFeatureList, skuIdFeatureIdMap);
-        }
-
-        List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
+        List<SBQQ__ConfigurationRule__c> configurationRuleList = new List<SBQQ__ConfigurationRule__c>();
         
-        if(productOptionToClone != null){
-            SBQQ__ProductOption__c newRecord;
+        if(configurationRuleToClone != null){
+            SBQQ__ConfigurationRule__c newRecord;
             for(String productId : recordList){
-                newRecord = new SBQQ__ProductOption__c();
-                newRecord = productOptionToClone.clone(false, true, false, false);
-                newRecord.SBQQ__ConfiguredSKU__c = productId;
+                newRecord = new SBQQ__ConfigurationRule__c();
+                newRecord = configurationRuleToClone.clone(false, true, false, false);
+                newRecord.SBQQ__Product__c = productId;
 
-                //if(optionIdToNumber != null && optionIdToNumber.containsKey(productId)){
-                //    newRecord.SBQQ__Number__c = optionIdToNumber.get(productId) + 1;
-                //} else {
-                //    newRecord.SBQQ__Number__c = 1;
+                //if(productIdFeatureIdMap.containsKey(productId)){
+                //    newRecord.SBQQ__ProductFeature__c = productIdFeatureIdMap.get(productId);
                 //}
 
-                if(skuIdFeatureIdMap.containsKey(productId)){
-                    newRecord.SBQQ__Feature__c = skuIdFeatureIdMap.get(productId);
-                }
-
-                productOptionList.add(newRecord);
+                configurationRuleList.add(newRecord);
             }
-            System.debug('>>> record to insert: ' + String.valueOf(productOptionList));
+            System.debug('>>> record to insert: ' + String.valueOf(configurationRuleList));
             insertResult.errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
-            insertResult.errorData = databaseInsert(productOptionList, insertResult.errorData);
+            insertResult.errorData = databaseInsert(configurationRuleList, insertResult.errorData);
 
             if(insertResult.errorData.size() > 0){
                 insertResult.success = false;
@@ -133,9 +120,9 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
     }
 
-    public static List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> databaseInsert(List<SBQQ__ProductOption__c> itemList, List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData){
+    public static List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> databaseInsert(List<SBQQ__ConfigurationRule__c> itemList, List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData){
 
-        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ConfigurationRule__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
         if(objRes.isCreateable() && objRes.isUpdateable()){
@@ -150,7 +137,7 @@ public inherited sharing class HDT_SRV_RuleAssociation {
                     String errorString = '';
                     HDT_WRP_ProductAssociation.HDT_WRP_LineError lineError = new HDT_WRP_ProductAssociation.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
-                        lineError.rowId = itemList[n].SBQQ__ConfiguredSKU__c;
+                        lineError.rowId = itemList[n].SBQQ__Product__c;
                         lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
                     }
                     errorData.add(lineError);
@@ -161,11 +148,11 @@ public inherited sharing class HDT_SRV_RuleAssociation {
         return errorData;
     }
 
-    public static List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> deleteProductOption(List<SBQQ__ProductOption__c> productOptionToDelete, List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData){
+    public static List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> deleteProductRule(List<SBQQ__ConfigurationRule__c> productOptionToDelete, List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData){
 
         errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
 
-        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ProductOption__c');
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ConfigurationRule__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
         if(objRes.isDeletable()){
@@ -190,5 +177,5 @@ public inherited sharing class HDT_SRV_RuleAssociation {
         return errorData;
 
     }
-*/
+
 }

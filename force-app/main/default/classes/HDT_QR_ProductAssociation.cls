@@ -119,4 +119,23 @@ public inherited sharing class HDT_QR_ProductAssociation {
         return jobList;
     }
 
+    public static List<SBQQ__ConfigurationRule__c> getConfigurationRuleByProductIdAndRuleId(List<SBQQ__ConfigurationRule__c> configurationRuleList, String ruleId, List<String> prodcutIdList){
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('SBQQ__ConfigurationRule__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        configurationRuleList = new List<SBQQ__ConfigurationRule__c>();
+
+        if(objRes.isAccessible()){
+            configurationRuleList = [
+                SELECT Id
+                FROM SBQQ__ConfigurationRule__c
+                WHERE SBQQ__ProductRule__c = :ruleId
+                AND SBQQ__Product__c IN :prodcutIdList
+            ];
+        }
+
+        return configurationRuleList;
+
+    }
+
 }
