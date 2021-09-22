@@ -7,6 +7,9 @@
         <locationY>586</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Redirect_to_order</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>methodName</name>
@@ -29,6 +32,9 @@
         <locationY>585</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Redirect_to_case</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>methodName</name>
@@ -51,6 +57,9 @@
         <locationY>792</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Redirect_to_order</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>methodName</name>
@@ -112,6 +121,38 @@
             <name>objectId</name>
             <value>
                 <elementReference>getActivity.Case__c</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Redirect_to_case</name>
+        <label>Redirect to case</label>
+        <locationX>95</locationX>
+        <locationY>769</locationY>
+        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>getActivity.Case__c</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Redirect_to_order</name>
+        <label>Redirect to order</label>
+        <locationX>553</locationX>
+        <locationY>878</locationY>
+        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>getActivity.Order__c</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
