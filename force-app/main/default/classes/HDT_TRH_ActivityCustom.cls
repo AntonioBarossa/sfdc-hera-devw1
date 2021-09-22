@@ -1,5 +1,6 @@
 public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHandler {
-	
+	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
+
     public override void beforeInsert(){
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_Scarti.setLookupFields(trigger.new);
@@ -9,10 +10,27 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
  	public override void afterDelete(){}
   	public override void afterUndelete(){}
     
-    public override void beforeUpdate(){}
+    public override void beforeUpdate(){
+        System.debug('beforeUpdate');
+        // HRAWRM-672 22/09/2021 EC
+        //wrts_prcgvr__Status__c='Chiusa';
+        String varStatus='Chiusa';
+        Map<Id, wrts_prcgvr__Activity__c> mapNew = (Map<Id, wrts_prcgvr__Activity__c>)trigger.newMap;
+        Map<Id, wrts_prcgvr__Activity__c> mapOld = (Map<Id, wrts_prcgvr__Activity__c>)trigger.oldMap;
+        for (wrts_prcgvr__Activity__c tempAct :(List<wrts_prcgvr__Activity__c>)trigger.new) {
+            if (mapNew.get(tempAct.id)!=null && mapOld.get(tempAct.id)!=null
+                && mapNew.get(tempAct.id).OwnerId !=  mapOld.get(tempAct.id).OwnerId
+                && mapNew.get(tempAct.id).wrts_prcgvr__Status__c!=varStatus&& mapNew.get(tempAct.id).RecordTypeId==recordTypeD2DId ) {
+                    System.debug('********HERE');
+                    tempAct.wrts_prcgvr__Status__c=varStatus;
+            }
+        }
+        // HRAWRM-672 22/09/2021 EC
+
+    }
 
     public override void afterUpdate(){
- 
+
         HDT_UTL_ActivityCustomProcess.changeAssignRelatedRecord(trigger.new,trigger.old);
 
         // @Picchiri 08.06.21 Credit Check Annullamento Ordine
@@ -23,6 +41,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         //cancel orders from quality call activities with 'No esito' and ActiveMonitoring__c = true
         HDT_UTL_ActivityCustomProcess.cancelQualityNoResult(trigger.new,trigger.old);
+        
+       // marco.arci@webresults.it 01/09/2021 gestione scarti documentali
+       HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new, trigger.old);
 
     }
 

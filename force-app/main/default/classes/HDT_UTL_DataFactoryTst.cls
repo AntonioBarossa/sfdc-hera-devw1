@@ -5,7 +5,11 @@
  * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
+
 public with sharing class HDT_UTL_DataFactoryTst{
+
+	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
 	public static void pClickInstance(){
 
@@ -113,11 +117,16 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Account> accList=new List<Account>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_BUSINESS;
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_BUSINESS;
 
 		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
@@ -126,15 +135,21 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678901';
+			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
 			acc.BillingIsAddressVerified__c=true;
 			//@frpanico 06/08 added Customer Code
-			acc.CustomerCode__c='1003616210';
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+        	acc.IsWrongFiscalData__c = false;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			accList.add(acc);
 
@@ -152,11 +167,17 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Account> accList=new List<Account>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
+		Id rt=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 		for (Integer i=0; i<amount; i++){
+
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
@@ -165,14 +186,24 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678901';
+			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(100 + i);
+			acc.FirstName__c= 'test';
+			acc.LastName__c='account'+i;
 			//@frpanico 06/08 added Customer Code
-			acc.CustomerCode__c='1003616210';
+
+			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
+			// OLD VALUE → acc.CustomerCode__c='1003616210';
+        	acc.IsWrongFiscalData__c = false;
+        	acc.BillingIsAddressVerified__c = true;
+			acc.CustomerCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
+			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			accList.add(acc);
 
@@ -186,13 +217,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return accList;
 	}
 
+	public static List<Account> createAccountPartner(Integer amount, Boolean doInsert, String name) {
+
+		List<Account> partnerAccounts = new List<Account>();		
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			partnerAccounts.add(
+				new Account(Name = name, RecordTypeId = utlConstants.ACCOUNT_RECORDTYPEID_PARTNER)
+			);
+		}
+
+		if (doInsert) {
+			
+			insert partnerAccounts;
+
+		}
+
+		return partnerAccounts;
+	}
+
 	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase){
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -235,9 +284,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -281,9 +328,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rtVoltura=constRecordType.ORDER_RECORDTYPEID_VOLTURA;
+		Id rtVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -330,9 +375,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		HDT_UTL_Constants constRecordType=new HDT_UTL_Constants();
-
-		Id rt=constRecordType.ORDER_RECORDTYPEID_DEFAULT;
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -466,7 +509,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			Contract testContract=new Contract();
 			testContract.AccountId=accId;
 			//@frpanico 06/08 Added contract code
-			testContract.SAPContractCode__c='3011913470';
+			testContract.SAPContractCode__c='301191347'+i;
 
 			contractList.add(testContract);
 		}
@@ -478,12 +521,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return contractList;
 	}
-
+	
+	
+	//CASE
+	
+	//CASE MOROSITà
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
-
+		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
+	}
+	
+	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
 		List<Case> caseList=new List<Case>();
-		HDT_UTL_Constants constUtl=new HDT_UTL_Constants();
-		String rtId=constUtl.CASE_RECORDTYPEID_MOROSITA;
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
 
 		for (Integer i=0; i<amount; i++){
 
@@ -513,6 +564,44 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return caseList;
 	}
+	
+	//CASE DOCUMENTALE/COPIA CONTRATTO
+	public static List<Case> createCaseDocumentale(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
 
@@ -603,11 +692,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
 
 		for (Integer i=0; i<amount; i++){
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+			Decimal numCustomerCode = Decimal.valueOf('200008867681');
+			Decimal result = numCustomerCode + i;
+			String stringResult = String.valueOf(result);
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
 
 			BillingProfile__c testBillingProfile=new BillingProfile__c();
 			testBillingProfile.Account__c=Account;
 			//@frpanico 06/08 added CaCode
-			testBillingProfile.ContractAccountCode__c='200008867681';
+			
+			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+			//OLDVALUE: testBillingProfile.ContractAccountCode__c='200008867681';
+			testBillingProfile.ContractAccountCode__c = stringResult;
+			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
+			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
+
+			
 
 			tstBillingProfileList.add(testBillingProfile);
 		}
@@ -1043,6 +1147,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return internalUser;
 	}
 
+	public static User createCommunityUser(Contact contact, String profileId ,Boolean doInsert) {
+        User communityUser = new User(
+                Alias = 'commuser',
+                FirstName = 'FirstName',
+                LastName = 'LastName',
+                Email = 'commuser@test.com',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'it',
+                LocaleSidKey = 'it',
+                ProfileId = profileId,
+                ContactId = contact.Id,
+                TimeZoneSidKey = 'Europe/Rome',
+                UserName = 'commuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+            insert communityUser;
+        }
+        return communityUser;
+    }
+
 	public static PermissionSetAssignment assignPermissionSet(User u, String permissionSet, Boolean doInsert){
 
 		PermissionSetAssignment psa=new PermissionSetAssignment(PermissionSetId=getPermissionSetId(permissionSet), AssigneeId=u.Id);
@@ -1426,4 +1550,667 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return accShareList;
 	}
+
+	public static List<DocumentSelected__c> createDocumentSelected(Integer amount,Boolean doInsert, Boolean credit, String caseId, String ca){
+
+		List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
+		Integer fixedAmount = credit ? -15 : 15;
+		for(Integer i = 0; i < amount; ++i){
+			DocumentSelected__c documentObj = new DocumentSelected__c();
+			documentObj.Name = '000041170936496' + i;
+			documentObj.Case__c = caseId;
+			documentObj.Amount__c = fixedAmount * (i + 1);
+			documentObj.Bill__c = '420174500378587' + i;
+			documentObj.ContractualAccount__c = ca;
+			documentObj.DocumentNumber__c = '000041170936496' + i;
+			documentObj.ExpirationDate__c = Date.newInstance(2019, 12, 24);
+			documentObj.Extension__c = 'SI';
+			documentObj.IssueDate__c = Date.newInstance(2019, 12, 04);
+			documentObj.IssuingCompany__c = 'IssuingCompany__c';
+			documentObj.PaymentMode__c = 'BOLLETTINO';
+			documentObj.DocumentResidue__c =  fixedAmount * (i + 1);
+			documentObj.TvFeeResidual__c = 12;
+			documentObj.PaymentChannel__c = 'Posta';
+			documentObj.Position1__c = '000';
+			documentObj.Position2__c = '0001';
+			documentObj.Position3__c = '000';
+			documents.add(documentObj);
+		}
+		if(doInsert){
+			insert documents;
+		}
+		return documents;
+	}
+	
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentalActivity__c docAct = new DocumentalActivity__c();
+			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
+			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
+			docAct.EnvelopeId__c = 'idPlico_' + i;
+			docAct.AttachmentCode__c = 'codiceAllegato_'+i;
+			docAct.PostelTimestamp__c = '2000000000';
+			docActList.add(docAct);
+		}
+		insert docActList;
+		return docActList;
+	}
+	
+	public static list<DocumentSendTracking__c> createDocumentSendTracking(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentSendTracking__c> docTrackList = new List<DocumentSendTracking__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentSendTracking__c docTrack = new DocumentSendTracking__c();
+			docTrack.Order__c = String.isNotBlank(orderId)?orderId:null;
+			docTrack.Case__c = String.isNotBlank(caseId)?caseId:null;
+			docTrack.EnvelopeId__c = 'idPlico_' + i;
+			docTrackList.add(docTrack);
+		}
+		insert docTrackList;
+		return docTrackList;
+	}
+	
+
+	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
+
+		List<AtecoMatrix__c> atecoMatrixList=new List<AtecoMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			AtecoMatrix__c testAtecoMatrix=new AtecoMatrix__c();
+			testAtecoMatrix.Name=name+i;
+
+			atecoMatrixList.add(testAtecoMatrix);
+		}
+
+		if (doInsert){
+
+			insert atecoMatrixList;
+		}
+
+		return atecoMatrixList;
+	}
+
+	public static List<FUBProcessing__c> createfubProcessing (Integer amount, Boolean doInsert, String status) {
+
+		List<FUBProcessing__c> fubProcessingList = new List<FUBProcessing__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FUBProcessing__c fubProcessing = new FUBProcessing__c(
+				Status__c = status
+			);		
+
+			fubProcessingList.add(fubProcessing);
+		}
+
+		if (doInsert){
+
+			insert fubProcessingList;
+		}
+
+		return fubProcessingList;
+	}
+
+	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id FubProcessingId) {
+
+		List<FUBProcessingItem__c> fubProcessingItemList = new List<FUBProcessingItem__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			FUBProcessingItem__c fubProcessingItem = new FUBProcessingItem__c(
+				Campaign__c = campaignId,
+            	FUBProcessing__c = FubProcessingId
+			);
+
+			fubProcessingItemList.add(fubProcessingItem);
+		}
+
+		if (doInsert){
+
+			insert fubProcessingItemList;
+		}
+
+		return fubProcessingItemList;
+	}
+
+	public static List<Individual> createIndividual (Integer amount, Boolean doInsert) {
+
+		List<Individual> indList = new List<Individual>();
+
+		for (Integer i=0; i<amount; i++){
+
+			Individual ind = new Individual(
+				FirstName = 'Mama',
+				LastName = 'Guzzo'
+        	);
+
+			indList.add(ind);
+		}
+
+		if (doInsert){
+
+			insert indList;
+		}
+
+		return indList;
+	}
+
+	public static List<ContactPointPhone> createContactPointPhone (Integer amount, Boolean doInsert, Id individualId) {
+
+		List<ContactPointPhone> cppList = new List<ContactPointPhone>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContactPointPhone cpp = new ContactPointPhone(
+            ParentId = individualId,
+            TelephoneNumber = '982591380'
+        );
+
+			cppList.add(cpp);
+		}
+
+		if (doInsert){
+
+			insert cppList;
+		}
+
+		return cppList;
+	}
+
+	public static List<ContactPointEmail> createContactPointEmail (Integer amount, Boolean doInsert, Id individualId) {
+
+		List<ContactPointEmail> cpeList = new List<ContactPointEmail>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ContactPointEmail cpe = new ContactPointEmail(
+            ParentId = individualId,
+            EmailAddress = 'sales@force.com'
+        );
+
+			cpeList.add(cpe);
+		}
+
+		if (doInsert){
+
+			insert cpeList;
+		}
+
+		return cpeList;
+	}
+
+	public static List<RentProcessRule__c> createRentProcessRule (Integer amount, Boolean doInsert, boolean applicationInterests, boolean deposit)
+	{
+		List<RentProcessRule__c> rules = new List<RentProcessRule__c>();
+		for(Integer i=0; i < amount; ++i)
+		{
+			RentProcessRule__c rule = new RentProcessRule__c();
+			rule.AmountToPayInInstallmentsFrom__c 		= 0.01;
+			rule.AmountToPayInInstallmentsTo__c			= 2000;
+			rule.ApplicationInterests__c				= applicationInterests;    //input
+			rule.ApprovalProcess__c						= false;
+			rule.AttachmentManagement__c				= false;
+			rule.CAWithOrWithoutSEPA__c					= false;
+			rule.Deposit__c								= deposit; //input
+			rule.ExistingInstallmentPlanUnpaidFrom__c 	= 0;
+			rule.ExistingInstallmentPlanUnpaidTo__c		= 3;
+			rule.InstallmentPlanReason__c				= 'Fattura SD'; 
+			rule.MaxInstallmentsNumber__c				= 6;
+			rule.Category__c							= 'Famiglie';
+			rules.add(rule);	
+		}
+		if(doInsert)
+		{
+			insert rules;
+		}
+		return rules;
+	}
+	public static List<SBQQ__QuoteProcess__c> createQuoteProcess(Integer amount, Boolean doInsert) {
+
+		List<SBQQ__QuoteProcess__c> qProcessList = new List<SBQQ__QuoteProcess__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__QuoteProcess__c qp = new SBQQ__QuoteProcess__c(
+            	Name = 'testQuoteProcess'+i,
+				SBQQ__Default__c = true,
+				SBQQ__GuidedOnly__c = true,
+				SBQQ__ProductAutoSelected__c = true,
+				SBQQ__ProductConfigurationInitializer__c = 'initializerTest',
+				SBQQ__ProductSearchExecutor__c = 'Executor',
+				SBQQ__SortOrder__c = 1
+        	);
+
+			qProcessList.add(qp);
+		}
+
+		if (doInsert){
+
+			insert qProcessList;
+		}
+
+		return qProcessList;
+	}
+
+	public static List<PaperProcessing__c> createPaperProcessing(Integer amount, Boolean doInsert, String name, String campaignId) {
+
+		List<PaperProcessing__c> paperProcessings = new List<PaperProcessing__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			paperProcessings.add(
+				new PaperProcessing__c(Name = name, Campaign__c = campaignId)
+			);
+		}
+
+		if (doInsert) {
+			insert paperProcessings;
+		}
+
+		return paperProcessings;
+
+	}
+
+	public static String getUserRoleId (String userRoleDeveloperName){
+		String userRoleId='';
+
+		if (!String.isEmpty(userRoleDeveloperName)){
+
+			userRoleId=[SELECT Id
+			FROM UserRole
+			WHERE DeveloperName = :userRoleDeveloperName
+			LIMIT 1].Id;
+
+		}
+
+		return userRoleId;
+	}
+
+	public static List<DistributorPointCode__c> createDistributorPointCode (Integer amount, Boolean doInsert, Id accountId){
+
+		List<DistributorPointCode__c> dpcList = new List<DistributorPointCode__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			DistributorPointCode__c dpc = new DistributorPointCode__c(
+				Account__c = accountId
+			);
+
+			dpcList.add(dpc);
+		}
+
+		if (doInsert) {
+
+			insert dpcList;
+
+		}
+
+		return dpcList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLink__c> createServiceLink (Integer amount, Boolean doInsert) {
+
+		List<wrts_prcgvr__ServiceLink__c> serviceLinkList = new List<wrts_prcgvr__ServiceLink__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLink__c sl = new wrts_prcgvr__ServiceLink__c(
+				wrts_prcgvr__IsActive__c = true
+			);
+
+			serviceLinkList.add(sl);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkList;
+		}
+
+		return serviceLinkList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLinkItem__c> createServiceLinkItem (Integer amount, Boolean doInsert, Id serviceLinkId) {
+
+		List<wrts_prcgvr__ServiceLinkItem__c> serviceLinkItemList = new List<wrts_prcgvr__ServiceLinkItem__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLinkItem__c sli = new wrts_prcgvr__ServiceLinkItem__c(
+				wrts_prcgvr__ServiceLink__c = serviceLinkId
+			);
+
+			serviceLinkItemList.add(sli);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkItemList;
+		}
+
+		return serviceLinkItemList;
+	}
+
+	
+	public static void createWebServiceConfiguration (String name, String endpoint, String method, String user) {
+
+		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
+			Name = name,
+			Endpoint__c = endpoint,
+			Method__c = method,
+			User__c = user         
+		);
+		
+		insert wsConfig;
+	}
+
+	public static void createWebServiceCredential (String name , String password, String username) {
+
+		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
+			Name = name,
+			Password__c = password,
+			Username__c = username
+		);
+
+		insert wsCredential;
+	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
+
+	public static List<SBQQ__Subscription__c> createSubscription (Integer amount, Boolean doInsert, Id accountId, Id contractId, Id servicePointId) {
+
+		List<SBQQ__Subscription__c> subcriptionList = new List<SBQQ__Subscription__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Subscription__c subscription = new SBQQ__Subscription__c(
+				SBQQ__Account__c = accountId,
+				SBQQ__Contract__c = contractId,
+				ServicePoint__c = servicePointId,
+				SBQQ__Quantity__c = 1.0
+			);
+
+			subcriptionList.add(subscription);
+		}
+
+		if (doInsert){
+
+			insert subcriptionList;
+		}
+
+		return subcriptionList;
+
+	}
+
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
+	}
+
+	public static List<CommercialCode__c> createCommCode(Integer amount, Boolean doInsert) {
+
+		List<CommercialCode__c> commCodeList = new List<CommercialCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommercialCode__c commCode = new CommercialCode__c(
+				Name = 'testCommCode'
+			);
+
+			commCodeList.add(commCode);
+		}
+
+		if (doInsert){
+
+			insert commCodeList;
+		}
+
+		return commCodeList;
+	}
+
+	public static List<MatriceRemiCode__c> createMatriceRemiCode(Integer amount, Boolean doInsert){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+
+			mRemiCode.RemiCode__c='test';
+
+			matriceRemiCode.add(mRemiCode);
+
+		}
+
+		if (doInsert){
+
+			insert matriceRemiCode;
+		}
+
+		return matriceRemiCode;
+	}
+
+	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
+
+		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ServiceRequest__c sr = new ServiceRequest__c(
+				ProcessType__c = 'Alert'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
+	
+	public static List<SurveyResponse__c> createSurveyResponse(Integer amount, Boolean doInsert) {
+
+		List<SurveyResponse__c> srList = new List<SurveyResponse__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyResponse__c sr = new SurveyResponse__c(
+				Name = 'testName'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
+
+	public static List<RateCategory__c> createRateCategoty(Integer amount, Boolean doInsert) {
+
+		List<RateCategory__c> rateCatList = new List<RateCategory__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			RateCategory__c rateCat = new RateCategory__c(
+				Commodity__c='testCommodity',
+				Name='testName',
+				CalculatedValue__c='123',
+				ProductName__c='testProduct',
+				Fornitura__c='testFornitura',
+				DistributorCode__c='testDistCode'
+			);
+
+		rateCatList.add(rateCat);
+		}
+
+		if (doInsert){
+
+			insert rateCatList;
+		}
+	return rateCatList;
+	}
+
+	public static List<SurveyCRM__c> createSurveyCrm (Integer amount, Boolean doInsert) {
+
+		List<SurveyCRM__c> surveyCrmList = new List<SurveyCRM__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyCRM__c surveyCrm = new SurveyCRM__c(
+				Name = 'testName'
+			);
+
+			surveyCrmList.add(surveyCrm);
+		}
+
+		if (doInsert){
+
+			insert surveyCrmList;
+		}
+
+		return surveyCrmList;
+	}
+
+	public static List<VisitAssignmentRules__c> createVisitAssignmentRules (Integer amount, Boolean doInsert) {
+
+		List<VisitAssignmentRules__c> visitAssigRulesList = new List<VisitAssignmentRules__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VisitAssignmentRules__c visitAssigRule = new VisitAssignmentRules__c(
+				Name = 'testName'
+			);
+
+			visitAssigRulesList.add(visitAssigRule);
+		}
+
+		if (doInsert){
+
+			insert visitAssigRulesList;
+		}
+
+		return visitAssigRulesList;
+	}
+
+	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
+
+		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
+
+			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
+			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.TotalRequest__c = 2;
+			massiveLoaderRequest.RequestOK__c = 2;
+			massiveLoaderRequest.RequestKO__c = 0;
+			massiveLoaderRequest.Phase__c = 'File in elaborazione';
+			massiveLoaderRequest.Priority__c = 1;
+
+
+			massiveLoaderRequestList.add(massiveLoaderRequest);
+		}
+
+		if (doInsert){
+
+			insert massiveLoaderRequestList;
+		}
+
+		return massiveLoaderRequestList;
+
+	}
+
+	public static List<BlackList__c> createBlacklist (Integer amount, Boolean doInsert) {
+
+		List<BlackList__c> blacklistList = new List<BlackList__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BlackList__c blacklist = new BlackList__c(
+				Name='testBlacklist',
+				Domain__c='testDomain',
+				Pod__c='testPOD'
+			);
+
+			blacklistList.add(blacklist);
+		}
+
+		if (doInsert){
+
+			insert blacklistList;
+		}
+
+		return blacklistList;
+	}
+
+	public static List<ComfortQualityCall__c> createComfortQualityCall (Integer amount, Boolean doInsert) {
+
+		List<ComfortQualityCall__c> comfQualityCallList = new List<ComfortQualityCall__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ComfortQualityCall__c comQualityCall = new ComfortQualityCall__c(
+				ComfortDocSendingChannel__c='Posta Cartacea'
+			);
+
+			comfQualityCallList.add(comQualityCall);
+		}
+
+		if (doInsert){
+
+			insert comfQualityCallList;
+		}
+
+		return comfQualityCallList;
+	}
+
 }

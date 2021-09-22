@@ -6,6 +6,7 @@
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>CodeManagementModel__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -20,15 +21,45 @@
                 <label>Prefisso + Progressivo</label>
             </value>
             <value>
-                <fullName>PrefissoNome</fullName>
+                <fullName>Prefisso + Nome + Cognome + Progressivo</fullName>
                 <default>false</default>
-                <label>Prefisso + Nome</label>
+                <label>Prefisso + Nome + Cognome + Progressivo</label>
             </value>
             <value>
                 <fullName>CognomeProgressivo</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Cognome + Progressivo</label>
             </value>
+            <value>
+                <fullName>PrefissoNome</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prefisso + Nome</label>
+            </value>
+            <value>
+                <fullName>TBD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TBD</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Generico</controllingFieldValue>
+            <controllingFieldValue>Pubblico</controllingFieldValue>
+            <valueName>Manuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Generico</controllingFieldValue>
+            <controllingFieldValue>Per singolo Campaign Member</controllingFieldValue>
+            <controllingFieldValue>Porta un amico</controllingFieldValue>
+            <controllingFieldValue>Convenzione</controllingFieldValue>
+            <valueName>PrefissoProgressivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Per singolo Campaign Member</controllingFieldValue>
+            <controllingFieldValue>Porta un amico</controllingFieldValue>
+            <valueName>Prefisso + Nome + Cognome + Progressivo</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

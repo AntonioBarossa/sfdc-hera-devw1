@@ -73,7 +73,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
         switch (eventType) {
             case 'POPUP':
                 //if (count == 0) {
-                    console.log('*******INSIDEPOPUP');
+                   /* console.log('*******INSIDEPOPUP');
                     this.toolbarAttributes = event.detail.eventObj;
                     this.uuid = this.toolbarAttributes.id;
                     callData = event.detail.CallData;
@@ -84,7 +84,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
                             this.ecid = elem.value;
                         }
                     });*/
-
+/*
 
                     if (this.ecid != '' && this.objectApiName == 'CampaignMember') {
                         this.showRecallMe = true;
@@ -115,7 +115,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
                         }
                     });*/
 
-                    if (checkMemberId == true) {
+                  /*  if (checkMemberId == true) {
                         //1st call - get available timeslots and fill the datatable
 
                         //redirect to campaignMember record page
@@ -128,7 +128,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
                             },
                         });
                     }
-                    count++;
+                    count++;*/
                // }
                 break;
 
@@ -185,6 +185,8 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
            // this.isSelectedDate
         this.template.querySelector("c-hdt-ct-toolbar-container").postAppointmentRequest(this.isSelectedDate);
         //}
+        this.showModal = false;
+
         console.log('saved');
     }
 
@@ -193,7 +195,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
         if (event.detail.status) {
             status = event.detail.status;
             console.log('submitHandlerNegativeOutcome - ' + status);
-            this.template.querySelector("c-hdt-ct-toolbar").saveScript(status, true);
+            this.template.querySelector("c-hdt-ct-toolbar-container").saveScript(status, true);
         }
     }
 }

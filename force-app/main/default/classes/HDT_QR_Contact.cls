@@ -10,6 +10,7 @@ public inherited sharing class HDT_QR_Contact {
 
         List<Contact> contactsList = [
             SELECT
+            Name,
             FirstName,
             LastName,
             MobilePhone,
@@ -101,7 +102,8 @@ public inherited sharing class HDT_QR_Contact {
     }
     
     public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
-        return [Select id,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
+        // Start HRAWRM-450 07/09/2021 add CertifiedEmail__c
+        return [Select id,CertifiedEmail__c,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
     }
 
     // INIZIO SVILUPPI EVERIS

@@ -30,6 +30,16 @@
         var leadId = myPageRef.state.c__leadId;
 
 
+        //attributo per innesco da ServicePoint
+        var servicePointId = myPageRef.state.c__servicePointId;
+        //attributo per innesco da BillingProfile
+        var billingProfileId = myPageRef.state.c__billingProfileId;
+        //attributo per sequenzializzazione
+        var serviceRequestId = myPageRef.state.c__serviceRequestId;
+        //attributo per esito compatibilita
+        var compatibile = myPageRef.state.c__compatibile;       
+
+
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
         component.set("v.recordid", caseId)
@@ -45,6 +55,10 @@
         console.log('# parentRecordId -> ' +parentRecordId);
         console.log('# campaignId -> ' + campaignId)
         console.log('# leadId -> ' + leadId);
+        console.log('# servicePointId -> '          + servicePointId);
+        console.log('# billingProfileId -> '        + billingProfileId);
+        console.log('# serviceRequestId -> '        + serviceRequestId);
+        console.log('# compatibile -> '             + compatibile);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -131,6 +145,18 @@
         }
         if(leadId != null){
             inputVariables.push({ name : 'LeadId', type : 'String', value : leadId});
+        }
+        if(servicePointId != null){
+            inputVariables.push({ name : 'InputServicePointId', type : 'String', value : servicePointId});
+        }
+        if(billingProfileId != null){
+            inputVariables.push({ name : 'BillingProfileId', type : 'String', value : billingProfileId});
+        }
+        if(serviceRequestId != null){
+            inputVariables.push({ name : 'ServiceRequestId', type : 'String', value : serviceRequestId});
+        }
+        if(compatibile != null){
+            inputVariables.push({ name : 'Compatibile', type : 'String', value : compatibile});
         }
 
         console.log('## inputVariables -> ');
@@ -334,9 +360,9 @@
         var tabId = event.getParam('tabId'); 
         console.log("Tab closed: " + tabId);
         console.log("Tab Current: " +component.get("v.subTabToClose"));
-        if (component.get("v.subTabToClose") == tabId) {
-            location.reload();
-        }
+        // if (component.get("v.subTabToClose") == tabId && component.get("v.subTabToClose") ) {
+        //     location.reload();
+        // }
         //
 
     }

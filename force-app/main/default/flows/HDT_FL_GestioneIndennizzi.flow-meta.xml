@@ -4,8 +4,8 @@
     <assignments>
         <name>AddToCollection_0_0_0_0_0</name>
         <label>AddToCollection</label>
-        <locationX>842</locationX>
-        <locationY>1550</locationY>
+        <locationX>974</locationX>
+        <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>IndemnityCollection</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>AddToCollection_0_0_0_0_0_0</name>
         <label>AddToCollection</label>
-        <locationX>1106</locationX>
-        <locationY>1670</locationY>
+        <locationX>1238</locationX>
+        <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>IndemnityCollection</assignToReference>
             <operator>Add</operator>
@@ -43,8 +43,8 @@
     <assignments>
         <name>AssignCausalCode</name>
         <label>AssignCausalCode</label>
-        <locationX>842</locationX>
-        <locationY>1430</locationY>
+        <locationX>974</locationX>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -66,8 +66,8 @@
     <assignments>
         <name>AssignCausalCode_0</name>
         <label>AssignCausalCode</label>
-        <locationX>1106</locationX>
-        <locationY>1550</locationY>
+        <locationX>1238</locationX>
+        <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -103,8 +103,8 @@
     <assignments>
         <name>AssignPhase</name>
         <label>AssignPhase</label>
-        <locationX>1062</locationX>
-        <locationY>2246</locationY>
+        <locationX>1194</locationX>
+        <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>UpdatePhase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -126,8 +126,8 @@
     <assignments>
         <name>AssignToCollection</name>
         <label>AssignToCollection</label>
-        <locationX>1062</locationX>
-        <locationY>2366</locationY>
+        <locationX>1194</locationX>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>UpdateCollection</assignToReference>
             <operator>Add</operator>
@@ -163,10 +163,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignVariables_0</name>
+        <name>AssignVariables_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
             <operator>Assign</operator>
@@ -186,9 +186,78 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignVariables_0_0</name>
+        <name>AssignVariables_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>578</locationX>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>AmountTypeFirst</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignVariables_0_0_0_0_0</name>
+        <label>AssignVariables</label>
+        <locationX>1634</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>AmountTypeFirst</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignVariables_0_0_0_0_0_0</name>
+        <label>AssignVariables</label>
+        <locationX>1898</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>AmountTypeFirst</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignVariables_0_0_0_0_0_0_0</name>
+        <label>AssignVariables</label>
+        <locationX>314</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -223,10 +292,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignVariables_0_0_0</name>
+        <name>AssignVariables_0_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
             <operator>Assign</operator>
@@ -246,61 +315,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignVariables_0_0_0_0</name>
+        <name>AssignVariables_0_0_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1106</locationX>
-        <locationY>758</locationY>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Attesa</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>GetFirstCausalCode</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignVariables_0_0_0_0_0</name>
-        <label>AssignVariables</label>
-        <locationX>1370</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>AmountTypeFirst</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Rettifica</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getInputCase.IndemnityDueBilllingCorrection__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>GetFirstCausalCode</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignVariables_0_0_0_0_0_0</name>
-        <label>AssignVariables</label>
-        <locationX>1634</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>AmountTypeFirst</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Rettifica</stringValue>
+                <stringValue>Invio</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -317,7 +340,7 @@
     <assignments>
         <name>AssignVariablesFirst</name>
         <label>AssignVariablesFirst</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.AccountId</assignToReference>
@@ -501,7 +524,7 @@
     <assignments>
         <name>AssignVariablesSecond</name>
         <label>AssignVariablesSecond</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>SecondIndemnityCase.AccountId</assignToReference>
@@ -669,35 +692,42 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Data_Emissione_Scaduta</name>
-        <label>Data Emissione Scaduta?</label>
-        <locationX>446</locationX>
+        <name>Doppio_Indennizzo</name>
+        <label>Doppio Indennizzo?</label>
+        <locationX>512</locationX>
         <locationY>758</locationY>
         <defaultConnector>
-            <targetReference>AssignVariables_0_0</targetReference>
+            <targetReference>Quale_importo_prendere</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Non Scaduta</defaultConnectorLabel>
+        <defaultConnectorLabel>Singolo</defaultConnectorLabel>
         <rules>
-            <name>Scaduta</name>
+            <name>Doppio</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>GreaterThan</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssignVariables_0</targetReference>
+                <targetReference>AssignVariables_0_0_0_0_0_0_0</targetReference>
             </connector>
-            <label>Scaduta</label>
+            <label>Doppio</label>
         </rules>
     </decisions>
     <decisions>
         <name>HowManyCase</name>
         <label>HowManyCase?</label>
-        <locationX>974</locationX>
-        <locationY>1310</locationY>
+        <locationX>1106</locationX>
+        <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>GetSecondCausalCode</targetReference>
         </defaultConnector>
@@ -726,9 +756,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Quale_importo_prendere</name>
+        <label>Quale importo prendere?</label>
+        <locationX>710</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>AssignVariables_0_0_0_0_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Rettifica Fatturazione</defaultConnectorLabel>
+        <rules>
+            <name>Invio_risposta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignVariables_0_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Invio risposta</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Switch_Casistica</name>
         <label>Switch Casistica</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>No Indennizzo</defaultConnectorLabel>
         <rules>
@@ -762,6 +817,13 @@
                     <stringValue>Risposta Inviata</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables</targetReference>
             </connector>
@@ -769,7 +831,7 @@
         </rules>
         <rules>
             <name>X2_Ind_Conf_Diritto_Rett</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -798,8 +860,22 @@
                     <stringValue>Risposta Inviata</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Data_Emissione_Scaduta</targetReference>
+                <targetReference>Doppio_Indennizzo</targetReference>
             </connector>
             <label>2 - Inviata Ind. Conf Diritto Rett.</label>
         </rules>
@@ -839,6 +915,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -884,6 +967,13 @@
                     <stringValue>Risposta Inviata - Attesa Rettifica</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables_0_0_0_0</targetReference>
             </connector>
@@ -918,6 +1008,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -956,6 +1053,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables_0_0_0_0_0_0</targetReference>
             </connector>
@@ -968,8 +1072,8 @@
     <loops>
         <name>UpdatePhase</name>
         <label>UpdatePhase</label>
-        <locationX>974</locationX>
-        <locationY>2126</locationY>
+        <locationX>1106</locationX>
+        <locationY>2342</locationY>
         <collectionReference>getCreatedIndemnities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1001,8 +1105,8 @@
     <recordCreates>
         <name>CreateIndemnityRecords</name>
         <label>CreateIndemnityRecords</label>
-        <locationX>974</locationX>
-        <locationY>1886</locationY>
+        <locationX>1106</locationX>
+        <locationY>2102</locationY>
         <connector>
             <targetReference>getCreatedIndemnities</targetReference>
         </connector>
@@ -1011,8 +1115,8 @@
     <recordLookups>
         <name>getCreatedIndemnities</name>
         <label>getCreatedIndemnities</label>
-        <locationX>974</locationX>
-        <locationY>2006</locationY>
+        <locationX>1106</locationX>
+        <locationY>2222</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>UpdatePhase</targetReference>
@@ -1046,8 +1150,8 @@
     <recordLookups>
         <name>GetFirstCausalCode</name>
         <label>GetFirstCausalCode</label>
-        <locationX>974</locationX>
-        <locationY>1190</locationY>
+        <locationX>1106</locationX>
+        <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>HowManyCase</targetReference>
@@ -1088,7 +1192,7 @@
     <recordLookups>
         <name>getIndemnityRecordType</name>
         <label>getIndemnityRecordType</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1109,7 +1213,7 @@
     <recordLookups>
         <name>getInputCase</name>
         <label>getInputCase</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1130,8 +1234,8 @@
     <recordLookups>
         <name>GetSecondCausalCode</name>
         <label>GetSecondCausalCode</label>
-        <locationX>1106</locationX>
-        <locationY>1430</locationY>
+        <locationX>1238</locationX>
+        <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssignCausalCode_0</targetReference>
@@ -1172,12 +1276,12 @@
     <recordUpdates>
         <name>UpdatePhaseCollection</name>
         <label>UpdatePhaseCollection</label>
-        <locationX>974</locationX>
-        <locationY>2582</locationY>
+        <locationX>1106</locationX>
+        <locationY>2798</locationY>
         <inputReference>UpdateCollection</inputReference>
     </recordUpdates>
     <start>
-        <locationX>848</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getInputCase</targetReference>

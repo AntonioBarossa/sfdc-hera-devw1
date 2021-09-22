@@ -238,6 +238,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.focusOnButton('home');
         }
     }
+
+    @api getInvoiceSelection() {
+        return idlist.map(e => {
+            return this.accountData.find(ele  => ele[this.uniqueId] === e);
+        });
+    }
+
     //button handler section --- START ---
     buttonHandler(event){
         try {
@@ -387,22 +394,36 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     billList(event){
 
-        var selectedId = this.getSingleSelectedId();
+        //@frpanico modificato Elenco Bollette poiche non necessita della selezione del documento
+        //var selectedId = this.getSingleSelectedId();
 
-        if(selectedId==undefined){
+        /*if(selectedId==undefined){
             return;
         }
 
         var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
         console.log('>>> società: ' + selected.societa);
         console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
-        console.log('>>> dataEmissione: ' + selected.dataEmissione);
+        console.log('>>> dataEmissione: ' + selected.dataEmissione);*/
 
         this.billParameters = event.currentTarget.dataset.parameters;
         //this.otherParams = ?;
-        this.company = selected.societa;
-        this.contractAccount = selected.contoContrattuale;
-        this.startDateString = selected.dataEmissione;
+        //this.company = selected.societa;
+        //this.contractAccount = selected.contoContrattuale;
+        var today = new Date();
+        today.setDate(today.getDate() - 365);
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        this.startDateString = dd + '/' + mm + '/' + yyyy;
+        console.log(this.startDateString);
+        /*this.startDateString = new Date();//selected.dataEmissione;
+        console.log('>>> Today Date ' + this.startDateString);
+        this.startDateString.setDate(this.startDateString - 365);
+        console.log('>>> Last year string ' + this.startDateString);
+        this.startDateString = this.startDateString.toString();
+        console.log('>>> Start Date ' + this.startDateString);*/
         this.showBillList = true;
     }
 
@@ -1062,8 +1083,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
                             break;
                         case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
+                            filterValue = currentFilter[key].value.toLowerCase();
+                            tableValueToFilter = item[key].toLowerCase();
                     }
 
                     switch (currentFilter[key].operator) {
@@ -1410,15 +1431,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     showSingleBill(event){
         console.log('>>> visualbolletta - showSingleBill');
-
-        //this.dispatchEvent(
-        //    new ShowToastEvent({
-        //        title: 'Visualizza bolletta',
-        //        message: 'Questo servizio non è ancora disponibile',
-        //        variant: 'info',
-        //        mode: 'sticky'
-        //    })
-        //);
+        this.openMainSpinner();
 
         var selectedId = this.getSingleSelectedId();
 
@@ -1427,15 +1440,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
-        console.log('>>> società: ' + selected.societa);
-        console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
-        console.log('>>> dataEmissione: ' + selected.dataEmissione);
+        const date = selected.dataEmissione.split("/");
 
         var docInvoiceObj = {
-            billNumber: selected.contoContrattuale,
+            billNumber: selected.numeroFattura.replace(/^0+/, ''),
             channel: 'CRM',
-            date: selected.dataEmissione,
-            documentType: 'Bolletta',
+            date: date[2] + '-' + date[1] + '-' + date[0],
+            type: 'Bolletta',
             company: selected.societa
         }
 

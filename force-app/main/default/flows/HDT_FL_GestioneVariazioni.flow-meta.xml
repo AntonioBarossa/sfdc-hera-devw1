@@ -91,8 +91,8 @@
     <assignments>
         <name>Accorpamento_Campi</name>
         <label>Accorpamento Campi</label>
-        <locationX>4012</locationX>
-        <locationY>1378</locationY>
+        <locationX>4009</locationX>
+        <locationY>1476</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.DistributorNote__c</assignToReference>
             <operator>Assign</operator>
@@ -289,8 +289,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>3880</locationX>
-        <locationY>1858</locationY>
+        <locationX>3869</locationX>
+        <locationY>2001</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -358,8 +358,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Elaborazione_Manuale</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
-        <locationX>4144</locationX>
-        <locationY>1618</locationY>
+        <locationX>4141</locationX>
+        <locationY>1716</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -505,8 +505,8 @@
     <assignments>
         <name>Assegna_Codice_Causale_0_0</name>
         <label>Assegna Codice Causale</label>
-        <locationX>3880</locationX>
-        <locationY>1738</locationY>
+        <locationX>3879</locationX>
+        <locationY>1870</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -821,8 +821,8 @@
     <assignments>
         <name>Assegna_Valori_0_0_0_0_0</name>
         <label>Assegna Valori</label>
-        <locationX>4012</locationX>
-        <locationY>778</locationY>
+        <locationX>3973</locationX>
+        <locationY>781</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -921,6 +921,31 @@
                 <targetReference>AssegnaFoundOtherCase</targetReference>
             </connector>
             <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0</name>
+        <label>Annullamento?</label>
+        <locationX>5571</locationX>
+        <locationY>564</locationY>
+        <defaultConnector>
+            <targetReference>Annullamento_Prestazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annullare</defaultConnectorLabel>
+        <rules>
+            <name>Non_Annulare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BillingProfileSelezionato</targetReference>
+            </connector>
+            <label>Non Annulare</label>
         </rules>
     </decisions>
     <decisions>
@@ -1023,6 +1048,82 @@
                 <targetReference>Annulla_Prestazione_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Avanzamento_Lettura</name>
+        <label>Avanzamento Lettura</label>
+        <locationX>3823</locationX>
+        <locationY>1328</locationY>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_Reading</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReading.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtSelfReading.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCaseAggiornato</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annullamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtSelfReading.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>BillingProfileSelezionato</name>
+        <label>BillingProfileSelezionato?</label>
+        <locationX>5614</locationX>
+        <locationY>683</locationY>
+        <defaultConnector>
+            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Selezionato</defaultConnectorLabel>
+        <rules>
+            <name>Selezionato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetBillingProfile_0</targetReference>
+            </connector>
+            <label>Selezionato</label>
         </rules>
     </decisions>
     <decisions>
@@ -1150,8 +1251,8 @@
     <decisions>
         <name>InRete_o_ExtraRete</name>
         <label>InRete o ExtraRete?</label>
-        <locationX>4012</locationX>
-        <locationY>1498</locationY>
+        <locationX>4009</locationX>
+        <locationY>1596</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale</targetReference>
         </defaultConnector>
@@ -1557,8 +1658,8 @@
     <decisions>
         <name>OutcomeForm_0_0_0_0_0_0_0</name>
         <label>OutcomeForm</label>
-        <locationX>4012</locationX>
-        <locationY>1138</locationY>
+        <locationX>4004</locationX>
+        <locationY>1111</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0_0_0_0</name>
@@ -1600,7 +1701,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetCaseAggiornato</targetReference>
+                <targetReference>Screen_Autolettura</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -1931,7 +2032,7 @@
     <formulas>
         <name>DistributorNoteFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; {!GetCaseAggiornato.Reading__c} &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
+        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
     </formulas>
     <formulas>
         <name>NextLabel</name>
@@ -1946,6 +2047,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
           &quot;Avanti&quot;,
           &quot;Conferma Pratica&quot;
 )</expression>
+    </formulas>
+    <formulas>
+        <name>ProcessTypeCambioCont</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -2106,8 +2212,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>Calcolo_Codice_Causale_0_0</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>3880</locationX>
-        <locationY>1618</locationY>
+        <locationX>3879</locationX>
+        <locationY>1750</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Codice_Causale_0_0</targetReference>
@@ -2253,8 +2359,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>4012</locationX>
-        <locationY>1258</locationY>
+        <locationX>4009</locationX>
+        <locationY>1356</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Accorpamento_Campi</targetReference>
@@ -2696,8 +2802,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>4144</locationX>
-        <locationY>1738</locationY>
+        <locationX>4141</locationX>
+        <locationY>1836</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2727,8 +2833,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>3880</locationX>
-        <locationY>1978</locationY>
+        <locationX>3879</locationX>
+        <locationY>2110</locationY>
         <connector>
             <targetReference>Loading_Spinner_0</targetReference>
         </connector>
@@ -2844,17 +2950,17 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>hdtBillingProfileScreen</name>
         <label>hdtBillingProfileScreen</label>
-        <locationX>5566</locationX>
-        <locationY>684</locationY>
+        <locationX>5476</locationX>
+        <locationY>644</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetBillingProfile_0</targetReference>
+            <targetReference>Annullamento_0</targetReference>
         </connector>
         <fields>
             <name>displaytestbilling</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Seleziona la bolletta di riferimento&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Selezionare il CA (non obbligatorio)&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2870,7 +2976,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>selectionType</name>
                 <value>
-                    <stringValue>BillingProfile</stringValue>
+                    <stringValue>BillingProfile_VarDom</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2889,6 +2995,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>searchVariant</name>
                 <value>
                     <stringValue>Label-Hidden</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nonReqSelection</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2932,8 +3044,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Loading_Spinner_0</name>
         <label>Loading Spinner</label>
-        <locationX>3880</locationX>
-        <locationY>2098</locationY>
+        <locationX>3879</locationX>
+        <locationY>2230</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3044,6 +3156,99 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>recordId</name>
                 <value>
                     <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Autolettura</name>
+        <label>Screen Autolettura</label>
+        <locationX>4009</locationX>
+        <locationY>1227</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Avanzamento_Lettura</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeaderReading</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtSelfReading</name>
+            <extensionName>c:hdtSelfReading</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>object</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>servicePointId</name>
+                <value>
+                    <elementReference>GetInputCase.ServicePoint__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>commodity</name>
+                <value>
+                    <elementReference>GetInputCase.CommodityFormula__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>allowSmallerReading</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3767,7 +3972,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo_0</name>
-            <fieldText>&lt;p&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/p&gt;&lt;p&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3782,7 +3987,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo1</name>
-            <fieldText>&lt;p&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&lt;/span&gt;&quot;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3895,8 +4100,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>5291</locationX>
-        <locationY>1663</locationY>
+        <locationX>5437</locationX>
+        <locationY>1529</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4141,8 +4346,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>4012</locationX>
-        <locationY>1018</locationY>
+        <locationX>4007</locationX>
+        <locationY>1016</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4203,7 +4408,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4245,7 +4450,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>ProcessTypeCambioCont</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4767,6 +4972,31 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Annullamento_Prestazione</name>
+        <label>Annullamento Prestazione</label>
+        <locationX>5707</locationX>
+        <locationY>562</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>addressCheck</name>
         <dataType>Boolean</dataType>
@@ -4814,6 +5044,16 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>

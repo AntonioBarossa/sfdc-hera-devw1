@@ -6,12 +6,19 @@
 
 public inherited sharing class HDT_UTL_MatrixCompatibility {
 
-        
+    /**
+    * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+    * @date 12/07/2021
+    * @description check compatibility for sales and postsales processes
+    * @param Map<String,Object> servReq - the map object containing data for the ServiceRequest__c 
+    * @param Boolean isPostSales - the boolean used for the postsale process
+    */   
     @AuraEnabled
     public static Map<String,Object> checkCompatibilitySales(Map<String,Object> servReq, Boolean isPostSales){
         try {
             System.debug(servReq);
             Map<String,Object> resMap = new Map<String,Object>();
+            List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
             ServiceRequest__c srRequest = new ServiceRequest__c();
             srRequest.ServicePointCode__c = String.valueOf(servReq.get('servicePointCode')); 
             srRequest.Status__c = 'Bozza';
@@ -38,6 +45,12 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                     srRequest.ProcessType__c= getProcessType(String.valueOf(servReq.get('processType')), 'Order', String.valueOf(servReq.get('commoditySector')));
                 }
             }
+            if(isPostSales== true && srRequest.ProcessType__c != null){
+                List<ServiceRequest__c> srvCheck = HDT_QR_ServiceRequest.getServiceRequestsSameServicePoint(srRequest.ServicePointCode__c,srRequest.ProcessType__c);
+                if(srvCheck != null && !srvCheck.isEmpty()){
+                    HDT_SRV_ServiceRequest.deleteRecord(srvCheck[0]);
+                }
+            }
 
             ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(srRequest);
             System.debug(srRequest);
@@ -51,7 +64,17 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             if(!result.incompatibilities.isEmpty()){
                 resMap.put('compatibility', getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities));
                 if(isPostSales!= null &&isPostSales){
-                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
+                    try {
+                        List<ServiceRequest__c> srToDeletes = HDT_QR_ServiceRequest.getCanceledServiceRequests(sReq.ServicePointCode__c);
+                        for(ServiceRequest__c srToDelete : srToDeletes){
+                            HDT_SRV_ServiceRequest.deleteRecord(srToDelete);
+                        }
+                    } catch (Exception err) {
+                        System.debug(err.getMessage());
+                    }
+                    sReq.Status__c = 'Annullato';
+                    srList.add(sReq);
+                    HDT_SRV_ServiceRequest.updateRecord(srList);
                 }
             }else{
                 resMap.put('compatibility', '');
@@ -64,6 +87,12 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         }
     }
 
+    /**
+    * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+    * @date 12/07/2021
+    * @description check compatibility for postsales processes
+    * @param Case cs - the Case is used to get the data for the ServiceRequest__c 
+    */
     @AuraEnabled
     public static String checkCompatibilityPostSales(Case cs){
         try {
@@ -91,10 +120,16 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
                 
             return compatibility;   
         }catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw e;
         }
     }
 
+    /**
+    * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+    * @date 12/07/2021
+    * @description check compatibility for ServiceRequest__c
+    * @param ServiceRequest__c srRequest  
+    */
     public static wrts_prcgvr.ObjectCompatibility_1_0.CheckResult checkCompatibility(ServiceRequest__c srRequest){
         try {
             wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt objectCompatibility =
@@ -111,6 +146,13 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    
+    /**
+    * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+    * @date 12/07/2021
+    * @description get Incompatibilities
+    * @param ServiceRequest__c[] incomps - the blocking ServiceRequests  
+    */
     public static String getIncompatibilityMessage(ServiceRequest__c[] incomps){
         Set<Id> conflictIds = new Set<Id>();
         Set<String> conflicts = new Set<String>();
@@ -119,7 +161,8 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         for(ServiceRequest__c c : incompatibilities){
             conflictIds.add(c.Id);
         }
-        for(ServiceRequest__c s : [SELECT Id,Case__c, Order__c, Order__r.OrderNumber, Case__r.CaseNumber,Type__c FROM ServiceRequest__c WHERE Id IN :conflictIds]) {
+        List<ServiceRequest__c> srvRequests= HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(conflictIds,'Id');
+        for(ServiceRequest__c s : srvRequests) {
             if(s.Type__c=='Case'){
                 if(s.Case__c != null){
                     conflicts.add(s.Case__r.CaseNumber);
@@ -139,6 +182,13 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         return String.join(conflictsString, ', ');
     }
 
+    /**
+    * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+    * @date 12/07/2021
+    * @description map the status
+    * @param String status 
+    * @param String type - type is Case or Order 
+    */
     public static String getStatus(String status, String type){
         String sts='';
         if(type == 'Case'){
@@ -174,6 +224,14 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         return sts;
     }
 
+    /**
+    * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+    * @date 12/07/2021
+    * @description map the processType using the metadata
+    * @param String pType - pType is the processType of the Case or Order
+    * @param String type - type is Case or Order 
+    * @param String commoditySector  
+    */
     private static String getProcessType(String pType, String type, String commoditySector){
         String processType='';
         List<HDT_MatrixCompatibilityMap__mdt> mdtList= HDT_QR_MatrixCompatibilityMap.getProcessTypeMap(pType.trim(),type);

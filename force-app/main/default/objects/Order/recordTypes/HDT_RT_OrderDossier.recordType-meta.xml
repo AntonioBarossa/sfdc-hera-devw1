@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_OrderDossier</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <description>Record Type Ordine Padre</description>
     <label>Order Dossier</label>
     <picklistValues>
@@ -425,7 +426,7 @@
     <picklistValues>
         <picklist>ConventionAssociation__c</picklist>
         <values>
-            <fullName>%C2%A05%2F3%2F21</fullName>
+            <fullName>UISMO-UISP MODENA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1607,6 +1608,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DocumentPackage__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ElectronicInvoicingMethod__c</picklist>
         <values>
             <fullName>Estero</fullName>
@@ -1929,7 +1949,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico  Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2464,6 +2520,25 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

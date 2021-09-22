@@ -33,6 +33,7 @@
     <customValue>
         <fullName>Da PGM</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Da PGM</label>
     </customValue>
     <customValue>
@@ -113,6 +114,7 @@
     <customValue>
         <fullName>Social</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Social</label>
     </customValue>
     <customValue>

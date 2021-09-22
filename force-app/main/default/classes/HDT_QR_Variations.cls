@@ -1,3 +1,10 @@
+/**
+ * @author Francesco Panico (frpanico@everis.com)
+ * @date 09/03/2021
+ * @description HDT_QR_Variations Class
+ * @history Francesco Panico – 09/03/2021 – Created Class
+ */
+
 public inherited sharing class HDT_QR_Variations {
 
     public static Boolean queryConsistencyTable(String recordId, String useCategory, String supplyType, String servicePointType){
@@ -25,16 +32,10 @@ public inherited sharing class HDT_QR_Variations {
         } else {
 
             return false;
-
         }
 
         return consistencyRecords.size() > 0;
-
-
-
     }
-
-
 
     public static List<ServicePoint__c> queryServicePoint(String accountId, String commodity, String servicePointId){
 
@@ -52,17 +53,15 @@ public inherited sharing class HDT_QR_Variations {
         }
 
         return toReturnList;
-
     }
-
 
     public static List<Case> queryOtherCases(List<Id> servicePointIds, String caseId){
 
         List<Case> toReturnList = new List<Case>();
         try{
-            toReturnList = [SELECT Id 
+            toReturnList = [SELECT Id, ServicePoint__r.Id 
             FROM Case
-            WHERE Id IN :servicePointIds
+            WHERE ServicePoint__r.Id IN :servicePointIds
             AND Id != :caseId
             AND Resident__c = false
             WITH SECURITY_ENFORCED];
@@ -71,7 +70,6 @@ public inherited sharing class HDT_QR_Variations {
         }
 
         return toReturnList;
-
     }
 
     public static Case getCaseInfo(String caseId){
@@ -91,12 +89,8 @@ public inherited sharing class HDT_QR_Variations {
         }catch(Exception e){
 
             System.debug(e.getMessage());
-
         }
 
         return currentCase;
-
     }
-
-
 }

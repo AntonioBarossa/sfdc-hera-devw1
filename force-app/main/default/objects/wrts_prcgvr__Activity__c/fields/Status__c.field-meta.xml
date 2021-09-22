@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Stato Lavorazione Attività</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -18,7 +18,7 @@
             </value>
             <value>
                 <fullName>Creata</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Creata</label>
             </value>
             <value>
@@ -100,6 +100,11 @@
                 <fullName>Non Esitata</fullName>
                 <default>false</default>
                 <label>Non Esitata</label>
+            </value>
+            <value>
+                <fullName>Aperta</fullName>
+                <default>false</default>
+                <label>Aperta</label>
             </value>
             <value>
                 <fullName>Sospesa</fullName>

@@ -4,16 +4,11 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria{
     static final string CANONERAITEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
-
-    static final set<string> ESITIINTERMEDIHEROKU = new set<string>{'Ammissibilità KO','Esito Ko da Sap','Esito KO da DL',
-                                                                    'Richiesta non identificata/anonima',
-                                                                    'Esito non elaborato da DL/SII','Esito ricevuto su richiesta chiusa',
-                                                                    'Eliminato esito in scarto','Errore invio a SAP','Errore determinazione variante SAP'};
 
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
                                                                                         'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
@@ -41,26 +36,95 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                                                                                    'CreatedByUsername__c' => 'UTENZA',
                                                                                    'StartDate__c' => 'DATA_EVENTO',
                                                                                    'DiscardDescription__c' => 'ERROR_MESSAGE'};
+    /*
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
         SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
-        SObject sender = (SObject) argsMap.get('sender');
+        SObject sender = (SObject) argsMap.get('sender');		
+		
+    }
+	*/
 
-        //c'è annullamento automatico a partire dal singolo scarto, per singolo processo, per singolo cluster
+	global boolean evaluate(Object args){
+		Map<String, Object> argsMap = (Map<String, Object>) args;
+        SObject transition = (SObject) argsMap.get('transition');
+        SObject condition = (SObject) argsMap.get('condition');
+        String method = (String) argsMap.get('method');
+        SObject record = (SObject) argsMap.get('record');
+		
+		//c'è annullamento automatico a partire dal singolo scarto, per singolo processo, per singolo cluster
         //non si riescono a passare tutte queste info tramite method, servirebbero una marea di method
         //non sembra esserci un modo per passare i dati tramite "parametri" alla action
-        //l'unica via, per ora, sembra quella di mettere il nome del template nel method. ES: 'checkActivityCreation(CBS_ATT006__AMMISSIBILITA_KO)'
+        //l'unica via, per ora, sembra quella di mettere il nome del template nel method. ES: 'checkActivityCreation___CBS_ATT006__AMMISSIBILITA_KO'
         //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
-        
-        if(method.startsWith('checkActivityCreation')){
-            checkActivityCreation((Id)sender.get('Id'), method.substringAfter('___'));
+		boolean check;
+		check = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
+		
+		if(method.startsWith('checkActivityCreation')){
+            return !check;
         }
-
+        if(method.startsWith('checkAnnullment')){
+            return check;
+        }
         return null;
+	}
+
+    public class HDT_UTL_FlowInputs{
+        @InvocableVariable
+        public String methodName;
+        @InvocableVariable
+        public String objectId;
+        @InvocableVariable
+        public String templateName;
     }
+
+    public class HDT_UTL_FlowOutputs{
+        @InvocableVariable
+        public String esito;
+        @InvocableVariable
+        public String dettaglioEsito;
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/08/2021
+    * @description HDT_UTL_Scarti.invokeScartiAction - chiamata da flow verso metodi di questa classe
+    * @param1 inputData - list<HDT_UTL_FlowInputs>
+    * @return void
+    */
+    @InvocableMethod(label='invokeScartiAction')
+    public static list<HDT_UTL_FlowOutputs> invokeScartiAction(list<HDT_UTL_FlowInputs> inputParam){
+      list<HDT_UTL_FlowOutputs> listOutputs= new list<HDT_UTL_FlowOutputs>();
+      HDT_UTL_FlowOutputs output= new HDT_UTL_FlowOutputs();
+        try{
+            switch on inputParam[0].methodName{
+                when 'chiudiAttivita'{
+                    chiudiAttivita(inputParam[0].objectId);
+                }
+                when 'annullaPratica'{
+                    annullaPratica(inputParam[0].objectId);
+                }
+                when 'annullaContratti'{
+                    HDT_UTL_Order.annullaContratti(inputParam[0].objectId);
+                }
+                when 'createActivityByObjectIdAndTemplateName'{
+                    wrts_prcgvr__Activity__c act= createActivityByObjectIdAndTemplateName(inputParam[0].objectId, inputParam[0].templateName);
+                    insert act;
+                }
+            }
+            output.esito='OK';
+            output.dettaglioEsito='OK';
+        }catch(Exception e){
+            output.esito='KO';
+            output.dettaglioEsito= e.getMessage();
+        }
+        listOutputs.add(output);
+        return listOutputs;  
+    }
+
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
@@ -151,7 +215,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
-    
+
+
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 06/08/2021
@@ -182,19 +247,243 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     }
 
     /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 24/08/2021
+    * @description HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk
+    * @param1 list of objectId - list of Ids of the parent records of the activity
+    * @param2 templateName - name of an activityTemplate
+    * @return list<wrts_prcgvr__Activity__c>
+    */
+    public static list<wrts_prcgvr__Activity__c> createActivityByObjectIdAndTemplateNameBulk(list<String> objectIds, String templateName){
+        system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        try{
+            Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
+            system.debug('HDT_UTL_Scarti template ' + template);
+            if(template.values().size() > 0){
+                wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+                List<wrts_prcgvr__Activity__c> resultActivities = new List<wrts_prcgvr__Activity__c>();
+                for(String singleObjectId: objectIds){
+                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>singleObjectId});
+                    system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
+                    resultActivities.add(activities.get(0));
+                }
+                system.debug('HDT_UTL_Scarti end ' + resultActivities);
+                return resultActivities;
+            }
+            system.debug('HDT_UTL_Scarti end');
+            return null;
+        }
+        catch(Exception e){
+            system.debug('HDT_UTL_Scarti catch ' + e);
+            return null;
+        }
+    }
+
+    /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.checkActivityCreation - Check on activity creation
     * @param1 recordId - Id of a record
+    * @return Boolean
+    */
+    public static Boolean checkActivityCreation(Id recordId, String templateName){
+        System.debug('checkActivityCreation_start_' + recordId + '_' + templateName);
+        Map<String, wrts_prcgvr__ActivityTemplate__c> templateMap = getTemplatesMapByName(new Set<String>{templateName});
+        if(!templateMap.isEmpty()){
+            List<wrts_prcgvr__ActivityAction__c> actions = [SELECT Id, wrts_prcgvr__Field__c, wrts_prcgvr__Value__c 
+                                                            FROM wrts_prcgvr__ActivityAction__c 
+                                                            WHERE wrts_prcgvr__ActivityTemplate__c = :templateMap.get(templateName).Id];
+            String activityType;
+            for(wrts_prcgvr__ActivityAction__c curAction : actions)
+                if('{!Type__c}'.equalsIgnoreCase(curAction.wrts_prcgvr__Field__c))
+                    activityType = curAction.wrts_prcgvr__Value__c;
+            Boolean toDoAnnullment = checkDiscardAnnullmentRule(recordId, activityType);
+            /*
+            System.debug('checkActivityCreation_toDoAnnullment_' + toDoAnnullment);
+            if(toDoAnnullment) annullaPratica(recordId);
+            else if(Schema.Case.SObjectType == recordId.getSobjectType() || Schema.Order.SObjectType == recordId.getSobjectType()){
+                wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(recordId, templateName);
+                System.debug('checkActivityCreation_newAct_' + newAct);
+                if(newAct != null) HDT_UTL_DatabaseService.insertSObject(newAct);
+            }
+            */
+            return toDoAnnullment;
+        }
+        return false;
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.checkDiscardAnnullmentRule - Check on pratica annullment
+    * @param1 recordId - Id of a record
+    * @return boolean: true if it has to do annullment; false instead
+    */
+    public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType){
+        Boolean outcome = false;
+        String parentObj;
+        if(Schema.Case.SObjectType == recordId.getSobjectType()) parentObj = 'Case';
+        if(Schema.Order.SObjectType == recordId.getSobjectType()) parentObj = 'Order';
+
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingField__c, ControllingValue__c, ProcessField__c, ProcessValue__c 
+                                                FROM DiscardAnnullmentRule__c
+                                                WHERE ParentObject__c = :parentObj
+                                                AND ActivityType__c = :activityType];
+		
+        if(!rules.isEmpty()){
+            String logicFields = '';
+            //START>>>modifica marco.arci@webresults.it
+            set<string> logicFieldsSet = new set<String>();
+            for(DiscardAnnullmentRule__c curRule : rules){
+                logicFieldsSet.add(curRule.ControllingField__c);
+                logicFieldsSet.add(curRule.ProcessField__c);
+            }
+            for(string currString : logicFieldsSet){
+                logicFields += ','+currString;
+            }
+			//END>>>modifica modifica marco.arci@webresults.it
+            system.debug('logicFields: '+logicFields);
+            if(Schema.Case.SObjectType == recordId.getSobjectType()){
+                String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
+                system.debug('queryString: '+queryString);
+                List<Case> parentCase = Database.query(queryString);
+                if(!parentCase.isEmpty()){
+                    for(DiscardAnnullmentRule__c curRule : rules){
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
+                            && String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
+                            outcome = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(Schema.Order.SObjectType == recordId.getSobjectType()){
+                String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
+                system.debug('queryString: '+queryString);
+                List<Order> parentOrder = Database.query(queryString);
+                if(!parentOrder.isEmpty()){
+                    for(DiscardAnnullmentRule__c curRule : rules){
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
+                            && String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
+                            outcome = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return outcome;
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.updatePraticaForScartoDocumentale - updates case/order with new data
+    * @param1 recordId - Id of a record
     * @return void
     */
-    public static void checkActivityCreation(Id recordId, String templateName){        
-        //TODO: check campi del case/order per vedere se va annullata la pratica o creata l'attività
-        if(Schema.Case.SObjectType == recordId.getSobjectType()
-            || Schema.Order.SObjectType == recordId.getSobjectType()){
-            wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(recordId, templateName);
-            if(newAct != null) HDT_UTL_DatabaseService.insertSObject(newAct);
+    //////////////////////////////////////////////////////////////////////////
+    @AuraEnabled
+    public static void updatePraticaForScartoDocumentale(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
+        Map<id,wrts_prcgvr__Activity__c> oldMapActivities = new Map<Id,wrts_prcgvr__Activity__c>(oldActivities);
+        String oldPhone, oldEmail;
+        List<wrts_prcgvr__Activity__c> activities = new list<wrts_prcgvr__Activity__c>();
+        List<id> relatedIds = new list<id>();
+        Map<string,SObject> relatedObject = new Map<string,SObject>();
+        list<SObject> relatedObjectsToUpdate = new list<SObject>();
+
+        for(wrts_prcgvr__Activity__c currActivity : newActivities){
+            if((currActivity.NewMobile__c!=oldMapActivities.get(currActivity.Id).NewMobile__c && currActivity.NewMobile__c!=null)
+                || (currActivity.NewEmail__c!=oldMapActivities.get(currActivity.Id).NewEmail__c && currActivity.NewEmail__c!=null)){
+                activities.add(currActivity);
+                if(currActivity.Case__c != null){
+                    relatedIds.add(currActivity.Case__c);
+                }else if(currActivity.Order__c != null){
+                    relatedIds.add(currActivity.Order__c);
+                }
+            }
         }
+
+        Map<Id,Case> relatedCases = new Map<Id,Case>([SELECT Id, PhoneNumber__c, Email__c
+                                   FROM Case
+                                   WHERE Id in :relatedIds]);
+        Map<Id,Order> relatedOrders = new Map<Id,Order>([SELECT Id, PhoneNumber__c, Email__c
+                                     FROM Order
+                                     WHERE Id in :relatedIds]);
+
+        
+        for(wrts_prcgvr__Activity__c currActivity : activities){
+                if(currActivity.Case__c != null){
+                    oldPhone = relatedCases.get(currActivity.Case__c).PhoneNumber__c;
+                    oldEmail = relatedCases.get(currActivity.Case__c).Email__c;
+                    relatedCases.get(currActivity.Case__c).PhoneNumber__c = currActivity.NewMobile__c;
+                    relatedCases.get(currActivity.Case__c).Email__c = currActivity.NewEmail__c;
+                    relatedObjectsToUpdate.add(relatedCases.get(currActivity.Case__c));
+                }
+                if(currActivity.Order__c != null){
+                    oldPhone = relatedOrders.get(currActivity.Order__c).PhoneNumber__c;
+                    oldEmail = relatedOrders.get(currActivity.Order__c).Email__c;
+                    relatedOrders.get(currActivity.Order__c).PhoneNumber__c = currActivity.NewMobile__c;
+                    relatedOrders.get(currActivity.Order__c).Email__c = currActivity.NewEmail__c;
+                    relatedObjectsToUpdate.add(relatedOrders.get(currActivity.Order__c));
+                }
+                updateContactForScartoDocumentale(oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
+        }
+        update relatedObjectsToUpdate;
+    }
+    //////////////////////////////////////////////////////////////////////////
+
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.updateContactForScartoDocumentale - updates contact points with new data
+    * @param1 recordId - Id of a record
+    * @return void
+    */
+    @AuraEnabled
+    public static void updateContactForScartoDocumentale(String oldPhone, String oldEmail, String newPhone, String newMail){
+        List<sObject> recordsForDML = new List<SObject>();
+        if(String.isNotBlank(oldPhone)){
+            List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId 
+                                            FROM ContactPointPhone 
+                                            WHERE TelephoneNumber = :oldPhone];
+            if(!cpp.isEmpty()){
+                if('Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
+                    ContactPointPhone newCPP = new ContactPointPhone();
+                    newCPP.TelephoneNumber = newPhone;
+                    newCPP.Status__c = 'Non verificato';
+                    newCPP.ParentId = cpp.get(0).ParentId;
+                    recordsForDML.add(newCPP);
+                }
+                else if('Non Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
+                    ContactPointPhone toUpdateCPP = new ContactPointPhone(Id = cpp.get(0).Id);
+                    toUpdateCPP.TelephoneNumber = newPhone;
+                    recordsForDML.add(toUpdateCPP);
+                }
+            }
+        }
+        if(String.isNotBlank(oldEmail)){
+            List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId 
+                                            FROM ContactPointEmail 
+                                            WHERE EmailAddress = :oldEmail];
+            if(!cpe.isEmpty()){
+                if('Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
+                    ContactPointEmail newCPE = new ContactPointEmail();
+                    newCPE.EmailAddress = newMail;
+                    newCPE.Status__c = 'Non verificato';
+                    newCPE.ParentId = cpe.get(0).ParentId;
+                    recordsForDML.add(newCPE);
+                }
+                else if('Non Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
+                    ContactPointEmail toUpdateCPE = new ContactPointEmail(Id = cpe.get(0).Id);
+                    toUpdateCPE.EmailAddress = newMail;
+                    recordsForDML.add(toUpdateCPE);
+                }
+            }
+        }
+        if(!recordsForDML.isEmpty()) HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
     }
 
     /**
@@ -267,6 +556,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
         }
+        
 
         if(toHandle.size()!=0){
             list<wrts_prcgvr__Activity__c> insertedActivities= new list<wrts_prcgvr__Activity__c>();
@@ -303,13 +593,24 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
     * @return void
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
+        Set<String> categories = new Set<String>();
+
+
+        Schema.DescribeFieldResult fieldResult = wrts_prcgvr__Activity__c.DiscardCategory__c.getDescribe();
+		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+		for( Schema.PicklistEntry pickListVal : ple){
+            if(!'Manuale'.equalsIgnoreCase(pickListVal.getValue()) && pickListVal.isActive()){
+                categories.add(pickListVal.getValue());
+            }
+		}     
+
         List<wrts_prcgvr__Activity__c> toUpdate = new List<wrts_prcgvr__Activity__c>();
 
         set<id> parentObjectCase = new set<id>();
         set<id> parentObjectOrder = new set<id>();
         set<id> inputDataId = new set<id>();
         for(wrts_prcgvr__Activity__c currAct : inputData){
-            if(ESITIINTERMEDIHEROKU.contains(currAct.Type__c)){
+            if(categories.contains(currAct.DiscardCategory__c)){
                 inputDataId.add(currAct.Id);
                 if(string.isNotBlank(currAct.Case__c)){
                     parentObjectCase.add(currAct.Case__c);
@@ -318,23 +619,78 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_0.I
                 }
             }
         }
-        list<wrts_prcgvr__Activity__c> relatedActCase = [select id, Status__c from wrts_prcgvr__Activity__c where Case__c in :parentObjectCase and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
-        list<wrts_prcgvr__Activity__c> relatedActOrder = [select id, Status__c from wrts_prcgvr__Activity__c where Order__c in :parentObjectOrder and Type__c in :ESITIINTERMEDIHEROKU and Id not in :inputDataId];
 
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActCase){
+        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, Status__c 
+                                                      FROM wrts_prcgvr__Activity__c 
+                                                      WHERE (Case__c IN :parentObjectCase OR Order__c IN :parentObjectOrder) 
+                                                      AND DiscardCategory__c IN :categories 
+                                                      AND Id NOT IN :inputDataId 
+                                                      AND status__c NOT IN ('Chiusa','Sospesa')];
+
+        for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(relatedAct);
             relatedAct.Status__c='Chiusa';
             toUpdate.add(relatedAct);
         }
-        for(wrts_prcgvr__Activity__c relatedAct: relatedActOrder){
-            system.debug(relatedAct);
-            relatedAct.Status__c='Chiusa';
-            toUpdate.add(relatedAct);
-        }
+
         
         if(!toUpdate.IsEmpty()){
             system.debug('lista NON vuota -> Aggiorno'+toUpdate);
             update toUpdate;
         }
     }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/08/2021
+    * @description HDT_UTL_Scarti.annullaPratica - annullamento pratica
+    * @param1 inputData - objectId
+    * @return void
+    */
+    public static void annullaPratica(Id objectId){
+        if(Schema.Case.SObjectType == objectId.getSobjectType()){
+            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato', Status='Closed', CancellationReason__c='Gestione Scarto');
+            /*eventuali modifiche*/
+            update caseRecord;
+        }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
+            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato', Status='Activated', CancellationReason__c='Gestione Scarto');
+            /*eventuali modifiche*/
+            update orderRecord;
+        }
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 27/08/2021
+    * @description HDT_UTL_Scarti.chiudiAttvita - chiusura attività figlie
+    * @param1 inputData - objectId
+    * @return void
+    */
+    public static void chiudiAttivita(Id objectId){
+        List<wrts_prcgvr__Activity__c> toUpdateActivities = new list<wrts_prcgvr__Activity__c>();
+        if(Schema.Case.SObjectType == objectId.getSobjectType()){
+            toUpdateActivities = [SELECT id, Status__c, wrts_prcgvr__Status__c
+                                  FROM wrts_prcgvr__Activity__c
+                                  WHERE Case__c= :objectId 
+                                  AND Status__c != 'Chiusa']; 
+            for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
+                singleActivity.Status__c='Chiusa';
+                singleActivity.wrts_prcgvr__Status__c='Chiusa';
+            }
+            update toUpdateActivities;
+        }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
+            toUpdateActivities = [SELECT id, Status__c, wrts_prcgvr__Status__c
+                        FROM wrts_prcgvr__Activity__c
+                        WHERE Order__c= :objectId 
+                        AND Status__c != 'Chiusa'];
+            for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
+                singleActivity.Status__c='Chiusa';
+                singleActivity.wrts_prcgvr__Status__c='Chiusa';
+            }
+            update toUpdateActivities; 
+        }    
+    }
+
+    
+
 }

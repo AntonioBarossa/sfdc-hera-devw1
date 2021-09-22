@@ -40,14 +40,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SupplySAPCityCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SupplySAPStreetCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>SupplyStreet__c</field>
             </layoutItems>
             <layoutItems>
@@ -108,6 +100,18 @@
                 <behavior>Readonly</behavior>
                 <field>UseCategory__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MeterStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SAPImplantCode__c</field>
+            </layoutItems><!--HRAWRM-251 17/09/2021 -->
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Resident__c</field>
+            </layoutItems><!--HRAWRM-251 17/09/2021 -->
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -155,8 +159,8 @@
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>CommercialProduct__c</fields><!--HRAWRM-251 17/09/2021 -->
+        <fields>SAPContractCode__c</fields><!--HRAWRM-251 17/09/2021 -->
         <fields>CONTRACT.STATUS</fields>
         <relatedList>Contract.ServicePoint__c</relatedList>
     </relatedLists>
@@ -177,7 +181,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002LiVD</masterLabel>
+        <masterLabel>00h1X000001Kv5Y</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

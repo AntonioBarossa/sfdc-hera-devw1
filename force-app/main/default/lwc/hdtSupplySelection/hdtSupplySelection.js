@@ -21,6 +21,8 @@ export default class hdtSupplySelection extends LightningElement {
     @api outputContract;
     @api responseArriccData;
     @api isRicercainSAP=false;
+    @api isCompatible;
+    @api serviceRequestId;
 
 
     /**
@@ -146,6 +148,8 @@ export default class hdtSupplySelection extends LightningElement {
      * Get selected service point
      */
     handleServicePointSelection(event){
+        this.isCompatible = event.detail.isCompatible;
+        this.serviceRequestId = event.detail.serviceRequestId;
         console.log('handleServicePointSelection' + JSON.stringify(event.detail));
         this.selectedServicePoint = event.detail;
         let contractNumber = this.selectedServicePoint['Contract Number'];
@@ -154,6 +158,16 @@ export default class hdtSupplySelection extends LightningElement {
             this.outputContract= data;
             console.log('outputContract *******'+ JSON.stringify(data));
         });
+
+		   //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
+        this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
+            detail: event.detail
+        }));																				 
+																		 
+    }
+
+    handleServicePointSelectionCancel(event){
+        
 
 		   //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
         this.dispatchEvent(new CustomEvent('servicepointselectionflow', {

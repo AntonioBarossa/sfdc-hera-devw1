@@ -154,28 +154,16 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>FULL_NAME</fields>
-        <fields>CORE.USERS.ALIAS</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
-        <fields>UPDATEDBY_USER.ALIAS</fields>
-        <fields>INDIVIDUAL.LAST_UPDATE</fields>
         <relatedList>Individual.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>TelephoneNumber</fields>
-        <fields>ActiveFromDate</fields>
-        <fields>LastModifiedDate</fields>
-        <fields>LastModifiedBy</fields>
-        <fields>Parent</fields>
         <relatedList>ContactPointPhone.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>EmailAddress</fields>
-        <fields>ActiveFromDate</fields>
-        <fields>LastModifiedDate</fields>
-        <fields>LastModifiedBy</fields>
-        <fields>Parent</fields>
         <relatedList>ContactPointEmail.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>

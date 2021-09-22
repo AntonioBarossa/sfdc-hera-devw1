@@ -1,4 +1,6 @@
 public with sharing class HDT_UTL_ServicePoint {
+
+    private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     public HDT_UTL_ServicePoint() {
 
@@ -24,6 +26,8 @@ public with sharing class HDT_UTL_ServicePoint {
 				}
 	
 			}
+            system.debug('*******responseArrichh:' +  response);
+            system.debug('*******responseArrichhMap:' +  mapRes);
 
 		
 					
@@ -76,7 +80,7 @@ public with sharing class HDT_UTL_ServicePoint {
             }   
 		}
 		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
-			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
+			spNew.Pressure__c  = Decimal.valueOf(mapRes.get('PRESSIONE'));
 		}
 
 		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
@@ -170,12 +174,12 @@ public with sharing class HDT_UTL_ServicePoint {
 				
                     if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
                         spNew.CommoditySector__c = 'Energia Elettrica';
-
+                        spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele'); //21/08/2021 - gabriele.rota@webresults.it
                     }else
                     {
 					    spNew.CommoditySector__c = 'Gas';
+                        spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas'); //21/08/2021 - gabriele.rota@webresults.it
                     }
-		
 				}
                 if(mapRes.get('MOTGARANZIAFORN')==null){
 				
@@ -190,6 +194,34 @@ public with sharing class HDT_UTL_ServicePoint {
 		
 					spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
 				}
+                if(mapRes.get('RESELLER')!=null && !String.isBlank(mapRes.get('RESELLER'))){
+					spNew.isReseller__c = mapRes.get('RESELLER') == 'X';
+				}
+                else{
+                    spNew.isReseller__c = false;
+                }
+                if(mapRes.get('DATACESSAZIONE')!=null && !String.isBlank(mapRes.get('DATACESSAZIONE'))){
+                    if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 8 ){
+                        Date d = Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
+                        if(d > date.today()){
+                            spNew.SwitchInWinback__c = true;
+                            spNew.SwitchOutDate__c = d;
+                        }
+                        else{
+                            spNew.SwitchInWinback__c = false;
+                            spNew.SwitchOutDate__c = null;
+                        }
+                        system.debug(d);
+                    }
+                    else{
+                        spNew.SwitchInWinback__c = false;
+                        spNew.SwitchOutDate__c = null;
+                    }
+                }
+                else{
+                    spNew.SwitchInWinback__c = false;
+                    spNew.SwitchOutDate__c = null;
+                }
 				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
 		
 					spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
@@ -267,6 +299,14 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
 					spNew.SupplyCountry__c = mapRes.get('CODICEPAESE') == 'IT' ? 'Italia' : 'Estero';
 				}
+                if(mapRes.get('LOCALITA')!=null && !String.isBlank(mapRes.get('LOCALITA'))
+                && mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))
+                && mapRes.get('CODIFICALOCALITA')!=null && !String.isBlank(mapRes.get('CODIFICALOCALITA'))
+                && mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))
+                && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))
+                ){
+                    spNew.SupplyisAddressVerified__c = true;
+                }
 
 
 		system.debug('spNew*****************' + spNew);

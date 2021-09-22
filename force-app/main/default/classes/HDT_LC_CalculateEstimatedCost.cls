@@ -38,7 +38,9 @@ public inherited sharing class HDT_LC_CalculateEstimatedCost {
         try{
             if(wrp.quoteType=='Rapido'){
                 getFixedQuotes(ord, wrp);
-                wrp.validityDate=DateTime.now().addDays(5).format('dd-MM-yyyy');
+                system.debug('voltage level '+ord.VoltageLevel__c);
+                Integer daysToBeAdded = ord.VoltageLevel__c=='BT'? 90 : 180;
+                wrp.validityDate=DateTime.now().addDays(daysToBeAdded).format('dd-MM-yyyy');
             }
         }catch(Exception e){
             system.debug(e.getStackTraceString()+' at line '+e.getLineNumber());

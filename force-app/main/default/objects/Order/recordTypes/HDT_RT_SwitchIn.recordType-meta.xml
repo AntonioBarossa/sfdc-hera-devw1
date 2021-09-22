@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_SwitchIn</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Order_Compact_Layout</compactLayoutAssignment>
     <description>Record type per gli ordini di SwitchIn</description>
     <label>SwitchIn</label>
     <picklistValues>
@@ -255,6 +256,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullo cambio offerta</fullName>
             <default>false</default>
         </values>
@@ -280,6 +285,10 @@
         </values>
         <values>
             <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delibera ARERA 155%2F2020</fullName>
             <default>false</default>
         </values>
         <values>
@@ -517,7 +526,7 @@
     <picklistValues>
         <picklist>ConventionAssociation__c</picklist>
         <values>
-            <fullName>%C2%A05%2F3%2F21</fullName>
+            <fullName>UISMO-UISP MODENA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2065,6 +2074,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Caricamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completata</fullName>
             <default>false</default>
         </values>
@@ -2106,6 +2123,10 @@
         </values>
         <values>
             <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2796,6 +2817,25 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

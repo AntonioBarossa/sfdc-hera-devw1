@@ -10,11 +10,32 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         List<DocumentalPayloadAdministration__c> documList = HDT_UTL_DataFactoryTst.createDocumentalPayloadAdm();
+        List<DocumentalActivity__c> docActList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1,null,caseList[0].Id);
         HDT_UTL_DataFactoryTst.createJsonPayload();
         HDT_UTL_DataFactoryTst.createDriverJson();
     }
 
-
+    @isTest
+    static void showOriginalDocumentPdf(){
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+        DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
+        String result = HDT_LC_DocumentSignatureManager.showOriginalDocument(docAct.Id);
+        Map<String,Object> mapResult = (Map<String,Object>) JSON.deserializeUntyped(result); 
+        System.assertEquals('OK', (String)mapResult.get('outcome'));
+        System.assertEquals('pdf', (String)mapResult.get('type'));
+        System.assertEquals('base64', (String)mapResult.get('base64'));
+    }
+    @isTest
+    static void showArchivedAttachmentPdf(){
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());
+        Test.startTest();
+        DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
+        String result = HDT_LC_DocumentSignatureManager.showArchivedAttachment(docAct.Id);
+        Map<String,Object> mapResult = (Map<String,Object>) JSON.deserializeUntyped(result); 
+        System.assertEquals('OK', (String)mapResult.get('outcome'));
+        System.assertEquals('base64', (String)mapResult.get('base64'));    
+    }
     @isTest
     static void previewDocumentFileCase() {
         Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalIntegrationTstMock());

@@ -950,6 +950,443 @@
         <default>false</default>
         <label>VOTIVE Subentro - EE</label>
     </customValue>
+    <customValue>
+        <fullName>Switch in Reseller</fullName>
+        <default>false</default>
+        <label>Switch in Reseller</label>
+    </customValue>
+    <customValue>
+        <fullName>Testo contratto in bolletta - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Testo contratto in bolletta - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Testo contratto in bolletta - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Testo contratto in bolletta - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione anagrafica cliente - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Variazione anagrafica cliente - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione anagrafica cliente - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Variazione anagrafica cliente - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Variazione domiciliazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione domiciliazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Variazione domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione su amministratore - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Variazione su amministratore - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione su amministratore - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Variazione su amministratore - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazion di Fallimento - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Comunicazion di Fallimento - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazione di Fallimento - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Comunicazione di Fallimento - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazione pagamento - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Comunicazione pagamento - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicazione pagamento - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Comunicazione pagamento - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Contenzioso in corso - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contenzioso in corso - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Contenzioso in corso - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Contenzioso in corso - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>BP-CA - Errata categoria - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>BP-CA - Errata categoria - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Alert - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Alert - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Alert - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Alert - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Allineamento anagrafica (ACG1) - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Allineamento anagrafica (ACG1) - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Allineamento anagrafica (AE1) - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Allineamento anagrafica (AE1) - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazione ClickPay - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Attivazione ClickPay - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazione ClickPay - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Attivazione ClickPay - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Blocco al sollecito ed interessi - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Blocco al sollecito ed interessi - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Blocco al sollecito ed interessi - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Blocco al sollecito ed interessi - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>BP-CA - Errata categoria - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>BP-CA - Errata categoria - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Caduta Linea / Chiamata Muta - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Caduta Linea / Chiamata Muta - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Caduta Linea / Chiamata Muta - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Caduta Linea / Chiamata Muta - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Copia bolletta/Bollettino - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Copia bolletta/Bollettino - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Copia bolletta/Bollettino - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Copia bolletta/Bollettino - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Dettaglio bolletta EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dettaglio bolletta EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Dichiarazione di Intento - IVA Esenzione / IVA Revoca Esenzione / Rettifica per segnalazione cassetto fiscale - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dichiarazione di Intento - IVA Esenzione / IVA Revoca Esenzione / Rettifica per segnalazione cassetto fiscale - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Dichiarazione di intento - IVA Esenzione / IVA Revoca Esenzione / Rettifica per segnalazione cassetto fiscale - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dichiarazione di intento - IVA Esenzione / IVA Revoca Esenzione / Rettifica per segnalazione cassetto fiscale - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Disassociazione Utente Web - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Disassociazione Utente Web - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Disassociazione Utente Web - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Disassociazione Utente Web - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore di chiamata / Chiamata Muta / Caduta Linea - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di chiamata / Chiamata Muta / Caduta Linea - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore di chiamata / Chiamata Muta / Caduta Linea - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di chiamata / Chiamata Muta / Caduta Linea - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore di Fatturazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di Fatturazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore di Fatturazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di Fatturazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Esercizio diritto privacy - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Esercizio diritto privacy - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Esercizio diritto privacy - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Esercizio diritto privacy - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Informative - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Informative - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Informative - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Informative - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica privacy - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Modifica privacy - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica privacy - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Modifica privacy - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuovo Impianto/Aggiunta attacco - preventivo analitico - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Nuovo Impianto/Aggiunta attacco - preventivo analitico - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuovo Impianto/Aggiunta attacco - preventivo analitico - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Nuovo Impianto/Aggiunta attacco - preventivo analitico - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagamento Online / Pagamento ClickPay - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Pagamento Online / Pagamento ClickPay - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagamento Online / Pagamento ClickPay - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Pagamento Online / Pagamento ClickPay - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Paperless - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Paperless - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Paperless - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Paperless - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Piano Rateizzazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Piano Rateizzazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Piano Rateizzazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Piano Rateizzazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Prescrizione fatture (Del. 569) - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Prescrizione fatture (Del. 569) - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Prescrizione fatture (Del. 569) - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Prescrizione fatture (Del. 569) - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Rettifica Consumi - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rettifica Consumi - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Rettifica Consumi - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rettifica Consumi - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Revoca Domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Revoca Domiciliazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Revoca Domiciliazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Revoca Domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborso - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rimborso - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborso - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rimborso - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritorno a fatturazione Bimestrale / Mensile - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ritorno a fatturazione Bimestrale / Mensile - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritorno a fatturazione Bimestrale / Mensile - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ritorno a fatturazione Bimestrale / Mensile - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>&quot;Sospensione a seguito di potenziale pericolo (A02.0151)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>&quot;Sospensione a seguito di potenziale pericolo (A02.0151)</label>
+    </customValue>
+    <customValue>
+        <fullName>/ Riattivazione a seguito di cessato pericolo (A02.0151) - GAS&quot;</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>/ Riattivazione a seguito di cessato pericolo (A02.0151) - GAS&quot;</label>
+    </customValue>
+    <customValue>
+        <fullName>Split Payment - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Split Payment - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Split Payment - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Split Payment - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Spostamento Contatore - Preventivo Rapido - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Spostamento Contatore - Preventivo Rapido - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Storno Rateizzazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Storno Rateizzazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Storno Rateizzazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Storno Rateizzazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch out dal SII - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Switch out dal SII - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch out dal SII - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Switch out dal SII - GAS</label>
+    </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>
     <sorted>false</sorted>

@@ -1,6 +1,7 @@
 public inherited sharing class HDT_UTL_HandleTechnicalData {
 
     public ServicePoint__c sp;
+    private HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 //NON TOCCARE
     public void handleE154Flow(Map<String, String> mapRequestFields, Order ord){
         system.debug('flusso E154');
@@ -14,6 +15,11 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         }
         if(!String.isBlank(mapRequestFields.get('NUMPREV'))){
             ord.QuotationNumber__c=mapRequestFields.get('NUMPREV');
+        }
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
         }
     }
 //NON TOCCARE
@@ -83,7 +89,14 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         }
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_DT'))) {
             sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_DT');
-        }        
+        }  
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+        }
+        
+        updateServicePoint();      
     }
 
     public void handlE351Flow(Map<String, String> mapRequestFields, Order ord){
@@ -121,6 +134,13 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_INT'))) {
             sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_INT');
         }
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+        }
+
+        updateServicePoint();
     }
 
 
@@ -198,6 +218,37 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (bonusData.size()>0) {
             ord.BonusData__c = String.join(bonusData, ';');
         }
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+        }
+
+        updateServicePoint();
+    }
+
+    public void handleCompletata(Map<String, String> mapRequestFields){
+        if (!String.isBlank(mapRequestFields.get('ANLAGE'))) {
+            sp.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+        }
+        if (!String.isBlank(mapRequestFields.get('VERTRAG'))) {
+            sp.SAPContractCode__c = mapRequestFields.get('VERTRAG');
+        }
+        if (!String.isBlank(mapRequestFields.get('ANLAGE_ST'))) {
+            switch on mapRequestFields.get('ANLAGE_ST'){
+                when 'Open', 'Riatt. avviata per morosita'{
+                    sp.MeterStatus__c = 'Attivo';
+                }
+                when 'Impianto chiuso per morosita' {
+                    sp.MeterStatus__c = 'Inattivo'; 
+                }
+                when 'Interr. avviata per morosita' {
+                    sp.MeterStatus__c = 'Sospeso';
+                }
+            }
+        }
+        sp.Status__c='Impianto compl. in funzione';
+        updateServicePoint();
     }
 
     private static Date getExpireDate(String expireDate){
@@ -205,6 +256,15 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         Integer mth = Integer.valueOf(expireDate.substring(4, 6));
         Integer dy = Integer.valueOf(expireDate.substring(6, 8));
         return Date.newInstance(yr, mth, dy);
+    }
+
+    private void updateServicePoint(){
+        try{
+            ServicePointSrv.updateRecord(sp);
+        }catch(Exception e){
+            system.debug('Exception Update ServicePoint');
+            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
+        }
     }
 
 }

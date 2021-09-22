@@ -4,7 +4,10 @@ public inherited sharing class HDT_UTL_Case {
     @InvocableMethod(label='Predefault')
     public static List<HDT_UTL_FlowOutputs> caseFlowPredefaults(List<HDT_UTL_FlowInputs> inputs){
 
+        HDT_QR_Case caseQr = new HDT_QR_Case();
+
         List<HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_FlowOutputs>();
+        List<Case> childCases = new List<Case>();
         HDT_UTL_FlowOutputs output = new HDT_UTL_FlowOutputs();
 
         String cluster = inputs[0].cluster;
@@ -13,6 +16,8 @@ public inherited sharing class HDT_UTL_Case {
         String implantType = inputs[0].implantType;
         Decimal powerRequested = inputs[0].powerRequested;
         String salesCompany = inputs[0].salesCompany;
+        Case currentCase = inputs[0].currentCase;
+        String cancellationNote = inputs[0].cancellationNote;
         
 
         if(process == 'Voltura Tecnica'){
@@ -29,6 +34,30 @@ public inherited sharing class HDT_UTL_Case {
             output.option = calculateOption(implantType, powerRequested);
             output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
         } 
+        else if(process.equalsIgnoreCase('Compatibilita'))
+        {
+            try 
+            {
+                output.isCompatible = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);   
+            } 
+            catch (Exception e) 
+            {   
+                output.isCompatible = '';
+                System.debug('Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());    
+            }
+            
+        }
+        else if(process.equalsIgnoreCase('Contenitore'))
+        {
+            output.childCases = caseQr.getChildCasesReclamo(currentCase.Note__c, currentCase.Id);
+        }
+        else if(process.equalsIgnoreCase('Annullamento'))
+        {
+            Datetime nowDate = Datetime.now();
+            String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+            output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
+            
+        }
 
         outputs.add(output);
 
@@ -51,6 +80,10 @@ public inherited sharing class HDT_UTL_Case {
         public Decimal powerRequested;
         @InvocableVariable
         public String salesCompany;
+        @InvocableVariable
+        public Case currentCase;
+        @InvocableVariable
+        public String cancellationNote;
 
 
     }
@@ -63,6 +96,12 @@ public inherited sharing class HDT_UTL_Case {
         public String option;
         @InvocableVariable
         public String salesCompanyCode;
+        @InvocableVariable
+        public String isCompatible;
+        @InvocableVariable
+        public List<Case> childCases;
+        @InvocableVariable
+        public String cancellationNote;
 
     }
 

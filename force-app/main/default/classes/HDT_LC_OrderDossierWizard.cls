@@ -28,8 +28,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         Boolean check = false;
 
         //Get Sale
-        saleSrv.checkReadAccess('Status__c,Account__c,Name');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Status__c,Account__c,Name');
+        saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         //Get Orders
@@ -64,7 +64,13 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     Status = 'Draft',
                     RecordTypeId = recordTypeIdOrderDossier,
                     EffectiveDate = Date.today(),
-                    Step__c = 1
+                    Step__c = 1,
+                    Channel__c = sale.Channel__c,
+                    VendorLastName__c = sale.VendorLastName__c,
+                    VendorFirstName__c = sale.VendorFirstName__C,
+                    CommercialId__c = sale.CommercialId__c,
+                    AgencyCode__c = sale.AgencyCode__c,
+                    Agency__c = sale.Agency__c
                 );
 
                 orderSrv.createRecord(parentOrderNew);
@@ -220,6 +226,41 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         }
 
         return check;
+    }
+
+    /**
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+    * @date 03/09/2021
+    * @description New community check logic using Site Class
+    * @return Map<String, Object> Containing indication if it's community context or not + any errors
+    */
+    @AuraEnabled
+    public static Map<String, Object> isCommunity(){
+
+        Map<String, Object> result = new Map<String, Object>();
+
+        try {
+
+            Id siteId = Site.getSiteId(); 
+            
+            if (siteId != null) {
+                result.put('isCommunity', true);
+            } else {
+                result.put('isCommunity', false);
+            }
+
+            result.put('error', false);
+            
+            
+        } catch (Exception e) {
+            
+            result.put('error', true);
+            result.put('errorMessage', e.getMessage());
+            result.put('errorStackTrace', e.getStackTraceString());
+            
+        }
+
+        return result;
     }
 
 }

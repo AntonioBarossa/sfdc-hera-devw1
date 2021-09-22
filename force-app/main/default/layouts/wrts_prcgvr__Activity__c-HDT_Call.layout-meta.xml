@@ -92,6 +92,10 @@
                 <behavior>Readonly</behavior>
                 <field>RecordingLink__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ConnectionID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -171,39 +175,28 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>wrts_prcgvr__Description__c</fields>
-        <fields>wrts_prcgvr__DueDate__c</fields>
-        <fields>wrts_prcgvr__Status__c</fields>
-        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
-        <fields>OWNER.LAST_NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Type__c</fields>
+        <fields>Status__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
         <fields>UPDATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>wrts_prcgvr__Activity__c.ParentActivity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>FULL_NAME</fields>
-        <fields>CORE.USERS.ALIAS</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
-        <fields>UPDATEDBY_USER.ALIAS</fields>
-        <fields>INDIVIDUAL.LAST_UPDATE</fields>
         <relatedList>Individual.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>TelephoneNumber</fields>
-        <fields>ActiveFromDate</fields>
-        <fields>LastModifiedDate</fields>
-        <fields>LastModifiedBy</fields>
-        <fields>Parent</fields>
         <relatedList>ContactPointPhone.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>EmailAddress</fields>
-        <fields>ActiveFromDate</fields>
-        <fields>LastModifiedDate</fields>
-        <fields>LastModifiedBy</fields>
-        <fields>Parent</fields>
         <relatedList>ContactPointEmail.Activity__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

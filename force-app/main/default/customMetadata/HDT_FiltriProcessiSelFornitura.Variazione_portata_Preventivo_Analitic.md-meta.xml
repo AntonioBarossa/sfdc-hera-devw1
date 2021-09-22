@@ -24,10 +24,10 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Variazione portata - Preventivo Analitic</value>
+        <value xsi:type="xsd:string">Variazione Portata</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica</value>
+        <value xsi:type="xsd:string">Gas</value>
     </values>
 </CustomMetadata>

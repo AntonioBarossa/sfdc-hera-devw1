@@ -5,6 +5,7 @@ import saveAct from '@salesforce/apex/HDT_LC_ActivityIvaAccise.saveActivity'
 import sospendi from '@salesforce/apex/HDT_LC_ActivityIvaAccise.sospendiActivity'
 import riprendi from '@salesforce/apex/HDT_LC_ActivityIvaAccise.riprendiActivity'
 import saveAttempt from '@salesforce/apex/HDT_LC_ActivityIvaAccise.saveAttempt'
+import { updateRecord } from 'lightning/uiRecordApi';
 
 export default class HdtActivityIvaAccise extends LightningElement {
 
@@ -14,8 +15,12 @@ export default class HdtActivityIvaAccise extends LightningElement {
     @api isAcciseEle = false;
     @api isSuspend = false;
     @api dateConfirm;
+    @api tentativi = 0;
     @api showIva = false;
     @api showAccise = false;
+    @api isDisabledField = false;
+    @api predefaultv;
+    @api loaded = false;
     @api acciseOptions =[
         {label:"Elettrico", value:"Elettrico"},
         {label:"Gas", value:"Gas"}
@@ -26,10 +31,14 @@ export default class HdtActivityIvaAccise extends LightningElement {
          console.log('********:' + event.target.name);
 
         console.log('********:' + event.target.checked);   
-     } 
+     }
+     
+     getValuePhone(event){
+         this.tentativi = event.target.value;
+     }
     
     handleSave(){
-
+        this.loaded = false;
         let checkIsAllFlag = true;
         let checkInitial = false;
         console.log('*******:' + JSON.stringify(this.act));
@@ -43,6 +52,7 @@ export default class HdtActivityIvaAccise extends LightningElement {
                 this.dispatchEvent(event);
                 console.log('*******:2');
                 checkInitial = true;
+                this.loaded = true;
         }
         else{
             if(this.showIva &&(!this.act.isIvaAnagrafici__c || !this.act.isIvaActivityCode__c || !this.act.isIvaSupplyAddress__c || !this.act.isIvaMatricola__c || !this.act.isIvaFirmLegalOwner__c || !this.act.isIvaCopyDocument__c || !this.act.isSchoolCategory__c || !this.act.isDenominazioneIncongruente__c || !this.act.isIva10Module__c || !this.act.isIvaAtecoCode__c )){
@@ -71,6 +81,8 @@ export default class HdtActivityIvaAccise extends LightningElement {
                     this.dispatchEvent(event);
                     this.dateConfirm = today.toISOString();
                     this.act.CompletationDateDocument__c = today.toISOString();
+                    updateRecord({ fields: { Id: this.recordId } });
+                    this.isDisabledField = true;
             }
             else{
                 const event = new ShowToastEvent({
@@ -82,32 +94,49 @@ export default class HdtActivityIvaAccise extends LightningElement {
             }
             saveAct({ act : this.act,
                       closeActivity : checkIsAllFlag
-                }).then({
-
+                }).then(response =>{
+                    this.loaded = true;
                 });
+        }
+        else{
+            this.loaded = true;
         }
     }
 
     handleSaveAttempt(){
         saveAttempt({
             actid : this.act.Id,
-            attempt : this.act.NumberOfAttempt__c
-        }).then({}); 
+            attempt : this.tentativi + ''
+        }).then(response=>{
+            if(response){
+                updateRecord({ fields: { Id: this.recordId } });
+                const event = new ShowToastEvent({
+                    message: 'Numero Tentativi Salvato Con Successo',
+                    variant: 'success',
+                    mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+            }
+        }); 
     }
 
     sospend(){
+        this.loaded = false;
         sospendi({actid : this.act.Id}).then(response => {
             if(response){
                 console.log('******HOLA');
                 this.isSuspend = true;
+                this.loaded = true;
             }
         });
     }
 
     handleRiprendi(){
+        this.loaded = false;
         riprendi({actid : this.act.Id}).then(response => {
             if(response){
                 this.isSuspend = false;
+                this.loaded = true;
             }
         });
     }
@@ -116,11 +145,29 @@ export default class HdtActivityIvaAccise extends LightningElement {
     connectedCallback() {
         getActivity({recordId : this.recordId}).then(response =>{
             this.act = response;
+            if(response.wrts_prcgvr__Status__c == 'Completed'){
+                this.isDisabledField = true;
+                this.dateConfirm = response.CompletationDateDocument__c;
+            }
+            this.tentativi = this.act.NumberOfAttempt__c;
             console.log('*****:' + JSON.stringify(response));
             console.log('*****:' + (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false );
             this.showIva = (response.Order__r != null && response.Order__r != undefined && response.Order__r.VATfacilitationFlag__c != null && response.Order__r.VATfacilitationFlag__c != undefined) ? response.Order__r.VATfacilitationFlag__c : false ;
             this.showAccise = (response.Order__r != null && response.Order__r != undefined && response.Order__r.FacilitationExcise__c != null && response.Order__r.FacilitationExcise__c != undefined) ? response.Order__r.FacilitationExcise__c : false ;
+            if(this.showAccise){
+                this.predefaultv = (response.Order__r != null && response.Order__r != undefined && response.Order__r.ServicePoint__r != undefined && response.Order__r.ServicePoint__r.CommoditySector__c == 'Energia Elettrica' ? 'Elettrico' : 'Gas');
+                if((response.Order__r != null && response.Order__r != undefined && response.Order__r.ServicePoint__r != undefined && response.Order__r.ServicePoint__r.CommoditySector__c == 'Energia Elettrica')){
+                    this.isAcciseGas = false;
+                    this.isAcciseEle = true;
+                }
+                else{
+                    this.isAcciseGas = true;
+                    this.isAcciseEle = false;
+                
+                }
+            }
             this.isSuspend = response.wrts_prcgvr__Status__c == 'Sospeso' ? true : false;
+            this.loaded = true;
         });
     }
  

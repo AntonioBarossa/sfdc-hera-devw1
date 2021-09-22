@@ -273,6 +273,7 @@ export default class hdtConfigureProduct extends LightningElement {
     }
 
     handleNext(){
+        console.log('sale : ' + JSON.stringify(this.saleRecord));
         this.updateSaleRecordNext({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});
     }
 

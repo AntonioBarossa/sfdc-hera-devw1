@@ -1,4 +1,5 @@
 public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
+    
     private String activityId;
 
     HDT_SRV_ActivityToQueueAssigner(String activityId) {

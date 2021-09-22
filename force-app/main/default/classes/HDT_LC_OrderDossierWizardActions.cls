@@ -21,73 +21,104 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
         
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+
+        // if (orderParent.ContractSigned__c == false) {
+                // LG Ripristino logica 18/09 FF
         if (orderParent.ContractSigned__c == false) {
-
-            //update child orders
-            for (Order childOrder : childOrders) {
-                
-                String phase = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
-                checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
-
-                if(childOrder.RecordType.DeveloperName == 'HDT_RT_CambioUso'
-                    || childOrder.RecordType.DeveloperName == 'HDT_RT_ConnessioneConAttivazione'
-                    || childOrder.RecordType.DeveloperName == 'HDT_RT_TemporaneaNuovaAtt'){
-                    phase = 'In attesa validazione';
-                }
-
-                if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
-                    phase = 'In attesa conferma cliente';
-                }
-
-                // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
-                    ordersToUpdate.add(new Order(
-                        Id = childOrder.Id,
-                        //EVERIS: AGGIUNTA CASISTICA VOLTURA
-                        Phase__c = phase
-                    ));
-                // }
-
-            }
-
-            //update parent order
-            ordersToUpdate.add(new Order(
-                Id = orderParent.Id,
-                Phase__c = 'Documentazione da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
-            ));
-
+            orderToUpdate.Phase__c = 'Documentazione da inviare';
         } else {
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+             //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        }
+           // orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+         //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        // }
 
-            //update child orders
-            for (Order childOrder : childOrders) {
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-                String phase = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione';
-                // Date dateComfortCall = null;
-
-                if(childOrder.RecordType.DeveloperName == 'HDT_RT_CambioUso'
-                    || childOrder.RecordType.DeveloperName == 'HDT_RT_ConnessioneConAttivazione'
-                    || childOrder.RecordType.DeveloperName == 'HDT_RT_TemporaneaNuovaAtt'){
-                    phase = 'In attesa validazione';
-                }
-
-                if (childOrder.ComfortCallDaysDue__c != null) { //comform call logic
-                    phase = 'In attesa conferma cliente';
-                    // dateCDateComfortCall__c
-                }
-
-                // if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
-                    ordersToUpdate.add(new Order(
-                        Id = childOrder.Id,
-                        Phase__c = phase
-                    ));
-                // }
+        for (Order childOrd : childOrders) {
+            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
+                ordersToUpdate.add(
+                    new Order(
+                        Id = childOrd.Id,
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    )
+                );
             }
+        }
+        
+        ordersToUpdate.add(orderToUpdate);
 
-            //update parent order
-            ordersToUpdate.add(new Order(
-                Id = orderParent.Id,
-                Phase__c = 'Documentazione da validare'
-            ));
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
+            }
+        }
 
+        orderSrv.updateRecords(ordersToUpdate);
+
+    }
+
+    @AuraEnabled
+    public static void save2(Order orderParent,boolean isPlicoSend){
+
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        List<Order> ordersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+
+        // if (orderParent.ContractSigned__c == false) {
+        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+                // LG Ripristino logica 18/09 FF
+        if (orderParent.ContractSigned__c == false) {
+            orderToUpdate.Phase__c = 'Documentazione da inviare';
+        } else {
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+             //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        }
+      /*  if(isPlicoSend){
+          //  orderToUpdate.Phase__c = 'Plico da inviare';
+          orderToUpdate.Phase__c = 'Documentazione da validare';
+        }
+        else{
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+        }*/
+        // }
+
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
+
+        for (Order childOrd : childOrders) {
+            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
+                ordersToUpdate.add(
+                    new Order(
+                        Id = childOrd.Id,
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    )
+                );
+            }
+        }
+        
+        ordersToUpdate.add(orderToUpdate);
+
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
+            }
         }
 
         orderSrv.updateRecords(ordersToUpdate);

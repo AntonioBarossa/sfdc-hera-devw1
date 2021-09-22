@@ -33,6 +33,9 @@
                         <valueListItems>
                             <value>Account.Escalation</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.HDT_VasOrders</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -57,46 +60,10 @@
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>D1 - Persona fisica</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D2 - Ditta individuale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D3 - Azienda</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D4 - Parti comuni</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D5 - Condominio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D6 - Associazione</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D7 - BP Doppio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>D8 - Marcatura nulla</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -108,6 +75,13 @@
                     <valueList>
                         <valueListItems>
                             <value>Account.Catalogo_Servizi</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Distributore</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.Escalation</value>
@@ -136,46 +110,10 @@
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D1 - Persona fisica</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D2 - Ditta individuale</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D3 - Azienda</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D4 - Parti comuni</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D5 - Condominio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D6 - Associazione</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D7 - BP Doppio</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CustomerMarking__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>D8 - Marcatura nulla</rightValue>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -192,6 +130,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Distributore</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -201,6 +146,13 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Distributore</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -686,6 +638,33 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountAlerts</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;Per questo cliente gli Alert sono gestiti su Siebel.&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-7de11b02-55bd-4945-9c3a-5a51e258a2ee</name>
@@ -910,11 +889,30 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>force:detailPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_Distributore</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-c55ab0d3-61d9-4597-ab2f-262306c994c6</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>HDT_RT_Distributore</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -933,6 +931,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_OneShotUser}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-4aef154f-25e4-4d25-a35c-09d8dabe36c8</name>
@@ -1003,6 +1008,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtLastBill</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.IsDigitalMarking__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

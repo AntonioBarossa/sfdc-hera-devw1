@@ -220,6 +220,13 @@ export default class HdtAdvancedSearch extends LightningElement {
     closeModal() {
         this.confirmButtonDisabled=true;
         this.openmodel = false;
+        console.log('*********:1' + this.serviceRequestId);
+        console.log('*********:2' + this.isIncompatible);
+        if(this.serviceRequestId != null && this.isIncompatible){
+            this.dispatchEvent(new CustomEvent('servicepointselectioncancel', {
+                detail: this.rowToSend
+            }));
+        }
     }
 
     /**
@@ -253,7 +260,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let columnsUniq = [...new Set(columns)];
         columnsUniq.forEach(field => 
             {
-                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id'){
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
                     this.tableColumns.push({label: field, fieldName: field});
                 }                 
             });
@@ -381,6 +388,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
+                this.serviceRequestId = null;
             } else {
                 this.alert('Dati tabella','Nessun record trovato','warn')
                 this.tableData = data;
@@ -527,8 +535,11 @@ export default class HdtAdvancedSearch extends LightningElement {
                     if(found){
                         this.isIncompatible= false;
                         row.iconCompatibility= this.iconCompatibility;
+                        row.serviceRequestId= this.serviceRequestId;
+                        row.isCompatible= true;
                         if(data.compatibility != ''){
                             this.isIncompatible=true;
+                            row.isCompatible= false;
                             row.compatibilityMessage= data.compatibility;
                             this.confirmButtonDisabled = true;
                         }else{
@@ -536,7 +547,8 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                this.createTable(this.originalData);  
+                console.log(this.originalData);
+                this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];
                 my_ids[0] = this.rowToSend.Id;
@@ -584,9 +596,11 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         this.closeModal();
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
+        if(this.serviceRequestId == null || (this.serviceRequestId != null && !this.isIncompatible)){
             this.dispatchEvent(new CustomEvent('servicepointselection', {
                 detail: this.rowToSend
-            }));       
+            }));
+        }       
         this.confirmButtonDisabled = true;
         this.preloading = false;
 

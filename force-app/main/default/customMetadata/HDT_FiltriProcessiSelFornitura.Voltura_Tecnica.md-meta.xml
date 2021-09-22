@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Voltura Tecnica</label>
+    <label>Voltura tecnica</label>
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
@@ -16,15 +16,15 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Draft</value>
+        <value xsi:type="xsd:string">Attivo,Cessato</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Attivo,Bozza,Sospeso</value>
+        <value xsi:type="xsd:string">Attivo,Cessato,Bozza</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Voltura Tecnica</value>
+        <value xsi:type="xsd:string">Voltura tecnica</value>
     </values>
     <values>
         <field>TipoServizio__c</field>

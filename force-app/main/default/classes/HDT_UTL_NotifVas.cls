@@ -21,6 +21,7 @@ public with sharing class HDT_UTL_NotifVas {
     public static void handleVasNotify(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
 
         Map<String, String> requestMap = new Map<String, String>();
+        system.debug(json.serialize(request));
         for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
             requestMap.put(field.name, field.value);
         }
@@ -28,11 +29,12 @@ public with sharing class HDT_UTL_NotifVas {
         Exception processExc;
         
         try {
-            switch on requestMap.get('TIPO_OPERAZIONE') {
-                when 'ATT' {
+            system.debug(request.header.fields.get(0).value);
+            switch on request.header.fields.get(0).value {
+                when 'sales' {
                     handleVasActivation(request, requestMap);
                 }
-                when 'DIS' {
+                when 'postsales' {
                     handleVasDeactivation(request, requestMap);
                 }
                 when else{
@@ -192,31 +194,34 @@ public with sharing class HDT_UTL_NotifVas {
     **/
     private static void mapPhaseAndStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         try {
-            if (String.isNotBlank(statusMapping.OrderPhase__c)) {
+            if (sObjMap.containsKey('Order')) {
                 Order currentOrder = (Order)sObjMap.get('Order');
-                currentOrder.Phase__c = statusMapping.OrderPhase__c;
-            }
+                if (String.isNotBlank(statusMapping.OrderPhase__c)) {
+                    currentOrder.Phase__c = statusMapping.OrderPhase__c;
+                }
 
-            if (String.isNotBlank(statusMapping.OrderStatus__c)) {
-                Order currentOrder = (Order)sObjMap.get('Order');
-                currentOrder.Status = statusMapping.OrderStatus__c;
+                if (String.isNotBlank(statusMapping.OrderStatus__c)) {
+                    currentOrder.Status = statusMapping.OrderStatus__c;
+                }
             }
     
-            if (String.isNotBlank(statusMapping.CasePhase__c)) {
+            if (sObjMap.containsKey('Case')) {
                 Case currentCase = (Case)sObjMap.get('Case');
-                currentCase.Phase__c = statusMapping.CasePhase__c;
-            }
+                if (String.isNotBlank(statusMapping.CasePhase__c)) {
+                    currentCase.Phase__c = statusMapping.CasePhase__c;
+                }
 
-            if (String.isNotBlank(statusMapping.CaseStatus__c)) {
-                Case currentCase = (Case)sObjMap.get('Case');
-                currentCase.Status = statusMapping.CaseStatus__c;
+                if (String.isNotBlank(statusMapping.CaseStatus__c)) {
+                    currentCase.Status = statusMapping.CaseStatus__c;
+                }
             }
     
-            if (String.isNotBlank(statusMapping.AssetStatus__c)) {
+            if (sObjMap.containsKey('Asset')) {
                 Asset currentAsset = (Asset)sObjMap.get('Asset');
-                currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                if (String.isNotBlank(statusMapping.AssetStatus__c)) {
+                    currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
+                }
             }
-
 
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
@@ -264,7 +269,7 @@ public with sharing class HDT_UTL_NotifVas {
     * @param targetRecord 
     **/
     private static void populateFieldsFromRequest(Map<String, String> requestMap, SObject targetRecord) {
-        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_MOTORE_VAS') );
+        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_VAS') );
         targetRecord.put('VasStatus__c', requestMap.get('STATO_PRATICA') );
         targetRecord.put('VasStatusDescription__c', requestMap.get('ESITO') );
         targetRecord.put('VasPolicyNumber__c', requestMap.get('NUMERO_POLIZZA') );

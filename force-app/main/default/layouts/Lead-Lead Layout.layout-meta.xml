@@ -39,10 +39,12 @@
                 <behavior>Readonly</behavior>
                 <field>LeadSource</field>
             </layoutItems>
+            <!--Start HRAWRM-384 31-08-2021-->
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>SourceDetail__c</field>
             </layoutItems>
+            <!--End HRAWRM-384 31-08-2021-->
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -261,6 +263,16 @@
     </relatedContent>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>AddCampaign</excludeButtons>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
+        <fields>CM.STATUS</fields>
+        <fields>CM.RESPONDED</fields>
+        <fields>CM.LAST_UPDATE</fields>
+        <relatedList>RelatedCampaignList</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>

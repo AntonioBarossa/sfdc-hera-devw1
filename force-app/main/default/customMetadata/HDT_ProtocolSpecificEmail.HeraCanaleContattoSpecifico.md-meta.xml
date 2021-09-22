@@ -14,4 +14,8 @@
         <field>Process__c</field>
         <value xsi:type="xsd:string">Verifica Pressione</value>
     </values>
+    <values>
+        <field>type__c</field>
+        <value xsi:type="xsd:string">Protocollo - Verifiche</value>
+    </values>
 </CustomMetadata>

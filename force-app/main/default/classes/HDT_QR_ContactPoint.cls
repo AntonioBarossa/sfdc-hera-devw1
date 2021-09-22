@@ -1,3 +1,10 @@
+/**
+ * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+ * @date 21/04/2021
+ * @description HDT_QR_ContactPoint Classes
+ * @history Sabina Levonja – 21/04/2021 – Created Class
+ */
+
 public inherited sharing class HDT_QR_ContactPoint {
 
     public static ContactPointPhone getContactPhoneById (Id contactPhoneId, String fields){
@@ -82,40 +89,58 @@ public inherited sharing class HDT_QR_ContactPoint {
         return contemail;
 
     }
+        
+    public static List<ContactPointEmail> getIndividualContactEmailList (Set<Id> setInd){
+        return [SELECT Id FROM ContactPointEmail WHERE ParentId IN :setInd  WITH SECURITY_ENFORCED];
 
-    public static ContactPointPhone getContactEmailByPhone (String phone, Id individualId, String fields){
-        ContactPointPhone res;
-
-        String query = 'SELECT '+ fields +
-                ' FROM ContactPointPhone WHERE ParentId = :individualId LIMIT 1';
-        List <ContactPointPhone> contphone = Database.query(query);
-
-        if(contPhone != null && contPhone.size() > 0){
-			res = contphone[0];
-		}
-		else{
-			res = null;
-		}
-        return res;
     }
+    public static List<ContactPointPhone> getIndividualContactsPhoneList (Set<Id> setInd){
 
-    public static ContactPointPhone getContactEmailById (Id contactEmailId, String fields){
-		
-		ContactPointPhone res;
-		
-        String query = 'SELECT '+ fields +
-                ' FROM ContactPointPhone WHERE Id = :contactEmailId LIMIT 1';
-        List <ContactPointPhone> contphone = Database.query(query);
-		if(contPhone != null && contPhone.size() > 0){
-			res = contphone[0];
-		}
-		else{
-			res = null;
-		}
-        return res;
+
+        return [SELECT Id FROM ContactPointPhone  WHERE ParentId IN :setInd WITH SECURITY_ENFORCED];
+
     }
+    
 
+    /** The parameter "String phone" is not being used anywhere inside this method 
+     *  The method was commented as it doesn't seem to be used anywhere
+     */
 
+    // public static ContactPointPhone getContactEmailByPhone (String phone, Id individualId, String fields){
+    //     ContactPointPhone res;
+
+    //     String query = 'SELECT '+ fields +
+    //             ' FROM ContactPointPhone WHERE ParentId = :individualId LIMIT 1';
+    //     List <ContactPointPhone> contphone = Database.query(query);
+
+    //     if(contPhone != null && contPhone.size() > 0){
+	// 		res = contphone[0];
+	// 	}
+	// 	else{
+	// 		res = null;
+	// 	}
+    //     return res;
+    // }
+
+    /** The name of the method doesn't match the returned sObject type
+     *  The method was commented as it doesn't seem to be used anywhere
+     */
+
+    // public static ContactPointPhone getContactEmailById (Id contactEmailId, String fields){
+		
+	// 	ContactPointPhone res;
+		
+    //     String query = 'SELECT '+ fields +
+    //             ' FROM ContactPointPhone WHERE Id = :contactEmailId LIMIT 1';
+    //     List <ContactPointPhone> contphone = Database.query(query);
+	// 	if(contPhone != null && contPhone.size() > 0){
+	// 		res = contphone[0];
+	// 	}
+	// 	else{
+	// 		res = null;
+	// 	}
+    //     return res;
+    // }
        
     public static ContactPointEmail searchContactPointEmail (String email){
         ContactPointEmail res;

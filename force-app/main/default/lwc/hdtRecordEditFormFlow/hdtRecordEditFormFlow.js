@@ -384,8 +384,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             let fifthLevel = this.selector('FithLevelComplaintClassification__c');
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
-                if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
-                    let soldBy = this.selector('SoldBy__c');
+                let soldBy = this.selector('SoldBy__c');
+                if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
+                    soldBy.disabled = false;
+                }else{
+                    soldBy.disabled = true;
                 }
             }
         } else if(!(Object.keys(channel).length === 0)){
@@ -413,12 +416,23 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     if(!(Object.keys(paymentType).length === 0)){
                         console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
+                        let workStatus = this.selector('WorkStatus__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza Sociale') === 0 && payType != null){
                             payType.disabled = false;
-                        } else {
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
+                        }else if(reason.value.localeCompare('Fattura SD') === 0 && workStatus != null){
+                            workStatus.disabled = false;
+                            workStatus.required = true;
+                        } 
+                        else {
                             payType.disabled = true;
                             payType.value = '';
+                            workStatus.disabled = true;
+                            workStatus.required = false;
+                            workStatus.value = '';
                         }
                     }
                 }
@@ -450,6 +464,20 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
                 if(depositPaymentMode.value === 'Paperless' && !depositPaymentMode.disabled){
                     sendPaperlessCode.disabled = false;
+                }
+            }
+        }
+        let depositPaymentModeObj = this.objSelector('DepositPaymentMode__c');
+        console.log('#DepositPaymentMode --> ' + JSON.stringify(depositPaymentModeObj));
+        if(!(Object.keys(depositPaymentModeObj).length === 0)){
+            let depositPaymentMode = this.selector('DepositPaymentMode__c');
+            console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
+            if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
+                let paperlessCode = this.selector('SendPaperlessCodeMode__c');
+                if(depositPaymentMode.value === 'Paperless'){
+                    paperlessCode.disabled = false;
+                } else {
+                    paperlessCode.disabled = true;
                 }
             }
         }

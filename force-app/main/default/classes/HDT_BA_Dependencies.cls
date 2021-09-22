@@ -5,7 +5,12 @@
 */
 public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject> {
     
-    public Database.QueryLocator start(Database.BatchableContext BC) {
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 15/07/2021
+    * @description start method
+    */
+    public Database.QueryLocator start(Database.BatchableContext bc) {
          
         String query = 'SELECT Id, Status__c, Case__c, Order__c, Type__c, NextPhase__c '
                     + 'FROM ServiceRequest__c '
@@ -16,7 +21,12 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
         return Database.getQueryLocator(query);
     }
      
-    public void execute(Database.BatchableContext BC, List<ServiceRequest__c> srList) {
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 15/07/2021
+    * @description execute method
+    */
+    public void execute(Database.BatchableContext bc, List<ServiceRequest__c> srList) {
         Integer recordsProcessed = 0;
         List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
         List<Order> ordersToBeUpdated = new List<Order>();
@@ -39,42 +49,49 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
             serviceRequestsToBeSequenced.add(sr);
             recordsProcessed++;
         }
-        Savepoint sp = Database.setSavePoint();
-        try{
-            if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
-                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
-                Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isUpdateable()&&
-                Order.SObjectType.getDescribe().isAccessible()&&
-                Schema.sObjectType.Order.fields.Status.isAccessible()&&
-                Schema.sObjectType.Order.fields.Status.isUpdateable()&&
-                Schema.sObjectType.Order.fields.Phase__c.isAccessible()&&
-                Schema.sObjectType.Order.fields.Phase__c.isUpdateable()&&
-                Case.SObjectType.getDescribe().isAccessible()&&
-                Schema.sObjectType.Case.fields.Status.isAccessible()&&
-                Schema.sObjectType.Case.fields.Status.isUpdateable()&&
-                Schema.sObjectType.Case.fields.Phase__c.isAccessible()&&
-                Schema.sObjectType.Case.fields.Phase__c.isUpdateable()){
-                
-                if(serviceRequestsToBeSequenced.size()>0){
-                    update serviceRequestsToBeSequenced;
+        if(srList.size()>0){
+            Savepoint sp = Database.setSavePoint();
+            try{
+                if (ServiceRequest__c.SObjectType.getDescribe().isAccessible()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.Status__c.isAccessible()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.Status__c.isUpdateable()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isAccessible()&&
+                    Schema.sObjectType.ServiceRequest__c.fields.DependOn__c.isUpdateable()&&
+                    Order.SObjectType.getDescribe().isAccessible()&&
+                    Schema.sObjectType.Order.fields.Status.isAccessible()&&
+                    Schema.sObjectType.Order.fields.Status.isUpdateable()&&
+                    Schema.sObjectType.Order.fields.Phase__c.isAccessible()&&
+                    Schema.sObjectType.Order.fields.Phase__c.isUpdateable()&&
+                    Case.SObjectType.getDescribe().isAccessible()&&
+                    Schema.sObjectType.Case.fields.Status.isAccessible()&&
+                    Schema.sObjectType.Case.fields.Status.isUpdateable()&&
+                    Schema.sObjectType.Case.fields.Phase__c.isAccessible()&&
+                    Schema.sObjectType.Case.fields.Phase__c.isUpdateable()){
+                    
+                    if(serviceRequestsToBeSequenced.size()>0){
+                        update serviceRequestsToBeSequenced;
+                    }
+                    if(ordersToBeUpdated.size()>0){
+                        update ordersToBeUpdated;
+                    }
+                    if(casesToBeUpdated.size()>0){
+                        update casesToBeUpdated;
+                    }
                 }
-                if(ordersToBeUpdated.size()>0){
-                    update ordersToBeUpdated;
-                }
-                if(casesToBeUpdated.size()>0){
-                    update casesToBeUpdated;
-                }
+            }catch(Exception ex){
+                System.debug(ex.getMessage());
+                Database.rollback(sp);
             }
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
-            Database.rollback(sp);
         }
         System.debug(recordsProcessed + ' records unlocked in the sequentialization processing');
     }   
      
-    public void finish(Database.BatchableContext BC) {
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 15/07/2021
+    * @description finish method
+    */
+    public void finish(Database.BatchableContext bc) {
         System.debug('Batch execution, for unlock records in the sequentialization processing, finished');
     }
 }

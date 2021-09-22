@@ -46,6 +46,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');
                     
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
                     newLead.WebFormField02__c = mapRequestFields.get('CAMPO_02');
@@ -87,6 +88,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    //HRAWRM-388 03/09/2021
+                    newLead.ContactReason__c='Info commerciali';
+                    //HRAWRM-388 03/09/2021
                     System.debug('PROVA WSFORM6');
                     
                     
@@ -258,8 +262,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
-                        newLead.ContactDate__c= DateTime.parse(mapRequestFields.get('D_O_RICONTATTO'));
+                        newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
                     newLead.FirstName= 'Lead';
                     newLead.LastName= 'Winback';
@@ -426,8 +431,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
-                        newLead.ContactDate__c= DateTime.parse(mapRequestFields.get('D_O_RICONTATTO'));
+                        newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
                     newLead.FirstName= 'Lead';
                     newLead.LastName= 'CaricaBollete';
@@ -601,8 +607,10 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField38__c = mapRequestFields.get('CAMPO_38');
                     newLead.WebFormField39__c = mapRequestFields.get('CAMPO_39');
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
+
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
-                        newLead.ContactDate__c= DateTime.parse(mapRequestFields.get('D_O_RICONTATTO'));
+                        newLead.ContactDate__c=getDateTimeFromString(mapRequestFields.get('D_O_RICONTATTO'));
                     }
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.City= mapRequestFields.get('COMUNE');
@@ -806,6 +814,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.WebFormField40__c = mapRequestFields.get('CAMPO_40');
                     newLead.CustomerMarking__c= mapRequestFields.get('MARCATURA');
                     newLead.Category__c= mapRequestFields.get('CATEGORIA');
+                    newLead.ContactReason__c='Info commerciali';//HRAWRM-388 03-09-2021
+
                     newLead.Company= newLead.FirstName+ ' '+newLead.LastName;
                     
                     HDT_SRV_Lead.checkCreateAccess(newLead);

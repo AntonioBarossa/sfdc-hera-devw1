@@ -76,9 +76,13 @@ public class HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
-	public static String generateGetEnvelopeRequest(SObject documentalObject){
+	public static String generateGetEnvelopeRequest(SObject documentalObject, String documentType){
 		if (documentalObject == null) {
 			throw new HDT_UTL_HeraException('Necessario passare in input una instanza di DocumentalActivity__c o DocumentSendTracking__c per visualizzare il documento.');
+		}
+
+		if (String.isBlank(documentType)) {
+			throw new HDT_UTL_HeraException('Errore interno nel recupero del documento archiviato.');
 		}
 
 		String envelopeId = (String) documentalObject.get('EnvelopeId__c');
@@ -87,7 +91,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 
 		String body = '';
-		if (getDocumentType(documentalObject) == 'pdf') {
+		if (documentType == 'pdf') {
 
 			JSONGenerator gen = JSON.createGenerator(false);
 			gen.writeStartObject();
@@ -102,7 +106,16 @@ public class HDT_SRV_DocumentalManagement{
 			body = gen.getAsString();
 
 		} else {
-			// TODO: generate request per recupero zip da Intesa
+
+			JSONGenerator gen = JSON.createGenerator(false);
+			DocusignSettings__c docusignCustomSettings = DocusignSettings__c.getInstance();
+			gen.writeStartObject();
+			gen.writeStringField('customerId', docusignCustomSettings.CustomerEnviromentId__c);
+			gen.writeStringField('transactionId', envelopeId);
+			gen.writeBooleanField('getCustomFields', true);
+			gen.writeStringField('typeDoc', 'ALL');
+			gen.writeEndObject();
+			body = gen.getAsString();
 		}
 
 		System.debug('GetEnvelopeRequest body: ' + body);
@@ -227,7 +240,10 @@ public class HDT_SRV_DocumentalManagement{
 				throw new HDT_UTL_HeraException('Errore Postel nel recupero del documento archiviato');
 			}
 		} else {
-			// TODO: invoke Intesa callout.
+			postelResponse = HDT_WS_DocumentalIntegration.submitGetIntesaZipRequest(body);
+			if (postelResponse.responseCode != 200) {
+				throw new HDT_UTL_HeraException('Errore Intesa nel recupero del documento archiviato');
+			}
 		}
 
 		return postelResponse;
@@ -271,10 +287,10 @@ public class HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
-				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
 				return orderList[0];
 			}
 		}else{
@@ -282,10 +298,21 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
-	public static void updateSobjectFromDocusign(SObject record,String status){
+	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
 		if(record != null){
+			String status = requestBody.status;
 			String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
+			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
+			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
+			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
+				listOfRadio.addAll(requestBody.listOfRadioGroup);
+				System.debug(requestBody.listOfRadioGroup);
+			}
+			if(requestBody.listOfData != null && requestBody.listOfData.size()>0){
+				listOfData.addAll(requestBody.listOfData);
+			}
+			
 			if(record.getSobjectType() == Case.getSobjectType()){
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
@@ -299,10 +326,126 @@ public class HDT_SRV_DocumentalManagement{
 					}
 				}
 			}else {
-				//tbd
+				if(status.equalsIgnoreCase('completed')){
+					record.put('DocumentalPhase__c','Plico firmato');					
+				}else{
+					//Che fase documentale settare?			
+				}
 			}
+			handleRadioGroup(record,listOfRadio);
+			handleDataText(record,listOfData);
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
+	}
+
+	public static void logDocusignError(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
+		if(record != null && requestBody != null){
+			String status = requestBody.status;
+			String processType = (String)record.get('DocumentalProcessType__c');
+			String cluster = (String)record.get('Cluster__c');
+			Id recordId = (Id)record.get('Id');
+			HDT_UTL_DocumentalManagement.createDocumentalActivityForError(requestBody.outcomeDescription, recordId, requestBody.envelopeId, record);
+		}
+	}
+
+	public static void createIntesaDocumentalActivity(SObject parentRecord,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody,String transactionId){
+		if(parentRecord != null){
+			String status = requestBody.status;
+			if(status.equalsIgnoreCase('completed')){
+				DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(parentRecord,transactionId);
+				if (documentalActivity != null){
+					documentalActivity.ReturnDate__c = Date.today();
+					documentalActivity.ActivityType__c = 'Documentazione completa';
+					try {
+						HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+					} catch (Exception ex) {
+						System.debug('Errore DML: ' + ex.getMessage());
+					}
+				}
+			}
+		}
+	}
+
+	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
+		if(listOfRadio != null && listOfRadio.size()>=0){
+			String individualId;
+			if(record.getSobjectType() == Case.getSobjectType()){
+				Case caseRecord = (Case) record;
+				Contact caseContact = (Contact) caseRecord.Contact;
+				individualId = caseContact.IndividualId;
+			}else{
+				Order orderRecord = (Order) record;
+				Contact orderContact = (Contact) orderRecord.Contact__r;
+				individualId = orderContact.IndividualId;
+			}
+			Individual individualRecord = new Individual();
+			individualRecord.Id = individualId;
+
+			if(record.getSobjectType() == Case.getSobjectType()){
+				//Settare phase del case in completata
+				record.put('Phase__c', 'Completata');
+				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
+					String privacyVersion;
+					String privacyCompany;
+					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
+						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
+							privacyVersion = singleAttachment.Version__c;
+						}
+					}
+					if(singleRadio.selected.equalsIgnoreCase('true')){
+						String value = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+						if(singleRadio.groupName.indexOf('radio1') > -1){
+							record.put('MarketingPrivacy__c', value);
+							individualRecord.MarketingPrivacy__c = value;
+							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
+							individualRecord.PrivacyMarketingChoiceSource__c = 'post-sales';
+							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
+							record.put('ProfilingPrivacy__c', value);
+							individualRecord.ProfilingPrivacy__c = value;
+							individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
+							individualRecord.PrivacyProfilingChoiceSource__c = 'post-sales';
+							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+						}
+					}
+				}
+				HDT_UTL_DatabaseService.updateSObject(individualRecord);
+			}else{
+				//in caso di order aggiornare privacy individual
+				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
+					String privacyVersion;
+					String privacyCompany;
+					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
+						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
+							privacyVersion = singleAttachment.Version__c;
+						}
+					}
+					if(singleRadio.selected.equalsIgnoreCase('true')){
+						String value = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+						if(singleRadio.groupName.indexOf('radio1') > -1){
+							individualRecord.MarketingPrivacy__c = value;
+							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
+							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
+							individualRecord.ProfilingPrivacy__c = value;
+							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
+							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+						}
+					}
+				}
+				try {
+					HDT_UTL_DatabaseService.updateSObject(individualRecord);
+				}catch(Exception ex){
+					System.debug('Errore DML: ' + ex.getMessage());
+				}
+			}
+			
+		}
+	}
+	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
+		//aggiornare i dati catastali
 	}
 
 	@future
@@ -348,7 +491,9 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			if(context.equalsIgnoreCase('Case')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
-			}else if(context.equalsIgnoreCase('Order') || context.equalsIgnoreCase('DocumentazioneAnticipata')){
+			}else if(context.equalsIgnoreCase('Order')){
+				processNumber = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'OrderNumber', 0, inputs, formParams);
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
 				processNumber = HDT_UTL_DocumentalManagement.getValue('Order', 'OrderNumber', 0, inputs, formParams);
 			}else{
 				processNumber = recordId;
@@ -972,8 +1117,12 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				signMode = o.SignatureMethod__c;
 			}
 		}
-
-		return signMode.contains('OTP') ? 'zip' : 'pdf';
+		if (String.isNotBlank(signMode)) {
+			return signMode.contains('OTP') ? 'zip' : 'pdf';	
+		}else {
+			return 'pdf';
+		}
+		
 	}
 
 	public static String getSignModeConfiguration(String processType, String source){
@@ -984,7 +1133,9 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			List<HDT_WRP_SignModeConfiguration> signSendConfigurationList = new List<HDT_WRP_SignModeConfiguration>();
 			HDT_WRP_SignModeConfiguration signSendConfiguration = new HDT_WRP_SignModeConfiguration();
 			List<HDT_SignModeSettings__mdt> signModeSettingsList = HDT_QR_DocumentalConfiguration.getSignModeSettings(processType,source);
+			System.debug('signModeSettingsList: ' + signModeSettingsList);
 			for(HDT_SignModeSettings__mdt singleRecord : signModeSettingsList){
+				System.debug('processing sign mode: ' + singleRecord.SignMode__c);
 				sendMode = new Map<String,String>();
 				signMode = new Map<String,String>();
 				signSendConfiguration = new HDT_WRP_SignModeConfiguration();
@@ -992,17 +1143,20 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				signMode.put('value', singleRecord.SignMode__c);
 				signSendConfiguration.signMode = new Map<String,String>(signMode);
 				if(singleRecord.SendMode1__c != null && singleRecord.SendMode1__c != ''){
+					System.debug('adding send mode: ' + singleRecord.SendMode1__c);
 					sendMode.put('label',singleRecord.SendMode1__c);
 					sendMode.put('value',singleRecord.SendMode1__c);
 					Map<String,String> prova = new Map<String,String>(sendMode);
 					signSendConfiguration.sendMode.add(prova);
 				}
 				if(singleRecord.SendMode2__c != null && singleRecord.SendMode2__c != ''){
+					System.debug('adding send mode: ' + singleRecord.SendMode2__c);
 					sendMode.put('label',singleRecord.SendMode2__c);
 					sendMode.put('value',singleRecord.SendMode2__c);
 					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
 				}
 				if(singleRecord.SendMode3__c != null && singleRecord.SendMode3__c != ''){
+					System.debug('adding send mode: ' + singleRecord.SendMode3__c);
 					sendMode.put('label',singleRecord.SendMode3__c);
 					sendMode.put('value',singleRecord.SendMode3__c);
 					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));

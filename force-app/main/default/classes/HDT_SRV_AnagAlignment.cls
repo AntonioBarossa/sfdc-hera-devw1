@@ -292,7 +292,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         Case anagAlignCase = createCaseUtility.createCase(inputMap);
 
         if (anagAlignCase != null) {
-            HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
+            try {
+                System.debug('Going to insert case: ' + anagAlignCase);
+                HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
+            } catch (Exception e) {
+                System.debug('Expection: ' + e.getMessage());
+                throw e;
+            }
+
             return caseQuery.getRecordById(anagAlignCase.Id);
         }
 
@@ -332,7 +339,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputMap.put('type', 'Ricostruzione Consumi');
         inputMap.put('accountId', accountId);
         inputMap.put('contactId', acr.ContactId);
-        inputMap.put('servicePointId', servicePoint);
+        inputMap.put('servicePointId', servicePoint.Id);
         inputMap.put('HerokuPracticeCode__c', herokuCode);
 
         HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();

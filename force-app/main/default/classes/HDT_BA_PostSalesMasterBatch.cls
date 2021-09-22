@@ -51,19 +51,35 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         HDT_UTL_DatabaseService.updateSObject(newCase);
                     }
                     else if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')){
-                        if(currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile')){
-                            currentCase.Phase__c = 'Annullamento - Da inviare';
-                        }else{
-                            currentCase.Phase__c = 'Preventivo scaduto';
+                        currentCase.Phase__c = 'Preventivo scaduto';
+                        HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                        event.SerializedCase__c = JSON.serialize(currentCase);
+                        Database.SaveResult sr = EventBus.publish(event);
+                        if (sr.isSuccess()) {
+                            System.debug('Successfully published event.');
+                        } else {
+                            for (Database.Error err : sr.getErrors()) {
+                                System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                            }
                         }
-                        HDT_UTL_DatabaseService.updateSObject(currentCase);
                     }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto')){
                         HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
                         Order relatedOrder = postsalesQr.getRelatedOrder(currentCase.Order__c);
                         if(relatedOrder!= null){
                             if(relatedOrder.EffectiveDate__c < System.today()){
                                 currentCase.Phase__c = 'Da Inviare';
-                                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                                //Fire del platform event per inviare il flusso ad Heroku
+                                //System.debug('# case da delegare ad un altro evento: ' + currentCase.size());
+                                HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
+                                event.SerializedCase__c = JSON.serialize(currentCase);
+                                Database.SaveResult sr = EventBus.publish(event);
+                                if (sr.isSuccess()) {
+                                    System.debug('Successfully published event.');
+                                } else {
+                                    for (Database.Error err : sr.getErrors()) {
+                                        System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                                    }
+                                }
                             }
                         }
                     }

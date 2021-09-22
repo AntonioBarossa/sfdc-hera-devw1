@@ -23,10 +23,11 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         system.debug('HDT_LC_QuoteAmendContract - quoteLine: ' + quoteLine);
 
         if (!contract.isEmpty() && !quoteLine.isEmpty()) {
-            quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
-                Id = quoteLine[0].Id,
-                BillingProfile__c = contract[0].BillingProfile__c
-            ));
+            List<SBQQ__QuoteLine__c> qlToUpdate = new List<SBQQ__QuoteLine__c>();
+            for(SBQQ__QuoteLine__c ql :quoteLine ){
+                qlToUpdate.add(new SBQQ__QuoteLine__c(Id=ql.id, BillingProfile__c=contract[0].BillingProfile__c) );
+            }
+            quoteLineSrv.updateRecords(qlToUpdate);
         } else {
             system.debug('HDT_LC_QuoteAmendContract - assocBillingProfileFromContract - nessun contract o quoteLine trovato');
         }
@@ -42,7 +43,27 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
        
         //get all quoteLine pods
         quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,ServicePoint__c');
-        List<SBQQ__QuoteLine__c> quoteLinePods = quoteLineQr.getRecordsByContractAndProductPod(contractId, saleId);
+        Map<id, SBQQ__QuoteLine__c> podsAndVas = new Map<id, SBQQ__QuoteLine__c>(quoteLineQr.getRecordsByContractAndProductPod(contractId, saleId));
+        system.debug('HDT_LC_QuoteAmendContract - podsAndVas: ' + podsAndVas);
+
+        Map<id, List<id>> podToChilds = new Map<id, List<id>>(); //id pod to other QL with the same father as the pod
+        Map<id, id> podToFather = new Map<id, id>(); // this map connect father with pod, I use to increase efficiency on mapping podToChilds 
+        List<SBQQ__QuoteLine__c> quoteLinePods = new List<SBQQ__QuoteLine__c>(); //this contains just the ql pod/pdr
+        
+
+        for(SBQQ__QuoteLine__c ql : podsAndVas.values()){
+            if(ql.SBQQ__Product__r.Name=='POD' || ql.SBQQ__Product__r.Name=='PDR'){
+                quoteLinePods.add(ql);
+                podToChilds.put(ql.id, new List<Id>());
+                podToFather.put(ql.SBQQ__RequiredBy__c, ql.id);
+            }
+        }
+        for(SBQQ__QuoteLine__c ql : podsAndVas.values()){
+            id key = podToFather.get(ql.SBQQ__RequiredBy__c);
+            if(key!= ql.id){
+                podToChilds.get(key).add(ql.id);
+            }
+        }
         system.debug('HDT_LC_QuoteAmendContract - quoteLinePods: ' + quoteLinePods);
 
         //get all saleServiceItems for this quote
@@ -71,18 +92,28 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
                 //get service points that haven't been assigned yet
                 for (SaleServiceItem__c saleServiceItem : saleServiceItems) {
                     if (!notAvailableServicePoints.contains(saleServiceItem.ServicePoint__c)) {
+                        system.debug('entered r74');
                         availableServicePoints.add(saleServiceItem.ServicePoint__c);
                     }
                 }
 
                 //new list with ql to update
                 List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
+                system.debug('availableServicePoints '+json.serialize(availableServicePoints));
 
                 for (Integer i = 0; i < availableServicePoints.size(); i++) {
+                    system.debug('entered r84');
                     quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(
                         Id = quoteLinesWithoutServicePoint[i].Id,
                         ServicePoint__c = availableServicePoints[i]
                     ));
+                    for(id childId : podToChilds.get(quoteLinesWithoutServicePoint[i].Id)){
+                        if(childId==null) break;
+                        quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(
+                            Id = childId,
+                            ServicePoint__c = availableServicePoints[i]
+                        ));
+                    }
                 }
 
                 quoteLineSrv.updateRecords(quoteLinesToUpdate);
@@ -99,13 +130,26 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if products have been created for quote
+    * @param String quoteId
+    */
+    private static Boolean haveProductsBeenCreated(String quoteId){
+        List<SBQQ__QuoteLine__c> createdQuoteLines = quoteLineQr.getRecordsByQuoteId(quoteId);
+
+        return !createdQuoteLines.isEmpty();
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Execute actions when exiting modal
     * @param String contractId - SBQQ__Quote__r.ContractReference__c
     */
     @AuraEnabled
-    public static void execModalExitActions(String contractId, String saleId){
+    public static Boolean execModalExitActions(String contractId, String saleId, String quoteId){
         assocBillingProfileFromContract(contractId, saleId);
         assocPodToQuoteLine(contractId, saleId);
+
+        return haveProductsBeenCreated(quoteId);
     }
 
 }

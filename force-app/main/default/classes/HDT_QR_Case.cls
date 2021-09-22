@@ -31,7 +31,10 @@ public inherited sharing class HDT_QR_Case {
             Contract__c,
             ContractCode__c,
             CommodityFormula__c,
-            PODPDRFormula__c
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -51,6 +54,10 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public Case getParentCaseById(String caseId){
+
+        if (caseId == null) {
+            return null;
+        }
 
         return [SELECT Id,
         Type,
@@ -81,6 +88,9 @@ public inherited sharing class HDT_QR_Case {
         return [Select Case.MotivatedResponseSendMode__c,Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
     }
 
+    public List<Case> getCaseModificaContratti(String podPdr){
+        return [Select Phase__c, CaseNumber from Case where ServicePointCode__c=:podPdr AND RecordType.DeveloperName='HDT_RT_GenericheAttivazioni' AND ServicePoint__c='' AND Type LIKE 'Modifica Contr Preattivazione%'  WITH SECURITY_ENFORCED ORDER BY Phase__c DESC ]; // aggiunti campi alla query
+    }
 
     /*** FIne Sviluppo per Campagne */
 
@@ -93,6 +103,7 @@ public inherited sharing class HDT_QR_Case {
             Phase__c
             FROM Case
             WHERE ParentId = :parentId
+            AND RecordType.DeveloperName = 'HDT_RT_RichiestaParere'
             WITH SECURITY_ENFORCED];
         }catch(Exception e){
             System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
@@ -179,6 +190,25 @@ public inherited sharing class HDT_QR_Case {
             LIMIT 1];
         
         return nonReqContr;
+    }
+
+    public List<Case> getChildCasesReclamo(String note, String recordId)
+    {
+        List<String> childIds = note.split(';');
+        List<Case> childCases = new List<Case>();
+        try
+        {
+            childCases = [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+        }
+        catch(Exception e)
+        {
+            System.Debug('Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
+        }
+        return childCases;
+    }
+    public List<Case> getCaseByAccountid(String accountid, string type)
+    {
+        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type = :type AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
 }

@@ -20,13 +20,14 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per la gestione del processo di sequenzializzazione
     * @date 13/07/2021
     * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
     * @param2 Map<Id, sObject> mappa degli oggetti con i vecchi valori
     * @param3 String tipology : tipologia process Case|Order
-    * @return void
     */
     public static void processSequentializationBefore(Map<Id,SObject> newSObjectMap,Map<Id,SObject> oldSObjectMap, String tipology){
+        
         List<ServiceRequest__c> incomingProcesses = new List<ServiceRequest__c>();
         Map<Id,Order> orders = new Map<Id,Order>();
         Map<Id,Case> cases = new Map<Id,Case>();
@@ -41,38 +42,43 @@ public inherited sharing class HDT_UTL_Dependencies {
                     orders.put(order.ID, order);
                 }
             }
-            try{
-                List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
-                                FROM ServiceRequest__c 
-                                WHERE Order__r.ID IN: orders.keySet()
-                                WITH SECURITY_ENFORCED];
-                for(ServiceRequest__c sr : srs){
-                    sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
-                    incomingProcesses.add(sr);
+            if(orders.size()>0){
+                try{
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                                    FROM ServiceRequest__c 
+                                    WHERE Order__r.ID IN: orders.keySet()
+                                    WITH SECURITY_ENFORCED];
+                    for(ServiceRequest__c sr : srs){
+                        sr.NextPhase__c = orders.get(sr.Order__c).Phase__c;
+                        incomingProcesses.add(sr);
+                    }
+                }catch(Exception ex){
+                    System.debug(ex.getMessage());
                 }
-                
-            }catch(Exception ex){
-                System.debug(ex.getMessage());
             }
         }else if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
             for(Case caseProcess : (list<Case>)newSObjectMap.values()){
                 Case oldCase = (Case)oldSObjectMap.get(caseProcess.ID);
-                if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c) && dependenciesCheckCs.contains(caseProcess.Phase__c)){
-                    cases.put(caseProcess.ID, caseProcess);
+                if(!String.IsEmpty(oldCase.Phase__c)){
+                    if(!oldCase.Phase__c.equalsIgnoreCase(caseProcess.Phase__c) && dependenciesCheckCs.contains(caseProcess.Phase__c)){
+                        cases.put(caseProcess.ID, caseProcess);
+                    }
                 }
             }
-            try{
-                List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Case__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
-                                FROM ServiceRequest__c 
-                                WHERE Case__r.ID IN: cases.keySet()
-                                WITH SECURITY_ENFORCED];
-                for(ServiceRequest__c sr : srs){
-                    sr.NextPhase__c = cases.get(sr.Case__c).Phase__c;
-                    incomingProcesses.add(sr);
+            if(cases.size()>0){
+                try{
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Case__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                                    FROM ServiceRequest__c 
+                                    WHERE Case__r.ID IN: cases.keySet()
+                                    WITH SECURITY_ENFORCED];
+                    for(ServiceRequest__c sr : srs){
+                        sr.NextPhase__c = cases.get(sr.Case__c).Phase__c;
+                        incomingProcesses.add(sr);
+                    }
+                    
+                }catch(Exception ex){
+                    System.debug(ex.getMessage());
                 }
-                
-            }catch(Exception ex){
-                System.debug(ex.getMessage());
             }
         }
         
@@ -99,9 +105,10 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per l'individuazione dei processi da sequnzializzare
     * @date 13/07/2021
     * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
-    * @return void
+    * @return Mappa dei processi da aggiornare
     */
     public static Map<String, List<SObject>> sequentialization(List<ServiceRequest__c> incomingProcesses){
 
@@ -123,7 +130,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                         + 'FROM DependenciesMatrix__c '
                         + conditions 
                         + ' WITH SECURITY_ENFORCED';
-
+            
             DependenciesMatrix__c[] dependencies = Database.query(queryDependenciesMatrix);
 
             Map<String,List<List<String>>> dependenciesMap = new Map<String,List<List<String>>>();
@@ -147,6 +154,7 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per la restituzione dell'elenco dei processi da sequnzializzare
     * @date 13/07/2021
     * @param1 List<ServiceRequest> struttura oggetti tecnici da sequenzializzare
     * @param2 Map<String,List<List<String>>> mappa delle dipendence
@@ -189,6 +197,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
                                     + 'ProcessType__c IN :matches '
                                     + 'WITH SECURITY_ENFORCED';
+
             try{
                 srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
                 
@@ -231,7 +240,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 }
                             }
                         }
-                        if(match){
+                        if(match && sr.Id != srBlocking.Id){
                             if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
                                 Case caseToUpdate = new Case(ID=sr.Case__c);
                                 caseToUpdate.Status = STATUS_SEQUENZIALIZZATO;
@@ -268,11 +277,11 @@ public inherited sharing class HDT_UTL_Dependencies {
 
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @description metodo per l'aggiornamento dei processi da sequnzializzare
     * @date 13/07/2021
     * @param1 List<ServiceRequest__c> serviceRequestsToBeSequenced
     * @param2 List<Order> ordersToBeUpdated
     * @param3 List<Case> casesToBeUpdated
-    * @return void
     */
     public static void updateProcesses(List<ServiceRequest__c> serviceRequestsToBeSequenced){
         

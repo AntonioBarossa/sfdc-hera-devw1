@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 24/06/2021
+* @description HDT_QR_Campaign
+* @history Lorenzo – 24/06/2021 – created class
+*/
 public with sharing class HDT_QR_Campaign {
     
     public static List<Campaign> getCampaignChild(List<String> listId){
@@ -48,6 +54,24 @@ public with sharing class HDT_QR_Campaign {
             AND (EndDate >= :d OR EndDate = NULL)
             AND Category__c = 'Campagna Outbound'
             AND Channel__c INCLUDES ('Telefonico Outbound')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Campaign> getOutboundCampaignsLead() {
+        Date d = Date.today();
+        return [
+            SELECT 
+            Id,
+            Name
+            FROM Campaign
+            WHERE isActive = true
+            AND StartDate <= :d
+            AND (EndDate >= :d OR EndDate = NULL)
+            AND Category__c = 'Campagna Outbound'
+            AND Channel__c INCLUDES ('Telefonico Outbound')
+            AND AssignmentType__c = 'Su Base Lead'
+            AND ReitekIntegrationTechnology__c = 'Web Service'
             WITH SECURITY_ENFORCED
         ];
     }

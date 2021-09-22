@@ -138,10 +138,36 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
             String namePerson= dataAccount.get('firstName') + ' '+ dataAccount.get('lastName');
             System.debug('marcatura : '+dataAccount.get('companyOwner'));
+            //? fix UAT 31/08/2021 verrà definita una logica in wave 3 come da feedback Analisi
+            String varMarking;
+            if ('Reseller'.equalsIgnoreCase(dataAccount.get('companyOwner'))){
+                List<String> listSoc =dataAccount.get('customerMarking').split('-');
+                if (listSoc.size()>0) {
+                    varMarking=listSoc.get(0)+'-Persona fisica';
+                }  
+            }
+            else {
+                varMarking= mapTranscodifica.get(dataAccount.get('companyOwner'));
+            }
+            //? fix UAT 31/08/2021 verrà definita una logica in wave 3 come da feedback Analisi
             
-            
-            
-            Account accountPerson= new Account(Name= namePerson, LastName__c= dataAccount.get('lastName') , FirstName__c= dataAccount.get('firstName'),RecordTypeId= recordTypeResId , FiscalCode__c= dataAccount.get('personFiscalCode'),PhonePrefix__c= dataAccount.get('phonePrefix'), PrimaryEmail__c= dataAccount.get('contactEmail'),FAX__c= dataAccount.get('contactFax'),MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'), MobilePhone__c= dataAccount.get('mobilePhone'),Phone= dataAccount.get('contactPhoneNumber'),Profession__c= dataAccount.get('profession'),Gender__c= dataAccount.get('gender'),DegreeOfStudies__c= dataAccount.get('education'), CompanyOwner__c=dataAccount.get('companyOwner'), CustomerMarking__c=mapTranscodifica.get(dataAccount.get('companyOwner')) , Category__c='Famiglie');
+            Account accountPerson= new Account(Name= namePerson, 
+            LastName__c= dataAccount.get('lastName') , 
+            FirstName__c= dataAccount.get('firstName'),
+            RecordTypeId= recordTypeResId ,
+            FiscalCode__c= dataAccount.get('personFiscalCode'),
+            PhonePrefix__c= dataAccount.get('phonePrefix'),
+            PrimaryEmail__c= dataAccount.get('contactEmail'),
+            FAX__c= dataAccount.get('contactFax'),
+            MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'),
+            MobilePhone__c= dataAccount.get('mobilePhone'),
+            Phone= dataAccount.get('contactPhoneNumber'),
+            Profession__c= dataAccount.get('profession'),
+            Gender__c= dataAccount.get('gender'),
+            DegreeOfStudies__c= dataAccount.get('education'),
+            CompanyOwner__c=dataAccount.get('companyOwner'), 
+            CustomerMarking__c=varMarking ,
+            Category__c='Famiglie');
             for(String s: accountAddress.keySet()){
                 if('BillingIsAddressVerified__c' == s){
                     accountPerson.put(s, accountAddress.get(s) == 'true' ? true : false);
@@ -156,6 +182,12 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Contact personContact= new Contact(AccountId= accPerson.Id,LastName= accountPerson.LastName__c,FirstName=accountPerson.FirstName__c ,Birthcity__c= dataAccount.get('birthplace'),Birthdate= birthdate,FiscalCode__c= accountPerson.FiscalCode__c,Email= accountPerson.PrimaryEmail__c,Fax= accountPerson.FAX__c,MobilePhonePrefix__c= accountPerson.MobilePhonePrefix__c, MobilePhone= accountPerson.MobilePhone__c ,PhonePrefix__c= accountPerson.PhonePrefix__c, Phone= accountPerson.Phone ,Profession__c= accountPerson.Profession__c);
             contactSrv.checkCreateAccess(personContact);
             Contact personCont= contactSrv.createRecord(personContact);
+            //Start HRDTR-00_HRAWRM-455 07/09/2021
+
+            Id jobId1 = System.enqueueJob(new HDT_QBL_BpCaRequest(accPerson,personCont));
+            System.debug('jobId: '+jobId1);
+            //End HRDTR-00_HRAWRM-455 07/09/2021
+
             //List<AccountContactRelation> listAccCon3 = accoContRelQr.getAccountContactRelation(accPerson.Id, personCont.Id, 'Id');
             AccountContactRelation ac = new AccountContactRelation();
             ac.accountId = acct.id;
@@ -171,8 +203,8 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // HDT_UTL_GestionePrivacy.createDefaultPrivacyContact(cont.Id, emails, phones);
         }
         //HDT_UTL_Account.makeRequest(account,contact);
-        Id jobID = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
-        System.debug('jobId: '+jobID);
+        Id jobId = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
+        System.debug('jobId: '+jobId);
 
     
         return acct;

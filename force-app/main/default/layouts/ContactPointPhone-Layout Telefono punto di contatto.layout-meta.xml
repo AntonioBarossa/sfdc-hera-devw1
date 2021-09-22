@@ -16,6 +16,10 @@
                 <field>TelephoneNumber</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TelephoneNumberCertificationsContacts__c</field><!-- HRAWRM-521 22/09/2021 EC-->
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IsPrimary</field>
             </layoutItems>
@@ -26,6 +30,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LastResultDateFUB__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LastOutcomeFUB__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

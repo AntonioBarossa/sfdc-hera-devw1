@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 25/06/2021
+* @description HDT_UTL_Note
+* @history Lorenzo – 25/06/2021 – created class
+*/
 public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<sObject> {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();

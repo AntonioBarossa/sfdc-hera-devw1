@@ -23,9 +23,14 @@ public with sharing class HDT_LC_CtToolbar {
         HDT_SRV_CampaignMember cmSrv = new HDT_SRV_CampaignMember();
         HDT_QR_CampaignMember cmQr = new HDT_QR_CampaignMember();
         CampaignMember cm = cmQr.getByEcid(ecid);
+        system.debug('********esitCampaignMember');
+        system.debug('********esitCampaignMember:' + ecid);
+        system.debug('********esitCampaignMember:' + ecid);
+        CampaignMember cmUp = new CampaignMember();
         if(cm != null){
-            cm.isToSendStatusReitek__c = false;
-            cmSrv.updateRecord(cm);
+            cmUp.id = cm.id;
+            cmUp.isToSendStatusReitek__c = false;
+            cmSrv.updateRecord(cmUp);
             return cm.status;
         }else{
             return null;

@@ -79,6 +79,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         let eventType = event.detail.eventType;
         eventType = eventType.toUpperCase();
         let callData = [];
+        let ecid = '';
         let checkMemberId = false;
         let count = 0;
         console.log("######:" + eventType)
@@ -88,9 +89,11 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 this.toolbarAttributes = event.detail.eventObj;
                 this.uuid = this.toolbarAttributes.id;
                 callData = event.detail.CallData;
-                ecid = window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID");
-                this.sendStatus(ecid);
-                console.log('*********ConnectionCleared:' + ecid);
+                let ecid2 = window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID");
+                this.ecid = ecid2;
+                console.log('*********ConnectionCleared:2' + ecid2);
+                this.sendStatus(ecid2);
+                console.log('*********ConnectionCleared:');
                 break;
             case 'POPUP':
                 //if (count == 0) {
@@ -171,7 +174,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
             });
     }
 
-    saveScript(esito, isResponsed) {
+    @api saveScript(esito, isResponsed) {
         window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed);
     }
 
@@ -213,6 +216,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
         getStatus({
             ecid: ecid
         }).then((response) => {
+            console.log('******' + response);
             if (response != '' && response != null) {
                 this.saveScript(response, true);
             } else {

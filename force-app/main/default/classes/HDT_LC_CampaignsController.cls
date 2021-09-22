@@ -42,6 +42,10 @@ public inherited sharing class HDT_LC_CampaignsController {
     public static List<Campaign> getOutboundCampaigns() {
         return  campaignQr.getOutboundCampaigns();
     }
+    @AuraEnabled(cacheable=true)
+    public static List<Campaign> getOutboundCampaignsLead() {
+        return  campaignQr.getOutboundCampaignsLead();
+    }
     @AuraEnabled
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
         try {
@@ -415,4 +419,14 @@ public inherited sharing class HDT_LC_CampaignsController {
         
     }
     
+    @AuraEnabled(cacheable=true)
+    public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
+        try {
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c FROM CampaignMember WHERE Id = :campaignMemberId];
+            System.debug(cm);
+            return cm;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }

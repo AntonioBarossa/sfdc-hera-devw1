@@ -15,6 +15,10 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     loading = false;
     isDialogVisible = false;
 
+    get notBillableVas(){
+        return this.order.RecordType.DeveloperName !== 'HDT_RT_VAS' || !this.order.IsBillableVas__c;
+    }
+    
     get cancellationOptions() {
         return [
             { label: 'Pratica errata', value: 'Pratica errata' },
@@ -38,7 +42,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
         console.log('this.order.Step__c disabledSave: ', this.order.Step__c);
-        return (this.order.Step__c !== this.lastStepNumber && this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus');
+        return (this.order.Step__c !== this.lastStepNumber && ( this.order.RecordType.DeveloperName !== 'HDT_RT_ScontiBonus' && this.notBillableVas ));
     }
 
     dateWithMonthsDelay (months) {
@@ -97,21 +101,17 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         let orderToSave = {};
 
-        if (this.lastStepData != null) {
-            let lastStepFields = this.lastStepData;
-            
-            //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
-            //orderToSave = {...lastStepFields, ...this.order};
-            orderToSave = {...this.order, ...lastStepFields};
+        console.log('keltin this.lastStepData: ' + JSON.stringify(this.lastStepData));
 
-            if (!this.validateLastStepFields(lastStepFields)) {
+        if (this.lastStepData != null) {
+
+            if (!this.validateLastStepFields(this.lastStepData)) {
                 return;
             }
 
-        } else {
-            orderToSave = this.order;
-        }
-        console.log("@orderToSave "+JSON.stringify(orderToSave));
+        } 
+        
+        orderToSave = this.order;
 
         calculateRate({ord: orderToSave}).then(data2 =>{
             if(!data2){
@@ -123,10 +123,10 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 this.dispatchEvent(toastSuccessMessage);
             }
 
-        save({order: orderToSave}).then(data =>{
+        save({order: orderToSave, lastStepData: this.lastStepData}).then(data =>{
             this.loading = false;
 
-            if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+            if(this.order.ProcessType__c === 'Switch in Ripristinatorio' || this.order.IsCloned__c===true){
                 console.log('redirect_attivazione_mod');
                 this.dispatchEvent(new CustomEvent('redirect_attivazione_mod'));
             } else {
