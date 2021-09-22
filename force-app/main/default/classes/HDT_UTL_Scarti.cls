@@ -68,8 +68,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
 		boolean check;
-		check = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
-		
+        try{		
+            check = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
+        } catch(Exception e){
+            system.debug(e.getMessage());
+            system.debug(e.getStackTraceString());
+        }
+
 		if(method.startsWith('checkActivityCreation')){
             return !check;
         }
@@ -205,7 +210,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
                     }
                     */
-                    newAct.put(curActField, 'StartDate__c'.equalsIgnoreCase(curActField) ? Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))) : curData.get(ANONIMAMAPPING.get(curActField)) );
+                    newAct.put(curActField, 'StartDate__c'.equalsIgnoreCase(curActField) ? Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))) : Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))) );
                     //>>>END marco.arci@webresults.it CodeReview
                 }
                 toInsert.add(newAct);
@@ -390,36 +395,69 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 logicFields += ','+currString;
             }
 			//END>>>modifica modifica marco.arci@webresults.it
-            system.debug('logicFields: '+logicFields);
-            if(Schema.Case.SObjectType == recordId.getSobjectType()){
-                String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
-                system.debug('queryString: '+queryString);
-                List<Case> parentCase = Database.query(queryString);
-                if(!parentCase.isEmpty()){
-                    for(DiscardAnnullmentRule__c curRule : rules){
-                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
-                            && String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
-                            outcome = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            if(Schema.Order.SObjectType == recordId.getSobjectType()){
-                String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
-                system.debug('queryString: '+queryString);
-                List<Order> parentOrder = Database.query(queryString);
-                if(!parentOrder.isEmpty()){
-                    for(DiscardAnnullmentRule__c curRule : rules){
-                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
-                            && String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
-                            outcome = true;
-                            break;
-                        }
+            
+            //>>>START marco.arci@webresults.it Code Review
+            Boolean outcome = checkDiscardAnnullmentRuleParentCase(recordId, logicFields, rules) || 
+                              checkDiscardAnnullmentRuleParentOrder(recordId, logicFields, rules);
+
+        }
+        return outcome;
+    }
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 15/09/2021
+    * @description HDT_UTL_Scarti.checkDiscardAnnullmentRuleParentCase - Check on pratica annullment
+    * @param recordId - Id of a record
+    * @param logicFields - String
+    * @param rules - List<DiscardAnnullmentRule__c>
+    * @return boolean : true if it has to do annullment; false instead
+    */
+    public static boolean checkDiscardAnnullmentRuleParentCase(Id recordId, String logicFields, List<DiscardAnnullmentRule__c> rules){
+        boolean outcome = false;
+        if(Schema.Case.SObjectType == recordId.getSobjectType()){
+            //system.debug('logicFields: '+logicFields);
+            String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
+            //system.debug('queryString: '+queryString);
+            List<Case> parentCase = Database.query(queryString);
+            if(!parentCase.isEmpty()){
+                for(DiscardAnnullmentRule__c curRule : rules){
+                    if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
+                        && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)))){
+                        outcome = true;
+                        break;
                     }
                 }
             }
         }
+        return outcome;
+    }
+
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 15/09/2021
+    * @description HDT_UTL_Scarti.checkDiscardAnnullmentRuleParentOrder - Check on pratica annullment
+    * @param recordId - Id of a record
+    * @param logicFields - String
+    * @param rules - List<DiscardAnnullmentRule__c>
+    * @return boolean : true if it has to do annullment; false instead
+    */
+    public static boolean checkDiscardAnnullmentRuleParentOrder(Id recordId, String logicFields, List<DiscardAnnullmentRule__c> rules){
+        boolean outcome = false;
+        if(Schema.Order.SObjectType == recordId.getSobjectType()){
+            String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
+            List<Order> parentOrder = Database.query(queryString);
+            if(!parentOrder.isEmpty()){
+                for(DiscardAnnullmentRule__c curRule : rules){
+                    if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
+                        && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)))){
+                        outcome = true;
+                        break;
+                    }
+                }
+            }
+        }   
         return outcome;
     }
     //>>>END marco.arci@webresults.it Code Review
