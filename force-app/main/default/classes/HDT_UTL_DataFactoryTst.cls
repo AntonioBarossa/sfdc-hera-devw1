@@ -601,6 +601,43 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return caseList;
 	}
 	
+	//AUTOLETTURA
+	public static List<Case> createCaseAutolettura(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
 	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
 		
 		List<Reading__c> readings = new List<Reading__c>();
