@@ -269,6 +269,27 @@ public class HDT_LC_OfferConfiguratorControllerTst {
     }
 
     @isTest
+    static void getOfferMatrixHandleThrownException(){
+
+        HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable offerMatrix;
+
+        Test.startTest();
+
+        try {
+
+            offerMatrix = HDT_LC_OfferConfiguratorController.getOfferMatrix('0', '0', '0');
+            
+        } catch (AuraHandledException e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+            
+        }
+        
+        Test.stopTest();
+
+    }
+
+    @isTest
     static void saveNewOfferConfigured(){
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
@@ -396,6 +417,27 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         techOffList = HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords(newTechnicalOffer.Id);
 
         System.assert(techOffList.size() > 0, 'techOffList.size() == 0 or techOffList == null');
+        
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void saveNewOfferConfiguredHandleThrownException(){
+
+
+        Test.startTest();
+
+        try {
+
+            List<TechnicalOfferItem__c> techOffList;
+            techOffList = HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords(null);
+            
+        } catch (AuraHandledException e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+
+        }
         
         Test.stopTest();
 
@@ -853,6 +895,27 @@ public class HDT_LC_OfferConfiguratorControllerTst {
 
         Test.stopTest();
     }
+
+    @isTest
+    static void sendTechOfferToSapHandleThrownException(){
+
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
+
+        Test.startTest();
+
+        try {
+
+            saveResponse = HDT_LC_OfferConfiguratorController.sendTechOfferToSap(null);
+            
+        } catch (AuraHandledException e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+            
+        }
+        
+        Test.stopTest();
+
+    }
     
     @isTest
     static void cloneRecord(){
@@ -913,6 +976,47 @@ public class HDT_LC_OfferConfiguratorControllerTst {
         System.assert('Offerta eliminata correttamente'.equalsIgnoreCase(saveResponse.message), 'saveResponse.message != Offerta eliminata correttamente');
 
         Test.stopTest();
+    }
+
+    @isTest
+    static void getTableDataHandleThrownException(){
+
+        List<sObject> resultsList;
+
+        Test.startTest();
+
+        try {
+
+            resultsList = HDT_LC_OfferConfiguratorController.getTableData(null, null, null, null, null);
+            
+        } catch (AuraHandledException e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+            
+        }
+        
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void cloneRecordHandleThrownException(){
+
+
+        Test.startTest();
+
+        try {
+
+            String results = HDT_LC_OfferConfiguratorController.cloneRecord(null, null);
+            
+        } catch (AuraHandledException e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+            
+        }
+        
+        Test.stopTest();
+
     }
 
     //@isTest
