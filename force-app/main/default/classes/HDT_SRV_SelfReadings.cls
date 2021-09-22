@@ -40,7 +40,8 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
-
+        System.debug('generateJsonCheckAutolettura - readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
+        
         String readingFields = 'Id';
         if (readingCase.CommodityFormula__c == 'Gas') {
             readingFields += ',ReadingRegisterMeter__c,ReadingRegisterCorrector__c,ReadingValueMeter__c,ReadingValueCorrector__c';
@@ -142,7 +143,7 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeStringField('pod', readingCase.PODPDRFormula__c);
         gen.writeFieldName('element');
         gen.writeStartArray();
-
+        
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
             gen.writeStringField('counter', '1');
