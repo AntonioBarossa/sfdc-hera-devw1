@@ -32,8 +32,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
         
         //READING
-        //TODO: ESPORTARE IN UTILITY
-        Reading__c read = HDT_UTL_DataFactoryTst.createReading(1, true, caseList[0].Id);
+        List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReading(1, true, caseList[0].Id);
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
