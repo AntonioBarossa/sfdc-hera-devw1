@@ -95,7 +95,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         if(relationshipNames[0]=='globaltag'){
             //not field but functions like "today" or other data, global.something bind "Global Tags"
             //return *valore globale da tornare, l'identificativo è relationshipNames[1]*
-            return getGlobalTagValues(relationshipNames);
+            return getGlobalTagValues(relationshipNames, relation);
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
             fieldOrRelation = relationshipNames[indexParentField];
@@ -168,20 +168,22 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
 
         String querySelectStatement='';
         Set<String> fieldsToSelect = new Set<String>();
-        fieldsToSelect.addAll(listFields);
-        for(String field : fieldsToSelect){
-            if(!field.startsWith('globaltag')){//exclude global tags from query
-                querySelectStatement=querySelectStatement+', '+field;
+        //fieldsToSelect.addAll(listFields);
+        for(String field : listFields){
+            if(!field.startsWith('globaltag') || field.startsWith('globaltag.redirlink')){//exclude global tags from query
+                //querySelectStatement=querySelectStatement+', '+field;
+                fieldsToSelect.add(field.removeStart('globaltag.redirlink.'));
             }
         }
+        querySelectStatement = String.join(new List<String>(fieldsToSelect), ', ');
         if(String.isBlank(querySelectStatement)){
             return '';
         }
-        return 'SELECT ' + (querySelectStatement.removeStart(','));
+        return 'SELECT ' + (querySelectStatement);
     }
 
     @TestVisible
-    private String getGlobalTagValues(List<String> relationshipNames){
+    private String getGlobalTagValues(List<String> relationshipNames, Sobject relation){
         //edit this method to add global tags
         String tagName=relationshipNames[1];
 
@@ -199,12 +201,22 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 }
                 return '\n\n'+relationshipNames[2].replace('_', ' ')+'\n';
             }
+            when 'redirlink' {
+                String linkLabel='';
+                linkLabel = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.redirlink.'), relation);
+                String idToRedirect = '';
+                relationshipNames[relationshipNames.size()-1]='Id';
+                idToRedirect = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.redirlink.'), relation);
+                return '<a href="/'+idToRedirect+'" target="_self">'+linkLabel+'</a>';
+            }
             when else{
                 tagValue='*valore mancante*';
             }
         }
         return ''+tagValue+'';
     }
+
+
 
     private class HDT_UTL_FormatTextScriptException extends Exception {}
 }

@@ -67,6 +67,9 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //***INIZIO SVILUPPO CAMPAGNE */
         HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
         //**FINE SVILUPPO */
+
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+
     }
 
     public override void afterInsert(){

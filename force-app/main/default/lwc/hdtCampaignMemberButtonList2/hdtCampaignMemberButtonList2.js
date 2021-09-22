@@ -1,12 +1,16 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import Survey from '@salesforce/resourceUrl/survey';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getScriptNameFromCampaign from '@salesforce/apex/HDT_LC_CampaignsController.getScriptNameFromCampaign';
+
+
 
 export default class hdtCampaignMemberButtonList2 extends NavigationMixin(LightningElement) {
     @api objectApiName;
     @api recordId;
     @track surveyIcon;
+    @wire(getScriptNameFromCampaign, {memberId: '$recordId'}) scriptName;
 
     connectedCallback() {
         this.surveyIcon = Survey + "/survey.png";
