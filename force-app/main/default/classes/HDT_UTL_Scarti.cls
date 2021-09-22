@@ -468,7 +468,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     @AuraEnabled
     public static void updatePraticaForScartoDocumentale(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
         Map<id,wrts_prcgvr__Activity__c> oldMapActivities = new Map<Id,wrts_prcgvr__Activity__c>(oldActivities);
-        String oldPhone, oldEmail;
+        String oldPhone;
+        String oldEmail;
         List<wrts_prcgvr__Activity__c> activities = new list<wrts_prcgvr__Activity__c>();
         List<id> relatedIds = new list<id>();
         Map<string,SObject> relatedObject = new Map<string,SObject>();
