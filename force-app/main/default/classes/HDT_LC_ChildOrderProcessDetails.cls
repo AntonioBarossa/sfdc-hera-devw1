@@ -14,6 +14,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+
+    @AuraEnabled
+    public static Map<String,Object> init(String Id){
+        Map<String,Object> result = new Map<String,Object>();
+
+        User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
+
+        result.put('loginChannel', user.LoginChannel__c);
+
+        return result;
+    }
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update order process step
@@ -133,6 +147,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
         }
         //Check RequestOption__c (Opzione di Distribuzione) END
+
+        //Check iva e accise docs START
+        if (order.VATfacilitationFlag__c || order.FacilitationExcise__c) {
+            List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+            if (docsIvaAccise.isEmpty()) {
+                throw new AuraHandledException('Caricare documento per iva e accise');
+            }
+        }
+        //Check iva e accise docs END
     }
 
 

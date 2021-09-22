@@ -259,6 +259,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String description = recordCase.Description != null?recordCase.Description:'';
                 currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
             }
+            if(reqWrp.requestMap.get('ANNOTAZIONI') != null && reqWrp.requestMap.get('ANNOTAZIONI') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI') + '\n' + description;
+            }
             if(reqWrp.requestMap.get('COD_CAUSALE') != null && reqWrp.requestMap.get('COD_CAUSALE') != ''){
                 currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
             }
@@ -527,7 +531,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.HerokuPracticeCode__c = herokuCode;
                     }
                     //Aggiunto PhoneNumber
-                    currentCase.PhoneNumber__c = contact?.MobilePhone;
+                    currentCase.PhoneNumber__c = contact.MobilePhone != null 
+                        ? contact.MobilePhone
+                        : contact.Phone != null 
+                        ? contact.Phone
+                        : '123';
                     sp = qrClass.getServicePoint(pod);
                     if(sp != null){
                         contract = qrClass.getContract(sp.Id);

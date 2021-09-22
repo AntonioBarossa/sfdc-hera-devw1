@@ -13,7 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Status__c</field>
+                <field>wrts_prcgvr__Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -22,6 +22,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Approved__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Note__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -32,6 +36,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Order__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Quote__c</field> <!-- UAT Cocetta  20/09/2021 -->
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -53,6 +61,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ReminderCount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NumberOfAttempt__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

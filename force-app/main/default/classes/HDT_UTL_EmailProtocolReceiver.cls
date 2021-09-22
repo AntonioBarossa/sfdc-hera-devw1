@@ -83,8 +83,8 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
       System.debug('Prova:::');
       if(mapEmailObj.get(email.toAddresses[0].toUpperCase())!=null){
           HDT_ProtocolSpecificEmail__mdt specEmail= mapEmailObj.get(email.toAddresses[0].toUpperCase());
-          activityCustom.Cluster__c= specEmail.Cluster__c;
-          activityCustom.Process__c= specEmail.Process__c;
+          activityCustom.type__c= specEmail.type__c;
+         
           System.debug('Prova2:::');
       }
       wrts_prcgvr__Activity__c resActivity = actSrv.createRecord(activityCustom);

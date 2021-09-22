@@ -3,6 +3,7 @@ import getRecord from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByIdS';
 import riassegna from '@salesforce/apex/HDT_UTL_ActivityCustom.riassegnaComCod';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import cambia from '@salesforce/apex/HDT_UTL_ActivityCustom.cambiaphaseComm';
+import { updateRecord } from 'lightning/uiRecordApi';
 
 export default class HdtCommercialRiassignButton extends LightningElement {
 
@@ -62,6 +63,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                updateRecord({ fields: { Id: this.recordId } });
             }
         });
      
@@ -79,6 +81,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                updateRecord({ fields: { Id: this.recordId } });
             }
         });
      
@@ -97,6 +100,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                updateRecord({ fields: { Id: this.recordId } });
             }
         });
      

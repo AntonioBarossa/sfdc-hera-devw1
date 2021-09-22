@@ -73,6 +73,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
 
+    //Order RecordType Default
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_CAMBIO_OFFERTA = 'HDT_RT_CambioOfferta';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_CAMBIO_OFFERTA =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_CAMBIO_OFFERTA).getRecordTypeId();
+
     //Order RecordType Voltura
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA = 'HDT_RT_Voltura';

@@ -454,7 +454,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         } else {
             console.log('enter with value');
             this.options = [];
-            this.options.push({label: this.order.ProcessType__c, value: this.order.ProcessType__c});
+            // fix LG 2009 richiesta da CZ da Room
+            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? this.order.ProcessType__c == 'Prima Attivazione con modifica' ? this.order.ProcessType__c : "Prima Attivazione" : this.order.ProcessType__c;
+            this.options.push({label: label, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
             this.checkCompatibilityProcess();
@@ -529,13 +531,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     return `${testoFinale}\n${elem}`;
                 }, result.errorDetails[0].code);
                 console.log(message);
-                let toastErrorMessage = new ShowToastEvent({
+                /*let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
                     message: message,
                     variant: 'warning', 
                     mode:'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(toastErrorMessage);*/
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
             
@@ -641,7 +643,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         console.log("this.3"); 
 
-        if(this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura'){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura') && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
             console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
             console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
             if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
