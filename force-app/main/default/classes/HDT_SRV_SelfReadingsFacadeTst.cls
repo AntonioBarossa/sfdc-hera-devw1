@@ -18,14 +18,23 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     //TEST SETUP
     //TODO: POSSIBILE CHE DEBBA ESSERE USATO CASE CON TIPO AD HOC RELATIVO ALLE LETTURE
     private static void mySetup(){
+        
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        
+        ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
+        servPoint.CommoditySector__c = 'Gas';
+        insert servPoint;
+        
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
+        
         //READING
+        //TODO: ESPORTARE IN UTILITY
+        Reading__c read = new Reading__c();
+        read.CaseGas__c = caseList[0].Id;
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }

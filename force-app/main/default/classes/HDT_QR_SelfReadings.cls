@@ -37,7 +37,7 @@ public inherited sharing class HDT_QR_SelfReadings {
     public Reading__c getReading(String objectName, Id objectId, String commodity, String readingFields) {
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-
+        
         if(objRes.isAccessible()) {
             
             String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r';
@@ -46,7 +46,11 @@ public inherited sharing class HDT_QR_SelfReadings {
             String query = String.format(queryTemplate, queryParameters);
 
             List<SObject> objects = Database.query(query);
+            System.debug('getReading - objects found: ' + objects.size());
+            
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
+            System.debug('getReading - objects ' + commodity + ' found: ' + objReadings.size());
+            
             return objReadings[0];
         }
 
