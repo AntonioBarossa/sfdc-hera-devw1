@@ -14,7 +14,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         System.debug('beforeUpdate');
         // HRAWRM-672 22/09/2021 EC
         //wrts_prcgvr__Status__c='Chiusa';
-        String varStatus='Completed';
+        String varStatus='Chiusa';
         Map<Id, wrts_prcgvr__Activity__c> mapNew = (Map<Id, wrts_prcgvr__Activity__c>)trigger.newMap;
         Map<Id, wrts_prcgvr__Activity__c> mapOld = (Map<Id, wrts_prcgvr__Activity__c>)trigger.oldMap;
         for (wrts_prcgvr__Activity__c tempAct :(List<wrts_prcgvr__Activity__c>)trigger.new) {
