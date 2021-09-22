@@ -40,6 +40,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         @AuraEnabled public string sectionLabel;
         @AuraEnabled public string sectionText;
         @AuraEnabled public String type;
+        @AuraEnabled public Decimal nextSection;
         @AuraEnabled public List<HDT_WRP_ScriptDecision> decisions;
     }
 
@@ -102,6 +103,10 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
 
         if (section.isSet('ScriptType__c')) {
             sectionWrapper.type = (String)section.get('ScriptType__c');
+        }
+
+        if (section.isSet('NextSection__c')) {
+            sectionWrapper.nextSection = (Decimal)section.get('NextSection__c');
         }
 
         List<HDT_WRP_ScriptDecision> decisions = new List<HDT_WRP_ScriptDecision>();

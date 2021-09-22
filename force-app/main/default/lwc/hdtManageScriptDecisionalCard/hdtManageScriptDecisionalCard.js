@@ -9,10 +9,10 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
     @api recordId;//record starting Object
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
 
+    isLoading = false;
     scriptPage;
-    pageIndex = 1;
     historyIndex = 0;
-    pageHistory = [];
+    pageHistory = [1];
     
     showGenericErrorToast() {
 		this.showToast('error', 'Errore', 'Si è verificato un errore. Ricaricare la pagina e riprovare. Se il problema persiste contattare il supporto tecnico.');
@@ -43,20 +43,36 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
     }
 
     get hasPrevious(){//check if first page
-        return this.pageIndex==0;
+        return (this.historyIndex>0);
     }
 
     get hasNext(){//check if last page
-        return this.htmlScriptList.length == (this.pageIndex+1);
+        return (this.historyIndex<(this.pageHistory.length-1)) || (this.scriptPage.nextSection!=null);
     }
 
     prevSection(){
-        this.pageIndex-=1;
+        this.historyIndex-=1;
         this.loadScriptPage();
     }
 
     nextSection(){
-        this.pageIndex+=1;
+        if (this.scriptPage.nextSection) {
+            this.pageHistory.push(this.scriptPage.nextSection);
+        }
+
+        this.historyIndex+=1;
+        this.loadScriptPage();
+    }
+
+    goToNextPage(event){
+        let nextPageIndex = event.target.value;
+
+        if (this.historyIndex<(this.pageHistory.length-1)) {
+            this.pageHistory.splice(this.historyIndex+1);
+        }
+
+        this.pageHistory.push(nextPageIndex);
+        this.historyIndex++;
         this.loadScriptPage();
     }
 
@@ -65,13 +81,15 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
     }
 
     loadScriptPage() {
+        this.isLoading = true;
         return getScriptPage({
             processName : this.scriptProcessName, 
             recordId : this.recordId, 
-            pageIndex : this.pageIndex
+            pageIndex : this.pageHistory[ this.historyIndex ]
         }).then(page => {
             console.log("scriptPage", JSON.stringify(page));
             this.scriptPage = page;
+            this.isLoading = false;
         },error => {
             console.log(error.body.message);
             this.showGenericErrorToast();

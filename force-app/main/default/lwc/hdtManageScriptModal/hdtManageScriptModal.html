@@ -32,13 +32,13 @@ Changes:
 
                     <!-- Inserire la card -->
                     
-                    <template if:false={decisional}>
+                    <template if:false={isDecisional}>
                         <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
                             child-additional-info={childAdditionalInfo} link-reitek={linkReitek}>
                         </c-hdt-manage-script-card>
                     </template>
 
-                    <template if:true={decisional}>
+                    <template if:true={isDecisional}>
                         <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId}
                             child-additional-info={childAdditionalInfo} link-reitek={linkReitek}>
                         </c-hdt-manage-script-decisional-card>

@@ -1,46 +1,49 @@
-<!--
-File: hdtManageScriptCard.html
-Project: HERA
-File Created: Tuesday, 15th June 2021 11:46:30 am
-Author: fdefelice
-DESCRIPTION: 
------
-HISTORY:
--->
 <template>
-    <template if:false={scriptPage}>
-        <div class="slds-align_absolute-center" style="height:5rem">
-            <div class="spinnerHolder">
-                <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
-            </div>
-        </div>
-    </template>
-    <template if:true={scriptPage}>
-        <lightning-card>
+    <lightning-card class="slds-is-relative">
 
-
-            <div slot="title">
+        <div slot="title">
+            <template if:true={scriptPage}>
                 <h2>{scriptPage.sectionLabel}</h2>
                 <div class="slds-border_bottom"></div>
-            </div>
+            </template>
+        </div>
 
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+        </template>
+
+        <template if:false={scriptPage}>
+            <p class="slds-text-heading_medium slds-m-vertical_medium">Caricamento in corso...</p>
+        </template>
+
+        <template if:true={scriptPage}>
             <lightning-formatted-rich-text value={scriptPage.sectionText}></lightning-formatted-rich-text>
-            <lightning-input type="url" label="Link" name="disabledLinkReitek" disabled value={linkReitek}>
-            </lightning-input>
 
             <template if:true={hasDecisions}>
-                <template for:each={scriptPage.decisions} for:item="decision">
-                    <lightning-button key={decision.label} label={decision.label} title={decision.label} class="slds-m-right_small"></lightning-button>
-                </template>
+                <div class="slds-m-vertical_small">
+                    <template for:each={scriptPage.decisions} for:item="decision">
+                        <lightning-button key={decision.label}
+                            label={decision.label}
+                            title={decision.label}
+                            class="slds-m-right_small"
+                            value={decision.targetPage}
+                            onclick={goToNextPage}></lightning-button>
+                    </template>
+                </div>
             </template>
 
-            <!--<div slot="footer">
-                <div class="slds-float_right">
-                    <template if:false={hasPrevious}>
+            <lightning-input type="url" label="Link" name="disabledLinkReitek" disabled value={linkReitek}>
+            </lightning-input>
+        </template>
+
+        <div slot="footer">
+            <template if:true={scriptPage}>
+                <div class="slds-text-align_right">
+                    <template if:true={hasPrevious}>
                         <lightning-button icon-name="utility:back" label="Pagina Precedente" onclick={prevSection}>
                         </lightning-button>
                     </template>
-                    <template if:false={hasNext}>
+                    <template if:true={hasNext}>
                         <lightning-button icon-name="utility:forward" label="Pagina Successiva" onclick={nextSection}
                             variant="success">
                         </lightning-button>
@@ -49,12 +52,8 @@ HISTORY:
                         onclick={saveRecLink} data-id="scriptModalBt">
                     </lightning-button>
                 </div>
-            </div>-->
+            </template>
+        </div>
 
-        </lightning-card>
-
-
-
-    </template>
-
+    </lightning-card>
 </template>
