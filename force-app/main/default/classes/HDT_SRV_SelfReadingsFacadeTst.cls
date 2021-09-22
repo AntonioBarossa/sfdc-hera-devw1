@@ -58,8 +58,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         argsMap.put('parameters', parameters);
         
         
-        String args = JSON.serialize(argsMap);
-        
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
@@ -73,7 +71,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
-        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(args);
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
         
         Test.stopTest();
         
