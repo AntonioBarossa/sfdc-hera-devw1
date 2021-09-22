@@ -72,8 +72,6 @@ public with sharing class HDT_SRV_SelfReadings {
         System.debug('reading.ReadingValueMeter__c: ' + reading.ReadingValueMeter__c);
         System.debug('reading.ReadingValueCorrector__c: ' + reading.ReadingValueCorrector__c);
         System.debug('reading.ReadingRegisterCorrector__c: ' + reading.ReadingRegisterCorrector__c);
-        System.debug('reading.ReadingRegister1__c: ' + reading.ReadingRegister1__c);
-        System.debug('reading.ReadingValue1__c: ' + reading.ReadingValue1__c);
         
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
