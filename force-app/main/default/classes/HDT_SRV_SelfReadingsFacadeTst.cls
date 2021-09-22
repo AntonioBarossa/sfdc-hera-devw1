@@ -25,6 +25,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        //READING
+        
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
