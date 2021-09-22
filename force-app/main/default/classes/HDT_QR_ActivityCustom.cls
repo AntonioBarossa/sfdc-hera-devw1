@@ -89,6 +89,20 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public static wrts_prcgvr__Activity__c getRecordByIdValidation(String activityId) {
+        return [
+            SELECT
+            Id,
+            order__c,
+            Account__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Id= :activityId
+            WITH SECURITY_ENFORCED
+        ];
+        
+    }
+
     @AuraEnabled
     public static wrts_prcgvr__Activity__c getRecordByIdS(String activityId) {
         return [

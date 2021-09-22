@@ -29152,9 +29152,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__ActivityTemplate__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -34250,4 +34250,8 @@
         <enabled>true</enabled>
         <name>ViewRoles</name>
     </userPermissions>
+    <pageAccesses>
+        <apexPage>HDT_VFP_LeadMessage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </Profile>
