@@ -115,6 +115,7 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
+        System.debug('generateJsonInvioLetture - readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
         String fieldsTemplate = ',ReadingRegister{0}__c,ReadingValue{0}__c,ReadingBand{0}__c,ReadingDate{0}__c,ReadingDigitNumber{0}__c,ReadingSerialNumber{0}__c,ReadingType{0}__c,ReadingUnit{0}__c';
