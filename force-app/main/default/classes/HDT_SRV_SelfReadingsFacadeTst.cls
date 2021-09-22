@@ -35,6 +35,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //TODO: ESPORTARE IN UTILITY
         Reading__c read = new Reading__c();
         read.CaseGas__c = caseList[0].Id;
+        insert read;
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
