@@ -93,64 +93,6 @@ public with sharing class HDT_LC_LastBill {
         String yyyy = listString[2];
         return Date.valueOf(yyyy+'-'+mm+'-'+gg);
     }
-    /*private static Map<String,String> getDataFromSap(String accountCode){
-        Map<String,String> result = new Map<String,String>();
-        Map<String,String> commodity = new Map<String,String>();
-        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject('EC', '');
-
-        HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow bodyWrapper = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
-        Datetime now = Datetime.now();
-        Datetime start = now.addMonths(-24);
-        // REQUEST VISTA RATE HOME
-        bodyWrapper.applicativo = 'ML';
-        bodyWrapper.aggregazione = '03';
-        bodyWrapper.loginId = '0-1';
-        bodyWrapper.dataFine = now.format('dd/MM/yyyy');
-        bodyWrapper.dataInizio = start.format('dd/MM/yyyy');
-        bodyWrapper.tipoTransazione = 'EC2';
-        bodyWrapper.tipoEstrattoConto = 'ORDINARIO';
-        bodyWrapper.codiceCliente = accountCode;
-
-        String body = JSON.serialize(bodyWrapper, true);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
-        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
-        Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
-        if (responseBodyMap.containsKey('data')) {
-            List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
-            if(dataObj.size() > 0){
-                Map<String, Object> singleObjMap = (Map<String, Object>) dataObj[0];
-                List<Object> secondoLivelloList = (List<Object>) singleObjMap.get('secondoLivelloInformativo');
-                for(Object single : secondoLivelloList){
-                    Map<String, Object> secondLevelObjMap = (Map<String, Object>) single;
-                    String singleCommodity = (String) secondLevelObjMap.get('settoreMerceologico');
-                    if(String.isNotBlank(singleCommodity)){
-                        commodity.put(singleCommodity, 'true');
-                    }
-                }
-                Double residuo = 0.0;
-                residuo = Double.valueOf(singleObjMap.get('residuo'));
-                result.put('outcome', 'OK'); 
-                result.put('amount', (String) singleObjMap.get('totaleCopertina')); 
-                result.put('billNumber', (String) singleObjMap.get('numeroFattura'));
-                result.put('expiredDate', (String) singleObjMap.get('dataScadenza'));
-                //se residuo è 0 pagato
-                if(residuo > 0){
-                    result.put('billStatus', 'NON PAGATA');    
-                }else {
-                    result.put('billStatus', 'PAGATA'); 
-                }
-                result.put('commodity', JSON.serialize(commodity));
-            }else {
-                result.put('outcome', 'KO'); 
-                result.put('message', 'Non sono presenti bollette recenti. Per maggiori dettagli accedi all\'Estratto Conto del Cliente'); 
-            }
-        }else {
-            result.put('outcome', 'KO'); 
-            result.put('message', 'Non sono presenti bollette recenti. Per maggiori dettagli accedi all\'Estratto Conto del Cliente');
-        }
-        return result;
-    }*/
 
     // Action method
     @AuraEnabled(continuation=true cacheable=true)
@@ -164,22 +106,22 @@ public with sharing class HDT_LC_LastBill {
 
         List<HDT_TabConfiguration__mdt> endPointMdt;
         endPointMdt = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMdt, 'EC');
-
-        HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow bodyWrapper = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
-        Datetime now = Datetime.now();
-        Datetime start = now.addMonths(-24);
-        // REQUEST VISTA RATE HOME
-        bodyWrapper.applicativo = 'ML';
-        bodyWrapper.aggregazione = '03';
-        bodyWrapper.loginId = '0-1';
-        bodyWrapper.dataFine = now.format('dd/MM/yyyy');
-        bodyWrapper.dataInizio = start.format('dd/MM/yyyy');
-        bodyWrapper.tipoTransazione = 'EC2';
-        bodyWrapper.tipoEstrattoConto = 'ORDINARIO';
-        bodyWrapper.codiceCliente = accountCode;
-
-        String body = JSON.serialize(bodyWrapper, true);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
+        String body = generateBodyForWebService(accountCode);
+        //HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow bodyWrapper = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
+        //Datetime now = Datetime.now();
+        //Datetime start = now.addMonths(-24);
+        //// REQUEST VISTA RATE HOME
+        //bodyWrapper.applicativo = 'ML';
+        //bodyWrapper.aggregazione = '03';
+        //bodyWrapper.loginId = '0-1';
+        //bodyWrapper.dataFine = now.format('dd/MM/yyyy');
+        //bodyWrapper.dataInizio = start.format('dd/MM/yyyy');
+        //bodyWrapper.tipoTransazione = 'EC2';
+        //bodyWrapper.tipoEstrattoConto = 'ORDINARIO';
+        //bodyWrapper.codiceCliente = accountCode;
+//
+        //String body = JSON.serialize(bodyWrapper, true);
+        //System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
 
         // Create continuation. Argument is timeout in seconds.
         Continuation con = new Continuation(40);
@@ -250,5 +192,125 @@ public with sharing class HDT_LC_LastBill {
 
         return JSON.serialize(result);
     }
+
+    @AuraEnabled
+    public static Object getLastBillDataFromSap(String accountCode){
+
+        String jsonObjString = '';
+ 
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject('EC', '');
+        String body = generateBodyForWebService(accountCode);
+
+        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
+        System.debug('Parsed response body = ' + JSON.serialize(responseBodyMap));
+
+        if (responseBodyMap.containsKey('data')) {
+            List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
+            if(dataObj.size() > 0){
+                Map<String, Object> singleObjMap = (Map<String, Object>) dataObj[0];
+                String billNumber = (String)singleObjMap.get('numeroFattura');
+                String dataEmissione = (String)singleObjMap.get('dataEmissione');
+                List<String> dateArray = dataEmissione.split('/');
+                String companyCode = HDT_SRV_ComunicationsSearchList.getCompanyCodeHelper((String) singleObjMap.get('societa'));
+
+                JSONGenerator gen = JSON.createGenerator(true);
+                gen.writeStartObject();
+                gen.writeStringField('billNumber', billNumber.replaceAll('^0+', ''));
+                gen.writeStringField('channel', 'CRM');
+                gen.writeStringField('date', dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0]);
+                gen.writeStringField('type', 'Bolletta');
+                gen.writeStringField('company', companyCode);
+                gen.writeEndObject();
+                jsonObjString = gen.getAsString();
+
+            }
+
+        }
+
+        return jsonObjString;
+
+    }
+
+    private static String generateBodyForWebService(String accountCode){
+
+        HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow bodyWrapper = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
+        
+        Datetime now = Datetime.now();
+        Datetime start = now.addMonths(-24);
+        
+        bodyWrapper.applicativo = 'ML';
+        bodyWrapper.aggregazione = '03';
+        bodyWrapper.loginId = '0-1';
+        bodyWrapper.dataFine = now.format('dd/MM/yyyy');
+        bodyWrapper.dataInizio = start.format('dd/MM/yyyy');
+        bodyWrapper.tipoTransazione = 'EC2';
+        bodyWrapper.tipoEstrattoConto = 'ORDINARIO';
+        bodyWrapper.codiceCliente = accountCode;
+
+        String body = JSON.serialize(bodyWrapper, true);
+        System.debug('Request body = ' + body);
+
+        return body;
+    }
+
+    /*private static Map<String,String> getDataFromSap(String accountCode){
+        Map<String,String> result = new Map<String,String>();
+        Map<String,String> commodity = new Map<String,String>();
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject('EC', '');
+
+        HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow bodyWrapper = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
+        Datetime now = Datetime.now();
+        Datetime start = now.addMonths(-24);
+        // REQUEST VISTA RATE HOME
+        bodyWrapper.applicativo = 'ML';
+        bodyWrapper.aggregazione = '03';
+        bodyWrapper.loginId = '0-1';
+        bodyWrapper.dataFine = now.format('dd/MM/yyyy');
+        bodyWrapper.dataInizio = start.format('dd/MM/yyyy');
+        bodyWrapper.tipoTransazione = 'EC2';
+        bodyWrapper.tipoEstrattoConto = 'ORDINARIO';
+        bodyWrapper.codiceCliente = accountCode;
+
+        String body = JSON.serialize(bodyWrapper, true);
+        System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
+        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
+        System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
+        if (responseBodyMap.containsKey('data')) {
+            List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
+            if(dataObj.size() > 0){
+                Map<String, Object> singleObjMap = (Map<String, Object>) dataObj[0];
+                List<Object> secondoLivelloList = (List<Object>) singleObjMap.get('secondoLivelloInformativo');
+                for(Object single : secondoLivelloList){
+                    Map<String, Object> secondLevelObjMap = (Map<String, Object>) single;
+                    String singleCommodity = (String) secondLevelObjMap.get('settoreMerceologico');
+                    if(String.isNotBlank(singleCommodity)){
+                        commodity.put(singleCommodity, 'true');
+                    }
+                }
+                Double residuo = 0.0;
+                residuo = Double.valueOf(singleObjMap.get('residuo'));
+                result.put('outcome', 'OK'); 
+                result.put('amount', (String) singleObjMap.get('totaleCopertina')); 
+                result.put('billNumber', (String) singleObjMap.get('numeroFattura'));
+                result.put('expiredDate', (String) singleObjMap.get('dataScadenza'));
+                //se residuo è 0 pagato
+                if(residuo > 0){
+                    result.put('billStatus', 'NON PAGATA');    
+                }else {
+                    result.put('billStatus', 'PAGATA'); 
+                }
+                result.put('commodity', JSON.serialize(commodity));
+            }else {
+                result.put('outcome', 'KO'); 
+                result.put('message', 'Non sono presenti bollette recenti. Per maggiori dettagli accedi all\'Estratto Conto del Cliente'); 
+            }
+        }else {
+            result.put('outcome', 'KO'); 
+            result.put('message', 'Non sono presenti bollette recenti. Per maggiori dettagli accedi all\'Estratto Conto del Cliente');
+        }
+        return result;
+    }*/
 
 }

@@ -59,12 +59,13 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myCase = [SELECT Id, Phase__c FROM Case];
+        Case myCase = [SELECT Id, Phase__c,TecnicalPhase__c FROM Case];
         
         //ASSERTS
         System.assert(result.success);
         System.assertEquals('OK', result.message);
-        System.assertEquals('Completata', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
+        //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
+        System.assertEquals('Completata', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
     
@@ -105,12 +106,13 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myCase = [SELECT Id, Phase__c FROM Case];
+        Case myCase = [SELECT Id, Phase__c,TecnicalPhase__c FROM Case];
         
         //ASSERTS
         System.assert(result.success);
         System.assertEquals('OK', result.message);
-        System.assertEquals('Errore Lavorazione SAP', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
+        //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
+        System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
     
@@ -151,12 +153,13 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myCase = [SELECT Id, Phase__c FROM Case];
+        Case myCase = [SELECT Id, Phase__c,TecnicalPhase__c FROM Case];
         
         //ASSERTS
         System.assert(result.success);
         System.assertEquals('OK', result.message);
-        System.assertEquals('Errore Lavorazione SAP', myCase.Phase__c);//TODO: 'Errore Lavorazione SAP'
+        //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
+        System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
     

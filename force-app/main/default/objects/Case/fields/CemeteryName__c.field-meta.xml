@@ -24,6 +24,11 @@
                 <label>Albareto Vecchio</label>
             </value>
             <value>
+                <fullName>Albareto Nuovo</fullName>
+                <default>false</default>
+                <label>Albareto Nuovo</label>
+            </value>
+            <value>
                 <fullName>Baggiovara Nuovo</fullName>
                 <default>false</default>
                 <label>Baggiovara Nuovo</label>

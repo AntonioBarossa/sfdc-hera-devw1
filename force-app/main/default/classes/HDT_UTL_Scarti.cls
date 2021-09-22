@@ -390,65 +390,32 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 logicFields += ','+currString;
             }
 			//END>>>modifica modifica marco.arci@webresults.it
-
-    //>>>START marco.arci@webresults.it Code Review
-            Boolean outcome = checkDiscardAnnullmentRuleParentCase(recordId, logicFields, rules) || 
-                              checkDiscardAnnullmentRuleParentOrder(recordId, logicFields, rules);
-            
-        }
-        return outcome;
-    }
-
-    /**
-    * @author Marco Arci (marco.arci@webresults.it)
-    * @date 15/09/2021
-    * @description HDT_UTL_Scarti.checkDiscardAnnullmentRuleParentCase - Check on pratica annullment
-    * @param recordId - Id of a record
-    * @param logicFields - String
-    * @param rules - List<DiscardAnnullmentRule__c>
-    * @return boolean : true if it has to do annullment; false instead
-    */
-    public static boolean checkDiscardAnnullmentRuleParentCase(Id recordId, String logicFields, List<DiscardAnnullmentRule__c> rules){
-        boolean outcome = false;
-        if(Schema.Case.SObjectType == recordId.getSobjectType()){
-            //system.debug('logicFields: '+logicFields);
-            String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
-            //system.debug('queryString: '+queryString);
-            List<Case> parentCase = Database.query(queryString);
-            if(!parentCase.isEmpty()){
-                for(DiscardAnnullmentRule__c curRule : rules){
-                    if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
-                        && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)))){
-                        outcome = true;
-                        break;
+            system.debug('logicFields: '+logicFields);
+            if(Schema.Case.SObjectType == recordId.getSobjectType()){
+                String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
+                system.debug('queryString: '+queryString);
+                List<Case> parentCase = Database.query(queryString);
+                if(!parentCase.isEmpty()){
+                    for(DiscardAnnullmentRule__c curRule : rules){
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
+                            && String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
+                            outcome = true;
+                            break;
+                        }
                     }
                 }
             }
-        }
-        return outcome;
-    }
-
-
-    /**
-    * @author Marco Arci (marco.arci@webresults.it)
-    * @date 15/09/2021
-    * @description HDT_UTL_Scarti.checkDiscardAnnullmentRuleParentOrder - Check on pratica annullment
-    * @param recordId - Id of a record
-    * @param logicFields - String
-    * @param rules - List<DiscardAnnullmentRule__c>
-    * @return boolean : true if it has to do annullment; false instead
-    */
-    public static boolean checkDiscardAnnullmentRuleParentOrder(Id recordId, String logicFields, List<DiscardAnnullmentRule__c> rules){
-        boolean outcome = false;
-        if(Schema.Order.SObjectType == recordId.getSobjectType()){
-            String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
-            List<Order> parentOrder = Database.query(queryString);
-            if(!parentOrder.isEmpty()){
-                for(DiscardAnnullmentRule__c curRule : rules){
-                    if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
-                        && curRule.ControllingValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)))){
-                        outcome = true;
-                        break;
+            if(Schema.Order.SObjectType == recordId.getSobjectType()){
+                String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
+                system.debug('queryString: '+queryString);
+                List<Order> parentOrder = Database.query(queryString);
+                if(!parentOrder.isEmpty()){
+                    for(DiscardAnnullmentRule__c curRule : rules){
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c)))
+                            && String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
+                            outcome = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -807,11 +774,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     public static void annullaPratica(Id objectId){
         if(Schema.Case.SObjectType == objectId.getSobjectType()){
-            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato',CancellationReason__c='Gestione Scarto');
+            Case caseRecord= new Case(Id=objectId, Phase__c='Annullato', Status='Closed', CancellationReason__c='Gestione Scarto');
             /*eventuali modifiche*/
             HDT_UTL_DatabaseService.updateSObject(caseRecord);
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato',CancellationReason__c='Gestione Scarto');
+            Order orderRecord = new Order(Id=objectId, Phase__c='Annullato', Status='Activated', CancellationReason__c='Gestione Scarto');
             /*eventuali modifiche*/
             HDT_UTL_DatabaseService.updateSObject(orderRecord);
         }
@@ -833,7 +800,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                   WITH SECURITY_ENFORCED]; 
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
                 singleActivity.Status__c='Chiusa';
-                singleActivity.wrts_prcgvr__Status__c='Completed';
+                singleActivity.wrts_prcgvr__Status__c='Chiusa';
             }
             HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
@@ -844,7 +811,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         WITH SECURITY_ENFORCED];
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
                 singleActivity.Status__c='Chiusa';
-                singleActivity.wrts_prcgvr__Status__c='Completed';
+                singleActivity.wrts_prcgvr__Status__c='Chiusa';
             }
             HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
         }    

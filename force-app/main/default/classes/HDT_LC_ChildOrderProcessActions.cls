@@ -154,6 +154,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     }
                 }
+
+                //18/09/2021 gabriele.rota@webresults.it - Package B Attivazioni
+                if (order.IsCloned__c) {
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                }
             }
             when 'HDT_RT_Attivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -200,13 +205,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 HDT_QR_Contract contractQr = new HDT_QR_Contract();
                 Order currentOrder = orderQr.getRecordById(order.Id);
                 Contract contractReference = new Contract();
-                try
+                if(currentOrder.ContractReference__c != null)
                 {
-                    contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
-                }
-                catch(Exception e)
-                {
-                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    try
+                    {
+                        contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                    }
+                    catch(Exception e)
+                    {
+                        System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    }
                 }
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
@@ -318,58 +326,62 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         {
             //@frpanico query for currentRecord
             Order currentOrder = orderQr.getRecordById(order.Id);
+            //@frpanico only for Energia Elettrica
             //@frpanico VAT check
             //@frpanico if VAT is null or blank ExciseRate and RegionalAdditional must be zero
-            if(orderToUpdate.VAT__c != null)
+            if(currentOrder.CommodityFormula__c == 'Energia Elettrica')
             {
-                if(orderToUpdate.VAT__c == '')
+                if(orderToUpdate.VAT__c != null)
+                {
+                    if(orderToUpdate.VAT__c == '')
+                    {
+                        orderToUpdate.ExciseRate__c = 0.0;
+                        orderToUpdate.RegionalAdditional__c = 0.0;
+                    }
+                }
+                else if(currentOrder.VAT__c == null)
                 {
                     orderToUpdate.ExciseRate__c = 0.0;
                     orderToUpdate.RegionalAdditional__c = 0.0;
                 }
-            }
-            else if(currentOrder.VAT__c == null)
-            {
-                orderToUpdate.ExciseRate__c = 0.0;
-                orderToUpdate.RegionalAdditional__c = 0.0;
-            }
-            //@frpanico ExciseEle check
-            //@frpanico if ExciseEle is null or blank VAT__c and RegionalAdditional must be blank and zero
-            //@frpanico if ExciseEle is not null nor blank, ExciseRate value's got from HDT_ExciseTranscode__mdt
-            if(orderToUpdate.ExciseEle__c != null)
-            {
-                if(orderToUpdate.ExciseEle__c == '')
+                //@frpanico ExciseEle check
+                //@frpanico if ExciseEle is null or blank VAT__c and RegionalAdditional must be blank and zero
+                //@frpanico if ExciseEle is not null nor blank, ExciseRate value's got from HDT_ExciseTranscode__mdt
+                if(orderToUpdate.ExciseEle__c != null)
+                {
+                    if(orderToUpdate.ExciseEle__c == '')
+                    {
+                        orderToUpdate.VAT__C = '';
+                        orderToUpdate.RegionalAdditional__c = 0.0;
+                        orderToUpdate.ExciseRate__c = 0.0;
+                    }
+                    else 
+                    {
+                        HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                        exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                        orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+                    }
+                }
+                else if(currentOrder.ExciseEle__c == null)
                 {
                     orderToUpdate.VAT__C = '';
                     orderToUpdate.RegionalAdditional__c = 0.0;
                     orderToUpdate.ExciseRate__c = 0.0;
                 }
-                else 
+                else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
                 {
                     HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
-                    exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                    exciseTranscode = orderQr.getExciseTranscode(currentOrder.ExciseEle__c);
                     orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
                 }
-            }
-            else if(currentOrder.ExciseEle__c == null)
-            {
-                orderToUpdate.VAT__C = '';
-                orderToUpdate.RegionalAdditional__c = 0.0;
-                orderToUpdate.ExciseRate__c = 0.0;
-            }
-            else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
-            {
-                HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
-                exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
-                orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
-            }
-            //@frpanico RegionalAdditional Check
-            //@frpanico if RegionalAdditional is null VAT and ExciseRate must be blank and zero
-            if(currentOrder.RegionalAdditional__c == null)
-            {
-                orderToUpdate.VAT__C = '';
-                orderToUpdate.RegionalAdditional__c = 0.0;
-                orderToUpdate.ExciseRate__c = 0.0;
+                //@frpanico RegionalAdditional Check
+                //@frpanico if RegionalAdditional is null VAT and ExciseRate must be blank and zero
+                if(currentOrder.RegionalAdditional__c == null)
+                {
+                    orderToUpdate.VAT__C = '';
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                    orderToUpdate.ExciseRate__c = 0.0;
+                }
             }
         }
         

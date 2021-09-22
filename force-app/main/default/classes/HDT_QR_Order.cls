@@ -34,7 +34,7 @@ public inherited sharing class HDT_QR_Order {
     public Map<Id, Order>  getOrdersRecord(list <Id> orderId){
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
-            Name, AccountId,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
+            Name, AccountId,SAPImplantCode__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
             Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
             CommercialProduct__c  
             FROM Order 
@@ -105,6 +105,7 @@ public inherited sharing class HDT_QR_Order {
             Sale__r.SalesContact__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
+            Sale__r.Channel__c,
             SwitchOutDate__c,
             Vat__c,
             ExciseGas__c,
@@ -239,7 +240,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckDescription__c,
             DocumentPackage__c,
             IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
-            RegionalAdditional__c                            //@frpanico 16/09/21 
+            RegionalAdditional__c,                            //@frpanico 16/09/21 
+            isTransition__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -294,6 +296,7 @@ public inherited sharing class HDT_QR_Order {
             SignatureMethod__c,
             DocSendingMethod__c,
             Sale__c,
+            TecnicalPhase__c,
             CreatedDate,
             Step__c,
             Sale__r.Channel__c,
@@ -392,7 +395,8 @@ public inherited sharing class HDT_QR_Order {
             Instance326__c,
             DocumentLow80__c,
             QualityCall__c,
-            AgencyCode__c
+            AgencyCode__c,
+            DistributorFormula__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -441,7 +445,8 @@ public inherited sharing class HDT_QR_Order {
             Phase__c,
             ComfortCallDaysDue__c,
             QualityCall__c,
-            QualityCallUnique__c
+            QualityCallUnique__c,
+            Contact__r.Email
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -469,7 +474,8 @@ public inherited sharing class HDT_QR_Order {
             QuickQuote__c,
             ChamberCommerceRegistration__c,
             Instance326__c,
-            DocumentLow80__c
+            DocumentLow80__c,
+            DistributorFormula__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -594,6 +600,51 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getRecordsByAccountIdCopContratto(String accountId,boolean contractSigned){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            AND Status != 'Draft'
+            AND ContractSigned__c = :contractSigned
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordsByAccountIdCopContrattoSignatureMethod(String accountId,String signatureMethod){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND ParentOrder__c = null
+            AND Status != 'Draft'
+            AND SignatureMethod__c = :signatureMethod
+            WITH SECURITY_ENFORCED
+        ];
+    }
     public List<Order> getActiveRecordsByAccountIdNotParent(String accountId){
         return [
             SELECT

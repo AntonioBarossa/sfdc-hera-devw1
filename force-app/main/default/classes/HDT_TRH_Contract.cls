@@ -34,7 +34,11 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         for (Contract tempContract : (List<Contract>)Trigger.new) {
             if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c))&& 
             (String.isBlank( String.valueOf(tempContract.ServicePoint__c)) ||String.isBlank( String.valueOf(tempContract.BillingProfile__c)) || String.isBlank( tempContract.Market__c  ) 
-            || String.isBlank( tempContract.VAT__c)|| String.isBlank( tempContract.CommercialProduct__c)   )     
+            || String.isBlank( tempContract.VAT__c)|| String.isBlank( tempContract.CommercialProduct__c) 
+            || String.isBlank(String.valueOf(tempContract.ActivatedDate))// HRDTR-00_HRAWRM-638
+            || String.isBlank(tempContract.SAPContractCode__c)// HRDTR-00_HRAWRM-638
+
+              )     
             ) {
               listOrderId.add(tempContract.SBQQ__Order__c);
               listContract.add(tempContract);
@@ -50,7 +54,9 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                         tempContract.ServicePoint__c   = mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
                         tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
                         tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
-                        tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto   
+                        tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
+                        tempContract.ActivatedDate      = mapOrder.get(tempContract.SBQQ__Order__c).EffectiveDate__c ; //HRAWRM-638  17/09/2021
+                        tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
                         tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
                         tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
                         tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c ;  //08/09/2021 HRAWRM-251 

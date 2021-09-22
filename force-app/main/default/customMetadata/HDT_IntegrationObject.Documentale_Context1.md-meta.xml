@@ -34,7 +34,7 @@
 },
 {
 &quot;objectName&quot;: &quot;Order&quot;,
-&quot;fields&quot;: &quot;Cluster__c,Subprocess__c&quot;,
+&quot;fields&quot;: &quot;Cluster__c,Subprocess__c,OrderNumber&quot;,
 &quot;relation&quot;: &quot;ParentOrder__r&quot;
 }
 ]
