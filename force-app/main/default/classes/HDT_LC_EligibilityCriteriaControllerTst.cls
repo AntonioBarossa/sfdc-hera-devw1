@@ -308,6 +308,24 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
     }
 
     @isTest
+    static void cloneEligibilityCriteriaRecordWithEligibleForAllCities(){
+
+        EligibilityCriteria__c criteria = [
+            SELECT Id, Product__c
+            FROM EligibilityCriteria__c WHERE EligibleForAllCities__c = true
+            LIMIT 1
+        ];
+
+        Test.startTest();
+
+        String s = HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord(criteria.Id, criteria.Product__c);
+
+        System.assert(!String.isBlank(s), 'Si è verificato un errore in fase di clonazione dell\' Eligibility Criteria');
+
+        Test.stopTest();
+    }
+
+    @isTest
     static void cloneEligibilityCriteriaRecordHandleThrownException(){
 
         Test.startTest();
