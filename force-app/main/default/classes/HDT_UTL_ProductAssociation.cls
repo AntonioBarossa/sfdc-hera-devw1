@@ -139,7 +139,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     Schema.DescribeSObjectResult objRes = objtype.getDescribe();
              
                     if(objRes.isDeletable ()){
-                        try{
+                        //try{
                             List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
                             errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
 
@@ -151,11 +151,10 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                                 respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
                             }
 
-                        } catch(Exception ex){
-                            respRunBatchObj.success = false;
-                            respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
-                        }
-                        
+                        //} catch(Exception ex){
+                        //    respRunBatchObj.success = false;
+                        //    respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
+                        //}
                     }
                     
                 } else {

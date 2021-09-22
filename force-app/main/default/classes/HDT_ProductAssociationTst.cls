@@ -138,6 +138,14 @@ public class HDT_ProductAssociationTst {
         //test confirm selection button
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
 
+        //**** */
+        for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' AND Name LIKE '%offertaExample%']){
+            recordList.add(p.Id);
+        }
+
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
+        //**** */
+
         //test batch
         executionType = 'filter';
 
@@ -153,6 +161,9 @@ public class HDT_ProductAssociationTst {
 
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
 
+        //test exception
+        recordList.add('$%&%&');
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '***', '%$&', recordList, '%$&', '%$&', 'insert');
     }
 
     @isTest
@@ -210,7 +221,13 @@ public class HDT_ProductAssociationTst {
         //test confirm selection button
         //Id productOptionIdToDelete = [SELECT Id FROM SBQQ__ProductOption__c LIMIT 1].Id;
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
+//**** */
+        for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' AND Name LIKE '%offertaExample%']){
+            recordList.add(p.Id);
+        }
 
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
+//**** */
         //test batch
         executionType = 'filter';
 
@@ -231,6 +248,11 @@ public class HDT_ProductAssociationTst {
     @isTest
     public static void getAsyncApexJob(){
         HDT_LC_ProductAssociation.getAsyncApexJob('SBQQ__ProductOption__c');
+    }
+
+    @isTest
+    public static void testSendNotificationException(){
+        HDT_UTL_ProductAssociation.sendCustomNotification(null);
     }
 
 }
