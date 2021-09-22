@@ -265,7 +265,31 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	public static void createLandRegistryData(Id requestId,SObject processRecord){
+	
+	public static DocumentalActivity__c initDocumentalActivity(sObject parentRecord,String envelopeId){
+		DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
+		try {
+			Id requestId = (Id) parentRecord.get('Id');
+			String sObjName = requestId.getSObjectType().getDescribe().getName();
+			switch on sObjName {
+				when 'Case' {
+					documentalActivity.CaseId__c =  requestId;
+				}
+				when 'Order' {
+					documentalActivity.OrderId__c = requestId;
+				}
+				when else {
+
+				}
+			}
+			documentalActivity.EnvelopeId__c = envelopeId;
+		} catch (Exception ex) {
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivity ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}
+		return documentalActivity;
+	}
+	
+	public static void createLandRegistryData(Id requestId,sObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			if (sObjName != 'Order'){

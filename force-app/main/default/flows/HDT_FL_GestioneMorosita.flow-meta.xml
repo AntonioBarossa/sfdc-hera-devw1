@@ -271,6 +271,13 @@
                 <elementReference>GetInputCase.Account.VATNumber__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.PhoneNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PhoneNumberFormula</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
@@ -614,6 +621,14 @@
         <dataType>Currency</dataType>
         <expression>100</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>PhoneNumberFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!GetInputCase.PhoneNumber__c}),
+      IF(ISBLANK({!GetInputCase.Contact.Phone}),&quot;123&quot;,{!GetInputCase.Contact.Phone}),
+      {!GetInputCase.PhoneNumber__c}
+)</expression>
     </formulas>
     <interviewLabel>Gestione Morosità {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Morosità</label>

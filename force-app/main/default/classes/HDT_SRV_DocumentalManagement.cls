@@ -379,6 +379,24 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 
+	public static void createIntesaDocumentalActivity(SObject parentRecord,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody,String transactionId){
+		if(parentRecord != null){
+			String status = requestBody.status;
+			if(status.equalsIgnoreCase('completed')){
+				DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(parentRecord,transactionId);
+				if (documentalActivity != null){
+					documentalActivity.ReturnDate__c = Date.today();
+					documentalActivity.ActivityType__c = 'Documentazione completa';
+					try {
+						HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+					} catch (Exception ex) {
+						System.debug('Errore DML: ' + ex.getMessage());
+					}
+				}
+			}
+		}
+	}
+
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
 		if(listOfRadio != null && listOfRadio.size()>=0){
 			String individualId;
