@@ -24,11 +24,8 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
         SObject sender = (SObject) argsMap.get('sender');
 
         Id objectId = (Id) sender.get('Id');
-        Id orderId = objectId;
-        if(objectId.getSobjectType().getDescribe().getName()!='Order'){
-            return null;
-        }
-        Order currentOrder = (Order) sender;
+        //Id orderId = objectId;
+        //Order currentOrder = (Order) sender;
         String newPhase = method.replaceAll('_', ' ');
         idToNewPhase.put(objectId, newPhase);
 
@@ -48,7 +45,6 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
         if(idToNewPhase.isEmpty()){
             return;
         }
-        system.debug('enqueueDoublePhaseTransactions');
         Map<Id, String> bulkMapForDoubleTransasction = new Map<Id, String>(idToNewPhase);
         idToNewPhase.clear();
 
@@ -60,9 +56,9 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
     }
 
     @future(callout=true)
-    private static void asyncBulkUpdateFuture(Map<Id, String> vasOrdersToUpdate){
+    private static void asyncBulkUpdateFuture(Map<Id, String> sobjToUpdate){
         system.debug('asyncBulkUpdateFuture ');
-        asyncBulkUpdate(vasOrdersToUpdate);
+        asyncBulkUpdate(sobjToUpdate);
     }
 
     /**
@@ -70,14 +66,30 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
     * @author federico.defelice@webresults.it | 16-09-2021 
     * @param vasOrdersToUpdate 
     **/
-    private static void asyncBulkUpdate(Map<Id, String> vasOrdersToUpdate){
+    private static void asyncBulkUpdate(Map<Id, String> sobjToUpdate){
         List<Order> childOrdersToUpdate= new List<Order>();
-        for(Id ordId : vasOrdersToUpdate.keySet() ){
-            childOrdersToUpdate.add(
-                new Order(Id=ordId, Phase__c=vasOrdersToUpdate.get(ordId))
-            );
+        List<Case> casesToUpdate= new List<Case>();
+        for(Id sobjId : sobjToUpdate.keySet()){
+
+            switch on sobjId.getSobjectType().getDescribe().getName(){
+                when 'Order'{
+                    childOrdersToUpdate.add(
+                        new Order(Id=sobjId, Phase__c=sobjToUpdate.get(sobjId))
+                    );
+                }
+                when 'Case'{
+                    casesToUpdate.add(
+                        new Case(Id=sobjId, Phase__c=sobjToUpdate.get(sobjId))
+                    );
+                }
+            }
         }
-        new HDT_SRV_Order().updateRecords(childOrdersToUpdate);
+        if(!childOrdersToUpdate.isEmpty()){
+            new HDT_SRV_Order().updateRecords(childOrdersToUpdate);
+        }
+        if(!casesToUpdate.isEmpty()){
+            new HDT_SRV_Case().updateRecords(casesToUpdate);
+        }
     }
 
 
