@@ -188,7 +188,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
         
         if (ord.ServicePoint__c != null) {
-            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('Gestione Switch in Ripristinatorio', 'Completed', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
         }
 
         system.debug('HDT_UTL_OrderProcessAssignment.isSwitchInRipristinatorio activityList: ' + activityList);
