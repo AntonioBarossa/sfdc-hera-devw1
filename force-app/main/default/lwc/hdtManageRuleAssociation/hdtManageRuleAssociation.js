@@ -2,9 +2,44 @@ import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 
+import cl_CreateTitle from '@salesforce/label/c.ConfRuleCreateTitle';
+import cl_DeleteTitle from '@salesforce/label/c.ConfRuleDeleteTitle';
+import cl_DeleteSection from '@salesforce/label/c.ConfRuleDeleteSection';
+import cl_CreateSection from '@salesforce/label/c.ConfRuleCreateSection';
+import cl_ConfirmSelection from '@salesforce/label/c.ProdOptAssociationConfirmSelection';
+import cl_Close from '@salesforce/label/c.ProdOptAssociationClose';
+import cl_CloseDeleteBody from '@salesforce/label/c.ConfRuleCloseDeleteBody';
+import cl_CloseCreateBody from '@salesforce/label/c.ConfRuleCloseCreateBody';
+import cl_ConfimSelectBody from '@salesforce/label/c.ConfRuleConfimSelectBody';
+import cl_ConfirmFilterTitle from '@salesforce/label/c.ProdOptAssociationConfirmFilterTitle';
+import cl_ConfirmFilterDeleteBody from '@salesforce/label/c.ConfRuleConfirmFilterDeleteBody';
+import cl_ConfirmFilterCreateBody from '@salesforce/label/c.ConfRuleConfirmFilterCreateBody';
+import cl_ConfimSelectBodyDelete from '@salesforce/label/c.ConfRuleConfimSelectBodyDelete';
+import cl_ResultText from '@salesforce/label/c.ProdOptAssociationResultText';
+import cl_NoResultText from '@salesforce/label/c.ProdOptAssociationNoResultText';
+
 export default class HdtManageRuleAssociation extends NavigationMixin(LightningElement) {
 
+    tableLabels = {
+        cl_CreateTitle,
+        cl_DeleteTitle,
+        cl_DeleteSection,
+        cl_CreateSection,
+        cl_ConfirmSelection,
+        cl_Close,
+        cl_CloseDeleteBody,
+        cl_CloseCreateBody,
+        cl_ConfimSelectBody,
+        cl_ConfirmFilterTitle,
+        cl_ConfirmFilterDeleteBody,
+        cl_ConfirmFilterCreateBody,
+        cl_ConfimSelectBodyDelete,
+        cl_ResultText,
+        cl_NoResultText
+    };
+
     @api recordid;
+    objApiName = 'SBQQ__ConfigurationRule__c';
     configurationRuleObj;
     showWelcom = false;
     showSearchOffer = false;

@@ -19,7 +19,7 @@ export default class HdtProductRuleEditForm extends LightningElement {
     getFieldSetList(){
         this.fieldsList.push('SBQQ__Active__c');
         this.fieldsList.push('SBQQ__AscendingNestedLevel__c');
-        /*getFieldSet({fieldSetName: 'EditFormOnLwc'})
+        /*getFieldSet({objApiName: 'SBQQ__ConfigurationRule__c', fieldSetName: 'fieldSetName'})
         .then(result => {
             console.log('>>> GET FIELD SET LIST');
             console.log('>>> ' + JSON.stringify(result));

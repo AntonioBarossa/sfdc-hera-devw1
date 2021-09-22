@@ -8,6 +8,7 @@ import chooseAssOperation_StatusError from '@salesforce/label/c.ChooseAssOperati
 
 export default class HdtChooseAssociationOperation extends LightningElement {
 
+    @api objType;
     @api iconName;
     @api mainTitleLabel;
     @api deleteTitleLabel;
@@ -25,7 +26,7 @@ export default class HdtChooseAssociationOperation extends LightningElement {
     }
 
     getAsyncApexJob(){
-        getAsyncApexJob()
+        getAsyncApexJob({objType: this.objType})
         .then(result => {
             console.log('>>> getAsyncApexJob');
             console.log('>>> ' + JSON.stringify(result));

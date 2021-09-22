@@ -107,13 +107,13 @@ public inherited sharing class HDT_QR_ProductAssociation {
         return prod2list;
     }
 
-    public static List<AsyncApexJob> getJobStatus(){
+    public static List<AsyncApexJob> getJobStatus(List<String> apexJobClass){
         List<AsyncApexJob> jobList = new List<AsyncApexJob>();
         jobList = [
             SELECT ExtendedStatus, ApexClass.name, MethodName, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors
             FROM AsyncApexJob
             WHERE CompletedDate = today
-            AND ApexClass.name IN ('HDT_BA_DeleteProductAssociation', 'HDT_BA_ProductAssociation')
+            AND ApexClass.name IN :apexJobClass
             AND Status NOT IN ('Aborted', 'Completed', 'Failed')
         ];
         return jobList;

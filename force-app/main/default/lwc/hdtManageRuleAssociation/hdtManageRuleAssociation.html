@@ -11,6 +11,7 @@
 
     <template if:true={showWelcom} >
         <c-hdt-choose-association-operation
+            obj-type={objApiName}
             enable-create={enableCreate}
             enable-delete={enableDelete}
             icon-name="standard:product_service_campaign"
@@ -33,6 +34,13 @@
     </template>
 
     <template if:true={showSearchTable} >
-        <p>SEARCH TABLE</p>
+        <c-hdt-product-association-search-table
+            obj-type={objApiName}
+            labels={tableLabels}
+            dml-context={dmlContext}
+            child-record-id={recordid}
+            junction-obj={configurationRuleObj}
+            onclosemodal={closeModal}
+        ></c-hdt-product-association-search-table>
     </template>
 </template>

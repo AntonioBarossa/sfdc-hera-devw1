@@ -72,7 +72,8 @@ public class HDT_ProductAssociationTst {
 
     @isTest
     public static void getFieldSet(){
-        List<String> fieldSetList = HDT_LC_ProductAssociation.getFieldSet('Bonus_EE');
+        List<String> fieldSetListProductOption = HDT_LC_ProductAssociation.getFieldSet('SBQQ__ProductOption__c', 'Bonus_EE');
+        List<String> fieldSetListProductRule = HDT_LC_ProductAssociation.getFieldSet('SBQQ__ProductRule__c', 'Bonus_EE');
     }
 
     @isTest
@@ -90,14 +91,14 @@ public class HDT_ProductAssociationTst {
         prodWrp.CategoryFamily__c = 'A.R.E.R.A';
         String filterString = JSON.serialize(prodWrp);
         
-        HDT_LC_ProductAssociation.getProductList(filterString, optionalSkuId, 'insert', false, '1');
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'insert', false, '1');
 
         //test try catch error
         filterString = '******';
-        HDT_LC_ProductAssociation.getProductList(filterString, optionalSkuId, 'insert', false, '1');
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'insert', false, '1');
 
         //test delete context
-        HDT_LC_ProductAssociation.getProductList(filterString, optionalSkuId, 'delete', false, '1');
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'delete', false, '1');
 
     }
 
@@ -135,7 +136,7 @@ public class HDT_ProductAssociationTst {
         String dmlContext = 'insert';
 
         //test confirm selection button
-        HDT_LC_ProductAssociation.runProductOptionAssociation('', productOptionObj, recordList, executionType, filterString, dmlContext);
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
 
         //test batch
         executionType = 'filter';
@@ -150,7 +151,7 @@ public class HDT_ProductAssociationTst {
         prodWrp2.CategoryFamily__c = null;
         filterString = JSON.serialize(prodWrp2);
 
-        HDT_LC_ProductAssociation.runProductOptionAssociation('', productOptionObj, recordList, executionType, filterString, dmlContext);
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
 
     }
 
@@ -208,7 +209,7 @@ public class HDT_ProductAssociationTst {
 
         //test confirm selection button
         //Id productOptionIdToDelete = [SELECT Id FROM SBQQ__ProductOption__c LIMIT 1].Id;
-        HDT_LC_ProductAssociation.runProductOptionAssociation(prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
 
         //test batch
         executionType = 'filter';
@@ -223,13 +224,13 @@ public class HDT_ProductAssociationTst {
         prodWrp2.CategoryFamily__c = null;
         filterString = JSON.serialize(prodWrp2);
         
-        HDT_LC_ProductAssociation.runProductOptionAssociation(prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
 
     }
 
     @isTest
     public static void getAsyncApexJob(){
-        HDT_LC_ProductAssociation.getAsyncApexJob();
+        HDT_LC_ProductAssociation.getAsyncApexJob('SBQQ__ProductOption__c');
     }
 
 }

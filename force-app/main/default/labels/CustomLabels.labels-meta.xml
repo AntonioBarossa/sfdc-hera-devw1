@@ -799,4 +799,74 @@
         <shortDescription>ChooseAssOperation_StatusError</shortDescription>
         <value>Lo stato del prodotto opzione non è compatibile</value>
     </labels>
+    <labels>
+        <fullName>ConfRuleCreateTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCreateTitle</shortDescription>
+        <value>Associazione Massiva delle regole prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleDeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleDeleteTitle</shortDescription>
+        <value>Rimozione Massiva delle regole prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCreateSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCreateSection</shortDescription>
+        <value>Su questi elementi puoi associare le regole di prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleDeleteSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleDeleteSection</shortDescription>
+        <value>Da questi elementi puoi eliminare le regole di prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCloseDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCloseDeleteBody</shortDescription>
+        <value>Attenzione! Vuoi annullare la rimozione delle regole prodotto prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCloseCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCloseCreateBody</shortDescription>
+        <value>Attenzione! Vuoi annullare l'associazione delle regole  prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfimSelectBodyDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfimSelectBodyDelete</shortDescription>
+        <value>Attenzione! la regola verrà rimossa da tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfimSelectBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfimSelectBody</shortDescription>
+        <value>Attenzione! la regola verrà associata a tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfirmFilterDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfirmFilterDeleteBody</shortDescription>
+        <value>Attenzione! In questo modo la regola verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfirmFilterCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfirmFilterCreateBody</shortDescription>
+        <value>Attenzione! In questo modo la regola verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
 </CustomLabels>

@@ -17,7 +17,7 @@ export default class HdtProductOptionEditForm extends LightningElement {
     }
 
     getFieldSetList(){
-      getFieldSet({fieldSetName: 'EditFormOnLwc'})
+      getFieldSet({objApiName: 'SBQQ__ProductOption__c', fieldSetName: 'EditFormOnLwc'})
       .then(result => {
           console.log('>>> GET FIELD SET LIST');
           console.log('>>> ' + JSON.stringify(result));

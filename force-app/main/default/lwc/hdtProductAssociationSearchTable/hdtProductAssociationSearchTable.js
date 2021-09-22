@@ -3,23 +3,6 @@ import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProduc
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-//Custom labels
-import cProdOptAssociationCreateTitle from '@salesforce/label/c.ProdOptAssociationCreateTitle';
-import cProdOptAssociationDeleteTitle from '@salesforce/label/c.ProdOptAssociationDeleteTitle';
-import cProdOptAssociationDeleteSection from '@salesforce/label/c.ProdOptAssociationDeleteSection';
-import cProdOptAssociationCreateSection from '@salesforce/label/c.ProdOptAssociationCreateSection';
-import cProdOptAssociationConfirmSelection from '@salesforce/label/c.ProdOptAssociationConfirmSelection';
-import cProdOptAssociationClose from '@salesforce/label/c.ProdOptAssociationClose';
-import cProdOptAssociationCloseDeleteBody from '@salesforce/label/c.ProdOptAssociationCloseDeleteBody';
-import cProdOptAssociationCloseCreateBody from '@salesforce/label/c.ProdOptAssociationCloseCreateBody';
-import cProdOptAssociationConfimSelectBody from '@salesforce/label/c.ProdOptAssociationConfimSelectBody';
-import cProdOptAssociationConfirmFilterTitle from '@salesforce/label/c.ProdOptAssociationConfirmFilterTitle';
-import cProdOptAssociationConfirmFilterDeleteBody from '@salesforce/label/c.ProdOptAssociationConfirmFilterDeleteBody';
-import cProdOptAssociationConfirmFilterCreateBody from '@salesforce/label/c.ProdOptAssociationConfirmFilterCreateBody';
-import cProdOptAssociationConfimSelectBodyDelete from '@salesforce/label/c.ProdOptAssociationConfimSelectBodyDelete';
-import cProdOptAssociationResultText from '@salesforce/label/c.ProdOptAssociationResultText';
-import cProdOptAssociationNoResultText from '@salesforce/label/c.ProdOptAssociationNoResultText';
-
 const columns = [
     { label: 'Codice prodotto', fieldName: 'ProductCode' },
     { label: 'Versione', fieldName: 'Version__c' },
@@ -30,12 +13,24 @@ const columns = [
     { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'}
 ];
 
+const fieldsList = [
+    'ProductCode',
+    'Version__c',
+    'Name',
+    'DescriptionSAP__c',
+    'CategoryFamily__c',
+    'Status__c',
+    'TypeOffer__c'
+];
+
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
-    //@api productOptionId;
-    @api optionalSkuId;
-    @api productOptionObj;
+    @api labels;
+    @api objType;
+    @api childRecordId;
+    @api junctionObj;
     @api dmlContext;
+    columns;
     counterText;
     counter;
     filterString;
@@ -46,30 +41,21 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     @track selectedIdList = [];
 
     label = {
-        confirmSelectedTitle: cProdOptAssociationConfirmSelection,
+        confirmSelectedTitle: '',
         confirmSelectedBody: '',
-        closeTitle: cProdOptAssociationClose,
+        closeTitle: '',
         closeBody: '',
-        //confirmAllTitle: '',
-        //confirmAllBody: '',
-        confirmFilterTitle: cProdOptAssociationConfirmFilterTitle,
+        confirmFilterTitle:  '',
         confirmFilterBody: ''
     };
     illustrationMessage;
     
     currentSelectedRows;
-    productId = '';
+    recId = '';
+    objectApiName = 'Product2';
     data = [];
     columns = columns;
-    fieldsList = [
-        'ProductCode',
-        'Version__c',
-        'Name',
-        'DescriptionSAP__c',
-        'CategoryFamily__c',
-        'Status__c',
-        'TypeOffer__c'
-    ];
+    fieldsList = fieldsList;
     showResultTable = false;
     
     @track modalObj = {
@@ -91,25 +77,42 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     toRec;//pagination
 
     connectedCallback(){
-        console.log('>>> PRODUCT OPTION OBJ: ' + this.productOptionObj);
+        console.log('>>> PRODUCT OPTION OBJ: ' + this.junctionObj);
+        console.log('>>> OBJ TYPE: ' + this.objType);
+        //console.log('>>> LABELS: ' + JSON.stringify(this.labels));
 
-        this.illustrationMessage = cProdOptAssociationResultText;
+        this.illustrationMessage = this.labels.cl_ResultText;
         this.page = 1;
+
+        //switch (this.objType) {
+        //    case 'SBQQ__ProductOption__c':
+        //        this.columns = productOptionColumns;
+        //        this.fieldsList = productOptionFieldsList;
+        //        break;
+        //    case 'SBQQ__ConfigurationRule__c':
+        //        this.columns = configurationRuleColumns;
+        //        this.fieldsList = configurationRuleFieldsList;
+        //}
+
+        this.label.confirmSelectedTitle = this.labels.cl_ConfirmSelection;
+        this.label.closeTitle = this.labels.cl_Close;
+        this.label.confirmFilterTitle = this.labels.cl_ConfirmFilterTitle;
+
 
         switch (this.dmlContext) {
             case 'delete':
-                this.mainTitle = cProdOptAssociationDeleteTitle;
-                this.sectionTitle = cProdOptAssociationDeleteSection;
-                this.label.confirmSelectedBody = cProdOptAssociationConfimSelectBodyDelete;
-                this.label.closeBody = cProdOptAssociationCloseDeleteBody;
-                this.label.confirmFilterBody = cProdOptAssociationConfirmFilterDeleteBody;
+                this.mainTitle = this.labels.cl_DeleteTitle;
+                this.sectionTitle = this.labels.cl_DeleteSection;
+                this.label.confirmSelectedBody = this.labels.cl_ConfimSelectBodyDelete;
+                this.label.closeBody = this.labels.cl_CloseDeleteBody;
+                this.label.confirmFilterBody = this.labels.cl_ConfirmFilterDeleteBody;
                 break;
             case 'insert':
-                this.mainTitle = cProdOptAssociationCreateTitle;
-                this.sectionTitle = cProdOptAssociationCreateSection;
-                this.label.confirmSelectedBody = cProdOptAssociationConfimSelectBody;
-                this.label.closeBody = cProdOptAssociationCloseCreateBody;
-                this.label.confirmFilterBody = cProdOptAssociationConfirmFilterCreateBody;
+                this.mainTitle = this.labels.cl_CreateTitle;
+                this.sectionTitle = this.labels.cl_CreateSection;
+                this.label.confirmSelectedBody = this.labels.cl_ConfimSelectBody;
+                this.label.closeBody = this.labels.cl_CloseCreateBody;
+                this.label.confirmFilterBody = this.labels.cl_ConfirmFilterCreateBody;
         }
 
     }
@@ -147,7 +150,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     getData(filter, usePagination, pageNumber){
         
-        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId, dmlContext: this.dmlContext, usePagination: usePagination, pageNumber: pageNumber})
+        getProductList({objType: this.objType, filterString: filter, childRecordId: this.childRecordId, dmlContext: this.dmlContext, usePagination: usePagination, pageNumber: pageNumber})
         .then(result => {
             console.log('>>> GET PRODUCT LIST');
 
@@ -159,7 +162,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     console.log('>>> NO DATA');
                     this.data = [];
                     this.showResultTable = false;
-                    this.illustrationMessage = cProdOptAssociationNoResultText;
+                    this.illustrationMessage = this.labels.cl_NoResultText;
                 } else {
                     console.log('>>> RECORD RETRIEVED: ' + result.prodList.length);
                     this.data = result.prodList;
@@ -225,10 +228,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     this.modalObj.header = this.label.closeTitle;
                     this.modalObj.body = this.label.closeBody;
                     break;
-                case 'confirmAll':
-                    this.modalObj.header = this.label.confirmAllTitle;
-                    this.modalObj.body = this.label.confirmAllBody;
-                    break;
+                //case 'confirmAll':
+                //    this.modalObj.header = this.label.confirmAllTitle;
+                //    this.modalObj.body = this.label.confirmAllBody;
+                //    break;
                 case 'confirmFilter':
                     this.modalObj.header = this.label.confirmFilterTitle;
                     this.modalObj.body = this.label.confirmFilterBody;
@@ -292,10 +295,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.runProductOptionAssociation('select');
     }
 
-    confirmAll(event){
-        console.log('>>>> confirmAll ');
-        this.runProductOptionAssociation('all');
-    }
+    //confirmAll(event){
+    //    console.log('>>>> confirmAll ');
+    //    this.runProductOptionAssociation('all');
+    //}
 
     confirmFilter(event){
         console.log('>>>> confirmFiltered ');
@@ -304,8 +307,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     runProductOptionAssociation(executionType){
         console.log('>>>> RUN PRODUCT OPTION ASSOCIATION');
-
-        runProductOptionAssociation({optionalSkuId: this.optionalSkuId, productOptionObj: this.productOptionObj, recordList: this.selectedIdList, executionType: executionType, filterString: this.filterString, dmlContext: this.dmlContext})
+ 
+        runProductOptionAssociation({objType: this.objType, childRecordId: this.childRecordId, junctionObj: this.junctionObj, recordList: this.selectedIdList, executionType: executionType, filterString: this.filterString, dmlContext: this.dmlContext})
         .then(result => {
             console.log('# response #');
             console.log('# resp -> ' + result.success);
