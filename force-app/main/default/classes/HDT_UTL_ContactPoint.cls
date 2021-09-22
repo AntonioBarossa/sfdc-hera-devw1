@@ -96,6 +96,10 @@ public with sharing class HDT_UTL_ContactPoint {
         
        
             ContactPointPhone contPhone= new ContactPointPhone(TelephoneNumber=phone ,Prefix__c= prefix,IsPrimary = isPrimary);
+            contPhone.TelephoneNumberCertificationsContacts__c=contPhone.Prefix__c.remove('+')+String.valueOf(contPhone.TelephoneNumber); // HRAWRM-521 22/09/2021 EC
+         
+            
+
             return contPhone;
     
         }
@@ -104,6 +108,7 @@ public with sharing class HDT_UTL_ContactPoint {
         
        
             ContactPointPhone contPhone= new ContactPointPhone(TelephoneNumber=phone ,Prefix__c= prefix,IsPrimary = isPrimary,type__c =type);
+            contPhone.TelephoneNumberCertificationsContacts__c=contPhone.Prefix__c.remove('*')+String.valueOf(contPhone.TelephoneNumber);// HRAWRM-521 22/09/2021 EC
             return contPhone;
     
         }
