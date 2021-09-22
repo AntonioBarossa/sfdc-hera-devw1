@@ -40,6 +40,7 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
+        System.debug('generateJsonCheckAutolettura - readingCase.ContractCode__c: ' + readingCase.ContractCode__c);
         System.debug('generateJsonCheckAutolettura - readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
         
         String readingFields = 'Id';
@@ -57,6 +58,7 @@ public with sharing class HDT_SRV_SelfReadings {
         System.debug('reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
+        
 
         gen.writeStartObject();
         gen.writeStringField('caseId', caseId);
