@@ -25,6 +25,9 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
 
         Id objectId = (Id) sender.get('Id');
         Id orderId = objectId;
+        if(objectId.getSobjectType().getDescribe().getName()!='Order'){
+            return null;
+        }
         Order currentOrder = (Order) sender;
         String newPhase = method.replaceAll('_', ' ');
         idToNewPhase.put(objectId, newPhase);
