@@ -186,12 +186,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentRequestItem.Account__c                = currentProcess.currentAccount.Id;
         currentProcess.currentOrderItem.SBQQ__ShippingAccount__c    = currentProcess.currentAccount.Id;
 
-        currentProcess.currentChildOrder.ServicePoint__c            = currentProcess.currentServicePoint.id   ;
-        currentProcess.currentChildOrder.BillingProfile__c          = currentProcess.currentBillingProfile.id ;
         currentProcess.currentChildOrder.RecordTypeId               = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro').getRecordTypeId();
 
         if(currentProcess.currentServicePoint.CommoditySector__c.equalsIgnoreCase('Energia Elettrica')){
-            currentProcess.currentChildOrder.ProcessType__c = 'Subentro EE';
+            currentProcess.currentChildOrder.ProcessType__c = 'Subentro Ele';
         }else if(currentProcess.currentServicePoint.CommoditySector__c.equalsIgnoreCase('Gas')){
             currentProcess.currentChildOrder.ProcessType__c = 'Subentro Gas';
         }else{
@@ -199,11 +197,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         }
         
         makeFatherOrder();
-        makeServiceRequest();
 
-        listUpdateGeneric.add(currentProcess.currentSale)           ;
-        listUpdateGeneric.add(currentProcess.currentServicePoint)   ;
-        listUpdateGeneric.add(currentProcess.currentBillingProfile) ;
+        listUpdateGeneric.add(0, currentProcess.currentSale)           ;
+        listUpdateGeneric.add(1, currentProcess.currentServicePoint)   ;
+        listUpdateGeneric.add(2, currentProcess.currentBillingProfile) ;
        // listUpdateGeneric.add(currentProcess.currentOrder)          ;
 
 
@@ -214,28 +211,43 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     public override void finalUpdate(){
         System.debug('finalUpdate');
         if (listUpdateGeneric.size()>0) {
-            upsert listUpdateGeneric;
-            
-            insert currentProcess.currentFatherOrder                                                        ;
+            Savepoint sp = Database.setSavePoint();
+            try {
+                upsert listUpdateGeneric;
+                
+                currentProcess.currentFatherOrder.Sale__c                    = ((Sale__c)listUpdateGeneric.get(0)).Id           ;
+                currentProcess.currentFatherOrder.ServicePoint__c            = ((ServicePoint__c)listUpdateGeneric.get(1)).Id   ;
+                currentProcess.currentFatherOrder.BillingProfile__c          = ((BillingProfile__c)listUpdateGeneric.get(2)).Id ;
+                insert currentProcess.currentFatherOrder                                                                        ;
 
-            currentProcess.currentChildOrder.ParentOrder__c     = currentProcess.currentFatherOrder.Id      ;
-            insert currentProcess.currentChildOrder                                                         ;
+                currentProcess.currentChildOrder.ParentOrder__c              = currentProcess.currentFatherOrder.Id             ;
+                currentProcess.currentChildOrder.Sale__c                    = ((Sale__c)listUpdateGeneric.get(0)).Id            ;
+                currentProcess.currentChildOrder.ServicePoint__c            = ((ServicePoint__c)listUpdateGeneric.get(1)).Id    ;
+                currentProcess.currentChildOrder.BillingProfile__c          = ((BillingProfile__c)listUpdateGeneric.get(2)).Id  ;
+                insert currentProcess.currentChildOrder                                                                         ;
 
-            System.debug('OrderId:'+currentProcess.currentChildOrder.Id)                                    ;
+                System.debug('OrderId:'+currentProcess.currentChildOrder.Id)                                                    ;
 
-            ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(currentProcess.currentServiceRequest);
-            wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq);
+                makeServiceRequest();
+                ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(currentProcess.currentServiceRequest)              ;
+                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq)   ;
 
-            if(!result.incompatibilities.isEmpty()){
-                String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
-                HDT_SRV_ServiceRequest.deleteRecord(sReq);
-                throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
+                if(!result.incompatibilities.isEmpty()){
+                    String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
+                    throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
+                }
+
+                currentProcess.currentOrderItem.OrderId             = currentProcess.currentChildOrder.Id       ;
+                currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id   ;
+                currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id     ;
+                // insert currentProcess.currentOrderItem;
+                
+            } catch (Exception ex) {
+
+                System.debug(ex.getMessage());
+                Database.rollback(sp);
             }
-
-            currentProcess.currentOrderItem.OrderId             = currentProcess.currentChildOrder.Id       ;
-            currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id   ;
-            currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id     ;
-           // insert currentProcess.currentOrderItem                                                        ;
         }
         currentProcess.currentRequestItem.Status__c=constant.MASSIVLOADER_STATUS_CHIUSO;
         update currentProcess.currentRequestItem;
@@ -290,12 +302,13 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         currentProcess.currentFatherOrder.SignatureMethod__c    = currentProcess.currentChildOrder.SignatureMethod__c                                                      ;
         currentProcess.currentFatherOrder.DocSendingMethod__c   = currentProcess.currentChildOrder.DocSendingMethod__c                                                     ;
         currentProcess.currentFatherOrder.Status                = currentProcess.currentChildOrder.Status                                                                  ;
+        currentProcess.currentFatherOrder.EffectiveDate         = currentProcess.currentChildOrder.EffectiveDate                                                           ;
    }
 
    private void makeServiceRequest(){
 
         currentProcess.currentServiceRequest.ServicePointCode__c = currentProcess.currentServicePoint.Name; 
-        currentProcess.currentServiceRequest.Status__c = currentProcess.currentChildOrder.Status;
+        currentProcess.currentServiceRequest.Status__c = 'Bozza';
         currentProcess.currentServiceRequest.Order__c = currentProcess.currentChildOrder.Id;
         currentProcess.currentServiceRequest.CommoditySector__c = currentProcess.currentServicePoint.CommoditySector__c;
         currentProcess.currentServiceRequest.Type__c = 'Order'; 
