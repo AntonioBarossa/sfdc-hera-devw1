@@ -22,6 +22,23 @@ public inherited sharing class HDT_QR_ActivityCustom {
         ];
     }
 
+    public static List<wrts_prcgvr__Activity__c> getRecordByTypeAndStatusAndAccountAndServicePointNotStatus(String type, String status, String accountId, String servicePointCode) {
+        return [
+            SELECT
+            Id,
+            Name,
+            Status__c,
+            Account__c,
+            ServicePointCode__c
+            FROM wrts_prcgvr__Activity__c
+            WHERE Type__c = :type
+            AND wrts_prcgvr__Status__c != :status
+            AND Account__c = :accountId
+            AND ServicePointCode__c = :servicePointCode
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public static List<wrts_prcgvr__Activity__c> getRecordById(String activityId) {
         return [
             SELECT
@@ -100,7 +117,6 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WHERE Id= :activityId
             WITH SECURITY_ENFORCED
         ];
-        
     }
 
     @AuraEnabled
@@ -134,6 +150,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+    @AuraEnabled
     public static List<wrts_prcgvr__Activity__c> getRecordByOrderIdAndType(String orderId,String type) {
         return [
             SELECT

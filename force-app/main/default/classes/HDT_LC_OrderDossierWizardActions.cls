@@ -68,6 +68,26 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
+    public static String createActivityVocalOrder(Order orderParent){
+
+        List<Order> ordersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+        if(orderParent.SignatureMethod__c == 'Vocal Order' && orderParent.Phase__c == 'Bozza'){
+            if (orderParent.ContractSigned__c == false) {
+                orderToUpdate.Phase__c = 'Documentazione da inviare';
+            } else {
+                orderToUpdate.Phase__c = 'Documentazione da validare';
+                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+            }
+            orderSrv.updateRecords(ordersToUpdate);
+        }
+        return orderToUpdate.Phase__c;
+    }
+
+    @AuraEnabled
     public static void save2(Order orderParent,boolean isPlicoSend){
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
