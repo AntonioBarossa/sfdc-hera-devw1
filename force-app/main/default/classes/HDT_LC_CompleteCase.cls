@@ -15,6 +15,9 @@ public with sharing class HDT_LC_CompleteCase {
                 'Documentale/Copia Contratto'
             };
             if (caseTypeList.contains(cs.Type) || cs.RecordType.DeveloperName == 'HDT_RT_PostSalesVAS') {
+                if (cs.Phase__c != 'In Lavorazione') {
+                    return 'Il case deve essere "In Lavorazione" per procedere con la chiusura';
+                }
                 if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__Status__c == 'Completed' ){
                     Case caseToUpdate = new Case();
                     caseToUpdate.id = cs.Id;
