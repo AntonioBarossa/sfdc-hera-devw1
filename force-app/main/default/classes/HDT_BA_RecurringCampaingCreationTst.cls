@@ -30,6 +30,7 @@ public with sharing class HDT_BA_RecurringCampaingCreationTst {
             cmpList[0].StartDate = Date.today();
             cmpList[1].Status = 'Bozza';
             cmpList[1].EndDate = Date.today();
+            cmpList[1].DateNextGeneration__c = Date.today();
             cmpList[1].StartDate = Date.today();
             cmpList[1].ParentId = cmpList[0].Id;
             update cmpList;
@@ -51,8 +52,10 @@ public with sharing class HDT_BA_RecurringCampaingCreationTst {
  
             Test.stopTest();
 
-            // System.assertEquals(expected, actual);
-            // System.assertNotEquals(expected, actual);
+            List<Campaign> cmpList = [SELECT Id FROM Campaign WHERE DateNextGeneration__c = null];
+
+            System.assertEquals(false, cmpList.isEmpty(), 'Campaign updated.');
+            System.assertNotEquals(true, cmpList.isEmpty(), 'Campaign update failed');
         }
     }
 }
