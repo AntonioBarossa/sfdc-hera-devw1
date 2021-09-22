@@ -48,7 +48,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //PREPARAZIONE ARGS
         Case myCase = [SELECT Id FROM Case];
         
-        Map<String,Object> parameters = new Map<String,Object>();
+        Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'CheckAutolettura');//TODO: IMPLEMENTARE CASI ALTERNATIVI
         
         
