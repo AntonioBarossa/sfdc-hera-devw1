@@ -101,6 +101,10 @@
                 <behavior>Edit</behavior>
                 <field>DiscardReason__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Priority__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -375,11 +379,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Order.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>99</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.Riprendi_Processo</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -489,6 +488,11 @@
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Escalation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>Product2</fields>
@@ -512,9 +516,6 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists> -->
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
@@ -539,22 +540,35 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SendDate__c</fields>
+        <fields>SendMode__c</fields>
+        <fields>Receiver__c</fields>
+        <fields>IsBounced__c</fields>
+        <relatedList>DocumentSendTracking__c.Order__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ActivityType__c</fields>
+        <fields>EnvelopeId__c</fields>
+        <fields>AttachmentCode__c</fields>
+        <fields>AttachmentDescription__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>ErrorDescription__c</fields>
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
-        <fields>SBQQ__NetAmount__c</fields>
-        <fields>SBQQ__Status__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>SBQQ__Primary__c</fields>
-        <relatedList>SBQQ__Quote__c.OrderReference__c</relatedList>
-    </relatedLists> -->
+        <fields>AttachmentCode__c</fields>
+        <fields>Version__c</fields>
+        <fields>Required__c</fields>
+        <relatedList>DocumentalEnvelopeAttachment__c.Order__c</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62W</masterLabel>
+        <masterLabel>00h3N000002SmKD</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
