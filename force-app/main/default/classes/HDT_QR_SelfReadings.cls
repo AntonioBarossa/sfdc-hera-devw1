@@ -24,7 +24,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             System.debug('Query: ' + query);
             List<SObject> objects = Database.query(query);
-
+            
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
             Id readingId = (Id) objReadings[0].get('Id');
 
