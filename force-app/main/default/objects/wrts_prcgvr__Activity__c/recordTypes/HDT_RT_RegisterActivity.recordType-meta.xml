@@ -1926,66 +1926,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Protocollo - Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Canone Rai</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Da tipizzare</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Disattivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Modifiche Anagrafiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Reclami</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Variazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Verifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Protocollo - Voltura</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Riapertura urgenti Errori DL</fullName>
             <default>false</default>
         </values>
