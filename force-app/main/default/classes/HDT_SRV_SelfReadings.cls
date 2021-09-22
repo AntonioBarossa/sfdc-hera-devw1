@@ -67,7 +67,14 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeStringField('commodity', readingCase.CommodityFormula__c);
         gen.writeFieldName('position');
         gen.writeStartArray();
-
+        
+        System.debug('reading.ReadingRegisterMeter__c: ' + reading.ReadingRegisterMeter__c);
+        System.debug('reading.ReadingValueMeter__c: ' + reading.ReadingValueMeter__c);
+        System.debug('reading.ReadingValueCorrector__c: ' + reading.ReadingValueCorrector__c);
+        System.debug('reading.ReadingRegisterCorrector__c: ' + reading.ReadingRegisterCorrector__c);
+        System.debug('reading.ReadingRegister1__c: ' + reading.ReadingRegister1__c);
+        System.debug('reading.ReadingValue1__c: ' + reading.ReadingValue1__c);
+        
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
             gen.writeStringField('register', reading.ReadingRegisterMeter__c);
@@ -118,6 +125,7 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
+        System.debug('generateJsonInvioLetture - readingCase.ContractCode__c: ' + readingCase.ContractCode__c);
         System.debug('generateJsonInvioLetture - readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
