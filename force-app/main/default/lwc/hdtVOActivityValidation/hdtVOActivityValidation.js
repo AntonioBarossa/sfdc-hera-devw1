@@ -15,7 +15,7 @@ export default class hdtVOActivityValidation extends LightningElement {
     @api caseid;
 
     save(){
-        let validation = this.template.querySelector('[data-name="validation__c"]').value;
+        let validation = this.template.querySelector('[data-name="Validation__c"]').value;
         valida({
             recordid : this.recordId,
             validazione : validation
@@ -36,6 +36,7 @@ export default class hdtVOActivityValidation extends LightningElement {
                 this.dispatchEvent(event);
             }
         });
+        updateRecord({ fields: { Id: this.recordId } });
     }
     approve(){
         valida({
