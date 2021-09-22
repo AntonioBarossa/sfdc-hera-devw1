@@ -15,6 +15,7 @@ public class HDT_SRV_AnagAlignmentTst {
         ordList[0].ExciseGAS__c = 'Imposta Usi Domestici (Cod. G_ICD)';
         ordList[0].ServicePoint__c = servPointList[0].Id;
         ordList[0].SupplyState__c = 'AQ';
+        ordList[0].Type = 'New';
         insert ordList;
 
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
@@ -378,6 +379,35 @@ public class HDT_SRV_AnagAlignmentTst {
         
     }
 
+    @IsTest
+    static void testFindRegionalAdditional(){
+        
+        Test.startTest();
+
+        HDT_QR_AnagAlignment a = new HDT_QR_AnagAlignment();
+
+        Double result = a.findRegionalAdditional('', '', '');
+
+        System.assertEquals(0, result, 'result != 0');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testFindServicePointByCodeNull(){
+        
+        Test.startTest();
+
+        HDT_QR_AnagAlignment a = new HDT_QR_AnagAlignment();
+        ServicePoint__c srvPoint = a.findServicePointByCode('');
+
+        System.assertEquals(null, srvPoint, 'srvPoint != null');
+
+        Test.stopTest();
+        
+    }
+
     public class HDT_SRV_AnagAlignmentTstMock implements HttpCalloutMock {
         // Implement this interface method
         public HTTPResponse respond(HTTPRequest request) {
@@ -390,5 +420,6 @@ public class HDT_SRV_AnagAlignmentTst {
             return response; 
         }
     }
+
 
 }
