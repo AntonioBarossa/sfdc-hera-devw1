@@ -26,7 +26,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         );
 
           //fix CC Generazione Credential LG MB
-          orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
+         // orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
         // if (orderParent.ContractSigned__c == false) {
                 // LG Ripristino logica 18/09 FF
         if (orderParent.ContractSigned__c == false) {
@@ -80,7 +80,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         );
 
           //fix CC Generazione Credential LG MB
-          orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
+        //  orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
         // if (orderParent.ContractSigned__c == false) {
         //     orderToUpdate.Phase__c = 'Documentazione da inviare';
         // } else {

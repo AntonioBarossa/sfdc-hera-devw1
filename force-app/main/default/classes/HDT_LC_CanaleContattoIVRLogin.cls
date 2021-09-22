@@ -61,13 +61,6 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         System.debug('It\'s inside the method checkFinalConfirmationOfTheContract');
         //ConsumptionCode__c consumptionCode = consumptionCodeQr.getRecordById(consumptionCodeId);
         Order ord = orderQr.getRecordById(orderId);
-       /*List<Order> listOrderChildToUpdate = orderQr.getChildOrdersByParentId(orderId);
-        List<Order> orderToUpdate = new List<Order>();
-        orderToUpdate.add(new Order(id=orderId,))
-
-
-
-*/
         return ord;     
    }
 
@@ -97,9 +90,43 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
    }
 
    @AuraEnabled
+   public static void generateUsernameAndPassword(String parentOrder){
+
+      //List<Order> orderList = orderQr.getChildOrdersByParentId(parentOrder);
+      Order ordChild = [Select id,ServicePoint__r.ServicePointCode__c,ServicePoint__r.Account__r.BirthDate__c,parentOrder__c,Account.customerMarking__c,sale__r.Channel__c,SignatureMethod__c from order where id = :parentOrder.id];
+      order ordParent = [select id,Username__c,Account.customerMarking__c,SignatureMethod__c,sale__r.Channel__c from order where id = :ordChild.parentOrder__c];
+      if (ordChild != null && ordParent != null && ordParent.Username__c == null && ordParent.Account.customerMarking__c == 'Famiglie' && ordParent.SignatureMethod__c == 'Vocal Order' && ordParent.sale__r.Channel__c == 'Teleselling Outbound'){
+
+        String podCode = ordChild.ServicePoint__r.ServicePointCode__c;
+        Integer lengthOfPodCode = podCode.length();
+        Integer startingCharacter = lengthOfPodCode - 8;
+        String partOne = podCode.substring(startingCharacter,lengthOfPodCode);
+        String thirdPosition = partOne.substring(2,3);
+        String sixthPosition = partOne.substring(5,6);
+        Integer ninthPosition = 9 - Integer.valueof(thirdPosition);
+        Integer tenthPosition = 9 - Integer.valueof(sixthPosition);
+        String username = partOne + String.valueOf(ninthPosition) + String.valueOf(tenthPosition);
+
+        Date birthDate = (Date)ordChild.ServicePoint__r.Account__r.BirthDate__c;  
+        String year = String.valueOf(birthDate.year());
+        String month = birthDate.month() > 9 ? String.valueOf(birthDate.month()) : '0'+String.valueOf(birthDate.month());
+        String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
+        String password = day + month + year.substring(2,4);
+        System.debug(password);
+        Order newOrder = new Order();
+        newOrder.Id = ordParent.id;
+        newOrder.UniqueCredentials__c = username + '_' + password;
+        newOrder.Username__c = username;
+        newOrder.Password__c = password;
+        orderSrv.updateRecord(newOrder);
+    
+      }
+      
+}
+@AuraEnabled
    public static Order generateUsernameAndPassword(Order parentOrder){
     try{
-      Order ordParent = [Select id,Account.customerMarking__c,sale__r.Channel__c,SignatureMethod__c from order where id = :parentOrder.id];
+      Order ordParent = [Select id,parentOrder__c,Account.customerMarking__c,sale__r.Channel__c,SignatureMethod__c from order where id = :parentOrder.id];
       if(ordParent.Account.customerMarking__c == 'Famiglie' && ordParent.SignatureMethod__c == 'Vocal Order' && ordParent.sale__r.Channel__c == 'Teleselling Outbound'){
       List<Order> orderList = orderQr.getChildOrdersByParentId(parentOrder.id);
       if (orderList.size() > 0){
@@ -134,5 +161,4 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         }
       return parentOrder;
 }
-
 }
