@@ -11,12 +11,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Preventivi', 'Variazioni', 'Generiche Attivazioni'},
             'Type' => new List<String>
-                {'Gestione Calamità', 'Informative', 'Comportamento Venditori HC'}
+                {'Gestione Calamità', 'Informative','Comunicazione di Fallimento','Comportamento Venditori HC'}
         },
     'ContrattoNonRichiesto' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami','Preventivi', 'Generiche Attivazioni'},
+                {'Reclami','Preventivi','Generiche Attivazioni'},
             'Type' => new List<String>
                 {'Comportamento Venditori HC'}
         },
