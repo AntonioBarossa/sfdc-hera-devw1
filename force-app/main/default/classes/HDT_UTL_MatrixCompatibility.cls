@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         return sts;
     }
 
-    private static String getProcessType(String pType, String type, String commoditySector){
+    public static String getProcessType(String pType, String type, String commoditySector){
         String processType='';
         List<HDT_MatrixCompatibilityMap__mdt> mdtList= HDT_QR_MatrixCompatibilityMap.getProcessTypeMap(pType.trim(),type);
         if(mdtList.size()==1){

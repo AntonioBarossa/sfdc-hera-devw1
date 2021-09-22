@@ -121,7 +121,9 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
    public class HDT_WRP_ProcessEntities{
       public Account                      currentAccount                ;
       public Contact                      currentPrimaryContact         ;
-      public Order                        currentOrder                  ;
+      public Order                        currentFatherOrder            ;
+      public Order                        currentChildOrder             ;
+      public ServiceRequest__c            currentServiceRequest         ;//AA 21/09/2021 ad ogni order Figlio è associato un oggetto tecnico ServiceRequest__c
       public Contract                     currentContract               ;
       public Quote                        currentQuote                  ;
       public Case                         currentCase                   ;
@@ -137,7 +139,9 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         public  HDT_WRP_ProcessEntities(){          
             currentAccount                  =   new  Account                     ();
             currentPrimaryContact           =   new  Contact                     ();
-            currentOrder                    =   new  Order                       ();
+            currentFatherOrder              =   new  Order                       ();
+            currentChildOrder               =   new  Order                       ();  
+            currentServiceRequest           =   new  ServiceRequest__c           ();
             currentOrderItem                =   new  OrderItem                   ();
             currentContract                 =   new  Contract                    ();
             currentQuote                    =   new  Quote                       ();
