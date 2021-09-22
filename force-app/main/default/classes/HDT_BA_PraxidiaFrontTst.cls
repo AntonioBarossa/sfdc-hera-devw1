@@ -35,7 +35,7 @@ public with sharing class HDT_BA_PraxidiaFrontTst {
     }
 	
 	@isTest
-    public static void testExemplo() {
+    public static void testBatch() {
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
