@@ -71,8 +71,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
         //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
-        String rtId = constants.CASE_RECORDTYPEID_MOROSITA;
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
         //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
         
