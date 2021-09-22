@@ -150,12 +150,14 @@ public inherited sharing class HDT_QR_ActivityCustom {
             WITH SECURITY_ENFORCED
         ];
     }
+    @AuraEnabled
     public static List<wrts_prcgvr__Activity__c> getRecordByOrderIdAndType(String orderId,String type) {
         return [
             SELECT
             
             Id,
             Approved__c,
+            Validation__c,
             Name,
             wrts_prcgvr__status__c
             FROM wrts_prcgvr__Activity__c
