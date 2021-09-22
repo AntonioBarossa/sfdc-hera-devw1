@@ -98,13 +98,20 @@ export default class HdtManageScriptCard extends LightningElement {
                 recordId : this.recordId, 
                 childRecordIdentifier : this.childAdditionalInfo
             });
-            console.log(this.htmlScriptList);
-            console.log("ok deploy")
-            this.scriptIndex=0;
+            if(this.htmlScriptList.length==0){
+                this.showToast('error', 'Non è disponibile lo script per questa campagna!');
+                this.dispatchEvent(new CustomEvent('close'));
+            }else{
+                console.log(this.htmlScriptList);
+                console.log("ok deploy")
+                this.scriptIndex=0;
+            }
+
             //this.openModal=true;
         }catch(e){
             console.log(e.body.message);
             this.showGenericErrorToast();
+            this.dispatchEvent(new CustomEvent('close'));
         }
     }
 
