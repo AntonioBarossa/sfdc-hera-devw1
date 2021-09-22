@@ -618,10 +618,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			*/
 			
 			reading.CaseGas__c = caseId;
+			
+			//METER
 			reading.ReadingRegisterMeter__c = 'TST';
 			reading.ReadingValueMeter__c = 1;
+			reading.ReadingBandMeter__c = 'TE';
+			reading.ReadingDateMeter__c = Date.today();
+			reading.ReadingDigitNumberMeter__c = 'TE';
+			reading.ReadingSerialNumberMeter__c = 'SERIAL_CORR';
+			reading.ReadingTypeMeter__c = 'READING_TYPE_METER';
+			reading.ReadingUnitMeter__c = 'TST';
+			
+			//CORRECTOR
 			reading.ReadingValueCorrector__c = 1;
 			reading.ReadingRegisterCorrector__c = 'TST';
+			reading.ReadingBandCorrector__c = 'TE';
+			reading.ReadingDateCorrector__c = Date.today();
+			reading.ReadingDigitNumberCorrector__c = 'TE';
+			reading.ReadingSerialNumberCorrector__c = 'SERIAL_CORR';
+			reading.ReadingTypeCorrector__c = 'READING_TYPE_CORRECTOR';
+			reading.ReadingUnitCorrector__c ='TST' ;
 			
 			readings.add(reading);
 		}
