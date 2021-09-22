@@ -57,6 +57,8 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
             System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+            System.debug('HDT_SRV_SelfReadingsFacade: exception stack trace string:' + ex.getStackTraceString() );
+            
         }
         return sapIntegration;
         
