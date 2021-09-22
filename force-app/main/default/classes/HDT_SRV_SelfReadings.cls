@@ -24,6 +24,7 @@ public with sharing class HDT_SRV_SelfReadings {
     // TODO WAVE 2: adeguare per altre commodity.
     private static HDT_WRP_GenericSapIntegration generateJsonCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
+            System.debug('inputParams null.');
             return null;
         }
 
@@ -34,6 +35,7 @@ public with sharing class HDT_SRV_SelfReadings {
 
         List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,ContractCode__c,CommodityFormula__c');
         if (cases.isEmpty()) {
+            System.debug('No Cases found.');
             return null;
         }
 
