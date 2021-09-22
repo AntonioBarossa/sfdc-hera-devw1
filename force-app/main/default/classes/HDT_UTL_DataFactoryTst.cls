@@ -612,6 +612,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			reading.ReadingValue1__c = 1;//NB: USATO PER CONTROLLARE ACCESSO A CAMPI READINGS
 			reading.ReadingRegister1__c = 'TST';
 			reading.CaseGas__c = caseId;
+			reading.ReadingRegisterMeter__c = 'TST';
+			reading.ReadingValueMeter__c = 1;
+			reading.ReadingValueCorrector__c = 1;
+			reading.ReadingRegisterCorrector__c = 'TST';
 			
 			readings.add(reading);
 		}
