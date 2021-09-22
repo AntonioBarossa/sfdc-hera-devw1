@@ -574,7 +574,6 @@
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
     <relatedLists>
-    <!-- <relatedLists>
         <fields>NAME</fields>
         <fields>AttachmentCode__c</fields>
         <fields>Version__c</fields>
