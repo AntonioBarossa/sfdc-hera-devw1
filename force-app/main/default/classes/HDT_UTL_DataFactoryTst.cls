@@ -601,6 +601,28 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return caseList;
 	}
 	
+	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			reading.ReadingValue1__c = 1;//NB: USATO PER CONTROLLARE ACCESSO A CAMPI READINGS
+			reading.ReadingRegister1__c = '';
+			reading.CaseGas__c = caseId;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
+	}
+	
 	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
