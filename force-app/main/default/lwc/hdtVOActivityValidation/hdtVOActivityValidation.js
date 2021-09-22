@@ -36,6 +36,7 @@ export default class hdtVOActivityValidation extends LightningElement {
                 this.dispatchEvent(event);
             }
         });
+        updateRecord({ fields: { Id: this.recordId } });
     }
     approve(){
         valida({
