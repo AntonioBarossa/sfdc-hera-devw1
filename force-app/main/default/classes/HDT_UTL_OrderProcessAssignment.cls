@@ -208,8 +208,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     public static void switchInRipristinatorioAction(Order ord) {
 
         system.debug('HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction START');
-            
-        List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+        List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('Gestione Switch in Ripristinatorio', 'Completed', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+
+        //List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
 
         activityCustomSrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityList[0].Id,
