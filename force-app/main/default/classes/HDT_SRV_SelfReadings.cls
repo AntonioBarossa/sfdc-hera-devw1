@@ -123,7 +123,6 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
-        System.debug('readingCase.ContractCode__c: ' + readingCase.ContractCode__c);
         System.debug('readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
