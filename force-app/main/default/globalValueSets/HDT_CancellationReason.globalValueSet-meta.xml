@@ -170,6 +170,16 @@
         <default>false</default>
         <label>Autolettura non acquisibile</label>
     </customValue>
+    <customValue>
+        <fullName>Annullamento dal SII</fullName>
+        <default>false</default>
+        <label>Annullamento dal SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Delibera ARERA 155/2020</fullName>
+        <default>false</default>
+        <label>Delibera ARERA 155/2020</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

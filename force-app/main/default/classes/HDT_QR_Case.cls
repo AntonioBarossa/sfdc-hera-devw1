@@ -31,7 +31,10 @@ public inherited sharing class HDT_QR_Case {
             Contract__c,
             ContractCode__c,
             CommodityFormula__c,
-            PODPDRFormula__c
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -100,6 +103,7 @@ public inherited sharing class HDT_QR_Case {
             Phase__c
             FROM Case
             WHERE ParentId = :parentId
+            AND RecordType.DeveloperName = 'HDT_RT_RichiestaParere'
             WITH SECURITY_ENFORCED];
         }catch(Exception e){
             System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());

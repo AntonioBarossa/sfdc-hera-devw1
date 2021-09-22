@@ -231,12 +231,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String variableAmount = '';
         Double totalAmount;
         String result='';
+        String caseType = '';
+        String supplyType = '';
         switch on context {
             when 'Case' {
                 amount = HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', 0, inputs, formParams);
                 fixedAmount = HDT_UTL_DocumentalManagement.getValue('Case', 'FixedAmount__c', 0, inputs, formParams);
                 variableAmount = HDT_UTL_DocumentalManagement.getValue('Case', 'VariableAmount__c', 0, inputs, formParams);
                 iva = HDT_UTL_DocumentalManagement.getValue('Case', 'VATPercentage__c', 0, inputs, formParams);
+                caseType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
+                supplyType = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyType__c', 0, inputs, formParams);
             }
             when else {
                 //quotationType = ''; //da ordine manca il campo
@@ -255,7 +259,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     ivaAmount = ((amountDouble/100)*ivaInteger);
             }
             totalAmount = amountDouble + ivaAmount;
-            result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;
+
+            if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) && context.equalsIgnoreCase('Case')){
+                //variableAmount è l'importo prestazione calcolato come amount - fixedAmount
+                //fixed amount è solo quotaVend se Variazione potenza dom sennò è quotaDistr + quotaVend| Se l'offerta è Placet togliere la quota Vend
+                if(caseType.contains('Potenza') && supplyType.equalsIgnoreCase('Domestico')){
+                    fixedAmount = '23';
+                }else {
+                    fixedAmount = '48,81';
+                }
+                variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+            }
+            result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
+            
         }else {
             result = '|||||';
         }

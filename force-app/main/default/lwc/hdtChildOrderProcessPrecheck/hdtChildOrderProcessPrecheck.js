@@ -454,7 +454,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         } else {
             console.log('enter with value');
             this.options = [];
-            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? "Prima Attivazione" : this.order.ProcessType__c;
+            // fix LG 2009 richiesta da CZ da Room
+            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? this.order.ProcessType__c == 'Prima Attivazione con modifica' ? this.order.ProcessType__c : "Prima Attivazione" : this.order.ProcessType__c;
             this.options.push({label: label, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
