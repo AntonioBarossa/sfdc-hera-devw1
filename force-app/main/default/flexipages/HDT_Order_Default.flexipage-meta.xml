@@ -445,7 +445,41 @@
                             <value>Order.Escalation</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Order.HDT_ChangePriority</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Order.HDT_CreateDistributorApointment</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Order.HDT_CloneCanceledOrder</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_SwitchIn</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CancellationReason__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento dal SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CancellationReason__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Delibera ARERA 155/2020</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CancellationReason__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Pratica errata</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
