@@ -738,10 +738,10 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, RecordType.DeveloperName from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, RecordType.DeveloperName from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){
