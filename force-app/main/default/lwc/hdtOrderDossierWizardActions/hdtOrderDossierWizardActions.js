@@ -32,7 +32,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
 
     get disablePrintButtonFunction() {
-        return this.isPrintButtonDisabled || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose || this.orderParentRecord.Phase__c != 'Documentazione da validare'));
+        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
     }
 
 
@@ -329,7 +329,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             orderId: this.recordId,
             type: 'Validazione Vocal Order'
         }).then(result => {
-            if(result != undefined && result != null && result.length > 0 && result[0].wrts_prcgvr__status__c == 'Completed'){
+            console.log('*********2:' + JSON.stringify(result));
+            if(result != undefined && result != null && result.length > 0 && result[0].wrts_prcgvr__Status__c == 'Completed' && result[0].Validation__c == 'Si'){
                 this.isVocalAndActivityNotClose = false;
             }
         })

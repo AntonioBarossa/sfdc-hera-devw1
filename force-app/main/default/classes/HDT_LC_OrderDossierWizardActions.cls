@@ -75,13 +75,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order orderToUpdate = new Order(
             Id = orderParent.Id
         );
-        if(orderParent.SignatureMethod__c == 'Vocal Order' && orderParent.Phase__c == 'Bozza'){
+        system.debug('********DEBUGLOL:' + orderParent);
+        if(orderParent.SignatureMethod__c == 'Vocal Order' && orderParent.Phase__c == 'In Lavorazione'){
             if (orderParent.ContractSigned__c == false) {
                 orderToUpdate.Phase__c = 'Documentazione da inviare';
             } else {
                 orderToUpdate.Phase__c = 'Documentazione da validare';
                  //   orderToUpdate.Phase__c = 'Plico da inviare'; 
             }
+            ordersToUpdate.add(orderToUpdate );
             orderSrv.updateRecords(ordersToUpdate);
         }
         return orderToUpdate.Phase__c;
@@ -101,11 +103,18 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         //     orderToUpdate.Phase__c = 'Documentazione da inviare';
         // } else {
                 // LG Ripristino logica 18/09 FF
-        if (orderParent.ContractSigned__c == false) {
-            orderToUpdate.Phase__c = 'Documentazione da inviare';
-        } else {
-            orderToUpdate.Phase__c = 'Documentazione da validare';
-             //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        System.debug('********LOL:' + orderParent);
+        if(orderParent.Phase__c == 'In Lavorazione'){
+            if (orderParent.ContractSigned__c == false) {
+                orderToUpdate.Phase__c = 'Documentazione da inviare';
+            } else {
+                orderToUpdate.Phase__c = 'Documentazione da validare';
+                //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+            }
+        }
+        else if(orderParent.Phase__c == 'Registrazione  da validare'){
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.status = 'Activated';
         }
       /*  if(isPlicoSend){
           //  orderToUpdate.Phase__c = 'Plico da inviare';
