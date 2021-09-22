@@ -25,16 +25,31 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
+        <field>Case.ServicePointCode__c</field>
+    </columns>
+    <columns>
         <field>CASE_NUMBER</field>
     </columns>
     <columns>
-        <field>CREATED_DATE</field>
+        <field>Case.DistributorName__c</field>
     </columns>
     <columns>
-        <field>LAST_UPDATE</field>
+        <field>Case.Cluster__c</field>
     </columns>
     <columns>
-        <field>LAST_UPDATE_BY</field>
+        <field>TYPE</field>
+    </columns>
+    <columns>
+        <field>Case.Subprocess__c</field>
+    </columns>
+    <columns>
+        <field>Case.SalesCompany__c</field>
+    </columns>
+    <columns>
+        <field>DESCRIPTION</field>
+    </columns>
+    <columns>
+        <field>Case.DiscardDescription__c</field>
     </columns>
     <filter>
         <criteriaItems>
