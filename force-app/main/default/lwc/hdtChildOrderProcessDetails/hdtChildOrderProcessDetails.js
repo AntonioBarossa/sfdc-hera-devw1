@@ -2185,7 +2185,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleWrapAddressObjectSpedizione(){
-        this.wrapAddressObjectSpedizione = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+        this.wrapAddressObjectSpedizione = this.template.querySelector(`c-hdt-target-object-address-fields[data-sec="${this.choosenSection}"]`).handleAddressFields();
         if(this.sectionDataToSubmit['ShippingStreetName__c'] != this.wrapAddressObjectSpedizione['Via']){
             this.sectionDataToSubmit['ShippingStreetName__c'] = this.wrapAddressObjectSpedizione['Via'];
         }

@@ -325,6 +325,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
+        this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
         console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
