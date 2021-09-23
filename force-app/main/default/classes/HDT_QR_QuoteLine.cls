@@ -160,9 +160,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__ProductFamily__c IN :famils
             WITH SECURITY_ENFORCED
+            Order by BillingProfile__c NULLS LAST
         ];
-
-    
     }
 
 

@@ -25,20 +25,28 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         System.debug('sendingBillMode: ' + sendingBillMode);
 
         quoteLineSrv.checkReadAccess('SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SBQQ__RequiredBy__r.SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
-        
-        System.debug('query result pod/pdr: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, paymentMethod, sendingBillMode));
+
         List<SBQQ__QuoteLine__c> listPodPdr = quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, paymentMethod, sendingBillMode);
+        System.debug('query result pod/pdr: ' + listPodPdr);
         
-        System.debug('query result vas: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId));
+        
         List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId);
+        System.debug('query result vas: ' + listVas);
         
-        System.debug('query result listVasCambioOfferta: ' + quoteLineQr.getQuoteLinesWithCambioOfferta(saleId));
+
+        List<SBQQ__QuoteLine__c> listBonus =   quoteLineQr.getRecordsBySaleFilteredFamilyBonus(saleId);
+        system.debug('query result sconti: '+listBonus );
+        
         List<SBQQ__QuoteLine__c> listVasCambioOfferta = quoteLineQr.getQuoteLinesWithCambioOfferta(saleId);
+        System.debug('query result listVasCambioOfferta: ' + listVasCambioOfferta);
 
         Map<String, List<SBQQ__QuoteLine__c>> quoteLineMap = new Map<String, List<SBQQ__QuoteLine__c>>();
         quoteLineMap.put('listPodPdr', listPodPdr);
         quoteLineMap.put('listVas', listVas);
         quoteLineMap.put('listVasCambioOfferta', listVasCambioOfferta);
+        if(!listBonus.isEmpty()){
+            quoteLineMap.put('listBonus', new List<SBQQ__QuoteLine__c>{listBonus[0]});
+        }
 
         return quoteLineMap;
     }
