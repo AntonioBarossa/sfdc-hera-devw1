@@ -372,12 +372,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 //for vas i need a bulk update on a queueable
                 if (childOrder.Phase__c == currentVasPhase) {
+                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
                     /*Order orderToUpdate = new Order(
                         Id = childOrder.Id,
                         Phase__c = newVasPhase
                     );
                     childOrdersToUpdate.add(orderToUpdate);*/
-                    vasOrdersToUpdate.put(childOrder.Id, newVasPhase);
+                    vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && childOrder.DistributorFormula__c == 'AMGA UDINE-10R0000032') {
                 //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
