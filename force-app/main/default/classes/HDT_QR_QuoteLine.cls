@@ -132,6 +132,40 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 23-09-2021 
+    * @param saleId 
+    * @return List<SBQQ__QuoteLine__c> 
+    **/
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredFamilyBonus(String saleId){
+        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c group by ProductFamily__c  ];
+        Set<String> famils = new Set<String>();
+        for(AggregateResult ag : lgr){
+            famils.add((String) ag.get('fam'));
+        }
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__ProductFamily__c IN :famils
+            WITH SECURITY_ENFORCED
+        ];
+
+    
+    }
+
+
     public List<SBQQ__QuoteLine__c> getQuoteLineAnalisiConsumi(List<String> mainQuoteLineIds){
         return [
             SELECT
@@ -320,7 +354,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             Id,
             SBQQ__Product__r.Name,
             SBQQ__Product__r.ProductCode,
-            SBQQ__Product__r.Version__c
+            SBQQ__Product__r.Version__c,
+            DelayEffectiveDate__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__RequiredBy__c = null
