@@ -1,3 +1,9 @@
+/**
+ * @author Lucas da Silva Fernandes (lucas.dasilva@engdb.com.br)
+ * @date 31/08/2021
+ * @description HDT_WS_HTTPServiceCallMock Test Class
+ * @history Lucas da Silva Fernandes – 31/08/2021 – Created Class
+ */
 global with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock {
     
     public Boolean successfullReturn = true;
@@ -25,6 +31,26 @@ global with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         body = JSON.serialize(transitionWbResponse);
                         res.setStatusCode(200);
                         res.setBody(body);
+                    } else {
+                        res.setStatusCode(404);
+                    }
+                }
+
+                if (wsc.Name == 'BP_CA') {
+                    HDT_WS_RichCreBpCaResponse dataresponse = new HDT_WS_RichCreBpCaResponse();                 
+                    dataresponse.data = new HDT_WS_RichCreBpCaResponse.dataResponseWrap();
+
+                    if (successfullReturn) {
+                        dataresponse.status = 'success';
+                        dataresponse.data.tipoAttivita = 'Errore';
+                        dataresponse.data.codiceBP = 'test';
+                        dataresponse.data.commenti = 'BP non rilevato';
+                        
+                        body = JSON.serialize(dataresponse);
+                        res.setStatusCode(200);
+                        res.setBody(body);
+                        
+                        
                     } else {
                         res.setStatusCode(404);
                     }
