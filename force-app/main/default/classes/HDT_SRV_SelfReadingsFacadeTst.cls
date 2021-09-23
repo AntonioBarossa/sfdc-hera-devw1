@@ -408,7 +408,55 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //NB: trattasi sempre di test del metodo execute della Facade.
     //handleResponseCheckAutolettura - RESPONSE CODE NOT 200 OR 201
-    
+    @isTest
+    private static void handleResponseCheckAutolettura_NOT200() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - handleResponseCheckAutolettura_NOT200';
+		System.debug(debugString);
+        
+        //SETUP
+        processError2 = true;
+        mySetup();
+        
+        //PREPARAZIONE ARGS
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String,String> parameters = new Map<String,String>();
+        parameters.put('requestType', 'CheckAutolettura');
+        
+        
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('method', '');//NB: PARAMETRO NON UTILIZZATO IN CODICE
+        argsMap.put('sender', myCase);
+        argsMap.put('parameters', parameters);
+        
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
+        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
+        
+        //TESTING
+        Test.startTest();
+        
+        HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
+        
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
+        
+        //ASSERTS
+        System.assertEquals('Check preliminari KO', myUpdatedCase.TecnicalPhase__c);
+        
+    }
     
     
     //handleResponseInvioLetture - RESPONSE CODE NOT 200 OR 201
@@ -450,26 +498,28 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
                     Map<String, Object> body = new Map<String, Object>();
                     body.put('errorDetails', errorDetails);
                     
-                    
                     //HTTP RESPONSE
                     response.setHeader('Content-Type', 'application/json');
                     response.setBody(JSON.serialize(body));
                     response.setStatusCode(400);
                     response.setStatus('OK');
+                    
+                } else {
+                    System.debug('myWebServiceMock - Processo normale');
+                    //PREPARING RESPONSE
+                    Map<String, Object> data = new Map<String, Object>();
+                    data.put('message', 'data fuori finestra acquisibile');
+                    
+                    Map<String, Object> body = new Map<String, Object>();
+                    body.put('data', data);
+                    
+                    //HTTP RESPONSE
+                    response.setHeader('Content-Type', 'application/json');
+                    response.setBody(JSON.serialize(body));
+                    response.setStatusCode(200);
+                    response.setStatus('OK');
+                    
                 }
-                
-                //PREPARING RESPONSE
-                Map<String, Object> data = new Map<String, Object>();
-                data.put('message', 'data fuori finestra acquisibile');
-                
-                Map<String, Object> body = new Map<String, Object>();
-                body.put('data', data);
-                
-                //HTTP RESPONSE
-                response.setHeader('Content-Type', 'application/json');
-                response.setBody(JSON.serialize(body));
-                response.setStatusCode(200);
-                response.setStatus('OK');
                 
             } else if(request.getEndpoint().equalsIgnoreCase('Callout:SendReadings')){
                 
