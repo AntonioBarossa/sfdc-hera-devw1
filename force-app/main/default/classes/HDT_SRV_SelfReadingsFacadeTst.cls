@@ -236,6 +236,15 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //ASSERTS
         System.assertEquals(null, result);
         
+        
+        //TESTING - NO CASES
+        inputParams = new HDT_WRP_GenericSapIntegration();
+        inputParams.recordId = '';
+        result = HDT_SRV_SelfReadings.generateJsonCheckAutolettura(inputParams);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
     }
     
     
@@ -252,6 +261,15 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //TESTING
         HDT_WRP_GenericSapIntegration result = HDT_SRV_SelfReadings.generateJsonInvioLetture(inputParams);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
+        
+        //TESTING - NO CASES
+        inputParams = new HDT_WRP_GenericSapIntegration();
+        inputParams.recordId = '';
+        result = HDT_SRV_SelfReadings.generateJsonInvioLetture(inputParams);
         
         //ASSERTS
         System.assertEquals(null, result);
