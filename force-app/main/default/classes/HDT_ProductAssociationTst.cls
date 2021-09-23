@@ -68,6 +68,14 @@ public class HDT_ProductAssociationTst {
 
         insert featureList;
 
+        SBQQ__ProductRule__c rule = new SBQQ__ProductRule__c();
+        rule.Name = 'ruleTest';
+        rule.SBQQ__EvaluationEvent__c = 'Always';
+        rule.SBQQ__ConditionsMet__c = 'All';
+        rule.SBQQ__Type__c = 'Selection';
+        rule.SBQQ__Scope__c = 'Product';
+        insert rule;
+
     }
 
     @isTest
@@ -91,6 +99,7 @@ public class HDT_ProductAssociationTst {
         prodWrp.CategoryFamily__c = 'A.R.E.R.A';
         String filterString = JSON.serialize(prodWrp);
         
+        Test.startTest();
         HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'insert', false, '1');
 
         //test try catch error
@@ -99,7 +108,7 @@ public class HDT_ProductAssociationTst {
 
         //test delete context
         HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'delete', false, '1');
-
+        Test.stopTest();
     }
 
     @isTest
@@ -135,6 +144,7 @@ public class HDT_ProductAssociationTst {
 
         String dmlContext = 'insert';
 
+        Test.startTest();
         //test confirm selection button
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', null, recordList, executionType, filterString, dmlContext);
@@ -175,6 +185,7 @@ public class HDT_ProductAssociationTst {
         prodOptionWrp.SBQQ__AppliedImmediately__c = false;
         productOptionObj = JSON.serialize(prodOptionWrp);
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordListForException, executionType, filterString, dmlContext);
+        Test.stopTest();
     }
 
     @isTest
@@ -229,6 +240,7 @@ public class HDT_ProductAssociationTst {
 
         String dmlContext = 'delete';
 
+        Test.startTest();
         //test confirm selection button
         //Id productOptionIdToDelete = [SELECT Id FROM SBQQ__ProductOption__c LIMIT 1].Id;
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
@@ -253,7 +265,7 @@ public class HDT_ProductAssociationTst {
         filterString = JSON.serialize(prodWrp2);
         
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', prodOptionalId, productOptionObj, recordList, executionType, filterString, dmlContext);
-
+        Test.stopTest();
     }
 
     @isTest
@@ -264,6 +276,97 @@ public class HDT_ProductAssociationTst {
     @isTest
     public static void testSendNotificationException(){
         HDT_UTL_ProductAssociation.sendCustomNotification(null);
+    }
+
+    @isTest
+    public static void runProductRuleAssociation_create(){
+
+        String productRuleId = [SELECT Id FROM SBQQ__ProductRule__c WHERE Name = 'ruleTest' LIMIT 1].Id;
+
+        Product2 prodWrp = new Product2();
+        prodWrp.Name = '';
+        prodWrp.DescriptionSAP__c = '';
+        prodWrp.ProductCode = '';
+        prodWrp.Version__c = '';
+        prodWrp.Status__c = 'In Sviluppo';
+        prodWrp.TypeOffer__c = '';
+        prodWrp.CategoryFamily__c = '';
+        String filterString = JSON.serialize(prodWrp);
+
+        //test getProductList
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ConfigurationRule__c', filterString, productRuleId, 'insert', false, '1');
+
+        //test complete filter
+        Product2 prodFilterWrp = new Product2();
+        prodFilterWrp.Name = 'template Offerta';
+        prodFilterWrp.DescriptionSAP__c = 'HERA';
+        prodFilterWrp.ProductCode = 'TEMPLATE_OFF_NON_DOM_EE';
+        prodFilterWrp.Version__c = 'v1';
+        prodFilterWrp.Status__c = 'In Sviluppo';
+        prodFilterWrp.TypeOffer__c = 'Scaffale';
+        prodFilterWrp.CategoryFamily__c = 'A.R.E.R.A';
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ConfigurationRule__c', JSON.serialize(prodFilterWrp), productRuleId, 'insert', false, '1');
+
+        //test insert with select
+        List<String> recordList = new List<String>();
+        String offerId = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
+        recordList.add(offerId);
+
+        SBQQ__ConfigurationRule__c confRuleObj = new SBQQ__ConfigurationRule__c();
+        confRuleObj.SBQQ__Active__c = true;
+        confRuleObj.SBQQ__ProductRule__c = productRuleId;
+
+        Test.startTest();
+        //test confirm selection button
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '', JSON.serialize(confRuleObj), recordList, 'select', filterString, 'insert');
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '', JSON.serialize(confRuleObj), recordList, 'filter', filterString, 'insert');
+
+        List<String> recordCompleteList = new List<String>();
+        for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale']){
+            recordCompleteList.add(p.Id);
+        }
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '', JSON.serialize(confRuleObj), recordCompleteList, 'select', filterString, 'insert');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void runProductRuleAssociation_delete(){
+
+        String productRuleId = [SELECT Id FROM SBQQ__ProductRule__c WHERE Name = 'ruleTest' LIMIT 1].Id;
+        List<SBQQ__ConfigurationRule__c> confRuleList = new List<SBQQ__ConfigurationRule__c>();
+        SBQQ__ConfigurationRule__c confRuleObj;
+
+        for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale']){
+            confRuleObj = new SBQQ__ConfigurationRule__c();
+            confRuleObj.SBQQ__Active__c = true;
+            confRuleObj.SBQQ__ProductRule__c = productRuleId;
+            confRuleObj.SBQQ__Product__c = p.Id;
+            confRuleList.add(confRuleObj);
+        }
+
+        insert confRuleList;
+
+        Product2 prodWrp = new Product2();
+        prodWrp.Name = '';
+        prodWrp.DescriptionSAP__c = '';
+        prodWrp.ProductCode = '';
+        prodWrp.Version__c = '';
+        prodWrp.Status__c = 'In Sviluppo';
+        prodWrp.TypeOffer__c = '';
+        prodWrp.CategoryFamily__c = '';
+        String filterString = JSON.serialize(prodWrp);
+
+        List<String> recordList = new List<String>();
+        recordList.add(confRuleList[0].Id);
+
+        Test.startTest();
+        //test getProductList
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ConfigurationRule__c', filterString, productRuleId, 'delete', false, '1');
+
+        //test confirm selection button
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', productRuleId, '', recordList, 'select', '', 'delete');
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', productRuleId, '', recordList, 'filter', filterString, 'delete');
+        Test.stopTest();
     }
 
 }
