@@ -568,7 +568,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
 
 
-        List<Account> listAccounts=[SELECT Id, CustomerCode__c FROM Account WHERE CustomerCode__c IN: codiciClienti WITH SECURITY_ENFORCED];
+        List<Account> listAccounts=[SELECT Id, CustomerCode__c 
+                                    FROM Account 
+                                    WHERE CustomerCode__c IN: codiciClienti 
+                                    WITH SECURITY_ENFORCED];
         Map<String, Id> accIdsPerBPcode = new Map<String, Id>();
         for(Account singleAccount: listAccounts){
             accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
