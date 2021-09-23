@@ -41,7 +41,6 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
-        System.debug('readingCase.ContractCode__c: ' + readingCase.ContractCode__c);
         System.debug('readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
         
         String readingFields = 'Id';
@@ -68,11 +67,6 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeStringField('commodity', readingCase.CommodityFormula__c);
         gen.writeFieldName('position');
         gen.writeStartArray();
-        
-        System.debug('reading.ReadingRegisterMeter__c: ' + reading.ReadingRegisterMeter__c);
-        System.debug('reading.ReadingValueMeter__c: ' + reading.ReadingValueMeter__c);
-        System.debug('reading.ReadingValueCorrector__c: ' + reading.ReadingValueCorrector__c);
-        System.debug('reading.ReadingRegisterCorrector__c: ' + reading.ReadingRegisterCorrector__c);
         
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
