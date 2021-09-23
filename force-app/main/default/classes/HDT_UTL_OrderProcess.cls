@@ -736,6 +736,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
     // FINE @Picchiri Credit check Date 15.06.21
 
+    public static void updatePhaseForFirm(List<Order> newListOrder){
+        for(Order ord1 : newListOrder){
+            if(ord1.phase__c == 'Documentazione da firmare' && ord1.DocumentalPhase__c == 'Plico firmato'){
+                ord1.phase__c = 'Documentazione Gestita';
+                ord1.status = 'Activated';
+                ord1.SignedDate__c = date.today();
+            } 
+        }
+    }
+
+
+
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
 		Order orderNew = orderList[0];
 		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
