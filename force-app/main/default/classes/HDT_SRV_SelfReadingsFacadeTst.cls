@@ -37,7 +37,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
         if(isCaseWithOrigin){
             Case myCase = caseList[0];
-            myCase.Origin = 'Email';
+            myCase.Origin = 'Sportello';
         }
         insert caseList;
         
@@ -501,7 +501,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
                     System.debug('myWebServiceMock - Introduzione errore manuale');
                     //PREPARING RESPONSE
                     Map<String, Object> myResponseMap = new Map<String, Object>();
-                    myResponseMap.put('message', 'Error Message');
+                    myResponseMap.put('message', 'data fuori finestra (non acquisibile)');
                     
                     List<Object> errorDetails = new List<Object>{myResponseMap};
                     
