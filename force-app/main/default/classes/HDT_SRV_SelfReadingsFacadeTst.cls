@@ -416,7 +416,11 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
     }
     
-    //NB: trattasi sempre di test del metodo execute della Facade.
+    
+    
+    
+    //NB: I SEGUENTI SONO COMUNQUE TEST DI EXECUTE DELLA FACADE
+    
     //handleResponseCheckAutolettura - RESPONSE CODE NOT 200 OR 201
     @isTest
     private static void handleResponseCheckAutolettura_NOT200() {
@@ -502,7 +506,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
                     System.debug('myWebServiceMock - Introduzione errore manuale');
                     //PREPARING RESPONSE
                     Map<String, Object> myResponseMap = new Map<String, Object>();
-                    myResponseMap.put('message', 'data fuori finestra (non acquisibile)');
+                    String myError = 'data fuori finestra (non acquisibile) - registri incompleti';
+                    myResponseMap.put('message', myError);
                     
                     List<Object> errorDetails = new List<Object>{myResponseMap};
                     
