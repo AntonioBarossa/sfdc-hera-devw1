@@ -137,14 +137,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 filtered.add(o1);
             }
 
-            if (o1.Phase__c == 'In attesa validazione') {
+            if (o1.Phase__c == 'In attesa validazione'  && o1.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                     phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
 
-            if (o1.Phase__c == 'Da Inviare') {
+            if (o1.Phase__c == 'Da Inviare'  && o1.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                    // phase__c = 'In attesa validazione'

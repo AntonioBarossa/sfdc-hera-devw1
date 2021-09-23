@@ -480,7 +480,8 @@ public inherited sharing class HDT_QR_Order {
             Instance326__c,
             DocumentLow80__c,
             DistributorFormula__c,
-            VASType__c
+            VASType__c,
+            DateComfortCall__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
