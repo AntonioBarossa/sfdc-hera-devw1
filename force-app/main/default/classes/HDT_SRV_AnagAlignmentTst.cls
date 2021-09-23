@@ -408,6 +408,28 @@ public class HDT_SRV_AnagAlignmentTst {
         
     }
 
+    @IsTest
+    static void testSubmitRequestFlow(){
+        
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock());
+
+        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs inputs = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs();
+        inputs.contractCode = 'codiceContratto';
+        inputs.pod = 'podProva';
+
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs> request = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs>();
+        request.add(inputs);
+
+        List<String> resultsList = HDT_WS_ArricchimentoDatiTemp.submitRequestFlow(request);
+
+        System.assert(resultsList.size() > 0, 'resultsList.size() == 0 or resultsList == null');
+
+        Test.stopTest();
+        
+    }
+
     public class HDT_SRV_AnagAlignmentTstMock implements HttpCalloutMock {
         // Implement this interface method
         public HTTPResponse respond(HTTPRequest request) {
