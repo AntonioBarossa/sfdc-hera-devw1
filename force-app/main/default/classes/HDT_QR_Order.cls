@@ -475,7 +475,9 @@ public inherited sharing class HDT_QR_Order {
             ChamberCommerceRegistration__c,
             Instance326__c,
             DocumentLow80__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            QualityCall__c,
+            DateComfortCall__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
