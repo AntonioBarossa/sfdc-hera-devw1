@@ -6,8 +6,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
-    private static Boolean throwException1 = false;
-    private static Boolean throwException2 = false;
+    private static Boolean processError1 = false;
+    private static Boolean processError2 = false;
     private static String myCommodity = 'Gas';
     private static Boolean isMeterCorrector = true;
     
@@ -270,7 +270,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
 		System.debug(debugString);
         
         //SETUP
-        throwException1 = true;
+        processError1 = true;
         mySetup();
         
         //PREPARAZIONE ARGS
@@ -406,6 +406,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
     }
     
+    //NB: trattasi sempre di test del metodo execute della Facade.
     //handleResponseCheckAutolettura - RESPONSE CODE NOT 200 OR 201
     
     
@@ -428,10 +429,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
             System.debug('myWebServiceMock - respond');
             HttpResponse response = new HttpResponse();
             
-            if(throwException1){
+            if(processError1){
                 throw new AuraHandledException('Fake Exception for Tests - Exception 1');
-            } else if(throwException2){
-                throw new AuraHandledException('Fake Exception for Tests - Exception 2');
             }
             
             //CheckAutolettura
@@ -439,6 +438,25 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
                 
                 //DEBUG
                 System.debug('myWebServiceMock - SelfReadingsCheck');
+                
+                if(processError2){
+                    System.debug('myWebServiceMock - Introduzione errore manuale');
+                    //PREPARING RESPONSE
+                    Map<String, Object> myResponseMap = new Map<String, Object>();
+                    myResponseMap.put('message', 'Error Message');
+                    
+                    List<Object> errorDetails = new List<Object>{myResponseMap};
+                    
+                    Map<String, Object> body = new Map<String, Object>();
+                    body.put('errorDetails', errorDetails);
+                    
+                    
+                    //HTTP RESPONSE
+                    response.setHeader('Content-Type', 'application/json');
+                    response.setBody(JSON.serialize(body));
+                    response.setStatusCode(400);
+                    response.setStatus('OK');
+                }
                 
                 //PREPARING RESPONSE
                 Map<String, Object> data = new Map<String, Object>();

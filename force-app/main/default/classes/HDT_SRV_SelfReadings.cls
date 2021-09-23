@@ -363,10 +363,10 @@ public with sharing class HDT_SRV_SelfReadings {
     // Verifica se per il dato Canale l'errore deve chiudere il Case.
     private static Boolean isClosingError(String msg, String origin) {
         if (String.isBlank(origin) || String.isBlank(msg)) {
-            return False;
+            return false;
         }
 
-        Boolean closeCase = False;
+        Boolean closeCase = false;
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
                 closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
