@@ -37,7 +37,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
         if(isCaseWithOrigin){
             Case myCase = caseList[0];
-            myCase.Origin = 'Origin_Test';
+            myCase.Origin = 'Email';
         }
         insert caseList;
         
