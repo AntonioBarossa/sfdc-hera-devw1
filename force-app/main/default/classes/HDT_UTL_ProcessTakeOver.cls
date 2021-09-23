@@ -143,18 +143,13 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     public override void registryCreation(){
         listUpdateGeneric = new List<SObject>();
         verifyAccountAddress();
+        HDT_UTL_Account.makeRequest(currentProcess.currentAccount,currentProcess.currentPrimaryContact); 
         if (currentProcess.currentAccount!=null &&currentProcess.currentAccount.Id==null ) {
             // solo se non esiste
             System.debug('Creazione Account');
             String expectedNewName = String.isBlank( currentProcess.currentAccount.FirstName__c) ?  currentProcess.currentAccount.LastName__c :  currentProcess.currentAccount.FirstName__c + ' ' +  currentProcess.currentAccount.LastName__c;
             currentProcess.currentAccount.Name=expectedNewName;
             //  currentProcess.currentAccount.BillingIsAddressVerified__c=true; 
-            System.debug('Silos : '+currentProcess.currentAccount.CompanyOwner__c);
-            System.debug('Marcatura : '+currentProcess.currentAccount.CustomerMarking__c);
-            System.debug('Categoria : '+currentProcess.currentAccount.Category__c);
-            System.debug('Partita iva : '+currentProcess.currentAccount.VATNumber__c);
-            System.debug('BillingIsAddressVerified__c : '+currentProcess.currentAccount.BillingIsAddressVerified__c);
-            System.debug('IsWrongFiscalData__c : '+currentProcess.currentAccount.IsWrongFiscalData__c);
             insert currentProcess.currentAccount;
             currentProcess.currentPrimaryContact.AccountId=currentProcess.currentAccount.id;
             insert currentProcess.currentPrimaryContact;   
