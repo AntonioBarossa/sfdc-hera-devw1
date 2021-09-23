@@ -471,6 +471,7 @@ public inherited sharing class HDT_QR_Order {
             AutorizationVolturaThirdTrader__c,
             CILegalRepresentative__c,
             CIAccoutn__c,
+            sale__r.isTransition__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
             Instance326__c,

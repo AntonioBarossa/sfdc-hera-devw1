@@ -277,6 +277,8 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Dati discordanti'{
                                 ord.phase__c = mapRequestFields.get('FASE');
+                                ord.DiscardReason__c = mapRequestFields.get('TESTO_ERRR');
+                                
                             }
                             when 'Completata' {
 
