@@ -149,6 +149,31 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>NoteAnnullamentoOrder</name>
+        <label>NoteAnnullamentoOrder</label>
+        <locationX>3932</locationX>
+        <locationY>1396</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assegna_Motivo_0_0_0</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cancellationNote</name>
+            <value>
+                <elementReference>GetOrderAggiornato.CancellationNote__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>Annullamento</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
@@ -414,6 +439,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>DefaultReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetOrderAggiornato.CancellationNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteAnnullamentoOrder.cancellationNote</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1386,11 +1418,11 @@
     <recordLookups>
         <name>GetOrderAggiornato</name>
         <label>GetOrderAggiornato</label>
-        <locationX>3872</locationX>
-        <locationY>1302</locationY>
+        <locationX>4081</locationX>
+        <locationY>1357</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assegna_Motivo_0_0_0</targetReference>
+            <targetReference>NoteAnnullamentoOrder</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
