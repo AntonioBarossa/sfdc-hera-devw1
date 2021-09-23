@@ -9,6 +9,8 @@
 		<members>HDT_SRV_MassiveLoaderRequest</members>
 		<members>HDT_UTL_ProcessExecution</members>
 		<members>HDT_UTL_ProcessTakeOver</members>
+		<members>HDT_SCH_ProcessRequestItem</members>
+		
 		<name>ApexClass</name>
 	</types>
 	<types>
