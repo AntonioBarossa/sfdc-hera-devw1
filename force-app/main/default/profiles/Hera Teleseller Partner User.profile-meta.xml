@@ -464,6 +464,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.isDatoDiscordante__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.isPreDocumentationToSend__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1440,6 +1445,16 @@
      <fieldPermissions>
         <editable>true</editable>
         <field>Sale__c.isTransition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.AreaManager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AgentMatrix__c.AreaManager__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -291,8 +291,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c');
+        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
@@ -309,6 +309,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommercialId__c = sale.CommercialId__c;
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
+        orderToUpdate.AreaManager__c = sale.AreaManager__c;
 
         orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
         orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
@@ -330,6 +331,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProductCode__c = quoteLineList[0].SBQQ__Product__r.ProductCode;
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
             orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
+            orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
         }
 
     }
