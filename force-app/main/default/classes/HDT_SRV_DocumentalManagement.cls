@@ -340,8 +340,8 @@ public class HDT_SRV_DocumentalManagement{
 				listOfRadio.addAll(requestBody.listOfRadioGroup);
 				System.debug(requestBody.listOfRadioGroup);
 			}
-			if(requestBody.listOfData != null && requestBody.listOfData.size()>0){
-				listOfData.addAll(requestBody.listOfData);
+			if(requestBody.listOfDataText != null && requestBody.listOfDataText.size()>0){
+				listOfData.addAll(requestBody.listOfDataText);
 			}
 			
 			if(record.getSobjectType() == Case.getSobjectType()){
