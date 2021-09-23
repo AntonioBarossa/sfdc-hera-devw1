@@ -7,6 +7,8 @@
 		<members>HDT_QR_MassiveLoaderProcess</members>
 		<members>HDT_QR_MassiveLoaderRequest</members>
 		<members>HDT_SRV_MassiveLoaderRequest</members>
+		<members>HDT_UTL_ProcessExecution</members>
+		<members>HDT_UTL_ProcessTakeOver</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
