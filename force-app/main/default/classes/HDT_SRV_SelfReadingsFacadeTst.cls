@@ -426,6 +426,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //SETUP
         processError2 = true;
+        isCaseWithOrigin = true;
         mySetup();
         
         //PREPARAZIONE ARGS
