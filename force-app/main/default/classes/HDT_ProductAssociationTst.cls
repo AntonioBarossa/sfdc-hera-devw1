@@ -137,7 +137,7 @@ public class HDT_ProductAssociationTst {
 
         //test confirm selection button
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
-
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', null, recordList, executionType, filterString, dmlContext);
         //**** */
         for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' AND Name LIKE '%offertaExample%']){
             recordList.add(p.Id);
@@ -164,6 +164,17 @@ public class HDT_ProductAssociationTst {
         //test exception
         recordList.add('$%&%&');
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '***', '%$&', recordList, '%$&', '%$&', 'insert');
+
+        //test exception insert error AND(TEXT(SBQQ__AppliedImmediatelyContext__c) != null, SBQQ__AppliedImmediately__c == false)
+        
+        List<String> recordListForException = new List<String>();
+        String offerIdForException = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
+        recordListForException.add(offerIdForException);
+
+        prodOptionWrp.SBQQ__AppliedImmediatelyContext__c = 'Always';
+        prodOptionWrp.SBQQ__AppliedImmediately__c = false;
+        productOptionObj = JSON.serialize(prodOptionWrp);
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordListForException, executionType, filterString, dmlContext);
     }
 
     @isTest

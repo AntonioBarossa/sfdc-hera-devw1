@@ -73,6 +73,12 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
+        if(String.isEmpty(productOptionObj)){
+            respRunBatchObj.success = false;
+            respRunBatchObj.message = 'Errore durante l\'elaborazione del prodotto opzione configurato';
+            return respRunBatchObj;
+        }
+
         SBQQ__ProductOption__c productOptionToClone = (SBQQ__ProductOption__c)JSON.deserialize(productOptionObj, SBQQ__ProductOption__c.class);
 
         switch on executionType {

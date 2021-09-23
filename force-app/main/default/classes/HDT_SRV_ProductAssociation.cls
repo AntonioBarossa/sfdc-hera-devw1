@@ -145,7 +145,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
         
-        if(productOptionToClone != null){
+        //if(productOptionToClone != null){
             SBQQ__ProductOption__c newRecord;
             for(String productId : recordList){
                 newRecord = new SBQQ__ProductOption__c();
@@ -175,10 +175,10 @@ public inherited sharing class HDT_SRV_ProductAssociation {
                 insertResult.success = true;
                 //insertResult.message = 'No product option record found';
             }
-        } else {
-            insertResult.success = false;
-            insertResult.message = 'No product option record found';
-        }
+        //} else {
+        //    insertResult.success = false;
+        //    insertResult.message = 'No product option record found';
+        //}
 
         return insertResult;
 
@@ -198,7 +198,6 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
                     HDT_WRP_ProductAssociation.HDT_WRP_LineError lineError = new HDT_WRP_ProductAssociation.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.rowId = itemList[n].SBQQ__ConfiguredSKU__c;
@@ -221,14 +220,14 @@ public inherited sharing class HDT_SRV_ProductAssociation {
  
         if(objRes.isDeletable()){
 
-            List<Database.DeleteResult> deleteResults = Database.delete(productOptionToDelete, false);
+            List<Database.DeleteResult> deleteResults;
+            deleteResults = Database.delete(productOptionToDelete, false);
 
             for(Integer n=0; n<deleteResults.size(); n++){
                 Database.DeleteResult dr = deleteResults[n];
 
                 if (!dr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
                     HDT_WRP_ProductAssociation.HDT_WRP_LineError lineError = new HDT_WRP_ProductAssociation.HDT_WRP_LineError();
                     for(Database.Error err : dr.getErrors()) {
                         lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';

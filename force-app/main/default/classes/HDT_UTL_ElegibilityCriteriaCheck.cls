@@ -30,7 +30,8 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
         String controllingField = 'Id';
         String whereString = ' WHERE ' + controllingField + ' =\''+ contractId + '\'';
         // TODO DA FIXARE: oltre al product name va recuperato anche il codice prodotto e il codice versione da usare nella query sotto su EligibilityCriteria__c
-        String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
+        //String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix --
+        String relatedQueryString = ',(SELECT SBQQ__Product__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';//montors fix ++
         queryString = queryString + relatedQueryString + fromString + whereString; 
         System.debug('contract query: ' + queryString);
 
@@ -42,14 +43,16 @@ public with sharing class HDT_UTL_ElegibilityCriteriaCheck {
 
         Contract c = (Contract) contracts[0];
         List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-        String productName = subscriptions[0].SBQQ__ProductName__c;
+        //String productName = subscriptions[0].SBQQ__ProductName__c;//montors fix --
+        String productId = subscriptions[0].SBQQ__Product__c;//montors fix ++
 
         // Query oggetto criteri eleggibilità
         objectName = 'EligibilityCriteria__c';
         queryFields = 'Id,BillSendingMethod__c,UseCategory__c,ResidentDeliveryAddress__c';
         queryString = 'SELECT ' + queryFields;
         fromString = ' FROM '+ objectName;
-        whereString = ' WHERE ProductName__c =\''+ productName + '\''; // TODO DA FIXARE: la query va fatta per codice prodotto + versione prodotto, che vanno recuperati dalla query precedente sul Contract.
+        //whereString = ' WHERE ProductName__c =\''+ productName + '\''; // TODO DA FIXARE: la query va fatta per codice prodotto + versione prodotto, che vanno recuperati dalla query precedente sul Contract.
+        whereString = ' WHERE Product__c =\''+ productId + '\'';//montors fix ++
         queryString = queryString + fromString + whereString; 
         System.debug('criteria query: ' + queryString);
 

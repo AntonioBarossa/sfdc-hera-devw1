@@ -87,33 +87,28 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
         List<SBQQ__ConfigurationRule__c> configurationRuleList = new List<SBQQ__ConfigurationRule__c>();
         
-        if(configurationRuleToClone != null){
-            SBQQ__ConfigurationRule__c newRecord;
-            for(String productId : recordList){
-                newRecord = new SBQQ__ConfigurationRule__c();
-                newRecord = configurationRuleToClone.clone(false, true, false, false);
-                newRecord.SBQQ__Product__c = productId;
+        SBQQ__ConfigurationRule__c newRecord;
+        for(String productId : recordList){
+            newRecord = new SBQQ__ConfigurationRule__c();
+            newRecord = configurationRuleToClone.clone(false, true, false, false);
+            newRecord.SBQQ__Product__c = productId;
 
-                //if(productIdFeatureIdMap.containsKey(productId)){
-                //    newRecord.SBQQ__ProductFeature__c = productIdFeatureIdMap.get(productId);
-                //}
+            //if(productIdFeatureIdMap.containsKey(productId)){
+            //    newRecord.SBQQ__ProductFeature__c = productIdFeatureIdMap.get(productId);
+            //}
 
-                configurationRuleList.add(newRecord);
-            }
-            System.debug('>>> record to insert: ' + String.valueOf(configurationRuleList));
-            insertResult.errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
-            insertResult.errorData = databaseInsert(configurationRuleList, insertResult.errorData);
+            configurationRuleList.add(newRecord);
+        }
+        System.debug('>>> record to insert: ' + String.valueOf(configurationRuleList));
+        insertResult.errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
+        insertResult.errorData = databaseInsert(configurationRuleList, insertResult.errorData);
 
-            if(insertResult.errorData.size() > 0){
-                insertResult.success = false;
-                insertResult.message = 'Error during product option insert';
-            } else {
-                insertResult.success = true;
-                //insertResult.message = 'No product option record found';
-            }
-        } else {
+        if(insertResult.errorData.size() > 0){
             insertResult.success = false;
-            insertResult.message = 'No product option record found';
+            insertResult.message = 'Error during product option insert';
+        } else {
+            insertResult.success = true;
+            //insertResult.message = 'No product option record found';
         }
 
         return insertResult;

@@ -73,6 +73,12 @@ public with sharing class HDT_UTL_RuleAssociation {
 
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
+        if(String.isEmpty(confRuleObj)){
+            respRunBatchObj.success = false;
+            respRunBatchObj.message = 'Errore durante l\'elaborazione della regola configurata';
+            return respRunBatchObj;
+        }
+
         SBQQ__ConfigurationRule__c configurationRuleToClone = (SBQQ__ConfigurationRule__c)JSON.deserialize(confRuleObj, SBQQ__ConfigurationRule__c.class);
 
         switch on executionType {
