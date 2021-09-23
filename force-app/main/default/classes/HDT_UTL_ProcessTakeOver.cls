@@ -144,7 +144,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         listUpdateGeneric = new List<SObject>();
         verifyAccountAddress();
      
-        HDT_UTL_Account.makeRequest(currentProcess.currentAccount,currentProcess.currentPrimaryContact); 
+        HDT_UTL_Account.massiveRequest(currentProcess.currentAccount,currentProcess.currentPrimaryContact); 
         if (currentProcess.currentAccount!=null &&currentProcess.currentAccount.Id==null ) {
             // solo se non esiste
             System.debug('Creazione Account');
