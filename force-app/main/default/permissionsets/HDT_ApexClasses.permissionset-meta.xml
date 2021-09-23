@@ -2293,10 +2293,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_WS_InstallmentPlans</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_WS_InvioNumerazioni</apexClass>
         <enabled>true</enabled>
     </classAccesses>

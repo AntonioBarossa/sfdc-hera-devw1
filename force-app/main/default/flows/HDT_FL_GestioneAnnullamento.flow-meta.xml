@@ -149,6 +149,31 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>NoteAnnullamentoOrder</name>
+        <label>NoteAnnullamentoOrder</label>
+        <locationX>3414</locationX>
+        <locationY>2138</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssegnaNoteAnnullamento</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cancellationNote</name>
+            <value>
+                <elementReference>GetOrderAggiornato_0.CancellationNote__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>Annullamento</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
@@ -250,28 +275,28 @@
         <locationX>4510</locationX>
         <locationY>3383</locationY>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Status</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.NotCancellable__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -346,7 +371,7 @@
         <locationX>3161</locationX>
         <locationY>2420</locationY>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.PreviousPhase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetOrder.Phase__c</elementReference>
@@ -581,6 +606,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaNoteAnnullamento</name>
+        <label>AssegnaNoteAnnullamento</label>
+        <locationX>3494</locationX>
+        <locationY>2261</locationY>
+        <assignmentItems>
+            <assignToReference>GetOrderAggiornato_0.CancellationNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteAnnullamentoOrder.cancellationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InviataHeroku_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>1467</locationX>
@@ -652,28 +693,28 @@
         <locationX>3996</locationX>
         <locationY>3237</locationY>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Status</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.NotCancellable__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -702,14 +743,14 @@
         <locationX>3403</locationX>
         <locationY>2813</locationY>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>OrderCancellationPhase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.NotCancellable__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -722,24 +763,24 @@
     <assignments>
         <name>Ripensato</name>
         <label>Ripensato</label>
-        <locationX>4214</locationX>
+        <locationX>4213</locationX>
         <locationY>3312</locationY>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Ripensato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.Status</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrderAggiornato.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -899,14 +940,14 @@
             <name>Inviata_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetOrderAggiornato.HerokuPracticeCode__c</leftValueReference>
+                <leftValueReference>GetOrderAggiornato_0.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>GetOrderAggiornato.Phase__c</leftValueReference>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Amm. Precheck OK SII</stringValue>
@@ -1386,11 +1427,32 @@
     <recordLookups>
         <name>GetOrderAggiornato</name>
         <label>GetOrderAggiornato</label>
-        <locationX>3872</locationX>
-        <locationY>1302</locationY>
+        <locationX>4081</locationX>
+        <locationY>1357</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Motivo_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOrderAggiornato_0</name>
+        <label>GetOrderAggiornato</label>
+        <locationX>3781</locationX>
+        <locationY>2170</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>NoteAnnullamentoOrder</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1514,7 +1576,7 @@
         <locationX>3773</locationX>
         <locationY>2038</locationY>
         <connector>
-            <targetReference>InviataHeroku_0</targetReference>
+            <targetReference>GetOrderAggiornato_0</targetReference>
         </connector>
         <inputReference>GetOrderAggiornato</inputReference>
     </recordUpdates>
@@ -1590,7 +1652,7 @@
         <label>Aggiorna Order</label>
         <locationX>3587</locationX>
         <locationY>3513</locationY>
-        <inputReference>GetOrderAggiornato</inputReference>
+        <inputReference>GetOrderAggiornato_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Ripristino_Fase</name>

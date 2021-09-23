@@ -228,9 +228,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(newOrdersList);
         Boolean ricalculateDate = false;
         //IsSequanzialized__c
+        Map<String,Order> mapOldOrder = new Map<String,Order>();
+        for (Order oldOrder : oldOrdersList) {
+            mapOldOrder.put(oldOrder.id,oldOrder);
+        }
         for (Order newOrder : newOrdersList) {
-            for (Order oldOrder : oldOrdersList) {
-
+            //for (Order oldOrder : oldOrdersList) {
+            Order oldOrder = mapOldOrder.get(newOrder.id);
+            if(oldOrder != null){
                 if(newOrder.id == oldOrder.id 
                     && newOrder.Status == 'In Lavorazione'
                     && newOrder.ProcessType__c != null
@@ -253,8 +258,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     orderToUpdate.id = newOrder.Id;
                     if(mapAccountRes.get(newOrder.AccountId)){                                        
                         orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                    orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                        //orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                        //orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
                     }
                     if(newOrder.ProcessType__c != 'Cambio Offerta'){ // Solo per Cambio Offerta
                         orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
