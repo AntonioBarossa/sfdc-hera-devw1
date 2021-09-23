@@ -7747,6 +7747,50 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
