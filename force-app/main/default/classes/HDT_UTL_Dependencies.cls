@@ -191,7 +191,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                 }
             }
 
-            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c '
+            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
                                     + 'FROM ServiceRequest__c '
                                     + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
                                     + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
