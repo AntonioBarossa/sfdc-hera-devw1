@@ -13,6 +13,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         ];
         return docList;
     }
+    
     public static List<Document> getDocumentByContext(String context){
         List<Document> docList = [
             SELECT Id, Name, Body

@@ -18,7 +18,7 @@
 &quot;lookupObject&quot;: [
 {
 &quot;objectName&quot;: &quot;Account&quot;,
-&quot;fields&quot;: &quot;Segment__c, CustomerCode__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity, BillingPostalCode, ShippingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, VATGroup__c, VATGroupStartDate__c,IsVATGroupJoined__c,VATGroupEndDate__c,BillingStreetName__c,CustomerType__c&quot;,
+&quot;fields&quot;: &quot;Segment__c, CustomerCode__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity, BillingPostalCode, BillingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, VATGroup__c, VATGroupStartDate__c,IsVATGroupJoined__c,VATGroupEndDate__c,BillingStreetName__c,CustomerType__c&quot;,
 &quot;relation&quot;: &quot;Account&quot;
 },
 {

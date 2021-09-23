@@ -4,7 +4,7 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
     @testSetup
     static void setupData() {
 
-        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(2, false);
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(3, false);
         productList[0].ProductCode = 'pCode01';
         productList[0].Version__c = '01V1';
         productList[0].Name = 'ExampleProduct';
@@ -14,6 +14,13 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         productList[1].Version__c = '01V1';
         productList[1].Name = 'ExampleProduct2';
         productList[1].Status__c = 'In Sviluppo';
+
+        productList[2].ProductCode = 'pCode03';
+        productList[2].Version__c = '01V1';
+        productList[2].Name = 'ExampleProduct3';
+        productList[2].Status__c = 'Vendibile';
+        productList[2].Family = Label.HDT_ProductFamilyTrigger;
+
 
         insert productList;
 
@@ -119,6 +126,24 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
 
     }
 
+    @isTest
+    static void saveEligibilityCriteriaHandleThrownException(){
+
+        Test.startTest();
+
+        try {
+            
+            HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse criteriaToSave = HDT_LC_EligibilityCriteriaController.saveEligibilityCriteria(null, null, null);
+
+        } catch (Exception e) {
+
+            System.assertNotEquals(null, e.getMessage(), 'Exception expected');
+            
+        }
+
+        Test.stopTest();
+
+    }
 
     @isTest
     static void getExistingCriteria(){
@@ -153,6 +178,89 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
 
         System.assertEquals(false, criteriaRecord.success, 'success != false');
         System.assert(Label.HDT_EligCriteria_ProductType.equals(criteriaRecord.message), 'message != Label.HDT_EligCriteria_ProductType');
+
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void getExistingCriteriaWithProductWithoutCrit(){
+
+        Product2 p = [
+            SELECT Id, Status__c, ProductCode, Version__c, StartDate__c, EndDate__c 
+            FROM Product2 WHERE ProductCode = 'pCode03'
+            LIMIT 1
+        ];
+
+        List<RateTemplate__c> rateList = new List<RateTemplate__c>();
+        RateTemplate__c rateTemplate = new RateTemplate__c(Name = 'EVVUD', ContractTemplate__c = 'ZELE_DOMES', ServiceProduct__c = 'ELE_DOMES', Visibile__c = true);
+        rateList.add(rateTemplate);
+        insert rateList;
+
+        TechnicalOffer__c technicalOffer = new TechnicalOffer__c();
+        technicalOffer.Name = p.ProductCode + ' [' + p.Version__c + '] [EVVUD]';
+        technicalOffer.NameExternalId__c = technicalOffer.Name;
+        technicalOffer.Product__c = p.Id;
+        technicalOffer.RateCategory__c = rateList[0].Id;
+        technicalOffer.SapCode__c = '1010';
+        technicalOffer.Status__c = 'Status OK';
+        insert technicalOffer;
+
+        List<TechnicalOfferItem__c> techOffeItems = new List<TechnicalOfferItem__c>();
+        TechnicalOfferItem__c tecOffItem = new TechnicalOfferItem__c();
+        tecOffItem.TechnicalOffer__c = technicalOffer.Id;
+        tecOffItem.Type__c = 'PDISCNT';
+        tecOffItem.Definition__c = 'DESCR ES_ADG_GO';
+        tecOffItem.G__c = false;
+        tecOffItem.V__c = false;
+        tecOffItem.M__c = false;
+        tecOffItem.S__c = null;
+        tecOffItem.Operand__c = 'ES_ADG_GO';
+        tecOffItem.FareType__c = 'TEST';
+        tecOffItem.FareTypeValue__c = 'TEST';
+        tecOffItem.InfoGroup__c = 'TEST';
+        tecOffItem.InfoGroupValue__c = 'TEST';
+        tecOffItem.NumericValue__c = '0.00001';
+        tecOffItem.Flag__c = false;
+        tecOffItem.PriceCode__c = 'TEST';
+        tecOffItem.PriceCodeValue__c = 'TEST';
+        tecOffItem.DiscountCode__c = 'TEST';
+        tecOffItem.DiscountCodeValue__c = 'TEST';
+        tecOffItem.StringValue__c = 'TEST';
+        techOffeItems.add(tecOffItem);
+        insert techOffeItems;
+
+        p.StartDate__c = Date.today().addDays(1);
+        p.EndDate__c = Date.today().addDays(2);
+        p.Status__c = Label.HDT_Confirmed;
+        update p;
+
+        Test.startTest();
+
+        HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion criteriaRecord = HDT_LC_EligibilityCriteriaController.getExistingCriteria(p.Id);
+
+        System.assertEquals(false, criteriaRecord.success, 'success != false');
+        System.assert(Label.HDT_EligCriteria_ProdStatus.equals(criteriaRecord.message), 'message != Label.HDT_EligCriteria_ProdStatus');
+
+        Test.stopTest();
+
+    }
+
+
+    @isTest
+    static void getExistingCriteriaHandleThrownException(){
+
+        Test.startTest();
+
+        try {
+            
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion criteriaRecord = HDT_LC_EligibilityCriteriaController.getExistingCriteria(null);
+
+        } catch (Exception e) {
+            
+            System.assertNotEquals(null, e.getMessage(), 'Exception expected');
+
+        }
 
         Test.stopTest();
 
@@ -195,6 +303,42 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         String s = HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord(criteria.Id, criteria.Product__c);
 
         System.assert(!String.isBlank(s), 'Si è verificato un errore in fase di clonazione dell\' Eligibility Criteria');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    static void cloneEligibilityCriteriaRecordWithEligibleForAllCities(){
+
+        EligibilityCriteria__c criteria = [
+            SELECT Id, Product__c
+            FROM EligibilityCriteria__c WHERE EligibleForAllCities__c = true
+            LIMIT 1
+        ];
+
+        Test.startTest();
+
+        String s = HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord(criteria.Id, criteria.Product__c);
+
+        System.assert(!String.isBlank(s), 'Si è verificato un errore in fase di clonazione dell\' Eligibility Criteria');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    static void cloneEligibilityCriteriaRecordHandleThrownException(){
+
+        Test.startTest();
+
+        try {
+
+            String s = HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord(null, null);
+            
+        } catch (AuraHandledException e) {
+            
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+
+        }
 
         Test.stopTest();
     }

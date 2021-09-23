@@ -1,39 +1,67 @@
 public class HDT_SRV_DocumentalManagement{
-	 
+	
 	public static String generateRequest(String recordId, String context, String formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generateRequest';
+		System.debug(debugString);
+		
 		String payload = '';
 		String body = '';
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driver = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
 		Map<String,Object> driverPayloadMap = new Map<String,Object>();
 		List<Map<String,Object>> driverPayloadListMap = new List<Map<String,Object>>();
+		
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
+		System.debug(debugString + ' - Superato blocco 1');
+		
+		//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver3');
+		
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
+		System.debug(debugString + ' - Superato blocco 2');
+		
+		//Viene estratto un Custom Metadata apposito identificato dal documentalContext. 
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
-		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
+		
+		//Formula una serie di query Strings dove vengono estratti l'oggetto interessato dal processo e numerosi Childs di varia natura, secondo quanto indicato nei Custom Metadata
+		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig, recordId); 
+		
+		//Esegue le query che ha formulato nel passaggio precedente
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
-		List<Map<String,List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList,documentalContext);
-		formParamsMap.put('Contesto',context);
+		
+		//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
+		List<Map<String, List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList, documentalContext);
+		formParamsMap.put('Contesto', context);
+		System.debug(debugString + ' - Superato blocco 3');
+		
+		//sub-processing della lista di mappe realizzata al punto precedente.
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
-			driver = generateDriver(recordObjectsListMap[i], driverStructure,formParamsMap);
-			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
+			driver = generateDriver(recordObjectsListMap[i], driverStructure, formParamsMap);
+			payload = generatePayload(recordObjectsListMap[i], payloadStructure, formParamsMap);
+			
 			if(context.equalsIgnoreCase('EC')){
 				payload += generatePayloadEstrattoConto(formParamsMap);
 			}else if(context.equalsIgnoreCase('GC')){
 				payload += generatePayloadGestioneCredito(formParamsMap);
 			}
+			
 			Blob payloadBlob = Blob.valueOf(payload);
 			payload = EncodingUtil.base64Encode(payloadBlob);
 			System.debug('Paylod ' + payload);
+			
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
-		body = composeJson(recordId, driverPayloadListMap,formParamsMap,recordObjectsListMap[0]);
+		System.debug(debugString + ' - Superato blocco 4');
+		
+		body = composeJson(recordId, driverPayloadListMap, formParamsMap, recordObjectsListMap[0]);
 		System.debug('Body ' + body);
+		
 		return body;
 	}
 
@@ -207,9 +235,12 @@ public class HDT_SRV_DocumentalManagement{
 
 	@future(callout=true)
 	public static void executeCalloutRequestFuture(String body, String context){
+		
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		
 		manageResponse(documentalResponse, context);
+		
 	}
 	
 	public static HDT_WRP_DocumentalResponse executeCalloutRequest(String body,String context){
@@ -328,6 +359,7 @@ public class HDT_SRV_DocumentalManagement{
 			}else {
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');					
+					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
 				}else{
 					//Che fase documentale settare?			
 				}
@@ -345,6 +377,24 @@ public class HDT_SRV_DocumentalManagement{
 			String cluster = (String)record.get('Cluster__c');
 			Id recordId = (Id)record.get('Id');
 			HDT_UTL_DocumentalManagement.createDocumentalActivityForError(requestBody.outcomeDescription, recordId, requestBody.envelopeId, record);
+		}
+	}
+
+	public static void createIntesaDocumentalActivity(SObject parentRecord,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody,String transactionId){
+		if(parentRecord != null){
+			String status = requestBody.status;
+			if(status.equalsIgnoreCase('completed')){
+				DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(parentRecord,transactionId);
+				if (documentalActivity != null){
+					documentalActivity.ReturnDate__c = Date.today();
+					documentalActivity.ActivityType__c = 'Documentazione completa';
+					try {
+						HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+					} catch (Exception ex) {
+						System.debug('Errore DML: ' + ex.getMessage());
+					}
+				}
+			}
 		}
 	}
 
@@ -439,14 +489,18 @@ public class HDT_SRV_DocumentalManagement{
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
+			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
 			}
+			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
-					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,recordId, response.deliverPackageResponse.packageIds,processRecord);
-					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
+					String msg = response.deliverPackageResponse.message;
+					String pkgId = response.deliverPackageResponse.packageIds;
+					HDT_UTL_DocumentalManagement.createDocumentSendTracking(msg, recordId, pkgId, processRecord);
+					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response, context);
 				}
 			}
 		}catch(Exception ex){
@@ -454,6 +508,7 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 	private static String composeJson(String recordId, List<Map<String,Object>> driverPayloadListMap,Map<String,Object> formParams,Map<String,List<sObject>> inputs){
+		
 		HDT_WRP_DocumentalRequest documentalRequest = new HDT_WRP_DocumentalRequest();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest sPackageRequest = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest();
@@ -462,6 +517,7 @@ public class HDT_SRV_DocumentalManagement{
 		String signMode = (String) formParams.get('signMode') != null? (String) formParams.get('signMode'):'';
 		String parsedContext = '';
 		String processNumber = '';
+		
 		try{
 			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
 				parsedContext = 'Case';
@@ -553,17 +609,26 @@ public class HDT_SRV_DocumentalManagement{
 		}
 		return signInfo;
 	}
-	private static List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> generateDriver(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations,Map<String,Object> formParams){
+	
+	private static List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> generateDriver(Map<String,List<sObject>> inputs, HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations, Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generateDriver';
+		System.debug(debugString);
+		
 		List<Map<String,String>> driverListMap = new List<Map<String,String>>();
 		Map<String,String> driverMap = new Map<String,String>();
 		String value = '';
+		
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver driver = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver();
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driverList = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
+		
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
 			
 			List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord> records = singleSection.records;
 
 			for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord : records){
+				
 				String expression = singleRecord.expression!=null?singleRecord.expression:'';
 				String classString = singleRecord.classString!=null?singleRecord.classString:'';
 				String methodString = singleRecord.methodString!=null?singleRecord.methodString:'';
@@ -572,18 +637,18 @@ public class HDT_SRV_DocumentalManagement{
 				String payloadField = singleRecord.payloadField!=null?singleRecord.payloadField:'';
 
 				if(expression != null && expression != ''){
-					value = HDT_UTL_DocumentalManagement.calculateExpression(inputs,expression,formParams);
+					value = HDT_UTL_DocumentalManagement.calculateExpression(inputs, expression, formParams);
 				}
 				//Nel caso in cui l'espressione ritorna $ deve essere ereditato il valore da uno dei controlli sotto
 				if((expression != null && expression != '' && value == '$') || expression == ''){
 					if(classString != null && classString != '' && methodString != null && methodString != ''){
-						value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString,methodString,inputs,formParams);
+						value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString, methodString, inputs, formParams);
 					}else if(separetor != null && separetor != ''){
 							//TODO Implentare getConcatValue
 							value = HDT_UTL_DocumentalManagement.getConcatValueFromObject(inputs,singleRecord);
 							value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 					}else{
-						value = HDT_UTL_DocumentalManagement.getValueFromObject(inputs,singleRecord,0,formParams);
+						value = HDT_UTL_DocumentalManagement.getValueFromObject(inputs, singleRecord, 0, formParams);
 						value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 					}
 					if(value == '' && defaultVal != null && defaultVal != ''){
@@ -606,6 +671,11 @@ public class HDT_SRV_DocumentalManagement{
 	}
 	
 	private static String generatePayload(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configurations,Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generatePayload';
+		System.debug(debugString);
+		
 		String[] payloadArray = new List<String>();
 		String payload = '';
 		Boolean recordNull = true;
@@ -615,6 +685,7 @@ public class HDT_SRV_DocumentalManagement{
 		Map<String,String> context = new Map<String,String>();
 		Map<String,String> iteratorContext = new Map<String,String>();
 		Integer countRecords = 1;
+		
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
 			String iterative = singleSection.iterative;
 			String recordType = singleSection.recordType;
@@ -626,6 +697,7 @@ public class HDT_SRV_DocumentalManagement{
 			}else{
 				countRecords = 1;
 			}
+			
 			for(Integer i = 0; i< countRecords; i++){
 				payloadArray = new List<String>();
 				payloadArray.add(recordType);
@@ -694,6 +766,11 @@ public class HDT_SRV_DocumentalManagement{
 		*/
 
 	public static String generatePayloadEstrattoConto(Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generatePayloadEstrattoConto';
+		System.debug(debugString);
+		
 		String payload = '';
 		String div='|';
 		String fineRiga='\n';
@@ -889,6 +966,11 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 
 */
 	public static String generatePayloadGestioneCredito(Map<String,Object> formParams){
+		
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagement - generatePayloadGestioneCredito';
+		System.debug(debugString);
+		
 		String payload = '';
 		String div='|';
 		String fineRiga='\n';
