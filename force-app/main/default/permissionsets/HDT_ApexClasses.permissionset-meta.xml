@@ -1853,6 +1853,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_ElegibilityCriteriaCheck</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
         <enabled>true</enabled>
     </classAccesses>
