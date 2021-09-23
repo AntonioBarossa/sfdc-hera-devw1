@@ -714,7 +714,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			reading.ReadingDigitNumber3__c = 'DN';
 			reading.ReadingDate3__c = Date.today();
 			
-			reading.ReadingValue34__c = 1;
+			reading.ReadingValue4__c = 1;
 			reading.ReadingRegister4__c = 'TST';
 			reading.ReadingType4__c = 'TST_READING_TYPE';
 			reading.ReadingSerialNumber4__c = 'TST_SERIAL_NUM';
