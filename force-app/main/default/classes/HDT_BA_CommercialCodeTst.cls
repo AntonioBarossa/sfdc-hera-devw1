@@ -50,14 +50,6 @@ public class HDT_BA_CommercialCodeTst {
             }
             insert contacts;
             
-            i=0;
-            List<CommercialCode__c> commercialCodes = HDT_UTL_DataFactoryTst.createCommCode(50, false);
-            for(CommercialCode__c c : commercialCodes){
-                c.fullcode__c = 'pizza'+i;
-                i++;
-            }
-            insert commercialCodes;
-            
             
             List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(50,false,camps[0].id,leads[0].id,contacts[0].id);
             i=0;
@@ -71,22 +63,25 @@ public class HDT_BA_CommercialCodeTst {
     
     @isTest
     static void test1(){
+        
         String campaignId = [SELECT id from Campaign].id;
+        
         List<String> campaignMembers = new List<String>();
         List <CampaignMember> cm = [SELECT id from CampaignMember];
         for(CampaignMember m : cm)
         	campaignMembers.add(m.id);
-        
-        
-        List <CampaignMember>  lista1 = [SELECT id,PromoCommercialCode__c from CampaignMember];
+                
+        CampaignMember  cm1 = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
         
         Test.startTest();
-		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode(campaignId,campaignMembers);
-        
+		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode(campaignId,campaignMembers);     
         Id batchId = Database.executeBatch(cc,200);
         Test.stopTest();
         
-        List <CampaignMember>  lista2 = [SELECT id,PromoCommercialCode__c from CampaignMember];
-        System.assertNotEquals(lista1,lista2);
+        CampaignMember  cm2 = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
+        System.assertNotEquals(cm1.PromoCommercialCode__c,cm2.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c updated by the batch'); 
+        
+        List<CommercialCode__c> commercialCodes = [select id from CommercialCode__c];
+    	System.assertEquals(100, commercialCodes.size(), 'The number of CommercialCodes in the system doubles the number of CampaignMembers');
     }
 }
