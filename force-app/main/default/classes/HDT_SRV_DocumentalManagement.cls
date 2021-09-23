@@ -377,7 +377,10 @@ public class HDT_SRV_DocumentalManagement{
 			}else{
 				Order orderRecord = (Order) record;
 				Contact orderContact = (Contact) orderRecord.Contact__r;
-				individualId = orderContact.IndividualId;
+				if (orderContact == null){
+					System.debug('Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
+					return;
+				}
 			}
 			Individual individualRecord = new Individual();
 			individualRecord.Id = individualId;
