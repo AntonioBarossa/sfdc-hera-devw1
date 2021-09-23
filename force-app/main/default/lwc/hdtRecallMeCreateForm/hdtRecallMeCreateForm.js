@@ -7,7 +7,7 @@ import {
 import {
     ShowToastEvent
 } from 'lightning/platformShowToastEvent';
-import getOutboundCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getOutboundCampaigns';
+import getOutboundCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getOutboundCampaignsLead';
 import createCampaignMemberFromLead from '@salesforce/apex/HDT_LC_RecallMeCreateForm.createCampaignMemberFromLead';
 import {
     getFieldValue,
@@ -17,6 +17,7 @@ import {
     getPicklistValues
 } from 'lightning/uiObjectInfoApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { CloseActionScreenEvent } from 'lightning/actions';
 import SOURCE_AGENCY from '@salesforce/schema/Lead.SourceAgency__c';
 import INTEREST_PRODUCT from '@salesforce/schema/Lead.InterestProduct__c';
 import MOBILE_PHONE from '@salesforce/schema/Lead.MobilePhone';
@@ -95,7 +96,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
     }
 
     handleSubmit(event) {
-
+        this.showSpinner=true; //HRAWRM-640 20/09/2021
         let sourceAgency = this.template.querySelector('[data-id = "agencyField"]').value;
         let interestProduct = this.template.querySelector('[data-id = "interestProductField"]').value;
         let campaignId = this.template.querySelector('[data-id = "campaignOutboundField"]').value;
@@ -112,6 +113,7 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 variant: 'error'
             }));
             this.dispatchEvent(new CustomEvent('afterSave'));
+            this.showSpinner=false; //HRAWRM-640 20/09/2021
         }
          else {
             createCampaignMemberFromLead({
@@ -121,14 +123,28 @@ export default class HdtRecallMeCreateForm extends LightningElement {
                 campaignId: campaignId,
                 mobilePhone: this.mobilePhone
             }).then(result => {
-                console.log(JSON.stringify(result));
-                this.showSpinner = false;
-                this.dispatchEvent(new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Campaign member created successfully!',
-                    variant: 'success'
-                }));
-                this.dispatchEvent(new CustomEvent('afterSave'));
+                if(result != null){
+                    console.log(JSON.stringify(result));
+                    this.showSpinner = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Campaign member created successfully!',
+                        variant: 'success'
+                    }));
+                    this.dispatchEvent(new CustomEvent('afterSave'));
+                    this.showSpinner=false; //HRAWRM-640 20/09/2021
+                }
+                else{
+                    console.log(JSON.stringify(result));
+                    this.showSpinner = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Warning',
+                        message: 'Manca la Configurazione per la coppia di valori inseriti',
+                        variant: 'warning'
+                    }));
+                    this.dispatchEvent(new CustomEvent('afterSave'));
+                    this.showSpinner=false; //HRAWRM-640 20/09/2021
+                }
             }).catch(err => {
                 console.log(JSON.stringify(err));
             });

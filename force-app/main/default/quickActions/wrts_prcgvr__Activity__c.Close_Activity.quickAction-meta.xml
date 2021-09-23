@@ -4,7 +4,7 @@
         <field>Status__c</field>
         <literalValue>Chiusa</literalValue>
     </fieldOverrides>
-    <label>Close Activity</label>
+    <label>Chiudi Attività</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>

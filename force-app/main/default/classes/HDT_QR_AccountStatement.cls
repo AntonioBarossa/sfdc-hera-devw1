@@ -114,4 +114,15 @@ public inherited sharing class HDT_QR_AccountStatement {
         return mdtButtonList;        
     }
 
+    public static List<AccountStatementFilter__c> getFilter(String id){
+        return [
+            SELECT id,Account__c,IsInstallment__c
+            FROM AccountStatementFilter__c	
+            WHERE id=:id
+            WITH SECURITY_ENFORCED
+        ];
+    
+    }
+
+
 }

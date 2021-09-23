@@ -47,6 +47,10 @@
                 <behavior>Readonly</behavior>
                 <field>InvoicingStreetCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IBAN__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

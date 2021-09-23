@@ -42,6 +42,10 @@ public inherited sharing class HDT_LC_CampaignsController {
     public static List<Campaign> getOutboundCampaigns() {
         return  campaignQr.getOutboundCampaigns();
     }
+    @AuraEnabled(cacheable=true)
+    public static List<Campaign> getOutboundCampaignsLead() {
+        return  campaignQr.getOutboundCampaignsLead();
+    }
     @AuraEnabled
     public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
         try {
@@ -413,6 +417,12 @@ public inherited sharing class HDT_LC_CampaignsController {
         return currentAccount ;
         
         
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String getScriptNameFromCampaign(String memberId){
+        List<CampaignMember> lcs = [select id, Campaign.ScriptConfig__r.Name from CampaignMember where id=:memberId WITH SECURITY_ENFORCED LIMIT 1];
+        return lcs.isEmpty()? '' : lcs[0].Campaign.ScriptConfig__r.Name;
     }
     
     @AuraEnabled(cacheable=true)

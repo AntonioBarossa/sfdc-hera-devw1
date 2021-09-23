@@ -73,6 +73,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
 
+    //Order RecordType Default
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_CAMBIO_OFFERTA = 'HDT_RT_CambioOfferta';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_CAMBIO_OFFERTA =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_CAMBIO_OFFERTA).getRecordTypeId();
+
     //Order RecordType Voltura
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA = 'HDT_RT_Voltura';
@@ -136,12 +143,21 @@ public with sharing class HDT_UTL_Constants {
      public final String ORDER_RECORDTYPEID_TEMPORANEANUOVAATT =
      Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT).getRecordTypeId();
 
+    
     //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
     @AuraEnabled
     public final String CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO = 'HDT_RT_DocCopiaContratto';
     @AuraEnabled
     public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
+    
+    //@anbuzzi 31/08 Case RecordType AUTOLETTURA
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA = 'HDT_RT_Autolettura';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_AUTOLETTURA =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA).getRecordTypeId();
+    
     
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled

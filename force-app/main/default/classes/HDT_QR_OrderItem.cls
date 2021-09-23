@@ -99,6 +99,7 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.Version__c,
             Product2.ProductCode,
             Product2.Name,
+            Product2.DescriptionSAP__c,
             VASBillingMode__c
             FROM 
             OrderItem 

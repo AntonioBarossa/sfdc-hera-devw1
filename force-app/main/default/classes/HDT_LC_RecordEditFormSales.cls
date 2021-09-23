@@ -21,7 +21,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     }
     @AuraEnabled
     public static wrapReturn getActivity(String caseId){
-        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,OperationSubType__c,OperationType__c,Contract__c');
+        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,AccountId,Channel__c,CopyType__c,sendmode__c,order__c,OperationSubType__c,OperationType__c,Contract__c');
         List<wrts_prcgvr__Activity__c> listActiv = HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
         Case res = new Case();
         wrapReturn wrp = new wrapReturn();
@@ -118,12 +118,6 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static void saveDraft(String caseId, String accountId, Map<String,Object> caseob){
         try {
             Case cs= new Case(Id=caseId);
-            List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,Phase__c');
-            if(caseList != null && !caseList.isEmpty() && caseList[0].Phase__c == 'Bozza'){
-                cs.phase__c = 'In Lavorazione';
-                cs.status = 'In Lavorazione';
-            }
-           // Case cs= new Case(Id=caseId);
 
             if(caseob.containsKey('OperationSubType__c')){
                 cs.put('OperationSubType__c',String.valueOf(caseob.get('OperationSubType__c')));

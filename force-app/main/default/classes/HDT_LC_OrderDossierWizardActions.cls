@@ -25,10 +25,108 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             Id = orderParent.Id
         );
 
+          //fix CC Generazione Credential LG MB
+         // orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
+        // if (orderParent.ContractSigned__c == false) {
+                // LG Ripristino logica 18/09 FF
+        if (orderParent.ContractSigned__c == false) {
+            orderToUpdate.Phase__c = 'Documentazione da inviare';
+        } else {
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+             //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        }
+           // orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+         //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        // }
+
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
+
+        for (Order childOrd : childOrders) {
+            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
+                ordersToUpdate.add(
+                    new Order(
+                        Id = childOrd.Id,
+                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    )
+                );
+            }
+        }
+        
+        ordersToUpdate.add(orderToUpdate);
+
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
+            }
+        }
+
+        orderSrv.updateRecords(ordersToUpdate);
+
+    }
+
+    @AuraEnabled
+    public static String createActivityVocalOrder(Order orderParent){
+
+        List<Order> ordersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+        system.debug('********DEBUGLOL:' + orderParent);
+        if(orderParent.SignatureMethod__c == 'Vocal Order' && orderParent.Phase__c == 'In Lavorazione'){
+            if (orderParent.ContractSigned__c == false) {
+                orderToUpdate.Phase__c = 'Documentazione da inviare';
+            } else {
+                orderToUpdate.Phase__c = 'Documentazione da validare';
+                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+            }
+            ordersToUpdate.add(orderToUpdate );
+            orderSrv.updateRecords(ordersToUpdate);
+        }
+        return orderToUpdate.Phase__c;
+    }
+
+    @AuraEnabled
+    public static void save2(Order orderParent,boolean isPlicoSend){
+
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        List<Order> ordersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+
+          //fix CC Generazione Credential LG MB
+        //  orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
         // if (orderParent.ContractSigned__c == false) {
         //     orderToUpdate.Phase__c = 'Documentazione da inviare';
         // } else {
+                // LG Ripristino logica 18/09 FF
+        System.debug('********LOL:' + orderParent);
+        if(orderParent.Phase__c == 'In Lavorazione'){
+            if (orderParent.ContractSigned__c == false) {
+                orderToUpdate.Phase__c = 'Documentazione da inviare';
+            } else {
+                orderToUpdate.Phase__c = 'Documentazione da validare';
+                //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+            }
+        }
+        else if(orderParent.Phase__c == 'Registrazione  da validare'){
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.status = 'Activated';
+        }
+      /*  if(isPlicoSend){
+          //  orderToUpdate.Phase__c = 'Plico da inviare';
+          orderToUpdate.Phase__c = 'Documentazione da validare';
+        }
+        else{
             orderToUpdate.Phase__c = 'Documentazione da validare';
+        }*/
         // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
