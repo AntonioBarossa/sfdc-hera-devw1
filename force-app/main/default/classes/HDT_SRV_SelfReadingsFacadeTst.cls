@@ -193,8 +193,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
         
         //ASSERTS
-        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
-        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
+        System.assert(!result.success);
+        System.assertEquals('KO', result.message);
         
     }
     
