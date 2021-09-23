@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'Autoletturadacliente' => new Map<String,List<String>>
         {
             'Type' => new List<String>
-                {'Verifica Dati al DL', 'Rettifica Consumi', 'Reclamo Scritto/Rich. Info'}
+                {'Verifica Dati al DL','Rettifica Consumi','Reclamo Scritto/Rich. Info'}
         },
     'AllineamentoCanoneRai' => new Map<String,List<String>>
         {
