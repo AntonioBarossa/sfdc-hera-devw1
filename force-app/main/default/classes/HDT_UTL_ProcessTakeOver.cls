@@ -207,8 +207,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     public override void finalUpdate(){
         System.debug('finalUpdate');
         if (listUpdateGeneric.size()>0) {
-            Savepoint sp = Database.setSavePoint();
-            try {
+           // Savepoint sp = Database.setSavePoint();
                 upsert listUpdateGeneric;
                 
                 currentProcess.currentFatherOrder.Sale__c                    = ((Sale__c)listUpdateGeneric.get(0)).Id           ;
@@ -225,25 +224,20 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 System.debug('OrderId:'+currentProcess.currentChildOrder.Id)                                                    ;
 
                 makeServiceRequest();
-                ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(currentProcess.currentServiceRequest)              ;
-                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq)   ;
+                //TODO Andrea
+                // ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(currentProcess.currentServiceRequest)              ;
+                // wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq)   ;
 
-                if(!result.incompatibilities.isEmpty()){
-                    String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
-                    HDT_SRV_ServiceRequest.deleteRecord(sReq);
-                    throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
-                }
-
+                // if(!result.incompatibilities.isEmpty()){
+                //     String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                //     HDT_SRV_ServiceRequest.deleteRecord(sReq);
+                //     throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
+                // }
+                //TODO Andrea
                 currentProcess.currentOrderItem.OrderId             = currentProcess.currentChildOrder.Id       ;
                 currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id   ;
                 currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id     ;
                 // insert currentProcess.currentOrderItem;
-                
-            } catch (Exception ex) {
-
-                System.debug(ex.getMessage());
-                Database.rollback(sp);
-            }
         }
         currentProcess.currentRequestItem.Status__c=constant.MASSIVLOADER_STATUS_CHIUSO;
         update currentProcess.currentRequestItem;
