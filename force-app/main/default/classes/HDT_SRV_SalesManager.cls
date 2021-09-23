@@ -222,12 +222,15 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         **/
         public void asyncronousUpdate(Id sobjectId, String newPhase, String errorDescription){
             Sobject sender;
+            String errorField;
             switch on sobjectId.getSobjectType().getDescribe().getName() {
                 when 'Case' {
                     sender = (SObject) new Case();
+                    errorField = 'DiscardDescription__c';
                 }
                 when 'Order' {
                     sender = (SObject) new Order();
+                    errorField = 'DiscardReason__c';
                 }
                 when else {
                     throw new HDT_UTL_HeraException('Invalid sObject provided');
@@ -237,7 +240,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             sender.put('Id', sobjectId);
             sender.put('Phase__c', newPhase);
             if (String.isNotBlank(errorDescription)) {
-                sender.put('DiscardReason__c', errorDescription);
+                sender.put(errorField, errorDescription);
             }
             Database.update(sender);
         }
