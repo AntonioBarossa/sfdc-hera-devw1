@@ -646,14 +646,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			
 			Reading__c reading = new Reading__c();
 			
-			/*
-			//CAMPI USATI PER READINGS NON-GAS
-			
-			reading.ReadingValue1__c = 1;
-			reading.ReadingRegister1__c = 'TST';
-			
-			*/
-			
 			reading.CaseGas__c = caseId;
 			
 			//METER

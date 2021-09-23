@@ -108,6 +108,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //SETUP
         myCommodity = 'Teleriscaldamento';
+        isMeterCorrector = false;
         mySetup();
         
         //PREPARAZIONE ARGS
