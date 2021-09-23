@@ -153,6 +153,4 @@ public inherited sharing class HDT_QR_Knowledge {
 
     }
 
-
-
 }

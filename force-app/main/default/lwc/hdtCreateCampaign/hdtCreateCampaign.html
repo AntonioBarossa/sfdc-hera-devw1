@@ -62,7 +62,7 @@
                             </lightning-input-field>
                         </div>
                         <div class="slds-col slds-size_1-of-2 slds-p-around--x-small endDate">
-                            <lightning-input-field field-name="EndDate"></lightning-input-field>
+                            <lightning-input-field field-name="EndDate" required={reqEndDate}></lightning-input-field>
                         </div>
                     </div>
                     <div class="slds-grid">
@@ -94,7 +94,7 @@
                         </template>
                     </div>
 
-                    <template if:true={campaignInboundFields}>
+                    <template if:true={showCampaignInboundFields}>
                         <div class="slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                                 <lightning-input-field field-name="CaseCategory__c" required={campaignInboundFields}></lightning-input-field>
@@ -158,7 +158,7 @@
                         <lightning-card title="Campagna Ricorrente" class="slds-col slds-size_1-of-1">
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small recurringField">
-                                    <lightning-input-field field-name="RecurringCampaign__c"
+                                    <lightning-input-field field-name="RecurringCampaign__c" data-id="recurringCampaign"
                                         onchange={handleRecurringCampaignChange}></lightning-input-field>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
                                 <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
                                     <lightning-input-field field-name="GenerationPeriod__c"
                                         required={recurringCampaignFieldsRequired}
-                                        onchange={handleGenerationPeriodChange}></lightning-input-field>
+                                       ></lightning-input-field>
                                 </div>
                             </div>
                         </lightning-card>
@@ -228,7 +228,7 @@
                     <template if:true={paperCampaignFields}>
                         <lightning-input-field field-name="PaperCampaignParameter__c"
                             class="slds-hide paperCampaignParameterField"></lightning-input-field>
-                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId}
+                        <c-hdt-paper-campaign-fields paper-record-id={paperRecId} reqrec={requiredShippingMethods}
                             onrecordsubmitted={handleRecordSubmitted} onerroroccurred={handleErrorOccurred}>
                         </c-hdt-paper-campaign-fields>
                     </template>

@@ -16,6 +16,7 @@ public with sharing class HDT_LC_RecallMeCreateForm {
            Lead updateLead = new Lead(
                Id = leadId,
                SourceAgency__c = sourceAgency,
+               ContactReason__c ='Info commerciali', //HRAWRM-640 20/09/2021
                InterestProduct__c = interestProduct
            );
            HDT_SRV_Lead.updateRecord(updateLead);

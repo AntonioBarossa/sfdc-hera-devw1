@@ -163,7 +163,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.ExciseGas__c =  mapAcciseGas.get(servicePoint.ExciseGas__c) != null ? mapAcciseGas.get(servicePoint.ExciseGas__c) : mapAcciseGas.get('ALTRO');
 
             if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') //HRAWRM-498
-                && servicePoint.SupplyType__c == 'Non Domestico') {
+                && servicePoint.SupplyType__c != 'A-Domestico') {
 
                     if(orderToUpdate.VAT__c == 'Iva 22% (Cod. 02)'){
                         orderToUpdate.ExciseGas__c = 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
@@ -172,7 +172,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
 
             } else if ((servicePoint.ExciseGas__c == null || servicePoint.ExciseGas__c == '') 
-                && servicePoint.SupplyType__c == 'Domestico') {
+                && servicePoint.SupplyType__c == 'A-Domestico') {
                 orderToUpdate.ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
             }
         } 
@@ -239,8 +239,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
 
+        
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        if(!orderOld.isTransition__c){
+            changeCustomerMarking(account);
+        }
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         String customerName = null;
         String customerLastName = null;
@@ -287,8 +291,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c');
+        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
@@ -305,6 +309,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommercialId__c = sale.CommercialId__c;
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
+        orderToUpdate.AreaManager__c = sale.AreaManager__c;
 
         orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
         orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
@@ -359,7 +364,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (!mainItems.isEmpty()) {
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
-            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.Name;
+            orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
             orderToUpdate.VASType__c=mainItems[0].Product2.Family;
             orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name.abbreviate(30);
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
@@ -450,12 +455,27 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
 
         orderSrv.updateRecord(orderToUpdate);
-
-        if (order.ServicePoint__c != null) {
+        //LG 2009 Concetta Richiesta disattivazione da ROOM
+        /*if (order.ServicePoint__c != null) {
             servicePointSrv.updateRecord(new ServicePoint__c(
                 Id = order.ServicePoint__c,
                 PowerRequested__c = null
             ));
+        }*/
+    }
+
+    private static void changeCustomerMarking(Account account){
+        Map<String, String> customerMarkingTranscode = 
+                new  Map<String, String>{
+                    'Persona fisica'=> 'D1 - ',
+                    'Azienda' => 'D3 - ',
+                    'Parti comuni' => 'D4 - '
+                };
+
+        String appendix = customerMarkingTranscode.get(account.customerMarking__c);
+        if(String.isNotBlank(appendix)){
+            account.customerMarking__c = appendix+account.customerMarking__c;
+            accountSrv.updateRecord(account);
         }
     }
 

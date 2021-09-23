@@ -1,6 +1,7 @@
 public class HDT_UTL_IntegrationObject{
 
 	public static Map<String,String> generateQueryString(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject jsonStructure, String recordId){
+		
 		String queryString = 'SELECT ' + jsonStructure.fields;
 		String fromString = ' FROM '+ jsonStructure.objectName;
 		String controllingField = jsonStructure.controllingField;
@@ -9,6 +10,7 @@ public class HDT_UTL_IntegrationObject{
 		if(String.isNotBlank(parentCondition)){
 			whereString = whereString + ' AND ' + parentCondition;
 		}
+		
 		String fieldLookup = '';
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationLookupObject singleLookupObject : jsonStructure.lookupObject){
 			List<String> fields = singleLookupObject.fields.split(',');
@@ -17,6 +19,7 @@ public class HDT_UTL_IntegrationObject{
 			} 
 		}
 		queryString += fieldLookup;
+		
 		List<String> relatedQueryList = new List<String>();
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationRelatedObject singleRelatedObject : jsonStructure.relatedObject){
 			String queryRelString = '(SELECT ' + singleRelatedObject.fields;
@@ -36,10 +39,11 @@ public class HDT_UTL_IntegrationObject{
 			queryString  = queryString + fromString + whereString; 
 		}
 		
-		system.debug('query ' + queryString);
+		System.debug('query ' + queryString);
 		return new Map<String,String>{'queryString' => queryString, 'parentObject' => jsonStructure.objectName};
 	}
 	
+	//esegue query generica ed estrae campo indicato da jsonField formattandolo come HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject
 	public static HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject getIntegrationObjectConfiguration(String objectName, String fields, String conditions, String jsonField){
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject toReturn = new HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject();
 		List<sObject> configurationRecord = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, conditions);

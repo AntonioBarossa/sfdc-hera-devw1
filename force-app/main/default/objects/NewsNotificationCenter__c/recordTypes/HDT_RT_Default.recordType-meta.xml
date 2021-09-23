@@ -6,10 +6,10 @@
     <label>Default</label>
     <picklistValues>
         <picklist>Cluster__c</picklist>
-        <values>
+        <!-- <values>
             <fullName>Ambiente</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
@@ -42,10 +42,10 @@
             <fullName>Generiche VAS</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>HERA</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Indennizzi</fullName>
             <default>false</default>
@@ -131,6 +131,10 @@
         </values>
         <values>
             <fullName>Teleselling Outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tutti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
