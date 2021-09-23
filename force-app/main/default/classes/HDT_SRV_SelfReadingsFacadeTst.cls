@@ -386,6 +386,27 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     }
     
     
+    //handleResponse
+    @isTest
+    private static void handleResponseTest() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - handleResponseTest';
+		System.debug(debugString);
+        
+        //SETUP
+        HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
+        sapIntegration.requestType = '';
+        
+        //TESTING
+        HDT_WRP_SelfReadingResponse result = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
+    }
+    
+    
     
     
     
