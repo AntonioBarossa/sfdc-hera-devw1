@@ -159,7 +159,15 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         System.debug('AddressSearch winner '+addressWinner);
         return addressWinner;
     }
+    public void arricchimentoDati(){
+        if (String.isBlank( currentProcess.currentServicePoint.ServicePointCode__c)   ) {
+            throw new HDT_WRP_ProcessEntitiesException( 'NullPointerExceptions','ServicePointCode can\'t be null');
 
+        }
+        HDT_WS_ArrichmentDataEntityResponse serResp=HDT_WS_ArrichmentDataEntityInvoker.callService('',currentProcess.currentServicePoint.ServicePointCode__c);
+        List<ServicePoint__c> lServicePoint=HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(currentProcess.currentServicePoint, serResp);
+       
+    }
 
    public class HDT_WRP_ProcessEntities{
       public Account                      currentAccount                ;
