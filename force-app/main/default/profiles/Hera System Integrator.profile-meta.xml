@@ -1062,6 +1062,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.AreaManager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AgentMatrix__c.AreaManager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BlackList__c.Domain__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7706,6 +7716,11 @@
         <field>ContactPointEmail.UsageType</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions><!-- HRAWRM-521 22/09/2021 EC-->
+        <editable>true</editable>
+        <field>ContactPointPhone.TelephoneNumberCertificationsContacts__c</field>
+        <readable>true</readable>
+    </fieldPermissions><!-- HRAWRM-521 22/09/2021 EC-->
     <fieldPermissions>
         <editable>true</editable>
         <field>ContactPointPhone.ActiveFromDate</field>

@@ -687,6 +687,9 @@
                             <value>Case.Escalation</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Case.HDT_ChangePriority</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Case.Riprendi_Processo_Sales</value>
                             <visibilityRule>
                                 <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5</booleanFilter>

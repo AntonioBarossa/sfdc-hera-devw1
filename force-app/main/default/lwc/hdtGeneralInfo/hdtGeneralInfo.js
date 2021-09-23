@@ -325,6 +325,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
+        this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
         console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
@@ -558,11 +559,20 @@ export default class HdtGeneralInfo extends LightningElement {
 
         if (Object.keys(this.selectedFromCompleteList).length != 0) {
 
+            let saleUpdateAgent = { 
+                Id: this.saleRecord.Id,
+                Agency__c: this.selectedFromCompleteList.AgencyName__c,
+                AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c,
+                VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c,
+                VendorFirstName__c:this.selectedFromCompleteListAgent.AgentFirstName__c,
+                CommercialId__c:this.selectedFromCompleteListAgent.AgentCode__c,
+                UpperChannelAgency__c:this.selectedFromCompleteListAgent.UpperChannelAgency__c,
+                LowerChannelAgency__c:this.selectedFromCompleteListAgent.LowerChannelAgency__c,
+                IsMonitoring__c:this.selectedFromCompleteListAgent.IsMonitoring__c,
+                AreaManager__c: this.selectedFromCompleteListAgent.AreaManager__c
+            };
 
-            this.updateSaleRecord({ Id: this.saleRecord.Id, Agency__c: this.selectedFromCompleteList.AgencyName__c, AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c,
-            VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c, VendorFirstName__c:this.selectedFromCompleteListAgent.AgentFirstName__c,CommercialId__c:this.selectedFromCompleteListAgent.AgentCode__c,
-            UpperChannelAgency__c:this.selectedFromCompleteListAgent.UpperChannelAgency__c, LowerChannelAgency__c:this.selectedFromCompleteListAgent.LowerChannelAgency__c,
-            IsMonitoring__c:this.selectedFromCompleteListAgent.IsMonitoring__c});
+            this.updateSaleRecord(saleUpdateAgent);
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
             //this.toggle();
@@ -586,6 +596,7 @@ export default class HdtGeneralInfo extends LightningElement {
             { label: 'Nome Agente', fieldName: 'AgentFirstName__c', type: 'text' },
             { label: 'Cognome Agente', fieldName: 'AgentLastName__c', type: 'text' },
             { label: 'Codice Agente', fieldName: 'AgentCode__c', type: 'text' },
+            { label: 'Area Manager', fieldName: 'AreaManager__c', type: 'text' },
 
         ];
 
