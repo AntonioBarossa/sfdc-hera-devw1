@@ -14,7 +14,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
 
     
     
-    //TODO: RICORDARSI DI TESTARE LE selfReadings AL COMPLETO.
+    //TODO: COPRIRE ANCHE handleInvioLettureForzato
+    //NB: metodo in questione si appoggia a Job HDT_QBL_SelfReadingsCallouts
     
     
     
