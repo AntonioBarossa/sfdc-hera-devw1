@@ -78,7 +78,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //PHASE ENABLE
         String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
+        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
@@ -129,8 +130,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //PHASE ENABLE
         String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
-        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
@@ -145,7 +145,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
-        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c);
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
         
     }
     
