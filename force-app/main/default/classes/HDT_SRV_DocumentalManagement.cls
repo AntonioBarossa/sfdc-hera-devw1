@@ -359,6 +359,7 @@ public class HDT_SRV_DocumentalManagement{
 			}else {
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');					
+					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
 				}else{
 					//Che fase documentale settare?			
 				}

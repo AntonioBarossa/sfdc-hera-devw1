@@ -1,4 +1,6 @@
-<aura:component controller="HDT_LC_ProductAssociation" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
+<aura:component controller="HDT_LC_ProductAssociation" implements="force:hasSObjectName,lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="sobjecttype" type="String" default="{!v.sObjectName}"/>    
     <!--<lightning:workspaceAPI aura:id="workspace" />-->
     <aura:attribute name="pageReference" type="Object"/>
     <lightning:navigation aura:id="navService"/>    

@@ -242,6 +242,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     finalCancellationPhase = 'Annullato';
+                                    Datetime nowDate = Datetime.now();
+                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
+                                    {
+                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                    }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                    	ord.Phase__c = 'Ripensamento - Esito OK da SII';
                                     finalCancellationPhase = 'Ripensato';
@@ -252,6 +259,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                    Datetime nowDate = Datetime.now();
+                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
+                                    {
+                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                    }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                     ord.Phase__c = 'Ripensamento - Esito KO da SII';
                                 }
