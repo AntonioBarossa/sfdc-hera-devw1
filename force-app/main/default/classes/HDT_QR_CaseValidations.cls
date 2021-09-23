@@ -6,6 +6,7 @@ public inherited sharing class HDT_QR_CaseValidations {
         return [SELECT Id,
         Type,
         Subprocess__c,
+        Cluster__c,
         CommodityFormula__c,
         ServicePoint__r.ServicePointCode__c,
         OpinionRequest__c,
@@ -22,7 +23,8 @@ public inherited sharing class HDT_QR_CaseValidations {
         Account.RecordType.DeveloperName,
         ContactId,
         Contract__r.StartDate,
-        ClientCategory__c
+        ClientCategory__c,
+        ShipmentAddressAssign__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
