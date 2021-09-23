@@ -99,23 +99,66 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
             }
         }
     }
-    public  HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse verifyAccountAddress(){
+
+    public  void verifyAccountAddress(){
         HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse resp= HDT_WS_HerokuAddressSearch.callServiceMass(
             currentProcess.currentAccount.BillingCity,
             currentProcess.currentAccount.BillingStreetName__c,
             currentProcess.currentAccount.BillingStreetNumber__c
         );
-        return resp;
-       
-    }
-    // public HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse> rs,String city,String street,String number){
-    //     Integer matchingPoints=0;
-    //     Integer elementNumber=0;
-    //     for (HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse tempRes : rs) {
-    //         tempRes.body
-    //     }
 
-    // }
+        List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> listPrestazioni=resp.prestazione;
+        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj retObj=analizeRespVerifyAddress(listPrestazioni,currentProcess.currentAccount.BillingCity,currentProcess.currentAccount.BillingStreetName__c, currentProcess.currentAccount.BillingStreetNumber__c,currentProcess.currentAccount.BillingPostalCode);
+        
+        if (retObj!=null ) {
+            currentProcess.currentAccount.BillingCity                   = retObj.city1;
+            currentProcess.currentAccount.BillingCityCode__c            = retObj.cityCode;
+            currentProcess.currentAccount.BillingStreetName__c          = retObj.street;
+            currentProcess.currentAccount.BillingPlaceCode__c           = retObj.cityPCode;
+            currentProcess.currentAccount.BillingPlace__c               = retObj.cityPName;
+            currentProcess.currentAccount.BillingIsAddressVerified__c   = true;
+        }
+        else {
+            currentProcess.currentAccount.BillingIsAddressVerified__c   = false;
+        }  
+    }
+
+    /**
+    * @description confronta gli indirizzi che restituisce il servizio con l'indirizzo in input  
+    * restituisce l'indirizzo che ha il numero matching points maggiore 
+    * @param rs  lista di indirizzi HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj
+    * @param city 
+    * @param street 
+    * @param myNumber 
+    * @param postalCode 
+    **/
+    public  HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> rs,String city,String street,String myNumber,String postalCode){
+        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj addressWinner;
+        Integer matchingPoints = 0;
+      
+        for (HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj tempRes : rs) {
+           Integer tempMatchingPoints=0;
+           System.debug('obj Resp' +tempRes.city1);
+           if(tempRes.city1.equalsIgnoreCase(city)){
+                tempMatchingPoints=tempMatchingPoints+1;
+            }
+            if(tempRes.street.equalsIgnoreCase(street)){
+                tempMatchingPoints=tempMatchingPoints+1;
+            }
+            if(tempRes.houseNum1.equalsIgnoreCase(myNumber)){
+                tempMatchingPoints=tempMatchingPoints+1;
+            }
+            if(tempRes.postCode1.equalsIgnoreCase(postalCode)){
+                tempMatchingPoints=tempMatchingPoints+1;
+            }
+            if(tempMatchingPoints>matchingPoints){
+                matchingPoints=tempMatchingPoints;
+                addressWinner=tempRes;
+            }
+        }
+        System.debug('AddressSearch winner '+addressWinner);
+        return addressWinner;
+    }
 
 
    public class HDT_WRP_ProcessEntities{
