@@ -233,6 +233,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String result='';
         String caseType = '';
         String supplyType = '';
+        String cluster = '';
         switch on context {
             when 'Case' {
                 amount = HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', 0, inputs, formParams);
@@ -241,6 +242,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 iva = HDT_UTL_DocumentalManagement.getValue('Case', 'VATPercentage__c', 0, inputs, formParams);
                 caseType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
                 supplyType = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyType__c', 0, inputs, formParams);
+                cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
             }
             when else {
                 //quotationType = ''; //da ordine manca il campo
@@ -260,7 +262,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             totalAmount = amountDouble + ivaAmount;
 
-            if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) && context.equalsIgnoreCase('Case')){
+            if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) && context.equalsIgnoreCase('Case') && cluster.equalsIgnoreCase('Preventivi')){
                 //variableAmount è l'importo prestazione calcolato come amount - fixedAmount
                 //fixed amount è solo quotaVend se Variazione potenza dom sennò è quotaDistr + quotaVend| Se l'offerta è Placet togliere la quota Vend
                 if(caseType.contains('Potenza') && supplyType.equalsIgnoreCase('Domestico')){

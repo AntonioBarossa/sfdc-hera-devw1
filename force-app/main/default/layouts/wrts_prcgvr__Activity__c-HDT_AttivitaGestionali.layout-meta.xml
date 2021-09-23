@@ -25,6 +25,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Note__c</field>
             </layoutItems>
         </layoutColumns>
@@ -39,7 +43,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Quote__c</field> <!-- UAT Cocetta  20/09/2021 -->
+                <field>Quote__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -83,11 +87,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>AssignmentRule__c</field>
+                <field>Agency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Agency__c</field>
+                <field>WorkGroup__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -97,11 +101,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RuleChosenQueue__c</field>
+                <field>AssignmentRule__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>WorkGroup__c</field>
+                <field>wrts_prcgvr__Priority__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

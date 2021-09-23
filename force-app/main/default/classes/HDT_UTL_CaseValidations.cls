@@ -86,9 +86,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateVolturaTecnica(fields);
  
-        } else {
+        }else if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi'))
+        {
+            result = validatePreventivi(fields, currentCase);
+        
+        }else {
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         }
 
@@ -1042,6 +1046,22 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         return result;
 
+    }
+
+    public string validatePreventivi(string fields, Case currentCase)
+    {
+        String result;
+        if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco')) 
+        if(currentCase.ShipmentAddressAssign__c == null)
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
+        }
+        else 
+        {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+
+        return result;
     }
 
     public String validateModificaPrivacy(String fields, String recordId){
