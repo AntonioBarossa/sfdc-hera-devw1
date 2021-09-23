@@ -48,7 +48,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     //TODO: IMPLEMENTARE ANCHE CASI CON RESPONSE CODE DIVERSO DA 200 E 201
     
     //execute
-    ///CheckAutolettura
+    ///CheckAutolettura - GAS
     @isTest
     private static void executeTest_CheckAutolettura() {
         
@@ -98,12 +98,76 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
     }
     
-    ///InvioLettureForzato
+    
+    ///CheckAutolettura - NON GAS
     @isTest
-    private static void executeTest_InvioLettureForzato() {
+    private static void executeTest_CheckAutolettura_NG() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato';
+		String debugString = TEST_NAME + ' - executeTest_CheckAutolettura_NG';
+		System.debug(debugString);
+        
+        //SETUP
+        myCommodity = 'Teleriscaldamento';
+        isMeterCorrector = false;
+        mySetup();
+        
+        //PREPARAZIONE ARGS
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String,String> parameters = new Map<String,String>();
+        parameters.put('requestType', 'CheckAutolettura');
+        
+        
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('method', '');//NB: PARAMETRO NON UTILIZZATO IN CODICE
+        argsMap.put('sender', myCase);
+        argsMap.put('parameters', parameters);
+        
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
+        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
+        
+        //TESTING
+        Test.startTest();
+        
+        HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
+        
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        
+        //ASSERTS
+        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c);
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    ///InvioLettureForzato - GAS
+    //TODO: IMPLEMENT
+    
+    
+    
+    ///InvioLettureForzato - NON GAS
+    @isTest
+    private static void executeTest_InvioLettureForzato_NG() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato_NG';
 		System.debug(debugString);
         
         //SETUP
