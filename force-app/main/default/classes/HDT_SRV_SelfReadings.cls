@@ -22,6 +22,7 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
             System.debug('inputParams null.');
@@ -107,6 +108,7 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonInvioLetture(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
             return null;
