@@ -63,7 +63,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Case myCase = [SELECT Id FROM Case];
         
         Map<String,String> parameters = new Map<String,String>();
-        parameters.put('requestType', 'CheckAutolettura');//TODO: IMPLEMENTARE CASI ALTERNATIVI
+        parameters.put('requestType', 'CheckAutolettura');
         
         
         Map<String,Object> argsMap = new Map<String,Object>();
@@ -78,8 +78,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //PHASE ENABLE
         String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
-        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
