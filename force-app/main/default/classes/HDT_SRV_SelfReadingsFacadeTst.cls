@@ -209,10 +209,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     ///InvioLettureForzato - NON GAS
     @isTest
-    private static void executeTest_InvioLettureForzato_NG() {
+    private static void executeTest_InvioLettureForzato() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato_NG';
+		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato';
 		System.debug(debugString);
         
         //SETUP
