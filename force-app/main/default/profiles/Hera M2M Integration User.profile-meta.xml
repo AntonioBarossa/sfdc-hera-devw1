@@ -10641,6 +10641,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Individual.PrivacySoftSpamChoiceCampaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Individual.PrivacySoftSpamChoiceDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
