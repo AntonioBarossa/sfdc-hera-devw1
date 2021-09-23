@@ -10,6 +10,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     private static Boolean processError2 = false;
     private static String myCommodity = 'Gas';
     private static Boolean isMeterCorrector = true;
+    private static Boolean isCaseWithOrigin = false;
+
     
     
     //TODO: RICORDARSI DI TESTARE LE selfReadings AL COMPLETO.
@@ -30,7 +32,14 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         insert servPoint;
         
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, true, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
+        
+        //CASE
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
+        if(isCaseWithOrigin){
+            Case myCase = caseList[0];
+            myCase.Origin = 'Origin_Test';
+        }
+        insert caseList;
         
         //READING
         if(isMeterCorrector){
