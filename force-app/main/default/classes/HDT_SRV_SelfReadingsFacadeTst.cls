@@ -6,9 +6,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
-    private static boolean fail_WS_1 = false;
-    private static boolean fail_WS_2 = false;
-    
+    private static Boolean fail_WS_1 = false;
+    private static Boolean fail_WS_2 = false;
+    private static String myCommodity = 'Gas';
+    private static Boolean isMeterCorrector = true;
     
     
     //TODO: RICORDARSI DI TESTARE LE selfReadings AL COMPLETO.
@@ -24,15 +25,20 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         
-        ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
-        servPoint.CommoditySector__c = 'Gas';
+        ServicePoint__c servPoint;
+        servPoint = HDT_UTL_DataFactoryTst.createServicePointMeterCorrector(1, false)[0];
+        servPoint.CommoditySector__c = myCommodity;
         insert servPoint;
         
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, true, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
         
         //READING
-        List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReading(1, true, caseList[0].Id);
+        if(isMeterCorrector){
+            List<Reading__c> readings = HDT_UTL_DataFactoryTst.createServicePointMeterCorrector(1, true, caseList[0].Id);
+        } else {
+            List<Reading__c> readings = HDT_UTL_DataFactoryTst.createServicePoint(1, true, caseList[0].Id);
+        }
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
@@ -42,13 +48,13 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //TODO: IMPLEMENTARE ANCHE CASI CON RESPONSE CODE DIVERSO DA 200 E 201
     
-    
+    //execute
     ///CheckAutolettura
     @isTest
-    private static void executeTest() {
+    private static void executeTest_CheckAutolettura() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest';
+		String debugString = TEST_NAME + ' - executeTest_CheckAutolettura';
 		System.debug(debugString);
         
         //SETUP
@@ -94,6 +100,64 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     }
     
     ///InvioLettureForzato
+    @isTest
+    private static void executeTest_InvioLettureForzato() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato';
+		System.debug(debugString);
+        
+        //SETUP
+        myCommodity = 'Teleriscaldamento';
+        mySetup();
+        
+        //PREPARAZIONE ARGS
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String,String> parameters = new Map<String,String>();
+        parameters.put('requestType', 'InvioLettureForzato');//TODO: IMPLEMENTARE CASI ALTERNATIVI
+        
+        
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('method', '');//NB: PARAMETRO NON UTILIZZATO IN CODICE
+        argsMap.put('sender', myCase);
+        argsMap.put('parameters', parameters);
+        
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
+        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
+        
+        //TESTING
+        Test.startTest();
+        
+        HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
+        
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        
+        //ASSERTS
+        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c);
+        
+    }
+    
+    
+    
+    
+    ///Eccezione intenzionale
+    
+    
+    
+    
     
     
     

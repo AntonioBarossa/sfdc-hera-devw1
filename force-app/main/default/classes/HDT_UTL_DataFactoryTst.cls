@@ -686,6 +686,53 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return readings;
 	}
 	
+	//reading meter/corrector
+	public static List<Reading__c> createServicePointMeterCorrector(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			reading.ReadingValue1__c = 1;
+			reading.ReadingRegister1__c = 'TST';
+			
+			reading.ReadingValue2__c = 1;
+			reading.ReadingRegister2__c = 'TST';
+			
+			reading.ReadingValue3__c = 1;
+			reading.ReadingRegister3__c = 'TST';
+			
+			reading.ReadingValue4__c = 1;
+			reading.ReadingRegister4__c = 'TST';
+			
+			reading.ReadingValue5__c = 1;
+			reading.ReadingRegister5__c = 'TST';
+			
+			reading.ReadingValue6__c = 1;
+			reading.ReadingRegister6__c = 'TST';
+			
+			reading.ReadingValue7__c = 1;
+			reading.ReadingRegister7__c = 'TST';
+			
+			reading.ReadingValue8__c = 1;
+			reading.ReadingRegister8__c = 'TST';
+			
+			reading.ReadingValue9__c = 1;
+			reading.ReadingRegister9__c = 'TST';
+			
+			reading.CaseGas__c = caseId;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
+	}
 	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){

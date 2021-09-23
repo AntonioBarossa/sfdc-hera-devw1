@@ -142,7 +142,8 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         }
         Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
-
+        System.debug('reading: ' + reading);
+        
         JSONGenerator gen = JSON.createGenerator(false);
 
         gen.writeStartObject();
