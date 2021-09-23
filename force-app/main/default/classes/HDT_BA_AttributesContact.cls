@@ -24,7 +24,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			conditionMap =' (Email!=null OR Email!=\'\') AND (IndividualId!=null) AND Email NOT IN:setEmailContactProcessed   ';
 		}
 
-        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate FROM Contact  WHERE '+conditionMap+'  ORDER BY Email,CreatedDate';
+        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRiskCtrl__c ,Email,CreatedDate FROM Contact  WHERE '+conditionMap+'  ORDER BY Email,CreatedDate';
         return Database.getQueryLocator(query);
     }
 
@@ -66,7 +66,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			// logica duplicati Contact end
 			
 			
-			List<Contact> listContactNotInChunk = [ SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate FROM Contact  
+			List<Contact> listContactNotInChunk = [ SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRiskCtrl__c ,Email,CreatedDate FROM Contact  
 			WHERE   (Email IN:mapContactByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapContactByEmail.values())  ORDER BY Email,CreatedDate];
 			
 			if (listContactNotInChunk!=null && !listContactNotInChunk.isEmpty()) {	
@@ -109,13 +109,13 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 					att.email=tempContact.Email;
 					att.contactCompany=tempContact.Company__c;
 					att.contactCompanyOwner=tempContact.CompanyOwner__c;
-					att.accountChurnRisk=tempContact.Account.ChurnkRisk__c;
+					att.accountChurnRisk=tempContact.Account.ChurnkRiskCtrl__c ;
 					mapEmailAttributes.put(tempContact.Email, att);
 				}
 				/*else {
 					HDT_WRP_Attributes actualAtt=mapEmailAttributes.get(tempContact.Email);
 					actualAtt.contactCompany=String.isNotBlank(tempContact.Company__c)? actualAtt.contactCompany+','+tempContact.Company__c:actualAtt.contactCompany;
-					actualAtt.accountChurnRisk=String.isNotBlank(tempContact.Account.ChurnkRisk__c)? actualAtt.accountChurnRisk+','+tempContact.Account.ChurnkRisk__c:actualAtt.accountChurnRisk;
+					actualAtt.accountChurnRisk=String.isNotBlank(tempContact.Account.ChurnkRiskCtrl__c )? actualAtt.accountChurnRisk+','+tempContact.Account.ChurnkRiskCtrl__c :actualAtt.accountChurnRisk;
 					mapEmailAttributes.put(tempContact.Email, actualAtt);
 					
 				}*/

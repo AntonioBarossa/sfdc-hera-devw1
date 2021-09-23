@@ -58,7 +58,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			
 			// controllo se sono presenti contact con la stessa email dei lead che sto processando
 			if (!mapLeadByEmail.isEmpty()) {
-				listContacts = [SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate,
+				listContacts = [SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRiskCtrl__c ,Email,CreatedDate,
 				(SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfiles__r),
 				(SELECT id,ContactId,Contact.Email,Contact.CreatedDate,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),
 				(SELECT id,Contact__c,Contact__r.Email,Contact__r.CreatedDate,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),
@@ -151,13 +151,13 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 					att.email=tempContact.Email;
 					att.contactCompany=tempContact.Company__c;
 					att.contactCompanyOwner=tempContact.CompanyOwner__c;
-					att.accountChurnRisk=tempContact.Account.ChurnkRisk__c;
+					att.accountChurnRisk=tempContact.Account.ChurnkRiskCtrl__c ;
 					mapEmailAttributes.put(tempContact.Email, att);
 				}
 			/*	else {
 					HDT_WRP_Attributes actualAtt=mapEmailAttributes.get(tempContact.Email);
 					actualAtt.contactCompany=String.isNotBlank(tempContact.Company__c)? actualAtt.contactCompany+','+tempContact.Company__c:actualAtt.contactCompany;
-					actualAtt.accountChurnRisk=String.isNotBlank(tempContact.Account.ChurnkRisk__c)? actualAtt.accountChurnRisk+','+tempContact.Account.ChurnkRisk__c:actualAtt.accountChurnRisk;
+					actualAtt.accountChurnRisk=String.isNotBlank(tempContact.Account.ChurnkRiskCtrl__c )? actualAtt.accountChurnRisk+','+tempContact.Account.ChurnkRiskCtrl__c :actualAtt.accountChurnRisk;
 					mapEmailAttributes.put(tempContact.Email, actualAtt);
 					
 				}*/
@@ -240,7 +240,12 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 					row = row+mapApiNameToAttribute.get('leadContactReason')+':'+tempWrp.leadContactReason+';';
 				}
 				if (String.isNotBlank(tempWrp.leadInterestArea)) {
-					row = row+mapApiNameToAttribute.get('leadInterestArea')+':'+tempWrp.leadInterestArea+';';
+					
+					if (';'.equalsIgnoreCase(tempWrp.leadInterestArea.substring(tempWrp.leadInterestArea.length()-1,tempWrp.leadInterestArea.length() )) ) {
+						tempWrp.leadInterestArea=tempWrp.leadInterestArea.removeEndIgnoreCase(';');
+					}
+					row = row+mapApiNameToAttribute.get('leadInterestArea')+':'+tempWrp.leadInterestArea.replace(';', ',');
+						
 				}
 				if (String.isNotBlank(tempWrp.leadRating)) {
 					row = row+mapApiNameToAttribute.get('leadRating')+':'+tempWrp.leadRating+';';
