@@ -396,7 +396,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             QualityCall__c,
             AgencyCode__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            VASType__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -472,12 +473,14 @@ public inherited sharing class HDT_QR_Order {
             CILegalRepresentative__c,
             CIAccoutn__c,
             sale__r.isTransition__c,
+            AgencyCode__c,
+            QualityCall__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
             Instance326__c,
             DocumentLow80__c,
             DistributorFormula__c,
-            QualityCall__c,
+            VASType__c,
             DateComfortCall__c
             FROM
             Order
