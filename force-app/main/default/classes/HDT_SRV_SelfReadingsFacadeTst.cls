@@ -158,8 +158,53 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     
     ///InvioLettureForzato - GAS
-    //TODO: IMPLEMENT
-    
+    @isTest
+    private static void executeTest_InvioLettureForzato_NG() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato_NG';
+		System.debug(debugString);
+        
+        //SETUP
+        mySetup();
+        
+        //PREPARAZIONE ARGS
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String,String> parameters = new Map<String,String>();
+        parameters.put('requestType', 'InvioLettureForzato');//TODO: IMPLEMENTARE CASI ALTERNATIVI
+        
+        
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('method', '');//NB: PARAMETRO NON UTILIZZATO IN CODICE
+        argsMap.put('sender', myCase);
+        argsMap.put('parameters', parameters);
+        
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
+        
+        //TESTING
+        Test.startTest();
+        
+        HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
+        
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        
+        //ASSERTS
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
+        
+    }
     
     
     ///InvioLettureForzato - NON GAS
