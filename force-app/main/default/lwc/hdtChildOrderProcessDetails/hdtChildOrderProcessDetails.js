@@ -1192,7 +1192,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Esecuzione Anticipata','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Rinuncia Diritto di Ripensamento','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, this.order.ProcessType__c == 'Switch in Ripristinatorio', '',''),
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ), true, true, '',''),
+                new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'), true, true, '',''),
 
 
                 // {
@@ -1440,7 +1440,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Localita','SupplyPlace__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Provincia','SupplyState__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Cap','SupplyPostalCode__c', this.typeVisibility('both'), true, true, '',''),                  
-                    new fieldData('Nazione','SupplyCityCode__c', this.typeVisibility('both'), true, true, '',''),                  
+                    new fieldData('Nazione','SupplyCountry__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Codice Istat','SupplyCityCode__c', this.typeVisibility('both'), false, true, '','')
                 ]
             },

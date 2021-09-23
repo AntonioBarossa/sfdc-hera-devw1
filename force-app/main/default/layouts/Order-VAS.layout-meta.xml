@@ -55,6 +55,10 @@
                 <behavior>Readonly</behavior>
                 <field>InvoiceEmailAddress__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VasStatus__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -104,6 +108,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Priority__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VasStatusDescription__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
