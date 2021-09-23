@@ -34,13 +34,6 @@ public class HDT_WS_HTTPServiceCall {
             System.debug('*************RESP:' + res.getBody());
             System.debug('*************STATUS:' + res.getStatusCode());
 
-            //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
-            Case logCase = new Case();
-            logCase.Causal__c = 'CALLOUT-'+nomeApi;
-            logCase.Note__c = JSON.serializePretty(request);
-            logCase.Description = res.getStatusCode()+'\n'+res.getBody();
-            //insert logCase;
-
             resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
             resp.statusCode = res.getStatusCode();
 
