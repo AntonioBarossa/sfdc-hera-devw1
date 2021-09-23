@@ -172,12 +172,23 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                             }
                             when 'Esito OK da DL' {
+                                HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                switch on mapRequestFields.get('COD_FLUSSO'){
+                                    when 'E150F'{
+                                        utlTechData.handleE150Flow(mapRequestFields, ord);
+                                    }
+                                    when '0300' {
+                                        utlTechData.handle300Flow(mapRequestFields, ord);
+                                    }
+                                }
                             }
                             when 'Amm. Precheck KO SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');

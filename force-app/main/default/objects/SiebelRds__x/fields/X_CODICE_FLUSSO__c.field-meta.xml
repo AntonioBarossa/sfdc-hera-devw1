@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_CODICE_FLUSSO</label>
+    <label>Codice flusso</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

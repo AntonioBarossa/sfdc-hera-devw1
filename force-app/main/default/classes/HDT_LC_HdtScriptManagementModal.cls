@@ -21,6 +21,7 @@ public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_F
         //for vocal order, you start from order father but some sections must be looped for each child order
         HDT_LC_HdtScriptManagementModal scriptFormatter = new HDT_LC_HdtScriptManagementModal();
         scriptFormatter.childRecordIdentifier=childRecordIdentifier;
+        system.debug(processName);
         return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
@@ -42,40 +43,44 @@ public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_F
     }
 
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
-        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
-
-        List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
-        system.debug('fields to query '+allFieldsToQuery);
-        String textToFormat='';
-        SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
-        system.debug('id '+recordId);
         List<HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_WRP_ScriptOutput>();
 
-        for(ScriptConfig__c section : process.ChildSections__r){
-            if(section.isChildLoopEvaluated__C){
-                //here the check is run for each child of the context object
-                //for each object visible, a section copy is generated
-                system.debug(record);
-                system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
-                for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
-                    if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
-                        String additionalLabel=String.isBlank(childRecordIdentifier)? '' :
-                         ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
-                        listSectionWrappers.add(
-                            createSectionWrapper(section, child, additionalLabel)
-                        );
+        List<ScriptConfig__c> processList = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED];
+        if (!processList.isEmpty()){
+            ScriptConfig__c process= processList[0];
+
+            List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
+            system.debug('fields to query '+allFieldsToQuery);
+            String textToFormat='';
+            SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
+            system.debug('id '+recordId);
+
+            for(ScriptConfig__c section : process.ChildSections__r){
+                if(section.isChildLoopEvaluated__C){
+                    //here the check is run for each child of the context object
+                    //for each object visible, a section copy is generated
+                    system.debug(record);
+                    system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
+                    for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
+                        if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
+                            String additionalLabel=String.isBlank(childRecordIdentifier)? '' :
+                            ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
+                            listSectionWrappers.add(
+                                createSectionWrapper(section, child, additionalLabel)
+                            );
+                        }
                     }
+                    continue;
+
                 }
-                continue;
 
+
+                if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
+                    listSectionWrappers.add(
+                        createSectionWrapper(section, record)
+                    );
+                }            
             }
-
-
-            if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
-                listSectionWrappers.add(
-                    createSectionWrapper(section, record)
-                );
-            }            
         }
         return listSectionWrappers;
     }
