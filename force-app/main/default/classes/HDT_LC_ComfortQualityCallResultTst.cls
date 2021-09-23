@@ -16,7 +16,7 @@ public with sharing class HDT_LC_ComfortQualityCallResultTst {
         Test.startTest();
         Boolean result = HDT_LC_ComfortQualityCallResult.init(activityList[0].Id);
         System.assertEquals(true, result, 'The method worked when given the Id of an Activity(Custom) with Type__c equals Quality Call');
-        System.assertEquals(false, result, 'The method worked, the result is not false');
+        System.assertNotEquals(false, result, 'The method worked, the result is not false');
         Test.stopTest();    
     }
 }
