@@ -13,11 +13,11 @@ public  class HDT_WS_MotoreVas {
     * @description Send VAS activation callout
     * @author gabriele.rota@webresults.it | 2021-07-12 
     * @param orderId  
-    * @return HDT_WS_Response 
+    * @return HDT_WS_ArrichmentDataEntityResponse 
     **/
-    public static HDT_WS_Response activationCallout(Id orderId){
+    public static HDT_WS_ArrichmentDataEntityResponse activationCallout(Id orderId){
         HDT_UTL_VasManagement.HDT_WRP_VASReq req = HDT_UTL_VasManagement.getActivationRequest(orderId);
-        HDT_WS_Response res = (HDT_WS_Response) HDT_WS_HTTPServiceCall.sendRequest('VAS.Activation', req,HDT_WS_ArrichmentDataEntityResponse.class);
+        HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest('VAS.Activation', req,HDT_WS_ArrichmentDataEntityResponse.class);
         return res;
     } 
 
@@ -25,11 +25,11 @@ public  class HDT_WS_MotoreVas {
     * @description Send VAS deactivation callout
     * @author gabriele.rota@webresults.it | 2021-07-12 
     * @param caseId  
-    * @return HDT_WS_Response 
+    * @return HDT_WS_ArrichmentDataEntityResponse 
     **/
-    public static HDT_WS_Response deactivationCallout(Id caseId){
+    public static HDT_WS_ArrichmentDataEntityResponse deactivationCallout(Id caseId){
         HDT_UTL_VasManagement.HDT_WRP_VASReq req = HDT_UTL_VasManagement.getDeactivationRequest(caseId);
-        HDT_WS_Response res = (HDT_WS_Response) HDT_WS_HTTPServiceCall.sendRequest('VAS.Deactivation', req,HDT_WS_ArrichmentDataEntityResponse.class);
+        HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest('VAS.Deactivation', req,HDT_WS_ArrichmentDataEntityResponse.class);
         return res;
     }
 }

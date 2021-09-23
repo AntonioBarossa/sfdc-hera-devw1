@@ -33,11 +33,21 @@ public class HDT_WS_HTTPServiceCall {
             HTTPResponse res = h.send(req);
             System.debug('*************RESP:' + res.getBody());
             System.debug('*************STATUS:' + res.getStatusCode());
+
+            //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
+            Case logCase = new Case();
+            logCase.Causal__c = 'CALLOUT-'+nomeApi;
+            logCase.Note__c = JSON.serializePretty(request);
+            logCase.Description = res.getStatusCode()+'\n'+res.getBody();
+            insert logCase;
+
             resp = (HDT_WS_Response)JSON.deserialize(res.getBody(), respClass);
             resp.statusCode = res.getStatusCode();
+
         }catch(Exception e){
             System.debug('************ERROR SEND Request');
             System.debug('************:' + e.getMessage());
+            resp.exceptionMessage = e.getMessage();
         }
 		System.debug('***********:response:' + r);
         return resp;
@@ -80,6 +90,7 @@ public class HDT_WS_HTTPServiceCall {
         }catch(Exception e){
             System.debug('************ERROR SEND Request');
             System.debug('************:' + e.getMessage());
+            resp.exceptionMessage = e.getMessage();
         }
 		System.debug('***********:response:' + r);
         return resp;
@@ -134,6 +145,7 @@ public class HDT_WS_HTTPServiceCall {
         }catch(Exception e){
             System.debug('************ERROR SEND Request');
             System.debug('************:' + e.getMessage());
+            resp.exceptionMessage = e.getMessage();
         }
 		System.debug('***********:response:' + r);
         return resp;
