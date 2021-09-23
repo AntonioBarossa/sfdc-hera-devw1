@@ -399,7 +399,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         sapIntegration.requestType = '';
         
         //TESTING
-        HDT_WRP_SelfReadingResponse result = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
+        HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse result = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
         
         //ASSERTS
         System.assertEquals(null, result);
