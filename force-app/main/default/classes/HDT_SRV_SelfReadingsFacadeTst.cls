@@ -219,6 +219,45 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
     }
     
+    //generateJsonCheckAutolettura
+    @isTest
+    private static void generateJsonCheckAutoletturaTest() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - generateJsonCheckAutoletturaTest';
+		System.debug(debugString);
+        
+        //SETUP
+        HDT_WRP_GenericSapIntegration inputParams;
+        
+        //TESTING
+        HDT_WRP_GenericSapIntegration result = HDT_SRV_SelfReadings.generateJsonCheckAutolettura(inputParams);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
+    }
+    
+    
+    //generateJsonInvioLetture
+    @isTest
+    private static void generateJsonInvioLettureTest() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - generateJsonInvioLettureTest';
+		System.debug(debugString);
+        
+        //SETUP
+        HDT_WRP_GenericSapIntegration inputParams;
+        
+        //TESTING
+        HDT_WRP_GenericSapIntegration result = HDT_SRV_SelfReadings.generateJsonInvioLetture(inputParams);
+        
+        //ASSERTS
+        System.assertEquals(null, result);
+        
+    }
+    
     
     
     
