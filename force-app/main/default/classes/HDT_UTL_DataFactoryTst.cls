@@ -714,7 +714,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			reading.ReadingValue9__c = 1;
 			reading.ReadingRegister9__c = 'TST';
 			
-			reading.CaseGas__c = caseId;
+			reading.CaseEle__c = caseId;
 			
 			readings.add(reading);
 		}
