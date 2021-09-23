@@ -406,7 +406,15 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
     }
     
+    //handleResponseCheckAutolettura - RESPONSE CODE NOT 200 OR 201
     
+    
+    
+    //handleResponseInvioLetture - RESPONSE CODE NOT 200 OR 201
+    //NB: POTENZIALMENTE SUPERFLUO
+    
+    //handleResponseInvioLettureForzato - RESPONSE CODE NOT 200 OR 201
+    //NB: POTENZIALMENTE SUPERFLUO
     
     
     
