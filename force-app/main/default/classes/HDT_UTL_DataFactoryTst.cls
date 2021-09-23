@@ -601,6 +601,91 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return caseList;
 	}
 	
+	//AUTOLETTURA
+	public static List<Case> createCaseAutolettura(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_AUTOLETTURA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
+	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			/*
+			//CAMPI USATI PER READINGS NON-GAS
+			
+			reading.ReadingValue1__c = 1;
+			reading.ReadingRegister1__c = 'TST';
+			
+			*/
+			
+			reading.CaseGas__c = caseId;
+			
+			//METER
+			reading.ReadingRegisterMeter__c = 'TST';
+			reading.ReadingValueMeter__c = 1;
+			reading.ReadingBandMeter__c = 'TE';
+			reading.ReadingDateMeter__c = Date.today();
+			reading.ReadingDigitNumberMeter__c = 'TE';
+			reading.ReadingSerialNumberMeter__c = 'SERIAL_CORR';
+			reading.ReadingTypeMeter__c = 'READING_TYPE_METER';
+			reading.ReadingUnitMeter__c = 'TST';
+			
+			//CORRECTOR
+			reading.ReadingValueCorrector__c = 1;
+			reading.ReadingRegisterCorrector__c = 'TST';
+			reading.ReadingBandCorrector__c = 'TE';
+			reading.ReadingDateCorrector__c = Date.today();
+			reading.ReadingDigitNumberCorrector__c = 'TE';
+			reading.ReadingSerialNumberCorrector__c = 'SERIAL_CORR';
+			reading.ReadingTypeCorrector__c = 'READING_TYPE_CORRECTOR';
+			reading.ReadingUnitCorrector__c ='TST' ;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
+	}
+	
 	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
