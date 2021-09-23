@@ -18,6 +18,7 @@ export default class HdtManageScriptCard extends LightningElement {
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
+    @api hasLink;
 
     htmlScriptList;
     scriptIndex;
@@ -98,13 +99,20 @@ export default class HdtManageScriptCard extends LightningElement {
                 recordId : this.recordId, 
                 childRecordIdentifier : this.childAdditionalInfo
             });
-            console.log(this.htmlScriptList);
-            console.log("ok deploy")
-            this.scriptIndex=0;
+            if(this.htmlScriptList.length==0){
+                this.showToast('error', 'Non è disponibile lo script per questa campagna!');
+                this.closeModal();
+            }else{
+                console.log(this.htmlScriptList);
+                console.log("ok deploy")
+                this.scriptIndex=0;
+            }
+
             //this.openModal=true;
         }catch(e){
             console.log(e.body.message);
             this.showGenericErrorToast();
+            this.closeModal();
         }
     }
 
@@ -130,5 +138,9 @@ export default class HdtManageScriptCard extends LightningElement {
         if(btConferma){
             btConferma.disabled=false;
         }
+    }
+
+    closeModal(){
+        this.dispatchEvent(new CustomEvent('close'));
     }
 }

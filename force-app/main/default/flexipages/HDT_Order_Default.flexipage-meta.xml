@@ -495,6 +495,9 @@
                             <value>Order.Escalation</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Order.HDT_ChangePriority</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Order.HDT_CreateDistributorApointment</value>
                         </valueListItems>
                         <valueListItems>

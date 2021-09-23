@@ -1853,6 +1853,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_ElegibilityCriteriaCheck</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2286,10 +2290,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_HerokuAddressSearch</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WS_InstallmentPlans</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
