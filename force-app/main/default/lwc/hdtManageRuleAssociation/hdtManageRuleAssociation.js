@@ -2,23 +2,23 @@ import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 
-import cl_CreateTitle from '@salesforce/label/c.ProdOptAssociationCreateTitle';
-import cl_DeleteTitle from '@salesforce/label/c.ProdOptAssociationDeleteTitle';
-import cl_DeleteSection from '@salesforce/label/c.ProdOptAssociationDeleteSection';
-import cl_CreateSection from '@salesforce/label/c.ProdOptAssociationCreateSection';
+import cl_CreateTitle from '@salesforce/label/c.ConfRuleCreateTitle';
+import cl_DeleteTitle from '@salesforce/label/c.ConfRuleDeleteTitle';
+import cl_DeleteSection from '@salesforce/label/c.ConfRuleDeleteSection';
+import cl_CreateSection from '@salesforce/label/c.ConfRuleCreateSection';
 import cl_ConfirmSelection from '@salesforce/label/c.ProdOptAssociationConfirmSelection';
 import cl_Close from '@salesforce/label/c.ProdOptAssociationClose';
-import cl_CloseDeleteBody from '@salesforce/label/c.ProdOptAssociationCloseDeleteBody';
-import cl_CloseCreateBody from '@salesforce/label/c.ProdOptAssociationCloseCreateBody';
-import cl_ConfimSelectBody from '@salesforce/label/c.ProdOptAssociationConfimSelectBody';
+import cl_CloseDeleteBody from '@salesforce/label/c.ConfRuleCloseDeleteBody';
+import cl_CloseCreateBody from '@salesforce/label/c.ConfRuleCloseCreateBody';
+import cl_ConfimSelectBody from '@salesforce/label/c.ConfRuleConfimSelectBody';
 import cl_ConfirmFilterTitle from '@salesforce/label/c.ProdOptAssociationConfirmFilterTitle';
-import cl_ConfirmFilterDeleteBody from '@salesforce/label/c.ProdOptAssociationConfirmFilterDeleteBody';
-import cl_ConfirmFilterCreateBody from '@salesforce/label/c.ProdOptAssociationConfirmFilterCreateBody';
-import cl_ConfimSelectBodyDelete from '@salesforce/label/c.ProdOptAssociationConfimSelectBodyDelete';
+import cl_ConfirmFilterDeleteBody from '@salesforce/label/c.ConfRuleConfirmFilterDeleteBody';
+import cl_ConfirmFilterCreateBody from '@salesforce/label/c.ConfRuleConfirmFilterCreateBody';
+import cl_ConfimSelectBodyDelete from '@salesforce/label/c.ConfRuleConfimSelectBodyDelete';
 import cl_ResultText from '@salesforce/label/c.ProdOptAssociationResultText';
 import cl_NoResultText from '@salesforce/label/c.ProdOptAssociationNoResultText';
 
-export default class HdtManageProductAssociation extends NavigationMixin(LightningElement) {
+export default class HdtManageRuleAssociation extends NavigationMixin(LightningElement) {
 
     tableLabels = {
         cl_CreateTitle,
@@ -39,8 +39,8 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
     };
 
     @api recordid;
-    objApiName = 'SBQQ__ProductOption__c';
-    productOptionObj;
+    objApiName = 'SBQQ__ConfigurationRule__c';
+    configurationRuleObj;
     showWelcom = false;
     showSearchOffer = false;
     showCreateRecord = false;
@@ -56,48 +56,30 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     label = {
         mainTitle: 'Associazione',
-        associationTitleLabel: 'Associazione massiva del Prodotto Opzione',
-        deleteTitleLabel: 'Rimozione massiva del Prodotto Opzione'
+        associationTitleLabel: 'Associazione massiva della Product Rule',
+        deleteTitleLabel: 'Rimozione massiva della Product Rule'
     };
 
     enableCreate = false;
     enableDelete = false;
 
     connectedCallback(){
-        console.log('>>> PRODUCT OPTION Id: ' + this.recordid);
+        console.log('>>> RULE Id: ' + this.recordid);
+        this.enableCreate = true;
+        this.enableDelete = true;
+        this.showWelcom = true;
     }
 
-    @wire(getRecord, { recordId: '$recordid', fields: ['Product2.Family', 'Product2.Status__c'] })
-    wiredProduct({ error, data }) {
-        if (data) {
-            console.log('>>> PRODUCT OPTION Family -> ' + data.fields.Family.value);
-            console.log('>>> PRODUCT OPTION  status -> ' + data.fields.Status__c.value);
-            
-            var notAvailableType = ['Offerta commerciale', 'VAS Prodotto', 'VAS Servizio'];
-            var availableStatusForCreation = ['In Sviluppo', 'Confermata', 'Vendibile', 'Scaduta'];
-            var availableStatusForDeletion = ['In Sviluppo', 'Confermata'];
+    //@wire(getRecord, { recordId: '$recordid', fields: ['Product2.Family', 'Product2.Status__c'] })
+    //wiredProduct({ error, data }) {
+    //    if (data) {
 
-            if(availableStatusForCreation.includes(data.fields.Status__c.value)){
-                this.enableCreate = true;
-            }
-
-            if(availableStatusForDeletion.includes(data.fields.Status__c.value)){
-                this.enableDelete = true;
-            }
-
-            if(notAvailableType.includes(data.fields.Family.value)){
-                this.showError = true;
-                this.errorMessage = 'Questa funzionalità è riservata a Bonus, Contributi, VAS, Promozioni';
-            } else {
-                this.showWelcom = true;
-            }
-
-        } else if (error) {
-            for(var key in error){
-                console.log('# Error -> ' + key + ' - ' + error[key]);
-            }
-        }
-    }
+    //    } else if (error) {
+    //        for(var key in error){
+    //            console.log('# Error -> ' + key + ' - ' + error[key]);
+    //        }
+    //    }
+    //}
 
     handleClick(event){
         console.log('### recordid -> ' + this.recordid);
@@ -140,13 +122,9 @@ export default class HdtManageProductAssociation extends NavigationMixin(Lightni
 
     }
 
-    saveRecord(event){
-        //console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionId);
-        //this.productOptionId = event.detail.productOptionId;
-        
-        console.log('>>> RECORD CONFIGURED -> ' + event.detail.productOptionObj);
-        this.productOptionObj = event.detail.productOptionObj;
-
+    saveRecord(event){        
+        console.log('>>> RECORD CONFIGURED -> ' + event.detail.configurationRuleObj);
+        this.configurationRuleObj = event.detail.configurationRuleObj;
         this.showCreateRecord = false;
         this.showSearchTable = true;
     }

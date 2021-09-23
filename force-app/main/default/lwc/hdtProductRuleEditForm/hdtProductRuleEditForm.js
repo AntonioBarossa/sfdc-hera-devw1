@@ -1,14 +1,14 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement,api } from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getFieldSet from '@salesforce/apex/HDT_LC_ProductAssociation.getFieldSet';
 import { deleteRecord } from 'lightning/uiRecordApi';
 
-export default class HdtProductOptionEditForm extends LightningElement {
+export default class HdtProductRuleEditForm extends LightningElement {
 
-    @api optionalSkuId;
-    productOptionId;
-    productOptionObj;
-    spinner = true;
+    @api ruleId;
+    configurationRuleId;
+    configurationRuleObj;
+    spinner = false;
 
     fieldsList = [];
 
@@ -17,39 +17,41 @@ export default class HdtProductOptionEditForm extends LightningElement {
     }
 
     getFieldSetList(){
-      getFieldSet({objApiName: 'SBQQ__ProductOption__c', fieldSetName: 'EditFormOnLwc'})
-      .then(result => {
-          console.log('>>> GET FIELD SET LIST');
-          console.log('>>> ' + JSON.stringify(result));
+        this.fieldsList.push('SBQQ__Active__c');
+        this.fieldsList.push('SBQQ__AscendingNestedLevel__c');
+        /*getFieldSet({objApiName: 'SBQQ__ConfigurationRule__c', fieldSetName: 'fieldSetName'})
+        .then(result => {
+            console.log('>>> GET FIELD SET LIST');
+            console.log('>>> ' + JSON.stringify(result));
 
-          if(result.length>0){
+            if(result.length>0){
 
-            result.forEach((fieldApiName) => {
-              this.fieldsList.push(fieldApiName);
-            });
+                result.forEach((fieldApiName) => {
+                    this.fieldsList.push(fieldApiName);
+                });
 
-            this.spinner = false;
-          } else {
+                this.spinner = false;
+            } else {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Errore nel recupero dei dati',
+                        message: error.message,
+                        variant: 'error',
+                    }),
+                );
+            }
+
+        })
+        .catch(error => {
+            console.log('# getFieldSet #');
             this.dispatchEvent(
-              new ShowToastEvent({
-                  title: 'Errore nel recupero dei dati',
-                  message: error.message,
-                  variant: 'error',
-              }),
-          );
-          }
-
-      })
-      .catch(error => {
-          console.log('# getFieldSet #');
-          this.dispatchEvent(
-              new ShowToastEvent({
-                  title: 'Error while retriving fieldset',
-                  message: error.message,
-                  variant: 'error',
-              }),
-          );
-      });
+                new ShowToastEvent({
+                title: 'Error while retriving fieldset',
+                message: error.message,
+                variant: 'error',
+                }),
+            );
+        });*/
     }
 
     handleLoad(event){
@@ -62,34 +64,33 @@ export default class HdtProductOptionEditForm extends LightningElement {
       event.preventDefault();
       let fields = event.detail.fields; 
       //console.log(JSON.stringify(fields));
-      fields.SBQQ__Number__c = 1;
       this.template.querySelector('lightning-record-edit-form').submit(fields);
     }
 
     handleSuccess(event) {
         try{
           console.log('>>>> handleSuccess');
-          console.log('>>>> PRODUCT OPTION ID: ' + event.detail.id);
+          console.log('>>>> PRODUCT RULE ID: ' + event.detail.id);
 
-          this.productOptionId = event.detail.id;
+          this.configurationRuleId = event.detail.id;
 
           const evt = new ShowToastEvent({
-              title: "Prodotto opzione",
+              title: "Regola prodotto",
               message: "Configurazione eseguita correttamente",
               variant: "success"
           });
           this.dispatchEvent(evt);
 
-          var criteriaObj = {};
+          var obj = {};
           this.template.querySelectorAll('lightning-input-field').forEach((field) => {
-            criteriaObj[field.fieldName] = field.value;
+            obj[field.fieldName] = field.value;
           });
   
-          var jsonRecord = JSON.stringify(criteriaObj);
+          var jsonRecord = JSON.stringify(obj);
 
           const saverecord = new CustomEvent("saverecord", {
-            //detail: {productOptionId: event.detail.id}
-            detail: {productOptionObj: jsonRecord}
+            //detail: {configurationRuleId: event.detail.id}
+            detail: {configurationRuleObj: jsonRecord}
           });
       
           // Dispatches the event.
@@ -117,7 +118,7 @@ export default class HdtProductOptionEditForm extends LightningElement {
     }
 
     delete(event) {
-      deleteRecord(this.productOptionId)
+      deleteRecord(this.configurationRuleId)
           .then(() => {
               console.log('>>>> RECORD DELETED');
           })
