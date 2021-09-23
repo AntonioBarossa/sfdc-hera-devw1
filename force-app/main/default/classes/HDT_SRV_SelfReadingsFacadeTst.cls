@@ -6,8 +6,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
-    private static Boolean fail_WS_1 = false;
-    private static Boolean fail_WS_2 = false;
+    private static Boolean throwException1 = false;
+    private static Boolean throwException2 = false;
     private static String myCommodity = 'Gas';
     private static Boolean isMeterCorrector = true;
     
@@ -152,7 +152,51 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     
     
-    ///Eccezione intenzionale
+    ///Eccezione intenzionale - Causata con submitRequest
+    @isTest
+    private static void executeTest_Exception() {
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - executeTest_Exception';
+		System.debug(debugString);
+        
+        //SETUP
+        throwException1 = true;
+        mySetup();
+        
+        //PREPARAZIONE ARGS
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String,String> parameters = new Map<String,String>();
+        parameters.put('requestType', 'CheckAutolettura');
+        
+        
+        Map<String,Object> argsMap = new Map<String,Object>();
+        argsMap.put('method', '');//NB: PARAMETRO NON UTILIZZATO IN CODICE
+        argsMap.put('sender', myCase);
+        argsMap.put('parameters', parameters);
+        
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
+        
+        //TESTING
+        Boolean caught = false;
+        
+        HDT_SRV_SelfReadingsFacade objToTest = new HDT_SRV_SelfReadingsFacade();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
+        
+        //ASSERTS
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
+        
+    }
     
     
     
@@ -169,6 +213,12 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
             //DEBUG
             System.debug('myWebServiceMock - respond');
             HttpResponse response = new HttpResponse();
+            
+            if(throwException1){
+                throw new AuraHandledException('Fake Exception for Tests - Exception 1');
+            } else if(throwException2){
+                throw new AuraHandledException('Fake Exception for Tests - Exception 2');
+            }
             
             //CheckAutolettura
             if(request.getEndpoint().equalsIgnoreCase('Callout:SelfReadingsCheck')){
