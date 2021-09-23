@@ -2213,4 +2213,41 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return comfQualityCallList;
 	}
 
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 23/09/2021
+	 */
+	public static List<User> createUserCommunity(Integer amount, Boolean doInsert){
+
+		List<User> userList=new List<User>();
+        Profile p = [SELECT Id FROM Profile WHERE Name LIKE '%Community%' LIMIT 1];
+
+		for (Integer i=0; i<amount; i++){
+
+			User user=new User();
+
+            user.UserName = 'test'+i+'_HDT_UTL_HelperMethodsTst@test.com';
+            user.FirstName = 'Test-First';
+            user.LastName = 'Test-Last';
+            user.Alias = 'test';
+            user.email = 'test' + math.random() + '@test.com';
+            user.CommunityNickName = string.valueOf(math.random()).substring(0,6);
+            user.ProfileID = p.id;
+            user.TimeZoneSidKey = 'America/New_York'; 
+            user.LocaleSidKey = 'en_US';
+            user.EmailEncodingKey = 'UTF-8'; 
+            user.LanguageLocaleKey = 'en_US';
+
+			
+			userList.add(user);
+		}
+
+		if (doInsert){
+
+			insert userList;
+		}
+
+		return userList;
+	}
+
 }
