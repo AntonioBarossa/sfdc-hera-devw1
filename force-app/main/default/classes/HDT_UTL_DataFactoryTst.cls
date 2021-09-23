@@ -687,7 +687,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 	
 	//reading meter/corrector
-	public static List<Reading__c> createServicePointMeterCorrector(Integer amount, Boolean doInsert, String caseId){
+	public static List<Reading__c> createReadingMeterCorrector(Integer amount, Boolean doInsert, String caseId){
 		
 		List<Reading__c> readings = new List<Reading__c>();
 		

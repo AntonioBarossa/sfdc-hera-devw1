@@ -17,7 +17,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     
     //TEST SETUP
-    //TODO: POSSIBILE CHE DEBBA ESSERE USATO CASE CON TIPO AD HOC RELATIVO ALLE LETTURE
     private static void mySetup(){
         
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -26,7 +25,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         
         ServicePoint__c servPoint;
-        servPoint = HDT_UTL_DataFactoryTst.createServicePointMeterCorrector(1, false)[0];
+        servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
         servPoint.CommoditySector__c = myCommodity;
         insert servPoint;
         
@@ -35,9 +34,9 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //READING
         if(isMeterCorrector){
-            List<Reading__c> readings = HDT_UTL_DataFactoryTst.createServicePointMeterCorrector(1, true, caseList[0].Id);
+            List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReadingMeterCorrector(1, true, caseList[0].Id);
         } else {
-            List<Reading__c> readings = HDT_UTL_DataFactoryTst.createServicePoint(1, true, caseList[0].Id);
+            List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReading(1, true, caseList[0].Id);
         }
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
