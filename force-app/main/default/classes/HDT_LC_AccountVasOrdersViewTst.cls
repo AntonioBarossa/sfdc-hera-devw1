@@ -1,7 +1,7 @@
 /*
  * @author Laureta Demishaj (laureta.demishaj@dunegroup.it)
  * @date 21/09/2021
- * @description HDT_UTL_CaseProcess for Test Classes
+ * @description HDT_LC_AccountVasOrdersView for Test Classes
  * @history Laureta Demishaj – 21/09/2021 – Created class
 */
 @isTest
@@ -11,13 +11,14 @@ public with sharing class HDT_LC_AccountVasOrdersViewTst {
     @isTest
     public static void getOrdersTst() {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        Id accountId = accList[0].Id;
+        Id accountId          = accList[0].Id;
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accountId, 'Bozza' );
         
         Test.startTest();
-            List<Order> response = new List<Order>();
-            response = HDT_LC_AccountVasOrdersView.getOrders(accountId);
-           System.assert(response != null);
+            List<Order> response = HDT_LC_AccountVasOrdersView.getOrders(accountId);
+            List<order> expectedResponse = [SELECT Id FROM Order];
+            System.assertEquals(expectedResponse, response, 'This method worked when given an Id that has orders');
+            System.assertEquals(null, response, 'This method worked when given an Account Id that has orders, the result is not null');
         Test.stopTest();
     }
 
@@ -38,7 +39,8 @@ public with sharing class HDT_LC_AccountVasOrdersViewTst {
             response = HDT_LC_AccountVasOrdersView.getOrders(accountId);
             
         } catch (Exception e) {
-            System.assertEquals('Script-thrown exception', e.getMessage());
+            System.assertEquals('Script-thrown exception', e.getMessage(), 'As expected, if the logged user has minimum access the method cant run');
+            System.assertNotEquals('', e.getMessage(), 'The exception throws an error message');
         }
             
          
