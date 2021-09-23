@@ -55,7 +55,7 @@ public class HDT_BA_CampaignBollettaTst {
                 i++;
             }
             insert campMembers;
-          
+
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('campaignBolletta','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
 
         }
@@ -63,8 +63,12 @@ public class HDT_BA_CampaignBollettaTst {
     
     @isTest
     static void test1(){
-       
+             
         String campaignId = [SELECT id from Campaign where Name='Test Campaign' limit 1].id;     
+        List<CampaignMember> listaCMpreBatch = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference'];
+        for(CampaignMember c : listaCMpreBatch)
+            c.isWsBollettaInvoked__c=false;
+        update listaCMpreBatch;
         
         Test.startTest();
         HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(campaignId);        
@@ -75,10 +79,9 @@ public class HDT_BA_CampaignBollettaTst {
         List<CampaignMember> listaCM = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference'];
         for(CampaignMember cm : listaCM)
             if(cm.isWsBollettaInvoked__c = true)
-                contBollette++;               
+            contBollette++;               
         
-
-        System.assertEquals(50, contBollette);
-        
+        System.assertEquals(50, contBollette, 'All the CampaignMember field isWsBollettaInvoked__c are set to true after the batch');
+        System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c is updated by the batch');
     }
 }
