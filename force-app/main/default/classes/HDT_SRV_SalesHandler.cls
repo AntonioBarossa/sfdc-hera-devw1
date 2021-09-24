@@ -173,6 +173,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Esito OK da DL' {
                                 HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
