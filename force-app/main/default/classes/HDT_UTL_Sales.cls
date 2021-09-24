@@ -372,7 +372,7 @@ public with sharing class HDT_UTL_Sales {
     }
 
     public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountid,String orderid,id recordtypeid){
-        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid);
+        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid, RecordingLink__c='https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}');
     }
     public static wrts_prcgvr__Activity__c instanceActValidazioneDocumentale(String accountid,String orderid,id recordtypeid){
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);
