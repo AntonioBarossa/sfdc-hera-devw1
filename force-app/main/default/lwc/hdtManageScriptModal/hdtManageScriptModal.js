@@ -15,6 +15,9 @@
 
 
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+import isDecisionalScript from '@salesforce/apex/HDT_LC_DecisionalScriptController.isDecisionalScript';
 
 export default class HdtManageScriptModal extends LightningElement {
 
@@ -24,8 +27,8 @@ export default class HdtManageScriptModal extends LightningElement {
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api linkReitek;
     @api hasLink;
+    isDecisional = false;
     openModal;
-
     
     connectedCallback(){// stub parameters for test purpose
         if(!this.scriptProcessName){
@@ -36,20 +39,21 @@ export default class HdtManageScriptModal extends LightningElement {
         }
     }
 
-
-    
-
     showModal(){
-        this.openModal=true;
+        isDecisionalScript({processName: this.scriptProcessName}).then(isDecisional => {
+            this.isDecisional = isDecisional;
+            this.openModal = true;
+        },error => {
+            this.dispatchEvent(new ShowToastEvent({
+                variant: 'error',
+                title: 'Non è stato possibile determinare il tipo dello script',
+                message: error
+            }));
+        })
     }
 
     closeModal(){
         this.openModal=false;
     }
-
-
-
-
-
 
 }

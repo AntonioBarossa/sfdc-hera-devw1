@@ -31,9 +31,18 @@ Changes:
                 <div class="slds-modal__content slds-var-p-around_medium">
 
                     <!-- Inserire la card -->
-                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
-                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} has-link={hasLink} onclose={closeModal}>
-                    </c-hdt-manage-script-card>
+                    
+                    <template if:false={isDecisional}>
+                        <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
+                            child-additional-info={childAdditionalInfo} link-reitek={linkReitek}>
+                        </c-hdt-manage-script-card>
+                    </template>
+
+                    <template if:true={isDecisional}>
+                        <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId}
+                            child-additional-info={childAdditionalInfo} link-reitek={linkReitek}>
+                        </c-hdt-manage-script-decisional-card>
+                    </template>
 
                 </div>
             </div>
