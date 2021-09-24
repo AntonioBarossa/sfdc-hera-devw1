@@ -27,11 +27,13 @@
 
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:if isTrue="{!v.isCommunity}"><!--HRAWRM-616   22/09/2021 -->
-        <c:hdtPrivacyAcquisitionCom myrecord="{!v.recordId}" aura:id="childlwc" />
+  
+        <c:hdtPrivacyAcquisitionCom myrecord="{!v.recordId}"  />
 
     </aura:if>
+
     <aura:if isTrue="{!v.mySpinner}">
-        <lightning:spinner variant="brand" size="medium"  />
+        <lightning:spinner variant="brand" size="medium" alternativeText="Loading"  />
     </aura:if><!--HRAWRM-616   22/09/2021 -->
     
 </aura:component>
