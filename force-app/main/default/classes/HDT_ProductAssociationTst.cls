@@ -146,8 +146,9 @@ public class HDT_ProductAssociationTst {
 
         Test.startTest();
         //test confirm selection button
-        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
-        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', null, recordList, executionType, filterString, dmlContext);
+        Object respObj1 = HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordList, executionType, filterString, dmlContext);
+        Object respObj2 = HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', null, recordList, executionType, filterString, dmlContext);
+
         //**** */
         for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' AND Name LIKE '%offertaExample%']){
             recordList.add(p.Id);
@@ -187,6 +188,12 @@ public class HDT_ProductAssociationTst {
         productOptionObj = JSON.serialize(prodOptionWrp);
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ProductOption__c', '', productOptionObj, recordListForException, executionType, filterString, dmlContext);
         Test.stopTest();
+
+        HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj obj1 = (HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj)respObj1;
+        HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj obj2 = (HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj)respObj2;
+        System.assertEquals(true, obj1.success,'L\'associazione è stata eseguita correttamente');
+        System.assertEquals(false, obj2.success,'Errore durante l\'elaborazione del prodotto opzione configurato');
+        
     }
 
     @isTest
