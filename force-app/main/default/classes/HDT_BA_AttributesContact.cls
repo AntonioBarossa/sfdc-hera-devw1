@@ -188,8 +188,9 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			
 			for (HDT_WRP_Attributes tempWrp : mapEmailAttributes.values()) {
 				row=String.isBlank(row)?row:row+'\n';
-				row=row+'hem:sha256:'+HDT_UTL_Utils.codingSha256(tempWrp.email)+'^';
-
+				String codeRow='hem:sha256:'+HDT_UTL_Utils.codingSha256(tempWrp.email)+'^';
+				row=row+codeRow;
+				
 				if (String.isNotBlank(tempWrp.contactCompany)) {
 					row = row+mapApiNameToAttribute.get('contactCompany')+':'+tempWrp.contactCompany+';';
 				}
@@ -288,9 +289,14 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 					row = row+mapApiNameToAttribute.get('accountCustomerQuality')+':'+tempWrp.accountCustomerQuality+';';
 				}
 				Integer indexSep  = row.lastIndexOf(';');
+				Integer indexSepAtt  = row.lastIndexOf('^');
+
 				Integer rowLenght = row.length();
 				if ((indexSep+1)==rowLenght) {
 					 row=row.substring(0, indexSep);
+				}
+				if ((indexSepAtt+1)==rowLenght) {
+					 row=row.replace(codeRow, '').removeEnd('\n');
 				}
 			}
 			if (String.isNotBlank(row)) {
