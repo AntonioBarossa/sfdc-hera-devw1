@@ -28,9 +28,13 @@ public class HDT_SCH_LeadExpiredSchedulerTst {
 
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];
     	System.assertEquals(1, jobsScheduled.size(), 'expecting one scheduled job');
+        System.assertNotEquals(0, jobsScheduled.size(),'not expecting scheduled job');
+        
 
         List<AsyncApexJob> jobsApexBatch = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'BatchApex'];
     	System.assertEquals(1, jobsApexBatch.size(), 'expecting one apex batch job');
+        System.assertNotEquals(0, jobsScheduled.size(),'not expecting apex batch job');
+
 
     }
 
