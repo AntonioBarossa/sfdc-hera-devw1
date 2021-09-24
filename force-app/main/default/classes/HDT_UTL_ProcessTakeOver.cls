@@ -225,14 +225,16 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
                 makeServiceRequest();
                 //TODO Andrea
-                // ServiceRequest__c sReq = HDT_SRV_ServiceRequest.createRecord(currentProcess.currentServiceRequest)              ;
-                // wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(sReq)   ;
-
-                // if(!result.incompatibilities.isEmpty()){
-                //     String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
-                //     HDT_SRV_ServiceRequest.deleteRecord(sReq);
-                //     throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
-                // }
+                insert currentProcess.currentServiceRequest;
+                wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(currentProcess.currentServiceRequest)   ;
+                if(!result.incompatibilities.isEmpty()){
+                    String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    delete currentProcess.currentServiceRequest;
+                    //TO DO da gestire l'eccezione    
+                    //throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
+                    System.debug('--------------Compatibility Error----------');
+                    System.debug(compatibilityMessage);
+                }
                 //TODO Andrea
                 currentProcess.currentOrderItem.OrderId             = currentProcess.currentChildOrder.Id       ;
                 currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id   ;
