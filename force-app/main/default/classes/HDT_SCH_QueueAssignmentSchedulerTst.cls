@@ -41,8 +41,8 @@ public class HDT_SCH_QueueAssignmentSchedulerTst {
         
 		Test.startTest();
         
-        HDT_SCH_PraxidiaReclami pr = new HDT_SCH_PraxidiaReclami();
-        String someSchJob = System.schedule('xxxPartnerQueuesxxx', CRON_EXP , pr);
+        HDT_SCH_PraxidiaReclami prec = new HDT_SCH_PraxidiaReclami();
+        String someSchJob = System.schedule('xxxPartnerQueuesxxx', CRON_EXP , prec);
         
         HDT_SCH_QueueAssignmentScheduler qas = new HDT_SCH_QueueAssignmentScheduler(accs);
         String jobID = System.schedule('Label of the job', CRON_EXP , qas);
