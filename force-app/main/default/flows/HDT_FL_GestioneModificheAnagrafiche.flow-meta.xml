@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Check_Criterio_Eleggibilita</name>
+        <label>Check Criterio Eleggibilita</label>
+        <locationX>2402</locationX>
+        <locationY>837</locationY>
+        <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Criterio_Eleggibilita_0</targetReference>
+        </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>CheckCriterioEleggibilita</assignToReference>
+            <name>abortProcess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>CheckCriteriaWarning</assignToReference>
+            <name>abortProcessWarning</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Gestione_Allineamento_Anagrafica</name>
         <label>Gestione Allineamento Anagrafica</label>
         <locationX>1106</locationX>
@@ -94,6 +120,31 @@
             <targetReference>InputFieldsModAnag</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Criterio_Eleggibilita_0</name>
+        <label>Check Criterio Eleggibilita</label>
+        <locationX>2466</locationX>
+        <locationY>957</locationY>
+        <defaultConnector>
+            <targetReference>Refresh_Ruolo_Contatto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Superato</defaultConnectorLabel>
+        <rules>
+            <name>Non_Superato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckCriterioEleggibilita</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Eleggibilita_Warning</targetReference>
+            </connector>
+            <label>Non Superato</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Processo</name>
         <label>Check Processo</label>
@@ -264,8 +315,8 @@
     <decisions>
         <name>Check_Processo_2</name>
         <label>Check Processo 2</label>
-        <locationX>2610</locationX>
-        <locationY>491</locationY>
+        <locationX>2790</locationX>
+        <locationY>517</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_Da_Inviare</targetReference>
         </defaultConnector>
@@ -383,6 +434,31 @@
                 <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
             </connector>
             <label>Titolare</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>CheckCriteriEleggibilita</name>
+        <label>Check Criteri Eleggibilita</label>
+        <locationX>2390</locationX>
+        <locationY>680</locationY>
+        <defaultConnector>
+            <targetReference>Refresh_Ruolo_Contatto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
+        <rules>
+            <name>Variazione_Anagrafica_Cliente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Refresh_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione Anagrafica Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Criterio_Eleggibilita</targetReference>
+            </connector>
+            <label>Variazione Anagrafica Cliente</label>
         </rules>
     </decisions>
     <formulas>
@@ -511,11 +587,11 @@
     <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>2275</locationX>
-        <locationY>489</locationY>
+        <locationX>2256</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Refresh_Ruolo_Contatto</targetReference>
+            <targetReference>CheckCriteriEleggibilita</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -532,8 +608,8 @@
     <recordLookups>
         <name>Refresh_Ruolo_Contatto</name>
         <label>Refresh Ruolo Contatto</label>
-        <locationX>2432</locationX>
-        <locationY>489</locationY>
+        <locationX>2601</locationX>
+        <locationY>573</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo_2</targetReference>
@@ -1046,8 +1122,8 @@
     <recordUpdates>
         <name>Set_Phase_Completata</name>
         <label>Set Phase Completata</label>
-        <locationX>2899</locationX>
-        <locationY>592</locationY>
+        <locationX>3079</locationX>
+        <locationY>618</locationY>
         <connector>
             <targetReference>Update_Contatto_non_titolare</targetReference>
         </connector>
@@ -1070,8 +1146,8 @@
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>2904</locationX>
-        <locationY>410</locationY>
+        <locationX>3084</locationX>
+        <locationY>436</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1094,8 +1170,8 @@
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>2617</locationX>
-        <locationY>781</locationY>
+        <locationX>2797</locationX>
+        <locationY>807</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1115,8 +1191,8 @@
     <recordUpdates>
         <name>Update_Contatto_non_titolare</name>
         <label>Update Contatto non titolare</label>
-        <locationX>3085</locationX>
-        <locationY>592</locationY>
+        <locationX>3265</locationX>
+        <locationY>618</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1160,8 +1236,8 @@
     <recordUpdates>
         <name>Update_Esercizio_Diritti_Privacy</name>
         <label>Update Esercizio Diritti Privacy</label>
-        <locationX>2618</locationX>
-        <locationY>198</locationY>
+        <locationX>2798</locationX>
+        <locationY>224</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1483,6 +1559,75 @@ Inserisci manualmente i seguenti campi:</description>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Eleggibilita_Warning</name>
+        <label>Screen Eleggibilita Warning</label>
+        <locationX>2380</locationX>
+        <locationY>1085</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Gestione_Annullamento_0</targetReference>
+        </connector>
+        <fields>
+            <name>WarningDisplay</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;{!CheckCriteriaWarning}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;Annullamento della prestazione.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>flowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>SelectBillingProfileScreen</name>
         <label>Selezione Billing Profile</label>
         <locationX>1098</locationX>
@@ -1615,8 +1760,8 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>3093</locationX>
-        <locationY>409</locationY>
+        <locationX>3273</locationX>
+        <locationY>435</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1667,6 +1812,31 @@ Inserisci manualmente i seguenti campi:</description>
             <name>recordToCancell</name>
             <value>
                 <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento_0</name>
+        <label>Gestione Annullamento</label>
+        <locationX>2447</locationX>
+        <locationY>1217</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1748,6 +1918,23 @@ Inserisci manualmente i seguenti campi:</description>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CheckCriteriaWarning</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CheckCriterioEleggibilita</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>CustomMetadataProcessType</name>

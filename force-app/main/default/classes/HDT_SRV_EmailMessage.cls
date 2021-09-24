@@ -1,14 +1,28 @@
 public with sharing class HDT_SRV_EmailMessage {
-
+    
+    //DEBUG
+    public static final String CLASS_NAME = 'HDT_SRV_EmailMessage';
+    
+    //DATA
+    public static final String CASE_TYPE1 = 'Dichiarazione di intento';
+    public static final String CASE_TYPE2 = 'Comunicazione di Fallimento';
+    public static final String CASE_TYPE3 = 'Richiesta Parere';
+    
     public HDT_SRV_EmailMessage() {
 
     }
+    
     public static void insertEmailMessage(EmailMessage m){
         HDT_UTL_DatabaseService.insertSObject(m);
     }
 
 
     public static void checkEmailSender(List<EmailMessage> emailList){
+        
+		//DEBUG
+		String debugString = CLASS_NAME + ' - checkEmailSender';
+		System.debug(debugString + ' - emailList size: ' + emailList.size());
+        
         Map<SObject,Id> mapEmailCase = new Map<SObject,Id>();
         String userEmail = UserInfo.getUserEmail();
         Id parentId;
@@ -43,9 +57,15 @@ public with sharing class HDT_SRV_EmailMessage {
 
 
     public static void checkIncomingEmails(List<EmailMessage> emailList){
+        
+		//DEBUG
+		String debugString = CLASS_NAME + ' - checkIncomingEmails';
+		System.debug(debugString + ' - emailList size: ' + emailList.size());
+        
         Map<SObject,Id> mapEmailCase = new Map<SObject,Id>();
         Id parentId;
         String objectName='';
+        
         for(EmailMessage email : emailList){
             parentId = email.parentId;
             if(parentId != null){
@@ -68,63 +88,81 @@ public with sharing class HDT_SRV_EmailMessage {
             manageEmailCase(mapEmailCase);
         }
     }
-
-    private static void manageEmailCase(Map<SObject,Id> params){
+    
+    //params: mappa EmailMessage ---> Parent Id (Case)
+    private static void manageEmailCase(Map<SObject, Id> params){
+        
+		//DEBUG
+		String debugString = CLASS_NAME + ' - manageEmailCase';
+		System.debug(debugString + ' - params size: ' + params.size());
+        
         HDT_QR_Case caseQr = new HDT_QR_Case();
-        List<Id> caseIdList = params.values();
-        String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName,Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
-        List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         Map<Id,Case> mapIdCase = new Map<Id,Case>();
         List<Case> caseToUpdate = new List<Case>();
-        List<Case> caseList = (List<Case>) recordList;
         Case parentRecord = new Case();
+        
+        List<Id> caseIdList = params.values();
+        String idString = String.join( new List<Id>(caseIdList) , '\',\'');
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
+        List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
+        List<Case> caseList = (List<Case>) recordList;
+        
         try{
             parentRecord = caseQr.getParentCaseById(caseList[0].ParentId);
-            System.debug('###Found Records --> ' + parentRecord);
-        } catch(Exception e){
-            System.debug(e.getMessage());
+            System.debug(debugString + ' - ###Found Records --> ' + parentRecord);
+        } catch (Exception e) {
+            System.debug(debugString + e.getMessage());
         }
+        
         for(Case single : (List<Case>)recordList){
             mapIdCase.put(single.Id, single);
         }
+        
+        //
         for (SObject emailObj : params.keySet()) {
             EmailMessage email = (EmailMessage) emailObj;
+            
             if(email.Incoming){
                 Case caseRecord = mapIdCase.get(email.ParentId);
-                if(caseRecord.Type == 'Comunicazione di Fallimento'
-                || caseRecord.Type == 'Dichiarazione di intento'
-                || caseRecord.Type == 'Richiesta Parere'){
+                System.debug(debugString + ' - Incoming Mail, case type: ' + caseRecord.Type);
+                
+                if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type)){
                         caseRecord.Phase__c = 'Risposta Ricevuta';
                         //Gestione avanzamento ParentCase di Reclamo
-                        if(caseRecord.Type == 'Richiesta Parere'){
-                            System.debug('### Inside Parere Condition ###');
+                        if(CASE_TYPE3.equals(caseRecord.Type)){
+                            System.debug(debugString + ' - ### Inside Parere Condition ###');
                             caseRecord.Phase__c = 'Completata';
                             if(parentRecord != null){
-                                System.debug('### Inside Parent Condition ###');
+                                System.debug(debugString + ' - ### Inside Parent Condition ###');
                                 parentRecord.Phase__c = 'Risposta Parere Ricevuta';
                                 caseToUpdate.add(parentRecord);
+                                System.debug(debugString + ' - ### adding parentRecord --> ' + parentRecord);
                             }
                         }
                 }
                 caseToUpdate.add(caseRecord);
-                System.debug('### Case To Update --> ' + caseToUpdate);
-            }else{
+                System.debug(debugString + ' - ### adding caseRecord --> ' + caseRecord);
+                
+            } else {
                 Case caseRecord = mapIdCase.get(email.ParentId);
-                if(caseRecord.Type == 'Comunicazione di Fallimento'
-                || caseRecord.Type == 'Dichiarazione di intento'
-                || caseRecord.Type == 'Richiesta Parere'){
-                    if(caseRecord.type == 'Richiesta Parere'){
+                System.debug(debugString + ' - NOT incoming Mail, case type: ' + caseRecord.Type);
+                
+                if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type)){
+                    if(CASE_TYPE3.equalsIgnoreCase(caseRecord.Type)){
                         caseRecord.Phase__c = 'In attesa risposta parere';
                     } else {
                         caseRecord.Phase__c = 'In attesa risposta Mail';
                     }
                 }
                 caseToUpdate.add(caseRecord);
+                System.debug(debugString + ' - ### adding caseRecord --> ' + caseRecord);
             }
         }
+        
+        System.debug(debugString + ' - ### Case To Update --> ' + caseToUpdate);
         if(caseToUpdate.size()>0){
             Boolean result = HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         }
     }
+    
 }

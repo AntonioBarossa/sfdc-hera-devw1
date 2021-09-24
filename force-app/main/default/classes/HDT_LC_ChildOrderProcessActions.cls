@@ -251,6 +251,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
                 
             }
+            when 'HDT_RT_ConnessioneConAttivazione' {
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    orderToUpdate.Instance326__c = 'Richiesto';
+                } else {
+                    orderToUpdate.Instance326__c = 'Richiesto';
+                }
+            }
+            when 'HDT_RT_TemporaneaNuovaAtt' {
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                }
+            }
         }
         
         //comfort quality call start

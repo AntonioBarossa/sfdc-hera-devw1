@@ -43,8 +43,8 @@ public with sharing class HDT_LC_CambioUsoTst {
             Boolean sucessCase = HDT_LC_CambioUso.updateCase(tCase.Id, tCase.SupplyType__c, tCase.UseChangeCharge__c, tCase.PhoneNumber__c, tCase.ServicePointType__c, tCase.Resident__c, tCase.Note__c);
             
             
-            System.assertEquals(true, sucessCase != null);
-			System.assertNotEquals(true, sucessCase == null);
+            System.assertEquals(true, sucessCase != null, 'sucessCase is not null');
+			System.assertNotEquals(true, sucessCase == null, 'sucessCase is null');
             Test.stopTest();
         }
     }

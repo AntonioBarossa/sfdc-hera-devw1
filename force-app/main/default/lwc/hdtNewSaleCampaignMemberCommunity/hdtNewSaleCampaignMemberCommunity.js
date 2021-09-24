@@ -13,7 +13,7 @@ export default class hdtNewSaleCampaignMemberCommunity extends NavigationMixin(L
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: '',
-                        message: 'Si prega di avviare la vendita direttamente sul Account corretto',
+                        message: 'Per procedere con la vendita si richiede di andare nel Account e procedere con Catalogo servizi', //HRAWRM-626 22/09/2021 EC
                         variant: "error"
                     })
                 );
