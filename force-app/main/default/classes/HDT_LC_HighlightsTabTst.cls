@@ -1,5 +1,5 @@
 @isTest
-public class HDT_BA_SelfReadingsTst {
+public class HDT_LC_HighlightsTabTst {
     
     @TestSetup
     static void setup(){
@@ -19,6 +19,7 @@ public class HDT_BA_SelfReadingsTst {
         caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
         caseList[0].Phase__c  = 'Inviata a SAP';
         caseList[0].Type  = 'Autolettura da cliente';
+        caseList[0].Cluster__c  = 'Autolettura';
     
         insert caseList;
         
@@ -32,23 +33,28 @@ public class HDT_BA_SelfReadingsTst {
     }
 
     @IsTest
-    static void testBatchExecution(){
+    static void testGetKpis(){
 
-        Case cs = [SELECT Id, Phase__c, LastModifiedDate, Type FROM Case LIMIT 1];
+        Account acc = [SELECT Id FROM Account LIMIT 1];
 
-        System.debug('Start Case Phase: ' + cs.Phase__c);
-        System.debug('Start Case Type: ' + cs.Type);
-        System.debug('Start Case LastModifiedDate: ' + cs.LastModifiedDate);
+        Case cs = [SELECT Id, Status, Cluster__c, Reason__c, Phase__c FROM Case LIMIT 1];
 
+        System.debug('Case Infomation: ');
+        System.debug('Case Status: ' + cs.Status);
+        System.debug('Case Cluster__c: ' + cs.Cluster__c);
+        System.debug('Case Reason__c: ' + cs.Reason__c);
+        System.debug('Case Phase__c: ' + cs.Phase__c);
+        
         Test.startTest();
 
-        HDT_BA_SelfReadings sr = new HDT_BA_SelfReadings();
-        Id batchId = Database.executeBatch(sr);
+        Map<String,Object> kpis = HDT_LC_HighlightsTab.getKpis(acc.Id);
+
+        System.assert(kpis != null, 'Map == null');
+        System.assertEquals(1, kpis.get('opportunities'), 'opportunities < 1');
+        System.assertEquals(1, kpis.get('dossier_open'), 'dossier_open < 1');
+        System.assertEquals(0, kpis.get('dossier_ko'), 'dossier_ko > 0');
 
         Test.stopTest();
-
-        Case updatedCase = [SELECT Id, Phase__c FROM Case LIMIT 1];
-        System.assertEquals('Esito KO da SAP simulato', updatedCase.Phase__c, 'Phase != Esito KO da SAP simulato');
         
     }
 
