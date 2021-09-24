@@ -8337,6 +8337,26 @@
 	</fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ActivityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ControllingField__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ProcessField__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.ProcessValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DiscountListP__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
