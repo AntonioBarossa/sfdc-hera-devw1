@@ -304,7 +304,6 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
