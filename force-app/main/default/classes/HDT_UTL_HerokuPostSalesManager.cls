@@ -325,7 +325,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     else if(nextPhase.equalsIgnoreCase('Esito OK da DL') && recordCase.Cluster__c.equalsIgnoreCase('Morosità'))
                     {
                         currentCase.ExecutionDate__c = dtMaxPrev;
-                        currentCase.PaymentDate__c	= dtMaxPrev;
+                        if(recordCase.Type.equalsIgnoreCase('Riattivazione Fornitura'))
+                        {
+                        	currentCase.PaymentDate__c	= dtMaxPrev;
+                        }
                     }
                 } catch(Exception e){
                     System.debug('DT_MAX_PREV assignment Exception -> ' + e.getMessage());
@@ -380,7 +383,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
-            if(paymentDate != null && paymentDate != '')
+            if(paymentDate != null && paymentDate != '' && recordCase.Type.equalsIgnoreCase('Riattivazione Fornitura'))
             {
                 try
                 {
