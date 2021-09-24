@@ -29,7 +29,7 @@ public class HDT_LC_DownloadAttachmentAzureTst {
      }
 
   @isTest
-	static void test1(){
+	static void testGetUrlNameDocumentLink(){
         String msg;
         String targetId = 'test';
         try{
@@ -37,7 +37,8 @@ public class HDT_LC_DownloadAttachmentAzureTst {
         }catch(Exception e){
             msg = e.getMessage();
         }
-        System.assertEquals('Script-thrown exception', msg);
+        System.assertEquals('Script-thrown exception', msg, 'The method throws an exception because the input is not a real id');
+        System.assertNotEquals('', msg, 'The exception message should not be empty');
         
     }
 }
