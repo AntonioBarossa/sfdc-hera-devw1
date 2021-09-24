@@ -32,12 +32,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
         },
-    'SospensioneCanoneRaiCalamità' => new Map<String,List<String>>
+    'SospensioneCanoneRaiCalamita' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami','Preventivi'},
             'Type' => new List<String>
-                {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
+                {'Gestione Calamità','Reclamo Scritto/Rich. Info'}
         },
     'VerificaPareggioFittizioCanoneRai' => new Map<String,List<String>>
         {
@@ -55,6 +55,16 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
                 {'Reclami', 'Fatturazione', 'Variazioni', 'Annullamento', 'Disattivazioni'}, 
             'Type' => new List<String>
                 {'Comportamento Venditori HC'}
+        },
+    'ContrattiModificaContrattoPreAttivazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Generiche Attivazioni', 'Preventivi'}
+        },
+    'DocumentaleCopiaContrattoFirmatoNonRicevuto' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Disattivazioni', 'Annullamento'}
         },
     'ChiusuraContatore' => new Map<String,List<String>>
         {
