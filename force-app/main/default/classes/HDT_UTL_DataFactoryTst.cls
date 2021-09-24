@@ -2395,4 +2395,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return trigSendList;
 	}
+
+	public static List<HDT_FulfillmentDateMatrix__c> createFullfillmentDateMatrix (Integer amount, Boolean doInsert) {
+
+		List<HDT_FulfillmentDateMatrix__c> fullfDateMatrixList = new List<HDT_FulfillmentDateMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			HDT_FulfillmentDateMatrix__c fullfDateMatrix = new HDT_FulfillmentDateMatrix__c(
+				Name = 'testFulDatMx'+i
+			);
+
+			fullfDateMatrixList.add(fullfDateMatrix);
+		}
+
+		if (doInsert){
+
+			insert fullfDateMatrixList;
+		}
+
+		return fullfDateMatrixList;
+	}
 }

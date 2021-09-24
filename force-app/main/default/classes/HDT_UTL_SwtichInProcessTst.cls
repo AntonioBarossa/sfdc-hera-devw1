@@ -12,14 +12,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 	static void makeData(){
 
 		HDT_UTL_DataFactoryTst.pClickInstance();
-		HDT_UTL_DataFactoryTst.pClickCasePhase();
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();
-
-		String rtId=constants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
-		String ordRtId=constants.ORDER_RECORDTYPEID_DEFAULT;
-		HDT_UTL_DataFactoryTst.newPhaseTransition('In Attesa Approvazione', 'Bozza', rtId, 'HDT_RT_DocCopiaContratto');
-		HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', rtId, 'HDT_RT_DocCopiaContratto');
-		HDT_UTL_DataFactoryTst.newPhaseTransition('Registrazione validata  Firmato/Inviato', 'Bozza', ordRtId, 'HDT_RT_Default');
 
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
@@ -50,7 +43,15 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			orders[1].ServicePoint__c=servPoints[0].Id;
 			insert orders;
 
-			HDT_FulfillmentDateMatrix__c fullfillDateMtx=new HDT_FulfillmentDateMatrix__c(Name='testFulDatMx', OriginMarket__c='Libero', ProcessType__c='Switch In', Commodity__c='Energia Elettrica', VoltageLevel__c='BT', SupplyType__c='Non Domestico', FulfillmentDateFrom__c=Date.newInstance(2021, 09, 11), FulfillmentDateTo__c=Date.newInstance(2021, 10, 10), ActivationDate__c=Date.newInstance(2021, 11, 01));
+			List<HDT_FulfillmentDateMatrix__c> fullfillDateMtx=HDT_UTL_DataFactoryTst.createFullfillmentDateMatrix(1, false);
+			fullfillDateMtx[0].OriginMarket__c='Libero';
+			fullfillDateMtx[0].ProcessType__c='Switch In';
+			fullfillDateMtx[0].Commodity__c='Energia Elettrica';
+			fullfillDateMtx[0].VoltageLevel__c='BT';
+			fullfillDateMtx[0].SupplyType__c='Non Domestico';
+			fullfillDateMtx[0].FulfillmentDateFrom__c=Date.newInstance(2021, 09, 11);
+			fullfillDateMtx[0].FulfillmentDateTo__c=Date.newInstance(2021, 10, 10);
+			fullfillDateMtx[0].ActivationDate__c=Date.newInstance(2021, 11, 01);
 			insert fullfillDateMtx;
 		}
 	}
@@ -173,7 +174,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 
 			List<HDT_FulfillmentDateMatrix__c> tFulDatMat=[SELECT Id, Name, OriginMarket__c, Commodity__c, VoltageLevel__c, SupplyType__c, FulfillmentDateFrom__c, FulfillmentDateTo__c, ActivationDate__c, ProcessType__c
 			                                               FROM HDT_FulfillmentDateMatrix__c
-			                                               WHERE Name='testFulDatMx'
+			                                               WHERE Name='testFulDatMx0'
 			                                               LIMIT 1];
 
 			tOrder[0].SignedDate__c=Date.today();
