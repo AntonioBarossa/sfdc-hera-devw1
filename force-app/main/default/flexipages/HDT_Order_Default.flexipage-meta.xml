@@ -379,6 +379,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Validazione_Documenti</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.IsVAS__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
