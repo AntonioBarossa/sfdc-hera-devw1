@@ -43,6 +43,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
 
+        Map<String,Order> mapParentOrder = new Map<String,Order>();
+        List<String> ordParentsIds = new List<String>();
+        for (Order ord : newOrderList) {
+            ordParentsIds.add(ord.ParentOrder__c);
+        }
+        List<Order> orderPadreDocs = orderQr.getParentOrderDocs(ordParentsIds);
+        for (Order ordPadre : orderPadreDocs) {
+            mapParentOrder.put(ordPadre.Id, ordPadre);
+        }
 
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
@@ -87,9 +96,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && order.Phase__c == 'Quality Call OK'
                 && isMonitoringList.contains(order.AgencyCode__c)) {
 
-                    List<Order> orderPadreDocs = orderQr.getParentOrderDocs(order);
-
-                    String newPhase = (HDT_LC_OrderDossierWizardActions.checkRequiredDocs(order) && HDT_LC_OrderDossierWizardActions.checkRequiredDocs(orderPadreDocs[0])) ? 'Comunicazione verso Heroku' : 'In attesa validazione';
+                    String newPhase = (HDT_LC_OrderDossierWizardActions.checkRequiredDocs(order) && HDT_LC_OrderDossierWizardActions.checkRequiredDocs(mapParentOrder.get(order.ParentOrder__c))) ? 'Comunicazione verso Heroku' : 'In attesa validazione';
                     order.Phase__c = newPhase;
                     DateTime nowDateTime = DateTime.now();
                     order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
