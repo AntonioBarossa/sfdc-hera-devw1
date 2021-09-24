@@ -248,7 +248,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
                 currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
-            }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
+            }
+            //@frpanico aggiunto DATA_EVENTO poiche DT_INVIO_DL sembra non venir inviato
+            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '')
+            {
+                currentCase.SendToDistributorDate__c = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
+            }
+            if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
                 String importo = reqWrp.requestMap.get('IMP_PREV_DIST');
                 if(importo.indexOf(',')>-1){
                     importo = importo.replace(',', '.');
