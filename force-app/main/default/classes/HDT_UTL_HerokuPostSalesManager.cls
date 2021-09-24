@@ -322,7 +322,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     {
                         currentCase.PowerReductionDate__c = dtMaxPrev;
                     }
-                    else if(nextPhase.equalsIgnoreCase('Esito OK da DL') && recordCase.Cluster__c.equalsIgnoreCase('Morosità'))
+                    else if((nextPhase.equalsIgnoreCase('Esito OK da DL') || nextPhase.equalsIgnoreCase('Esito KO da DL')) && recordCase.Cluster__c.equalsIgnoreCase('Morosità'))
                     {
                         currentCase.ExecutionDate__c = dtMaxPrev;
                         if(recordCase.Type.equalsIgnoreCase('Riattivazione Fornitura'))
