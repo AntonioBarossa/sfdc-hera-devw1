@@ -241,7 +241,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentPackage__c,
             IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
             RegionalAdditional__c,                            //@frpanico 16/09/21 
-            isTransition__c
+            isTransition__c,
+            QuotationType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -481,7 +482,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             DistributorFormula__c,
             VASType__c,
-            DateComfortCall__c
+            DateComfortCall__c,
+            DocumentPackage__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -851,11 +853,9 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
-            AccountId,
-            Account.ActiveMonitoring__c 
+            AgencyCode__c
             from Order 
             Where id = :id
-            AND Account.ActiveMonitoring__c = true
             WITH SECURITY_ENFORCED
         ];
     }
@@ -868,5 +868,9 @@ public inherited sharing class HDT_QR_Order {
     public HDT_ExciseTranscode__mdt getExciseTranscode(String exciseString)
     {
         return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];
+    }
+
+    public List<Order> getParentOrderDocs(Order ord){
+        return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id = :ord.ParentOrder__c WITH SECURITY_ENFORCED];
     }
 }
