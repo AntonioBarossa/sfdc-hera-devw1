@@ -71,7 +71,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Variazioni'}, 
             'Type' => new List<String>
-                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti'}
+                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti', 'Comunicazione di Fallimento'}
         },
     'RecessoperAltriMotivi' => new Map<String,List<String>>
         {
@@ -138,7 +138,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
-    'VerificaTitolaritàPOD/PDR' => new Map<String,List<String>>
+    'VerificaTitolaritaPOD/PDR' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
