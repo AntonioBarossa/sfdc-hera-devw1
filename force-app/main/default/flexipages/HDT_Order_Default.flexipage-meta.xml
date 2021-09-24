@@ -424,7 +424,7 @@
                         <valueListItems>
                             <value>CustomButton.Order.HDT_AnnullamentoPrestazione</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>NE</operator>
@@ -449,6 +449,11 @@
                                     <leftValue>{!Record.NotCancellable__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Activated</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

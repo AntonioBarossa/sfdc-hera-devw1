@@ -291,12 +291,34 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String note = recordCase.Note__c != null?recordCase.Note__c:'';
                 currentCase.Note__c =  nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE') + '\n' + note;
             }
-            if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
+            if(reqWrp.requestMap.get('DT_MAX_PREV') != null && reqWrp.requestMap.get('DT_MAX_PREV') != ''){
+                HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                Date dtMaxPrev = null;
+                try
+                {
+                    dtMaxPrev = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
+                }
+                catch(Exception e)
+                {
+                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                }
+                if(dtMaxPrev == null)
+                {
+                    try
+                    {
+                       dtMaxPrev = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    }
+                    catch(Exception e)
+                    {
+                         System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                    }
+                }
                 try{
-                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
-                    Date dtMaxPrev = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
-                    currentCase.QuotationValidityDate__c = dtMaxPrev;
-                    if(nextPhase.equalsIgnoreCase('Esito OK Riduzione Potenza'))
+                    if(recordCase.Cluster__c == 'Preventivi')
+                    {
+                    	currentCase.QuotationValidityDate__c = dtMaxPrev;
+                    }
+                    else if(nextPhase.equalsIgnoreCase('Esito OK Riduzione Potenza'))
                     {
                         currentCase.PowerReductionDate__c = dtMaxPrev;
                     }
@@ -306,7 +328,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.PaymentDate__c	= dtMaxPrev;
                     }
                 } catch(Exception e){
-                    System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                    System.debug('DT_MAX_PREV assignment Exception -> ' + e.getMessage());
                 }
             }
             //Data Annullamento
@@ -362,7 +384,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             {
                 try
                 {
-                    Date payDate = enrichSrv.getDateFromString(paymentDate);
+                    Date payDate = Date.valueOf(paymentDate);
                     currentCase.PaymentDate__c = payDate;
                 }
                 catch(Exception e)
