@@ -21,6 +21,19 @@
     }
     </aura:html> 
     <aura:handler name="init" action="{!c.init}" value="{!this}" /> 
+    <aura:attribute name="isCommunity" type="boolean" default="false"/><!--HRAWRM-616   22/09/2021 -->
+    <aura:attribute name="mySpinner" type="boolean" default="false"/>
+    <aura:attribute name="myrecordid" type="String" /><!--HRAWRM-616   22/09/2021 -->
+
     <lightning:workspaceAPI aura:id="workspace" />
-    <lightning:spinner variant="brand" size="medium" />
+    <aura:if isTrue="{!v.isCommunity}"><!--HRAWRM-616   22/09/2021 -->
+  
+        <c:hdtPrivacyAcquisitionCom myrecord="{!v.recordId}"  />
+
+    </aura:if>
+
+    <aura:if isTrue="{!v.mySpinner}">
+        <lightning:spinner variant="brand" size="medium" alternativeText="Loading"  />
+    </aura:if><!--HRAWRM-616   22/09/2021 -->
+    
 </aura:component>

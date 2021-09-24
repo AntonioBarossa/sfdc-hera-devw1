@@ -96,18 +96,24 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 console.log("*****DentroConnection");
                 this.toolbarAttributes = event.detail.eventObj;
                 this.uuid = this.toolbarAttributes.id;
-                callData = event.detail.CallData;
-                this.endCallDateTime = this.toolbarAttributes.endTime;
-                this.callDuration = (parseInt(this.toolbarAttributes.time_duration_sec) / 60).toFixed(2); // convert in minutes
-                this.waitingTime = (parseInt(this.toolbarAttributes.waitingTime) / 60).toFixed(2); // convert in minutes
-                if (this.activityId != null) {
-                    this.trackActivity('updatectivity');
+                if(this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound'){
+
+                    this.saveScript('Positivo', true);
                 }
-                let ecid2 = window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID");
-                this.ecid = ecid2;
-                console.log('*********ConnectionCleared:2' + ecid2);
-                this.sendStatus(ecid2);
-                console.log('*********ConnectionCleared:');
+                else{
+                    callData = event.detail.CallData;
+                    this.endCallDateTime = this.toolbarAttributes.endTime;
+                    this.callDuration = (parseInt(this.toolbarAttributes.time_duration_sec) / 60).toFixed(2); // convert in minutes
+                    this.waitingTime = (parseInt(this.toolbarAttributes.waitingTime) / 60).toFixed(2); // convert in minutes
+                    if (this.activityId != null) {
+                        this.trackActivity('updatectivity');
+                    }
+                    let ecid2 = window.TOOLBAR.CONTACT.GetCallDataValueByName(this.toolbarAttributes, "ECID");
+                    this.ecid = ecid2;
+                    console.log('*********ConnectionCleared:2' + ecid2);
+                    this.sendStatus(ecid2);
+                    console.log('*********ConnectionCleared:');
+                }
                 break;
             case 'POPUP':
                 //if (count == 0) {
@@ -196,6 +202,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @api saveScript(esito, isResponsed) {
         window.TOOLBAR.EASYCIM.saveScript(this.uuid, esito, isResponsed);
     }
+
 
     @api getSlot() {
         console.log('getSlot');

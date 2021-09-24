@@ -541,11 +541,6 @@
                 <label>In registrazione</label>
             </value>
             <value>
-                <fullName>Registrazione da validare</fullName>
-                <default>false</default>
-                <label>Registrazione da validare</label>
-            </value>
-            <value>
                 <fullName>Plico Firmato da validare</fullName>
                 <default>false</default>
                 <label>Plico Firmato da validare</label>
@@ -574,6 +569,11 @@
                 <fullName>Plico  Firmato/Inviato</fullName>
                 <default>false</default>
                 <label>Plico  Firmato/Inviato</label>
+            </value>
+            <value>
+                <fullName>Plico Firmato da inviare</fullName>
+                <default>false</default>
+                <label>Plico Firmato da inviare</label>
             </value>
             <value>
                 <fullName>BL010</fullName>
