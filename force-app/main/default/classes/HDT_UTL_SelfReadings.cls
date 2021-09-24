@@ -164,12 +164,15 @@ public inherited sharing class HDT_UTL_SelfReadings {
             }
             when 'KO' {
                 c.Phase__c = 'Check preliminari KO';
+                HDT_UTL_DatabaseService.upsertSObject(c); // necessario per doppia transizione di fase.
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 c.Description = nowDateFormat + ': '  + request.outcomeDescription;
+                c.Phase__c = 'KO Definitivo';
+                c.Status = 'Closed';
             }
             when else {
                 c.Phase__c = 'Attesa check preliminari';
-                c.Type = 'In Lavorazione';
+                c.Status = 'In Lavorazione';
             }
         }
 
