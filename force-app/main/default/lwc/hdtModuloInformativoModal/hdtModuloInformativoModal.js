@@ -21,7 +21,7 @@ export default class HdtModuloInformativoModal extends LightningElement {
     showSms = false;
     get moduloInformativoSendTypeOptions() {
         let options = [
-            { label: 'Email', value: 'Email' },
+            { label: 'Invia', value: 'Invia' },
             { label: 'Stampa', value: 'Stampa' }
         ];
 
@@ -37,7 +37,7 @@ export default class HdtModuloInformativoModal extends LightningElement {
         this.moduloSendTypeSelection = event.target.value;
 
         switch (this.moduloSendTypeSelection) {
-            case 'Email':
+            case 'Invia':
                 this.showEmail = true;
                 this.showStampa = false;
                 this.showSms = false;
@@ -79,7 +79,7 @@ export default class HdtModuloInformativoModal extends LightningElement {
         this.loading = true;
         
         switch (this.moduloSendTypeSelection) {
-            case 'Email':
+            case 'Invia':
                 this.handleEmail();
                 break;
             case 'Stampa':
