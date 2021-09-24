@@ -199,7 +199,7 @@ public inherited sharing class HDT_UTL_Dependencies {
 
             try{
                 srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
-                String recordTypeVAS = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+                String rtVaS = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
                 for(ServiceRequest__c sr : incomingProcesses){
                     Boolean valueToUpdate = true;
                     Boolean servicePoint = false;
@@ -256,7 +256,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
-                                if(orderRecordType.equalsIgnoreCase(recordTypeVAS) && (orderToUpdate.OrderReference__c == null && orderToUpdate.IsBillableVas__c == false)){
+                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.IsBillableVas__c == false)){
                                     valueToUpdate = false;
                                 }
                                 if(valueToUpdate){
