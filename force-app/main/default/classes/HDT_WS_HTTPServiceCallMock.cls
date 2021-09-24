@@ -55,6 +55,26 @@ global with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         res.setStatusCode(404);
                     }
                 }
+
+                if (wsc.Name == 'CampagenDmDmpData') {
+                    HDT_WS_CampagenDmDmpDataResponse campDataRes = new HDT_WS_CampagenDmDmpDataResponse();               
+                    // dataresponse.data = new HDT_WS_RichCreBpCaResponse.dataResponseWrap();
+
+                    if (successfullReturn) {
+                        // dataresponse.status = 'success';
+                        // dataresponse.data.tipoAttivita = 'Errore';
+                        // dataresponse.data.codiceBP = 'test';
+                        // dataresponse.data.commenti = 'BP non rilevato';
+                        
+                        body = JSON.serialize(campDataRes);
+                        res.setStatusCode(200);
+                        res.setBody(body);
+                        
+                        
+                    } else {
+                        res.setStatusCode(404);
+                    }
+                }
             }
         }
 
