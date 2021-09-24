@@ -142,7 +142,8 @@ public inherited sharing class HDT_QR_QuoteLine {
         List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c group by ProductFamily__c  ];
         Set<String> famils = new Set<String>();
         for(AggregateResult ag : lgr){
-            famils.add((String) ag.get('fam'));
+            if(String.isNotBlank((String) ag.get('fam')))
+                famils.add((String) ag.get('fam'));
         }
         return [
             SELECT
