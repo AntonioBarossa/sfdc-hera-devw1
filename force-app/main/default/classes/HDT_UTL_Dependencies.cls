@@ -44,7 +44,7 @@ public inherited sharing class HDT_UTL_Dependencies {
             }
             if(orders.size()>0){
                 try{
-                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.IsBillableVas__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
                                     FROM ServiceRequest__c 
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
@@ -190,7 +190,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }
-            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
+            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.IsBillableVas__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
                                     + 'FROM ServiceRequest__c '
                                     + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
                                     + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
@@ -199,6 +199,7 @@ public inherited sharing class HDT_UTL_Dependencies {
 
             try{
                 srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
+
                 String rtVas = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
                 for(ServiceRequest__c sr : incomingProcesses){
                     Boolean valueToUpdate = true;
@@ -249,16 +250,14 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     casesToBeUpdated.add(caseToUpdate);
                                 }
                             }else if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_SALES)){
-                                Order orderToUpdate = [SELECT ID, RecordTypeId, OrderReference__c, IsBillableVas__c 
-                                                        FROM Order 
-                                                        WHERE ID =: sr.Order__c 
-                                                        WITH SECURITY_ENFORCED];
+                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,OrderReference__c=sr.Order__r.OrderReference__c,IsBillableVas__c=sr.Order__r.IsBillableVas__c);
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
                                 if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.IsBillableVas__c == false)){
                                     valueToUpdate = false;
                                 }
+                                
                                 if(valueToUpdate){
                                     ordersToBeUpdated.add(orderToUpdate);
                                 }
