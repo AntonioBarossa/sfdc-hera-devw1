@@ -25,7 +25,9 @@ public class HDT_WS_CampagenDmDmpDataRequestTst {
         HDT_WS_CampagenDmDmpDataRequest req = new HDT_WS_CampagenDmDmpDataRequest(runId,status,fileType,errorMessage,contentVersionIds);
         Test.stopTest();
         
-        System.assertEquals('expected status', req.status);
+        System.assertEquals('expected status', req.status, 'Value of the field status successfully set');
+        System.assertNotEquals(null, req.runId, 'Value of the field runId successfully set');
+        
     }
 
 }
