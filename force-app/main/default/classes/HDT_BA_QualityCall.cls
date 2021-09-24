@@ -139,6 +139,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
 
+        Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
+
         for (String ordId : orderActivityMap.keySet()) {
             if ( orderMap.get(ordId).Contact__c != null && !qualityCampaign.isEmpty()) {
 
@@ -165,12 +167,21 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     }
 
                 } else {
-                    campaignMembersInsert.add(new CampaignMember(
-                        ContactId = orderMap.get(ordId).Contact__c,
-                        CampaignId = qualityCampaign[0].Id,
-                        PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                        RelatedActivity__c = orderActivityMap.get(ordId).Id
-                    ));
+                    if (orderActivityMap.get(ordId).Id != null) {
+                        campaignMembersInsert.add(new CampaignMember(
+                            ContactId = orderMap.get(ordId).Contact__c,
+                            CampaignId = qualityCampaign[0].Id,
+                            PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                        ));
+
+                        notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
+                            ContactId = orderMap.get(ordId).Contact__c,
+                            CampaignId = qualityCampaign[0].Id,
+                            PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                        ));
+                    }
                 }
             }
         }
@@ -178,7 +189,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>>campaignMembersInsert: ' + campaignMembersInsert);
 
         if(!campaignMembersInsert.isEmpty()) {
-            insert campaignMembersInsert;
+            insert notDuplicatedCampToIns.values();
         }
 
         // campaignMembersUpdateAdd.addAll(campaignMembersUpdate);
