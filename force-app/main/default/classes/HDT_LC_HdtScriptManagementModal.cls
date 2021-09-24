@@ -21,6 +21,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         //for vocal order, you start from order father but some sections must be looped for each child order
         HDT_LC_HdtScriptManagementModal scriptFormatter = new HDT_LC_HdtScriptManagementModal();
         scriptFormatter.childRecordIdentifier=childRecordIdentifier;
+        system.debug(processName);
         return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
@@ -72,7 +73,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
                     if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
                         String additionalLabel=String.isBlank(childRecordIdentifier)? '' :
-                         ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
+                        ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
                         listSectionWrappers.add(
                             createSectionWrapper(section, child, additionalLabel)
                         );

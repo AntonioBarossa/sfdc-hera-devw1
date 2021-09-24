@@ -40,6 +40,13 @@
                 <elementReference>Get_Service_Point_0</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServicePointCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Service_Point_0.ServicePointCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Service_Point</targetReference>
         </connector>
@@ -185,6 +192,7 @@
         <object>ServicePoint__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>CommoditySector__c</queriedFields>
+        <queriedFields>ServicePointCode__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>

@@ -340,6 +340,11 @@
                 <default>false</default>
                 <label>Documenti non validati</label>
             </value>
+            <value>
+                <fullName>Iva e Accise da validare</fullName>
+                <default>false</default>
+                <label>Iva e Accise da validare</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

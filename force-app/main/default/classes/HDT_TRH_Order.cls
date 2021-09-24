@@ -27,11 +27,14 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
         
+       // HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
-        
+        HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
     }
     public override void afterUpdate() {
+        HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
         //Execute creation Activities 
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkSaveActivityContext(null);
@@ -42,7 +45,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
 
-        HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
+        // HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);
 
         //Handle 'Plico validato Firmato' case for Order Dossier
         HDT_UTL_OrderProcess.orderPhaseManagementAfterUpdate(trigger.new,trigger.old);

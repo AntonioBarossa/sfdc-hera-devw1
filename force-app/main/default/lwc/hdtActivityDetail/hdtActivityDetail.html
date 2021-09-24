@@ -2,26 +2,36 @@
     <template if:true={show}>
         <br></br>
         <template for:each={objectList} for:item="oggetto">
-            <div key={oggetto} title={oggetto}>
+            <div key={oggetto.api} title={oggetto}>
                 <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
-                    <lightning-accordion-section key={oggetto.api} name={oggetto.label} label={oggetto.label} class="slds-theme_shade slds-box slds-box_xx-small">
+                    <lightning-accordion-section name={oggetto.label} label={oggetto.label} class="slds-theme_shade slds-box slds-box_xx-small">
                         <lightning-card>
                             <lightning-record-view-form
                                 object-api-name={oggetto.api}
                                 record-id={oggetto.id}
                                 density="all">
-                                <lightning-layout key={oggetto.api} multiple-rows>
+                                <lightning-layout multiple-rows>
                                     <template for:each={oggetto.fields} for:item="field">
-                                
-                                        <lightning-layout-item key={field} size="6" padding="around-small" >
-
+                                        <lightning-layout-item key={field.fieldName} size="6" padding="around-small" >
                                             <div class="slds-border_bottom slds-p-bottom_x-small">
-                                                <lightning-output-field key={field}
-                                                    field-name={field} >
-                                                </lightning-output-field>
+                                                <!--START- costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile-->
+                                                <template if:true={field.isLink}>
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">{field.fieldName}</span>
+                                                        <div class="slds-form-element__control">
+                                                            <a href="#" class="slds-text-link_reset">
+                                                                <span data-id={field.fieldName} class="slds-text-link" onclick={redirectToRecord}>{field.fieldValue}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                                <!--END- costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile-->
+                                                <template if:false={field.isLink}><!-- costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile-->
+                                                    <lightning-output-field field-name={field.fieldName} >
+                                                    </lightning-output-field>
+                                                </template><!-- costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile-->
                                             </div>
                                         </lightning-layout-item>
-
                                     </template>
                                 </lightning-layout>
                             </lightning-record-view-form>

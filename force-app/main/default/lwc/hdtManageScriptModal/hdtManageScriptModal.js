@@ -26,6 +26,7 @@ export default class HdtManageScriptModal extends LightningElement {
     @api buttonLabel;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api linkReitek;
+    @api hasLink;
     isDecisional = false;
     openModal;
     
