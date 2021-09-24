@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Fatturazione','Variazioni','Generiche Attivazioni','Canone Rai'}
         },
-    'Contratti/BonusCommerciale' => new Map<String,List<String>>
+    'ContrattiBonusCommerciale' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Fatturazione', 'Variazioni', 'Annullamento', 'Disattivazioni'}, 
@@ -114,7 +114,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Verifica GDM'}
         },
-    'RitornoaFatturazioneBimestrale/Mensile' => new Map<String,List<String>>
+    'RitornoaFatturazioneBimestraleMensile' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
@@ -131,14 +131,14 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
         },
-    'Unificazione/SeparazioneBP-CA-Bolletta' => new Map<String,List<String>>
+    'UnificazioneSeparazioneBPCABolletta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
-    'VerificaTitolaritaPOD/PDR' => new Map<String,List<String>>
+    'VerificaTitolaritaPODPDR' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
@@ -162,7 +162,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami'}
         },
-    'CadutaLinea/ChiamataMuta' => new Map<String,List<String>>
+    'CadutaLineaChiamataMuta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
