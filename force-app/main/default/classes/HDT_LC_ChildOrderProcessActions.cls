@@ -186,14 +186,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Istanza 326
                     orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
-                    orderToUpdate.QuickQuote__c = 'Richiesto';
+                    if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
+                        orderToUpdate.QuickQuote__c = 'Richiesto';
+                    }
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
                     orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
                     // Carta identità
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Accettazione preventivo rapido
-                    orderToUpdate.QuickQuote__c = 'Richiesto';
+                    if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
+                        orderToUpdate.QuickQuote__c = 'Richiesto';
+                    }
                     // Istanza 326
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
