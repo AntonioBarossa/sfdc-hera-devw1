@@ -199,7 +199,7 @@ public inherited sharing class HDT_UTL_Dependencies {
 
             try{
                 srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
-                String rtVaS = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+                String rtVas = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
                 for(ServiceRequest__c sr : incomingProcesses){
                     Boolean valueToUpdate = true;
                     Boolean servicePoint = false;
