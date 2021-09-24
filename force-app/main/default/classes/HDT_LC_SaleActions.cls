@@ -45,9 +45,8 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteLinesListForBillingCheck.addAll(quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(sale.Id));
 
         List<SBQQ__QuoteLine__c> qlSconto = quoteLineQr.getRecordsBySaleFilteredFamilyBonus(sale.Id);
-        if(!qlSconto.isEmpty()){
-            quoteLinesListForBillingCheck.add(qlSconto[0]);
-        }
+        qlSconto=HDT_LC_ApplyBillingProfileModal.getBonusPerOffer(qlSconto);
+        quoteLinesListForBillingCheck.addAll(qlSconto);
 
         List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
         List<SBQQ__QuoteLine__c> quoteLinePrimary = new List<SBQQ__QuoteLine__c>();

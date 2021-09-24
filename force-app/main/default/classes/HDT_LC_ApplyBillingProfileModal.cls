@@ -36,6 +36,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
 
         List<SBQQ__QuoteLine__c> listBonus =   quoteLineQr.getRecordsBySaleFilteredFamilyBonus(saleId);
         system.debug('query result sconti: '+listBonus );
+        listBonus = getBonusPerOffer(listBonus);
         
         List<SBQQ__QuoteLine__c> listVasCambioOfferta = quoteLineQr.getQuoteLinesWithCambioOfferta(saleId);
         System.debug('query result listVasCambioOfferta: ' + listVasCambioOfferta);
@@ -44,11 +45,19 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         quoteLineMap.put('listPodPdr', listPodPdr);
         quoteLineMap.put('listVas', listVas);
         quoteLineMap.put('listVasCambioOfferta', listVasCambioOfferta);
-        if(!listBonus.isEmpty()){
-            quoteLineMap.put('listBonus', new List<SBQQ__QuoteLine__c>{listBonus[0]});
-        }
+        quoteLineMap.put('listBonus', listBonus);
 
         return quoteLineMap;
+    }
+
+    public static List<SBQQ__QuoteLine__c> getBonusPerOffer(List<SBQQ__QuoteLine__c> allBonus){
+        Map<id, SBQQ__QuoteLine__c> aQuoteLinePerOffer = new Map<id, SBQQ__QuoteLine__c>();
+        for(SBQQ__QuoteLine__c line : allBonus ){
+            if(!aQuoteLinePerOffer.containsKey(line.SBQQ__RequiredBy__c)){
+                aQuoteLinePerOffer.put(line.SBQQ__RequiredBy__c, line);
+            }
+        }
+        return aQuoteLinePerOffer.values();
     }
 
     /**

@@ -159,8 +159,9 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__ProductFamily__c IN :famils
+            AND SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
             WITH SECURITY_ENFORCED
-            Order by BillingProfile__c NULLS LAST
+            Order by BillingProfile__c NULLS LAST, Name
         ];
     }
 
