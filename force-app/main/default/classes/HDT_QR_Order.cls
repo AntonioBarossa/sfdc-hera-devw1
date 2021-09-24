@@ -99,10 +99,12 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.BirthDate__c,
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
             Sale__r.SalesContact__c,
+            Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
             Sale__r.Channel__c,
@@ -241,7 +243,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentPackage__c,
             IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
             RegionalAdditional__c,                            //@frpanico 16/09/21 
-            isTransition__c
+            isTransition__c,
+            QuotationType__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -851,11 +854,9 @@ public inherited sharing class HDT_QR_Order {
         return [
             Select 
             id,
-            AccountId,
-            Account.ActiveMonitoring__c 
+            AgencyCode__c
             from Order 
             Where id = :id
-            AND Account.ActiveMonitoring__c = true
             WITH SECURITY_ENFORCED
         ];
     }
