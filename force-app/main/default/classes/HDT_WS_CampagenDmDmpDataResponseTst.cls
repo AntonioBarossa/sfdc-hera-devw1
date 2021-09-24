@@ -52,9 +52,8 @@ public class HDT_WS_CampagenDmDmpDataResponseTst {
         
         Test.stopTest();
                 
-        System.assertEquals('test4', res.data.testata.messaggio);
-        System.assertEquals('test6', res.data.posizioni[0].valore);
-        System.assertEquals('test9', res.errorDetails[0].additionalInfo);        
+        System.assertEquals('test4', res.data.testata.messaggio, 'Value of the field messaggio successfully set');
+        System.assertNotEquals(null, res.errorDetails[0].additionalInfo, 'Value of the field additionalInfo successfully set');
             
     }
 
