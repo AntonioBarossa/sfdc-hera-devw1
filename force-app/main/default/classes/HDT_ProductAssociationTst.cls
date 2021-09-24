@@ -181,6 +181,7 @@ public class HDT_ProductAssociationTst {
         String offerIdForException = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
         recordListForException.add(offerIdForException);
 
+        //test insert error
         prodOptionWrp.SBQQ__AppliedImmediatelyContext__c = 'Always';
         prodOptionWrp.SBQQ__AppliedImmediately__c = false;
         productOptionObj = JSON.serialize(prodOptionWrp);
@@ -296,6 +297,9 @@ public class HDT_ProductAssociationTst {
         //test getProductList
         HDT_LC_ProductAssociation.getProductList('SBQQ__ConfigurationRule__c', filterString, productRuleId, 'insert', false, '1');
 
+        //test try catch error
+        HDT_LC_ProductAssociation.getProductList('SBQQ__ConfigurationRule__c', '******', productRuleId, 'insert', false, '1');
+
         //test complete filter
         Product2 prodFilterWrp = new Product2();
         prodFilterWrp.Name = 'template Offerta';
@@ -326,6 +330,26 @@ public class HDT_ProductAssociationTst {
             recordCompleteList.add(p.Id);
         }
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '', JSON.serialize(confRuleObj), recordCompleteList, 'select', filterString, 'insert');
+       
+        //test String.isEmpty(confRuleObj)
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '', null, recordCompleteList, 'select', filterString, 'insert');
+
+        //test exception
+        recordList.add('$%&%&');
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '***', '%$&', recordList, '%$&', '%$&', 'insert');
+        
+        //test insert error
+        //TEXT(SBQQ__AscendingNestedLevel__c) != null && TEXT(SBQQ__AscendingNestedLevel__c) != '1') ||
+        //(TEXT(SBQQ__DescendingNestedLevel__c) != null && TEXT(SBQQ__DescendingNestedLevel__c) != '1') ||
+        //(TEXT(SBQQ__DescendingActionNesting__c) != null && TEXT(SBQQ__DescendingActionNesting__c) != '1')
+        
+        confRuleObj.SBQQ__DescendingActionNesting__c = '2';
+
+        List<String> recordForErrorList = new List<String>();
+        String offerForErrorId = [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale' LIMIT 1].Id;
+        recordForErrorList.add(offerForErrorId);
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', '', JSON.serialize(confRuleObj), recordForErrorList, 'select', filterString, 'insert');
+
         Test.stopTest();
     }
 
@@ -365,6 +389,14 @@ public class HDT_ProductAssociationTst {
 
         //test confirm selection button
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', productRuleId, '', recordList, 'select', '', 'delete');
+
+        //delete records size > 10
+        List<String> allProductList = new List<String>();
+        for(Product2 p : [SELECT Id FROM Product2 WHERE Family = 'Offerta Commerciale']){
+            allProductList.add(confRuleList[0].Id);
+        }
+        HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', productRuleId, '', allProductList, 'select', '', 'delete');
+
         HDT_LC_ProductAssociation.runProductOptionAssociation('SBQQ__ConfigurationRule__c', productRuleId, '', recordList, 'filter', filterString, 'delete');
         Test.stopTest();
     }
