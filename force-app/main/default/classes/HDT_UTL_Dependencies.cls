@@ -190,7 +190,6 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }
-
             String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
                                     + 'FROM ServiceRequest__c '
                                     + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
@@ -200,8 +199,9 @@ public inherited sharing class HDT_UTL_Dependencies {
 
             try{
                 srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
-                
+                String recordTypeVAS = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
                 for(ServiceRequest__c sr : incomingProcesses){
+                    Boolean valueToUpdate = true;
                     Boolean servicePoint = false;
                     Boolean account = false;
                     Boolean billing = false;
@@ -245,16 +245,29 @@ public inherited sharing class HDT_UTL_Dependencies {
                                 Case caseToUpdate = new Case(ID=sr.Case__c);
                                 caseToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 caseToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
-                                casesToBeUpdated.add(caseToUpdate);
+                                if(valueToUpdate){
+                                    casesToBeUpdated.add(caseToUpdate);
+                                }
                             }else if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_SALES)){
-                                Order orderToUpdate = new Order(ID=sr.Order__c);
+                                Order orderToUpdate = [SELECT ID, RecordTypeId, OrderReference__c, IsBillableVas__c 
+                                                        FROM Order 
+                                                        WHERE ID =: sr.Order__c 
+                                                        WITH SECURITY_ENFORCED];
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
-                                ordersToBeUpdated.add(orderToUpdate);
+                                String orderRecordType = orderToUpdate.RecordTypeId;
+                                if(orderRecordType.equalsIgnoreCase(recordTypeVAS) && (orderToUpdate.OrderReference__c == null && orderToUpdate.IsBillableVas__c == false)){
+                                    valueToUpdate = false;
+                                }
+                                if(valueToUpdate){
+                                    ordersToBeUpdated.add(orderToUpdate);
+                                }
                             }
                             sr.DependOn__c = srBlocking.ID;
                             sr.Status__c = STATUS_SEQUENZIALIZZATO;
-                            serviceRequestsToBeSequenced.add(sr);
+                            if(valueToUpdate){
+                                serviceRequestsToBeSequenced.add(sr);
+                            }
 
                             break;
                         }
