@@ -110,11 +110,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> onlyString = new List<String>();
         List<Order> ordersQualityOkUpdate = new List<Order>();
 
+//**** AGGIUNTA Validazione Documentale LG 2009 FF */
+        List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
 
-       // List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
 
-
-        for(Order o : ordersFullList2){
+        for(Order o : ordersFullList){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
             }
@@ -137,14 +137,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 filtered.add(o1);
             }
 
-            if (o1.Phase__c == 'In attesa validazione') {
+            if (o1.Phase__c == 'In attesa validazione'  && o1.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                     phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
 
-            if (o1.Phase__c == 'Da Inviare') {
+            if (o1.Phase__c == 'Da Inviare'  && o1.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                    // phase__c = 'In attesa validazione'
@@ -228,9 +228,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(newOrdersList);
         Boolean ricalculateDate = false;
         //IsSequanzialized__c
+        Map<String,Order> mapOldOrder = new Map<String,Order>();
+        for (Order oldOrder : oldOrdersList) {
+            mapOldOrder.put(oldOrder.id,oldOrder);
+        }
         for (Order newOrder : newOrdersList) {
-            for (Order oldOrder : oldOrdersList) {
-
+            //for (Order oldOrder : oldOrdersList) {
+            Order oldOrder = mapOldOrder.get(newOrder.id);
+            if(oldOrder != null){
                 if(newOrder.id == oldOrder.id 
                     && newOrder.Status == 'In Lavorazione'
                     && newOrder.ProcessType__c != null
@@ -253,8 +258,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     orderToUpdate.id = newOrder.Id;
                     if(mapAccountRes.get(newOrder.AccountId)){                                        
                         orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                    orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
-                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                        //orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
+                        //orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(newOrder);            
                     }
                     if(newOrder.ProcessType__c != 'Cambio Offerta'){ // Solo per Cambio Offerta
                         orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(newOrder);
@@ -372,12 +377,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 //for vas i need a bulk update on a queueable
                 if (childOrder.Phase__c == currentVasPhase) {
+                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
                     /*Order orderToUpdate = new Order(
                         Id = childOrder.Id,
                         Phase__c = newVasPhase
                     );
                     childOrdersToUpdate.add(orderToUpdate);*/
-                    vasOrdersToUpdate.put(childOrder.Id, newVasPhase);
+                    vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && childOrder.DistributorFormula__c == 'AMGA UDINE-10R0000032') {
                 //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
@@ -735,6 +741,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         return mapIdToOrderUpdateTmp;    
     }
     // FINE @Picchiri Credit check Date 15.06.21
+
+    public static void updatePhaseForFirm(List<Order> newListOrder){
+        for(Order ord1 : newListOrder){
+            if(ord1.phase__c == 'Documentazione da firmare' && ord1.DocumentalPhase__c == 'Plico firmato'){
+                ord1.phase__c = 'Documentazione Gestita';
+                ord1.status = 'Activated';
+                ord1.SignedDate__c = date.today();
+            } 
+        }
+    }
+
+
 
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
 		Order orderNew = orderList[0];

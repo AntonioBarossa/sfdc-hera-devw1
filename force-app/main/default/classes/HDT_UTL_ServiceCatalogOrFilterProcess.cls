@@ -11,19 +11,19 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Preventivi', 'Variazioni', 'Generiche Attivazioni'},
             'Type' => new List<String>
-                {'Gestione Calamità', 'Informative', 'Comportamento Venditori HC'}
+                {'Gestione Calamità', 'Informative','Comunicazione di Fallimento','Comportamento Venditori HC'}
         },
     'ContrattoNonRichiesto' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami','Preventivi', 'Generiche Attivazioni'},
+                {'Reclami','Preventivi','Generiche Attivazioni'},
             'Type' => new List<String>
                 {'Comportamento Venditori HC'}
         },
     'Autoletturadacliente' => new Map<String,List<String>>
         {
             'Type' => new List<String>
-                {'Verifica Dati al DL', 'Rettifica Consumi', 'Reclamo Scritto/Rich. Info'}
+                {'Verifica Dati al DL','Rettifica Consumi','Reclamo Scritto/Rich. Info'}
         },
     'AllineamentoCanoneRai' => new Map<String,List<String>>
         {
@@ -43,6 +43,11 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
+        },
+    'CambioUsoFittizio' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione','Variazioni','Generiche Attivazioni','Canone Rai'}
         },
     'Contratti/BonusCommerciale' => new Map<String,List<String>>
         {
@@ -541,7 +546,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         }
         return res;
     }
- 
+
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
         //fix

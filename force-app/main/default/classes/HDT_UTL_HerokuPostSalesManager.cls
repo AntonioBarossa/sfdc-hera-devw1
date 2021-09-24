@@ -294,7 +294,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
                 try{
                     HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
-                    currentCase.QuotationValidityDate__c = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    Date dtMaxPrev = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    currentCase.QuotationValidityDate__c = dtMaxPrev;
+                    if(nextPhase.equalsIgnoreCase('Esito OK Riduzione Potenza'))
+                    {
+                        currentCase.PowerReductionDate__c = dtMaxPrev;
+                    }
+                    else if(nextPhase.equalsIgnoreCase('Esito OK da DL') && recordCase.Cluster__c.equalsIgnoreCase('Morosità'))
+                    {
+                        currentCase.ExecutionDate__c = dtMaxPrev;
+                        currentCase.PaymentDate__c	= dtMaxPrev;
+                    }
                 } catch(Exception e){
                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
                 }
@@ -315,10 +325,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
         }else if(method.equalsIgnoreCase('esito_finale')){
+            HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
             String contractCode = reqWrp.requestMap.get('VERTRAG');
+            String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -345,6 +357,18 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
+            }
+            if(paymentDate != null && paymentDate != '')
+            {
+                try
+                {
+                    Date payDate = enrichSrv.getDateFromString(paymentDate);
+                    currentCase.PaymentDate__c = payDate;
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                }
             }
             if(contractCode != null || contractCode != ''){
 
@@ -531,7 +555,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.HerokuPracticeCode__c = herokuCode;
                     }
                     //Aggiunto PhoneNumber
-                    currentCase.PhoneNumber__c = contact?.MobilePhone;
+                    currentCase.PhoneNumber__c = contact.MobilePhone != null 
+                        ? contact.MobilePhone
+                        : contact.Phone != null 
+                        ? contact.Phone
+                        : '123';
                     sp = qrClass.getServicePoint(pod);
                     if(sp != null){
                         contract = qrClass.getContract(sp.Id);

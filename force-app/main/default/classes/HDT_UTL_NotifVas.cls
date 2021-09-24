@@ -47,6 +47,13 @@ public with sharing class HDT_UTL_NotifVas {
             processExc = e;
         }
 
+        //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
+        Case logCase = new Case();
+        logCase.Causal__c = 'CALLIN-Vas.'+request.header.fields.get(0).value;
+        logCase.Note__c = JSON.serializePretty(request);
+        logCase.Description = RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem);
+        insert logCase;
+
         setResponse(mrrResponseItem, processExc);
     }
     
@@ -269,7 +276,7 @@ public with sharing class HDT_UTL_NotifVas {
     * @param targetRecord 
     **/
     private static void populateFieldsFromRequest(Map<String, String> requestMap, SObject targetRecord) {
-        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_MOTORE_VAS') );
+        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_VAS') );
         targetRecord.put('VasStatus__c', requestMap.get('STATO_PRATICA') );
         targetRecord.put('VasStatusDescription__c', requestMap.get('ESITO') );
         targetRecord.put('VasPolicyNumber__c', requestMap.get('NUMERO_POLIZZA') );

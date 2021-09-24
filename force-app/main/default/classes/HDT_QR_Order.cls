@@ -105,6 +105,7 @@ public inherited sharing class HDT_QR_Order {
             Sale__r.SalesContact__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
+            Sale__r.Channel__c,
             SwitchOutDate__c,
             Vat__c,
             ExciseGas__c,
@@ -395,7 +396,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             QualityCall__c,
             AgencyCode__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            VASType__c
             FROM Order 
             WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
@@ -470,11 +472,16 @@ public inherited sharing class HDT_QR_Order {
             AutorizationVolturaThirdTrader__c,
             CILegalRepresentative__c,
             CIAccoutn__c,
+            sale__r.isTransition__c,
+            AgencyCode__c,
+            QualityCall__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
             Instance326__c,
             DocumentLow80__c,
-            DistributorFormula__c
+            DistributorFormula__c,
+            VASType__c,
+            DateComfortCall__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -737,10 +744,10 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
     public List<Order> getRecordByOrderId(String recordId){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name from Order where Id = :recordId WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c from Order where Id = :recordId WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){
