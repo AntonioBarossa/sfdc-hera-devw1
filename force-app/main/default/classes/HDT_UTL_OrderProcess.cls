@@ -531,7 +531,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                 ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                 if (String.isBlank(String.valueOf(temp.ServicePoint__r.Account__c)) ||String.isBlank(String.valueOf(temp.ServicePoint__r.SAPImplantCode__c))) {
-                    sp.Account__c=temp.AccountId;
+                   // sp.Account__c=temp.AccountId;
                     sp.SAPImplantCode__c=temp.SapContractCode__c;
                     listObjToUpdate.add(sp);
                 }         
