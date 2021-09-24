@@ -484,7 +484,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             DistributorFormula__c,
             VASType__c,
-            DateComfortCall__c
+            DateComfortCall__c,
+            DocumentPackage__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -869,5 +870,9 @@ public inherited sharing class HDT_QR_Order {
     public HDT_ExciseTranscode__mdt getExciseTranscode(String exciseString)
     {
         return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];
+    }
+
+    public List<Order> getParentOrderDocs(List<String> ordParents){
+        return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id IN :ordParents WITH SECURITY_ENFORCED];
     }
 }
