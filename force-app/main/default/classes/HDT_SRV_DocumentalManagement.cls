@@ -347,12 +347,12 @@ public class HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
-					if(cluster.equalsIgnoreCase('Preventivi')){
+					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
 				}else{
 					//Che fase documentale settare?
-					if(cluster.equalsIgnoreCase('Preventivi')){
+					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo rifiutato');
 					}
 				}
