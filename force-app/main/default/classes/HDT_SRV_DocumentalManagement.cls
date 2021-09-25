@@ -480,7 +480,9 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
-		//aggiornare i dati catastali
+		if(record != null && record.getSobjectType() == Case.getSobjectType()){
+			return;
+		}
 		Id recordId = (Id) record.get('Id');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
