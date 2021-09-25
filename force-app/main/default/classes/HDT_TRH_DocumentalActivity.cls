@@ -7,7 +7,9 @@
 public inherited sharing class HDT_TRH_DocumentalActivity extends HDT_TRH_TriggerHandler{
 
     public override void beforeInsert(){
+
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
+        // Valorizza le lookup OrderId__c e CaseId__c, se vuote, a partire dai campi ParentProcessId__c e ProcessId__c che valorizza il MOGA.
         try{
             List<DocumentalActivity__c> docActivityList = (List<DocumentalActivity__c>) trigger.new;
             Set<String> parentSetCase = new Set<String>();
