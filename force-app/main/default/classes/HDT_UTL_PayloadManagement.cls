@@ -524,16 +524,17 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
         }
 
+        preventivoCounter = 0;
         for (Integer i = 0; i < orders.size(); i++) {
             String processType = HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams);
             if (processType != 'Prima Attivazione con modifica') {
                 continue;
             }
-
+            preventivoCounter++;
             String[] record = new List<String>();
-            // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
-            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
-            if (i > 0 || String.isNotBlank(payloadSection)) {
+            // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se preventivoCounter = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (preventivoCounter > 0 || String.isNotBlank(payloadSection)) {
                 record.add('00310');
                 record.add('50');
             }
@@ -548,7 +549,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'SupplyAddressFormula__c', i, inputs, formParams));     // Indirizzo del lavoro
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));                    // Stato
             // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
-            if (i < orders.size() - 1) {
+            if (preventivoCounter != numPreventiviOrders) {
                 record.add(endLine);
             }
             payloadSection += String.join(record, div);
