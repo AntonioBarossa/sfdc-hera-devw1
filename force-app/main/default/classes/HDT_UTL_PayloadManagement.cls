@@ -533,8 +533,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             preventivoCounter++;
             String[] record = new List<String>();
             // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
-            // Se preventivoCounter = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
-            if (preventivoCounter > 0 || String.isNotBlank(payloadSection)) {
+            // Se preventivoCounter = 1 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (preventivoCounter > 1 || String.isNotBlank(payloadSection)) {
                 record.add('00310');
                 record.add('50');
             }
