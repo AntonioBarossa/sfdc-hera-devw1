@@ -318,6 +318,7 @@
         <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
         <fields>ActivityType__c</fields>
         <fields>EnvelopeId__c</fields>
         <fields>AttachmentCode__c</fields>
