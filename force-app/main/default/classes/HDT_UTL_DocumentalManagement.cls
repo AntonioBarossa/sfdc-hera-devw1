@@ -104,9 +104,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			
 			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
 			List<Order> orderList = new List<Order>();
-			
+			Set<String> serviceItemSet = new Set<String>();
+			Map<String,Id> processNumberIdMap = new Map<String,Id>();
 			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
-				recordId = (Id) serviceItem.serviceId;
+				serviceItemSet.add(serviceItem.serviceId);
+			}
+			List<SObject> processRecods = HDT_QR_DocumentalConfiguration.getRecordFromServiceItems(context, serviceItemSet);
+			for(SObject singleRecord : processRecods){
+				if(context.equalsIgnoreCase('Case')){
+					processNumberIdMap.put((String)singleRecord.get('CaseNumber'), (Id)singleRecord.get('Id'));
+				}else{
+					processNumberIdMap.put((String)singleRecord.get('OrderNumber'), (Id)singleRecord.get('Id'));
+				}
+			}
+			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
+				recordId = (Id) processNumberIdMap.get(serviceItem.serviceId);
 				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;

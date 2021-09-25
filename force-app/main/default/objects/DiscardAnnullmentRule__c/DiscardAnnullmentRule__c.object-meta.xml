@@ -150,18 +150,23 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Masculine</gender>
     <label>Regola Annullamento Scarto</label>
     <nameField>
+        <displayFormat>DAR-{0000}</displayFormat>
         <label>Regola Annullamento Scarto Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Regola Annullamento Scarto</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>ActivityType__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ProcessValue__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ControllingValue__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

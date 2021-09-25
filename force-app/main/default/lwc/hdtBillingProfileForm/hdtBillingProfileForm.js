@@ -395,7 +395,10 @@ export default class hdtBillingProfileForm extends LightningElement {
         let notApplicableFields = ['SignatoryType__c','LegalAgent__c','OtherPayer__c','BillSendingMethod__c'];
 
         if (!notApplicableFields.includes(event.target.fieldName) && event.target.fieldName !== undefined) {
-            this.fields[this.fields.findIndex(el => el.fieldName === event.target.fieldName)].value = event.target.value;
+            let elem = this.fields.find(el => el.fieldName === event.target.fieldName);
+            if(elem){
+                elem.value = event.target.value;
+            }
         }
 
         if (event.target.name === 'SignatoryType__c') {
