@@ -419,7 +419,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
-                    updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                    updateContactForScartoDocumentale({accountId: this.orderParentRecord.AccountId,
+                                                       oldPhone: this.oldPhoneValue,
                                                        oldEmail: this.oldEmailValue,
                                                        newPhone: resultWrapper.phone,
                                                        newMail: resultWrapper.email}).then(data=>{

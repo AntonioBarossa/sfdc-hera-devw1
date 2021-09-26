@@ -108,6 +108,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         public String esito;
         @InvocableVariable
         public String dettaglioEsito;
+        @InvocableVariable
+        public String recordId;
     }
 
     /**
@@ -122,6 +124,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
       list<HDT_UTL_FlowOutputs> listOutputs= new list<HDT_UTL_FlowOutputs>();
       HDT_UTL_FlowOutputs output= new HDT_UTL_FlowOutputs();
         try{
+            Id outputRecordId;
             switch on inputParam[0].methodName{
                 when 'chiudiAttivita'{
                     chiudiAttivita(inputParam[0].objectId);
@@ -135,13 +138,16 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 when 'createActivityByObjectIdAndTemplateName'{
                     wrts_prcgvr__Activity__c act= createActivityByObjectIdAndTemplateName(inputParam[0].objectId, inputParam[0].templateName);
                     HDT_UTL_DatabaseService.insertSObject(act);
+                    outputRecordId = act.Id;
                 }
             }
+            output.recordId=outputRecordId;
             output.esito='OK';
             output.dettaglioEsito='OK';
         }catch(Exception e){
+            System.debug('ERROR: ' + e.getMessage() + ' @@ ' + e.getStackTraceString());
             output.esito='KO';
-            output.dettaglioEsito= e.getMessage();
+            output.dettaglioEsito= e.getMessage() + ' @@ ' + e.getStackTraceString();
         }
         listOutputs.add(output);
         return listOutputs;  
@@ -443,11 +449,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
 
-        Map<Id,Case> relatedCases = new Map<Id,Case>([SELECT Id, PhoneNumber__c, Email__c
+        Map<Id,Case> relatedCases = new Map<Id,Case>([SELECT Id, PhoneNumber__c, Email__c, AccountId
                                    FROM Case
                                    WHERE Id in :relatedIds
                                    WITH SECURITY_ENFORCED]);
-        Map<Id,Order> relatedOrders = new Map<Id,Order>([SELECT Id, PhoneNumber__c, Email__c
+        Map<Id,Order> relatedOrders = new Map<Id,Order>([SELECT Id, PhoneNumber__c, Email__c, AccountId
                                      FROM Order
                                      WHERE Id in :relatedIds
                                      WITH SECURITY_ENFORCED]);
@@ -460,6 +466,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     relatedCases.get(currActivity.Case__c).PhoneNumber__c = currActivity.NewMobile__c;
                     relatedCases.get(currActivity.Case__c).Email__c = currActivity.NewEmail__c;
                     relatedObjectsToUpdate.add(relatedCases.get(currActivity.Case__c));
+                    updateContactForScartoDocumentale(relatedCases.get(currActivity.Case__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
                 if(currActivity.Order__c != null){
                     oldPhone = relatedOrders.get(currActivity.Order__c).PhoneNumber__c;
@@ -467,8 +474,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     relatedOrders.get(currActivity.Order__c).PhoneNumber__c = currActivity.NewMobile__c;
                     relatedOrders.get(currActivity.Order__c).Email__c = currActivity.NewEmail__c;
                     relatedObjectsToUpdate.add(relatedOrders.get(currActivity.Order__c));
+                    updateContactForScartoDocumentale(relatedOrders.get(currActivity.Order__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
-                updateContactForScartoDocumentale(oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
         }
         HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
     }
@@ -485,50 +492,62 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param newMail - String
     */
     @AuraEnabled
-    public static void updateContactForScartoDocumentale(String oldPhone, String oldEmail, String newPhone, String newMail){
-        List<sObject> recordsForDML = new List<SObject>();
-        if(String.isNotBlank(oldPhone)){
-            List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId 
-                                            FROM ContactPointPhone 
-                                            WHERE TelephoneNumber = :oldPhone
-                                            WITH SECURITY_ENFORCED];
-            if(!cpp.isEmpty()){
-                if('Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
-                    ContactPointPhone newCPP = new ContactPointPhone();
-                    newCPP.TelephoneNumber = newPhone;
-                    newCPP.Status__c = 'Non verificato';
-                    newCPP.ParentId = cpp.get(0).ParentId;
-                    recordsForDML.add(newCPP);
-                }
-                else if('Non Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
-                    ContactPointPhone toUpdateCPP = new ContactPointPhone(Id = cpp.get(0).Id);
-                    toUpdateCPP.TelephoneNumber = newPhone;
-                    recordsForDML.add(toUpdateCPP);
-                }
-            }
-        }
-        if(String.isNotBlank(oldEmail)){
-            List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId 
-                                            FROM ContactPointEmail 
-                                            WHERE EmailAddress = :oldEmail
-                                            WITH SECURITY_ENFORCED];
-            if(!cpe.isEmpty()){
-                if('Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
-                    ContactPointEmail newCPE = new ContactPointEmail();
-                    newCPE.EmailAddress = newMail;
-                    newCPE.Status__c = 'Non verificato';
-                    newCPE.ParentId = cpe.get(0).ParentId;
-                    recordsForDML.add(newCPE);
-                }
-                else if('Non Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
-                    ContactPointEmail toUpdateCPE = new ContactPointEmail(Id = cpe.get(0).Id);
-                    toUpdateCPE.EmailAddress = newMail;
-                    recordsForDML.add(toUpdateCPE);
+    public static void updateContactForScartoDocumentale(Id accountId, String oldPhone, String oldEmail, String newPhone, String newMail){
+        List<Contact> relatedContacts = [SELECT Id, IndividualId
+                                         FROM Contact 
+                                         WHERE AccountId = :accountId
+                                         WITH SECURITY_ENFORCED];
+        if(!relatedContacts.isEmpty()){
+            Set<Id> individualIds = new Set<Id>();
+            for(Contact curContact : relatedContacts){
+                individualIds.add(curContact.IndividualId);
+            } 
+            List<sObject> recordsForDML = new List<SObject>();
+            if(String.isNotBlank(oldPhone)){
+                List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId 
+                                                FROM ContactPointPhone 
+                                                WHERE ParentId IN :individualIds
+                                                AND TelephoneNumber = :oldPhone
+                                                WITH SECURITY_ENFORCED];
+                if(!cpp.isEmpty()){
+                    if('Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
+                        ContactPointPhone newCPP = new ContactPointPhone();
+                        newCPP.TelephoneNumber = newPhone;
+                        newCPP.Status__c = 'Non verificato';
+                        newCPP.ParentId = cpp.get(0).ParentId;
+                        recordsForDML.add(newCPP);
+                    }
+                    else if('Non Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
+                        ContactPointPhone toUpdateCPP = new ContactPointPhone(Id = cpp.get(0).Id);
+                        toUpdateCPP.TelephoneNumber = newPhone;
+                        recordsForDML.add(toUpdateCPP);
+                    }
                 }
             }
-        }
-        if(!recordsForDML.isEmpty()){
-            HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
+            if(String.isNotBlank(oldEmail)){
+                List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId 
+                                                FROM ContactPointEmail 
+                                                WHERE ParentId IN :individualIds
+                                                AND EmailAddress = :oldEmail
+                                                WITH SECURITY_ENFORCED];
+                if(!cpe.isEmpty()){
+                    if('Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
+                        ContactPointEmail newCPE = new ContactPointEmail();
+                        newCPE.EmailAddress = newMail;
+                        newCPE.Status__c = 'Non verificato';
+                        newCPE.ParentId = cpe.get(0).ParentId;
+                        recordsForDML.add(newCPE);
+                    }
+                    else if('Non Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
+                        ContactPointEmail toUpdateCPE = new ContactPointEmail(Id = cpe.get(0).Id);
+                        toUpdateCPE.EmailAddress = newMail;
+                        recordsForDML.add(toUpdateCPE);
+                    }
+                }
+            }
+            if(!recordsForDML.isEmpty()){
+                HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
+            }
         }
     }
 
@@ -615,8 +634,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     toHandle.add(singleData);
                 }
             }else if(singleData.getSObjectType()==schema.SMSTracking__c.getSObjectType()){
-                if(singleData.get('Undelivered__c')==true &&
-                oldData.get((Id)singleData.get('Id')).get('Undelivered__c')!=((string)singleData.get('Undelivered__c'))){
+                if(singleData.get('Undelivered__c')==true
+                   && oldData.get((Id)singleData.get('Id')).get('Undelivered__c')!=singleData.get('Undelivered__c')){
                     toHandle.add(singleData);
                 }
             }
