@@ -4,7 +4,10 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria{
+global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria, Queueable{
+    private List<wrts_prcgvr__Activity__c> newActivities;
+    private List<wrts_prcgvr__Activity__c> oldActivities;
+
     static final string CANONERAITEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
@@ -46,6 +49,16 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 		
     }
 	*/
+
+    public HDT_UTL_Scarti(List<wrts_prcgvr__Activity__c> newActs, List<wrts_prcgvr__Activity__c> oldActs) {
+        this.newActivities = newActs;
+        this.oldActivities = oldActs;
+    }
+    public void execute(QueueableContext context) {
+        system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
+        updatePraticaForScartoDocumentaleQueue(newActivities, oldActivities);
+    }
+
 
     /**
     * @author Marco Arci (marco.arci@webresults.it)
@@ -419,6 +432,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return outcome;
     }
 
+
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
@@ -429,6 +443,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     //////////////////////////////////////////////////////////////////////////
     @AuraEnabled
     public static void updatePraticaForScartoDocumentale(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
+        HDT_UTL_Scarti updateJob = new HDT_UTL_Scarti(newActivities, oldActivities);
+        System.enqueueJob(updateJob);
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.updatePraticaForScartoDocumentaleQueue - updates case/order with new data
+   * @param newActivities - List<wrts_prcgvr__Activity__c>
+    * @param oldActivities - List<wrts_prcgvr__Activity__c>
+    */
+    //////////////////////////////////////////////////////////////////////////
+    @AuraEnabled
+    public static void updatePraticaForScartoDocumentaleQueue(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
+        System.debug('updatePraticaForScartoDocumentale start newActivities: ' + JSON.serializePretty(newActivities));
+        System.debug('updatePraticaForScartoDocumentale start oldActivities: ' + JSON.serializePretty(oldActivities));
+        try{
         Map<id,wrts_prcgvr__Activity__c> oldMapActivities = new Map<Id,wrts_prcgvr__Activity__c>(oldActivities);
         String oldPhone; 
         String oldEmail;
@@ -458,6 +489,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                      WHERE Id in :relatedIds
                                      WITH SECURITY_ENFORCED]);
 
+        System.debug('updatePraticaForScartoDocumentale relatedCases: ' + JSON.serializePretty(relatedCases));
+        System.debug('updatePraticaForScartoDocumentale relatedOrders: ' + JSON.serializePretty(relatedOrders));
         
         for(wrts_prcgvr__Activity__c currActivity : activities){
                 if(currActivity.Case__c != null){
@@ -477,7 +510,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     updateContactForScartoDocumentale(relatedOrders.get(currActivity.Order__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
         }
-        HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
+        System.debug('updatePraticaForScartoDocumentale end relatedObjectsToUpdate: ' + JSON.serializePretty(relatedObjectsToUpdate));
+        if(!relatedObjectsToUpdate.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
+        }
+        }
+        catch(Exception e){
+            System.debug('updatePraticaForScartoDocumentale errorMessage: ' + e.getMessage());
+            System.debug('updatePraticaForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
+        }
     }
     //////////////////////////////////////////////////////////////////////////
 
@@ -493,6 +534,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     @AuraEnabled
     public static void updateContactForScartoDocumentale(Id accountId, String oldPhone, String oldEmail, String newPhone, String newMail){
+        System.debug('updateContactForScartoDocumentale start accountId: ' + accountId);
+        System.debug('updateContactForScartoDocumentale start oldPhone: ' + oldPhone );
+        System.debug('updateContactForScartoDocumentale start oldEmail: ' + oldEmail);
+        System.debug('updateContactForScartoDocumentale start newPhone: ' + newPhone);
+        System.debug('updateContactForScartoDocumentale start newMail: ' + newMail);
+        try{
         List<Contact> relatedContacts = [SELECT Id, IndividualId
                                          FROM Contact 
                                          WHERE AccountId = :accountId
@@ -545,9 +592,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                 }
             }
+            System.debug('updateContactForScartoDocumentale end recordsForDML: ' + JSON.serializePretty(recordsForDML));
             if(!recordsForDML.isEmpty()){
                 HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
             }
+        }
+        }
+        catch(Exception e){
+            System.debug('updateContactForScartoDocumentale errorMessage: ' + e.getMessage());
+            System.debug('updateContactForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
         }
     }
 
