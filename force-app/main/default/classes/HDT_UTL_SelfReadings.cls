@@ -287,4 +287,19 @@ public inherited sharing class HDT_UTL_SelfReadings {
         response.readingId = r.Id;
     }
 
+    public static Boolean isAutomaticDiscard(String errorType, String errorCode) {
+        if (String.isBlank(errorType) || String.isBlank(errorCode)) {
+            return false;
+        }
+
+        HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
+        List<HDT_SelfReadingError__mdt> configs = queryHandler.getDiscardConfiguration(errorType, errorCode);
+
+        if (configs.isEmpty()) {
+            return false;
+        }
+
+        return configs[0].IsAutomaticDiscard__c;
+    }
+
 }
