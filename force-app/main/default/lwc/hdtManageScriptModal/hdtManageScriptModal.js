@@ -30,14 +30,17 @@ export default class HdtManageScriptModal extends LightningElement {
     isDecisional = false;
     openModal;
     
-    connectedCallback(){// stub parameters for test purpose
-        if(!this.scriptProcessName){
-            this.scriptProcessName='Mini Vocal Order';
-            this.buttonLabel='OTP';
-            this.recordId='8011X000002SkvlQAC';
-            this.childAdditionalInfo='orderNumber';
-        }
-    }
+    // connectedCallback(){// stub parameters for test purpose
+    //     if(!this.scriptProcessName){
+    //         this.scriptProcessName='Mini Vocal Order';
+    //         this.buttonLabel='OTP';
+    //         this.recordId='8011X000002SkvlQAC';
+    //         this.childAdditionalInfo='orderNumber';
+    //     }
+    // }
+
+
+    
 
     showModal(){
         isDecisionalScript({processName: this.scriptProcessName}).then(isDecisional => {

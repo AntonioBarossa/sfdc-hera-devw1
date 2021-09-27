@@ -379,11 +379,18 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Validazione_Documenti</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.IsVAS__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ProcessType__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -419,12 +426,22 @@
                                     <operator>NE</operator>
                                     <rightValue>Amm. Precheck KO SII</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Activated</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Order.HDT_AnnullamentoPrestazione</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>NE</operator>
@@ -454,6 +471,11 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Activated</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Annullato</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
