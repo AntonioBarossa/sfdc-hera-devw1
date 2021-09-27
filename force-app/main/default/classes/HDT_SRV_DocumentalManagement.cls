@@ -340,8 +340,8 @@ public class HDT_SRV_DocumentalManagement{
 				listOfRadio.addAll(requestBody.listOfRadioGroup);
 				System.debug(requestBody.listOfRadioGroup);
 			}
-			if(requestBody.listOfData != null && requestBody.listOfData.size()>0){
-				listOfData.addAll(requestBody.listOfData);
+			if(requestBody.listOfDataText != null && requestBody.listOfDataText.size()>0){
+				listOfData.addAll(requestBody.listOfDataText);
 			}
 			
 			if(record.getSobjectType() == Case.getSobjectType()){
@@ -408,7 +408,10 @@ public class HDT_SRV_DocumentalManagement{
 			}else{
 				Order orderRecord = (Order) record;
 				Contact orderContact = (Contact) orderRecord.Contact__r;
-				individualId = orderContact.IndividualId;
+				if (orderContact == null){
+					System.debug('Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
+					return;
+				}
 			}
 			Individual individualRecord = new Individual();
 			individualRecord.Id = individualId;
@@ -478,6 +481,23 @@ public class HDT_SRV_DocumentalManagement{
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
 		//aggiornare i dati catastali
+		Id recordId = (Id) record.get('Id');
+		List<LandRegistry__c> registries = new List<LandRegistry__c>();
+		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
+			LandRegistry__c reg = new LandRegistry__c();
+			reg.Order__c = recordId;
+			// TODO: valorizzare campi oggetto con i valori che manda Intesa.
+			registries.add(reg);
+		}
+
+		if (!registries.isEmpty()){
+			try {
+				System.debug('# dati catastali da inserire: ' + registries.size());
+				HDT_UTL_DatabaseService.insertSObject(registries);
+			}catch(Exception ex){
+				System.debug('Errore DML: ' + ex.getMessage());
+			}
+		}
 	}
 
 	@future

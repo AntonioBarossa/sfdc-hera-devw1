@@ -1,3 +1,9 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@dunegroup.it)
+ * @date 24/06/2021
+ * @description HDT_WRP_CampaignPraxidia Class
+ * @history Lorenzo Gulotta 24/06/2021 – Created class
+ */
 public class HDT_WRP_CampaignPraxidia {
     public class front{
         public String idClienteSblSap;

@@ -25,16 +25,37 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
+        <field>Order.ServicePointCodeFormula__c</field>
+    </columns>
+    <columns>
         <field>ORDER_NUMBER</field>
     </columns>
     <columns>
-        <field>ORDER_CREATED_DATE</field>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>Order.DistributorFormula__c</field>
+    </columns>
+    <columns>
+        <field>Order.Cluster__c</field>
+    </columns>
+    <columns>
+        <field>Order.ProcessType__c</field>
+    </columns>
+    <columns>
+        <field>Order.Subprocess__c</field>
+    </columns>
+    <columns>
+        <field>Order.SalesCompany__c</field>
+    </columns>
+    <columns>
+        <field>ORDER_DESCRIPTION</field>
+    </columns>
+    <columns>
+        <field>Order.DiscardReason__c</field>
     </columns>
     <columns>
         <field>ORDER_LAST_UPDATE</field>
-    </columns>
-    <columns>
-        <field>UPDATEDBY.NAME</field>
     </columns>
     <filter>
         <criteriaItems>

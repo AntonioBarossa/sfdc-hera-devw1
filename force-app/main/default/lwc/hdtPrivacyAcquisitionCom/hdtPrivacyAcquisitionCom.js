@@ -4,7 +4,8 @@ import { NavigationMixin } from 'lightning/navigation';
 export default class HdtPrivacyAcquisitionCom  extends NavigationMixin(LightningElement) {
     @api myrecord;
     connectedCallback(){
-        console.log('***recordId:'+ recordId);
+        console.log('***HdtPrivacyAcquisitionCom');
+        console.log('***recordId:'+ this.myrecord);
         this[NavigationMixin.GenerateUrl]({
             type: "comm__namedPage",
             attributes: {
