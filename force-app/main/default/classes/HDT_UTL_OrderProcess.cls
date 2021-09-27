@@ -520,37 +520,37 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         return newOrdersList;
     }
 
-   /**
-   * @description 
-   * HRDTR-00_HRAWRM-638
-   **/
-   public static void overturningFields(List<Order> listOrder ){
-    List<SObject> listObjToUpdate = new List<SObject>();
+      /**
+     * @description 
+     * HRDTR-00_HRAWRM-638
+     **/
+    public static void overturningFields(List<Order> listOrder ){
+        Map<Id, Sobject> mapObjToUpdate = new Map<Id, Sobject>();
         for (Order temp : listOrder) {
             
             if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                 ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                 if (String.isBlank(String.valueOf(temp.ServicePoint__r.Account__c)) ||String.isBlank(String.valueOf(temp.ServicePoint__r.SAPImplantCode__c))) {
-                   // sp.Account__c=temp.AccountId;
+                    // sp.Account__c=temp.AccountId;
                     sp.SAPImplantCode__c=temp.SapContractCode__c;
-                    listObjToUpdate.add(sp);
+                    //listObjToUpdate.add(sp);
+                    mapObjToUpdate.put(sp.Id, sp);
                 }         
             }
             if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
                 if (String.isBlank(String.valueOf(temp.BillingProfile__r.ContractAccountCode__c)) && String.isNotBlank((temp.SapContractCode__c) )) {
                     BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
-                    listObjToUpdate.add(bill);
+                    //listObjToUpdate.add(bill);
+                    mapObjToUpdate.put(bill.id, bill);
                 }
             }
 
         }
-        if (listObjToUpdate!=null && listObjToUpdate.size()>0) {
-            System.debug('listObjToUpdate*****'+listObjToUpdate);
-
-           update  listObjToUpdate;
+        if(!mapObjToUpdate.values().isEmpty()){
+            update  mapObjToUpdate.values();
         }
 
-   }
+    }
     // START @Picchiri Credit check Date 04.06.21
     // Viene invocata da una modifica lato ordine
     // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
