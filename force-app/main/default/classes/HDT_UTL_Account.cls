@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 16/07/2021
+* @description HDT_UTL_Note
+* @history Lorenzo – 16/07/2021 – created class
+*/
 public with sharing class HDT_UTL_Account {
     @auraEnabled
     public static String checkIsBackoffice(){

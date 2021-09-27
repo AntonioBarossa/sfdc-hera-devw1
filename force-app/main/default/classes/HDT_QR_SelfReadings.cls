@@ -11,6 +11,19 @@ public inherited sharing class HDT_QR_SelfReadings {
         }
     }
 
+    /*public List<HDT_SelfReadingError__mdt> getDiscardConfiguration(String errorType, String errorCode) {
+        List<HDT_SelfReadingError__mdt> config = [SELECT Id, IsAutomaticDiscard__c FROM HDT_SelfReadingError__mdt WHERE Type__c = :errorType AND ErrorCode__c = :errorCode WITH SECURITY_ENFORCED];
+        return config;
+    }*/
+
+    public List<HDT_SelfReadingError__mdt> getDiscardConfigurations(Set<String> errorCodes) {
+        List<String> errorTypes = new List<String>();
+        errorTypes.add('Esito KO pre-MDM');
+        errorTypes.add('Esito KO da SAP');
+        List<HDT_SelfReadingError__mdt> configs = [SELECT Id, ErrorCode__c, IsAutomaticDiscard__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND ErrorCode__c IN :errorCodes WITH SECURITY_ENFORCED];
+        return configs;
+    }
+
     public Id getReadingId(String objectName, Id objectId, String commodity) {
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
