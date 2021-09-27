@@ -30,7 +30,7 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         Account acc = [SELECT Id FROM Account];
         Contact con = [SELECT Id FROM Contact];
         ServicePoint__c srv = [SELECT Id FROM ServicePoint__c];
-        Contract contract = [SELECT Id FROM Account];
+        Contract contract = [SELECT Id FROM Contract];
         Order ord = [SELECT Id FROM Order];
         
         //MY CASE 1
