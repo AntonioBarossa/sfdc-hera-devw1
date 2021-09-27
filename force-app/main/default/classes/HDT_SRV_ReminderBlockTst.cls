@@ -40,7 +40,7 @@ public with sharing class HDT_SRV_ReminderBlockTst {
     //TESTS
     
     @isTest
-    private static void createRequestBodyTest() {
+    private static void createRequestBodyTest_1() {
         
 		//DEBUG
 		String debugString = TEST_NAME + ' - createRequestBodyTest';
@@ -63,5 +63,9 @@ public with sharing class HDT_SRV_ReminderBlockTst {
         
         
     }
+    
+    //createRequestBodyTest_W
+    //TODO: IMPLEMENT
+    
     
 }
