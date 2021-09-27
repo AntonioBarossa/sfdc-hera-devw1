@@ -62,8 +62,7 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         
         //ASSERTS
         HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowOutputs output = outputs[0];
-        
-        
+        System.assert(output.indemnityNotConfirmed);
         
     }
     
