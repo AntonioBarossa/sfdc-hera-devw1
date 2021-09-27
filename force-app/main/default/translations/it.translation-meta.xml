@@ -5,6 +5,10 @@
         <name>wrts_prcgvr__Date</name>
     </customLabels>
     <customLabels>
+        <label>Tipo Operazione</label>
+        <name>wrts_prcgvr__Type</name>
+    </customLabels>
+    <customLabels>
         <label>Valore Dopo La Modifica</label>
         <name>wrts_prcgvr__TransitionActivityPage_DestinationColumn</name>
     </customLabels>
