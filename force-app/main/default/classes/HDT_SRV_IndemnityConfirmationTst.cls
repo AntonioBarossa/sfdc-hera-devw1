@@ -27,6 +27,8 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         System.debug(debugString);
         
         //SETUP
+        mySetup();
+        
         Account acc = [SELECT Id FROM Account];
         Contact con = [SELECT Id FROM Contact];
         ServicePoint__c srv = [SELECT Id FROM ServicePoint__c];
