@@ -347,12 +347,12 @@ public class HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
-					if(cluster.equalsIgnoreCase('Preventivi')){
+					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
 				}else{
 					//Che fase documentale settare?
-					if(cluster.equalsIgnoreCase('Preventivi')){
+					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo rifiutato');
 					}
 				}
@@ -399,7 +399,7 @@ public class HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
-		if(listOfRadio != null && listOfRadio.size()>=0){
+		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
@@ -480,7 +480,9 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
-		//aggiornare i dati catastali
+		if(record != null && record.getSobjectType() == Case.getSobjectType()){
+			return;
+		}
 		Id recordId = (Id) record.get('Id');
 		List<LandRegistry__c> registries = new List<LandRegistry__c>();
 		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {

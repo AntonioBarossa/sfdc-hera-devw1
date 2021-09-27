@@ -446,7 +446,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 }).then(result => {
                     this.handleGoNext();
                 }).catch(error => {
-                    this.showToast('Errore nell\'invio del documento al cliente.');
+                    this.showMessage('Errore nell\'invio del documento al cliente.','error');
                     console.error(error);
                 });
             }

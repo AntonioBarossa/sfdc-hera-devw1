@@ -283,15 +283,6 @@
         <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>ActivityType__c</fields>
-        <fields>EnvelopeId__c</fields>
-        <fields>AttachmentCode__c</fields>
-        <fields>AttachmentDescription__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>ErrorDescription__c</fields>
-        <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>Delivered__c</fields>

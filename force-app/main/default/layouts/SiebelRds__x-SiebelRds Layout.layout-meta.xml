@@ -1592,6 +1592,8 @@
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
         <relatedList>SiebelActivity__x.SRA_SR_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>

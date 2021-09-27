@@ -5,6 +5,10 @@
         <name>wrts_prcgvr__Date</name>
     </customLabels>
     <customLabels>
+        <label>Tipo Operazione</label>
+        <name>wrts_prcgvr__Type</name>
+    </customLabels>
+    <customLabels>
         <label>Valore Dopo La Modifica</label>
         <name>wrts_prcgvr__TransitionActivityPage_DestinationColumn</name>
     </customLabels>
@@ -17,7 +21,11 @@
         <name>wrts_prcgvr__PhaseManager_OnlyTypeAllowedOnCondition</name>
     </customLabels>
     <customLabels>
-        <label>Storico Fasi</label>
+        <label>Consentito</label>
+        <name>wrts_prcgvr__Automatic</name>
+    </customLabels>
+    <customLabels>
+        <label>Cronologia Fasi</label>
         <name>wrts_prcgvr__PhaseHistory</name>
     </customLabels>
     <customLabels>

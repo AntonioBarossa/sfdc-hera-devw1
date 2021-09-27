@@ -100,7 +100,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
             List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) ); 
-
+            
+            //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
+            /*
             String queryNonStoricizzati = 'select Id, FirstName__c,LastName__c  , FiscalCode__c ,VATNumber__c, CustomerCode__c FROM Account ';   
             if(filterby=='Codice Fiscale'){
                 queryNonStoricizzati +=' WHERE FiscalCode__c = :searchKey';
@@ -117,7 +119,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             } 
             List<Account> listAccount =  Database.query( String.escapeSingleQuotes(queryNonStoricizzati) );
-          
+            */
+            //END>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
 
             for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
@@ -132,7 +135,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                         )
                 );
             }
- 
+            //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
+            /*
             for(Account sfCustomer:listAccount){
                 wrapperToreturn.add(
                     new HDT_LC_Customer(
@@ -146,6 +150,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                         )
                 );
             }
+            */
+            //END>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
         }
         System.debug('wrapperToreturn: '+wrapperToreturn);
         return wrapperToreturn;
