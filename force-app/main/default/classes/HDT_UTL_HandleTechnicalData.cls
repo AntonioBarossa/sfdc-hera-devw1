@@ -7,6 +7,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         system.debug('flusso E154');
         if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
             ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+            ord.QuotationType__c = 'Analitico';
         }
         if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
             if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
