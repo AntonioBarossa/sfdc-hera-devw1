@@ -535,7 +535,8 @@ public inherited sharing class HDT_QR_Order {
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
             Phase__c,
-            SupplyAddressFormula__c
+            SupplyAddressFormula__c,
+            SBQQ__Quote__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

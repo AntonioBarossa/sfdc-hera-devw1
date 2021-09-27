@@ -69,10 +69,10 @@
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
-            <layoutItems>
+            <!-- <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Amount</field>
-            </layoutItems>
+            </layoutItems> HRAWRM-249 -->
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
