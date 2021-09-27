@@ -204,13 +204,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Errore di Fatturazione'}
         },
-    'AllineamentoAnagrafica' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi', 'Morosità'}, 
-            'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione', 'Variazione Anagrafica Cliente', 'Fiscale', 'Modifica Tariffa Residente/Non Residente'}
-        },
     'DisassociazioneUtenteWeb' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -230,28 +223,28 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità','Esercizio Diritti Privacy'}
+                {'Gestione Calamità'}
         },
     'Richiestaparere' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Esercizio Diritti Privacy'}
+                {'Gestione Calamità', 'Errore di Fatturazione'}
         },
     'VariazioneAnagraficaCliente' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Condizioni Contrattuali Errate','Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta'}
         },
     'VariazionesuAmministratore' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta'}
         },
     'GestioneDisalimentabilità' => new Map<String,List<String>>
         {
