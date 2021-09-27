@@ -53,6 +53,21 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
 
         List<Case> casesToUpdate = new List<Case>();
         List<wrts_prcgvr__Activity__c> activitiesToCreate = new List<wrts_prcgvr__Activity__c>();
+
+        Set<String> errorCodes = new Set<String>();
+        for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
+            if (String.isBlank(outcomeData.caseId)) {
+                continue;
+            }
+            if (String.isNotBlank(outcomeData.activityType) && String.isNotBlank(outcomeData.errorCode)) {
+                if (outcomeData.activityType.equalsIgnoreCase('Esito KO da SAP') || outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
+                    errorCodes.add(outcomeData.errorCode);
+                }
+            }
+        }
+
+        Map<String, Boolean> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodes);
+
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
 
@@ -72,21 +87,38 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }
 
-            if (String.isNotBlank(outcomeData.errorCode) || String.isNotBlank(outcomeData.errorDescription)) {
-                switch on caseToUpdate.Phase__c {
-                    when 'Esito KO da SAP' {
-                        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-                        activity.wrts_prcgvr__ActivityTemplate__c = templateKoSap.Id;
-                        activity.Case__c = caseToUpdate.Id;
-                        activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
-                        activitiesToCreate.add(activity);
+            if (String.isNotBlank(outcomeData.errorCode)) {
+                Boolean isAutomaticDiscard = false;
+                try {
+                    isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorCode);
+                } catch (Exception e) {
+                    System.debug('Exception: ' + e.getMessage());
+                }
+                if (isAutomaticDiscard) {
+                    caseToUpdate.Status = 'Closed';
+                    String errorDescription = caseToUpdate.Phase__c; // Esito KO pre-MDM oppure Esito KO da SAP
+                    if (String.isNotBlank(outcomeData.errorDescription)) {
+                        errorDescription += ' - ' + outcomeData.errorDescription;
                     }
-                    when 'Esito KO pre-MDM' {
-                        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-                        activity.wrts_prcgvr__ActivityTemplate__c = templateKoMdm.Id;
-                        activity.Case__c = caseToUpdate.Id;
-                        activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
-                        activitiesToCreate.add(activity);
+                    caseToUpdate.Subject = errorDescription;  // tracciamo l'errore su Subject poichè Description potrebbe già contenere qualcosa e non possiamo permetterci di querare il case per andare in append.
+                    caseToUpdate.Phase__c = 'KO Definitivo';  // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
+                } else {
+                    // Creazione activity per successiva lavorazione dello scarto.
+                    switch on caseToUpdate.Phase__c {
+                        when 'Esito KO da SAP' {
+                            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+                            activity.wrts_prcgvr__ActivityTemplate__c = templateKoSap.Id;
+                            activity.Case__c = caseToUpdate.Id;
+                            activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                            activitiesToCreate.add(activity);
+                        }
+                        when 'Esito KO pre-MDM' {
+                            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+                            activity.wrts_prcgvr__ActivityTemplate__c = templateKoMdm.Id;
+                            activity.Case__c = caseToUpdate.Id;
+                            activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                            activitiesToCreate.add(activity);
+                        }
                     }
                 }
             }
