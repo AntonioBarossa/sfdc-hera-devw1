@@ -108,8 +108,8 @@ public inherited sharing class HDT_LC_GeneralInfo {
         CommercialId__c = agent.AgentCode__c,
         UpperChannelAgency__c = agent.UpperChannelAgency__c,
         LowerChannelAgency__c = agent.LowerChannelAgency__c,
-        IsMonitoring__c = agent.IsMonitoring__c	
-        	
+        IsMonitoring__c = agent.IsMonitoring__c,
+        AreaManager__c = agent.AreaManager__c
     ));
 
     return agentList;

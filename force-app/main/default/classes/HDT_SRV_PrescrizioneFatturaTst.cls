@@ -190,7 +190,7 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         
         public HTTPResponse respond(HTTPRequest request){
             
-            System.debug('HDT_WS_PostSalesTstMock - creaBillingsBlockReminder');
+            System.debug('HDT_WS_PostSalesTstMock - respond');
             HttpResponse response = new HttpResponse();
             
             String responseOutcome = 'OK';
