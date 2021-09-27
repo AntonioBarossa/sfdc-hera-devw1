@@ -106,12 +106,12 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             String query = 'SELECT Id, EffectiveDate__c, CreatedDate, RecordType.DeveloperName FROM Order';
 
-            if (String.isNotBlank(accountId)) {
+           /* if (String.isNotBlank(accountId)) {
                 query += ' WHERE AccountId = :accountId';
-            }
+            }*/
 
             if (String.isNotBlank(servicePointId)) {
-                query += ' AND ServicePoint__c = :servicePointId';
+                query += ' WHERE ServicePoint__c = :servicePointId';
             }
 
             if (!recordTypeIds.isEmpty()) {
