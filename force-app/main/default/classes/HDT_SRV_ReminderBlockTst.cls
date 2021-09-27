@@ -17,9 +17,10 @@ public with sharing class HDT_SRV_ReminderBlockTst {
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, true, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, true, acc[0].id, contactList[0].Id, servPointList[0].Id, contractList[0].id, ordList[0].id);
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
@@ -36,6 +37,19 @@ public with sharing class HDT_SRV_ReminderBlockTst {
         
         //SETUP
         mySetup();
+        
+        Case myCase = [SELECT Id FROM Case];
+        
+        //TESTING
+        HDT_SRV_ReminderBlock myTestObject = new HDT_SRV_ReminderBlock();
+        myTestObject.createRequestBody(myCase.Id);
+        
+        //RETRIEVING DATA
+        
+        
+        
+        //ASSERTS
+        
         
         
     }
