@@ -472,8 +472,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
     }
-    //////////////////////////////////////////////////////////////////////////
-
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
