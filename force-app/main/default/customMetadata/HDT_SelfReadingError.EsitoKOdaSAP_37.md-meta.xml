@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>EsitoKOdaSAP_37</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Lettura non ribaltabile su ISU Vendita</value>
+    </values>
+    <values>
+        <field>ErrorCode__c</field>
+        <value xsi:type="xsd:string">112</value>
+    </values>
+    <values>
+        <field>IsAutomaticDiscard__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">Esito KO da SAP</value>
+    </values>
+</CustomMetadata>
