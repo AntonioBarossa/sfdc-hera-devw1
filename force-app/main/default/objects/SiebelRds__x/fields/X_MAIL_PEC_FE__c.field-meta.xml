@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_MAIL_PEC_FE</label>
+    <label>PEC Fattura Elettronica</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

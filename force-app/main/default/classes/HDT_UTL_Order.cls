@@ -224,6 +224,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.IsRemoteManaged__c = oldOrder.IsRemoteManaged__c;
         orderToUpdate.CustomerRequestDate__c = oldOrder.CustomerRequestDate__c;
         orderToUpdate.Commodity__c = oldOrder.Commodity__c;
+        orderToUpdate.isDatoDiscordante__c = true;
         update orderToUpdate;
     }
 

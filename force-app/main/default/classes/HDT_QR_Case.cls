@@ -31,14 +31,50 @@ public inherited sharing class HDT_QR_Case {
             Contract__c,
             ContractCode__c,
             CommodityFormula__c,
-            PODPDRFormula__c
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
     }
-    
+    /*******
+     *  Cambio uso TEcnico
+     */
+    public Case getRecordByIdCambioUso(String Id) {
+        return [
+            SELECT 
+            Id,
+            Status,
+            Subject,
+            Subprocess__c,
+            AccountId,
+            CaseNumber,
+            ServicePoint__r.Distributor__r.Code__c,
+            HerokuPracticeCode__c,
+            /*** Sviluppo Gest Appuntamento */
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
+            /*** FINE */
+            ContactId,
+            ServicePoint__c,
+            Contract__c,
+            ContractCode__c,
+            CommodityFormula__c,
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
+            FROM Case
+            where Id = :Id
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
+
     public List<Case> getChageNonRegMeterByOrder(String orderId){
 
         return [SELECT Id
