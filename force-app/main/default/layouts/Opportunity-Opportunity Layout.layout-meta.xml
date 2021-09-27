@@ -57,10 +57,10 @@
                 <behavior>Edit</behavior>
                 <field>Probability</field>
             </layoutItems>
-            <layoutItems>
+            <!-- <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Amount</field>
-            </layoutItems>
+            </layoutItems>  HRAWRM-249-->
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
