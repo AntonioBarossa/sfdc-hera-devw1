@@ -109,6 +109,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.SapContractCode__c = sapCode;
                     newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
                 }
+                when 'HDT_RT_AttivazioneConModifica' {
+                    newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
+                }
             }
 
             switch on processType {

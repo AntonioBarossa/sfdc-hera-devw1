@@ -3,6 +3,7 @@
     <fullName>CheckVisibility__c</fullName>
     <description>campo testo, lista di condizioni booleane campo==/!=stringa separati da ; se popolata le condizioni vengono valutate a run time sul record di contesto per decidere se mostrare o meno questa particolare schermata</description>
     <externalId>false</externalId>
+    <inlineHelpText>Condizioni multiple separate da ; | Non usare apici/virgolette | Operatori consentiti: ==, !=</inlineHelpText>
     <label>Condizioni Visualizzazione</label>
     <length>255</length>
     <required>false</required>

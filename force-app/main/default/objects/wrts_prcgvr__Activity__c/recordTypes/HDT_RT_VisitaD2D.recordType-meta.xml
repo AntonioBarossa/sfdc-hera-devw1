@@ -239,5 +239,9 @@
             <fullName>Not Started</fullName>
             <default>true</default>
         </values>
+        <values><!--HRAWRM-672-->
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values><!--HRAWRM-672-->
     </picklistValues>
 </RecordType>

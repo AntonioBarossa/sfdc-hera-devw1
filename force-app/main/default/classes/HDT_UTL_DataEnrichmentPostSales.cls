@@ -144,6 +144,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('ElectronicInvoiceCertifiedEmailAddress__c', pecElettronica);
             transcodeMap.put('ElectronicInvoicingMethod__c', modInvioFatt);
             transcodeMap.put('SendCertifiedEmailConsentDate__c', dataConsensoPEc);
+            transcodeMap.put('InvoicingCountry__c', nazioneRecapito);
 
         } catch(Exception e) {
             System.debug('Billing Profile non presente a sistema');

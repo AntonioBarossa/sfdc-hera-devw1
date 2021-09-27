@@ -101,6 +101,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+
+
                                 if( mapRequestFields.get('DES_ERR_AEEG') != null) {
                                     ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                     ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
@@ -112,13 +114,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                     Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                     Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
+                                    ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+                                    ord.QuotationType__c='Predeterminabile';
                                     switch on mapRequestFields.get('TIPO_INTERVENTO') {
-                                        when 'A Preventivo' {
-                                            ord.QuotationType__c='Analitico';
-                                            //ord.ValidityDateEstimate__c=Date.today().addDays(15);
-                                        }
                                         when 'Attivazione', 'Lavoro Semplice' {
-                                            ord.QuotationType__c='Predeterminabile';
                                             ord.ValidityDateEstimate__c=Date.today().addDays(validityDateDelay);
                                         }
                                     }
@@ -172,12 +171,24 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Esito OK da DL' {
+                                HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                switch on mapRequestFields.get('COD_FLUSSO'){
+                                    when 'E150F'{
+                                        utlTechData.handleE150Flow(mapRequestFields, ord);
+                                    }
+                                    when '0300' {
+                                        utlTechData.handle300Flow(mapRequestFields, ord);
+                                    }
+                                }
                             }
                             when 'Amm. Precheck KO SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
@@ -231,6 +242,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     finalCancellationPhase = 'Annullato';
+                                    Datetime nowDate = Datetime.now();
+                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
+                                    {
+                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                    }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                    	ord.Phase__c = 'Ripensamento - Esito OK da SII';
                                     finalCancellationPhase = 'Ripensato';
@@ -241,6 +259,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                    Datetime nowDate = Datetime.now();
+                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
+                                    {
+                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                    }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                     ord.Phase__c = 'Ripensamento - Esito KO da SII';
                                 }
@@ -252,6 +277,8 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Dati discordanti'{
                                 ord.phase__c = mapRequestFields.get('FASE');
+                                ord.DiscardReason__c = mapRequestFields.get('TESTO_ERR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
 

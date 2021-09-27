@@ -174,7 +174,7 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
+                                    <operator>NE</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
                                 </criteria>
                             </visibilityRule>
