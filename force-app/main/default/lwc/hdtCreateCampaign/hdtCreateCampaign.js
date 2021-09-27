@@ -107,7 +107,7 @@ export default class HdtCreateCampaign extends LightningElement {
     
         if ("Campagna Contenitore" != categoryField && event.detail.value === 'Pianificata' && categoryField != null) {
            
-            //this.startDateFieldRequired = true;
+            //! HRAWRM-686 this.startDateFieldRequired = true; 
             // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
 
             //!this.campaignInboundFields = ((categoryField == 'Campagna CRM'|| categoryField == 'Campagna Marketing Cloud' ) && (processType == 'Entrambi' || processType == 'Nuovo Caso')) ? true : false;
@@ -122,7 +122,7 @@ export default class HdtCreateCampaign extends LightningElement {
         } 
      
         else {  
-            //this.startDateFieldRequired = false;
+            //! HRAWRM-686 this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
             this.campaignMemberAssignmentTypeRequired = false;
