@@ -147,7 +147,7 @@ export default class HdtCreateCampaign extends LightningElement {
         let processType = this.template.querySelector('.processType > lightning-input-field').value;
 
         if ("Campagna Contenitore" != event.detail.value && this.statusField === 'Pianificata') {
-            this.startDateFieldRequired = true;
+            //!HRAWRM-686 this.startDateFieldRequired = true;
             // 27-08-2021  HRDTR-00_HRAWRM-303  categoryField == 'Campagne Marketing Cloud'
             this.campaignInboundFields = ((processType == 'Entrambi' || processType == 'Nuovo Caso')&& this.statusField !== 'Bozza' ) ? true : false;//  ....||HRDTR-00_HRAWRM-303 | Matteo Tatti HRAWRM-658 21/09/2021
             this.showCampaignInboundFields = ((processType == 'Entrambi' || processType == 'Nuovo Caso' ) ) ? true : false;
@@ -161,12 +161,13 @@ export default class HdtCreateCampaign extends LightningElement {
             if ("Campagna Contenitore" == event.detail.value) {
                 this.channelFieldRequired = false;
             }
-            this.startDateFieldRequired = false;
+           //!HRAWRM-686 this.startDateFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
             this.campaignMemberAssignmentTypeRequired = false;
             this.campaignMemberAssignmentRequired = false;
         }
+        this.checkStartDateMethods(this.statusField);
         this.checkRequiredProcessType(categoryField,this.statusField);
     }
     // Start HRAWRM-621 16/09/2021
