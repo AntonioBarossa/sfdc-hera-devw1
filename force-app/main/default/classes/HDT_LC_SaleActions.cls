@@ -156,7 +156,7 @@ public inherited sharing class HDT_LC_SaleActions {
         
         String groupToAssign = null;
 
-        system.debug('***mapLineGroup: ' + mapLineGroup);
+        system.debug('***mapLineGroup: ' + json.serialize(mapLineGroup));
 
         for(SBQQ__QuoteLine__c quoteLine : allQuoteLines){
             // quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
@@ -192,6 +192,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
             quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
+        //if(sale.Id=='a3I3N00000042c6UAA') throw new AuraHandledException('Mio test');
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);

@@ -87,8 +87,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),//Processo Amend
             new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),//Processo Amend
-            //new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),
-            //new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', true, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), null, true, false, true, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
@@ -131,6 +131,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
+        isAmendmentAllowed=isAmendmentAllowed||isScontiBonus(ord);
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
         system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
@@ -162,6 +163,18 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
 
         return utilityOrderProcessAssignment(availableProcesses);
+    }
+
+    private static boolean isScontiBonus(Order ord){
+        system.debug('entra sconti');
+        List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+        if(!items.isEmpty()){
+            system.debug('entra sconti2');
+            OrderItem itm =  items[0];
+            return getFamilySconto().contains(itm.Product2.Family);
+        }
+        return false;
+
     }
     
     public static Boolean isCambioOfferta(Order ord){
