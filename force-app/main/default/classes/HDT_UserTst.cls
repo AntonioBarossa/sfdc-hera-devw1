@@ -10,7 +10,9 @@
 
 @isTest
 public class HDT_UserTst {
+    
 	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+    
     @isTest
     static void test1(){
         
@@ -22,26 +24,14 @@ public class HDT_UserTst {
 
         System.runAs(internalUser){
                        
-            String profId = [Select id from Profile limit 1].id;
-            
-            User u = new User(
-
-                LastName='testlastname',
-                Email='testmail@mailtest.it',
-                Username='testmail@username.it',
-                Alias='testest',
-                IsActive=true,
-                TimeZoneSidKey='Europe/Berlin',
-                LocaleSidKey='af_ZA', 
-                EmailEncodingKey='UTF-8',
-                ProfileId=profId, 
-                LanguageLocaleKey='en_US'
-            );
-            
+            Id profile = [Select id from Profile limit 1].id;            
+            User u = HDT_UTL_DataFactoryTst.createInternalUser(profile,false);
+            u.Alias = 'testef56';
             insert u;
             
-            List<User> users = [Select id from User where LastName='testlastname'];
-            System.assertEquals(1, users.size());
+            List<User> users = [Select id from User where Alias='testef56'];
+            
+            System.assertEquals(1, users.size(), 'One user successfully inserted');
             
         }
      }
