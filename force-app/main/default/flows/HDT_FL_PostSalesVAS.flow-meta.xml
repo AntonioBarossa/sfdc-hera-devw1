@@ -234,7 +234,7 @@
             <inputParameters>
                 <name>groupOptions</name>
                 <value>
-                    <stringValue>ORDERS_IN_PROGRESS_VAS;ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI</stringValue>
+                    <stringValue>ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
