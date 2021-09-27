@@ -53,6 +53,21 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
 
         List<Case> casesToUpdate = new List<Case>();
         List<wrts_prcgvr__Activity__c> activitiesToCreate = new List<wrts_prcgvr__Activity__c>();
+
+        Set<String> errorCodes = new Set<String>();
+        for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
+            if (String.isBlank(outcomeData.caseId)) {
+                continue;
+            }
+            if (String.isNotBlank(outcomeData.activityType) && String.isNotBlank(outcomeData.errorCode)) {
+                if (outcomeData.activityType.equalsIgnoreCase('Esito KO da SAP') || outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
+                    errorCodes.add(outcomeData.errorCode);
+                }
+            }
+        }
+
+        Map<String, Boolean> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodes);
+
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
 
@@ -75,7 +90,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
             if (String.isNotBlank(outcomeData.errorCode)) {
                 Boolean isAutomaticDiscard = false;
                 try {
-                    isAutomaticDiscard = HDT_UTL_SelfReadings.isAutomaticDiscard(caseToUpdate.Phase__c, outcomeData.errorCode);
+                    isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorCode);
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
                 }

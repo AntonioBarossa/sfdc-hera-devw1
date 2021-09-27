@@ -287,7 +287,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         response.readingId = r.Id;
     }
 
-    public static Boolean isAutomaticDiscard(String errorType, String errorCode) {
+    /*public static Boolean isAutomaticDiscard(String errorType, String errorCode) {
         if (String.isBlank(errorType) || String.isBlank(errorCode)) {
             return false;
         }
@@ -300,6 +300,27 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         return configs[0].IsAutomaticDiscard__c;
+    }*/
+
+    public static Map<String,Boolean> isAutomaticDiscard(Set<String> errorCodes) {
+        if (errorCodes == null) {
+            return null;
+        }
+
+        Map<String, Boolean> isAutomaticDiscardMap = new Map<String, Boolean>();
+
+        HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
+        List<HDT_SelfReadingError__mdt> configs = queryHandler.getDiscardConfigurations(errorCodes);
+
+        if (configs.isEmpty()) {
+            return null;
+        }
+
+        for (HDT_SelfReadingError__mdt conf : configs) {
+            isAutomaticDiscardMap.put(conf.ErrorCode__c, conf.IsAutomaticDiscard__c);
+        }
+
+        return isAutomaticDiscardMap;
     }
 
 }
