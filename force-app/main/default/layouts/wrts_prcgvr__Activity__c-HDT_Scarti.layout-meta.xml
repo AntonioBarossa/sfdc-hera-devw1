@@ -115,11 +115,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>AssignmentRule__c</field>
+                <field>Agency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Agency__c</field>
+                <field>WorkGroup__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -129,11 +129,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RuleChosenQueue__c</field>
+                <field>AssignmentRule__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>WorkGroup__c</field>
+                <field>wrts_prcgvr__Priority__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

@@ -28,8 +28,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         Boolean check = false;
 
         //Get Sale
-        saleSrv.checkReadAccess('Status__c,Account__c,Name');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Status__c,Account__c,Name');
+        saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         //Get Orders
@@ -64,7 +64,14 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     Status = 'Draft',
                     RecordTypeId = recordTypeIdOrderDossier,
                     EffectiveDate = Date.today(),
-                    Step__c = 1
+                    Step__c = 1,
+                    Channel__c = sale.Channel__c,
+                    VendorLastName__c = sale.VendorLastName__c,
+                    VendorFirstName__c = sale.VendorFirstName__C,
+                    CommercialId__c = sale.CommercialId__c,
+                    AgencyCode__c = sale.AgencyCode__c,
+                    Agency__c = sale.Agency__c,
+                    AreaManager__c = sale.AreaManager__c
                 );
 
                 orderSrv.createRecord(parentOrderNew);
@@ -83,6 +90,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+                    orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
+
+
 
                     System.debug('Lista Ordini '+orderItemsList);
 
@@ -161,6 +171,18 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         System.debug(mapResponse);
 
         return mapResponse;
+    }
+
+    private static List<OrderItem> handleNotAmendBonus(List<Id> listOrdersId){
+        List<OrderItem> bonusToUpdate = new List<OrderItem>();
+        List<OrderItem> allBonuses = orderItemQr.getRecordsByOrderIdFilteredFamilyBonus(listOrdersId);
+        for(OrderItem itm : allBonuses){
+            if(itm.SBQQ__RequiredBy__c==null){
+                bonusToUpdate.add(itm);
+            }
+        }
+        system.debug(bonusToUpdate);
+        return bonusToUpdate;
     }
 
     // @AuraEnabled

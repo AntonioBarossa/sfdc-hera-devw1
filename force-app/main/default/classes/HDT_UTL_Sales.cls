@@ -210,11 +210,11 @@ public with sharing class HDT_UTL_Sales {
                         childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
-                        ord.Phase__c = 'Documentazione da Firmare';
+                        ord.Phase__c = 'Documentazione da Validare';
                         childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
-                  //  listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                       listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione da Validare';
@@ -300,11 +300,11 @@ public with sharing class HDT_UTL_Sales {
                       //  childToUpdate.add(ord);
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
-                        ord.Phase__c = 'Documentazione da Firmare';
+                        ord.Phase__c = 'Documentazione da Validare';
                       //  childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
-                  //  listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                       listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     else if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione da Validare';
@@ -372,7 +372,7 @@ public with sharing class HDT_UTL_Sales {
     }
 
     public static wrts_prcgvr__Activity__c instanceActVocalOrd(String accountid,String orderid,id recordtypeid){
-        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid);
+        return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Vocal Order',recordtypeid=recordtypeid, RecordingLink__c='https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}');
     }
     public static wrts_prcgvr__Activity__c instanceActValidazioneDocumentale(String accountid,String orderid,id recordtypeid){
         return new wrts_prcgvr__Activity__c(account__c = accountid,wrts_prcgvr__Status__c= 'Aperta',order__c = orderid,type__c='Validazione Documentale',recordtypeid=recordtypeid);

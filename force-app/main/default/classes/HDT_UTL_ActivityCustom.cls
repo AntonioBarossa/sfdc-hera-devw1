@@ -130,8 +130,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = act.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Documentazione Gestita';
-            ord.status = 'Activated';
+            //ord.phase__c = 'Documentazione Gestita';
+            //ord.status = 'Activated';
             orderSrv.updateRecord(ord);
         }
         activityCustomSrv.updateRecord(act);
