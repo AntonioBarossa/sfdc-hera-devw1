@@ -15,7 +15,6 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
     }
     
     
@@ -28,6 +27,42 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         System.debug(debugString);
         
         //SETUP
+        Account acc = [SELECT Id FROM Account];
+        Contact con = [SELECT Id FROM Contact];
+        ServicePoint__c srv = [SELECT Id FROM ServicePoint__c];
+        Contract contract = [SELECT Id FROM Account];
+        Order ord = [SELECT Id FROM Order];
+        
+        //MY CASE 1
+        Case myCase_1 = HDT_UTL_DataFactoryTst.createCase(1, false, acc.id, con.Id, srv.id, contract.id, ord.id)[0];
+        myCase_1.FirstLevelComplaintClassification__c = 'Reclamo Scritto';
+        myCase_1.SecondLevelComplaintClassification__c = 'Misura';
+        myCase_1.IndemnityConfirmed__c = true;
+        insert myCase_1;
+        
+        //MY CASE 2
+        Case myCase_2 = HDT_UTL_DataFactoryTst.createCase(1, false, acc.id, con.Id, srv.id, contract.id, ord.id)[0];
+        insert myCase_2;
+        
+        //HDT_UTL_FlowInputs
+        HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs input = new HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs();
+        input.recordId = myCase_2.Id;
+        input.accountId = acc.Id;
+        input.servicePointId = srv.Id;
+        input.firstLevel = myCase_1.FirstLevelComplaintClassification__c;
+        input.secondLevel = myCase_1.SecondLevelComplaintClassification__c;
+        
+        List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs> inputs;
+        inputs = new List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs>{input};
+        
+        
+        //TESTING
+        List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowOutputs> outputs;
+        outputs = HDT_SRV_IndemnityConfirmation.checkIndemnityConfirmation(inputs);
+        
+        //ASSERTS
+        HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowOutputs output = outputs[0];
+        
         
         
     }
