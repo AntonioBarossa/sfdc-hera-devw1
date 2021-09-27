@@ -2,9 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -140,6 +137,16 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Account.Catalogo_Servizi</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.HDT_AccountStatement</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.HDT_AccountReadings</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
@@ -183,16 +190,6 @@
             <actionName>Account.Escalation</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.Catalogo_Servizi</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.HDT_AccountStatement</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -332,7 +329,7 @@
         <fields>SendCertifiedEmailConsentDate__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
-    <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>SAPContractCode__c</fields>
@@ -342,7 +339,7 @@
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <relatedList>RelatedContractList</relatedList>
-    </relatedLists><!--End  HRAWRM-258   14-09-2021  -->
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>SBQQ__ContractedPrice__c.SBQQ__Account__c</relatedList>
@@ -484,8 +481,8 @@
         <fields>SendDate__c</fields>
         <fields>Receiver__c</fields>
         <fields>SendMode__c</fields>
-        <fields>BounceReason__c</fields>
         <fields>EnvelopeId__c</fields>
+        <fields>IsBounced__c</fields>
         <relatedList>DocumentSendTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -506,7 +503,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X0000027QgN</masterLabel>
+        <masterLabel>00h3N000002MyGI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
