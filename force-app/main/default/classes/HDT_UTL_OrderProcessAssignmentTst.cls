@@ -72,7 +72,8 @@ private class HDT_UTL_OrderProcessAssignmentTst {
   @isTest
   static void testInitProcesses() {
       List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processes = HDT_UTL_OrderProcessAssignment.initProcesses();
-      System.assertEquals(23, processes.size());
+      System.assertEquals(23, processes.size(),'we created 23  HDT_WRP_Process');
+      System.assertNotEquals(2, processes.size(),'we have created more than two HDT_WRP_Process');
   }
 
   @isTest 
@@ -84,7 +85,8 @@ private class HDT_UTL_OrderProcessAssignmentTst {
                       WHERE PowerRequested__c=10];
       
     List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processes = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(oneOrder);
-    System.assertEquals(0, processes.size());
+    System.assertEquals(0, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
+    System.assertNotEquals(2, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
   }
 
   @isTest 
@@ -94,14 +96,20 @@ private class HDT_UTL_OrderProcessAssignmentTst {
                       SBQQ__Quote__r.AllowChangeUse__c,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.RecordType.DeveloperName,SBQQ__Quote__r.ContractReference__c
                       FROM Order 
                       WHERE PowerRequested__c=10];
-     	HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(oneOrder);
+
+                      HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(oneOrder);
+
+     System.assertEquals(1, [SELECT count() FROM wrts_prcgvr__Activity__c WHERE Order__c=: oneOrder.id], ' we only have one update wrts_prcgvr__Activity__c ');	
+     System.assertNotEquals(3, [SELECT count() FROM wrts_prcgvr__Activity__c WHERE Order__c=: oneOrder.id], ' we only have one update wrts_prcgvr__Activity__c ');	
+      
   }
 
   @isTest 
   static void testFieldsTransition() {     
     Sale__c sale = [SELECT Id FROM Sale__c WHERE Name='testSaleName0' LIMIT 1];
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
-    System.assertEquals('Remi', field);
+    System.assertEquals('Remi', field,' there is no ServicePoint linked to a sale');
+    System.assertEquals('code', field,' there is no ServicePoint linked to a sale');
   }
 
 
