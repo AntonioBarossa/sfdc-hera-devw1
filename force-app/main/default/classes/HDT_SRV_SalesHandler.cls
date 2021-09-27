@@ -181,6 +181,21 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                
+                                //Start HRAWRM-657 21/09/2021
+                                List<Id> listRecType = new List<Id>();
+                                Id rtTemporaryNewActivation        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId();
+                                Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
+                                listRecType.add(rtTemporaryNewActivation);
+                                listRecType.add(rtConnectionwithActivation);
+                                if (listRecType.contains(ord.recordtypeId )   ) {
+                                    ord.ServicePointCode__c = mapRequestFields.get('POD');
+                                    ord.ServicePoint__r.Name= mapRequestFields.get('POD');
+                                    ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
+                                }
+                                //End HRAWRM-657 21/09/2021
+                                
+                                
                                 switch on mapRequestFields.get('COD_FLUSSO'){
                                     when 'E150F'{
                                         utlTechData.handleE150Flow(mapRequestFields, ord);
@@ -288,6 +303,19 @@ public with sharing class HDT_SRV_SalesHandler {
                                         redirectPreventivo=true;
                                     }
                                 }
+                                //Start HRAWRM-657 21/09/2021
+                                List<Id> listRecordType = new List<Id>();
+                                Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
+                                Id rtChangeOffer        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId();
+                                Id rtVultureWithSwitch  = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
+                                listRecordType.add(rtSwitchIn);
+                                listRecordType.add(rtChangeOffer);
+                                listRecordType.add(rtVultureWithSwitch);
+
+                                if (!listRecordType.contains(ord.recordtypeId )   ) {
+                                    ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
+                                }
+                                //End HRAWRM-657 21/09/2021
 
                                 if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
