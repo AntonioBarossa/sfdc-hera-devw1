@@ -13,7 +13,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     private static final String VAS_SERVICE_TYPE = 'VAS Servizio';
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
     private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
+    private static final String PHASE_SEQUENZIALIZZATO = 'Sequenzializzato';
 
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     
     /**
@@ -82,6 +84,15 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         HDT_WS_ArrichmentDataEntityResponse res;
         String newPhase;
         String errorDescription;
+
+        //gabriele.rota@webresults.it | 2021-09-27
+        if (sobjectId.getSobjectType().getDescribe().getName()=='Order') {
+            Order currentOrder = orderQr.getOrderbyId(sobjectId);
+            if (currentOrder.Phase__c==PHASE_SEQUENZIALIZZATO) {
+                //l'Ordine è stato sequenzializzato, non deve essere inviato al Motore VAS
+                return;
+            }
+        }
 
         switch on method{
             when 'activation'{
