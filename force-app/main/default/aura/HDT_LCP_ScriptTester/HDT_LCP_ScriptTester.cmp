@@ -24,6 +24,8 @@
                                 recordId="{!v.recordId}"
                                 buttonLabel="Avvia Script">
                             </c:hdtManageScriptModal>
+                            
+                            <lightning:button label="Modifica Script" iconName="utility:edit" class="slds-m-left_small" value="{!script.Id}" onclick="{! c.openScript }"/>
                         </div>
                     </p>
 

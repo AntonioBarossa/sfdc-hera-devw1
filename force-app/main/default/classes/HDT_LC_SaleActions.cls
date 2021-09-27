@@ -28,6 +28,34 @@ public inherited sharing class HDT_LC_SaleActions {
     }
 
     /**
+    * @description 
+    * @author federico.defelice@webresults.it | 24-09-2021 
+    * @param primaryQlSconto 
+    * @param allQlSconto 
+    **/
+    private static void reassignQlSconti(List<SBQQ__QuoteLine__c> primaryQlSconto,  List<SBQQ__QuoteLine__c> allQlSconto){
+        Map<id, SBQQ__QuoteLine__c> mapOfferToPrimary = new Map<id, SBQQ__QuoteLine__c>();
+        list<SBQQ__QuoteLine__c> listToUpdate = new list<SBQQ__QuoteLine__c>();
+        set<Id> idsPrimary = new Map<id, SBQQ__QuoteLine__c>( primaryQlSconto ).keySet();
+
+        for(SBQQ__QuoteLine__c ql : primaryQlSconto ){
+            mapOfferToPrimary.put(ql.SBQQ__RequiredBy__c, ql);
+        }
+        for(SBQQ__QuoteLine__c ql : allQlSconto ){
+            if(!(idsPrimary.contains(ql.id) || idsPrimary.contains(ql.SBQQ__RequiredBy__c))){
+                SBQQ__QuoteLine__c qlUp = new SBQQ__QuoteLine__c(Id=ql.Id);
+                qlUp.SBQQ__RequiredBy__c= mapOfferToPrimary.get(ql.SBQQ__RequiredBy__c)?.Id;
+                listToUpdate.add(qlUp);
+            }
+        }
+        system.debug('ivaste');
+        system.debug(json.serialize(listToUpdate));
+        if(!listToUpdate.isEmpty()){
+            quoteLineSrv.updateRecords(listToUpdate);
+        }
+    }
+
+    /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale
      * @param Sale__c sale
@@ -38,12 +66,20 @@ public inherited sharing class HDT_LC_SaleActions {
         Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
         Id campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
         
+        List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
+
         //1 - Check if QuoteLines have BillingProfiles associated
         quoteLineSrv.checkReadAccess('Name,BillingProfile__c,SBQQ__Quote__c');
         List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
         List<SBQQ__QuoteLine__c> quoteLinesListForBillingCheck = quoteLineQr.getRecordsBySaleForBillingCheck(sale.Id);
         quoteLinesListForBillingCheck.addAll(quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(sale.Id));
-        List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
+
+        List<SBQQ__QuoteLine__c> allQlSconto = quoteLineQr.getRecordsBySaleFilteredFamilyBonus(sale.Id);
+        List<SBQQ__QuoteLine__c> primaryQlSconto=HDT_LC_ApplyBillingProfileModal.getBonusPerOffer(allQlSconto);
+        quoteLinesListForBillingCheck.addAll(primaryQlSconto);
+        reassignQlSconti(primaryQlSconto, allQlSconto);
+
+        
         List<SBQQ__QuoteLine__c> quoteLinePrimary = new List<SBQQ__QuoteLine__c>();
         List<String> quoteLinesWithoutBilling = new List<String>();
 
@@ -120,7 +156,7 @@ public inherited sharing class HDT_LC_SaleActions {
         
         String groupToAssign = null;
 
-        system.debug('***mapLineGroup: ' + mapLineGroup);
+        system.debug('***mapLineGroup: ' + json.serialize(mapLineGroup));
 
         for(SBQQ__QuoteLine__c quoteLine : allQuoteLines){
             // quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
@@ -156,6 +192,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
             quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
+        //if(sale.Id=='a3I3N00000042c6UAA') throw new AuraHandledException('Mio test');
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);

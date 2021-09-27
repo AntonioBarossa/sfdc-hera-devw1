@@ -105,7 +105,12 @@ public with sharing class HDT_WS_DocumentalIntegration {
                         }
                     }
                     when 'TERMINATE' {
-                        responseWrap.content = (String) responseData.get('zipBase64');
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non disponibile o non completata)');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
                     }
                 }
             }

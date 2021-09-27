@@ -4,7 +4,10 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria{
+global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria, Queueable{
+    private List<wrts_prcgvr__Activity__c> newActivities;
+    private List<wrts_prcgvr__Activity__c> oldActivities;
+
     static final string CANONERAITEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
@@ -46,6 +49,16 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 		
     }
 	*/
+
+    public HDT_UTL_Scarti(List<wrts_prcgvr__Activity__c> newActs, List<wrts_prcgvr__Activity__c> oldActs) {
+        this.newActivities = newActs;
+        this.oldActivities = oldActs;
+    }
+    public void execute(QueueableContext context) {
+        system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
+        updatePraticaForScartoDocumentaleQueue(newActivities, oldActivities);
+    }
+
 
     /**
     * @author Marco Arci (marco.arci@webresults.it)
@@ -108,6 +121,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         public String esito;
         @InvocableVariable
         public String dettaglioEsito;
+        @InvocableVariable
+        public String recordId;
     }
 
     /**
@@ -122,6 +137,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
       list<HDT_UTL_FlowOutputs> listOutputs= new list<HDT_UTL_FlowOutputs>();
       HDT_UTL_FlowOutputs output= new HDT_UTL_FlowOutputs();
         try{
+            Id outputRecordId;
             switch on inputParam[0].methodName{
                 when 'chiudiAttivita'{
                     chiudiAttivita(inputParam[0].objectId);
@@ -135,13 +151,16 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 when 'createActivityByObjectIdAndTemplateName'{
                     wrts_prcgvr__Activity__c act= createActivityByObjectIdAndTemplateName(inputParam[0].objectId, inputParam[0].templateName);
                     HDT_UTL_DatabaseService.insertSObject(act);
+                    outputRecordId = act.Id;
                 }
             }
+            output.recordId=outputRecordId;
             output.esito='OK';
             output.dettaglioEsito='OK';
         }catch(Exception e){
+            System.debug('ERROR: ' + e.getMessage() + ' @@ ' + e.getStackTraceString());
             output.esito='KO';
-            output.dettaglioEsito= e.getMessage();
+            output.dettaglioEsito= e.getMessage() + ' @@ ' + e.getStackTraceString();
         }
         listOutputs.add(output);
         return listOutputs;  
@@ -413,6 +432,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return outcome;
     }
 
+
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
@@ -423,6 +443,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     //////////////////////////////////////////////////////////////////////////
     @AuraEnabled
     public static void updatePraticaForScartoDocumentale(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
+        HDT_UTL_Scarti updateJob = new HDT_UTL_Scarti(newActivities, oldActivities);
+        System.enqueueJob(updateJob);
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.updatePraticaForScartoDocumentaleQueue - updates case/order with new data
+   * @param newActivities - List<wrts_prcgvr__Activity__c>
+    * @param oldActivities - List<wrts_prcgvr__Activity__c>
+    */
+    //////////////////////////////////////////////////////////////////////////
+    @AuraEnabled
+    public static void updatePraticaForScartoDocumentaleQueue(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
+        System.debug('updatePraticaForScartoDocumentale start newActivities: ' + JSON.serializePretty(newActivities));
+        System.debug('updatePraticaForScartoDocumentale start oldActivities: ' + JSON.serializePretty(oldActivities));
+        try{
         Map<id,wrts_prcgvr__Activity__c> oldMapActivities = new Map<Id,wrts_prcgvr__Activity__c>(oldActivities);
         String oldPhone; 
         String oldEmail;
@@ -443,15 +480,17 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
 
-        Map<Id,Case> relatedCases = new Map<Id,Case>([SELECT Id, PhoneNumber__c, Email__c
+        Map<Id,Case> relatedCases = new Map<Id,Case>([SELECT Id, PhoneNumber__c, Email__c, AccountId
                                    FROM Case
                                    WHERE Id in :relatedIds
                                    WITH SECURITY_ENFORCED]);
-        Map<Id,Order> relatedOrders = new Map<Id,Order>([SELECT Id, PhoneNumber__c, Email__c
+        Map<Id,Order> relatedOrders = new Map<Id,Order>([SELECT Id, PhoneNumber__c, Email__c, AccountId
                                      FROM Order
                                      WHERE Id in :relatedIds
                                      WITH SECURITY_ENFORCED]);
 
+        System.debug('updatePraticaForScartoDocumentale relatedCases: ' + JSON.serializePretty(relatedCases));
+        System.debug('updatePraticaForScartoDocumentale relatedOrders: ' + JSON.serializePretty(relatedOrders));
         
         for(wrts_prcgvr__Activity__c currActivity : activities){
                 if(currActivity.Case__c != null){
@@ -460,6 +499,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     relatedCases.get(currActivity.Case__c).PhoneNumber__c = currActivity.NewMobile__c;
                     relatedCases.get(currActivity.Case__c).Email__c = currActivity.NewEmail__c;
                     relatedObjectsToUpdate.add(relatedCases.get(currActivity.Case__c));
+                    updateContactForScartoDocumentale(relatedCases.get(currActivity.Case__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
                 if(currActivity.Order__c != null){
                     oldPhone = relatedOrders.get(currActivity.Order__c).PhoneNumber__c;
@@ -467,13 +507,19 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     relatedOrders.get(currActivity.Order__c).PhoneNumber__c = currActivity.NewMobile__c;
                     relatedOrders.get(currActivity.Order__c).Email__c = currActivity.NewEmail__c;
                     relatedObjectsToUpdate.add(relatedOrders.get(currActivity.Order__c));
+                    updateContactForScartoDocumentale(relatedOrders.get(currActivity.Order__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
-                updateContactForScartoDocumentale(oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
         }
-        HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
+        System.debug('updatePraticaForScartoDocumentale end relatedObjectsToUpdate: ' + JSON.serializePretty(relatedObjectsToUpdate));
+        if(!relatedObjectsToUpdate.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
+        }
+        }
+        catch(Exception e){
+            System.debug('updatePraticaForScartoDocumentale errorMessage: ' + e.getMessage());
+            System.debug('updatePraticaForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
+        }
     }
-    //////////////////////////////////////////////////////////////////////////
-
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
@@ -485,50 +531,74 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param newMail - String
     */
     @AuraEnabled
-    public static void updateContactForScartoDocumentale(String oldPhone, String oldEmail, String newPhone, String newMail){
-        List<sObject> recordsForDML = new List<SObject>();
-        if(String.isNotBlank(oldPhone)){
-            List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId 
-                                            FROM ContactPointPhone 
-                                            WHERE TelephoneNumber = :oldPhone
-                                            WITH SECURITY_ENFORCED];
-            if(!cpp.isEmpty()){
-                if('Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
-                    ContactPointPhone newCPP = new ContactPointPhone();
-                    newCPP.TelephoneNumber = newPhone;
-                    newCPP.Status__c = 'Non verificato';
-                    newCPP.ParentId = cpp.get(0).ParentId;
-                    recordsForDML.add(newCPP);
-                }
-                else if('Non Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
-                    ContactPointPhone toUpdateCPP = new ContactPointPhone(Id = cpp.get(0).Id);
-                    toUpdateCPP.TelephoneNumber = newPhone;
-                    recordsForDML.add(toUpdateCPP);
-                }
-            }
-        }
-        if(String.isNotBlank(oldEmail)){
-            List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId 
-                                            FROM ContactPointEmail 
-                                            WHERE EmailAddress = :oldEmail
-                                            WITH SECURITY_ENFORCED];
-            if(!cpe.isEmpty()){
-                if('Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
-                    ContactPointEmail newCPE = new ContactPointEmail();
-                    newCPE.EmailAddress = newMail;
-                    newCPE.Status__c = 'Non verificato';
-                    newCPE.ParentId = cpe.get(0).ParentId;
-                    recordsForDML.add(newCPE);
-                }
-                else if('Non Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
-                    ContactPointEmail toUpdateCPE = new ContactPointEmail(Id = cpe.get(0).Id);
-                    toUpdateCPE.EmailAddress = newMail;
-                    recordsForDML.add(toUpdateCPE);
+    public static void updateContactForScartoDocumentale(Id accountId, String oldPhone, String oldEmail, String newPhone, String newMail){
+        System.debug('updateContactForScartoDocumentale start accountId: ' + accountId);
+        System.debug('updateContactForScartoDocumentale start oldPhone: ' + oldPhone );
+        System.debug('updateContactForScartoDocumentale start oldEmail: ' + oldEmail);
+        System.debug('updateContactForScartoDocumentale start newPhone: ' + newPhone);
+        System.debug('updateContactForScartoDocumentale start newMail: ' + newMail);
+        try{
+        List<Contact> relatedContacts = [SELECT Id, IndividualId
+                                         FROM Contact 
+                                         WHERE AccountId = :accountId
+                                         WITH SECURITY_ENFORCED];
+        if(!relatedContacts.isEmpty()){
+            Set<Id> individualIds = new Set<Id>();
+            for(Contact curContact : relatedContacts){
+                individualIds.add(curContact.IndividualId);
+            } 
+            List<sObject> recordsForDML = new List<SObject>();
+            if(String.isNotBlank(oldPhone)){
+                List<ContactPointPhone> cpp = [SELECT Id, TelephoneNumber, Status__c, ParentId 
+                                                FROM ContactPointPhone 
+                                                WHERE ParentId IN :individualIds
+                                                AND TelephoneNumber = :oldPhone
+                                                WITH SECURITY_ENFORCED];
+                if(!cpp.isEmpty()){
+                    if('Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
+                        ContactPointPhone newCPP = new ContactPointPhone();
+                        newCPP.TelephoneNumber = newPhone;
+                        newCPP.Status__c = 'Non verificato';
+                        newCPP.ParentId = cpp.get(0).ParentId;
+                        recordsForDML.add(newCPP);
+                    }
+                    else if('Non Verificato'.equalsIgnoreCase(cpp.get(0).Status__c)){
+                        ContactPointPhone toUpdateCPP = new ContactPointPhone(Id = cpp.get(0).Id);
+                        toUpdateCPP.TelephoneNumber = newPhone;
+                        recordsForDML.add(toUpdateCPP);
+                    }
                 }
             }
+            if(String.isNotBlank(oldEmail)){
+                List<ContactPointEmail> cpe = [SELECT Id, EmailAddress, Status__c, ParentId 
+                                                FROM ContactPointEmail 
+                                                WHERE ParentId IN :individualIds
+                                                AND EmailAddress = :oldEmail
+                                                WITH SECURITY_ENFORCED];
+                if(!cpe.isEmpty()){
+                    if('Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
+                        ContactPointEmail newCPE = new ContactPointEmail();
+                        newCPE.EmailAddress = newMail;
+                        newCPE.Status__c = 'Non verificato';
+                        newCPE.ParentId = cpe.get(0).ParentId;
+                        recordsForDML.add(newCPE);
+                    }
+                    else if('Non Verificato'.equalsIgnoreCase(cpe.get(0).Status__c)){
+                        ContactPointEmail toUpdateCPE = new ContactPointEmail(Id = cpe.get(0).Id);
+                        toUpdateCPE.EmailAddress = newMail;
+                        recordsForDML.add(toUpdateCPE);
+                    }
+                }
+            }
+            System.debug('updateContactForScartoDocumentale end recordsForDML: ' + JSON.serializePretty(recordsForDML));
+            if(!recordsForDML.isEmpty()){
+                HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
+            }
         }
-        if(!recordsForDML.isEmpty()){
-            HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
+        }
+        catch(Exception e){
+            System.debug('updateContactForScartoDocumentale errorMessage: ' + e.getMessage());
+            System.debug('updateContactForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
         }
     }
 
@@ -615,8 +685,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     toHandle.add(singleData);
                 }
             }else if(singleData.getSObjectType()==schema.SMSTracking__c.getSObjectType()){
-                if(singleData.get('Undelivered__c')==true &&
-                oldData.get((Id)singleData.get('Id')).get('Undelivered__c')!=((string)singleData.get('Undelivered__c'))){
+                if(singleData.get('Undelivered__c')==true
+                   && oldData.get((Id)singleData.get('Id')).get('Undelivered__c')!=singleData.get('Undelivered__c')){
                     toHandle.add(singleData);
                 }
             }
