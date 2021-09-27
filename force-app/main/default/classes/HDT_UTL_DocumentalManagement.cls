@@ -240,7 +240,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
+					// l'email sull'account potrebbe non essere quella inserita nella modale dell'EC, che non tracciamo da nessuna parte.
+					//documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 			}
