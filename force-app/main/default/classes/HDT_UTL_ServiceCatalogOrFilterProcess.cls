@@ -32,12 +32,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
         },
-    'SospensioneCanoneRaiCalamità' => new Map<String,List<String>>
+    'SospensioneCanoneRaiCalamita' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami','Preventivi'},
             'Type' => new List<String>
-                {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
+                {'Gestione Calamità','Reclamo Scritto/Rich. Info'}
         },
     'VerificaPareggioFittizioCanoneRai' => new Map<String,List<String>>
         {
@@ -49,19 +49,29 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Fatturazione','Variazioni','Generiche Attivazioni','Canone Rai'}
         },
-    'Contratti/BonusCommerciale' => new Map<String,List<String>>
+    'ContrattiBonusCommerciale' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Fatturazione', 'Variazioni', 'Annullamento', 'Disattivazioni'}, 
             'Type' => new List<String>
                 {'Comportamento Venditori HC'}
         },
+    'ContrattiModificaContrattoPreAttivazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Generiche Attivazioni', 'Preventivi'}
+        },
+    'DocumentaleCopiaContrattoFirmatoNonRicevuto' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Disattivazioni', 'Annullamento'}
+        },
     'ChiusuraContatore' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Variazioni'}, 
             'Type' => new List<String>
-                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti'}
+                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti', 'Comunicazione di Fallimento'}
         },
     'RecessoperAltriMotivi' => new Map<String,List<String>>
         {
@@ -104,7 +114,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Verifica GDM'}
         },
-    'RitornoaFatturazioneBimestrale/Mensile' => new Map<String,List<String>>
+    'RitornoaFatturazioneBimestraleMensile' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
@@ -121,14 +131,14 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
         },
-    'Unificazione/SeparazioneBP-CA-Bolletta' => new Map<String,List<String>>
+    'UnificazioneSeparazioneBPCABolletta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
-    'VerificaTitolaritàPOD/PDR' => new Map<String,List<String>>
+    'VerificaTitolaritaPODPDR' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
@@ -152,7 +162,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami'}
         },
-    'CadutaLinea/ChiamataMuta' => new Map<String,List<String>>
+    'CadutaLineaChiamataMuta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
@@ -549,22 +559,30 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
 
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
-        
-        if(method == 'Piano Rateizzazione'){
+        //fix
+        if(method == 'PianoRateizzazione'){
             HDT_QR_Case caseQr = new HDT_QR_Case();
-            String accountId = (String)sb.get('Account__c');
-            List<Case> listCase = caseQr.getCaseByAccountid(accountId,'Storno Rateizzazione');
-            if(listCase != null && !listCase.isEmpty()){
-                res = true;
-            }
-            else{
-                String s = (String)sb.get('IsInstallment__c');
-                if(s == 'false'){
+            String accountFilterId = (String)sb.get('Id');
+            System.debug('****1:' + sb);
+            System.debug('****2:' + accountFilterId);
+            List<AccountStatementFilter__c> act = HDT_QR_AccountStatement.getFilter(accountFilterId);
+            if(act != null && !act.isEmpty()){
+                List<Case> listCase = caseQr.getCaseByAccountid(act[0].Account__c,'Storno Rateizzazione');
+                if(listCase != null && !listCase.isEmpty()){
                     res = true;
                 }
                 else{
-                    res = false;
+                    //String s = (String)sb.get('IsInstallment__c');
+                    if(act[0].IsInstallment__c == false){
+                        res = true;
+                    }
+                    else{
+                        res = false;
+                    }
                 }
+            }
+            else{
+                res = false;
             }
         }
         else if(mapAccountStatementFilter.get(method) != null){
