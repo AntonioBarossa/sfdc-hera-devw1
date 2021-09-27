@@ -30,7 +30,7 @@ public with sharing class HDT_SRV_ReminderBlockTst {
             myCase.BlockType__c = 'W - Verifica metrologica contatore in corso';
         }
         
-        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id, billingProfileList[0].ContractAccountCode__c);
+        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id, bpf[0].ContractAccountCode__c);
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
