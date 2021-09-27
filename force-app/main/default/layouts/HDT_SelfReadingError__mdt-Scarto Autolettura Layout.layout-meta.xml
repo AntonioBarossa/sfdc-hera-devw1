@@ -24,7 +24,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AutomaticDiscard__c</field>
+                <field>IsAutomaticDiscard__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
