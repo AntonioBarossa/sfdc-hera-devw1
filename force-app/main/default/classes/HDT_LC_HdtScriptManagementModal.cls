@@ -14,7 +14,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change

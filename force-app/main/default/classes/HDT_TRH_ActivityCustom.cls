@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 25/05/2021
+* @description HDT_TRH_ActivityCustom
+* @history Lorenzo – 25/05/2021 – created class
+*/
 public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHandler {
 	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
 
