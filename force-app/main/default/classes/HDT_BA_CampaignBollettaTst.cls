@@ -75,13 +75,9 @@ public class HDT_BA_CampaignBollettaTst {
         Id batchId = Database.executeBatch(cb,200);
         Test.stopTest();
         
-        Integer contBollette = 0;
-        List<CampaignMember> listaCM = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference'];
-        for(CampaignMember cm : listaCM)
-            if(cm.isWsBollettaInvoked__c = true)
-            contBollette++;               
+        List<CampaignMember> listaCM = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference' and isWsBollettaInvoked__c = true];              
         
-        System.assertEquals(50, contBollette, 'All the CampaignMember field isWsBollettaInvoked__c are set to true after the batch');
+        System.assertEquals(50, listaCM.size(), 'All the CampaignMember field isWsBollettaInvoked__c are set to true after the batch');
         System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c is updated by the batch');
     }
 }
