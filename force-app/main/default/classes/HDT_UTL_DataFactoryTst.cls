@@ -8,7 +8,7 @@
 
 public with sharing class HDT_UTL_DataFactoryTst{
 
-	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
 
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
 	public static void pClickInstance(){
@@ -449,7 +449,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			servPoint.Name='testServicePoint'+i;
 			servPoint.ServicePointCode__c='testServicePointCode';
-
+			servPoint.RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
 			servPointList.add(servPoint);
 		}
@@ -599,6 +599,91 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return caseList;
+	}
+	
+	//AUTOLETTURA
+	public static List<Case> createCaseAutolettura(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_AUTOLETTURA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
+	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			/*
+			//CAMPI USATI PER READINGS NON-GAS
+			
+			reading.ReadingValue1__c = 1;
+			reading.ReadingRegister1__c = 'TST';
+			
+			*/
+			
+			reading.CaseGas__c = caseId;
+			
+			//METER
+			reading.ReadingRegisterMeter__c = 'TST';
+			reading.ReadingValueMeter__c = 1;
+			reading.ReadingBandMeter__c = 'TE';
+			reading.ReadingDateMeter__c = Date.today();
+			reading.ReadingDigitNumberMeter__c = 'TE';
+			reading.ReadingSerialNumberMeter__c = 'SERIAL_CORR';
+			reading.ReadingTypeMeter__c = 'READING_TYPE_METER';
+			reading.ReadingUnitMeter__c = 'TST';
+			
+			//CORRECTOR
+			reading.ReadingValueCorrector__c = 1;
+			reading.ReadingRegisterCorrector__c = 'TST';
+			reading.ReadingBandCorrector__c = 'TE';
+			reading.ReadingDateCorrector__c = Date.today();
+			reading.ReadingDigitNumberCorrector__c = 'TE';
+			reading.ReadingSerialNumberCorrector__c = 'SERIAL_CORR';
+			reading.ReadingTypeCorrector__c = 'READING_TYPE_CORRECTOR';
+			reading.ReadingUnitCorrector__c ='TST' ;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
 	}
 	
 	
@@ -1582,9 +1667,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return documents;
 	}
 	
-	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
 		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
-		for(Integer i=0; i<numberRecords;i++){
+		for(Integer i=0; i<amount;i++){
 			DocumentalActivity__c docAct = new DocumentalActivity__c();
 			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
 			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
@@ -1593,7 +1678,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			docAct.PostelTimestamp__c = '2000000000';
 			docActList.add(docAct);
 		}
-		insert docActList;
+
+		if(doInsert){
+			insert docActList;
+		}
+		
 		return docActList;
 	}
 	
@@ -2213,6 +2302,121 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return comfQualityCallList;
 	}
 
+
+	public static List<BrandSalesCompany__c> createBrandSalesCompany (Integer amount, Boolean doInsert) {
+
+		List<BrandSalesCompany__c> brandSalesCoList = new List<BrandSalesCompany__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BrandSalesCompany__c brandSaleCo = new BrandSalesCompany__c(
+				Name = 'testName'
+			);
+
+			brandSalesCoList.add(brandSaleCo);
+		}
+
+		if (doInsert){
+
+			insert brandSalesCoList;
+		}
+
+		return brandSalesCoList;
+	}
+
+	public static List<SMSTracking__c> createSmsTracking (Integer amount, Boolean doInsert, Id contactId) {
+
+		List<SMSTracking__c> smsTrackList = new List<SMSTracking__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SMSTracking__c smsTrack=new SMSTracking__c(
+				FromName__c='testSms',
+				CompanyOwner__c='HERA COMM',
+				ContactID__c=contactId,
+				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
+				MessageID__c=12321421,
+				Mobile__c='234234234',
+				MobileMessageTrackingID__c=12343143,
+				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
+			);
+			
+			smsTrackList.add(smsTrack);
+		}
+
+		if (doInsert){
+
+			insert smsTrackList;
+		}
+
+		return smsTrackList;
+	}
+
+	public static List<et4ae5__IndividualEmailResult__c> createIndividualEmailResult (Integer amount, Boolean doInsert, Id triggeredSendId) {
+
+		List<et4ae5__IndividualEmailResult__c> indEmailRes = new List<et4ae5__IndividualEmailResult__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__IndividualEmailResult__c ier = new et4ae5__IndividualEmailResult__c(
+				Name = 'tester',
+				EmailAddress__c = 'my@email.com',
+				et4ae5__TriggeredSendDefinition__c = triggeredSendId
+			);
+
+			indEmailRes.add(ier);
+		}
+
+		if (doInsert){
+
+			insert indEmailRes;
+		}
+
+		return indEmailRes;
+	}
+
+	public static List<et4ae5__Automated_Send__c> createTriggeredSend (Integer amount, Boolean doInsert) {
+
+		List<et4ae5__Automated_Send__c> trigSendList = new List<et4ae5__Automated_Send__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__Automated_Send__c autoSend = new et4ae5__Automated_Send__c(
+				Name = 'automaticSent'
+			);
+
+			trigSendList.add(autoSend);
+		}
+
+		if (doInsert){
+
+			insert trigSendList;
+		}
+
+		return trigSendList;
+	}
+
+	public static List<HDT_FulfillmentDateMatrix__c> createFullfillmentDateMatrix (Integer amount, Boolean doInsert) {
+
+		List<HDT_FulfillmentDateMatrix__c> fullfDateMatrixList = new List<HDT_FulfillmentDateMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			HDT_FulfillmentDateMatrix__c fullfDateMatrix = new HDT_FulfillmentDateMatrix__c(
+				Name = 'testFulDatMx'+i
+			);
+
+			fullfDateMatrixList.add(fullfDateMatrix);
+		}
+
+		if (doInsert){
+
+			insert fullfDateMatrixList;
+		}
+
+		return fullfDateMatrixList;
+	}
+
 	/**
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 23/09/2021
@@ -2238,7 +2442,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
             user.EmailEncodingKey = 'UTF-8'; 
             user.LanguageLocaleKey = 'en_US';
 
-			
+
 			userList.add(user);
 		}
 
@@ -2249,5 +2453,5 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return userList;
 	}
-
+	
 }
