@@ -139,12 +139,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @return List<SBQQ__QuoteLine__c> 
     **/
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredFamilyBonus(String saleId){
-        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c group by ProductFamily__c  ];
-        Set<String> famils = new Set<String>();
-        for(AggregateResult ag : lgr){
-            if(String.isNotBlank((String) ag.get('fam')))
-                famils.add((String) ag.get('fam'));
-        }
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         return [
             SELECT
             Id,
@@ -159,6 +154,35 @@ public inherited sharing class HDT_QR_QuoteLine {
             BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__ProductFamily__c IN :famils
+            AND SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
+            WITH SECURITY_ENFORCED
+            Order by BillingProfile__c NULLS LAST, Name
+        ];
+    }
+
+        /**
+    * @description 
+    * @author federico.defelice@webresults.it | 23-09-2021 
+    * @param saleId 
+    * @return List<SBQQ__QuoteLine__c> 
+    **/
+    public List<SBQQ__QuoteLine__c> getRecordsByQuoteFilteredFamilyBonus(String quoteId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__ProductFamily__c IN :famils
             AND SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
             WITH SECURITY_ENFORCED
@@ -332,7 +356,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Product__r.Version__c,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
-            ServicePoint__c
+            ServicePoint__c,
+            SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__Product__r.Name IN ('POD','PDR')

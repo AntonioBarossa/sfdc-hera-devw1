@@ -639,7 +639,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["district"] = this.order.ServicePoint__r.SupplyProvince__c;
             data["postCode"] = this.order.ServicePoint__r.SupplyPostalCode__c;
 
-            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumptionStandardM3__c;
+            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumption__c;
         }
         console.log("this.3"); 
 
@@ -793,7 +793,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
         console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
 
-        while(count <= 5
+        while(count <= 8
             && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
             && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
             ){

@@ -223,6 +223,7 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
+            ServicePoint__r.AnnualConsumption__c,
             SalesCompanyCode__c,
             Owner.Username,
             CustomerType__c,
@@ -558,6 +559,25 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE Id = :orderId
             AND Status = :status
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 27-09-2021 
+    * @param quoteId 
+    * @return List<Order> 
+    **/
+    public List<Order> getPodOrderFromQuote(String quoteId){
+        return [
+            SELECT
+            ServicePoint__c 
+            FROM
+            Order
+            WHERE
+            SBQQ__Quote__c =:quoteId
+            AND ServicePoint__c!=null
             WITH SECURITY_ENFORCED
         ];
     }
