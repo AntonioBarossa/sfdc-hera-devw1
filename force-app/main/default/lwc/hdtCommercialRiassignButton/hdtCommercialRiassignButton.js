@@ -63,7 +63,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
-                updateRecord({ fields: { Id: this.recordId } });
+                window.reload();//updateRecord({ fields: { Id: this.recordId } });
             }
         });
      
@@ -81,7 +81,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
-                updateRecord({ fields: { Id: this.recordId } });
+                window.reload();//updateRecord({ fields: { Id: this.recordId } });
             }
         });
      
@@ -100,7 +100,7 @@ export default class HdtCommercialRiassignButton extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
-                updateRecord({ fields: { Id: this.recordId } });
+                window.reload();//updateRecord({ fields: { Id: this.recordId } });
             }
         });
      

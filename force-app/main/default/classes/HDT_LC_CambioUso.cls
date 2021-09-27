@@ -38,10 +38,10 @@ public with sharing class HDT_LC_CambioUso {
         HDT_SRV_Case caseSrv = new HDT_SRV_Case();
         System.debug('*****2:');
         Case c1 = caseQr.getRecordByIdCambioUso(caseId);
-        List<ServicePoint__c> srv = srvQr.getRecordById(c1.servicepoint__c,'id,Vat__c,DisconnectibilityType__c,CommoditySector__c,SupplyCity__c,Account__r.CustomerMarking__c,distributor__r.code__c');
+        List<ServicePoint__c> srv = srvQr.getRecordById(c1.servicepoint__c,'id,Disconnectable__c,Vat__c,DisconnectibilityType__c,CommoditySector__c,SupplyCity__c,Account__r.CustomerMarking__c,distributor__r.code__c');
         String code = '';
         try{
-            List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(srv[0] != null ? srv[0].CommoditySector__c : 'Energia Elettrica',srv[0].distributor__r.code__c,'N/A',tipoImpianto);
+            List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(srv[0] != null ? srv[0].CommoditySector__c : 'Energia Elettrica',srv[0].distributor__r.code__c,'N/A',tipoFornitura);
             for(RateCategory__c r : listRate){
                 if(r.DistributorCode__c == srv[0].distributor__r.code__c && r.operatore__c == 'Uguale'){
                     code = r.CalculatedValue__c;
@@ -79,6 +79,7 @@ public with sharing class HDT_LC_CambioUso {
             c.TaxRate__c = mapIvaIdToValue2.get(srv[0].Vat__c);
            // c.CustomerType__c = c1.account.CustomerType__c;
             c.DisconnectibilityType__c = srv[0].DisconnectibilityType__c;
+            c.Disconnectable__c = srv[0].Disconnectable__c;
             c.Note__c = note;
             System.debug('*****4:');
             c.phase__c = 'Da Inviare';
