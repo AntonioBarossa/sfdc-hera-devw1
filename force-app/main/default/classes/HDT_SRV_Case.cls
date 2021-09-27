@@ -78,4 +78,17 @@ public inherited sharing class HDT_SRV_Case {
         HDT_UTL_DatabaseService.updateSObject(c);
 
     }
+
+    /**
+    * @description  Update List case
+    * @author federico.defelice@webresults.it | 22-09-2021 
+    * @param cases 
+    **/
+    public void updateRecords(List<Case> cases){
+        for (Case c : cases) {
+            List<String> fields = helperMethods.getObjAttrList(c);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+        HDT_UTL_DatabaseService.updateSObject(cases);
+    }
 }
