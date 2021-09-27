@@ -288,6 +288,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.RecordType.Developername,
             Account.Category__c,
+            DocumentalPhase__c,
             Name,
             RecordTypeId,
             RecordType.Name,
@@ -872,6 +873,9 @@ public inherited sharing class HDT_QR_Order {
         return [SELECT Excise__c FROM HDT_ExciseTranscode__mdt WHERE Active__c = true AND ExciseString__c = :exciseString WITH SECURITY_ENFORCED LIMIT 1];
     }
 
+    public List<Order> getParentOrderDocs(Order ord){
+        return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id = :ord.ParentOrder__c WITH SECURITY_ENFORCED];
+    }
     public List<Order> getParentOrderDocs(List<String> ordParents){
         return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id IN :ordParents WITH SECURITY_ENFORCED];
     }
