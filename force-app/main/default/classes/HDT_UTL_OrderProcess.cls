@@ -43,6 +43,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
 
+        Map<String,Order> mapParentOrder = new Map<String,Order>();
+        List<String> ordParentsIds = new List<String>();
+        for (Order ord : newOrderList) {
+            ordParentsIds.add(ord.ParentOrder__c);
+        }
+        List<Order> orderPadreDocs = orderQr.getParentOrderDocs(ordParentsIds);
+        for (Order ordPadre : orderPadreDocs) {
+            mapParentOrder.put(ordPadre.Id, ordPadre);
+        }
 
         for (Order order : newOrderList) {
             Order oldOrder= mapOrder.get(order.Id);
@@ -59,18 +68,39 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
 
+            String phaseStory = order.PhaseStory__c;
             if(order.Phase__c!=oldOrder.Phase__c 
                 && oldOrder.Phase__c == 'Documentazione validata' 
                 && order.Phase__c == 'Comunicazione Verso Heroku'
                 && order.QualityCall__c
-                && isMonitoringList.contains(order.AgencyCode__c)){
+                && isMonitoringList.contains(order.AgencyCode__c)
+                && !phaseStory.contains('Quality Call OK')){
                 String newPhase = 'In attesa di quality call';
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = oldOrder.Phase__c+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
 
+            if(order.Phase__c!=oldOrder.Phase__c 
+                && oldOrder.Phase__c == 'In attesa di quality call' 
+                && order.Phase__c == 'Quality Call OK'
+                ){
+                String newPhase = 'Comunicazione Verso Heroku';
+                order.Phase__c = newPhase;
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
+            }
 
+            if (order.Phase__c!=oldOrder.Phase__c 
+                && oldOrder.Phase__c != 'In attesa di quality call'
+                && order.Phase__c == 'Quality Call OK'
+                && isMonitoringList.contains(order.AgencyCode__c)) {
+
+                    String newPhase = (HDT_LC_OrderDossierWizardActions.checkRequiredDocs(order) && HDT_LC_OrderDossierWizardActions.checkRequiredDocs(mapParentOrder.get(order.ParentOrder__c))) ? 'Comunicazione verso Heroku' : 'In attesa validazione';
+                    order.Phase__c = newPhase;
+                    DateTime nowDateTime = DateTime.now();
+                    order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
+            }
         }
         
     }   
@@ -137,14 +167,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 filtered.add(o1);
             }
 
-            if (o1.Phase__c == 'In attesa validazione') {
+            if (o1.Phase__c == 'In attesa validazione'  && o1.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                     phase__c = HDT_LC_OrderDossierWizardActions.checkRequiredDocs(o1) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
 
-            if (o1.Phase__c == 'Da Inviare') {
+            if (o1.Phase__c == 'Da Inviare'  && o1.DateComfortCall__c == null) {
                 childOrdersDocValid.add(new Order(
                     Id = o1.Id,
                    // phase__c = 'In attesa validazione'
@@ -377,12 +407,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if(childOrder.recordType.Developername == 'HDT_RT_VAS'){
                 //for vas i need a bulk update on a queueable
                 if (childOrder.Phase__c == currentVasPhase) {
+                    String phaseVas = childOrder.VASType__c?.equals('VAS Servizio')? 'In attesa tempi di ripensamento' : newVasPhase;
                     /*Order orderToUpdate = new Order(
                         Id = childOrder.Id,
                         Phase__c = newVasPhase
                     );
                     childOrdersToUpdate.add(orderToUpdate);*/
-                    vasOrdersToUpdate.put(childOrder.Id, newVasPhase);
+                    vasOrdersToUpdate.put(childOrder.Id, phaseVas);
                 }
             } else if (childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt' && childOrder.DistributorFormula__c == 'AMGA UDINE-10R0000032') {
                 //MODIFICARE IN ATTESA DI SVILUPPO MATRICE, TEMPORANEA ATTIVAZIONE FABIANA BUG 18/09/21
@@ -415,8 +446,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else{
                     System.debug('***********4');
                     if (childOrder.Phase__c == currentPhase
-                        && !childOrder.QualityCall__c
-                        && !isMonitoringList.contains(childOrder.AgencyCode__c)
+                        // && !childOrder.QualityCall__c
+                        // && !isMonitoringList.contains(childOrder.AgencyCode__c)
                         //@frpanico 06/09/2021 added voltura condition
                         && childOrder.ProcessType__c != 'Voltura' ) {
                         System.debug('***********5');
@@ -500,7 +531,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                 ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                 if (String.isBlank(String.valueOf(temp.ServicePoint__r.Account__c)) ||String.isBlank(String.valueOf(temp.ServicePoint__r.SAPImplantCode__c))) {
-                    sp.Account__c=temp.AccountId;
+                   // sp.Account__c=temp.AccountId;
                     sp.SAPImplantCode__c=temp.SapContractCode__c;
                     listObjToUpdate.add(sp);
                 }         

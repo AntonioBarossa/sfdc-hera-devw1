@@ -37,6 +37,26 @@
             <assignToReference>esitoApex</assignToReference>
             <name>esito</name>
         </outputParameters>
+        <outputParameters>
+            <assignToReference>newActivityId</assignToReference>
+            <name>recordId</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Redirect_to_activity</name>
+        <label>Redirect to activity</label>
+        <locationX>1262</locationX>
+        <locationY>353</locationY>
+        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>newActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
@@ -90,7 +110,7 @@
         <choiceText>Preavviso Cessazione</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>CBS_MOR007_PREAVVISO_CESSAZIONE</stringValue>
+            <stringValue>CBS_MOR007__PREAVVISO_CESSAZIONE</stringValue>
         </value>
     </choices>
     <interviewLabel>HDT_FL_CreationManualActivity {!$Flow.CurrentDateTime}</interviewLabel>
@@ -173,7 +193,7 @@
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>ScreenEsito</name>
@@ -183,6 +203,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Redirect_to_activity</targetReference>
+        </connector>
         <fields>
             <name>esitoKO</name>
             <fieldText>&lt;p&gt;Errore nella creazione dell&apos;attività!&lt;/p&gt;&lt;p&gt;Dettagli: {!DettaglioEsitoApex}&lt;/p&gt;</fieldText>
@@ -214,7 +237,7 @@
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
@@ -259,6 +282,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>newActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>tipologiaSelezionata</name>
