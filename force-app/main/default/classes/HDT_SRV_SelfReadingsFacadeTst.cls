@@ -484,6 +484,9 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //PREPARAZIONE ARGS
         Case myCase = [SELECT Id FROM Case];
         
+        //WEBSERVICE MOCKS
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
         Test.startTest();
         HDT_SRV_SelfReadings.handleInvioLettureForzato(myCase);
         Test.stopTest();
