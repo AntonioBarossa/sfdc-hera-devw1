@@ -11,11 +11,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     private static String myCommodity = 'Gas';
     private static Boolean isMeterCorrector = true;
     private static Boolean isCaseWithOrigin = false;
-
-    
-    
-    //TODO: COPRIRE ANCHE handleInvioLettureForzato
-    //NB: metodo in questione si appoggia a Job HDT_QBL_SelfReadingsCallouts
     
     
     
@@ -54,8 +49,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     
     //TESTS
-    
-    //TODO: IMPLEMENTARE ANCHE CASI CON RESPONSE CODE DIVERSO DA 200 E 201
     
     //execute
     ///CheckAutolettura - GAS
@@ -474,11 +467,33 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     }
     
     
-    //handleResponseInvioLetture - RESPONSE CODE NOT 200 OR 201
-    //NB: POTENZIALMENTE SUPERFLUO
     
-    //handleResponseInvioLettureForzato - RESPONSE CODE NOT 200 OR 201
-    //NB: POTENZIALMENTE SUPERFLUO
+    //NB: metodo in questione si appoggia a Job HDT_QBL_SelfReadingsCallouts
+    @isTest
+    private static void handleInvioLettureForzatoTest(){
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - handleInvioLettureForzatoTest';
+		System.debug(debugString);
+        
+        //SETUP
+        processError1 = true;
+        isMeterCorrector = false;
+        mySetup();
+        
+        //PREPARAZIONE ARGS
+        Case myCase = [SELECT Id FROM Case];
+        
+        Test.startTest();
+        HDT_SRV_SelfReadings.handleInvioLettureForzato(myCase);
+        Test.stopTest();
+        
+        //
+        
+    }
+    
+    
+    
     
     
     
