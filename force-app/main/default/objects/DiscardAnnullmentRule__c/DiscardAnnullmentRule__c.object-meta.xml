@@ -162,11 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Regola Annullamento Scarto</pluralLabel>
-    <searchLayouts>
-        <searchResultsAdditionalFields>ActivityType__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ProcessValue__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ControllingValue__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

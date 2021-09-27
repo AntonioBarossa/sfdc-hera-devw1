@@ -7329,7 +7329,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>1
+        <editable>true</editable>
         <field>Contact.MailingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
