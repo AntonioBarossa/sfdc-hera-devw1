@@ -11,7 +11,6 @@ export default class HdtCreateCampaign extends LightningElement {
     reqEndDate=false;
     varRecurringCampaign=false;
     requiredShippingMethods=false;  // Start HRAWRM-621 16/09/2021
-    disabledStatus=true
     @track reitekFieldRequired = false;
     @track startDateFieldRequired = false;
     @track easyRequired=false;
