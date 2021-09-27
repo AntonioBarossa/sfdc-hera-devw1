@@ -11,10 +11,10 @@ public inherited sharing class HDT_QR_SelfReadings {
         }
     }
 
-    public List<HDT_SelfReadingError__mdt> getDiscardConfiguration(String errorType, String errorCode) {
+    /*public List<HDT_SelfReadingError__mdt> getDiscardConfiguration(String errorType, String errorCode) {
         List<HDT_SelfReadingError__mdt> config = [SELECT Id, IsAutomaticDiscard__c FROM HDT_SelfReadingError__mdt WHERE Type__c = :errorType AND ErrorCode__c = :errorCode WITH SECURITY_ENFORCED];
         return config;
-    }
+    }*/
 
     public List<HDT_SelfReadingError__mdt> getDiscardConfigurations(Set<String> errorCodes) {
         List<String> errorTypes = new List<String>();
