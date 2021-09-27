@@ -37,6 +37,8 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @track endCallDateTime;
     @track waitingTime;
     @track callDuration;
+    @track regLink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saasher|78|52344|109"},"sort":{"startTs":-1},"index":0}';
+    @track registrationLinkVo;
 
     iconName = '';
     agentStatus = '';
@@ -279,11 +281,23 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
 
     trackActivity(action) {
         if (action == 'createActivity') {
-            let registrationLinkVo;
+            if (this.objectApiName == 'Sale__c') {
+                let url = new URL(this.regLink);
+                let searchparams = JSON.parse(url.searchParams.get('filter'));
+                searchparams.filter.ecid = this.ecid;
+                let newparams = JSON.stringify(searchparams);
+                this.registrationLinkVo = this.regLink.replace(url.searchParams.get('filter'), newparams);
+                let reiteklink = this.registrationLinkVo;
+                const event = new CustomEvent('getreiteklink', {
+                    detail: { reiteklink }
+                });
+                this.dispatchEvent(event);
+            }
+
             createActivity({
                 startCall: this.startCallDateTime,
                 clientNumber: this.numberToCall,
-                registrationLink: registrationLinkVo,
+                registrationLink: this.registrationLinkVo,
                 ecid: this.ecid,
                 campaignMemberId: this.campaignMemberId
             }).then(data => {
