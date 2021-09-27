@@ -117,20 +117,20 @@ export default class HdtManageScriptCard extends LightningElement {
     }
 
     saveRecLink(){
-        let link= this._linkReitek;
+        let link = this._linkReitek;
+        link = "http://recording-link--test/"+new Date().getTime();
         saveReitekLink({recordId : this.recordId, reitekLink: link})
-            .then(result=>{
+            .then(() => {
                 this.dispatchEvent(new ShowToastEvent({
                     variant: "success",
                     title: "Link Salvato",
                     message: "L'operazione di salvataggio del link è andata a buon fine"
                 }));
                 this.closeModal();
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error);
                 this.showGenericErrorToast();
-            });
-        
+            })
     }
 
     enableConfirmButton(){
