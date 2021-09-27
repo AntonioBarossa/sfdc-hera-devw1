@@ -175,6 +175,8 @@ public with sharing class HDT_UTL_VasManagement {
 
             //numDocRif = null
             statoPratica = currentCase.VasStatus__c;
+
+            dataCessazione = Date.today();
         }
     }
 
