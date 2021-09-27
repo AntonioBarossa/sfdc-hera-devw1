@@ -231,6 +231,13 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 ord.CancellationHerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                Datetime nowDate = Datetime.now();
+                                String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                if(mapRequestFields.get('ANNOTAZIONI_ANN ') != null && mapRequestFields.get('ANNOTAZIONI_ANN ') != '')
+                                {
+                                    ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN ') + '\n' + cancellationNote;
+                                }
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
