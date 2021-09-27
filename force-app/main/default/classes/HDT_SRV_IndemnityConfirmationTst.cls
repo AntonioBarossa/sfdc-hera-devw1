@@ -37,6 +37,7 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst {
         
         //MY CASE 1
         Case myCase_1 = HDT_UTL_DataFactoryTst.createCaseDocumentale(1, false, acc.id, con.Id, srv.id, contract.id, ord.id)[0];
+        myCase_1.ComplaintType__c = 'Reclamo Scritto';
         myCase_1.FirstLevelComplaintClassification__c = 'Reclamo Scritto';
         myCase_1.SecondLevelComplaintClassification__c = 'Misura';
         myCase_1.IndemnityConfirmed__c = true;
