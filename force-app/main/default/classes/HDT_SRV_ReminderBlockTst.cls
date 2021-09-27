@@ -6,8 +6,8 @@ public with sharing class HDT_SRV_ReminderBlockTst {
     
     
     //DATA
-    //private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
-    
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static boolean isBlockType1 = true;
     
     
     
@@ -19,7 +19,19 @@ public with sharing class HDT_SRV_ReminderBlockTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, true, acc[0].id, contactList[0].Id, servPointList[0].Id, contractList[0].id, ordList[0].id);
+        
+        //CASE
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactList[0].Id, servPointList[0].Id, contractList[0].id, ordList[0].id);
+        Case myCase = caseList[0];
+        
+        if(isBlockType1){
+            myCase.BlockType__c = '1 - Partite da chiarire/fatture errate o contestate';
+        } else {
+            myCase.BlockType__c = 'W - Verifica metrologica contatore in corso';
+        }
+        
+        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id, billingProfileList[0].ContractAccountCode__c);
+        
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
@@ -36,7 +48,6 @@ public with sharing class HDT_SRV_ReminderBlockTst {
         
         //SETUP
         mySetup();
-        
         Case myCase = [SELECT Id FROM Case];
         
         //TESTING
