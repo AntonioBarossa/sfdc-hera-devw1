@@ -31,7 +31,7 @@ public with sharing class HDT_SRV_ReminderBlockTst {
         }
         insert myCase;
         
-        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id, bpf[0].ContractAccountCode__c);
+        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, myCase.Id, bpf[0].ContractAccountCode__c);
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
