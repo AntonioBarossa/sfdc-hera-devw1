@@ -42,12 +42,18 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
         return (this.scriptPage!=null && this.scriptPage.decisions.length>0);
     }
 
-    get hasPrevious(){//check if first page
+    get hasPrevious(){
         return (this.historyIndex>0);
     }
 
-    get hasNext(){//check if last page
+    get hasNext(){
         return (this.historyIndex<(this.pageHistory.length-1)) || (this.scriptPage.nextSection!=null);
+    }
+
+    get isLastPage(){
+        return (this.scriptPage!=null && this.scriptPage.decisions.length==0) &&
+            this.historyIndex==(this.pageHistory.length-1) && 
+            this.scriptPage.nextSection==null;
     }
 
     prevSection(){
@@ -97,20 +103,27 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
     }
 
     saveRecLink(){
-        let link= this._linkReitek;
+        this.isLoading = true;
+        let link = this._linkReitek;
+        link = "http://recording-link--test/"+new Date().getTime();
         saveReitekLink({recordId : this.recordId, reitekLink: link})
-            .then(result=>{
+            .then(() => {
                 this.dispatchEvent(new ShowToastEvent({
                     variant: "success",
                     title: "Link Salvato",
                     message: "L'operazione di salvataggio del link è andata a buon fine"
                 }));
                 this.closeModal();
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error);
                 this.showGenericErrorToast();
-            });
-        
+            }).then(() => {
+                this.isLoading = false;
+            })
+    }
+
+    closeModal(){
+        this.dispatchEvent(new CustomEvent('close'));
     }
 
     enableConfirmButton(){

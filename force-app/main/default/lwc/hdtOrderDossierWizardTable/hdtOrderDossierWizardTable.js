@@ -74,7 +74,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
             {label: 'Indirizzo di fornitura', fieldName: 'SupplyAddressFormula__c', type: 'text'},
             {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
             {label: 'Processo', fieldName: 'recordtypename', type: 'text'},
-            {label: 'Offerta', fieldName: 'CommercialProduct__c', type: 'text'},
+            {label: 'Offerta', fieldName: 'offerta', type: 'text'},
             {type:  'button',typeAttributes:{
                     iconName: 'utility:edit',
                     label: 'Avvia Processo', 
@@ -114,6 +114,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                 ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
                 ord.pod = ord.ServicePoint__c !== undefined ? ord.ServicePoint__r.ServicePointCode__c : '';
                 ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
+                ord.offerta = data.primeQuoteLineMap[ord.Id]
 
             });
 

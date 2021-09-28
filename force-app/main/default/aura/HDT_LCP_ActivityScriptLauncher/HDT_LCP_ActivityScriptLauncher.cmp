@@ -1,0 +1,34 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+
+    <aura:attribute name="recordId" type="String" />
+
+    <aura:attribute name="orderId" type="String" />
+    <aura:attribute name="isLoading" type="Boolean" default="true"/>
+    <aura:attribute name="activity" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="scriptName" type="String"/>
+
+    <lightning:navigation aura:id="navService"/>
+
+    <force:recordData aura:id="recordLoader"
+        recordId="{!v.recordId}"
+        fields="Type__c,Order__c"
+        targetFields="{!v.activity}"
+        targetError="{!v.recordLoadError}"
+        recordUpdated="{!c.recordUpdated}"
+    />
+
+    <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="medium" />
+    </aura:if>
+
+    <aura:if isTrue="{!v.scriptName}">
+        <c:hdtManageScriptModal scriptProcessName="{!v.scriptName}"
+            recordId="{!v.orderId}"
+            isInsideModal="true"
+            openModal="true"
+            onclose="{!c.handleCloseAction}">
+        </c:hdtManageScriptModal>
+    </aura:if>
+
+</aura:component>	

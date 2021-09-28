@@ -446,8 +446,15 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if(order.ServicePoint__c == null || (mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo') )){
             //Enter here for VAS or BonusESconti
             alignOrderItem(orderToUpdate);
+            if(orderToUpdate.isVas__c && order.OrderReference__c==null){
+                //fai il match con l'orderItem di tipo pod che ha lo stesso quote
+                List<Order> ordersPod=orderQr.getPodOrderFromQuote(order.SBQQ__Quote__c);
+                if(!ordersPod.isEmpty()){
+                    orderToUpdate.OrderReference__c=ordersPod[0].Id;
+                }
+            }
             if(mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo')){
-                //only for Bonus
+                //only for Amend Bonus
                 orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
                 orderToUpdate.BillingProfile__c=mixedData.billProf;
                 if(orderToUpdate.BillingProfile__c!=null)

@@ -8,7 +8,7 @@ export default class HdtProductRuleEditForm extends LightningElement {
     @api ruleId;
     configurationRuleId;
     configurationRuleObj;
-    spinner = false;
+    spinner = true;
 
     fieldsList = [];
 
@@ -17,9 +17,9 @@ export default class HdtProductRuleEditForm extends LightningElement {
     }
 
     getFieldSetList(){
-        this.fieldsList.push('SBQQ__Active__c');
-        this.fieldsList.push('SBQQ__AscendingNestedLevel__c');
-        /*getFieldSet({objApiName: 'SBQQ__ConfigurationRule__c', fieldSetName: 'fieldSetName'})
+        //this.fieldsList.push('SBQQ__Active__c');
+        //this.fieldsList.push('SBQQ__AscendingNestedLevel__c');
+        getFieldSet({objApiName: 'SBQQ__ConfigurationRule__c', fieldSetName: 'EditFormOnLwc'})
         .then(result => {
             console.log('>>> GET FIELD SET LIST');
             console.log('>>> ' + JSON.stringify(result));
@@ -51,7 +51,7 @@ export default class HdtProductRuleEditForm extends LightningElement {
                 variant: 'error',
                 }),
             );
-        });*/
+        });
     }
 
     handleLoad(event){

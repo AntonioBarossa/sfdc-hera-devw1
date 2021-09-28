@@ -464,6 +464,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.MethodSignedAccepted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.isDatoDiscordante__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6447,7 +6452,6 @@
         <field>Case.ServicePointType__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ShipmentAddressAssign__c</field>
@@ -7364,7 +7368,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.MailingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9266,16 +9270,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>HDT_AccountDataEnrichment__mdt.Authorization__c</field>
         <readable>true</readable>
@@ -9417,6 +9411,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_CalcoloPreventivi__mdt.OperationCode__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.PowerQuote__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9434,6 +9433,11 @@
         <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.QuotationType__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CalcoloPreventivi__mdt.RT__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9459,6 +9463,36 @@
         <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.VendDistr__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CalcoloPreventivi__mdt.VoltageLevel__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.ConstantName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.FieldName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.ObjectName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.ValueToOverride__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9642,8 +9676,23 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_Dependant_Picklist_VAS__mdt.AdditionalConfiguration__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_Dependant_Picklist_VAS__mdt.Description__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_Dependant_Picklist_VAS__mdt.HasAssetSelection__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_Dependant_Picklist_VAS__mdt.HasSubSelection__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9674,6 +9723,21 @@
         <editable>false</editable>
         <field>HDT_Dependant_Picklist_VAS__mdt.Value__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ExciseTranscode__mdt.Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ExciseTranscode__mdt.ExciseString__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ExciseTranscode__mdt.Excise__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10011,6 +10075,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_MatrixCompatibilityMap__mdt.Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_MatrixCompatibilityMap__mdt.CommoditySector__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>HDT_MeterReadingTranscodeMap__mdt.SalesforceValue__c</field>
         <readable>true</readable>
@@ -10023,6 +10097,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>HDT_MeterReadingTranscodeMap__mdt.TranscodeType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10174,6 +10258,26 @@
         <editable>false</editable>
         <field>HDT_SapWsConfiguration__mdt.NamedCredential__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.Description__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.ErrorCode__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.IsAutomaticDiscard__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.Type__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -34223,7 +34327,7 @@
         <name>EditEvent</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditKnowledge</name>
     </userPermissions>
     <userPermissions>
@@ -34299,11 +34403,11 @@
         <name>ViewAllCustomSettings</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewArchivedArticles</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>ViewDraftArticles</name>
     </userPermissions>
     <userPermissions>

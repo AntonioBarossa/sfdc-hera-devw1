@@ -520,8 +520,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             System.debug('updatePraticaForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
         }
     }
-    //////////////////////////////////////////////////////////////////////////
-
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
