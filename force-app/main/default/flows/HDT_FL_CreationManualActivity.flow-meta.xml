@@ -105,7 +105,7 @@
             <assignToReference>Activity.OpeningNote__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Note_di_apertura</elementReference>
+                <elementReference>Note_di_apertura_text</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -211,6 +211,12 @@
                     <elementReference>AccountId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -226,10 +232,9 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Note_di_apertura</name>
-            <dataType>String</dataType>
+            <name>Note_di_apertura_text</name>
             <fieldText>Note di apertura</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
