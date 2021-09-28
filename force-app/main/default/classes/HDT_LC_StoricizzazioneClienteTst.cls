@@ -38,23 +38,11 @@ public class HDT_LC_StoricizzazioneClienteTst {
     @isTest
     static void test1(){
         
-        UserRole r = [select DeveloperName from UserRole where DeveloperName = 'HDT_FrontOffice_HERA_COMM'];
-        id profileid = [SELECT Id FROM Profile WHERE Name = 'Hera System Integrator'].Id;
-        
-        User u = new User(
-            ProfileId = profileid,
-            LastName = 'last',
-            Email = 'tuser000@amamama.com',
-            Username = 'tuser000@amamama.com' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US',
-            UserRoleId = r.Id
-        );
+        Id profileId = HDT_UTL_DataFactoryTst.getProfileId('Hera System Integrator');
+        Id UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId('HDT_FrontOffice_HERA_COMM');
+        User u = HDT_UTL_DataFactoryTst.createInternalUser(profileId,false);
+        u.UserRoleId = UserRoleid;
+        insert u;
         
         system.runAs(u){
             Test.startTest();        
