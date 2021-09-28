@@ -1,14 +1,14 @@
-public without sharing class HDT_BA_ProductAssociation implements Database.Batchable<sObject>, Database.Stateful {
+public without sharing class HDT_BA_ProductRuleAssociation implements Database.Batchable<sObject>, Database.Stateful {
 
-    public SBQQ__ProductOption__c productOptionToClone;
+    public SBQQ__ConfigurationRule__c confRuleToClone;
     public String queryString;
     public String batchType = '';
     public List<String> idList;
     public String filterString;
     public Integer errorCounter;
 
-    public HDT_BA_ProductAssociation(String type, SBQQ__ProductOption__c prodOptToClone, List<String> productIdList, String filter){
-        productOptionToClone = prodOptToClone;
+    public HDT_BA_ProductRuleAssociation(String type, SBQQ__ConfigurationRule__c confRuleToCloneTemp, List<String> productIdList, String filter){
+        confRuleToClone = confRuleToCloneTemp;
         idList = productIdList;
         batchType = type;
         filterString = filter;
@@ -45,7 +45,7 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
             recordList.add(product.Id);
         }
         HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult;
-        insertResult = HDT_SRV_ProductAssociation.associateProductOption(productOptionToClone, recordList);
+        insertResult = HDT_SRV_RuleAssociation.associateProductRule(confRuleToClone, recordList);
 
         if(insertResult.errorData.size() > 0){
             errorCounter += insertResult.errorData.size();
@@ -57,7 +57,7 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
         ////METHOD TO SEND EMAIL NOTIFICATION
         HDT_WRP_ProductAssociation.HDT_WRP_Notification notification;
         notification = new HDT_WRP_ProductAssociation.HDT_WRP_Notification();
-        notification.targetId = productOptionToClone.SBQQ__OptionalSKU__c;
+        notification.targetId = confRuleToClone.SBQQ__ProductRule__c;
         notification.userId = Userinfo.getUserId();
         notification.title = Label.ProdOptAssociationNotification_Title;
 
