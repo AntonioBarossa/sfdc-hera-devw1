@@ -27,10 +27,10 @@ public with sharing class HDT_SRV_EditAlertTst {
     //execute
     ///outcome OK
     @isTest
-    private static void executeTest() {
+    private static void executeTest_OK() {
         
         //DEBUG
-        String debugString = TEST_NAME + ' - executeTest';
+        String debugString = TEST_NAME + ' - executeTest_OK';
         System.debug(debugString);
         
         //SETUP
@@ -41,7 +41,6 @@ public with sharing class HDT_SRV_EditAlertTst {
         argsMap.put('sender', myCase);
         
         //CASE PHASE
-        //'Esito OK da SAP'
         String rtName =  constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
         String rtId = constants.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
@@ -63,7 +62,41 @@ public with sharing class HDT_SRV_EditAlertTst {
     
     
     ///outcome KO
-    //TODO: 'Errore Lavorazione SAP'
+    @isTest
+    private static void executeTest_Error() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - executeTest_Error';
+        System.debug(debugString);
+        
+        //SETUP
+        isOk = false;
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('sender', myCase);
+        
+        //CASE PHASE
+        String rtName =  constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
+        String rtId = constants.CASE_RECORDTYPEID_MOROSITA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Errore Lavorazione SAP', 'Bozza', rtId, rtName,'A','','','');
+        
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //TESTING
+        HDT_SRV_EditAlert myObjectToTest = new HDT_SRV_EditAlert();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
+        
+        //ASSERTS
+        System.assert(result.success);
+        System.assert('OK'.equalsIgnoreCase(result.message));
+        
+    }
+    
     
     
     
