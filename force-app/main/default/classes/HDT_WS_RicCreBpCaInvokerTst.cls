@@ -32,7 +32,9 @@ public class HDT_WS_RicCreBpCaInvokerTst {
        HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req); 
        Test.stopTest();
         
-       System.assertEquals(200, res.statusCode, 'The call has been successful');
+       System.assertEquals(200, res.statusCode, 'The call was not successful');
+       System.assertNotEquals(null, res, 'A response was successfully created');
+
     }
 
 }
