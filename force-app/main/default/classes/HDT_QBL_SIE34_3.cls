@@ -19,15 +19,15 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
       List<String> contentVersionIds = new List<String>()   ;
 
       String condition=' WHERE Cluster__c IN (\'Disattivazioni\',\'Morosità\') AND Type=\'Interruzione Fornitura\' AND Status !=\'Closed\' AND LastModifiedDate >=:filterDate ';
-      String query = 'SELECT Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,via_recapito,Subscription__r.SBQQ__ProductName__c FROM Case';
+      String query = 'SELECT Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,Subscription__r.SBQQ__ProductName__c FROM Case';
 
-
+   
       try {
          
     
          List<Case> listCase = Database.query(query+condition);
          
-         String header='rag_sociale,nome,cognome,business_partner,pod,apparecchiatura,data_cessazione,cod_fiscale,p_iva,via,civico,cap,localita,comune,provincia,codice_offerta,via_legale,civico_legale,cap_legale,localita_legale,comune_legale,provincia_legale,percentuale_iva,tipo_ordine,decode,X_CODICE_CAUSALE,telefono,distributore,servizio,rds_creata_da,indirizzo_esteso_recapito,offerta_commerciale    \n';
+         String header='rag_sociale,nome,cognome,business_partner,pod,apparecchiatura,data_cessazione,cod_fiscale,p_iva,via,civico,cap,localita,comune,provincia,codice_offerta,via_legale,civico_legale,cap_legale,localita_legale,comune_legale,provincia_legale,percentuale_iva,tipo_ordine,decode,X_CODICE_CAUSALE,telefono,distributore,servizio,rds_creata_da,indirizzo_esteso_recapito,via_recapito,offerta_commerciale    \n';
          String body  ='';
      
          for (Case tempCase : listCase) {
@@ -77,7 +77,7 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
          errorMessage=e.getMessage();
          status='failed';
       }
-
+      System.debug('contentVersionIds'+contentVersionIds);
       Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
       System.debug('jobId: '+jobID);
    }

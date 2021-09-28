@@ -533,6 +533,39 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                 }
             }
+            when 'SIE34'{
+                System.debug('SIE34');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34'));
+                        System.debug('jobIDSIE34: '+jobIDSIE34);
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                       
+                        responseField.fieldType = 'TEXT';
+                        responseField.name = 'ESITO';
+                        responseField.value = 'KO';
+        
+                        responseFieldError.fieldType = 'TEXT';
+                        responseFieldError.name = 'ERROR_MESSAGE';
+                        responseFieldError.value = 'runId cannot be empty';
+        
+                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+                        mrrResponseItem.objects.add(responseObject);
+        
+                        RestContext.response.statusCode = 400;
+        
+                    }
+                }
+            }
             when else {
 
                 responseField.fieldType = 'TEXT';

@@ -9,7 +9,7 @@ public with sharing class HDT_WS_SIE34DataRequest  extends HDT_WS_Request {
         this.runId              = runId;
         this.Status             = Status;
         this.fileType           = fileType;
-        this.contentVersionIds  = String.isBlank(errorMessage)?contentVersionIds:new List<String>();
+        this.contentVersionIds  = (String.isBlank(errorMessage)||contentVersionIds==null)?contentVersionIds:new List<String>();
         this.description        = String.isBlank(errorMessage)?'':errorMessage;
     }
 }
