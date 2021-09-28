@@ -542,7 +542,7 @@
             <sortOrder>17</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Order.HDT_SendEmail</actionName>
+            <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>18</sortOrder>
         </platformActionListItems>
