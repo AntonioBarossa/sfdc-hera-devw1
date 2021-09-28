@@ -67,7 +67,9 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
             }
         }
     }
+    
 
+    @TestVisible
     @Future
     private static void updateFuture(String inputString) {
 

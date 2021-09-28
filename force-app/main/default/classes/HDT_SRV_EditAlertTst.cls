@@ -111,6 +111,25 @@ public with sharing class HDT_SRV_EditAlertTst {
     }
     
     
+    //updateFuture
+    
+    @isTest
+    private static void updateFutureTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - updateFutureTest';
+        System.debug(debugString);
+        
+        //SETUP
+        mySetup();
+        
+        //TESTING
+        Case myCase = [SELECT Id FROM Case];
+        HDT_SRV_EditAlert.updateFuture(JSON.serialize(myCase));
+        
+        
+    }
+    
     
     
     
