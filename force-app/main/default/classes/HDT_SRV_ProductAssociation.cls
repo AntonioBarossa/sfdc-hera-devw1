@@ -11,8 +11,8 @@ public inherited sharing class HDT_SRV_ProductAssociation {
             apexJobClass.add('HDT_BA_DeleteProductAssociation');
             apexJobClass.add('HDT_BA_ProductAssociation');
         } else if(objType.equalsIgnoreCase('SBQQ__ProductRule__c')){
-            apexJobClass.add('HDT_BA_DeleteProductAssociation');
-            apexJobClass.add('HDT_BA_ProductAssociation');
+            apexJobClass.add('HDT_BA_DeleteProductRuleAssociation');
+            apexJobClass.add('HDT_BA_ProductRuleAssociation');
         }
 
         List<AsyncApexJob> asyncApexJobList = HDT_QR_ProductAssociation.getJobStatus(apexJobClass);
@@ -27,15 +27,6 @@ public inherited sharing class HDT_SRV_ProductAssociation {
             for(Schema.FieldSetMember s : fieldSetMembers) {
                 fieldSetList.add(String.valueOf(s.getFieldPath()));
             }
-
-            //fieldSetList.add('SBQQ__Type__c');
-            //fieldSetList.add('SBQQ__Quantity__c');           
-            //fieldSetList.add('SBQQ__MinQuantity__c');
-            //fieldSetList.add('SBQQ__MaxQuantity__c');
-            //fieldSetList.add('SBQQ__Discount__c');
-            //fieldSetList.add('SBQQ__DiscountAmount__c');
-            //fieldSetList.add('SBQQ__Selected__c');
-            //fieldSetList.add('SBQQ__QuantityEditable__c');
 
         } catch(Exception ex){
             System.debug('>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');
