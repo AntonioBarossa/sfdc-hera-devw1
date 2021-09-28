@@ -205,6 +205,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     }
 
     public override void finalUpdate(){
+        String compatibilityMessage = '';
         System.debug('finalUpdate');
         if (listUpdateGeneric.size()>0) {
            // Savepoint sp = Database.setSavePoint();
@@ -224,234 +225,66 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 System.debug('OrderId:'+currentProcess.currentChildOrder.Id)                                                    ;
 
                 makeServiceRequest();
-                //TODO Andrea
                 insert currentProcess.currentServiceRequest;
+                
                 wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result = HDT_UTL_MatrixCompatibility.checkCompatibility(currentProcess.currentServiceRequest)   ;
                 if(!result.incompatibilities.isEmpty()){
-                    String compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
+                    compatibilityMessage = HDT_UTL_MatrixCompatibility.getIncompatibilityMessage((ServiceRequest__c[])result.incompatibilities);
                     delete currentProcess.currentServiceRequest;
-                    //TO DO da gestire l'eccezione    
-                    //throw new HDT_WRP_ProcessEntitiesException( 'Compatibility Alert',compatibilityMessage);
-                    System.debug('--------------Compatibility Error----------');
-                    System.debug(compatibilityMessage);
                 }
-                //TODO Andrea
                 currentProcess.currentOrderItem.OrderId             = currentProcess.currentChildOrder.Id       ;
                 currentProcess.currentOrderItem.BillingProfile__c   = currentProcess.currentBillingProfile.id   ;
                 currentProcess.currentOrderItem.ServicePoint__c     = currentProcess.currentServicePoint.id     ;
                 // insert currentProcess.currentOrderItem;
         }
         currentProcess.currentRequestItem.Status__c=constant.MASSIVLOADER_STATUS_CHIUSO;
-        update currentProcess.currentRequestItem;
+        if(String.isNotBlank(compatibilityMessage)){
+            currentProcess.currentRequestItem.StatusDescription__c = 'Compatibility Alert - '+compatibilityMessage;
+        }  
+        update currentProcess.currentRequestItem; 
     }
-
-
-
-   /**
-   * @description mapping Contact by Account
-   **/
-   private void makeContact(){
-        currentProcess.currentPrimaryContact.DegreeOfStudies__c                 = currentProcess.currentAccount.DegreeOfStudies__c                   ;
-        currentProcess.currentPrimaryContact.CompanyOwner__c                    = currentProcess.currentAccount.CompanyOwner__c                      ;
-        currentProcess.currentPrimaryContact.LastName                           = currentProcess.currentAccount.LastName__c                          ;
-        currentProcess.currentPrimaryContact.Gender__c                          = currentProcess.currentAccount.Gender__c                            ;
-        currentProcess.currentPrimaryContact.FirstName                          = currentProcess.currentAccount.FirstName__c                         ;
-        currentProcess.currentPrimaryContact.Birthdate                          = currentProcess.currentAccount.BirthDate__c                         ;
-        currentProcess.currentPrimaryContact.FiscalCode__c                      = currentProcess.currentAccount.FiscalCode__c                        ;
-        currentProcess.currentPrimaryContact.Birthcity__c                       = currentProcess.currentAccount.BirthProvince__c                     ;
-        currentProcess.currentPrimaryContact.MobilePhonePrefix__c               = currentProcess.currentAccount.MobilePhonePrefix__c                 ;
-        currentProcess.currentPrimaryContact.Phone                              = currentProcess.currentAccount.Phone                                ;
-        currentProcess.currentPrimaryContact.MobilePhone                        = currentProcess.currentAccount.MobilePhone__c                       ;
-        currentProcess.currentPrimaryContact.Email                              = currentProcess.currentAccount.PrimaryEmail__c                      ;
-        currentProcess.currentPrimaryContact.PhonePrefix__c                     = currentProcess.currentAccount.PhonePrefix__c                       ;
-        currentProcess.currentPrimaryContact.Fax                                = currentProcess.currentAccount.FAX__c                               ;                       
-        currentProcess.currentPrimaryContact.Profession__c                      = currentProcess.currentAccount.Profession__c                        ;             
-        currentProcess.currentPrimaryContact.MailingCity                        = currentProcess.currentAccount.BillingCity                          ;           
-        currentProcess.currentPrimaryContact.MailingCityCode__c                 = currentProcess.currentAccount.BillingCityCode__c                   ;                  
-        currentProcess.currentPrimaryContact.MailingCountry                     = currentProcess.currentAccount.BillingCountry                       ;              
-        currentProcess.currentPrimaryContact.MailingPostalCode                  = currentProcess.currentAccount.BillingPostalCode                    ;                 
-        currentProcess.currentPrimaryContact.MailingState                       = currentProcess.currentAccount.BillingState                         ;            
-        currentProcess.currentPrimaryContact.MailingStreet                      = currentProcess.currentAccount.BillingStreet                        ;             
-        currentProcess.currentPrimaryContact.MailingStreetName__c               = currentProcess.currentAccount.BillingStreetName__c                 ;                    
-        currentProcess.currentPrimaryContact.MailingStreetCode__c               = currentProcess.currentAccount.BillingStreetCode__c                 ;                    
-        currentProcess.currentPrimaryContact.MailingStreetNumber__c             = currentProcess.currentAccount.BillingStreetNumber__c               ;                      
-        currentProcess.currentPrimaryContact.MailingStreetNumberExtension__c    = currentProcess.currentAccount.BillingStreetNumberExtension__c      ;                               
-        currentProcess.currentPrimaryContact.MailingStreetToponym__c            = currentProcess.currentAccount.BillingStreetToponym__c              ;                       
-        currentProcess.currentPrimaryContact.MailingRegion__c                   = currentProcess.currentAccount.BillingRegion__c                     ;                
-        currentProcess.currentPrimaryContact.MailingPlace__c                    = currentProcess.currentAccount.BillingPlace__c                      ;                
-        currentProcess.currentPrimaryContact.MailingPlaceCode__c                = currentProcess.currentAccount.BillingPlaceCode__c                  ;                    
-        currentProcess.currentPrimaryContact.MailingIsAddressVerified__c        = currentProcess.currentAccount.BillingIsAddressVerified__c          ;                           
-   }
-
-   private void makeFatherOrder(){
-
-        currentProcess.currentFatherOrder.AccountId             = currentProcess.currentChildOrder.AccountId                                                               ;
-        currentProcess.currentFatherOrder.Sale__c               = currentProcess.currentChildOrder.Sale__c                                                                 ;
-        currentProcess.currentFatherOrder.ServicePoint__c       = currentProcess.currentChildOrder.ServicePoint__c                                                         ;
-        currentProcess.currentFatherOrder.RecordTypeId          = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();
-
-        currentProcess.currentFatherOrder.ContractSigned__c     = currentProcess.currentChildOrder.ContractSigned__c                                                       ;
-        currentProcess.currentFatherOrder.SignatureMethod__c    = currentProcess.currentChildOrder.SignatureMethod__c                                                      ;
-        currentProcess.currentFatherOrder.DocSendingMethod__c   = currentProcess.currentChildOrder.DocSendingMethod__c                                                     ;
-        currentProcess.currentFatherOrder.Status                = currentProcess.currentChildOrder.Status                                                                  ;
-        currentProcess.currentFatherOrder.EffectiveDate         = currentProcess.currentChildOrder.EffectiveDate                                                           ;
-   }
-
-   private void makeServiceRequest(){
-
-        currentProcess.currentServiceRequest.ServicePointCode__c = currentProcess.currentServicePoint.Name; 
-        currentProcess.currentServiceRequest.Status__c = 'Bozza';
-        currentProcess.currentServiceRequest.Order__c = currentProcess.currentChildOrder.Id;
-        currentProcess.currentServiceRequest.CommoditySector__c = currentProcess.currentServicePoint.CommoditySector__c;
-        currentProcess.currentServiceRequest.Type__c = 'Order'; 
-        if(currentProcess.currentServicePoint.Id != null){
-            currentProcess.currentServiceRequest.ServicePoint__c = currentProcess.currentServicePoint.Id;
-        }else{
-            currentProcess.currentServiceRequest.Account__c = currentProcess.currentChildOrder.AccountId;
-            currentProcess.currentServiceRequest.BillingProfile__c = currentProcess.currentChildOrder.BillingProfile__c;
-        }
-        currentProcess.currentServiceRequest.ProcessType__c= HDT_UTL_MatrixCompatibility.getProcessType(currentProcess.currentChildOrder.ProcessType__c, 'Order', String.valueOf(currentProcess.currentServicePoint.CommoditySector__c));
-   }
    
    private void mapFieldsObject(){
-        mapAccountFields = new Map<String, String>{
-            'Nome'                                                  =>  'FirstName__c'                                  ,
-            'Cognome/Ragione Sociale'                               =>  'LastName__c'                                   ,
-            'Codice Fiscale'                                        =>  'FiscalCode__c'                                 ,
-            'P.IVA'                                                 =>  'VATNumber__c'                                  ,
-            'BP'                                                    =>  'BPSAPModel__c'                                 ,
-            'Marcatura'                                             =>  'CustomerMarking__c'                            ,
-            'Categoria'                                             =>  'Category__c'                                   ,
-            'Silos'                                                 =>  'CompanyOwner__c'                               ,
-           // 'Barrato'=>'',
-            'Prefisso Cellulare'                                    =>  'MobilePhonePrefix__c'                          ,
-            'Cellulare'                                             =>  'MobilePhone__c'                                ,
-            'Prefisso telefono fisso'                               =>  'PhonePrefix__c'                                ,
-            'Telefono fisso'                                        =>  'Phone'                                         ,
-            'Altro Telefono'                                        =>  'OtherPhone__c'                                 ,
-            'Email'                                                 =>  'PrimaryEmail__c'                               ,
-            'FAX'                                                   =>  'FAX__c'                                        ,
-            'Data nascita'                                          =>  'BirthDate__c'                                  ,
-            'Comune di nascita'                                     =>  'BirthProvince__c'                              ,
-            'Sesso'                                                 =>  'Gender__c'                                     ,
-            'Tipo di Account'                                       =>  'RecordTypeId'                                  ,
-            'Titolo di studio'                                      =>  'DegreeOfStudies__c'                            ,
-            'Professione'                                           =>  'Profession__c'                                 ,
-            // indirizzo
-            'Nome Via [Residenziale/Sede Legale]'                   =>  'BillingStreetName__c'                          ,
-            'Comune'                                                =>  'BillingCity'                                   ,
-            'CAP'                                                   =>  'BillingPostalCode'                             ,
-            'Stato'                                                 =>  'BillingCountry'                                ,
-            'Provincia'                                             =>  'BillingState'                                  ,
-            'Codice Via Stradario SAP'                              =>  'BillingStreetCode__c'                          ,
-            'Estens.Civico'                                         =>  'BillingStreetNumberExtension__c'               ,
-            'Civico'                                                =>  'BillingStreetNumber__c'                        ,
-            'Indirizzo Estero'                                      =>  'ShippingAddressIsForeign__c'                   ,
-            'Localita'                                              =>  'BillingPlace__c'                               ,
-            'Codice Localita'                                       =>  'BillingPlaceCode__c'                           ,
-            'Flag Verificato'                                       =>  'BillingIsAddressVerified__c'
-            // inserire domicilio
-        };
-        mapSaleFields = new Map<String, String>{
-            'Canale'                                                =>  'Channel__c'                                    ,
-            'Codice Amico'                                          =>  'FriendCode__c '                                ,
-            'Agenzia'                                               =>  'Agency__c'                                     ,
-            'Venduto Da'                                            =>  'SaleBy__c'                                     ,
-            'Nome Agente'                                           =>  'VendorFirstName__c'                            ,
-            'Cognome Agente'                                        =>  'VendorLastName__c'                             ,
-            'Campagna'                                              =>  'Campaign__c'                                   ,
-            'Campagna Commissioning'                                =>  'CommissioningCampaign__c'
-        };
-        mapServicePointFields=new Map<String, String>{  
-            'SP_Codice POD/PDR'                                     =>  'Name'                                          ,
-            'Servizio'                                              =>  'CommoditySector__c'                            ,
-            'Distributore'                                          =>  'Distributor__c'                                ,
-            'Tipo Fornitura'                                        =>  'SupplyType__c'                                 ,
-            'Tipologia Impianto'                                    =>  'ImplantType__c'                                ,
-            'Consumo annuo'                                         =>  'AnnualConsumption__c'                          ,
-            'Mercato di provenienza'                                =>  'MarketOrigin__c'                               ,
-            'Classe Contatore'                                      =>  'MeterClass__c'                                 ,
-            'Categoria D\'Uso'                                      =>  'UseCategory__c'                                ,
-            'Disalimentabile'                                       =>  'Disconnectable__c'                             ,
-            'Tipologia Disalimentabilità'                           =>  'DisconnectibilityType__c'                      ,
-            'Telefono non disalimentabilità'                        =>  'DisconnectibilityPhone__c'                     ,
-            'Residente'                                             =>  'Resident__c'                                   ,
-            'Potenza contrattuale'                                  =>  'PowerContractual__c'                           ,
-            'Potenza disponibile'                                   =>  'PowerAvailable__c'                             ,
-            'Tensione di Consegna'                                  =>  'VoltageLevel__c'                               ,
-            'Presenza Allaccio'                                     =>  'PlugPresence__c'                               ,
-            'Fase Richiesta'                                        =>  'RequestPhase__c'                               ,
-            'Tipo Apparecchiatura'                                  =>  'MeterType__c'                                  ,
-            'Potenza Richiesta'                                     =>  'PowerRequested__c'                             ,
-            'Matricola Contatore'                                   =>  'MeterSN__c'                                    ,
-            'Codice Remi'                                           =>  'RemiCode__c'                                   ,
-            'Livello pressione'                                     =>  'PressureLevel__c'                              ,
-            'Classe di prelievo'                                    =>  'WithdrawalClass__c'                            ,
-            'Potenzialità massima richiesta'                        =>  'MaxRequiredPotential__c'                       ,
-            'SP_Comune'                                             =>  'SupplyCity__c'                                 ,
-            'SP_Via'                                                =>  'SupplyStreetName__c'                           ,
-            'SP_Civico'                                             =>  'SupplyStreetNumber__c'                         ,
-            'SP_Indirizzo Estero'                                   =>  'SupplyAddessIsForeign__c'
-        };
-        mapBillingProfileFields=new Map<String, String>{
-            'Modalità di Pagamento'                                 =>  'PaymentMethod__c'                              ,
-            'Modalità invio bolletta'                               =>  'BillSendingMethod__c'                          ,
-            'Email invio Bolletta'                                  =>  'InvoiceEmailAddress__c'                        ,
-            'Destinatario Divergente'                               =>  'DivergentSubject__c'                           ,
-            'Tiplo XML'                                             =>  'XMLType__c'                                    ,
-            'IBAN Estero'                                           =>  'IbanIsForeign__c'                              ,
-            'IBAN'                                                  =>  'IBAN__c'                                       ,
-            'Paese'                                                 =>  'IbanCountry__c'                                ,
-            'CIN-IBAN'                                              =>  'IbanCIN_IBAN__c'                               ,
-            'CIN'                                                   =>  'IbanCIN__c'                                   ,
-            'ABI'                                                   =>  'IbanABI__c'                                    ,
-            'CAB'                                                   =>  'IbanCAB__c'                                    ,
-            'Numero Conto'                                          =>  'IbanCodeNumber__c'                             ,
-            'Tipo Sottoscrittore'                                   =>  'SignatoryType__c'                              ,
-            'Nome Sottoscrittore CC'                                =>  'BankAccountSignatoryFirstName__c'              ,
-            'Cognome Sottoscrittore CC'                             =>  'BankAccountSignatoryLastName__c'               , 
-            'Codice Fiscale sottoscrittore CC'                      =>  'BankAccountSignatoryFiscalCode__c'             ,
-            'Modalità invio Fatturazion Elettronica'                =>  'ElectronicInvoicingMethod__c'                  ,
-            'Pec Fatturazione Elettronica'                          =>  'ElectronicInvoiceCertifiedEmailAddress__c'     ,
-            'Codice Destinatario'                                   =>  'SubjectCode__c'                                ,
-            'BP_Comune'                                             =>  'InvoicingCity__c'                              ,
-            'BP_Via'                                                =>  'InvoicingStreetName__c'                        ,
-            'BP_Civico'                                             =>  'InvoicingStreetNumber__c'
-        };
-        mapOrderFields=new Map<String, String>{
-            'Contratto Firmato'                                     =>  'ContractSigned__c'                              ,
-            'Data Firma'                                            =>  'SignedDate__c'                                  ,
-            'Metodo Firma'                                          =>  'SignatureMethod__c'                             ,
-            'Modalità invio doc'                                    =>  'DocSendingMethod__c'                            ,
-            'Uso Energia'                                           =>  'UseTypeEnergy__c'                               ,
-            'Mandato di Connessione'                                =>  'ConnectionMandate__c'                           ,
-            'Autocert.Contr.Connessione'                            =>  'SelfCertificationConnection__c'                 ,
-            'Tipo di Connessione'                                   =>  'ConnectionType__c'                              ,
-            'Opzione di distribuzione'                              =>  'RequestOption__c '                              ,
-            'Recapito Telefonico'                                   =>  'PhoneNumber__c'                                 ,
-            'Azione Commerciale'                                    =>  'CommercialAction__c'                            ,
-            'Codice ISTAT/Ateco'                                    =>  'AtecoCode__c'                                   ,
-            'Autocert.Istanza'                                      =>  'InstanceSelfCertification__c'                   ,
-            'Note per il DL'                                        =>  'CommentForDL__c'                                ,
-            'Convenzione/Associazione'                              =>  'ConventionAssociation__c'                       ,
-            'Superficie Servita'                                    =>  'SurfaceServed__c'                               ,
-            'Esclusione Deposito cauzionale'                        =>  'SecurityDepositExcluded__c'                     ,
-            'Fatturazione Aggregata'                                =>  'AggregateBilling__c'                            ,
-            'IVA'                                                   =>  'VAT__c'                                         ,
-            'OR_Date Inizio'                                        =>  'EffectiveDate'                                  ,
-            'OR_Status'                                             =>  'Status'    
-        };
-        mapOrderItemFields=new Map<String, String>{
-        //  'Descrizione Offerta'                                   =>  'ProductName__c'                                 ,
-            'Modalità di Pagamento'                                 =>  'PaymentMode__c'                                 ,
-            'Modalità invio Belletta'                               =>  'SendingBillMode__c'                             ,
-            'Contributi'                                            =>  'DescriptionSAPBonusContributo__c'               ,
-            'Superficie MQ'                                         =>  'Surface__c'                                     ,
-            'Numero Occupanti'                                      =>  'OccupantsNumber__c'                             ,
-            'Proprietario'                                          =>  'OwnerAC__c'                                     ,
-            'Tipo Abitazione'                                       =>  'DwellingType__c'                                ,
-            'Mantieni Analisi Consumi'                              =>  'KeepConsumptionsAnalysis__c'                    ,
-            'VAS - Data attivazione'                                =>  'VasActivationDate__c'
-        };
+        List<HDT_MassiveFieldsObjectMap__mdt> listAccountFields = getMapFieldsObject('Account');
+        
+        mapAccountFields = new Map<String, String>();
+        for(HDT_MassiveFieldsObjectMap__mdt accountFields : listAccountFields){
+            mapAccountFields.put(accountFields.labelField__c, accountFields.nameField__c);
+        }
+
+        List<HDT_MassiveFieldsObjectMap__mdt> listSaleFields = getMapFieldsObject('Sale');
+
+        mapSaleFields = new Map<String, String>();
+        for(HDT_MassiveFieldsObjectMap__mdt saleFields : listSaleFields){
+            mapSaleFields.put(saleFields.labelField__c, saleFields.nameField__c);
+        }
+
+        List<HDT_MassiveFieldsObjectMap__mdt> listServicePointFields = getMapFieldsObject('ServicePoint');
+
+        mapServicePointFields = new Map<String, String>();
+        for(HDT_MassiveFieldsObjectMap__mdt servicePointFields : listServicePointFields){
+            mapServicePointFields.put(servicePointFields.labelField__c, servicePointFields.nameField__c);
+        }
+
+        List<HDT_MassiveFieldsObjectMap__mdt> listBillingProfileFields = getMapFieldsObject('BillingProfile');
+
+        mapBillingProfileFields = new Map<String, String>();
+        for(HDT_MassiveFieldsObjectMap__mdt billingProfileFields : listBillingProfileFields){
+            mapBillingProfileFields.put(billingProfileFields.labelField__c, billingProfileFields.nameField__c);
+        }
+
+        List<HDT_MassiveFieldsObjectMap__mdt> listOrderFields = getMapFieldsObject('Order');
+
+        mapOrderFields = new Map<String, String>();
+        for(HDT_MassiveFieldsObjectMap__mdt orderFields : listOrderFields){
+            mapOrderFields.put(orderFields.labelField__c, orderFields.nameField__c);
+        }
+
+        List<HDT_MassiveFieldsObjectMap__mdt> listOrderItemFields = getMapFieldsObject('OrderItem');
+
+        mapOrderItemFields = new Map<String, String>();
+        for(HDT_MassiveFieldsObjectMap__mdt orderItemFields : listOrderItemFields){
+            mapOrderItemFields.put(orderItemFields.labelField__c, orderItemFields.nameField__c);
+        }
     } 
 }
