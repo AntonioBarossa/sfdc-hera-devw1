@@ -90,7 +90,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
-                    orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
+                    // 2809 LG commentedForError orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
 
 
 
