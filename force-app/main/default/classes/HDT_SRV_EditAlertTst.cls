@@ -54,9 +54,14 @@ public with sharing class HDT_SRV_EditAlertTst {
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
         
+        //RETRIEVE DATA
+        Case myCaseUpdated = [SELECT Id, TecnicalPhase__c FROM Case];
+        
         //ASSERTS
         System.assert(result.success);
         System.assert('OK'.equalsIgnoreCase(result.message));
+        
+        System.assertEquals('Esito OK da SAP', myCaseUpdated.TecnicalPhase__c);
         
     }
     
@@ -91,9 +96,13 @@ public with sharing class HDT_SRV_EditAlertTst {
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
         
+        //RETRIEVE DATA
+        Case myCaseUpdated = [SELECT Id, TecnicalPhase__c FROM Case];
+        
         //ASSERTS
         System.assert(result.success);
         System.assert('OK'.equalsIgnoreCase(result.message));
+        System.assertEquals('Errore Lavorazione SAP', myCaseUpdated.TecnicalPhase__c);
         
     }
     
