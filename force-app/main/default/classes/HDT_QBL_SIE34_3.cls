@@ -68,7 +68,7 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
                body=row;
             }
             else {
-               body='\n'+row; 
+               body=body+'\n'+row; 
             }
          }
         contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(header+body,'OUT_CESSAZIONE_IN_RETE.txt','OUT_CESSAZIONE_IN_RETE'));
