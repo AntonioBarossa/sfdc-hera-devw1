@@ -94,9 +94,11 @@ public with sharing class HDT_SRV_EditAlertTst {
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
         //TESTING
+        Test.startTest();
         HDT_SRV_EditAlert myObjectToTest = new HDT_SRV_EditAlert();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
+        Test.stopTest();
         
         //RETRIEVE DATA
         Case myCaseUpdated = [SELECT Id, TecnicalPhase__c FROM Case];
