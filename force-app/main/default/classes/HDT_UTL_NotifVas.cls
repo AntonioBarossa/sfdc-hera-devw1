@@ -153,18 +153,27 @@ public with sharing class HDT_UTL_NotifVas {
                 }
             }
             when 'Case' {
-                List<Case> cases = new HDT_QR_Case().getRecordByPracticeNumber(sObjectKey);
-                if (!cases.isEmpty()) {
-                    sObjMap.put('Case', cases.get(0));
-                }
-                if (cases.get(0).Order__r!=null) {
-                    sObjMap.put('Order', cases.get(0).Order__r);
-                }
-                if (cases.get(0).Asset!=null) {
-                    sObjMap.put('Asset', cases.get(0).Asset);
-                }
-                if (cases.get(0).Subscription__r!=null) {
-                    sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
+                List<Order> orders = orderQr.getRecordByOrderNumber(sObjectKey);
+                if (!orders.isEmpty()) {
+                    sObjMap.put('Order', orders.get(0));
+
+                    Id orderId = orders.get(0).Id;
+
+                    List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
+                        WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId)
+                        WITH SECURITY_ENFORCED LIMIT 1];
+
+                    if (!cases.isEmpty()) {
+                        sObjMap.put('Case', cases.get(0));
+
+                        if (cases.get(0).Asset!=null) {
+                            sObjMap.put('Asset', cases.get(0).Asset);
+                        }
+                        if (cases.get(0).Subscription__r!=null) {
+                            sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
+                        }
+                    }
                 }
             }
         }
