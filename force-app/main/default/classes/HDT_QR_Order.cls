@@ -245,7 +245,8 @@ public inherited sharing class HDT_QR_Order {
             IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
             RegionalAdditional__c,                            //@frpanico 16/09/21 
             isTransition__c,
-            QuotationType__c
+            QuotationType__c,
+            CommodityFormula__c                              //@frpanico 28/09/21
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
