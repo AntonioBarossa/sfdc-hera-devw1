@@ -38,7 +38,7 @@ public with sharing class HDT_SRV_EditAlertTst {
         Case myCase = [SELECT Id FROM Case];
         
         Map<String, Object> argsMap = new Map<String, Object>();
-        argsMap.put('sender', myCase.Id);
+        argsMap.put('sender', myCase);
         
         //CASE PHASE
         //'Esito OK da SAP'
@@ -56,7 +56,8 @@ public with sharing class HDT_SRV_EditAlertTst {
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(argsMap);
         
         //ASSERTS
-        
+        System.assert(result.success);
+        System.assert('OK'.equalsIgnoreCase(result.message));
         
     }
     
