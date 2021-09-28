@@ -9,40 +9,56 @@
  * -----
  */
 
-public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
+public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
+
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
 
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
         HDT_LC_HdtScriptManagementModal scriptFormatter = new HDT_LC_HdtScriptManagementModal();
         scriptFormatter.childRecordIdentifier=childRecordIdentifier;
+        system.debug(processName);
         return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static void saveReitekLink(String recordId, String reitekLink){
-        if(String.isNotBlank(reitekLink)){
+        if (String.isNotBlank(reitekLink)){
             String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
-            SObject genericSObject = (SObject)Type.forName('Schema',objectName).newInstance();
-            genericSObject.put('Id', recordId);
-            genericSObject.put('campo Reitek Link', reitekLink);
-            SObjectAccessDecision decision = Security.stripInaccessible(AccessType.UPDATABLE, new list<SObject>{genericSObject});
-            update decision.getRecords();
+            if (objectName=='wrts_prcgvr__Activity__c'){
+                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+                activity.Id = recordId;
+                activity.RecordingLink__c = reitekLink;
+                activitySrv.updateRecord(activity);
+            }
         }
     }
 
     public class HDT_WRP_ScriptOutput{
         @AuraEnabled public string sectionLabel;
         @AuraEnabled public string sectionText;
+        @AuraEnabled public String type;
+        @AuraEnabled public Decimal nextSection;
+        @AuraEnabled public List<HDT_WRP_ScriptDecision> decisions;
+    }
+
+    public class HDT_WRP_ScriptDecision{
+        @AuraEnabled public String label;
+        @AuraEnabled public Integer targetPage;
     }
 
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
         ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
+        return getScriptPagesFromScript(process, recordId);
+    }
+
+    protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId){
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         system.debug('fields to query '+allFieldsToQuery);
@@ -60,7 +76,7 @@ public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_F
                 for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
                     if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
                         String additionalLabel=String.isBlank(childRecordIdentifier)? '' :
-                         ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
+                        ' | '+childRecordIdentifier+ ' : '+String.valueOf(child.get(childRecordIdentifier));
                         listSectionWrappers.add(
                             createSectionWrapper(section, child, additionalLabel)
                         );
@@ -88,6 +104,35 @@ public inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_F
         HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
         sectionWrapper.sectionLabel=section.SectionLabel__c+additionalLabel;
         sectionWrapper.sectionText=formatText(section.textScript__c, record);
+
+        if (section.isSet('ScriptType__c')) {
+            sectionWrapper.type = (String)section.get('ScriptType__c');
+        }
+
+        if (section.isSet('NextSection__c')) {
+            sectionWrapper.nextSection = (Decimal)section.get('NextSection__c');
+        }
+
+        List<HDT_WRP_ScriptDecision> decisions = new List<HDT_WRP_ScriptDecision>();
+        List<Schema.SObjectField> decisionFields = new List<Schema.SObjectField>{
+            ScriptConfig__c.LabelOption1__c,
+            ScriptConfig__c.LabelOption2__c,
+            ScriptConfig__c.LabelOption3__c
+        };
+        for (Schema.SObjectField decisionField:decisionFields) {
+            if (section.isSet(decisionField)) {
+                String decision = (String)section.get(decisionField);
+                if (String.isNotBlank(decision)) {
+                    List<String> decisionSplit = decision.split('::');
+                    HDT_WRP_ScriptDecision dec = new HDT_WRP_ScriptDecision();
+                    dec.label = decisionSplit[0];
+                    dec.targetPage = Integer.valueOf( decisionSplit[1] );
+                    decisions.add(dec);
+                }
+            }
+        }
+        sectionWrapper.decisions = decisions;
+
         return sectionWrapper;
     }
 

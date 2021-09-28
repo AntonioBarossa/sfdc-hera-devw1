@@ -1083,8 +1083,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
                             break;
                         case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
+                            filterValue = currentFilter[key].value.toLowerCase();
+                            tableValueToFilter = item[key].toLowerCase();
                     }
 
                     switch (currentFilter[key].operator) {
@@ -1431,15 +1431,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     showSingleBill(event){
         console.log('>>> visualbolletta - showSingleBill');
-
-        //this.dispatchEvent(
-        //    new ShowToastEvent({
-        //        title: 'Visualizza bolletta',
-        //        message: 'Questo servizio non è ancora disponibile',
-        //        variant: 'info',
-        //        mode: 'sticky'
-        //    })
-        //);
+        this.openMainSpinner();
 
         var selectedId = this.getSingleSelectedId();
 
@@ -1448,16 +1440,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
-        console.log('>>> società: ' + selected.societa);
-        console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
-        console.log('>>> dataEmissione: ' + selected.dataEmissione);
-
         const date = selected.dataEmissione.split("/");
 
         var docInvoiceObj = {
-            billNumber: selected.contoContrattuale,
+            billNumber: selected.numeroFattura.replace(/^0+/, ''),
             channel: 'CRM',
-            //date: selected.dataEmissione,
             date: date[2] + '-' + date[1] + '-' + date[0],
             type: 'Bolletta',
             company: selected.societa

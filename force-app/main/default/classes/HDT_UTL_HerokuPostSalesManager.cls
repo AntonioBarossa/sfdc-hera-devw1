@@ -151,9 +151,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
-            if(sendDlDate != null && sendDlDate != ''){
+            /*if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
-            }
+            }*/
             if(herokuCancellationCode != null && herokuCancellationCode != ''){
                 caseNew.CancellationHerokuPracticeCode__c = herokuCancellationCode;
             }
@@ -246,9 +246,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && !(currentPhase.indexOf('Annull') > -1)){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
             }
-            if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
+            /*if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
                 currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
-            }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
+            }*/
+            //@frpanico aggiunto DATA_EVENTO poiche DT_INVIO_DL sembra non venir inviato
+            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase.equalsIgnoreCase('Inviato al DL'))
+            {
+                currentCase.SendToDistributorDate__c = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
+            }
+            if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
                 String importo = reqWrp.requestMap.get('IMP_PREV_DIST');
                 if(importo.indexOf(',')>-1){
                     importo = importo.replace(',', '.');
@@ -258,6 +264,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
                 String description = recordCase.Description != null?recordCase.Description:'';
                 currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
+            }
+            if(reqWrp.requestMap.get('ANNOTAZIONI') != null && reqWrp.requestMap.get('ANNOTAZIONI') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('ANNOTAZIONI') + '\n' + description;
             }
             if(reqWrp.requestMap.get('COD_CAUSALE') != null && reqWrp.requestMap.get('COD_CAUSALE') != ''){
                 currentCase.CancellationReasonCode__c = reqWrp.requestMap.get('COD_CAUSALE');
@@ -287,12 +297,47 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String note = recordCase.Note__c != null?recordCase.Note__c:'';
                 currentCase.Note__c =  nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE') + '\n' + note;
             }
-            if(reqWrp.requestMap.get('DT_MAX_PREV') != null){
+            if(reqWrp.requestMap.get('DT_MAX_PREV') != null && reqWrp.requestMap.get('DT_MAX_PREV') != ''){
+                HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+                Date dtMaxPrev = null;
+                try
+                {
+                    dtMaxPrev = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
+                }
+                catch(Exception e)
+                {
+                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                }
+                if(dtMaxPrev == null)
+                {
+                    try
+                    {
+                       dtMaxPrev = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    }
+                    catch(Exception e)
+                    {
+                         System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                    }
+                }
                 try{
-                    HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
-                    currentCase.QuotationValidityDate__c = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
+                    if(recordCase.Cluster__c == 'Preventivi')
+                    {
+                    	currentCase.QuotationValidityDate__c = dtMaxPrev;
+                    }
+                    else if(nextPhase.equalsIgnoreCase('Esito OK Riduzione Potenza'))
+                    {
+                        currentCase.PowerReductionDate__c = dtMaxPrev;
+                    }
+                    else if((nextPhase.equalsIgnoreCase('Esito OK da DL') || nextPhase.equalsIgnoreCase('Esito KO da DL')) && recordCase.Cluster__c.equalsIgnoreCase('Morosità'))
+                    {
+                        currentCase.ExecutionDate__c = dtMaxPrev;
+                        if(recordCase.Type.equalsIgnoreCase('Riattivazione Fornitura'))
+                        {
+                        	currentCase.PaymentDate__c	= dtMaxPrev;
+                        }
+                    }
                 } catch(Exception e){
-                    System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                    System.debug('DT_MAX_PREV assignment Exception -> ' + e.getMessage());
                 }
             }
             //Data Annullamento
@@ -311,10 +356,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
         }else if(method.equalsIgnoreCase('esito_finale')){
+            HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
             String contractCode = reqWrp.requestMap.get('VERTRAG');
+            String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -341,6 +388,18 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
+            }
+            if(paymentDate != null && paymentDate != '' && recordCase.Type.equalsIgnoreCase('Riattivazione Fornitura'))
+            {
+                try
+                {
+                    Date payDate = Date.valueOf(paymentDate);
+                    currentCase.PaymentDate__c = payDate;
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                }
             }
             if(contractCode != null || contractCode != ''){
 
@@ -527,7 +586,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         currentCase.HerokuPracticeCode__c = herokuCode;
                     }
                     //Aggiunto PhoneNumber
-                    currentCase.PhoneNumber__c = contact?.MobilePhone;
+                    currentCase.PhoneNumber__c = contact.MobilePhone != null 
+                        ? contact.MobilePhone
+                        : contact.Phone != null 
+                        ? contact.Phone
+                        : '123';
                     sp = qrClass.getServicePoint(pod);
                     if(sp != null){
                         contract = qrClass.getContract(sp.Id);

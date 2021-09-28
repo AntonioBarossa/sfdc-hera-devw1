@@ -12,12 +12,22 @@ export default class HdtCampaignNewOverride extends LightningElement {
     companyDefault = '';
 
     @api handleSubmit() {
-        
+        let nameSize = this.template.querySelector('[data-id="name"]').value.length;
+        console.log('nameSize '+nameSize); //HRAWRM-620 20/09/2021
+        if (nameSize>70) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Il nome della campagna non può contenere più di 70 caratteri',
+                    message: '',
+                    variant: 'error'
+                })
+            );
+        }//HRAWRM-620 20/09/2021
         if( this.template.querySelector('[data-id="companyOwner"]').value == '' ) {
 
             this.template.querySelector('[data-id="companyOwner"]').reportValidity();
 
-        } else {
+        } else if(nameSize<=70) {//HRAWRM-620 20/09/2021
             this.template.querySelector('lightning-record-edit-form').submit();
         }
         

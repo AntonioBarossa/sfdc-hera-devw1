@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ATTRIB_34</label>
+    <label>Tipo fatturazione</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

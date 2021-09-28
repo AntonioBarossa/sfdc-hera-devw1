@@ -56,6 +56,8 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     }
 
     submitDetails() {
+        if(this.quoteType=="")
+            return;
         const fields = {};
         fields['Id'] = this.recordId;
         fields['QuotationType__c'] = this.quoteType;
@@ -106,7 +108,7 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
                 this.powerQuote=wrapper.fixedQuotes.PowerQuote__c;
                 this.estimateAmount=wrapper.estimatedAmount;
             }else{
-                this.sendToast('Errore Calcolo Preventivo',  'Fallimento Nel calcolare Preventivo', 'warning');
+                this.sendToast('Errore Calcolo Preventivo',  'Non è possibile calcolare il preventivo in questa fase, sarà calcolata nelle fasi successive', 'warning');
             }
             this.isModalOpen = true;
         }catch(e){

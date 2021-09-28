@@ -14,6 +14,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+
+    @AuraEnabled
+    public static Map<String,Object> init(String Id){
+        Map<String,Object> result = new Map<String,Object>();
+
+        User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
+
+        result.put('loginChannel', user.LoginChannel__c);
+
+        return result;
+    }
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update order process step
@@ -108,12 +122,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
-        //02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni
-        Order orderFull = orderQr.getRecordById(order.Id);
-        if (orderFull.IsCloned__c && orderFull.Phase__c=='Bozza') {
-            order.Phase__c = 'Documentazione Validata';
-        }
-
         exeChecks(order);
 
         orderSrv.updateRecord(order);
@@ -121,7 +129,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     private static void exeChecks(Order order){
         //Check RequestOption__c (Opzione di Distribuzione) START
-        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+        if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.ImplantType__c != null && order.PowerCommitted__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -130,7 +138,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if (calculatedRequestOption != oldOrder.RequestOption__c) {
                 throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
             }
-        } else if(order.RequestOption__c != null){
+        } else if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.RequestOption__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -139,6 +147,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
         }
         //Check RequestOption__c (Opzione di Distribuzione) END
+
+        //Check iva e accise docs START
+        if (order.VATfacilitationFlag__c || order.FacilitationExcise__c) {
+            List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+            if (docsIvaAccise.isEmpty()) {
+                throw new AuraHandledException('Caricare documento per iva e accise');
+            }
+        }
+        //Check iva e accise docs END
     }
 
 
