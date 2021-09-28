@@ -117,6 +117,13 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 caseToUpdate.Phase__c = 'KO Definitivo';  // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
             } else {
                 // Creazione activity per successiva lavorazione dello scarto.
+                String errorDescriptionAct = '';
+                if(String.isNotBlank(outcomeData.errorDescription)){
+                    errorDescriptionAct = outcomeData.errorDescription;
+                }
+                if(String.isNotBlank(outcomeData.errorCode)){
+                    errorDescriptionAct = errorDescriptionAct + ' ' + outcomeData.errorCode;
+                }
                 switch on caseToUpdate.Phase__c {
                     when 'Esito KO da SAP' {
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
