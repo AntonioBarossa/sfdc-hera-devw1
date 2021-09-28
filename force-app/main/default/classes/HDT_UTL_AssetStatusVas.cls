@@ -35,10 +35,12 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
         for (Asset asset:assets) {
             if (String.isNotBlank(asset.SBQQ__OrderProduct__c)) {
                 Order currentOrder = orderPerItem.get(asset.SBQQ__OrderProduct__c);
+                Boolean isParentAsset = (asset.SBQQ__RootAsset__c==null);
+                Boolean isVasOrder = (currentOrder.RecordType.DeveloperName==ORDER_VAS_RT);
 
-                if (currentOrder.RecordType.DeveloperName==ORDER_VAS_RT) {
-                    asset.DigitalAssetStatus = ASSET_ACTIVE_STATUS;
-                    asset.VasPracticeCode__c = currentOrder.VasPracticeCode__c;
+                if (isVasOrder && isParentAsset) {
+                    asset.DigitalAssetStatus = ASSET_ACTIVE_STATUS;//setting status to active
+                    asset.VasPracticeCode__c = currentOrder.VasPracticeCode__c;//copying Vas fields from order
                 }
             }
         }
