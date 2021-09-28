@@ -11,7 +11,7 @@ import updateCampaignMemberStatus from '@salesforce/apex/HDT_LC_CtToolbar.update
 import getStatus from '@salesforce/apex/HDT_LC_CtToolbar.getStatusByEcid';
 import createActivity from '@salesforce/apex/HDT_LC_CtToolbar.createActivity';
 import updateActivity from '@salesforce/apex/HDT_LC_CtToolbar.updateActivity';
-
+import saveEcidInSales from '@salesforce/apex/HDT_LC_CtToolbar.saveEcidInSales';
 
 export default class HdtCtToolbarContainer extends NavigationMixin(LightningElement) {
 
@@ -39,6 +39,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
     @track callDuration;
     @track regLink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saasher|78|52344|109"},"sort":{"startTs":-1},"index":0}';
     @track registrationLinkVo;
+    @track saleId;
 
     iconName = '';
     agentStatus = '';
@@ -64,6 +65,11 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
              this.spinner = false;           
          }, 1000);*/
 
+        //get saleId if in wizard-vendita page
+        if (location.href.indexOf('wizard-vendita') > 0) {
+            let currentUrl = new URL(location.href);
+            this.saleId = currentUrl.searchParams.get('c__saleId');
+        }
     }
 
     closeModal() {
@@ -98,11 +104,11 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 console.log("*****DentroConnection");
                 this.toolbarAttributes = event.detail.eventObj;
                 this.uuid = this.toolbarAttributes.id;
-                if(this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound'){
+                if (this.toolbarAttributes.type != null && this.toolbarAttributes.type != undefined && this.toolbarAttributes.type == 'inbound') {
 
                     this.saveScript('Positivo', true);
                 }
-                else{
+                else {
                     callData = event.detail.CallData;
                     this.endCallDateTime = this.toolbarAttributes.endTime;
                     this.callDuration = (parseInt(this.toolbarAttributes.time_duration_sec) / 60).toFixed(2); // convert in minutes
@@ -130,6 +136,18 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 if (this.ecid != '' && this.objectApiName == 'CampaignMember') {
                     this.showRecallMe = true;
                 }
+
+                //update sale record adding ecid value
+                if (this.saleId != null && this.ecid != null) {
+                    saveEcidInSales({ 'saleId': this.saleId, 'ecid': this.ecid }).then(data => {
+                        if (data) {
+                            console.log('Ecid saved in Sale ' + this.saleId);
+                        }
+                    }).catch(err => {
+                        console.log(JSON.stringify(err));
+                    })
+                }
+
                 window.TOOLBAR.EASYCIM.openScript(this.uuid, this.ecid, false).then(
                     function (data) {
                         console.log('******DATAOPENSCRIPT:' + JSON.stringify(data));
@@ -281,18 +299,16 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
 
     trackActivity(action) {
         if (action == 'createActivity') {
-            if (this.objectApiName == 'Sale__c') {
-                let url = new URL(this.regLink);
-                let searchparams = JSON.parse(url.searchParams.get('filter'));
-                searchparams.filter.ecid = this.ecid;
-                let newparams = JSON.stringify(searchparams);
-                this.registrationLinkVo = this.regLink.replace(url.searchParams.get('filter'), newparams);
-                let reiteklink = this.registrationLinkVo;
-                const event = new CustomEvent('getreiteklink', {
-                    detail: { reiteklink }
-                });
-                this.dispatchEvent(event);
-            }
+            let url = new URL(this.regLink);
+            let searchparams = JSON.parse(url.searchParams.get('filter'));
+            searchparams.filter.ecid = this.ecid;
+            let newparams = JSON.stringify(searchparams);
+            this.registrationLinkVo = this.regLink.replace(url.searchParams.get('filter'), newparams);
+            let reiteklink = this.registrationLinkVo;
+            const event = new CustomEvent('getreiteklink', {
+                detail: { reiteklink }
+            });
+            this.dispatchEvent(event);
 
             createActivity({
                 startCall: this.startCallDateTime,

@@ -1,5 +1,6 @@
 public with sharing class HDT_LC_CtToolbar {
     public static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    public static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     @auraEnabled
     public static boolean updateCampaignMember(String ecid,string campaignMember,string agent){
         HDT_SRV_CampaignMember cmSrv = new HDT_SRV_CampaignMember();
@@ -97,6 +98,20 @@ public with sharing class HDT_LC_CtToolbar {
             System.debug('###### activity #### ' +activity);
             activitySrv.updateRecord(activity);
             return true;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean saveEcidInSales(String saleId, String ecid){
+        try {
+            Sale__c sale = new Sale__c(
+                Id = saleId,
+                Ecid__c = ecid
+            );
+        saleSrv.updateRecord(sale);
+        return true;            
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
