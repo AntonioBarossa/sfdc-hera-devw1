@@ -129,7 +129,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     private static void exeChecks(Order order){
         //Check RequestOption__c (Opzione di Distribuzione) START
-        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+        if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.ImplantType__c != null && order.PowerCommitted__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -138,7 +138,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if (calculatedRequestOption != oldOrder.RequestOption__c) {
                 throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
             }
-        } else if(order.RequestOption__c != null){
+        } else if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.RequestOption__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 

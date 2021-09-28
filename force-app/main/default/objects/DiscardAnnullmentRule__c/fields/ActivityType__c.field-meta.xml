@@ -4,9 +4,97 @@
     <description>Tipo di attività che dovrebbe crearsi in alternativa all&apos;annullamento</description>
     <externalId>false</externalId>
     <label>Tipo attività</label>
-    <length>255</length>
     <required>true</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>ProcessValue__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Esito KO da DL</fullName>
+                <default>false</default>
+                <label>Esito KO da DL</label>
+            </value>
+            <value>
+                <fullName>Esito KO da SAP</fullName>
+                <default>false</default>
+                <label>Esito KO da SAP</label>
+            </value>
+            <value>
+                <fullName>KO Pre-MDM</fullName>
+                <default>false</default>
+                <label>KO Pre-MDM</label>
+            </value>
+            <value>
+                <fullName>Annullamento SII</fullName>
+                <default>false</default>
+                <label>Annullamento SII</label>
+            </value>
+            <value>
+                <fullName>Ammissibilità KO</fullName>
+                <default>false</default>
+                <label>Ammissibilità KO</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Prima Attivazione Ele</controllingFieldValue>
+            <controllingFieldValue>Temporanea - Nuova Attivazione</controllingFieldValue>
+            <controllingFieldValue>Risoluzione Punto Sospeso</controllingFieldValue>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <controllingFieldValue>Subentro Ele</controllingFieldValue>
+            <controllingFieldValue>Prima Attivazione In delibera</controllingFieldValue>
+            <controllingFieldValue>Prima Attivazione Fuori delibera</controllingFieldValue>
+            <controllingFieldValue>Risoluzione NO Contatore</controllingFieldValue>
+            <controllingFieldValue>Verifica GDM</controllingFieldValue>
+            <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
+            <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Richiesta lettura cliente</controllingFieldValue>
+            <controllingFieldValue>Recesso per Altri Motivi</controllingFieldValue>
+            <controllingFieldValue>Voltura</controllingFieldValue>
+            <controllingFieldValue>Connessione con Attivazione</controllingFieldValue>
+            <controllingFieldValue>Proroga Temporanea</controllingFieldValue>
+            <controllingFieldValue>Sospensione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Riattivazione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Variazione Potenza</controllingFieldValue>
+            <controllingFieldValue>Interruzione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Chiusura Contatore</controllingFieldValue>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <controllingFieldValue>Risoluzione No Disalimentabile</controllingFieldValue>
+            <controllingFieldValue>Spostamento Contatore</controllingFieldValue>
+            <controllingFieldValue>Riattivazione non morose</controllingFieldValue>
+            <controllingFieldValue>Subentro Gas</controllingFieldValue>
+            <valueName>Ammissibilità KO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Risoluzione Punto Sospeso</controllingFieldValue>
+            <controllingFieldValue>Switch in Gas</controllingFieldValue>
+            <controllingFieldValue>Switch in Ele</controllingFieldValue>
+            <controllingFieldValue>Voltura</controllingFieldValue>
+            <valueName>Annullamento SII</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <valueName>Esito KO da SAP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <valueName>KO Pre-MDM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica GDM</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Connessione con Attivazione</controllingFieldValue>
+            <controllingFieldValue>Sospensione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Riattivazione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Variazione Potenza</controllingFieldValue>
+            <controllingFieldValue>Interruzione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Chiusura Contatore</controllingFieldValue>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <controllingFieldValue>Risoluzione No Disalimentabile</controllingFieldValue>
+            <valueName>Esito KO da DL</valueName>
+        </valueSettings>
+    </valueSet>
 </CustomField>

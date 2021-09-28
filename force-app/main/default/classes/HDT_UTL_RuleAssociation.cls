@@ -98,8 +98,8 @@ public with sharing class HDT_UTL_RuleAssociation {
                     }
                     
                 } else {
-                    //HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, configurationRuleToClone, recordList, '');
-                    //Id batchId = Database.executeBatch(createAssociationBatch);
+                    HDT_BA_ProductRuleAssociation createAssociationBatch = new HDT_BA_ProductRuleAssociation(executionType, configurationRuleToClone, recordList, '');
+                    Id batchId = Database.executeBatch(createAssociationBatch);
                     respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                     respRunBatchObj.success = true;
                 }
@@ -107,11 +107,11 @@ public with sharing class HDT_UTL_RuleAssociation {
             when 'filter' {
                 //run batch for all Product2 using where condition
 
-                //String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', configurationRuleToClone.SBQQ__OptionalSKU__c, findMethod);
-                //System.debug('>>> queryString: ' + queryString);
-                //
-                //HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), queryString);
-                //Id batchId = Database.executeBatch(createAssociationBatch);
+                String queryString = generateQueryString(filterString, 'AND', configurationRuleToClone.SBQQ__ProductRule__c, findMethod);
+                System.debug('>>> queryString: ' + queryString);
+                
+                HDT_BA_ProductRuleAssociation createAssociationBatch = new HDT_BA_ProductRuleAssociation(executionType, configurationRuleToClone, new List<String>(), queryString);
+                Id batchId = Database.executeBatch(createAssociationBatch);
                 respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                 respRunBatchObj.success = true;
             }
@@ -139,7 +139,7 @@ public with sharing class HDT_UTL_RuleAssociation {
                     Schema.DescribeSObjectResult objRes = objtype.getDescribe();
              
                     if(objRes.isDeletable ()){
-                        try{
+                        //try{
                             List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
                             errorData = HDT_SRV_RuleAssociation.deleteProductRule(productRuleToDelete, errorData);
 
@@ -151,16 +151,16 @@ public with sharing class HDT_UTL_RuleAssociation {
                                 respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
                             }
 
-                        } catch(Exception ex){
-                            respRunBatchObj.success = false;
-                            respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
-                        }
+                        //} catch(Exception ex){
+                        //    respRunBatchObj.success = false;
+                        //    respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
+                        //}
                         
                     }
                     
                 } else {
-                    //HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, recordList, '');
-                    //Id batchId = Database.executeBatch(deleteAssociationBatch);
+                    HDT_BA_DeleteProductRuleAssociation deleteAssociationBatch = new HDT_BA_DeleteProductRuleAssociation(executionType, ruleId, recordList, '');
+                    Id batchId = Database.executeBatch(deleteAssociationBatch);
                     respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                     respRunBatchObj.success = true;
                 }
@@ -168,11 +168,11 @@ public with sharing class HDT_UTL_RuleAssociation {
             when 'filter' {
                 //run batch for all Product2 using where condition
 
-                //String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', optionalSkuId, findMethod);
-                //System.debug('>>> queryString: ' + queryString);
+                String queryString = generateQueryString(filterString, 'AND', ruleId, findMethod);
+                System.debug('>>> queryString: ' + queryString);
 
-                //HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), queryString);
-                //Id batchId = Database.executeBatch(deleteAssociationBatch);
+                HDT_BA_DeleteProductRuleAssociation deleteAssociationBatch = new HDT_BA_DeleteProductRuleAssociation(executionType, ruleId, new List<String>(), queryString);
+                Id batchId = Database.executeBatch(deleteAssociationBatch);
                 respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                 respRunBatchObj.success = true;
             }

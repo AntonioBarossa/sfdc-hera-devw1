@@ -39,14 +39,15 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
             response.message = 'OK';
 
         } catch(Exception ex){
-            response.success = False;
+            response.success = false;
             response.message = 'KO';
             System.debug('HDT_SRV_SelfReadingsFacade: exception at line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
 
         return response;
     }
-
+    
+    @testVisible
     private static HDT_WRP_GenericSapIntegration submitRequest(String recordId, String requestType) {
        
         HDT_UTL_SapIntegrationInterface support = HDT_UTL_SapIntegrationAdapterFactory.getInstance('HDT_WS_SelfReadingsIntegrationAdapter');
