@@ -26,7 +26,7 @@ public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
                 Case__r.SecondLevelOpinion__c,
                 Case__r.DistributorName__c,
                 Order__r.DistributorFormula__c,
-                Case__r.Market__c,
+                //Case__r.Market__c,
                 Order__r.Market__c,
                 Case__r.SalesCompany__c,
                 Order__r.SalesCompany__c,
@@ -77,8 +77,8 @@ public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
                 // (OfferType__c INCLUDES (:activity.Order__r.OfferType__c) OR OfferType__c = null) AND
                 (Distributor__c =: activity.Case__r.DistributorName__c OR Distributor__c = null) AND
                 (Distributor__c =: activity.Order__r.DistributorFormula__c OR Distributor__c = null) AND
-                (Market__c INCLUDES (:activity.Case__r.Market__c) OR Market__c = null) AND
-                (Market__c INCLUDES (:activity.Order__r.Market__c) OR Market__c = null) AND
+                // (Market__c INCLUDES (:activity.Case__r.Market__c) OR Market__c = null) AND
+                // (Market__c INCLUDES (:activity.Order__r.Market__c) OR Market__c = null) AND
                 (Vendor__c =: activity.Case__r.SalesCompany__c OR Vendor__c = null) AND
                 (Vendor__c =: activity.Order__r.SalesCompany__c OR Vendor__c = null) AND
                 (MacroProcess__c INCLUDES (:activity.Case__r.Cluster__c) OR MacroProcess__c = null) AND
