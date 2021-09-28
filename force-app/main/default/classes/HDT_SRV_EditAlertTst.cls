@@ -6,7 +6,7 @@ public with sharing class HDT_SRV_EditAlertTst {
     
     //DATA
     private static final HDT_UTL_Constants constants = new HDT_UTL_Constants();
-    private static String isOk = true;
+    private static Boolean isOk = true;
     
     
     //TEST SETUP
@@ -51,7 +51,8 @@ public with sharing class HDT_SRV_EditAlertTst {
         
         //TESTING
         HDT_SRV_EditAlert myObjectToTest = new HDT_SRV_EditAlert();
-        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = myObjectToTest.execute(JSON.serialize(argsMap));
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result;
+        result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) myObjectToTest.execute(JSON.serialize(argsMap));
         
         //ASSERTS
         
@@ -75,7 +76,7 @@ public with sharing class HDT_SRV_EditAlertTst {
             
             HttpResponse response = new HttpResponse();
             
-            String note = '';
+            String note;
             if(isOk){
                 note = 'OK';
             } else {
