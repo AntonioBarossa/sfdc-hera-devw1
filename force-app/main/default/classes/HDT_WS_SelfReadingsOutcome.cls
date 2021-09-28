@@ -58,7 +58,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         Set<String> errorCodesDescriptionSet = new Set<String>();
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
             if (String.isBlank(outcomeData.caseId)) {
-                continue;
+                continue; 
             }
             if (String.isNotBlank(outcomeData.activityType)) {
                 if (outcomeData.activityType.equalsIgnoreCase('Esito KO da SAP') || outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
