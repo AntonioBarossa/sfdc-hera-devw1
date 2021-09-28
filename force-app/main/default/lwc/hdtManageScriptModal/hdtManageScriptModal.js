@@ -27,23 +27,35 @@ export default class HdtManageScriptModal extends LightningElement {
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api linkReitek;
     @api hasLink;
-    isDecisional = false;
-    openModal;
-    
-    // connectedCallback(){// stub parameters for test purpose
-    //     if(!this.scriptProcessName){
-    //         this.scriptProcessName='Mini Vocal Order';
-    //         this.buttonLabel='OTP';
-    //         this.recordId='8011X000002SkvlQAC';
-    //         this.childAdditionalInfo='orderNumber';
-    //     }
-    // }
+    @api isInsideModal = false;
+    @api openModal = false;
+    isDecisional;
 
-
+    get hasScriptType() {
+        return (this.isDecisional!=null);
+    }
     
+    connectedCallback(){
+        if (this.openModal) {
+            this.checkScriptType();
+        }
+    }
 
     showModal(){
-        isDecisionalScript({processName: this.scriptProcessName}).then(isDecisional => {
+        this.checkScriptType();
+    }
+
+    closeModal(){
+        this.openModal = false;
+    }
+
+    handleCloseEvt(){
+        console.log("handleCloseEvt");
+        this.dispatchEvent(new CustomEvent('close'));
+    }
+
+    checkScriptType() {
+        return isDecisionalScript({processName: this.scriptProcessName}).then(isDecisional => {
             this.isDecisional = isDecisional;
             this.openModal = true;
         },error => {
@@ -52,11 +64,7 @@ export default class HdtManageScriptModal extends LightningElement {
                 title: 'Non è stato possibile determinare il tipo dello script',
                 message: error
             }));
-        })
-    }
-
-    closeModal(){
-        this.openModal=false;
+        });
     }
 
 }
