@@ -7415,7 +7415,38 @@
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
+            <fullName>Default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Libero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regolamentato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MarketingPrivacy__c</picklist>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non espresso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10327,6 +10358,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>VATPercentage__c</picklist>
+        <values>
+            <fullName>GENERICI 20%-02</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>AUTOFATT%2E F%2ECAMPO IVA ART%2E2-13</fullName>
             <default>false</default>
