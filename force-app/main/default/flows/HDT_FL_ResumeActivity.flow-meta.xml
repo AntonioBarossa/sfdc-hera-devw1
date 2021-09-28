@@ -27,6 +27,13 @@
                 <stringValue>Aperta</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentActivity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>update</targetReference>
         </connector>
