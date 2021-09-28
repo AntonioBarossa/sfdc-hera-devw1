@@ -114,6 +114,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
                 when 'HDT_RT_TemporaneaNuovaAtt' {
                     newOrder.RequestOption__c = null;
+                    newOrder.ConnectionType__c = null;
                 }
             }
 
