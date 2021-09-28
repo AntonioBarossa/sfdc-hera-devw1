@@ -614,19 +614,26 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     console.log("LOG11:" + this.personFiscalCode.value);
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
                     console.log("LOG12:" + prova);
+                    var keyCode= prova;
+
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
                         console.log("LOG12");
                         let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
-                            this.gender= fiscData.gender;
+                            //this.gender= fiscData.gender;
+                            this.gender=fiscData[keyCode].gender;
                         }
-                        if(this.birthDate === undefined || this.birthDate.trim()===''){
-                            this.birthDate= fiscData.birthDate;
+                        if(this.birthDate || this.birthDate.trim()==''){
+                            console.log('this.birthDate: '+this.birthDate);
+                            //this.birthDate= fiscData.birthDate;
+                            this.birthDate=fiscData[keyCode].birthDate;
                         }
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
-                            this.birthPlace= fiscData.birthPlace;
+                           // this.birthPlace= fiscData.birthPlace;
+                           this.birthPlace=fiscData[keyCode].birthPlace;
+
                         }
                         console.log("LOG13:");
                         console.log("LOG13:" + businessName.value);
