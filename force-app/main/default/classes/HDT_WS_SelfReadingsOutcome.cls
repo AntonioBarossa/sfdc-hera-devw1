@@ -36,8 +36,8 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = req.data;
 
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
-        String queryStringKoMdm = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'Esito KO pre-MDM\'';
-        String queryStringKoSap = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'Esito KO da SAP\'';
+        String queryStringKoMdm = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'CBS_AUT004__ESITO_KO_PRE-MDM\'';
+        String queryStringKoSap = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'CBS_AUT002__ESITO_KO_DA_SAP\'';
         List<SObject> templatesKoMdm = HDT_QR_GenericQuery.getGenericRecords(queryStringKoMdm, objectName);
         List<SObject> templatesKoSap = HDT_QR_GenericQuery.getGenericRecords(queryStringKoSap, objectName);
         wrts_prcgvr__ActivityTemplate__c templateKoMdm = new wrts_prcgvr__ActivityTemplate__c();
