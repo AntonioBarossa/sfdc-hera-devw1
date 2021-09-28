@@ -24,7 +24,7 @@ public class HDT_UserTst {
 
         System.runAs(internalUser){
                        
-            Id profile = [Select id from Profile limit 1].id;            
+            Id profile = HDT_UTL_DataFactoryTst.getProfileId('Hera Standard User');           
             User u = HDT_UTL_DataFactoryTst.createInternalUser(profile,false);
             u.Alias = 'testef56';
             insert u;
