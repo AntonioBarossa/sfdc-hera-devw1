@@ -65,7 +65,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     errorCodes.add(outcomeData.errorCode);
                     if(String.isNotBlank(outcomeData.errorCode)){
                         errorCodesDescriptionSet.add(outcomeData.errorCode);
-                    }else {
+                    }else if(String.isNotBlank(outcomeData.errorDescription)) {
                         errorCodesDescriptionSet.add(outcomeData.errorDescription);
                     }
                 }
@@ -100,7 +100,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
                 }
-            }else{
+            }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
                     isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorDescription);
                 } catch (Exception e) {
