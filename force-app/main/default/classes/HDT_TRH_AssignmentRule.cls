@@ -1,6 +1,6 @@
 public with sharing class HDT_TRH_AssignmentRule extends HDT_TRH_TriggerHandler {
     public override void beforeInsert(){
-        populateUID((List<AssignmentRule__c>) trigger.newMap.values());
+        populateUID((List<AssignmentRule__c>) trigger.new);
     }
 
     public override void beforeUpdate(){
