@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_ContentVersion {
         cv.VersionData          = generateFileBlob;
         Date runDate            = Date.today();
         cv.Title                = fileTitle;
-        cv.PathOnClient         = fileName+'.csv';
+        cv.PathOnClient         = fileName;
         insert cv;
         return cv.id;
     }
