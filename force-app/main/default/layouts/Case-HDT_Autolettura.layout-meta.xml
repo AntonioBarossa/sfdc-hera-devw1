@@ -234,49 +234,29 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>Case.HDT_SendEmail</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>1</sortOrder>
+            <actionName>Case.HDT_SendThirdPartyEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>CloseCase</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>Case.HDT_SendSms</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>LogACall</actionName>
+            <actionName>Case.HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentNote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Catalogo_Servizi</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Case.Escalation</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
+            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

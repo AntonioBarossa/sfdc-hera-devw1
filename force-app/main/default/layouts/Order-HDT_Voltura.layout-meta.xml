@@ -479,19 +479,19 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
+            <actionName>Order.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
+            <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendSms</actionName>
+            <actionName>Order.HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
+            <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionName>Order.HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>2</sortOrder>
+            <sortOrder>20</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Order.Escalation</actionName>
