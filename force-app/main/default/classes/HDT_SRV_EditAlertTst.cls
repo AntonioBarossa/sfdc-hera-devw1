@@ -2,28 +2,97 @@
 public with sharing class HDT_SRV_EditAlertTst {
     
     //DEBUG
-    
+    public static final String TEST_NAME = 'HDT_SRV_EditAlertTst';
     
     //DATA
+    private static final HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static String isOk = true;
     
     
     //TEST SETUP
+    private static void mySetup(){
+        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+    }
     
     
     //TESTS
     
     //execute
+    ///outcome OK
     private static void executeTest() {
         
         //DEBUG
-        
+        String debugString = TEST_NAME + ' - executeTest';
+        System.debug(debugString);
         
         //SETUP
+        mySetup();
+        Case myCase = [SELECT Id FROM Case];
+        
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('sender', myCase.Id);
+        
+        //CASE PHASE
+        //'Esito OK da SAP'
+        String rtName =  constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
+        String rtId = constants.CASE_RECORDTYPEID_MOROSITA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
         
         
-        //
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //TESTING
+        HDT_SRV_EditAlert myObjectToTest = new HDT_SRV_EditAlert();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse result = myObjectToTest.execute(JSON.serialize(argsMap));
+        
+        //ASSERTS
         
         
+    }
+    
+    
+    ///outcome KO
+    //TODO: 'Errore Lavorazione SAP'
+    
+    
+    
+    
+    
+    
+    
+    //WEBSERVICE MOCKS
+    public class myWebServiceMock implements HTTPCalloutMock{
+        
+        public HTTPResponse respond(HTTPRequest request){
+            
+            HttpResponse response = new HttpResponse();
+            
+            String note = '';
+            if(isOk){
+                note = 'OK';
+            } else {
+                note = 'KO';
+            }
+            
+            Map<String, Object> bodyResp = new Map<String, Object>();
+            bodyResp.put('note', note);
+            
+            
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(JSON.serialize(bodyResp));
+            response.setStatusCode(200);
+            response.setStatus('OK');
+            
+            return response;
+        }
     }
     
 }
