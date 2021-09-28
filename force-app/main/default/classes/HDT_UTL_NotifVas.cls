@@ -178,6 +178,9 @@ public with sharing class HDT_UTL_NotifVas {
             }
         }
 
+        System.debug('sObjMap.keySet()');
+        System.debug(sObjMap.keySet());
+
         if (sObjMap.isEmpty()) {
             throw new HDT_UTL_HeraException('KEY_SERVIZIO: No records found');
         }

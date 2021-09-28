@@ -173,7 +173,7 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             when 'ASSETS_ACTIVATED'{
                 records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:searchString WITH SECURITY_ENFORCED];
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
                 records = [SELECT SBQQ__Contract__r.ContractNumber,
