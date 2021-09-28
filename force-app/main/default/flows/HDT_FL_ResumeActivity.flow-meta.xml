@@ -7,13 +7,6 @@
         <locationX>491</locationX>
         <locationY>224</locationY>
         <assignmentItems>
-            <assignToReference>currentActivity.SuspensionReason__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>currentActivity.SuspensionDueDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -22,6 +15,13 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>currentActivity.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentActivity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Aperta</stringValue>
