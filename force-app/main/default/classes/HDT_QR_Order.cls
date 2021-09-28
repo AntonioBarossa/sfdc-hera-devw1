@@ -900,4 +900,10 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getParentOrderDocs(List<String> ordParents){
         return [Select id,DocumentPackage__c,CIAccoutn__c,AutorizationVolturaThirdTrader__c,CILegalRepresentative__c,QuickQuote__c,ChamberCommerceRegistration__c,Instance326__c,DocumentLow80__c from Order Where id IN :ordParents WITH SECURITY_ENFORCED];
     }
+
+    //@frpanico getOpenActivities
+    public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
+    {
+        return [SELECT Id, Status__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Completed' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+    }
 }
