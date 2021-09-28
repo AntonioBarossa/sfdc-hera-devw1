@@ -38,7 +38,7 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
         try {
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug(ex.getMessage()); 
+            System.debug('HDT_SRV_EditAlert callout ERROR: ' + ex.getMessage()); 
         }
         return sapIntegration;
     }
