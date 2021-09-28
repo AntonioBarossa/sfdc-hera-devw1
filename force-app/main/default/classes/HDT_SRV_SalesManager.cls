@@ -87,7 +87,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
 
         //gabriele.rota@webresults.it | 2021-09-27
         if (sobjectId.getSobjectType().getDescribe().getName()=='Order') {
-            Order currentOrder = orderQr.getOrderbyId(sobjectId);
+            Order currentOrder = orderQr.getRecordById(sobjectId);
             if (currentOrder.Phase__c==PHASE_SEQUENZIALIZZATO) {
                 //l'Ordine è stato sequenzializzato, non deve essere inviato al Motore VAS
                 return;
