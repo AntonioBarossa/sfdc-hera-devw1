@@ -26,6 +26,7 @@ public with sharing class HDT_SRV_EditAlertTst {
     
     //execute
     ///outcome OK
+    @isTest
     private static void executeTest() {
         
         //DEBUG
