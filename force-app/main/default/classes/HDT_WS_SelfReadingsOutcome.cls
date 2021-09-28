@@ -60,7 +60,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
             if (String.isBlank(outcomeData.caseId)) {
                 continue;
             }
-            if (String.isNotBlank(outcomeData.activityType) && String.isNotBlank(outcomeData.errorCode)) {
+            if (String.isNotBlank(outcomeData.activityType)) {
                 if (outcomeData.activityType.equalsIgnoreCase('Esito KO da SAP') || outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
                     errorCodes.add(outcomeData.errorCode);
                     if(String.isNotBlank(outcomeData.errorCode)){
