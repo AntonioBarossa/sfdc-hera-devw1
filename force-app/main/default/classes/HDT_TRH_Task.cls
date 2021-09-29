@@ -187,20 +187,20 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
     }*/
 
-    private String doxeeTemplateCode(String doxeeTemplate) {
+    private Integer doxeeTemplateCode(String doxeeTemplate) {
 
         switch on doxeeTemplate {
             when 'Comunicazione Forte Consumo (23)' {
-                return '023';
+                return 23;
             }
             when 'Comunicazione Fuga Accertata (24)' {
-                return '024';
+                return 24;
             }
             when 'Comunicazione Fuga Presunta (25)' {
-                return '025';
+                return 25;
             }
             when 'Ultimo Avviso (26)' {
-                return '026';
+                return 26;
             }
         }
 
