@@ -5,21 +5,21 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
     private List<String> contentVersionIds ;
  
  
-    public HDT_QBL_SIE34_2SMEGas(String varRunId,Date varDate,String varFileType) {
-       System.debug('Start HDT_QBL_SIE34_2SMEGas')        ;
-       this.runId             = varRunId            ;
-       this.filterDate        = varDate             ;
-       this.fileType          = varFileType         ;
-       this.contentVersionIds = new List<String>()  ;
+    public HDT_QBL_SIE34_2SMEGas(String varRunId,Date varDate,String varFileType,List<String> varContentVersionIds) {
+       System.debug('Start HDT_QBL_SIE34_2SMEGas')          ;
+       this.runId             = varRunId                    ;
+       this.filterDate        = varDate                     ;
+       this.fileType          = varFileType                 ;
+       this.contentVersionIds = varContentVersionIds        ;
     }
  
  
     public void execute(QueueableContext context) {
-       System.debug('HDT_QBL_SIE34_2SMEGas.execute')      ;
-       String status                  = 'success'   ;
-       String errorMessage            = ''          ;
+       System.debug('HDT_QBL_SIE34_2SMEGas.execute')   ;
+       String status                  = 'success'      ;
+       String errorMessage            = ''             ;
        String condition = ' WHERE Cluster__c =\'Preventivi\' AND Status =\'Closed\' AND LastModifiedDate >=:filterDate ';
-       String query     = 'SELECT BillingProfile__r.InvoicingCountry__c,BillingProfile__r.ContractAccountCode__c,Contact.Email,Account.LastName__c,Account.BillingCity,Account.BillingPlace__c, Account.BillingPostalCode,Account.BillingState,Account.BillingStreetName__c,Account.BillingStreetNumberExtension__c, Account.BillingStreetNumber__c, Account.Category__c, Account.CustomerCode__c,'+
+       String query     = 'SELECT Contract__r.ContractSalesCompany__c,BillingProfile__r.InvoicingCountry__c,BillingProfile__r.ContractAccountCode__c,Contact.Email,Account.LastName__c,Account.BillingCity,Account.BillingPlace__c, Account.BillingPostalCode,Account.BillingState,Account.BillingStreetName__c,Account.BillingStreetNumberExtension__c, Account.BillingStreetNumber__c, Account.Category__c, Account.CustomerCode__c,'+
        'Account.CustomerType__c,Account.FirstName__c, Account.FiscalCode__c,Account.VATNumber__c,BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c,BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,'+
        'BillingProfile__r.BankAccountSignatoryFirstName__c,BillingProfile__r.BankAccountSignatoryFiscalCode__c,BillingProfile__r.BankAccountSignatoryLastName__c,BillingProfile__r.BankAgency__c,BillingProfile__r.BankName__c,BillingProfile__r.IbanABI__c,BillingProfile__r.IbanCAB__c,'+
        'BillingProfile__r.IbanCIN_IBAN__c,BillingProfile__r.IbanCIN__c,BillingProfile__r.IbanCodeNumber__c,BillingProfile__r.IbanCountry__c,BillingProfile__r.InvoicingAddressFormula__c, BillingProfile__r.InvoicingCity__c,'+
