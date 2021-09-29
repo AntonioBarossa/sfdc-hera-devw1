@@ -22,7 +22,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         }
         
         ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, '');
         
         //CASE
         Case myCase = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id)[0];
