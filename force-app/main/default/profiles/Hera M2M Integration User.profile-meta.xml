@@ -7484,6 +7484,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.SourceAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.InterestProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.ContactReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ContactPointAddress.ActiveFromDate</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8529,12 +8544,12 @@
         <field>DocumentSelected__c.Position1__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.Position2__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.Position3__c</field>
         <readable>true</readable>
@@ -24521,6 +24536,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.Ecid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ScriptConfig__c.CheckVisibility__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28916,87 +28936,87 @@
         <field>wrts_prcgvr__Activity__c.isDenominazioneIncongruente__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaActivityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaAnagrafici__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaAtecoCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaFirmLegalOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaMatricola__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaSupplyAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isSchoolCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIva10Module__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseSupply__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAccisePdrPod__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseModuleRequest__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseExclusionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseExclusionModuleAccise__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseCopyTechnicalRelation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.IsAcciseContractualPower__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CompletationDateDocument__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.NumberOfAttempt__c</field>
         <readable>true</readable>
@@ -29014,6 +29034,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivityEndTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ActivityOutcome__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29839,6 +29864,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Ecid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32823,7 +32853,16 @@
         <object>ServicePoint__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    	<objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Service26Config__c </object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
 		<allowCreate>true</allowCreate>
 		<allowDelete>true</allowDelete>
 		<allowEdit>true</allowEdit>
@@ -34085,6 +34124,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FUBProcessing__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>GeneralTermsCondition__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
