@@ -54,6 +54,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         this.newActivities = newActs;
         this.oldActivities = oldActs;
     }
+    public HDT_UTL_Scarti(){}
+
     public void execute(QueueableContext context) {
         system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
         updatePraticaForScartoDocumentaleQueue(newActivities, oldActivities);
