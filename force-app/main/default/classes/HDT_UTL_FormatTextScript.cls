@@ -125,17 +125,22 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 system.debug(dataFieldType);
                 switch on dataFieldType{
                     when 'STRING'{
-                        fieldValue= (String) relation.get(fieldOrRelation);
+                        fieldValue = (String) relation.get(fieldOrRelation);
                     }
                     when 'DATETIME'{
-                        fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
+                        fieldValue = ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
                     }
                     when 'DATE'{
                         DateTime tempDate = (DATE) relation.get(fieldOrRelation);
-                        fieldValue= tempDate.day()+'/'+tempDate.month()+'/'+tempDate.year();
+                        if (tempDate!=null) {
+                            fieldValue = tempDate.day()+'/'+tempDate.month()+'/'+tempDate.year();
+                        }
+                        else {
+                            fieldValue = 'null';
+                        }
                     }
                     when else {
-                        fieldValue= STRING.valueOf(relation.get(fieldOrRelation));
+                        fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
                     }
                 }
                 

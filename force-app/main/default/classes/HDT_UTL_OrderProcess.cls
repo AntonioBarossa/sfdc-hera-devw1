@@ -807,6 +807,25 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     HDT_UTL_DatabaseService.updateSObject(nonReqContract);
                 }
             }
+            //@frpanico closes open activities on "Annullato" or "Ripensato"
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            {                
+                List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+                try
+                {
+                    activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
+                    for(wrts_prcgvr__Activity__c activity : activities)
+                    {
+                        activity.Status__c = 'Annullata';
+                        activity.wrts_prcgvr__Status__c = 'Completed';
+                    }
+                    HDT_UTL_DatabaseService.updateSObject(activities);
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                }
+            }
 		}
 		return false;
 	}
