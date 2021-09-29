@@ -37,7 +37,6 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Case</controllingFieldValue>
-            <controllingFieldValue>Order</controllingFieldValue>
             <valueName>DiscardDescription__c</valueName>
         </valueSettings>
         <valueSettings>
