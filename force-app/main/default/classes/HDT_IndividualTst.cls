@@ -8,7 +8,7 @@ public with sharing class HDT_IndividualTst {
         List<Individual> IndiTest  = HDT_UTL_DataFactoryTst.createIndividual(1,true);
 
 
-        system.assertNotEquals('', IndiTest[0].id , 'is not Empty');
+        system.assertNotEquals('', IndiTest[0].id , 'Individual is not created correctly (individual id is not available)');
 
     }
 }
