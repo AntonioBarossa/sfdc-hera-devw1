@@ -51,7 +51,8 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug('ivaste');
         system.debug(json.serialize(listToUpdate));
         if(!listToUpdate.isEmpty()){
-            quoteLineSrv.updateRecords(listToUpdate);
+            //quoteLineSrv.updateRecords(listToUpdate);//We should Bypass Field security for this test
+            update listToUpdate;
         }
     }
 
@@ -74,14 +75,11 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__QuoteLine__c> quoteLinesListForBillingCheck = quoteLineQr.getRecordsBySaleForBillingCheck(sale.Id);
         quoteLinesListForBillingCheck.addAll(quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(sale.Id));
 
-         /*****LG 2809 ripristinato per errori bloccanti  */ /*
-        List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
-
         List<SBQQ__QuoteLine__c> allQlSconto = quoteLineQr.getRecordsBySaleFilteredFamilyBonus(sale.Id);
         List<SBQQ__QuoteLine__c> primaryQlSconto=HDT_LC_ApplyBillingProfileModal.getBonusPerOffer(allQlSconto);
         quoteLinesListForBillingCheck.addAll(primaryQlSconto);
         reassignQlSconti(primaryQlSconto, allQlSconto);
-        */
+
         
         List<SBQQ__QuoteLine__c> quoteLinePrimary = new List<SBQQ__QuoteLine__c>();
         List<String> quoteLinesWithoutBilling = new List<String>();

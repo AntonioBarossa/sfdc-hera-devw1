@@ -158,6 +158,31 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     }
 
 
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 29-09-2021 
+    * @param newActMap 
+    * @param oldActMap 
+    **/
+    public static void closeSobjectOnActivityClosing(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
+        //Proroga connessione temporanea
+        Set<Id> sobjsId = new Set<Id>();
+        Map<Id, wrts_prcgvr__Activity__c> oldActMap = new Map<Id, wrts_prcgvr__Activity__c>(oldActList);
+        for(wrts_prcgvr__Activity__c act : newActList){
+            if(act.wrts_prcgvr__Status__c=='Completed' && oldActMap.get(act.id).wrts_prcgvr__Status__c=='Not Started'){
+                sobjsId.add((ID)act.wrts_prcgvr__ObjectId__c);
+            }
+        }
+
+        Map<Id, Case> casesToUpdate = new Map<Id, Case>([Select id, Phase__c from Case where RecordType.DeveloperName='HDT_RT_ProrogaTemporanea' AND Phase__c='In Lavorazione' AND Id IN :sobjsId WITH SECURITY_ENFORCED]);
+        if(!casesToUpdate.isEmpty()){
+            for(Case c : casesToUpdate.values()){
+                c.Phase__c='Completata';
+            }
+        }
+        new HDT_SRV_Case().updateRecords(casesToUpdate.values());
+    }
+
     // @Picchiri 15.06.21 Credit Check Gestione Esiti ed eventuali invocazione a chiamata Mulesoft
     public static wrts_prcgvr__Activity__c closeActivityCheck(wrts_prcgvr__Activity__c act){
         act.Status__c = 'Chiusa'; 
