@@ -3092,7 +3092,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3175,7 +3175,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3282,7 +3282,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3389,7 +3389,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3502,7 +3502,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3941,7 +3941,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4000,7 +4000,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4095,7 +4095,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4456,7 +4456,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4563,7 +4563,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4878,7 +4878,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4991,7 +4991,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5110,7 +5110,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5229,7 +5229,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5336,7 +5336,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5443,7 +5443,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5550,7 +5550,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5663,7 +5663,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5776,7 +5776,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -5889,7 +5889,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6002,7 +6002,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6085,7 +6085,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6192,7 +6192,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6287,7 +6287,7 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+                <elementReference>TargetContact</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
