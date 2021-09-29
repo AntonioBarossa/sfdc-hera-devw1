@@ -395,7 +395,7 @@ public with sharing class HDT_UTL_ServicePoint {
 	public static void updateServicePointImplantAndSupplytype(Set<String> servicePointIdListSet){
         List<String> listServiceId = new List<String>();
         listServiceId.addAll(servicePointIdListSet);
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordByIdList(servicePointIdList,'Id,SupplyTypeTemp__c,ImplantTypeTemp__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordByIdList(listServiceId,'Id,SupplyTypeTemp__c,ImplantTypeTemp__c');
         for(servicePoint__c sr : servicePointList){
             sr.supplytype__c = sr.supplytypeTemp__c;
             sr.implantType__c = sr.implanttypetemp__c;

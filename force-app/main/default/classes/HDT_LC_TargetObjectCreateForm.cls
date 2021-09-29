@@ -108,7 +108,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             servMap.put('SupplyTypeTemp__c',servMap.get('SupplyType__c'));
             servMap.remove('ImplantType__c');
             servMap.remove('SupplyType__c');
-            ServicePoint__c servicePointObject = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
+            servicePointObject = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
             System.debug(servicePointObject);
         }catch(Exception e){
             System.debug('ERRORE utilizzo vecchia versione');
@@ -275,7 +275,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
             servMap.put('SupplyTypeTemp__c',servMap.get('SupplyType__c'));
             servMap.remove('ImplantType__c');
             servMap.remove('SupplyType__c');
-            ServicePoint__c servicePoint = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
+            servicePoint = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
             System.debug(servicePoint);
         }catch(Exception e){
             System.debug('ERRORE utilizzo vecchia versione');
