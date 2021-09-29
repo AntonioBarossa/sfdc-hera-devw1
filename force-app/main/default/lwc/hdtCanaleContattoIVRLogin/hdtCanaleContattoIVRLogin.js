@@ -87,6 +87,13 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         link.download = `${fileName}.pdf`
         link.click();
       }
+      downloadZip(base64String, fileName) {
+        const source = `data:application/pdf;base64,${base64String}`;
+        const link = document.createElement("a");
+        link.href = source;
+        link.download = `${fileName}.zip`
+        link.click();
+      }
      /*  onClickDownloadPdf(){
         let base64String = 'base64';
         this.downloadPdf(base64String,'UFJPVkFET1dOTE9BRFBST1ZB');
@@ -100,7 +107,12 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         
             if(this.name = 'onClickDownloadPdf'){
                // let base64String = 'UFJPVkFET1dOTE9BRFBST1ZB';
-            this.downloadPdf(res.base64,'Plico');
+            if(res.type == 'zip'){
+                this.downloadZip(res.base64,'Plico');
+            }
+            else{
+                this.downloadPdf(res.base64,'Plico');
+            }   
             }
         
         });
