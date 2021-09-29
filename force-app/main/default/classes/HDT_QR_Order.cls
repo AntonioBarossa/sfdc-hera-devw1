@@ -197,6 +197,7 @@ public inherited sharing class HDT_QR_Order {
             ActivatedDate,                                  // @Picchiri 21/05/21
             ServicePoint__r.VoltageLevel__c,                // @Picchiri 21/05/21
             ServicePoint__r.SupplyType__c,                  // @Picchiri 21/05/21
+            ServicePoint__r.SupplyTypeTemp__c,
             RecessNotice__c,                                // @Picchiri 21/05/21
             CustomerCategory__c,                            // @Picchiri 26/05/21
             Channel__c,                                     // @Picchiri 27/05/21
@@ -223,7 +224,7 @@ public inherited sharing class HDT_QR_Order {
             OwnerId,                                        // @Picchiri  10/06/21
             OrderReferenceNumber,                            // @Picchiri  15/06/21
             IsSequanzialized__c,                             // @Picchiri  24/06/21
-            ServicePoint__r.AnnualConsumption__c,
+            ServicePoint__r.AnnualConsumption__c,                            
             SalesCompanyCode__c,
             Owner.Username,
             CustomerType__c,
@@ -360,7 +361,8 @@ public inherited sharing class HDT_QR_Order {
             WizardCompletedDate__c,                         
             ActivatedDate,                                  
             ServicePoint__r.VoltageLevel__c,                
-            ServicePoint__r.SupplyType__c,                  
+            ServicePoint__r.SupplyType__c, 
+            ServicePoint__r.SupplyTypeTemp__c,                 
             RecessNotice__c,                                
             CustomerCategory__c,                            
             Channel__c,                                     
