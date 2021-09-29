@@ -288,9 +288,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('FATTIB_TEC') != null && reqWrp.requestMap.get('FATTIB_TEC') != ''){
                 if(reqWrp.requestMap.get('FATTIB_TEC').equalsIgnoreCase('SI')){
-                    currentCase.TechnicalFeasibility__c = true;
+                    currentCase.TechnicalFeasibility__c = 'Si';
                 } else {
-                    currentCase.TechnicalFeasibility__c = false;
+                    currentCase.TechnicalFeasibility__c = 'No';
                 }
             }
             if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
