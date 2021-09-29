@@ -81,7 +81,7 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
          errorMessage=e.getMessage();
          status='failed';
          System.debug('contentVersionIds'+contentVersionIds);
-         Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+         Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
          System.debug('jobId: '+jobID);
       }
      
