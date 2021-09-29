@@ -5,10 +5,12 @@ public with sharing class HDT_WS_SelfReadingsTst {
     
     
     //DATA
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     
     //TEST SETUP
     private static void mySetup(){
+        
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
@@ -33,21 +35,51 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //SETUP
         mySetup();
-        Case myCase = [SELECT Id FROM Case];
-        Contract myContract = [SELECT Id, SAPContractCode__c FROM Case];
+        Case myCase = [SELECT Id, Cluster__c , Type FROM Case];
+        Contract myContract = [SELECT Id, SAPContractCode__c FROM Contract];
         
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData reading = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData();
         //reading.id;
+        reading.mru = 'TEST_MRU';
+        reading.sendTo = 'TEST_SENDTO';
+        
+        reading.digits1 = 'TEST_digits1';
+        reading.digits2 = 'TEST_digits2';
+        
+        reading.date1 = Date.today();
+        reading.date2 = Date.today();
+        
+        reading.band1 = 'TEST_band1';
+        reading.band2 = 'TEST_band2';
+        
+        reading.value1 = 10.1;
+        reading.value2 = 10.2;
+        
+        reading.serialNumber1 = 'TEST_serialNumber1';
+        reading.serialNumber2 = 'TEST_serialNumber2';
+        
+        reading.register1 = 'TEST_register1';
+        reading.register2 = 'TEST_register2';
+        
+        reading.type1 = 'TEST_type1';
+        reading.type2 = 'TEST_type2';
+        
+        reading.unit1 = 'TEST_unit1';
+        reading.unit2 = 'TEST_unit2';
+        
         
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
+        srr.readings = reading;
         srr.Id = myCase.Id;
         srr.commodity = 'Gas';
         srr.contractCode = myContract.SAPContractCode__c;
-        srr.readings = reading;
         srr.origin = 'Sportello';
         srr.integrationId = '';
         srr.serialNumber = '';
-        srr.readingDate = '';
+        srr.readingDate = Date.today();
+        srr.outcome = 'OK';
+        srr.cluster = myCase.Cluster__c;
+        srr.type = myCase.Type;
         
         
         //REST CONTEXT
@@ -58,14 +90,22 @@ public with sharing class HDT_WS_SelfReadingsTst {
         RestContext.request =req;
         RestContext.response = res;
         
+        //CASE PHASE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
         
         
         //TESTING
         HDT_WS_SelfReadings.doPost();
         
         //ASSERTS
+        //TODO: SCRIVERE ASSERTS
         
     }
+    
+    
+    //TODO: CASO DI TEST COMMODITY ENERGIA ELETTRICA
     
     
     ///THROW 1
@@ -80,7 +120,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     
     
     //TODO: POSSIBILE CHE VADA TESTATA A MANO PARTE DI HDT_UTL_SelfReadings
-    
+    ///TODO: CASI CON REQUEST OUTCOME NON 'OK' DI DEFAULT per upsertInboundSelfReading
     
     
 }
