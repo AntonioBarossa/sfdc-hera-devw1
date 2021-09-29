@@ -10,7 +10,8 @@ public with sharing class HDT_WS_DocumentalIntegration {
             req.setTimeout(120000);
             Http http = new Http();
             HTTPResponse res = http.send(req);
-            System.debug('Engage1 response: ' + res.getBody());
+            // da scommentare solo per debug temporanei, la response può essere molto grande e causare un heap size exception.
+            //System.debug('Engage1 response: ' + res.getBody());
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
                 System.debug(JSON.serialize(responseBodyMap.get('data')));
