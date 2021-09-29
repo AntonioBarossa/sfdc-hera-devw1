@@ -103,7 +103,6 @@ public with sharing class HDT_BA_AttributesTest {
         ord.EffectiveDate=myDate2;
         
         // insert ord;
-
        
         Id caseRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro_EE').getRecordTypeId();
         
