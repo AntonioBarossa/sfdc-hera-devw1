@@ -204,7 +204,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             }
         }
 
-        return 0;
+        return '0';
 
     }
 
