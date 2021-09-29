@@ -51,7 +51,8 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug('ivaste');
         system.debug(json.serialize(listToUpdate));
         if(!listToUpdate.isEmpty()){
-            quoteLineSrv.updateRecords(listToUpdate);
+            //quoteLineSrv.updateRecords(listToUpdate);//We should Bypass Field security for this test
+            update listToUpdate;
         }
     }
 

@@ -210,8 +210,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
                 envelopeId = requestBody.envelopeId;
                 outcome = requestBody.outcome;
                 transactionId = HDT_SRV_DocumentalManagement.getTransactionId(envelopeId);
+                // I KO da mulesoft contengono direttamente il transactionId di Engage1 nel body.
+                if (String.isBlank(transactionId) && String.isNotBlank(envelopeId)){
+                    transactionId = envelopeId;
+                }
                 SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
-                if (outcome == 'KO'){
+                if ((outcome == 'KO') || (outcome == 'OK' && requestBody.status == 'voided')){
                     HDT_SRV_DocumentalManagement.logDocusignError(recordToUpdate, requestBody);
                 } else {
                     HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody);
