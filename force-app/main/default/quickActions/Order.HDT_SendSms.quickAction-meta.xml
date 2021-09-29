@@ -8,6 +8,10 @@
         <field>Subject</field>
         <formula>&apos;SMS&apos;</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>WhoId</field>
+        <formula>Order.Contact__c</formula>
+    </fieldOverrides>
     <label>Invia SMS</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
@@ -46,5 +50,6 @@
         </quickActionLayoutColumns>
     </quickActionLayout>
     <targetObject>Task</targetObject>
+    <targetParentField>What</targetParentField>
     <type>LogACall</type>
 </QuickAction>
