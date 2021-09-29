@@ -14,7 +14,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
     
     //
     @isTest
-    private static void testMock() {
+    private static void doPostTest() {
+        
         
         
     }
