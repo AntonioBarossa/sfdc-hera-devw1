@@ -31,12 +31,9 @@ public with sharing class HDT_QuoteTst {
 
       //  update testQ;
 
-
-
-        SBQQ__Quote__c Q = [SELECT id,SBQQ__Type__c FROM SBQQ__Quote__c WHERE id =: testQ[0].id LIMIT 1];
         
-        system.assertEquals('Quote', testQ[0].SBQQ__Type__c , 'Quote is inserted correctly');
-        system.assertNotEquals('',  testQ[0].SBQQ__Type__c , 'is not Empty');
+        system.assertEquals(true, testQ[0].Id != null , 'Quote was not inserted correctly');
+        system.assertNotEquals(true,  testQ[0].Id == null , 'The Id of the inserted quote is empty');
 
     }
 }
