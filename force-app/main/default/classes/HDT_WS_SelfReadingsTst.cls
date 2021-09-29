@@ -100,7 +100,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         HDT_WS_SelfReadings.doPost();
         
         //ASSERTS
-        //TODO: SCRIVERE ASSERTS
+        System.assertEquals(201, RestContext.response.statusCode);
         
     }
     
