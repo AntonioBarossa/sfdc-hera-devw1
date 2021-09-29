@@ -492,17 +492,17 @@
         <platformActionListItems>
             <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>18</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Order.HDT_SendSms</actionName>
-            <actionType>QuickAction</actionType>
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Order.HDT_SendCertifiedEmail</actionName>
+            <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Order.Escalation</actionName>
