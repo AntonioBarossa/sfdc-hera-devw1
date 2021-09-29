@@ -14,7 +14,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //ACCOUNT
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        Account accSecond = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'SECOND COMPANY', 'Azienda', 'Aziende SME')[0];
+        Account accSecond = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'AAA-EBT', 'AAS ASSOCIAZIONE', 'Aziende SME')[0];
         
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
