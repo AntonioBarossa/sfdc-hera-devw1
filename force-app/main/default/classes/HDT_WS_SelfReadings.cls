@@ -20,6 +20,7 @@ global with sharing class HDT_WS_SelfReadings {
                 responseWrap.readingId = outcomeResponse.readingId;
                 responseWrap.integrationId = requestWrap.integrationId;
             } catch (Exception e) {
+                //TODO: RE-COMMENT DEBUG
                 System.debug('Exception (ERROR 400): ' + e.getMessage());
                 System.debug('STACK TRACE STRING: ' + e.getStackTraceString());
                 response.statusCode = 400;
@@ -27,6 +28,7 @@ global with sharing class HDT_WS_SelfReadings {
                 responseWrap.outcomeDescription = e.getMessage();
             }
         } catch (Exception e) {
+            //TODO: RE-COMMENT DEBUG
             System.debug('Exception (ERROR 500): ' + e.getMessage());
             System.debug('STACK TRACE STRING: ' + e.getStackTraceString());
             response.statusCode = 500;
