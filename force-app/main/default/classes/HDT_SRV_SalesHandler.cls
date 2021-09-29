@@ -483,20 +483,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         
                     }
                     else {
-                     
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
@@ -516,24 +503,11 @@ public with sharing class HDT_SRV_SalesHandler {
                         RestContext.response.statusCode = 200;
                     }
                     else {
-                       
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
-            when 'SIE34'{
+            when 'SIE34_3'{
                 System.debug('SIE34');
                 if (request.objects.get(0).fields.get(0) != null ) {
                     Map<String,String> localMapRequestFields = new Map<String,String>();
@@ -545,24 +519,10 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
                         Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34'));
-                        System.debug('jobIDSIE34: '+jobIDSIE34);
                         RestContext.response.statusCode = 200;
                     }
                     else {
-                       
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
@@ -594,7 +554,20 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+    private static void mapError(String msg, HDT_WRP_MrrResponse.HDT_WRP_Field responseField,HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject,HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem){
+        responseField.fieldType = 'TEXT';
+        responseField.name = 'ESITO';
+        responseField.value = 'KO';
 
+        responseFieldError.fieldType = 'TEXT';
+        responseFieldError.name = 'ERROR_MESSAGE';
+        responseFieldError.value = msg;
+
+        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+        mrrResponseItem.objects.add(responseObject);
+
+        RestContext.response.statusCode = 400;
+    }
     private static void updateServicePoint(ServicePoint__c sp){
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
