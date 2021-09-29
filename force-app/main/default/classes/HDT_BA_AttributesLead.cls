@@ -60,7 +60,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			if (!mapLeadByEmail.isEmpty()) {
 				listContacts = [SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRiskCtrl__c ,Email,CreatedDate,
 				(SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfiles__r),
-				(SELECT id,ContactId,Contact.Email,Contact.CreatedDate,ClientCategory__c,EarlyRecess__c,EnergyService__c,/*Market__c,*/Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),
+				(SELECT id,ContactId,Contact.Email,Contact.CreatedDate,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Cases),
 				(SELECT id,Contact__c,Contact__r.Email,Contact__r.CreatedDate,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract__r),
 				(SELECT id,Contact__c,Contact__r.Email,Phase__c,RecordTypeId,Status,Type,ServicePoint__r.CommoditySector__c FROM Orders__r) FROM Contact  WHERE  Email IN:mapLeadByEmail.keySet() ORDER BY Email,CreatedDate ]; 	
 			}
@@ -86,7 +86,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			
 			
 			List<Lead> listLeadNotInChunk = [SELECT id,ContactReason__c,CreatedDate,InterestArea__c,Rating,Status,Email,
-			(SELECT id,ContactId,Contact.Email,Lead__c,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,/*Market__c,*/Outcome__c,Phase__c,Reason,SalesCompany__c,
+			(SELECT id,ContactId,Contact.Email,Lead__c,Lead__r.email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,
 			ServicePoint__c,Status,SupplyType__c,Type FROM Cases__r)
 			FROM lead
 			WHERE (IsConverted=false)AND Status !='Expired' AND (Email IN:mapLeadByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapLeadByEmail.values())  ORDER BY Email,CreatedDate];
@@ -175,7 +175,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 				actualAtt.caseClientCategory  = String.isNotBlank(actualAtt.caseClientCategory)? String.isNotBlank(tempCase.ClientCategory__c               ) ? actualAtt.caseClientCategory+','+tempCase.ClientCategory__c                  :   actualAtt.caseClientCategory:tempCase.ClientCategory__c                 ;                  
 				actualAtt.caseEarlyRecess     = String.isNotBlank(actualAtt.caseEarlyRecess   )? String.isNotBlank(String.valueOf(tempCase.EarlyRecess__c)  ) ? actualAtt.caseEarlyRecess   +','+String.valueOf(tempCase.EarlyRecess__c)     :   actualAtt.caseEarlyRecess   :String.valueOf(tempCase.EarlyRecess__c)    ;            
 				actualAtt.caseEnergyService   = String.isNotBlank(actualAtt.caseEnergyService )? String.isNotBlank(tempCase.EnergyService__c                ) ? actualAtt.caseEnergyService +','+tempCase.EnergyService__c                   :   actualAtt.caseEnergyService :tempCase.EnergyService__c                  ;                
-				//actualAtt.caseMarket          = String.isNotBlank(actualAtt.caseMarket        )? String.isNotBlank(tempCase.Market__c                       ) ? actualAtt.caseMarket        +','+tempCase.Market__c                          :   actualAtt.caseMarket        :tempCase.Market__c                         ;  
+				actualAtt.caseMarket          = String.isNotBlank(actualAtt.caseMarket        )? String.isNotBlank(tempCase.Market__c                       ) ? actualAtt.caseMarket        +','+tempCase.Market__c                          :   actualAtt.caseMarket        :tempCase.Market__c                         ;  
 				actualAtt.caseOutcome         = String.isNotBlank(actualAtt.caseOutcome       )? String.isNotBlank(tempCase.Outcome__c                      ) ? actualAtt.caseOutcome       +','+tempCase.Outcome__c                         :   actualAtt.caseOutcome       :tempCase.Outcome__c                        ;    
 				actualAtt.casePhase           = String.isNotBlank(actualAtt.casePhase         )? String.isNotBlank(tempCase.Phase__c                        ) ? actualAtt.casePhase         +','+tempCase.Phase__c                           :   actualAtt.casePhase         :tempCase.Phase__c                          ;
 				actualAtt.caseReason          = String.isNotBlank(actualAtt.caseReason        )? String.isNotBlank(tempCase.Reason                          ) ? actualAtt.caseReason        +','+tempCase.Reason                             :   actualAtt.caseReason        :tempCase.Reason                            ;
@@ -382,4 +382,5 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 		Id batchprocessid = Database.executeBatch(attrContact,1000);
 
 	}
+	
 }

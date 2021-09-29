@@ -103,7 +103,6 @@ public with sharing class HDT_BA_AttributesTest {
         ord.EffectiveDate=myDate2;
         
         // insert ord;
-
        
         Id caseRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro_EE').getRecordTypeId();
         
@@ -120,7 +119,7 @@ public with sharing class HDT_BA_AttributesTest {
             mCase.Reason='New problem';
             mcase.EarlyRecess__c=false;
             mcase.EnergyService__c='Si';
-            //mcase.Market__c='Libero';
+            mcase.Market__c='Libero';
             mcase.Status='New'; 
             mCase.SalesCompany__c='test';
             listCase.add(mcase);

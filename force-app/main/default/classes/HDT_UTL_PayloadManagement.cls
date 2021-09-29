@@ -753,7 +753,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 String[] record = new List<String>();
                 record.add('00310');
                 record.add('120');
-                // record.add('Tipologia fornitura: ' + c.Market__c);
+                record.add('Tipologia fornitura: ' + c.Market__c);
                 record.add(endLine);
                 payloadSection += String.join(record, div);
             }
@@ -925,4 +925,5 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
     }
+    
 }

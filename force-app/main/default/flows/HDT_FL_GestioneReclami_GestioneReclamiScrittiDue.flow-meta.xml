@@ -660,12 +660,12 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
-        <!-- <inputAssignments>
+        <inputAssignments>
             <field>Market__c</field>
             <value>
                 <elementReference>GetInputCaseAggiornato.Market__c</elementReference>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>Origin</field>
             <value>

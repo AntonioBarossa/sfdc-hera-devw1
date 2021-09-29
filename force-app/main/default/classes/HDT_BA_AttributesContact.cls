@@ -124,7 +124,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			
 
 			List<BillingProfile__c> listBillingProfile  = [SELECT id,Contact__c,Contact__r.Email,BillSendingMethod__c,PaymentMethod__c,Status__c FROM BillingProfile__c  WHERE Contact__c IN:setContactId ];
-			List<Case> listCase                         = [SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,/*Market__c,*/Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Case WHERE ContactId IN:setContactId];
+			List<Case> listCase                         = [SELECT id,ContactId,Contact.Email,ClientCategory__c,EarlyRecess__c,EnergyService__c,Market__c,Outcome__c,Phase__c,Reason,SalesCompany__c,ServicePoint__c,Status,SupplyType__c,Type FROM Case WHERE ContactId IN:setContactId];
 			List<Order> listOrder                       = [SELECT id,Contact__c,Contact__r.Email,Phase__c,RecordTypeId,Status,Type,ServicePoint__r.CommoditySector__c FROM Order WHERE Contact__c IN:setContactId ];
 			List<Contract> listContract                 = [SELECT id,Contact__c,Contact__r.Email,ActivatedDate,CustomerSignedDate,EndDate,EstimatedEndDate__c,Status FROM Contract WHERE Contact__c IN:setContactId ];
 
@@ -139,7 +139,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 				actualAtt.caseClientCategory  = String.isNotBlank(actualAtt.caseClientCategory)? String.isNotBlank(tempCase.ClientCategory__c               ) ? actualAtt.caseClientCategory+','+tempCase.ClientCategory__c                  :   actualAtt.caseClientCategory:tempCase.ClientCategory__c                 ;                  
 				actualAtt.caseEarlyRecess     = String.isNotBlank(actualAtt.caseEarlyRecess   )? String.isNotBlank(String.valueOf(tempCase.EarlyRecess__c)  ) ? actualAtt.caseEarlyRecess   +','+String.valueOf(tempCase.EarlyRecess__c)     :   actualAtt.caseEarlyRecess   :String.valueOf(tempCase.EarlyRecess__c)    ;            
 				actualAtt.caseEnergyService   = String.isNotBlank(actualAtt.caseEnergyService )? String.isNotBlank(tempCase.EnergyService__c                ) ? actualAtt.caseEnergyService +','+tempCase.EnergyService__c                   :   actualAtt.caseEnergyService :tempCase.EnergyService__c                  ;                
-				// actualAtt.caseMarket          = String.isNotBlank(actualAtt.caseMarket        )? String.isNotBlank(tempCase.Market__c                       ) ? actualAtt.caseMarket        +','+tempCase.Market__c                          :   actualAtt.caseMarket        :tempCase.Market__c                         ;  
+				actualAtt.caseMarket          = String.isNotBlank(actualAtt.caseMarket        )? String.isNotBlank(tempCase.Market__c                       ) ? actualAtt.caseMarket        +','+tempCase.Market__c                          :   actualAtt.caseMarket        :tempCase.Market__c                         ;  
 				actualAtt.caseOutcome         = String.isNotBlank(actualAtt.caseOutcome       )? String.isNotBlank(tempCase.Outcome__c                      ) ? actualAtt.caseOutcome       +','+tempCase.Outcome__c                         :   actualAtt.caseOutcome       :tempCase.Outcome__c                        ;    
 				actualAtt.casePhase           = String.isNotBlank(actualAtt.casePhase         )? String.isNotBlank(tempCase.Phase__c                        ) ? actualAtt.casePhase         +','+tempCase.Phase__c                           :   actualAtt.casePhase         :tempCase.Phase__c                          ;
 				actualAtt.caseReason          = String.isNotBlank(actualAtt.caseReason        )? String.isNotBlank(tempCase.Reason                          ) ? actualAtt.caseReason        +','+tempCase.Reason                             :   actualAtt.caseReason        :tempCase.Reason                            ;
@@ -331,4 +331,5 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',errorMessage,listIdContentVersion);
 
     }
+	
 }

@@ -295,7 +295,7 @@
                 <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
-        <!-- <inputAssignments>
+        <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
@@ -330,7 +330,7 @@
             <value>
                 <stringValue>Libero</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -556,7 +556,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </filters>
-        <!-- <inputAssignments>
+        <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
@@ -591,7 +591,7 @@
             <value>
                 <stringValue>Libero</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -817,7 +817,7 @@
                 <elementReference>formula_6_myRule_5_A1_4067717145</elementReference>
             </value>
         </inputAssignments>
-        <!-- <inputAssignments>
+        <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
@@ -852,7 +852,7 @@
             <value>
                 <stringValue>Libero</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>

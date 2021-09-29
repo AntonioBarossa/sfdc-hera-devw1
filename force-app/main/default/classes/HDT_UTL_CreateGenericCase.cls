@@ -144,7 +144,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         // Campi sezione Tributi e Dati Commerciali
         newCase.TaxRate__c = parentOrder.VAT__c;
         newCase.AtecoCode__c = parentOrder.AtecoCode__c;
-        // newCase.Market__c = parentOrder.Market__c;
+        newCase.Market__c = parentOrder.Market__c;
         newCase.Contract__c = parentOrder.ContractId;
         newCase.ServicePoint__c = parentOrder.ServicePoint__c;
         // Campi sezione Altri Dati
@@ -200,6 +200,5 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         return newCase;
     }
-
 
 }

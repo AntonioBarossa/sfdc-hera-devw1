@@ -1852,14 +1852,14 @@
         <picklistField>CaliberAvailable__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
-    <!-- <dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>MarketPicklist</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Market__c</picklistField>
         <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets> -->
+    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>ServizioPicklist</name>
         <dataType>Picklist</dataType>

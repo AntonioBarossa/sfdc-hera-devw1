@@ -47,12 +47,12 @@
                 <elementReference>Get_Case.YearManufactureMeter__c</elementReference>
             </value>
         </inputParameters>
-        <!-- <inputParameters>
+        <inputParameters>
             <name>market</name>
             <value>
                 <elementReference>Get_Case.Market__c</elementReference>
             </value>
-        </inputParameters> -->
+        </inputParameters>
         <inputParameters>
             <name>processType</name>
             <value>

@@ -58,7 +58,7 @@ public with sharing class HDT_QR_InformativeManager {
 
                     contextSobj = [SELECT AccountId, 
                     ServicePoint__c, 
-                    // Market__c, 
+                    Market__c, 
                     BillingProfile__c, 
                     Cluster__c, 
                     Type,
@@ -74,7 +74,7 @@ public with sharing class HDT_QR_InformativeManager {
 
                     contextSobj = [SELECT Id,AccountId,
                     ServicePoint__c,
-                    // Market__c,
+                    Market__c,
                     BillingProfile__c,
                     SalesCompany__c,
                     ContractId,

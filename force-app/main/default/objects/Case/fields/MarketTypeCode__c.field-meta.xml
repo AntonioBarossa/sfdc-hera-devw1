@@ -3,12 +3,12 @@
     <fullName>MarketTypeCode__c</fullName>
     <description>Codice tipo mercato inviato a Heroku.</description>
     <externalId>false</externalId>
-    <formula>/*CASE(TEXT(Market__c),
+    <formula>CASE(TEXT(Market__c),
 &apos;Libero&apos;, &apos;L&apos;,
 &apos;Default&apos;, &apos;D&apos;,
 &apos;FUI&apos;, &apos;F&apos;,
 &apos;M&apos;
-)*/&apos;&apos;</formula>
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Servizio Tutela</label>
     <required>false</required>
