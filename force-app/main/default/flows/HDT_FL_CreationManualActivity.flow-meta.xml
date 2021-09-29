@@ -65,13 +65,6 @@
         <locationX>602</locationX>
         <locationY>274</locationY>
         <assignmentItems>
-            <assignToReference>Activity.Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Approvazione Quote</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Activity.Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
