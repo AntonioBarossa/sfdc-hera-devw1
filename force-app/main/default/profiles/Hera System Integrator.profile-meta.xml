@@ -34196,6 +34196,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>GeneralTermsCondition__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>FUBProcessing__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

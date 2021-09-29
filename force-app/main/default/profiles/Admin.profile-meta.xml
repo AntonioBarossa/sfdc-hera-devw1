@@ -36467,6 +36467,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>GeneralTermsCondition__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>MassiveLoader</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
