@@ -25,7 +25,6 @@
             <value>
                 <fullName>Description</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Description</label>
             </value>
             <value>
@@ -38,6 +37,11 @@
         <valueSettings>
             <controllingFieldValue>Case</controllingFieldValue>
             <valueName>DiscardDescription__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Description</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Order</controllingFieldValue>
