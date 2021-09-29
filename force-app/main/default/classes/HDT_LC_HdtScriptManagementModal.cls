@@ -28,15 +28,18 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     }
 
     @AuraEnabled
-    public static void saveReitekLink(String recordId, String reitekLink){
-        if (String.isNotBlank(reitekLink)){
-            String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
-            if (objectName=='wrts_prcgvr__Activity__c'){
-                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-                activity.Id = recordId;
-                activity.RecordingLink__c = reitekLink;
-                activitySrv.updateRecord(activity);
-            }
+    public static void saveReitekLink(String recordId, String activityId, String reitekLink){
+        //Temporary mock
+        if (String.isBlank(reitekLink)) {
+            reitekLink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}';
+        }
+
+        if (String.isNotBlank(activityId)) {
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.Id = activityId;
+            activity.RecordingLink__c = reitekLink;
+            update activity;
+            //activitySrv.updateRecord(activity);
         }
     }
 

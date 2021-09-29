@@ -25,6 +25,7 @@
     <aura:if isTrue="{!v.scriptName}">
         <c:hdtManageScriptModal scriptProcessName="{!v.scriptName}"
             recordId="{!v.orderId}"
+            activityId="{!v.recordId}"
             isInsideModal="true"
             openModal="true"
             onclose="{!c.handleCloseAction}">
