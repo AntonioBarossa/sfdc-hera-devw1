@@ -421,4 +421,16 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public CampaignMember getRecordById(String campaignMemberId) {
+        return [
+            SELECT
+            Id,
+            ContactId, 
+            LeadId
+            FROM CampaignMember 
+            WHERE Id = :campaignMemberId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
