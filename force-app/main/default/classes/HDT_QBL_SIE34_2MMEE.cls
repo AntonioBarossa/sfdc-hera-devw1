@@ -44,106 +44,107 @@ public with sharing class HDT_QBL_SIE34_2MMEE implements Queueable  {
           String body  ='';
       
           for (Case tempCase : listCase) {   
-                String row = tempCase.CaseNumber                                +','+  
-                tempCase.CaseNumber                                             +','+  
-                tempCase.CreatedDate                                            +','+   
-                tempCase.Account.CustomerCode__c                                +','+               
-                tempCase.Account.LastName__c + ' '+ tempCase.FirstName__c       +','+                                
-                tempCase.Account.VATNumber__c                                   +','+            
-                tempCase.Account.FiscalCode__c                                  +','+             
-                tempCase.Contact.MobilePhone                                    +','+              
-                tempCase.Contact.Fax                                            +','+      
-                tempCase.Contact.Email                                          +','+               
-                tempCase.Contact.FirstName                                      +','+         
-                tempCase.Contact.LastName                                       +','+        
-                tempCase.Account.BillingStreetName__c                           +','+                    
-                tempCase.Account.BillingStreetNumber__c                         +','+                       
-                tempCase.Account.BillingPostalCode                              +','+                  
-                tempCase.Account.BillingCity                                    +','+            
-                tempCase.Account.BillingState                                   +','+             
-                tempCase.FirstName__c                                           +','+ 
-                tempCase.LastName__c                                            +','+
-                tempCase.ComplaintEntryChannel__c                               +','+                
-                tempCase.ServicePoint__r.SupplyStreet__c                        +','+                       
-                tempCase.ServicePoint__r.SupplyStreetNumber__c                  +','+                             
-                tempCase.ServicePoint__r.SupplyPostalCode__c                    +','+                           
-                tempCase.ServicePoint__r.SupplyCity__c                          +','+                     
-                tempCase.ServicePoint__r.SupplyProvince__c                      +','+                         
-                tempCase.ServicePoint__r.SupplyCityCode__c                      +','+                         
-                tempCase.BillingProfile__r.InvoicingStreetName__c               +','+                              
-                tempCase.BillingProfile__r.InvoicingStreetNumber__c             +','+                                
-                tempCase.BillingProfile__r.InvoicingPostalCode__c               +','+                              
-                tempCase.BillingProfile__r.InvoicingCity__c                     +','+                        
-                tempCase.BillingProfile__r.InvoicingProvince__c                 +','+                            
-                tempCase.BillingProfile__r.PaymentMethod__c                     +','+                        
-                tempCase.BillingProfile__r.PaymentMethod__c                     +','+                        
-                tempCase.BillingProfile__r.BankName__c                          +','+                   
-                tempCase.BillingProfile__r.BankAgency__c                        +','+                     
-                tempCase.BillingProfile__r.IbanCountry__c                       +','+                      
-                tempCase.BillingProfile__r.IbanCIN_IBAN__c                      +','+                       
-                tempCase.BillingProfile__r.IbanCIN__c                           +','+                  
-                tempCase.BillingProfile__r.IbanABI__c                           +','+                  
-                tempCase.BillingProfile__r.IbanCAB__c                           +','+                  
-                tempCase.BillingProfile__r.IbanCodeNumber__c                    +','+                         
-                tempCase.BillingProfile__r.BankAccountSignatoryFirstName__c     +','+                                        
-                tempCase.BillingProfile__r.BankAccountSignatoryLastName__c      +','+                                       
-                tempCase.BillingProfile__r.BankAccountSignatoryFiscalCode__c    +','+                                         
-                tempCase.PODPDRFormula__c                                       +','+        
-                tempCase.CommodityFormula__c                                    +','+           
-                tempCase.AnnualConsumption__c                                   +','+            
-                tempCase.AtecoCode__c                                           +','+    
-                tempCase.ServicePointType__c                                    +','+           
-                tempCase.TensionOption__c                                       +','+        
-                tempCase.PowerContractualFormula__c                             +','+                  
-                tempCase.Power__c                                               +','+
-                tempCase.Voltage__c                                             +','+  
-                tempCase.DistributorCode__c                                     +','+          
-                tempCase.Distributor__c                                         +','+      
-                tempCase.VATPercentage__c                                       +','+        
-                tempCase.Taxes__c                                               +','+
-                tempCase.Account.BillingStreetNumberExtension__c                +','+                               
-                tempCase.Account.BillingPlace__c                                +','+               
-                tempCase.ServicePoint__r.SupplyStreetNumberExtension__c         +','+                                      
-                tempCase.ServicePoint__r.SupplyPlace__c                         +','+                      
-                tempCase.BillingProfile__r.InvoicingStreetNumberExtension__c    +','+                                         
-                tempCase.BillingProfile__r.InvoicingPlace__c                    +','+                         
-                tempCase.BillingProfile__r.InvoicingAddressFormula__c           +','+                                  
-                tempCase.CreatedBy.Name                                         +','+      
-                tempCase.DistributorNote__c                                     +','+          
-                tempCase.PhoneNumber__c                                         +','+      
-                tempCase.Disconnectable__c                                      +','+         
-                tempCase.DisconnectibilityType__c                               +','+                
-                tempCase.Account.Category__c                                    +','+           
-                tempCase.Mobile__c                                              +','+ 
-                tempCase.RemoteManagementSystem__c                              +','+                 
-                tempCase.CustomerRequestDate__c                                 +','+              
-                tempCase.Amount__c                                              +','+ 
-                tempCase.Phase__c                                               +','+                          
-                tempCase.QuotationNumber__c                                     +','+          
-                tempCase.ConnectionType__c                                      +','+         
-                tempCase.UseTypeEnergy__c                                       +','+        
-                tempCase.Account.CustomerType__c                                +','+               
-                tempCase.DisplacementDistance__c                                +','+               
-                tempCase.EndDate__c                                             +','+  
-                tempCase.BillingProfile__r.BillSendingMethod__c                 +','+                            
-                tempCase.BillingProfile__r.InvoiceEmailAddress__c               +','+                              
-                tempCase.Account.FirstName__c                                   +','+         
-                tempCase.BillingProfile__r.ContractAccountCode__c               +','+                      
-                tempCase.BillingProfile__r.BankAccountSignatoryLastName__c      +','+                
-                tempCase.BillingProfile__r.BankAccountSignatoryFirstName__c     +','+                 
-                tempCase.BillingProfile__r.BankAccountSignatoryFiscalCode__c    +','+                     
-                tempCase.BillingProfile__r.InvoicingStreetName__c               +','+                             
-                tempCase.BillingProfile__r.InvoicingStreetNumber__c             +','+                              
-                tempCase.BillingProfile__r.InvoicingPostalCode__c               +','+                         
-                tempCase.BillingProfile__r.InvoicingCity__c                     +','+                    
-                tempCase.BillingProfile__r.InvoicingProvince__c                 +','+                     
-                tempCase.BillingProfile__r.InvoiceCertifiedEmailAddress__c      +','+                                       
-                tempCase.BillingProfile__r.SendCertifiedEmailConsentDate__c     +','+                                        
-                tempCase.SupplyType__c                                          +','+     
-                tempCase.Market__c                                              +','+ 
-                tempCase.OperationCode__c                                       +','+        
-                tempCase.QuotationType__c                                       +','+        
-                tempCase.CausalCode__c                                            ;   
+                String name=String.isNotBlank(tempCase.FirstName__c)?tempCase.FirstName__c:'';
+                String row = tempCase.CaseNumber                                                                      +','+  
+                tempCase.CaseNumber                                                                                   +','+  
+                tempCase.CreatedDate                                                                                  +','+   
+                tempCase.Account.CustomerCode__c                                                                      +','+               
+                tempCase.Account.LastName__c + ' '+  name                                                             +','+                                
+                tempCase.Account.VATNumber__c                                                                         +','+            
+                tempCase.Account.FiscalCode__c                                                                        +','+             
+                tempCase.Contact.MobilePhone                                                                          +','+              
+                tempCase.Contact.Fax                                                                                  +','+      
+                tempCase.Contact.Email                                                                                +','+               
+                tempCase.Contact.FirstName                                                                            +','+         
+                tempCase.Contact.LastName                                                                             +','+        
+                tempCase.Account.BillingStreetName__c                                                                 +','+                    
+                tempCase.Account.BillingStreetNumber__c                                                               +','+                       
+                tempCase.Account.BillingPostalCode                                                                    +','+                  
+                tempCase.Account.BillingCity                                                                          +','+            
+                tempCase.Account.BillingState                                                                         +','+             
+                tempCase.FirstName__c                                                                                 +','+ 
+                tempCase.LastName__c                                                                                  +','+
+                tempCase.ComplaintEntryChannel__c                                                                     +','+                
+                tempCase.ServicePoint__r.SupplyStreet__c                                                              +','+                       
+                tempCase.ServicePoint__r.SupplyStreetNumber__c                                                        +','+                             
+                tempCase.ServicePoint__r.SupplyPostalCode__c                                                          +','+                           
+                tempCase.ServicePoint__r.SupplyCity__c                                                                +','+                     
+                tempCase.ServicePoint__r.SupplyProvince__c                                                            +','+                         
+                tempCase.ServicePoint__r.SupplyCityCode__c                                                            +','+                         
+                tempCase.BillingProfile__r.InvoicingStreetName__c                                                     +','+                              
+                tempCase.BillingProfile__r.InvoicingStreetNumber__c                                                   +','+                                
+                tempCase.BillingProfile__r.InvoicingPostalCode__c                                                     +','+                              
+                tempCase.BillingProfile__r.InvoicingCity__c                                                           +','+                        
+                tempCase.BillingProfile__r.InvoicingProvince__c                                                       +','+                            
+                tempCase.BillingProfile__r.PaymentMethod__c                                                           +','+                        
+                tempCase.BillingProfile__r.PaymentMethod__c                                                           +','+                        
+                tempCase.BillingProfile__r.BankName__c                                                                +','+                   
+                tempCase.BillingProfile__r.BankAgency__c                                                              +','+                     
+                tempCase.BillingProfile__r.IbanCountry__c                                                             +','+                      
+                tempCase.BillingProfile__r.IbanCIN_IBAN__c                                                            +','+                       
+                tempCase.BillingProfile__r.IbanCIN__c                                                                 +','+                  
+                tempCase.BillingProfile__r.IbanABI__c                                                                 +','+                  
+                tempCase.BillingProfile__r.IbanCAB__c                                                                 +','+                  
+                tempCase.BillingProfile__r.IbanCodeNumber__c                                                          +','+                         
+                tempCase.BillingProfile__r.BankAccountSignatoryFirstName__c                                           +','+                                        
+                tempCase.BillingProfile__r.BankAccountSignatoryLastName__c                                            +','+                                       
+                tempCase.BillingProfile__r.BankAccountSignatoryFiscalCode__c                                          +','+                                         
+                tempCase.PODPDRFormula__c                                                                             +','+        
+                tempCase.CommodityFormula__c                                                                          +','+           
+                tempCase.AnnualConsumption__c                                                                         +','+            
+                tempCase.AtecoCode__c                                                                                 +','+    
+                tempCase.ServicePointType__c                                                                          +','+           
+                tempCase.TensionOption__c                                                                             +','+        
+                tempCase.PowerContractualFormula__c                                                                   +','+                  
+                tempCase.Power__c                                                                                     +','+
+                tempCase.Voltage__c                                                                                   +','+  
+                tempCase.DistributorCode__c                                                                           +','+          
+                tempCase.Distributor__c                                                                               +','+      
+                tempCase.VATPercentage__c                                                                             +','+        
+                tempCase.Taxes__c                                                                                     +','+
+                tempCase.Account.BillingStreetNumberExtension__c                                                      +','+                               
+                tempCase.Account.BillingPlace__c                                                                      +','+               
+                tempCase.ServicePoint__r.SupplyStreetNumberExtension__c                                               +','+                                      
+                tempCase.ServicePoint__r.SupplyPlace__c                                                               +','+                      
+                tempCase.BillingProfile__r.InvoicingStreetNumberExtension__c                                          +','+                                         
+                tempCase.BillingProfile__r.InvoicingPlace__c                                                          +','+                         
+                tempCase.BillingProfile__r.InvoicingAddressFormula__c                                                 +','+                                  
+                tempCase.CreatedBy.Name                                                                               +','+      
+                tempCase.DistributorNote__c                                                                           +','+          
+                tempCase.PhoneNumber__c                                                                               +','+      
+                tempCase.Disconnectable__c                                                                            +','+         
+                tempCase.DisconnectibilityType__c                                                                     +','+                
+                tempCase.Account.Category__c                                                                          +','+           
+                tempCase.Mobile__c                                                                                    +','+ 
+                tempCase.RemoteManagementSystem__c                                                                    +','+                 
+                tempCase.CustomerRequestDate__c                                                                       +','+              
+                tempCase.Amount__c                                                                                    +','+ 
+                tempCase.Phase__c                                                                                     +','+                          
+                tempCase.QuotationNumber__c                                                                           +','+          
+                tempCase.ConnectionType__c                                                                            +','+         
+                tempCase.UseTypeEnergy__c                                                                             +','+        
+                tempCase.Account.CustomerType__c                                                                      +','+               
+                tempCase.DisplacementDistance__c                                                                      +','+               
+                tempCase.EndDate__c                                                                                   +','+  
+                tempCase.BillingProfile__r.BillSendingMethod__c                                                       +','+                            
+                tempCase.BillingProfile__r.InvoiceEmailAddress__c                                                     +','+                              
+                tempCase.Account.FirstName__c                                                                         +','+         
+                tempCase.BillingProfile__r.ContractAccountCode__c                                                     +','+                      
+                tempCase.BillingProfile__r.BankAccountSignatoryLastName__c                                            +','+                
+                tempCase.BillingProfile__r.BankAccountSignatoryFirstName__c                                           +','+                 
+                tempCase.BillingProfile__r.BankAccountSignatoryFiscalCode__c                                          +','+                     
+                tempCase.BillingProfile__r.InvoicingStreetName__c                                                     +','+                             
+                tempCase.BillingProfile__r.InvoicingStreetNumber__c                                                   +','+                              
+                tempCase.BillingProfile__r.InvoicingPostalCode__c                                                     +','+                         
+                tempCase.BillingProfile__r.InvoicingCity__c                                                           +','+                    
+                tempCase.BillingProfile__r.InvoicingProvince__c                                                       +','+                     
+                tempCase.BillingProfile__r.InvoiceCertifiedEmailAddress__c                                            +','+                                       
+                tempCase.BillingProfile__r.SendCertifiedEmailConsentDate__c                                           +','+                                        
+                tempCase.SupplyType__c                                                                                +','+     
+                tempCase.Market__c                                                                                    +','+ 
+                tempCase.OperationCode__c                                                                             +','+        
+                tempCase.QuotationType__c                                                                             +','+        
+                tempCase.CausalCode__c                                                                                  ;   
                                                      
              
              if (String.isBlank(body)) {
@@ -153,9 +154,9 @@ public with sharing class HDT_QBL_SIE34_2MMEE implements Queueable  {
                 body=body+'\n'+row; 
              }
           }
-        contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(header+body,'PP(EE)OUT_PREVENTIVI_MM.txt','PP(EE)OUT_PREVENTIVI_MM'));
-        System.debug('contentVersionIds'+contentVersionIds);
-        // Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_2MMEEFile2(runId,filterDate, fileType,contentVersionIds));
+         contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(header+body,'PP(EE)OUT_PREVENTIVI_MM.txt','PP(EE)OUT_PREVENTIVI_MM'));
+         System.debug('contentVersionIds'+contentVersionIds);
+         Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_2MMGas(runId,filterDate, fileType,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();

@@ -41,12 +41,14 @@ public with sharing class HDT_QBL_SIE34_2SMEEE implements Queueable  {
           String body  ='';
       
           for (Case tempCase : listCase) {
+                String name=String.isNotBlank(tempCase.FirstName__c)?tempCase.FirstName__c:'';
+
                 String row = tempCase.CaseNumber                                   +','+       
                 tempCase.CaseNumber                                                +','+       
                 tempCase.CreatedDate                                               +','+        
                 tempCase.SubProcess__c                                             +','+          
                 tempCase.Account.CustomerCode__c                                   +','+                    
-                tempCase.Account.LastName__c + ' ' +tempCase.Account.FirstName__c  +','+                                     
+                tempCase.Account.LastName__c + ' ' +name                           +','+                                     
                 tempCase.Account.VATNumber__c                                      +','+                 
                 tempCase.Account.FiscalCode__c                                     +','+                  
                 /*TODO da controllare  */   
