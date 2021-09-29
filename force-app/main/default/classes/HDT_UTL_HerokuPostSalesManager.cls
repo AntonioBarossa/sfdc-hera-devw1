@@ -250,7 +250,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
             }*/
             //@frpanico aggiunto DATA_EVENTO poiche DT_INVIO_DL sembra non venir inviato
-            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase.equalsIgnoreCase('Inviato al DL'))
+            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase != null && nextPhase.equalsIgnoreCase('Inviato al DL'))
             {
                 currentCase.SendToDistributorDate__c = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
             }
@@ -288,9 +288,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('FATTIB_TEC') != null && reqWrp.requestMap.get('FATTIB_TEC') != ''){
                 if(reqWrp.requestMap.get('FATTIB_TEC').equalsIgnoreCase('SI')){
-                    currentCase.TechnicalFeasibility__c = true;
+                    currentCase.TechnicalFeasibility__c = 'Si';
                 } else {
-                    currentCase.TechnicalFeasibility__c = false;
+                    currentCase.TechnicalFeasibility__c = 'No';
                 }
             }
             if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
