@@ -22,6 +22,18 @@
                 <default>false</default>
                 <label>Type</label>
             </value>
+            <value>
+                <fullName>ProcessType__</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ProcessType__</label>
+            </value>
+            <value>
+                <fullName>ProcessType__c​</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>ProcessType__c​</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Case</controllingFieldValue>
