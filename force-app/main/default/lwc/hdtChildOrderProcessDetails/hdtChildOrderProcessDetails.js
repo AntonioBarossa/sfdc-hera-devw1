@@ -2085,7 +2085,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Data decorrenza',
                         'apiname': 'EffectiveDate__c',
-                        'typeVisibility': this.order.IsActivationDeferred__c,
+                        'typeVisibility': this.order.IsActivationDeferred__c && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                         'required': false,
                         'disabled': false,
                         'value': '',
