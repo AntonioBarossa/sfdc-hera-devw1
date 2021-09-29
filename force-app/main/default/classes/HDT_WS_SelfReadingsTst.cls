@@ -28,17 +28,26 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void doPostTest() {
         
         //SETUP
+        mySetup();
+        
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData reading = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData();
+        
+        
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
         srr.commodity = '';
         srr.contractCode = '';
-        srr.readings = '';
+        srr.readings = reading;
         
         
         
         //REST CONTEXT
-        RestContext.request = new RestRequest();
-        RestContext.response = new RestResponse();
-        request.requestBody = Blob.valueof(JSON.serialize(srr));
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestBody = Blob.valueof(JSON.serialize(srr));
+        
+        RestContext.request =req;
+        RestContext.response = res;
+        
         
         
         //TESTING
