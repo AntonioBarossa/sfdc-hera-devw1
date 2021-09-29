@@ -1,6 +1,9 @@
 @isTest
 public with sharing class HDT_WS_PaperlessTst {
     
+    //CLASSE DI TEST COMMENTATA - RILEVATA CLASSE TARGET DEI TEST COME DEPRECATA.
+    
+    /*
     //DEBUG
     
     
@@ -90,5 +93,5 @@ public with sharing class HDT_WS_PaperlessTst {
     
     
     
-    
+    */
 }
