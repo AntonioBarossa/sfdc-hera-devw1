@@ -65,6 +65,7 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
             tempCase.DeliveryAddress__c                   +','+
             tempCase.DeliveryAddress__c                   +','+		
             tempCase.Subscription__r.SBQQ__ProductName__c;
+            row = row.replaceAll('null', '');  
             if (String.isBlank(body)) {
                body=row;
             }

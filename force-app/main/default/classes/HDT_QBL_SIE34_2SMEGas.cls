@@ -141,7 +141,7 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
                 tempCase.QuotationType__c                                                        +','+                                         
                 tempCase.Contract__r.ContractSalesCompany__c                                     +','+                                                
                 tempCase.CausalCode__c                                                             ;        
-                                                     
+                row = row.replaceAll('null', '');                                      
              
              if (String.isBlank(body)) {
                 body=row;

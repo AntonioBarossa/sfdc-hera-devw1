@@ -136,8 +136,8 @@ public with sharing class HDT_QBL_SIE34_2MMGas implements Queueable  {
                tempCase.Market__c                                                                                     +','+ 
                tempCase.OperationCode__c                                                                              +','+     
                tempCase.QuotationType__c                                                                              +','+     
-               tempCase.CausalCode__c                                                      ; 
- 
+               tempCase.CausalCode__c                                                                                   ; 
+               row = row.replaceAll('null', '');  
                 
                                                      
              

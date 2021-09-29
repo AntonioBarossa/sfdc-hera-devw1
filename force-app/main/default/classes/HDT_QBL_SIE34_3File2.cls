@@ -68,7 +68,7 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
              tempCase.Subscription__r.SBQQ__ProductName__c                   +','+                                           
              tempCase.SalesCompany__c                                        +','+               
              tempCase.CancellationReasonCode__c                                ; 
- 
+             row = row.replaceAll('null', '');  
              if (String.isBlank(body)) {
                 body=row;
              }
