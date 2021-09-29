@@ -121,6 +121,21 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
 
+                Set<Id> recordTypeIdsNoPhase = new Set<Id>{
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Attivazione').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AttivazioneConModifica').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioUso').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchInVolturaTecnica').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId()
+                };
+
+
                 if (responseService.responses[0].objects == null) {
                     // ord.DiscardReason__c = responseService.responses[0].description;
                     //ord.Phase__c = 'Comunicazione verso Heroku KO';
@@ -207,18 +222,6 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Esito OK da DL' {
-                                            //Start HRAWRM-657 21/09/2021
-                                            List<Id> listRecType = new List<Id>();
-                                            Id rtTemporaryNewActivation        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId();
-                                            Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
-                                            listRecType.add(rtTemporaryNewActivation);
-                                            listRecType.add(rtConnectionwithActivation);
-                                            if (listRecType.contains(ord.recordtypeId )   ) {
-                                                ord.ServicePointCode__c = fieldValueResponse.get('POD');
-                                                ord.ServicePoint__r.Name= fieldValueResponse.get('POD');
-                                                ord.ServicePoint__r.ServicePointCode__c = fieldValueResponse.get('POD');
-                                            }
-                                            //End HRAWRM-657 21/09/2021
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
                                             ord.SapContractActivationDate__c = fieldValueResponse.get('DT_INIZIO_VERT') != null ? Date.valueOf(fieldValueResponse.get('DT_INIZIO_VERT')) : null;
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
@@ -259,19 +262,6 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             //ord.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
                                         }
                                         when 'Completata' {
-                                            //Start HRAWRM-657 21/09/2021
-                                            List<Id> listRecordType = new List<Id>();
-                                            Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
-                                            Id rtChangeOffer        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId();
-                                            Id rtVultureWithSwitch  = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
-                                            listRecordType.add(rtSwitchIn);
-                                            listRecordType.add(rtChangeOffer);
-                                            listRecordType.add(rtVultureWithSwitch);
-
-                                            if (!listRecordType.contains(ord.recordtypeId )   ) {
-                                                ord.EffectiveDate__c = date.valueOf( fieldValueResponse.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
-                                            }
-                                            //End HRAWRM-657 21/09/2021
                                             ord.Description = fieldValueResponse.get('NOTA_HK');
                                             ord.SAPImplantCode__c = fieldValueResponse.get('ANLAGE');
                                             ord.OrderODV__c = fieldValueResponse.get('VBELN');
@@ -296,7 +286,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
                                 ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
                             }
-                            else if( (ID) obj.get('RecordTypeId') == Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId()){
+                            //else if( (ID) obj.get('RecordTypeId') == Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId()){
+                            else if( recordTypeIdsNoPhase.contains((ID) obj.get('RecordTypeId'))){
                                 //BonusESconti
                                 ord.HerokuPracticeCode__c = responseService.responses[0].header.requestId;
                                 ord.TecnicalPhase__c = 'Comunicazione verso Heroku OK';
