@@ -1237,18 +1237,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>TemporaryConnectionEndDate__c</field>
-            <value>
-                <elementReference>Get_Contract_Proroga.SBQQ__Order__r.TemporaryConnectionEndDate__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>TemporaryConnectionStartDate__c</field>
-            <value>
-                <elementReference>Get_Contract_Proroga.SBQQ__Order__r.TemporaryConnectionStartDate__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Type</field>
             <value>
                 <elementReference>ProcessType</elementReference>
