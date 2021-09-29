@@ -177,7 +177,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Map<Id, Case> casesToUpdate = new Map<Id, Case>([Select id, Phase__c from Case where RecordType.DeveloperName='HDT_RT_ProrogaTemporanea' AND Phase__c='In Lavorazione' AND Id IN :sobjsId WITH SECURITY_ENFORCED]);
         if(!casesToUpdate.isEmpty()){
             for(Case c : casesToUpdate.values()){
-                c.Phase__c='Chiuso';
+                c.Phase__c='Completata';
             }
         }
         new HDT_SRV_Case().updateRecords(casesToUpdate.values());
