@@ -128,6 +128,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             status__c,
             case__c,
             case__r.phase__c,
+            recordtypeid,
             Contact__c,
             Distributor__c,
             AppointmentDate__c
