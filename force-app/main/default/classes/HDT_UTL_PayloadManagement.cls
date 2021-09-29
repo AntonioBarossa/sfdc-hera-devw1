@@ -28,6 +28,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleFlagDeliveryAddress(inputs,formParams);
                 }when 'handleFlagPaperless' {
                     return handleFlagPaperless(inputs,formParams);
+                }when 'calculateSignModeDriver' {
+                    return calculateSignModeDriver(inputs,formParams);
                 }
                 when else {
                     return '';
@@ -917,6 +919,24 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         System.debug('calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
         System.debug('calculateIndemnityBox boxType output: ' + boxType);
         return boxType;
+    }
+
+    // Calcola il driver MODALITA_FIRMA, che è un driver PRIMARIO e quindi o ha un valore configurato su Engage1, oppure deve essere vuoto.
+    private String calculateSignModeDriver(Map<String,List<sObject>> inputs, Map<String,Object> formParams) {
+        String context = (String) formParams.get('Contesto');
+        String signModeForm = HDT_UTL_DocumentalManagement.getValue('FormParameters', 'signMode', 0, inputs, formParams);
+        if (String.isNotBlank(signModeForm)) {
+            return signModeForm == 'Vocal Order' ? signModeForm : '';
+        }
+
+        String signMode = '';
+        if (context == 'Order') {
+            signMode = HDT_UTL_DocumentalManagement.getValue('Order', 'SignatureMethod__c', 0, inputs, formParams);
+        }/*  else if (context == 'Case') {
+            signMode = HDT_UTL_DocumentalManagement.getValue('Case', 'SignMode__c', 0, inputs, formParams);
+        } */ // al momento Engage1 non ha configurato nessun plico post-sales con driver MODALITA_FIRMA valorizzato.
+
+        return signMode == 'Vocal Order' ? signMode : '';
     }
 
     // Restituisce la data nel formato richiesto da Engage1
