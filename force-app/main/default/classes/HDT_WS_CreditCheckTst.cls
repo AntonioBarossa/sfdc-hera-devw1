@@ -1,8 +1,8 @@
 /**
  * @author Valere (valere@noeli-it.net)
- * @date 28/09/2021
+ * @date 29/09/2021
  * @description HDT_WS_CreditCheck Test Class
- * @history valere - 28/09/2021– Created Class
+ * @history valere - 29/09/2021– Created Class
  */
 @isTest
 private class HDT_WS_CreditCheckTst {
