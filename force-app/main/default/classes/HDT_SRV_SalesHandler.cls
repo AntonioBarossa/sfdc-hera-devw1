@@ -518,7 +518,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34'));
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
