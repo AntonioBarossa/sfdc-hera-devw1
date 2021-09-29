@@ -683,8 +683,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String disconnectableCategory = getFieldValue(fields, 'DisconnectibilityType__c');
 
         String phonePesse = getFieldValue(fields, 'MobilePhoneNoticePesse__c');
-
-
+        
+        String autocertAsl = getFieldValue(fields, 'SelfCertificationAcquisitionAsl__c');
 
         if(caseType == 'Riattivazione Fornitura'){
 
