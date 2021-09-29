@@ -90,6 +90,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+                    // 2809 LG commentedForError orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
+
+
 
                     System.debug('Lista Ordini '+orderItemsList);
 
@@ -168,6 +171,18 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         System.debug(mapResponse);
 
         return mapResponse;
+    }
+
+    private static List<OrderItem> handleNotAmendBonus(List<Id> listOrdersId){
+        List<OrderItem> bonusToUpdate = new List<OrderItem>();
+        List<OrderItem> allBonuses = orderItemQr.getRecordsByOrderIdFilteredFamilyBonus(listOrdersId);
+        for(OrderItem itm : allBonuses){
+            if(itm.SBQQ__RequiredBy__c==null){
+                bonusToUpdate.add(itm);
+            }
+        }
+        system.debug(bonusToUpdate);
+        return bonusToUpdate;
     }
 
     // @AuraEnabled

@@ -300,6 +300,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>X_DOM_STATUS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>X_DOMIC_DESCR__c</field>
             </layoutItems>
             <layoutItems>

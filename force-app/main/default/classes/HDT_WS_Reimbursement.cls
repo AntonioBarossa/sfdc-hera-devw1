@@ -19,7 +19,7 @@ public inherited sharing class HDT_WS_Reimbursement {
 
         }catch(Exception e){
 
-            //blank code
+            result = 'Error';
 
         }
 
@@ -32,7 +32,7 @@ public inherited sharing class HDT_WS_Reimbursement {
                     HDT_WRP_ErrorResponse errorResponse = 
                         (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
 
-                    System.debug('WS_Reimbursement errorResponse--> ' + errorResponse);
+                    //System.debug('WS_Reimbursement errorResponse--> ' + errorResponse);
 
                     result = 'Error';
 
@@ -40,6 +40,7 @@ public inherited sharing class HDT_WS_Reimbursement {
 
                 when 200{
 
+                    result = 'Ok';
                     //CAPIRE LA STRUTTURA DELLA RISPOSTA POSITIVA;
 
                 }

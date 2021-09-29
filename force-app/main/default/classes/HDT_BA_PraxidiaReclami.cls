@@ -9,7 +9,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
     String generateFile = header;
     public Iterable<Case> start(Database.BatchableContext context) {
 
-        List<Case> listCase = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
+        List<Case> dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
 
         return this.dtos;
     }

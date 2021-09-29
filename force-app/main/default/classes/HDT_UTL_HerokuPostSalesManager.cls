@@ -151,9 +151,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
-            if(sendDlDate != null && sendDlDate != ''){
+            /*if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
-            }
+            }*/
             if(herokuCancellationCode != null && herokuCancellationCode != ''){
                 caseNew.CancellationHerokuPracticeCode__c = herokuCancellationCode;
             }
@@ -246,9 +246,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && !(currentPhase.indexOf('Annull') > -1)){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
             }
-            if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
+            /*if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
                 currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
-            }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
+            }*/
+            //@frpanico aggiunto DATA_EVENTO poiche DT_INVIO_DL sembra non venir inviato
+            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase.equalsIgnoreCase('Inviato al DL'))
+            {
+                currentCase.SendToDistributorDate__c = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
+            }
+            if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
                 String importo = reqWrp.requestMap.get('IMP_PREV_DIST');
                 if(importo.indexOf(',')>-1){
                     importo = importo.replace(',', '.');

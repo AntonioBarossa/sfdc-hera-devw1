@@ -11,10 +11,12 @@
 
 public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
@@ -25,15 +27,16 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static void saveReitekLink(String recordId, String reitekLink){
-        if(String.isNotBlank(reitekLink)){
+        if (String.isNotBlank(reitekLink)){
             String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
-            SObject genericSObject = (SObject)Type.forName('Schema',objectName).newInstance();
-            genericSObject.put('Id', recordId);
-            genericSObject.put('campo Reitek Link', reitekLink);
-            SObjectAccessDecision decision = Security.stripInaccessible(AccessType.UPDATABLE, new list<SObject>{genericSObject});
-            update decision.getRecords();
+            if (objectName=='wrts_prcgvr__Activity__c'){
+                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+                activity.Id = recordId;
+                activity.RecordingLink__c = reitekLink;
+                activitySrv.updateRecord(activity);
+            }
         }
     }
 

@@ -44,7 +44,7 @@ public inherited sharing class HDT_UTL_Dependencies {
             }
             if(orders.size()>0){
                 try{
-                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.IsBillableVas__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
                                     FROM ServiceRequest__c 
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
@@ -190,7 +190,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }
-            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.IsBillableVas__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
+            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
                                     + 'FROM ServiceRequest__c '
                                     + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
                                     + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
@@ -223,12 +223,20 @@ public inherited sharing class HDT_UTL_Dependencies {
                             bmatches.add(blockingMatches[0]);
                         }
                     }
-
+                    String incomingServicePoint = '';
+                    if(servicePoint){
+                        incomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
+                        incomingServicePoint = incomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:incomingServicePoint;
+                    }
+                    
                     for(ServiceRequest__c srBlocking : srBlockings){
                         Boolean match = false;
                         if(bmatches.contains(srBlocking.ProcessType__c)){
                             if(servicePoint){
-                                if(((String)sr.ServicePointCode__c).equalsIgnoreCase((String)srBlocking.ServicePointCode__c)){
+                                String blockingServicePoint = (String)srBlocking.ServicePointCode__c==null?(String)srBlocking.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)srBlocking.ServicePointCode__c;
+                                blockingServicePoint = blockingServicePoint==null?(String)srBlocking.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:blockingServicePoint;
+                                
+                                if(incomingServicePoint.equalsIgnoreCase(blockingServicePoint)){
                                     match = true;
                                 }
                             }else if(account){
@@ -250,11 +258,11 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     casesToBeUpdated.add(caseToUpdate);
                                 }
                             }else if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_SALES)){
-                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,OrderReference__c=sr.Order__r.OrderReference__c,IsBillableVas__c=sr.Order__r.IsBillableVas__c);
+                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c);
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
-                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.IsBillableVas__c == false)){
+                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.ContractReference__c == null)){
                                     valueToUpdate = false;
                                 }
                                 
