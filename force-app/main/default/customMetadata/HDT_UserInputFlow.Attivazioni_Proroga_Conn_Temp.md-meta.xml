@@ -3,14 +3,6 @@
     <label>Attivazioni - Proroga Conn Temp</label>
     <protected>false</protected>
     <values>
-        <field>CollectiveEnvoiceType__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
-        <field>ContractsToUnifyNumber__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
