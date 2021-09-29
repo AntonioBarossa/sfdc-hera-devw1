@@ -683,8 +683,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String disconnectableCategory = getFieldValue(fields, 'DisconnectibilityType__c');
 
         String phonePesse = getFieldValue(fields, 'MobilePhoneNoticePesse__c');
-
-
+        
+        String autocertAsl = getFieldValue(fields, 'SelfCertificationAcquisitionAsl__c');
 
         if(caseType == 'Riattivazione Fornitura'){
 
@@ -719,7 +719,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
                         'Il telefono Pesse\nEd è necessario inserire un allegato'));
-                } else {
+                }else if(disconnectableCategory.equalsIgnoreCase('01- App. medico terapeutiche') && (autocertAsl == null || autocertAsl == '' || !autocertAsl.equalsIgnoreCase('SI')))
+                {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                        'Se Categoria Disalimentabilità è "01- App. medico terapeutiche" bisogna valorizzare a SI "Autocert. di acq. da cliente cert. ASL"'));
+                }
+                else {
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                 }
             } else {

@@ -7,7 +7,7 @@
         <value xsi:type="xsd:string">{
 &quot;objectName&quot;: &quot;Account&quot;,
 &quot;controllingField&quot;:&quot;Id&quot;,
-&quot;fields&quot;: &quot;Name,Segment__c, VATGroupEndDate__c,CustomerCode__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity, BillingPostalCode, ShippingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, VATGroup__c,IsVATGroupJoined__c, VATGroupStartDate__c,BillingStreetName__c&quot;,
+&quot;fields&quot;: &quot;Name,Segment__c, VATGroupEndDate__c,CustomerCode__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity, BillingPostalCode, BillingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, VATGroup__c,IsVATGroupJoined__c, VATGroupStartDate__c,BillingStreetName__c&quot;,
 &quot;relatedObject&quot;: [
 ],
 &quot;lookupObject&quot;: [
