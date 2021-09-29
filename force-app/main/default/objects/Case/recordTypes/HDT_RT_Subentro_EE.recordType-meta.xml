@@ -2132,6 +2132,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>EconomicFeasibility__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ElectronicInvoicingMethod__c</picklist>
         <values>
             <fullName>Estero</fullName>
@@ -9899,6 +9910,17 @@
         </values>
         <values>
             <fullName>Processo M02</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
+        <picklist>TechnicalFeasibility__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

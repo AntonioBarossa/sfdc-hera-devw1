@@ -1437,6 +1437,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Civico','SupplyStreetNumber__c', this.typeVisibility('both'), true, true, '',''),                  
+                    new fieldData('Barrato','SupplyStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Localita','SupplyPlace__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Provincia','SupplyState__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Cap','SupplyPostalCode__c', this.typeVisibility('both'), true, true, '',''),                  
@@ -1480,6 +1481,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
+                    new fieldData('Barrato','BillingStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),            
                     {
                         'label': 'Civico',
                         'apiname': 'BillingStreetNumber__c',
@@ -2305,40 +2307,40 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             tipoDoc = 'MODULISTICA_B12';
         }
 
-        if (this.loginChannel === 'Sportello') {
+        // if (this.loginChannel === 'Sportello') {
             this.template.querySelector('c-hdt-modulo-informativo-modal').handleShowModal();
             this.template.querySelector('c-hdt-modulo-informativo-modal').initVariables({'tipoDoc': tipoDoc});
-        } else {
-            this.loading = true;
-            var formParams = {     
-                mode : 'Print',
-                Archiviato : 'Y',
-                TipoPlico: tipoDoc,
-                sendMode:'Sportello'
-            };
-            sendAdvanceDocumentation({
-                recordId: this.order.Id,
-                context: 'DocumentazioneAnticipata',
-                formParams: JSON.stringify(formParams)
-            }).then(result => {
-                this.loading = false;
-                const event = new ShowToastEvent({
-                    title: 'Successo',
-                    message: 'Documentazione inviata',
-                    variant: 'success',
-                });
-                this.dispatchEvent(event);
-            }).catch(error => {
-                this.loading = false;
-                const event = new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Non è stato possibile inviare la documentazione al cliente',
-                    variant: 'error',
-                });
-                this.dispatchEvent(event);
-                console.error(error);
-            });
-        }
+        // } else {
+        //     this.loading = true;
+        //     var formParams = {     
+        //         mode : 'Print',
+        //         Archiviato : 'Y',
+        //         TipoPlico: tipoDoc,
+        //         sendMode:'Sportello'
+        //     };
+        //     sendAdvanceDocumentation({
+        //         recordId: this.order.Id,
+        //         context: 'DocumentazioneAnticipata',
+        //         formParams: JSON.stringify(formParams)
+        //     }).then(result => {
+        //         this.loading = false;
+        //         const event = new ShowToastEvent({
+        //             title: 'Successo',
+        //             message: 'Documentazione inviata',
+        //             variant: 'success',
+        //         });
+        //         this.dispatchEvent(event);
+        //     }).catch(error => {
+        //         this.loading = false;
+        //         const event = new ShowToastEvent({
+        //             title: 'Attenzione',
+        //             message: 'Non è stato possibile inviare la documentazione al cliente',
+        //             variant: 'error',
+        //         });
+        //         this.dispatchEvent(event);
+        //         console.error(error);
+        //     });
+        // }
     }
 
     retryEsitiCreditCheck(){        

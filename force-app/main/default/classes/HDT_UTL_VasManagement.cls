@@ -150,7 +150,7 @@ public with sharing class HDT_UTL_VasManagement {
         **/
         public HDT_WRP_VASReq(Order currentOrder, Case currentCase) {
             this(currentOrder);
-            this.keyServizio = currentCase.CaseNumber;
+            //this.keyServizio = currentCase.CaseNumber;
         }
     }
 
@@ -175,6 +175,8 @@ public with sharing class HDT_UTL_VasManagement {
 
             //numDocRif = null
             statoPratica = currentCase.VasStatus__c;
+
+            dataCessazione = Date.today();
         }
     }
 
