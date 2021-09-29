@@ -10796,7 +10796,7 @@
     <picklistValues>
         <picklist>VATPercentage__c</picklist>
         <values>
-            <fullName>GENERICI 20%-02</fullName>
+            <fullName>GENERICI 20%25-02</fullName>
             <default>false</default>
         </values>
         <values>
