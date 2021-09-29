@@ -1087,6 +1087,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Channel__c</field>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Generiche Attivazioni</stringValue>
@@ -1114,6 +1120,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Get_Contract_Proroga.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CreatorGroup__c</field>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1174,6 +1186,12 @@
             <field>ServicePoint__c</field>
             <value>
                 <elementReference>Get_Contract_Proroga.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Station__c</field>
+            <value>
+                <elementReference>$User.Station__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
