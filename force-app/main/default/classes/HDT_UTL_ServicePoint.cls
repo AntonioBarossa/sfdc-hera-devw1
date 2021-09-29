@@ -308,6 +308,13 @@ public with sharing class HDT_UTL_ServicePoint {
                     spNew.SupplyisAddressVerified__c = true;
                 }
 
+                if(mapRes.get('BP') != null){
+                    List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
+                    if (!accBp.isEmpty()) {
+                        spNew.Account__c = accBp[0].Id;
+                    }
+                }
+
 
 		system.debug('spNew*****************' + spNew);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
