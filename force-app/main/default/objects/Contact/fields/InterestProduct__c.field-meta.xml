@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InterestProduct__c</fullName>
+    <externalId>false</externalId>
+    <label>Prodotto di interesse</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>ContactReason__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_InterestProduct</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Bebè Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Bebè Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Bebè Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Caldaia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Caldaia Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Caldaia Sicura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Caldaia Sicura Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Clima</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Clima Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Contawatt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Contawatt Lavoro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera EtàPiù Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera EtàPiù Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera EtàPiù Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Fotovoltaico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Fotovoltaico Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Impronta Zero Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Impronta Zero Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Impronta Zero Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Impronta Zero Lavoro Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Impronta Zero Lavoro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Impronta Zero Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Led</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Led Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera No Problem</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera No Problem Lavoro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Fissa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Fissa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Fissa Lavoro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Fissa Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Variabile Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Variabile Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Variabile Lavoro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Placet Variabile Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Scaldacqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Scaldacqua Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Thermo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Special Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Special Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Special Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Special Lavoro Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Special Lavoro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Prezzo Netto Special Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Welcome Hera Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Welcome Hera Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Welcome Hera Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera E-bike</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera Monopattino</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

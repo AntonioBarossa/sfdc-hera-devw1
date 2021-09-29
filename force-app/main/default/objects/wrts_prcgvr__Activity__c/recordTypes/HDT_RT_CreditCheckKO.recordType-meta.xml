@@ -5,6 +5,17 @@
     <description>Record type per le activity di KO Credit Check sul Nuovo Cliente</description>
     <label>Credit Check KO</label>
     <picklistValues>
+        <picklist>ActivityOutcome__c</picklist>
+        <values>
+            <fullName>Negativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positivo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ManualCheckResult__c</picklist>
         <values>
             <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>

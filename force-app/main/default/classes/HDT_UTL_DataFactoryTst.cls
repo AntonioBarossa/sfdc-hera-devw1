@@ -2555,5 +2555,33 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return visitAssigRulesList;
 	}
+	/**
+     * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
+     * @date 28/09/2021
+     * @description createDaysToExpiration Method
+     * @history Sabina Levonja - 28/09/2021– Created method
+     */
+	public static List<CS_DaysToExpiration__c> createDaysToExpiration(Integer amount, Boolean doInsert,String numberOfDays, String type) {
+
+		List<CS_DaysToExpiration__c> expDays = new List<CS_DaysToExpiration__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_DaysToExpiration__c exp = new CS_DaysToExpiration__c(
+				Name = 'Vendita',
+				NumberOfDays__c = numberOfDays,
+				Type__c = type
+			);
+
+			expDays.add(exp);
+		}
+
+		if (doInsert){
+
+			insert expDays;
+		}
+
+		return expDays;
+	}
 	
 }
