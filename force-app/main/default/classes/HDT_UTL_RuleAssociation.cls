@@ -4,7 +4,7 @@ public with sharing class HDT_UTL_RuleAssociation {
         
         String op = ' ' + operator + ' ';
         String queryString = '';
-        List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
+        List<String> familyList = getFamilyList();
 
         Product2 filterProduct = (Product2)JSON.deserialize(filterString, Product2.class);
         System.debug('>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
@@ -179,6 +179,15 @@ public with sharing class HDT_UTL_RuleAssociation {
         }
 
         return respRunBatchObj;
+    }
+
+    public static List<String> getFamilyList(){
+        List<String> sl = new List<String>();
+        sl.add('Offerta commerciale');
+        sl.add('VAS Prodotto');
+        sl.add('VAS Servizio');
+        sl.add('Promozione');
+        return sl;
     }
 
 }

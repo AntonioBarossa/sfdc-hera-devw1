@@ -227,8 +227,8 @@ public inherited sharing class HDT_UTL_ProductAssociation {
     public static List<String> getFamilyList(){
         List<String> sl = new List<String>();
         sl.add('Offerta commerciale');
-        sl.add('VAS Prodotto');
-        sl.add('VAS Servizio');
+        //sl.add('VAS Prodotto');
+        //sl.add('VAS Servizio');
         return sl;
     }
 
