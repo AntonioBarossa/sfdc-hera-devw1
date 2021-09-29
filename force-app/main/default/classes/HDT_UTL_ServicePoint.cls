@@ -1,11 +1,13 @@
+/**
+ * @author Luca Molino (luca.molino@engdb.com.br)
+ * @date 23/03/2021
+ * @description HDT_UTL_ServicePoint Class
+ * @history Luca Molino – 23/03/2021 – Created Class
+ */
 public with sharing class HDT_UTL_ServicePoint {
 
     private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
-    public HDT_UTL_ServicePoint() {
-
-    }
-
 
     @AuraEnabled
 	public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
@@ -172,7 +174,7 @@ public with sharing class HDT_UTL_ServicePoint {
 				}
 				if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
 				
-                    if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
+                    if(mapRes.get('DESCRCOMM')== 'Energia Elettrica'){
                         spNew.CommoditySector__c = 'Energia Elettrica';
                         spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele'); //21/08/2021 - gabriele.rota@webresults.it
                     }else
@@ -201,8 +203,8 @@ public with sharing class HDT_UTL_ServicePoint {
                     spNew.isReseller__c = false;
                 }
                 if(mapRes.get('DATACESSAZIONE')!=null && !String.isBlank(mapRes.get('DATACESSAZIONE'))){
-                    if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 8 ){
-                        Date d = Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
+                    if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 10 /*8*/  ){
+                        Date d = Date.valueOf(mapRes.get('DATACESSAZIONE')); //.substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
                         if(d > date.today()){
                             spNew.SwitchInWinback__c = true;
                             spNew.SwitchOutDate__c = d;
@@ -327,7 +329,6 @@ public with sharing class HDT_UTL_ServicePoint {
         return listFields;
 
     }
- 
 
     @AuraEnabled(cacheable=true)
     public static  HDT_WRP_AddressObject getInstanceWrapAddressObject(sObject s){
