@@ -29,12 +29,14 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //SETUP
         mySetup();
+        Case myCase = [SELECT Id FROM Case];
         
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData reading = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData();
-        
+        //reading.id;
         
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
-        srr.commodity = '';
+        srr.Id = myCase.Id;
+        srr.commodity = 'Gas';
         srr.contractCode = '';
         srr.readings = reading;
         
@@ -68,6 +70,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
     
     ///THROW 3
     
+    
+    //TODO: POSSIBILE CHE VADA TESTATA A MANO PARTE DI HDT_UTL_SelfReadings
     
     
     
