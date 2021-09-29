@@ -432,11 +432,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
                 }
             }
-            updateFuture(JSON.serialize(currentCase));
             if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
-                currentCase.Phase__c = 'Piano Rata Annullato';
-                updateFuture(JSON.serialize(currentCase));
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                currentCase.Phase__c = 'Piano Rata Annullato';  
             }
+            updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
