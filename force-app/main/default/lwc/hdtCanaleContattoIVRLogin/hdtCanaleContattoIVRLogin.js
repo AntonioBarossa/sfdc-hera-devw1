@@ -16,7 +16,7 @@ import IMPLANT_TYPE from '@salesforce/schema/Order.ImplantType__c';
 import checkLogin from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkLogin';
 import checkContractualEnvelope from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
 import checkListenVO from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkListenVO';
-import checkFinalConfirmationOfTheContract from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkFinalConfirmationOfTheContract';
+import checkFinalConfirmationOfTheContract from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
 import getOrderSiblings from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblings';
 import getOrderSiblingsDocumentalActivity from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblingsDocumentalActivity';
 import downloadFile from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.downloadDocument'
