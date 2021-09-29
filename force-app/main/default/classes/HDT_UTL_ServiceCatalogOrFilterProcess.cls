@@ -39,11 +39,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità','Reclamo Scritto/Rich. Info'}
         },
-    'VerificaPareggioFittizioCanoneRai' => new Map<String,List<String>>
-        {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
-        },
     'CambioUsoFittizio' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -263,11 +258,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
         },
-    'CopiaBolletta/Bollettino' => new Map<String,List<String>>
-        {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
-        },
     'DoppiPagamenti/Incassi' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -284,16 +274,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
-        },
-    'PianoRateizzazione' => new Map<String,List<String>>
-        {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
-        },
-    'Rimborso' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami'}
         },
     'RevocaDomiciliazione' => new Map<String,List<String>>
         {

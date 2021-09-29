@@ -23,7 +23,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 responseWrap.outcomeDescription = e.getMessage();
             }
         } catch (Exception e) {
-            System.debug('Exception: ' + e.getMessage());
+            //System.debug('Exception: ' + e.getMessage());
             response.statusCode = 500;
             responseWrap.outcome = 'KO';
             responseWrap.outcomeDescription = 'Error while parsing JSON body: ' + e.getMessage();
@@ -36,8 +36,8 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = req.data;
 
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
-        String queryStringKoMdm = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'Esito KO pre-MDM\'';
-        String queryStringKoSap = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'Esito KO da SAP\'';
+        String queryStringKoMdm = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'CBS_AUT004__ESITO_KO_PRE-MDM\'';
+        String queryStringKoSap = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'CBS_AUT002__ESITO_KO_DA_SAP\'';
         List<SObject> templatesKoMdm = HDT_QR_GenericQuery.getGenericRecords(queryStringKoMdm, objectName);
         List<SObject> templatesKoSap = HDT_QR_GenericQuery.getGenericRecords(queryStringKoSap, objectName);
         wrts_prcgvr__ActivityTemplate__c templateKoMdm = new wrts_prcgvr__ActivityTemplate__c();
@@ -58,14 +58,14 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         Set<String> errorCodesDescriptionSet = new Set<String>();
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
             if (String.isBlank(outcomeData.caseId)) {
-                continue;
+                continue; 
             }
-            if (String.isNotBlank(outcomeData.activityType) && String.isNotBlank(outcomeData.errorCode)) {
+            if (String.isNotBlank(outcomeData.activityType)) {
                 if (outcomeData.activityType.equalsIgnoreCase('Esito KO da SAP') || outcomeData.activityType.equalsIgnoreCase('KO Pre-MDM')) {
                     errorCodes.add(outcomeData.errorCode);
                     if(String.isNotBlank(outcomeData.errorCode)){
                         errorCodesDescriptionSet.add(outcomeData.errorCode);
-                    }else {
+                    }else if(String.isNotBlank(outcomeData.errorDescription)) {
                         errorCodesDescriptionSet.add(outcomeData.errorDescription);
                     }
                 }
@@ -100,7 +100,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
                 }
-            }else{
+            }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
                     isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorDescription);
                 } catch (Exception e) {
@@ -117,6 +117,13 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 caseToUpdate.Phase__c = 'KO Definitivo';  // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
             } else {
                 // Creazione activity per successiva lavorazione dello scarto.
+                String errorDescriptionAct = '';
+                if(String.isNotBlank(outcomeData.errorDescription)){
+                    errorDescriptionAct = outcomeData.errorDescription;
+                }
+                if(String.isNotBlank(outcomeData.errorCode)){
+                    errorDescriptionAct = errorDescriptionAct + ' ' + outcomeData.errorCode;
+                }
                 switch on caseToUpdate.Phase__c {
                     when 'Esito KO da SAP' {
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
