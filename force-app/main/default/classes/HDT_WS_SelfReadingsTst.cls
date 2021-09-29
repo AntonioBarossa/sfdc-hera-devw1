@@ -6,6 +6,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static Boolean skipError_ACR = true;//USATO PER INDURRE ERRORE MISSING PRIMARY CONTACT ON ACCOUNT
     
     
     //TEST SETUP
@@ -15,7 +16,11 @@ public with sharing class HDT_WS_SelfReadingsTst {
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
-        AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, acc[0].Id, contactList[0].Id);
+        
+        if (skipError_ACR){
+            AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, acc[0].Id, contactList[0].Id);
+        }
+        
         ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
         
