@@ -14,18 +14,10 @@ public with sharing class HDT_OrderTst {
        //List<Account> testAcc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Persona fisica','Famiglie');
        //Account acct = [SELECT id,Name FROM Account WHERE Name =: 'testact'];
 
-        List<Order> orderTest = HDT_UTL_DataFactoryTst.createOrder(1, false, acct.Id , 'Bozza');
+        List<Order> orderTest = HDT_UTL_DataFactoryTst.createOrder(1, true, acct.Id , 'Bozza');
         
-
-        
-
-        insert orderTest;
-
-
-        Order O = [SELECT id,Phase__c FROM Order WHERE id =: orderTest[0].id LIMIT 1];
-        
-        system.assertEquals('Bozza', orderTest[0].Phase__c , 'Order is inserted correctly');
-        system.assertNotEquals('',  orderTest[0].Phase__c , 'is not Empty');
+        system.assertEquals(true, orderTest[0].Id != null , 'Order was not inserted correctly');
+        system.assertNotEquals(true,  orderTest[0].Id == null , 'The Id of the inserted Order is null');
 
     }
 }
