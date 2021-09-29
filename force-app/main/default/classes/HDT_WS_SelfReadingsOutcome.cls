@@ -23,7 +23,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 responseWrap.outcomeDescription = e.getMessage();
             }
         } catch (Exception e) {
-            System.debug('Exception: ' + e.getMessage());
+            //System.debug('Exception: ' + e.getMessage());
             response.statusCode = 500;
             responseWrap.outcome = 'KO';
             responseWrap.outcomeDescription = 'Error while parsing JSON body: ' + e.getMessage();
