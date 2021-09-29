@@ -17,10 +17,8 @@ public with sharing class HDT_OpportunityTst {
 
         insert testOpt;
         
-        Opportunity opp = [SELECT id,CompanyOwner__c FROM Opportunity WHERE id =: testOpt[0].id LIMIT 1];
-        
-        system.assertEquals('HERA COMM', testOpt[0].CompanyOwner__c , 'Opportunity is inserted correctly');
-        system.assertNotEquals('',  testOpt[0].CompanyOwner__c , 'is not Empty');
+        system.assertEquals(true, testOpt[0].Id != null, 'The opportunity was not inserted correctly');
+        system.assertNotEquals(true,  testOpt[0].Id == null, 'The Id of the inserted opportunity is null');
 
     }
 }
