@@ -102,6 +102,18 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         
         ServicePoint__c servicePointObject = (ServicePoint__c)JSON.deserialize(servicePoint, ServicePoint__c.class);
 
+        try{
+            Map<String, Object> servMap = new Map<String, Object>( servicePointObject.getPopulatedFieldsAsMap() );
+            servMap.put('ImplantTypeTemp__c',servMap.get('ImplantType__c'));//remove( 'MeterStatus__c' );
+            servMap.put('SupplyTypeTemp__c',servMap.get('SupplyType__c'));
+            servMap.remove('ImplantType__c');
+            servMap.remove('SupplyType__c');
+            ServicePoint__c servicePointObject = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
+            System.debug(servicePointObject);
+        }catch(Exception e){
+            System.debug('ERRORE utilizzo vecchia versione');
+        }
+
         System.debug('createServicePoint_tmp converted servicepoint string ' + servicePointObject);
 
         createServicePoint2(servicePointObject, sale);
@@ -257,6 +269,17 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         system.debug('ServicePoint : ' + servicePoint);
         system.debug('sale : ' + sale);
         system.debug('isSap = ' +  sap);
+        try{
+            Map<String, Object> servMap = new Map<String, Object>( servicePoint.getPopulatedFieldsAsMap() );
+            servMap.put('ImplantTypeTemp__c',servMap.get('ImplantType__c'));//remove( 'MeterStatus__c' );
+            servMap.put('SupplyTypeTemp__c',servMap.get('SupplyType__c'));
+            servMap.remove('ImplantType__c');
+            servMap.remove('SupplyType__c');
+            ServicePoint__c servicePoint = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
+            System.debug(servicePoint);
+        }catch(Exception e){
+            System.debug('ERRORE utilizzo vecchia versione');
+        }
         if(sap == false){
             system.debug('entra in updateRecord');
            // serviceSp.updateRecord(servicePoint);
