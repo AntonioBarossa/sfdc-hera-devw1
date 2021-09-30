@@ -3,10 +3,10 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
     private Date filterDate                ;
     private String fileType                ;
     private List<String> contentVersionIds ;
- 
+    private final String NOTMAPPED=''      ;
+
  
     public HDT_QBL_SIE34_2SMEGas(String varRunId,Date varDate,String varFileType,List<String> varContentVersionIds) {
-       System.debug('Start HDT_QBL_SIE34_2SMEGas')          ;
        this.runId             = varRunId                    ;
        this.filterDate        = varDate                     ;
        this.fileType          = varFileType                 ;
@@ -15,7 +15,6 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
  
  
     public void execute(QueueableContext context) {
-       System.debug('HDT_QBL_SIE34_2SMEGas.execute')   ;
        String status                  = 'success'      ;
        String errorMessage            = ''             ;
        String condition = ' WHERE Cluster__c =\'Preventivi\' AND Status =\'Closed\' AND LastModifiedDate >=:filterDate ';
@@ -34,10 +33,9 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
     
        try {
           
-          System.debug('query: '+query+condition);
           List<Case> listCase = Database.query(query+condition);
           
-          String header='codice_offerta,numero_sr,data_richiesta,tipo ordine,codice_cliente,rag_sociale + " " + Nome,p_iva,cod_fiscale,tel,fax,e-mail,nome legale rappresentante,cognome legale rappresentante,indirizzo_sede_legale,civico_sede_legale,cap_sede_legale,comune_sede_legale,provincia_sede_legale,cognome_venditore,nome_venditore,canale,indirizzo_fornitura,civico_fornitura,cap_fornitura,comune_fornitura,provincia_fornitura,cod_istat_comune,indirizzo_spedizione,civico_spedizione,cap_spedizione,comune_spedizione,provincia_spedizione,tipologia_pagamento,pagamento,banca_denominazione,Agenzia Banca,Paese,CIN-IBAN,banca_cin,banca_abi,banca_cab,banca_cc,nome_sottoscritore_rid,cognome_sottoscritore_rid,cf_sottoscrittore_rid,pod,servizio,consumi_anno,Cod istat ateco,cod_distributore,distributore,percentuale_iva,tipologia_imposta,suffisso_sede_legale,localita_sede_legale,suffisso_fornitura,localita_fornitura,suffisso_spedizione,localita_spedizione,INDIRIZZO CONTO CONTRATTUALE,RdS Creata Da,annotazioni,recapito telefonico,Disalimentazione,Categoria di disalimentazione,CATEGORIA CLIENTE,CELLULARE_CLIENTE,TIPO_CLIENTE,DISTANZA_SPOSTAMENTO,CONFERMA_CLIENTE,CODICE_PREVENTIVO_DISTRIBUTORE,Data fine,IMPORTO_PREVENTIVO,MODALITA_INVIO_BOLLETTA,EMAIL_INVIO_BOLLETTA,NOME CLIENTE,COD CONTATTO DEST DIVERGENTE,COGNOME/RAG SOC DEST DIVERGENTE,NOME DEST DIVERGENTE,CF DEST DIVERGENTE,VIA DEST DIVERGENTE,NUM CIVICO DEST DIVERGENTE,CAP DEST DIVERGENTE,COMUNE DEST DIVERGENTE,PROVINCIA DEST DIVERGENTE,EMAIL_INVIO_BOLLETTA_PEC,DATA_CONSENSO_PEC,TIPO_FORNITURA,TIPO_MERCATO,TIPO_OPERAZIONE,TIPO_PREVENTIVO,SOCIETA_VENDITA,Codice Causale \n';
+         // String header='codice_offerta,numero_sr,data_richiesta,tipo ordine,codice_cliente,rag_sociale + " " + Nome,p_iva,cod_fiscale,tel,fax,e-mail,nome legale rappresentante,cognome legale rappresentante,indirizzo_sede_legale,civico_sede_legale,cap_sede_legale,comune_sede_legale,provincia_sede_legale,cognome_venditore,nome_venditore,canale,indirizzo_fornitura,civico_fornitura,cap_fornitura,comune_fornitura,provincia_fornitura,cod_istat_comune,indirizzo_spedizione,civico_spedizione,cap_spedizione,comune_spedizione,provincia_spedizione,tipologia_pagamento,pagamento,banca_denominazione,Agenzia Banca,Paese,CIN-IBAN,banca_cin,banca_abi,banca_cab,banca_cc,nome_sottoscritore_rid,cognome_sottoscritore_rid,cf_sottoscrittore_rid,pod,servizio,consumi_anno,Cod istat ateco,cod_distributore,distributore,percentuale_iva,tipologia_imposta,suffisso_sede_legale,localita_sede_legale,suffisso_fornitura,localita_fornitura,suffisso_spedizione,localita_spedizione,INDIRIZZO CONTO CONTRATTUALE,RdS Creata Da,annotazioni,recapito telefonico,Disalimentazione,Categoria di disalimentazione,CATEGORIA CLIENTE,CELLULARE_CLIENTE,TIPO_CLIENTE,DISTANZA_SPOSTAMENTO,CONFERMA_CLIENTE,CODICE_PREVENTIVO_DISTRIBUTORE,Data fine,IMPORTO_PREVENTIVO,MODALITA_INVIO_BOLLETTA,EMAIL_INVIO_BOLLETTA,NOME CLIENTE,COD CONTATTO DEST DIVERGENTE,COGNOME/RAG SOC DEST DIVERGENTE,NOME DEST DIVERGENTE,CF DEST DIVERGENTE,VIA DEST DIVERGENTE,NUM CIVICO DEST DIVERGENTE,CAP DEST DIVERGENTE,COMUNE DEST DIVERGENTE,PROVINCIA DEST DIVERGENTE,EMAIL_INVIO_BOLLETTA_PEC,DATA_CONSENSO_PEC,TIPO_FORNITURA,TIPO_MERCATO,TIPO_OPERAZIONE,TIPO_PREVENTIVO,SOCIETA_VENDITA,Codice Causale \n';
          
          
          
@@ -150,16 +148,13 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
                 body=body+'\n'+row; 
              }
           }
-         contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(header+body,'PP(GAS)OUT_PREVENTIVI_SME.txt','PP(GAS)OUT_PREVENTIVI_SME'));
-         System.debug('contentVersionIds'+contentVersionIds);
+         contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP(GAS)OUT_PREVENTIVI_SME.txt','PP(GAS)OUT_PREVENTIVI_SME'));
          Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_2MMEE(runId,filterDate, fileType,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          System.debug('contentVersionIds'+contentVersionIds);
           Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
-          System.debug('jobId: '+jobID);
        }
       
     }
