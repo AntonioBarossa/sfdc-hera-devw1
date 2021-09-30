@@ -481,7 +481,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
-            }
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
+            currentCase.Phase__c = 'KO Definitivo';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
