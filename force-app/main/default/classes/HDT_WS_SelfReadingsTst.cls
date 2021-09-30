@@ -149,8 +149,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
         resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
         
-        System.assert('KO'.equalsIgnoreCase(responseWrap.response.outcome));
-        System.assert('Required field missing: commodity'.equalsIgnoreCase(responseWrap.response.outcomeDescription));
+        System.assert('KO'.equalsIgnoreCase(resp.outcome));
+        System.assert('Required field missing: commodity'.equalsIgnoreCase(resp.outcomeDescription));
         
     }
     
@@ -184,8 +184,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
         resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
         
-        System.assert('KO'.equalsIgnoreCase(responseWrap.response.outcome));
-        System.assert('Required field missing: contractCode'.equalsIgnoreCase(responseWrap.response.outcomeDescription));
+        System.assert('KO'.equalsIgnoreCase(resp.outcome));
+        System.assert('Required field missing: contractCode'.equalsIgnoreCase(resp.outcomeDescription));
         
     }
     
@@ -220,8 +220,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
         resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
         
-        System.assert('KO'.equalsIgnoreCase(responseWrap.response.outcome));
-        System.assert('Required field missing: readings'.equalsIgnoreCase(responseWrap.response.outcomeDescription));
+        System.assert('KO'.equalsIgnoreCase(resp.outcome));
+        System.assert('Required field missing: readings'.equalsIgnoreCase(resp.outcomeDescription));
         
     }
     
