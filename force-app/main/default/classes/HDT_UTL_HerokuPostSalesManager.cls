@@ -529,7 +529,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String containerCaseNumber = '';
         String herokuCode = '';
         String containerId = '';
-        String priorita = '';
         Contract contract;
         ServicePoint__c sp;
         Account account;
@@ -551,7 +550,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
-            priorita = reqWrp.requestMap.get('PRIORITA');
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -639,11 +637,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             if(String.isNotBlank(ufficioCompetente)){
                                 currentCase.CompetentOffice__c = ufficioCompetente;
-                            }
-                            //@frpanico Added "PRIORITA"
-                            if(String.isNotBlank(priorita))
-                            {
-                                currentCase.Priority = priorita.equalsIgnoreCase('3') ? 'Alta' : priorita.equalsIgnoreCase('2') ? 'Media' : 'Bassa';
                             }
                             //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
                             if(String.isNotBlank(containerCaseNumber)){
