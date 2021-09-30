@@ -122,7 +122,43 @@ public with sharing class HDT_WS_SelfReadingsTst {
     
     
     ///THROW 1
-    
+    @isTest
+    private static void doPostTest_Exception1() {
+        
+        //SETUP
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData reading = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData();
+        
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
+        srr.readings = reading;
+        srr.Id = '';
+        //srr.commodity = 'Gas';
+        srr.contractCode = myContract.SAPContractCode__c;
+        srr.origin = 'Sportello';
+        srr.integrationId = '';
+        srr.serialNumber = '';
+        srr.readingDate = Date.today();
+        srr.outcome = 'OK';
+        srr.cluster = myCase.Cluster__c;
+        srr.type = myCase.Type;
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestBody = Blob.valueof(JSON.serialize(srr));
+        
+        RestContext.request =req;
+        RestContext.response = res;
+        
+        //TESTING
+        HDT_WS_SelfReadings.doPost();
+        
+        //ASSERTS
+        System.assertEquals(400, RestContext.response.statusCode);
+        System.assert('KO'.equalsIgnoreCase(RestContext.response.outcome));
+        System.assert('Required field missing: commodity'.equalsIgnoreCase(RestContext.response.outcomeDescription));
+        
+    }
     
     
     ///THROW 2
