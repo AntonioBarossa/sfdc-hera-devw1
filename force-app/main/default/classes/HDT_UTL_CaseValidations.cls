@@ -197,9 +197,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
                 }
-        }
-        
-        
+            }        
         }else if (caseType == 'Blocco Sollecito/Interessi'){
 
             String blockType = getFieldValue(fields, 'BlockType__c');
@@ -282,6 +280,21 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 }
             }else{
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            }
+        }
+        else if(caseType == 'Rimborso')
+        {
+            String beneficiaryType = getFieldValue(fields,'AccountholderTypeBeneficiary__c');
+            String beneficiary = getFieldValue(fields,'BeneficiaryAccount__c');
+            if(beneficiaryType != null && beneficiaryType != '' 
+            && (beneficiaryType.equalsIgnoreCase('Beneficiario Alternativo') || beneficiaryType.equalsIgnoreCase('Erede')) 
+            && (beneficiary == null || beneficiary == ''))
+            {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per "Erede" o "Beneficiario Alternativo" è necessario indicare il "Beneficiario"'));
+            }
+            else 
+            {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }
         }
         else
