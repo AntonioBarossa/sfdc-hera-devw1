@@ -104,9 +104,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			
 			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
 			List<Order> orderList = new List<Order>();
-			
+			Set<String> serviceItemSet = new Set<String>();
+			Map<String,Id> processNumberIdMap = new Map<String,Id>();
 			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
-				recordId = (Id) serviceItem.serviceId;
+				serviceItemSet.add(serviceItem.serviceId);
+			}
+			List<SObject> processRecods = HDT_QR_DocumentalConfiguration.getRecordFromServiceItems(context, serviceItemSet);
+			for(SObject singleRecord : processRecods){
+				if(context.equalsIgnoreCase('Case')){
+					processNumberIdMap.put((String)singleRecord.get('CaseNumber'), (Id)singleRecord.get('Id'));
+				}else{
+					processNumberIdMap.put((String)singleRecord.get('OrderNumber'), (Id)singleRecord.get('Id'));
+				}
+			}
+			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
+				recordId = (Id) processNumberIdMap.get(serviceItem.serviceId);
 				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;
@@ -228,7 +240,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
+					// l'email sull'account potrebbe non essere quella inserita nella modale dell'EC, che non tracciamo da nessuna parte.
+					//documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 			}
@@ -248,7 +261,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			switch on sObjName {
 				when 'Case' {
 					documentalActivity.CaseId__c = (Id) requestId;
-					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					//System.debug('### Account Id: '+processRecord.get('AccountId'));
 				}
 				when 'Order' {
 					documentalActivity.OrderId__c = (Id) requestId;
@@ -258,7 +271,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
-			documentalActivity.ErrorDescription__c = errorMessage;
+			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
 
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 		} catch (Exception ex) {

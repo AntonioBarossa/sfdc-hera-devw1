@@ -338,12 +338,21 @@
         <enabled>true</enabled>
         <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
     </customSettingAccesses>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>VocalOrderPublicConfirm__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VocalOrderPublicConfirm__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.Commodity__c</field>
@@ -391,6 +400,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SupplyTypeTemp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.ImplantTypeTemp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.ExciseEle__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -406,7 +425,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ResidentialStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SupplyStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BillingStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.RateCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.MethodSignedAccepted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -416,7 +455,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.IsDocusignAttachment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Username__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Password__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.UniqueCredentials__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.isPreDocumentationToSend__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.isPreDocToSend__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1582,16 +1646,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.StartDate</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7477,6 +7531,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.SourceAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.InterestProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.ContactReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ContactPointAddress.ActiveFromDate</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8522,12 +8591,12 @@
         <field>DocumentSelected__c.Position1__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.Position2__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.Position3__c</field>
         <readable>true</readable>
@@ -9514,6 +9583,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_CalcoloPreventivi__mdt.OperationCode__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.PowerQuote__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9531,6 +9605,11 @@
         <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.QuotationType__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CalcoloPreventivi__mdt.RT__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9556,6 +9635,36 @@
         <editable>false</editable>
         <field>HDT_CalcoloPreventivi__mdt.VendDistr__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CalcoloPreventivi__mdt.VoltageLevel__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.ConstantName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.FieldName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.ObjectName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.ValueToOverride__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CallScriptValue__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9739,8 +9848,23 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_Dependant_Picklist_VAS__mdt.AdditionalConfiguration__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_Dependant_Picklist_VAS__mdt.Description__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_Dependant_Picklist_VAS__mdt.HasAssetSelection__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_Dependant_Picklist_VAS__mdt.HasSubSelection__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9771,6 +9895,21 @@
         <editable>false</editable>
         <field>HDT_Dependant_Picklist_VAS__mdt.Value__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ExciseTranscode__mdt.Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ExciseTranscode__mdt.ExciseString__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_ExciseTranscode__mdt.Excise__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10108,6 +10247,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_MatrixCompatibilityMap__mdt.Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_MatrixCompatibilityMap__mdt.CommoditySector__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>HDT_MeterReadingTranscodeMap__mdt.SalesforceValue__c</field>
         <readable>true</readable>
@@ -10120,6 +10269,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>HDT_MeterReadingTranscodeMap__mdt.TranscodeType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_ObjectRecordType__mdt.ValueToRemove__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10271,6 +10430,26 @@
         <editable>false</editable>
         <field>HDT_SapWsConfiguration__mdt.NamedCredential__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.Description__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.ErrorCode__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.IsAutomaticDiscard__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_SelfReadingError__mdt.Type__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10680,6 +10859,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Individual.PrivacyProfilingConsentInitiative__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Individual.PrivacySoftSpamChoiceCampaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13057,87 +13241,87 @@
         <field>wrts_prcgvr__Activity__c.Validation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaActivityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaAnagrafici__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaAtecoCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaFirmLegalOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaMatricola__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIvaSupplyAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isSchoolCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isIva10Module__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseSupply__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAccisePdrPod__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseModuleRequest__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseExclusionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseExclusionModuleAccise__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.isAcciseCopyTechnicalRelation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.IsAcciseContractualPower__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CompletationDateDocument__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.NumberOfAttempt__c</field>
         <readable>true</readable>
@@ -26629,6 +26813,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.Ecid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ScriptConfig__c.CheckVisibility__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31036,6 +31225,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ActivityOutcome__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivityStartTime__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31292,6 +31486,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.DiscardDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DiscardResubmitted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DiscardWorked__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -31792,7 +31996,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__ActivityTemplate__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -31837,6 +32041,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Ecid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33163,6 +33372,24 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>DiscardAnnullmentRule__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>VocalOrderPublicConfirm__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>  
+     <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Service26Config__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions> 
     <objectPermissions>
@@ -34993,6 +35220,15 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Service26Config__c </object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
 		<allowCreate>true</allowCreate>
 		<allowDelete>true</allowDelete>
 		<allowEdit>true</allowEdit>
@@ -36259,6 +36495,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FUBProcessing__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>GeneralTermsCondition__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

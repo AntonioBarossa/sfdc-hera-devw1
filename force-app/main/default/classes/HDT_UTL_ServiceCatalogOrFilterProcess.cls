@@ -6,11 +6,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Fatturazione'}
         },
-    'CambioUsoFittizio' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami','Fatturazione','Variazioni','Generiche Attivazioni','Canone Rai'}
-        },
     'AnnullamentoContratti' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -28,7 +23,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'Autoletturadacliente' => new Map<String,List<String>>
         {
             'Type' => new List<String>
-                {'Verifica Dati al DL', 'Rettifica Consumi', 'Reclamo Scritto/Rich. Info'}
+                {'Verifica Dati al DL','Rettifica Consumi','Reclamo Scritto/Rich. Info'}
         },
     'AllineamentoCanoneRai' => new Map<String,List<String>>
         {
@@ -37,31 +32,41 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
         },
-    'SospensioneCanoneRaiCalamità' => new Map<String,List<String>>
+    'SospensioneCanoneRaiCalamita' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami','Preventivi'},
             'Type' => new List<String>
-                {'Gestione Calamità', 'Reclamo Scritto/Rich. Info'}
+                {'Gestione Calamità','Reclamo Scritto/Rich. Info'}
         },
-    'VerificaPareggioFittizioCanoneRai' => new Map<String,List<String>>
+    'CambioUsoFittizio' => new Map<String,List<String>>
         {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
+            'Cluster__c' => new List<String>
+                {'Reclami','Fatturazione','Variazioni','Generiche Attivazioni','Canone Rai'}
         },
-    'Contratti/BonusCommerciale' => new Map<String,List<String>>
+    'ContrattiBonusCommerciale' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Fatturazione', 'Variazioni', 'Annullamento', 'Disattivazioni'}, 
             'Type' => new List<String>
                 {'Comportamento Venditori HC'}
         },
+    'ContrattiModificaContrattoPreAttivazione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Generiche Attivazioni', 'Preventivi'}
+        },
+    'DocumentaleCopiaContrattoFirmatoNonRicevuto' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Disattivazioni', 'Annullamento'}
+        },
     'ChiusuraContatore' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Variazioni'}, 
             'Type' => new List<String>
-                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti'}
+                {'Comportamento Venditori HC', 'Gestione Calamità', 'Informative', 'Annullamento Contratti', 'Comunicazione di Fallimento'}
         },
     'RecessoperAltriMotivi' => new Map<String,List<String>>
         {
@@ -104,7 +109,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Verifica GDM'}
         },
-    'RitornoaFatturazioneBimestrale/Mensile' => new Map<String,List<String>>
+    'RitornoaFatturazioneBimestraleMensile' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
@@ -121,14 +126,14 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
         },
-    'Unificazione/SeparazioneBP-CA-Bolletta' => new Map<String,List<String>>
+    'UnificazioneSeparazioneBPCABolletta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
-    'VerificaTitolaritàPOD/PDR' => new Map<String,List<String>>
+    'VerificaTitolaritaPODPDR' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
@@ -152,7 +157,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami'}
         },
-    'CadutaLinea/ChiamataMuta' => new Map<String,List<String>>
+    'CadutaLineaChiamataMuta' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
@@ -194,13 +199,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Gestione Calamità', 'Errore di Fatturazione'}
         },
-    'AllineamentoAnagrafica' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi', 'Morosità'}, 
-            'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione', 'Variazione Anagrafica Cliente', 'Fiscale', 'Modifica Tariffa Residente/Non Residente'}
-        },
     'DisassociazioneUtenteWeb' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
@@ -220,44 +218,37 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità','Esercizio Diritti Privacy'}
+                {'Gestione Calamità'}
         },
     'Richiestaparere' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Esercizio Diritti Privacy'}
+                {'Gestione Calamità', 'Errore di Fatturazione'}
         },
     'VariazioneAnagraficaCliente' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Condizioni Contrattuali Errate','Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta'}
         },
     'VariazionesuAmministratore' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
             'Type' => new List<String>
-                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta','Esercizio Diritti Privacy'}
+                {'Gestione Calamità', 'Errore di Fatturazione','Unificazione/Separazione BP-CA-Bolletta'}
         },
-    'GestioneDisalimentabilità' => new Map<String,List<String>>
+    'GestioneDisalimentabilita' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Morosità'}, 
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
-    'Riattivazione Fornitura' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi'}, 
-            'Type' => new List<String>
-                {'Gestione Calamità'}
-        },
-    'BloccoSollecito/Interessi' => new Map<String,List<String>>
+    'BloccoSollecitoInteressi' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
@@ -267,22 +258,12 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
         },
-    'ContenziosoInCorso' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami'}
-        },
-    'CopiaBolletta/Bollettino' => new Map<String,List<String>>
-        {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
-        },
     'DoppiPagamenti/Incassi' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
         },
-    'AttivazioneClick&Pay' => new Map<String,List<String>>
+    'AttivazioneClickPay' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}, 
@@ -293,16 +274,6 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         {
             'Type' => new List<String>
                 {'Reclamo Scritto/Rich. Info'}
-        },
-    'PianoRateizzazione' => new Map<String,List<String>>
-        {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
-        },
-    'Rimborso' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami'}
         },
     'RevocaDomiciliazione' => new Map<String,List<String>>
         {
@@ -324,21 +295,24 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'SegnalazioniVAS' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi'}, 
-            'Type' => new List<String>
-                {'Autoelettrica', 'HVAC'}
+                {'Reclami'}
         },
     'AggiuntaAttacco' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
-    'Esecuzionelavori' => new Map<String,List<String>>
+    'ModificaImpianto' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
-    'SpostamentoVotiveModena' => new Map<String,List<String>>
+    'EmissioneImpulsi' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VariazionePortata' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
@@ -373,17 +347,17 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
-    'VariazionePortata' => new Map<String,List<String>>
-        {
-            'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi'}
-        },
     'VariazionePotenza' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
     'VariazioneTensione' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'SpostamentoVotiveModena' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
@@ -398,14 +372,9 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Fatturazione'},
             'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info', 'Condizioni Contrattuali Errate', 'Recesso su Richesta Cliente'}
+                {'Reclamo Scritto/Rich. Info', 'Condizioni Contrattuali Errate'}
         },
-    'RichiestaParere' => new Map<String,List<String>>
-        {
-            'Type' => new List<String>
-                {'Reclamo Scritto/Rich. Info'}
-        },
-    'ReclamoScritto/Rich.Info' => new Map<String,List<String>>
+    'ReclamoScrittoRichInfo' => new Map<String,List<String>>
         {
             'Type' => new List<String>
                 {'Ricostruzione Consumi'}
@@ -437,17 +406,17 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami','Fatturazione'}
         },
-    'GestioneCalamità' => new Map<String,List<String>>
+    'GestioneCalamita' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
         },
-    'MancataTelelettura/lettura' => new Map<String,List<String>>
+    'MancataTeleletturalettura' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Fatturazione'}
         },
-    'Marcatura/UsoPdR' => new Map<String,List<String>>
+    'MarcaturaUsoPdR' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami'}
@@ -462,21 +431,21 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
             {'Reclami'}
         },
-    'ModificaTariffaResidente/Non Residente' => new Map<String,List<String>>
+    'ModificaTariffaResidenteNonResidente' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi', 'Variazioni'},
+                {'Reclami', 'Preventivi'},
             'Type' => new List<String>
                 {'Condizioni Contrattuali Errate'}
         },
-    'Modifica/AzzeramentoConsumoAnnuo' => new Map<String,List<String>>
+    'ModificaAzzeramentoConsumoAnnuo' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'},
             'Type' => new List<String>
                 {'Gestione Calamità', 'Marcatura/Uso PdR', 'Modifica Tariffa Residente/Non Residente' }
         },
-    'BP/CA-erratacategoria' => new Map<String,List<String>>
+    'BPCAerratacategoria' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
@@ -501,7 +470,22 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi'}
         },
-    'VerificaTensione-Pressione' => new Map<String,List<String>>
+    'RichiestaLetturaCliente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'SostContatoreCliente' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi'}
+        },
+    'VerificaGdm' => new Map<String,List<String>>
+        {
+            'Cluster__c' => new List<String>
+                {'Reclami', 'Preventivi', 'Fatturazione'}
+        },
+    'VerificaTensionePressione' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Fatturazione'}
@@ -546,7 +530,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         }
         return res;
     }
- 
+
     public static Boolean accountStatementFilter(sObject sb, String method){
         boolean res = true;
         //fix

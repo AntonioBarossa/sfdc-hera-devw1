@@ -6,7 +6,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -49,6 +49,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>> ordersAlreadyAssigned: ' + ordersAlreadyAssigned);
         system.debug('>> ordersAlreadyAssigned size: ' + ordersAlreadyAssigned.size());
 
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
@@ -57,7 +59,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if (ord.ActivityQualityToBeCanceled__c) {
+                if (ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c)) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 } else {
@@ -121,23 +123,24 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<String> commissioningCampaignList = new List<String>();
         List<String> contactList = new List<String>();
         for (Order orderCm : orderMap.values()) {
-            if ( orderCm.Contact__c != null && orderCm.CommissioningCampaign__c != null) {
-                commissioningCampaignList.add(orderCm.CommissioningCampaign__c);
+            if ( orderCm.Contact__c != null) {
+                // commissioningCampaignList.add(orderCm.CommissioningCampaign__c);
                 contactList.add(orderCm.Contact__c);
             }
         }
         system.debug('>> commissioningCampaignList: ' + commissioningCampaignList);
         system.debug('>> contactList: ' + contactList);
 
+        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
+
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
-        if (!commissioningCampaignList.isEmpty() && !contactList.isEmpty()) {
-            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(commissioningCampaignList, contactList);
+        if (!qualityCampaign.isEmpty() && !contactList.isEmpty()) {
+            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(new List<String>{qualityCampaign[0].Id}, contactList);
             system.debug('>> campaignMembersBulk: ' + campaignMembersBulk);
         }
 
         system.debug('>> orderActivityMap.keySet: ' + orderActivityMap.keySet());
 
-        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
 
         Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
 
@@ -168,12 +171,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
                 } else {
                     if (orderActivityMap.get(ordId).Id != null) {
-                        campaignMembersInsert.add(new CampaignMember(
-                            ContactId = orderMap.get(ordId).Contact__c,
-                            CampaignId = qualityCampaign[0].Id,
-                            PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id
-                        ));
+                        // campaignMembersInsert.add(new CampaignMember(
+                        //     ContactId = orderMap.get(ordId).Contact__c,
+                        //     CampaignId = qualityCampaign[0].Id,
+                        //     PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                        //     RelatedActivity__c = orderActivityMap.get(ordId).Id
+                        // ));
 
                         notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
                             ContactId = orderMap.get(ordId).Contact__c,
@@ -186,9 +189,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             }
         }
 
-        system.debug('>>campaignMembersInsert: ' + campaignMembersInsert);
 
-        if(!campaignMembersInsert.isEmpty()) {
+        List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
+        system.debug('>>campNotDuplicateList: ' + campNotDuplicateList);
+
+
+        if(!campNotDuplicateList.isEmpty()) {
             insert notDuplicatedCampToIns.values();
         }
 

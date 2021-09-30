@@ -58,9 +58,10 @@
                     console.log('isCommunity true');
                     component.set("v.isCommunity", true);
                     component.set("v.mySpinner", false);
-                    setTimeout(function(){ location.reload(); 
+                    setTimeout(function(){ 
+                        location.reload(); 
                         $A.get("e.force:closeQuickAction").fire();
-                    }, 300);
+                    }, 400);
                    
                    
 

@@ -318,10 +318,10 @@ public class HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
-				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
 				return orderList[0];
 			}
 		}else{
@@ -340,19 +340,19 @@ public class HDT_SRV_DocumentalManagement{
 				listOfRadio.addAll(requestBody.listOfRadioGroup);
 				System.debug(requestBody.listOfRadioGroup);
 			}
-			if(requestBody.listOfData != null && requestBody.listOfData.size()>0){
-				listOfData.addAll(requestBody.listOfData);
+			if(requestBody.listOfDataText != null && requestBody.listOfDataText.size()>0){
+				listOfData.addAll(requestBody.listOfDataText);
 			}
 			
 			if(record.getSobjectType() == Case.getSobjectType()){
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
-					if(cluster.equalsIgnoreCase('Preventivi')){
+					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
 				}else{
 					//Che fase documentale settare?
-					if(cluster.equalsIgnoreCase('Preventivi')){
+					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo rifiutato');
 					}
 				}
@@ -399,7 +399,7 @@ public class HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio){
-		if(listOfRadio != null && listOfRadio.size()>=0){
+		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
@@ -408,7 +408,10 @@ public class HDT_SRV_DocumentalManagement{
 			}else{
 				Order orderRecord = (Order) record;
 				Contact orderContact = (Contact) orderRecord.Contact__r;
-				individualId = orderContact.IndividualId;
+				if (orderContact == null){
+					System.debug('Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
+					return;
+				}
 			}
 			Individual individualRecord = new Individual();
 			individualRecord.Id = individualId;
@@ -477,7 +480,26 @@ public class HDT_SRV_DocumentalManagement{
 		}
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
-		//aggiornare i dati catastali
+		if(record != null && record.getSobjectType() == Case.getSobjectType()){
+			return;
+		}
+		Id recordId = (Id) record.get('Id');
+		List<LandRegistry__c> registries = new List<LandRegistry__c>();
+		for (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData singleData : listOfData) {
+			LandRegistry__c reg = new LandRegistry__c();
+			reg.Order__c = recordId;
+			// TODO: valorizzare campi oggetto con i valori che manda Intesa.
+			registries.add(reg);
+		}
+
+		if (!registries.isEmpty()){
+			try {
+				System.debug('# dati catastali da inserire: ' + registries.size());
+				HDT_UTL_DatabaseService.insertSObject(registries);
+			}catch(Exception ex){
+				System.debug('Errore DML: ' + ex.getMessage());
+			}
+		}
 	}
 
 	@future

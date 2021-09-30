@@ -59,6 +59,10 @@
                 <behavior>Readonly</behavior>
                 <field>VasStatus__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VASType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -112,6 +116,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VasStatusDescription__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VasSubtype__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

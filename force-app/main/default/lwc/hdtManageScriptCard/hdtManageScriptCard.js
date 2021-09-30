@@ -22,7 +22,28 @@ export default class HdtManageScriptCard extends LightningElement {
 
     htmlScriptList;
     scriptIndex;
-    
+    @wire(getHTMLScript, {processName : '$scriptProcessName', 
+        recordId : '$recordId', 
+        childRecordIdentifier : '$childAdditionalInfo'})
+        getScript({ data, error }) {
+            if(data){
+                this.htmlScriptList= data;
+                if(this.htmlScriptList.length==0){
+                    this.showToast('error', 'Non è disponibile lo script per questa campagna!');
+                    this.closeModal();
+                }else{
+                    console.log(this.htmlScriptList);
+                    console.log("ok deploy")
+                    this.scriptIndex=0;
+                }
+
+                //this.openModal=true;
+            }else if(error){
+                console.log(error.body.message);
+                this.showGenericErrorToast();
+                this.closeModal();
+            }
+        }
     showGenericErrorToast() {
 		this.showToast('error', 'Errore', 'Si è verificato un errore. Ricaricare la pagina e riprovare. Se il problema persiste contattare il supporto tecnico.');
 	}
@@ -92,45 +113,45 @@ export default class HdtManageScriptCard extends LightningElement {
     
     
 
-    async connectedCallback(){
-        try{
-            this.htmlScriptList=  await getHTMLScript({
-                processName : this.scriptProcessName, 
-                recordId : this.recordId, 
-                childRecordIdentifier : this.childAdditionalInfo
-            });
-            if(this.htmlScriptList.length==0){
-                this.showToast('error', 'Non è disponibile lo script per questa campagna!');
-                this.closeModal();
-            }else{
-                console.log(this.htmlScriptList);
-                console.log("ok deploy")
-                this.scriptIndex=0;
-            }
+    // async connectedCallback(){
+    //     try{
+    //         this.htmlScriptList=  await getHTMLScript({
+    //             processName : this.scriptProcessName, 
+    //             recordId : this.recordId, 
+    //             childRecordIdentifier : this.childAdditionalInfo
+    //         });
+    //         if(this.htmlScriptList.length==0){
+    //             this.showToast('error', 'Non è disponibile lo script per questa campagna!');
+    //             this.closeModal();
+    //         }else{
+    //             console.log(this.htmlScriptList);
+    //             console.log("ok deploy")
+    //             this.scriptIndex=0;
+    //         }
 
-            //this.openModal=true;
-        }catch(e){
-            console.log(e.body.message);
-            this.showGenericErrorToast();
-            this.closeModal();
-        }
-    }
+    //         //this.openModal=true;
+    //     }catch(e){
+    //         console.log(e.body.message);
+    //         this.showGenericErrorToast();
+    //         this.closeModal();
+    //     }
+    // }
 
     saveRecLink(){
-        let link= this._linkReitek;
+        let link = this._linkReitek;
+        link = "http://recording-link--test/"+new Date().getTime();
         saveReitekLink({recordId : this.recordId, reitekLink: link})
-            .then(result=>{
+            .then(() => {
                 this.dispatchEvent(new ShowToastEvent({
                     variant: "success",
                     title: "Link Salvato",
                     message: "L'operazione di salvataggio del link è andata a buon fine"
                 }));
                 this.closeModal();
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error);
                 this.showGenericErrorToast();
-            });
-        
+            })
     }
 
     enableConfirmButton(){

@@ -69,7 +69,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -372,14 +372,14 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         String name='';
         switch on sp.commoditySector__c{
             when 'Gas'{
-                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyTypeTemp__c=='Domestico' || sp.SupplyTypeTemp__c=='A-Domestico'){
                     Name = 'Gas Domestico (A-Domestico)';
                 }else{
                     Name = 'Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)';
                 }
             }
             when 'Energia Elettrica'{
-                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyTypeTemp__c=='Domestico' || sp.SupplyTypeTemp__c=='A-Domestico'){
                     Name = 'Energia Elettrica Domestico';
                 }else{
                     Name = 'Energia Elettrica Non Domestico';
