@@ -1690,6 +1690,14 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
         </values>
