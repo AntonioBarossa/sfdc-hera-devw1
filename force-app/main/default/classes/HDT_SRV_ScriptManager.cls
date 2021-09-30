@@ -1,5 +1,5 @@
 /**
- * @description       : 
+ * @description       : Service class for Script CB
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
  * @last modified on  : 2021-09-29
@@ -11,12 +11,12 @@ public inherited sharing class HDT_SRV_ScriptManager {
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
     
     /**
-    * @description 
+    * @description Get script name and target for given order
     * @author gabriele.rota@webresults.it | 2021-09-29 
     * @param orderParentId  
     * @return HDT_WRP_ScriptConfig
     **/
-    public static HDT_WRP_ScriptConfig getScriptConfig(Id orderParentId){
+    public static HDT_WRP_ScriptConfig getOrderScriptConfig(Id orderParentId){
 
         HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
 
@@ -35,40 +35,38 @@ public inherited sharing class HDT_SRV_ScriptManager {
 
         if (parentOrder.SignatureMethod__c=='Vocal Order') {
             List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
-            if (scripts.isEmpty()) {
-                throw new HDT_UTL_HeraException('Non esiste uno script per l\'offerta');
+            if (!scripts.isEmpty()) {
+                config.scriptName = scripts[0].Name;
             }
-            config.scriptName = scripts[0].Name;
         }
 
         return config;
     }
 
-    /*
-        TODO: Per Activity
-        var orderId = activity.Order__c;
+    /**
+    * @description Get script name and target for given activity
+    * @author gabriele.rota@webresults.it | 2021-09-29 
+    * @param activityId  
+    * @return HDT_WRP_ScriptConfig
+    **/
+    public static HDT_WRP_ScriptConfig getActivityScriptConfig(Id activityId){
 
-        var scriptName;
-        switch (activity.Type__c) {
-            case "Quality Call":
-                scriptName = "Quality call";
-                break;
-            case "Comfort Call":
-                scriptName = "Comfort call";
-                break;
-            default:
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    title: "Nessuno Script disponibile",
-                    message: "Non è presente uno Script per l'Attività corrente",
-                    type: "warning"
-                });
-                toastEvent.fire();
+        HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
+
+        wrts_prcgvr__Activity__c activity = HDT_QR_ActivityCustom.getActivityByRecordId(activityId)[0];
+        config.scriptTarget = activity.Order__c;
+
+        switch on activity.Type__c {
+            when 'Quality Call'{
+                config.scriptName = 'Quality call';
+            }
+            when 'Comfort Call'{
+                config.scriptName = 'Comfort call';
+            }
         }
-        
-        cmp.set("v.orderId", orderId);
-        cmp.set("v.scriptName", scriptName);
-    */
+
+        return config;
+    }
 
     public class HDT_WRP_ScriptConfig{
         @AuraEnabled public String scriptName {get;set;}
