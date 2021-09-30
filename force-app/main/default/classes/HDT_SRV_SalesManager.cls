@@ -14,6 +14,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
     private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
     private static final String PHASE_SEQUENZIALIZZATO = 'Sequenzializzato';
+    private static final String PHASE_KO_PRODOTTO = 'Cod. offerta non mappato';
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
@@ -98,7 +99,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             when 'activation'{
                 res = HDT_WS_MotoreVas.activationCallout(sobjectId);
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
-                newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
                 if (!isSuccess) {
                     if (String.isNotBlank(res.exceptionMessage)){
                         errorDescription = res.exceptionMessage;
@@ -107,6 +107,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                         errorDescription = res.errorDetails[0].message;
                     }
                 }
+                newPhase = isSuccess?'Comunicazione verso Motore VAS OK': errorDescription.startsWithIgnoreCase(PHASE_KO_PRODOTTO)? 'Ko prodotto vas' : 'Comunicazione verso Motore VAS KO';
             }
             when 'deactivation'{
                 res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
