@@ -26,10 +26,9 @@ public with sharing class HDT_WS_SelfReadingsTst {
             ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
             
         } else {
-            Order myOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza');
-            
-            
+            Order myOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza')[0];
             ordList = new List<Order>{myOrder};
+            insert ordList;
 
         }
         
