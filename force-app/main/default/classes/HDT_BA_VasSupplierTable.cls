@@ -66,6 +66,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
 
         List<SBQQ__Subscription__c> subs = getSubscriptions(codes);
         List<Asset> assets = getAssets(codes);
+        system.debug('subs '+subs?.size()+JSON.serialize(subs));
+        system.debug('assets '+assets?.size()+JSON.serialize(assets));
 
         Map<SObject, String> recordsPerCode = new Map<SObject, String>();
         recordsPerCode.putAll( copyVasFields(subs, vasRecordsMap) );
@@ -140,6 +142,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     }
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
+                    system.debug(e.getStackTraceString());
                     vasRecord.Status__c = STATUS_ERROR;
                     vasRecord.ErrorDescription__c = 'MAPPING_ERROR: Error mapping Asset/Subscription fields';
                 }
@@ -152,6 +155,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     vasSupplToOrder.put(vasRecord.Id, orderToUpdate.Id);
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
+                    system.debug(e.getStackTraceString());
                     vasRecord.Status__c = STATUS_ERROR;
                     vasRecord.ErrorDescription__c = 'MAPPING_ERROR: Error mapping Order fields';
                 }
@@ -176,7 +180,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
 
         List<Asset> assetsToUpdate = new List<Asset>();
         List<SBQQ__Subscription__c> subsToUpdate = new List<SBQQ__Subscription__c>();
-        List<Order> ordersToUpdate = new List<Order>();
+        //List<Order> ordersToUpdate = new List<Order>();
+        Map<Id, Order> mapOrdersToUpdate = new Map<Id, Order>();
 
         Map<Id, String> recordIdsPerCode = new Map<Id, String>();
         for (SObject record:recordsPerCode.keySet()) {
@@ -187,14 +192,15 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                 subsToUpdate.add((SBQQ__Subscription__c)record);
             }
             if (record.getSObjectType() == Schema.Order.getSObjectType()) {
-                ordersToUpdate.add((Order)record);
+                //ordersToUpdate.add((Order)record);
+                mapOrdersToUpdate.put((ID) record.get('id'), (Order)record);
             }
             recordIdsPerCode.put((Id)record.get('Id'), recordsPerCode.get(record) );
         }
 
         saveAndCheckResults(assetsToUpdate, recordIdsPerCode, vasRecordsMap);
         saveAndCheckResults(subsToUpdate, recordIdsPerCode, vasRecordsMap);
-        saveAndCheckResults(ordersToUpdate, recordIdsPerCode, vasRecordsMap);
+        saveAndCheckResults(mapOrdersToUpdate.values(), recordIdsPerCode, vasRecordsMap);
     }
 
     /**
