@@ -75,6 +75,13 @@
                 <elementReference>GetChildSospensione.CompetentOffice__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCreatedCase.IsContainer__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCreatedCase_0</targetReference>
         </connector>
@@ -96,6 +103,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCreatedCase.Contact.MobilePhone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCreatedCase.CompetentOffice__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getParentCase.CompetentOffice__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCreatedCase.IsContainer__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -374,9 +395,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>GetChildSospensione</leftValueReference>
-                <operator>WasVisited</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
