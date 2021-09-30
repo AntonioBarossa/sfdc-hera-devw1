@@ -230,13 +230,12 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void doPostTest_Error500() {
         
         //SETUP
-        Case myFakeCase = new Case();//WRONG TYPE PER CAUSARE ECCEZIONE
-        myFakeCase.Deposit__c = true;
+        String myErrorString = '{Test';
         
         //REST CONTEXT
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        req.requestBody = Blob.valueof(JSON.serialize(myFakeCase));
+        req.requestBody = Blob.valueof(myErrorString);
         
         RestContext.request =req;
         RestContext.response = res;
