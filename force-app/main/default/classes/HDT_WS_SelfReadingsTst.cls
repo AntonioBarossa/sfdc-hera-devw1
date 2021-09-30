@@ -196,6 +196,10 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
     }
     
+    //TODO: COMMODITY ELETTRICITà
+    
+    
+    
     
     
     ///THROW 1
