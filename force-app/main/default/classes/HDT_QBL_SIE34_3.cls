@@ -1,3 +1,7 @@
+/**
+ * @description       : 
+ * @last modified on  : 30-09-2021
+**/
 public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
    private String runId                   ;   
    private Date filterDate                ;
@@ -7,6 +11,12 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
 
 
 
+   /**
+   * @description :  
+   * @param varRunId 
+   * @param varDate 
+   * @param varFileType 
+   **/
    public HDT_QBL_SIE34_3(String varRunId,Date varDate,String varFileType) {
       System.debug('Start HDT_QBL_SIE34_3')        ;
       this.runId             = varRunId            ;
@@ -16,6 +26,10 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
    }
 
 
+   /**
+   * @description 
+   * @param context 
+   **/
    public void execute(QueueableContext context) {
       System.debug('HDT_QBL_SIE34_3.execute')      ;
       String status                  = 'success'   ;
