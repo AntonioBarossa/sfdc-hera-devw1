@@ -40,9 +40,11 @@ public with sharing class HDT_WS_SelfReadingsTst {
     }
     
     
+    
+    
     //TESTS
     
-    //
+    //doPost
     @isTest
     private static void doPostTest() {
         
@@ -118,7 +120,82 @@ public with sharing class HDT_WS_SelfReadingsTst {
     }
     
     
-    //TODO: CASO DI TEST COMMODITY ENERGIA ELETTRICA
+    //KO DEFAULT
+    @isTest
+    private static void doPostTest_ResponseKO() {
+        
+        //SETUP
+        mySetup();
+        Case myCase = [SELECT Id, Cluster__c , Type FROM Case];
+        Contract myContract = [SELECT Id, SAPContractCode__c FROM Contract];
+        
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData reading = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData();
+        //reading.id;
+        reading.mru = 'TEST_MRU';
+        reading.sendTo = 'TEST_SENDTO';
+        
+        reading.digits1 = 'T1';
+        reading.digits2 = 'T2';
+        
+        reading.date1 = Date.today();
+        reading.date2 = Date.today();
+        
+        reading.band1 = 'B1';
+        reading.band2 = 'B2';
+        
+        reading.value1 = 10.1;
+        reading.value2 = 10.2;
+        
+        reading.serialNumber1 = 'TEST_SER_NUM_1';
+        reading.serialNumber2 = 'TEST_SER_NUM_2';
+        
+        reading.register1 = 'TR1';
+        reading.register2 = 'TR2';
+        
+        reading.type1 = 'TEST_type1';
+        reading.type2 = 'TEST_type2';
+        
+        reading.unit1 = 'TU1';
+        reading.unit2 = 'TU2';
+        
+        
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
+        srr.readings = reading;
+        srr.Id = myCase.Id;
+        srr.commodity = 'Gas';
+        srr.contractCode = myContract.SAPContractCode__c;
+        srr.origin = 'Sportello';
+        srr.integrationId = '';
+        srr.serialNumber = '';
+        srr.readingDate = Date.today();
+        srr.outcome = 'KO';//KO INTENZIONALE
+        srr.cluster = myCase.Cluster__c;
+        srr.type = myCase.Type;
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestBody = Blob.valueof(JSON.serialize(srr));
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //CASE PHASE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari KO', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo', 'Check preliminari KO', rtId, rtName,'A','','','');
+        
+        
+        //TESTING
+        HDT_WS_SelfReadings.doPost();
+        
+        //ASSERTS
+        System.assertEquals(201, RestContext.response.statusCode);
+        
+    }
+    
     
     
     ///THROW 1
