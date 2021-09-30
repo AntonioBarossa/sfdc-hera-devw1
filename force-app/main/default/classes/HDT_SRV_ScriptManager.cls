@@ -34,7 +34,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
         }
 
         if (parentOrder.SignatureMethod__c=='Vocal Order') {
-            List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
+            List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE ScriptType__c='Processo' AND Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
             if (!scripts.isEmpty()) {
                 config.scriptName = scripts[0].Name;
             }

@@ -40,6 +40,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
             activity.RecordingLink__c = reitekLink;
             update activity;
             //activitySrv.updateRecord(activity);
+            //Using update because users are not allowed to edit Actiivity (temporary)
         }
     }
 
@@ -198,7 +199,9 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         //get fields name of variables in condition statements
         Set<String> returnSetFieldsToQuery = new Set<String>();
         for(String conditions :listConditions){
-            List<String> arrayConditions = conditions.split(';');
+            Boolean isOrOperator = conditions.contains('OR');
+            String splitOperator = isOrOperator?'OR':'AND';
+            List<String> arrayConditions = conditions.split(splitOperator);
             for(String condition : arrayConditions){
                 Boolean checkCompare = condition.contains('==');
                 String compareOperator = checkCompare? '==' : '!=';
@@ -217,9 +220,16 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         if (conditions == null || conditions.trim().equals('')){
             return true;
         }
+
+        conditions = conditions.deleteWhitespace();
+        
+        Boolean isOrOperator = conditions.contains('OR');
+        Boolean isAndOperator = !isOrOperator;
+        String splitOperator = isOrOperator?'OR':'AND';
+
         String fieldName, valueToCheck, actualFieldValue;
-        List<String> arrayConditions = conditions.split(';');
-        Boolean visibility=false;
+        List<String> arrayConditions = conditions.split(splitOperator);
+        Boolean visibility = isAndOperator?true:false;
         try{
             for(String condition : arrayConditions){
                 Boolean checkCompare = condition.contains('==');
@@ -229,8 +239,16 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 fieldName=arraySingleCondition[0];
                 valueToCheck=arraySingleCondition[1];
                 actualFieldValue=getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
-                visibility=assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
-                if(!visibility){
+                Boolean conditionVisibility = assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
+
+                if (isOrOperator) {
+                    visibility = visibility || conditionVisibility;
+                }
+                else {
+                    visibility = visibility && conditionVisibility;
+                }
+
+                if(!visibility && isAndOperator){
                     break;
                 }
             }
