@@ -116,8 +116,8 @@ public with sharing class HDT_WRP_PaperProcessingTst {
             paper.societa='test';
             paper.tipoLettera='test';
             listPaper.add(paper);
-            System.assertEquals(false, listPaper.isEmpty());
-            System.assertNotEquals(true, listPaper.isEmpty());
+            System.assertEquals(false, listPaper.isEmpty(),'The list of PaperProcessings was created');
+            System.assertNotEquals(true, listPaper.isEmpty(),'The list of PaperProcessings was not created');
             
             Test.stopTest();
 
