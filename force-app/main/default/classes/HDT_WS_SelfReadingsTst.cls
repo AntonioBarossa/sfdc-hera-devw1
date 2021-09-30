@@ -476,7 +476,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         mySetup();
         
         ServicePoint__c servPoint = [SELECT Id FROM ServicePoint__c];
-        Account acc = [SELECT Id FROM Account];
+        Account acc = [SELECT Id FROM Account][0];
         Date myDate = Date.newInstance(2011, 11, 18);
         Time myTime = Time.newInstance(3, 3, 3, 0);
         DateTime dt = DateTime.newInstance(myDate, myTime);
