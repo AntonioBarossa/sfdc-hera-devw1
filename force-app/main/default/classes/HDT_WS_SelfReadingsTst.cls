@@ -144,8 +144,13 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //ASSERTS
         System.assertEquals(400, RestContext.response.statusCode);
-        System.assert('KO'.equalsIgnoreCase(RestContext.response.outcome));
-        System.assert('Required field missing: commodity'.equalsIgnoreCase(RestContext.response.outcomeDescription));
+        
+        String responseWrap = RestContext.response.responseBody.toString();
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
+        resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
+        
+        System.assert('KO'.equalsIgnoreCase(responseWrap.response.outcome));
+        System.assert('Required field missing: commodity'.equalsIgnoreCase(responseWrap.response.outcomeDescription));
         
     }
     
@@ -174,8 +179,13 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //ASSERTS
         System.assertEquals(400, RestContext.response.statusCode);
-        System.assert('KO'.equalsIgnoreCase(RestContext.response.outcome));
-        System.assert('Required field missing: contractCode'.equalsIgnoreCase(RestContext.response.outcomeDescription));
+        
+        String responseWrap = RestContext.response.responseBody.toString();
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
+        resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
+        
+        System.assert('KO'.equalsIgnoreCase(responseWrap.response.outcome));
+        System.assert('Required field missing: contractCode'.equalsIgnoreCase(responseWrap.response.outcomeDescription));
         
     }
     
@@ -205,8 +215,13 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //ASSERTS
         System.assertEquals(400, RestContext.response.statusCode);
-        System.assert('KO'.equalsIgnoreCase(RestContext.response.outcome));
-        System.assert('Required field missing: readings'.equalsIgnoreCase(RestContext.response.outcomeDescription));
+        
+        String responseWrap = RestContext.response.responseBody.toString();
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
+        resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
+        
+        System.assert('KO'.equalsIgnoreCase(responseWrap.response.outcome));
+        System.assert('Required field missing: readings'.equalsIgnoreCase(responseWrap.response.outcomeDescription));
         
     }
     
