@@ -231,6 +231,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //SETUP
         Case myFakeCase = new Case();//WRONG TYPE PER CAUSARE ECCEZIONE
+        myFakeCase.Deposit__c = true;
         
         //REST CONTEXT
         RestRequest req = new RestRequest();
