@@ -44,7 +44,7 @@ public class HDT_LC_RequestVisitD2DCreateFormTst {
             Id visitId = visits[0].id;
             
             
-            List<PercentageRulesForAssigningVisits__c> percentages = HDT_UTL_DataFactoryTst.createPercentageRuleForAssigningVisits(1,false);
+            List<PercentageRulesForAssigningVisits__c> percentages = HDT_UTL_DataFactoryTst.createPercentageRulesForAssigningVisits(1,false,'testname',visitId);
             for(PercentageRulesForAssigningVisits__c p : percentages){
                 p.Agency__c = accId;
                 p.PercentageOfAssignment__c = 10;
