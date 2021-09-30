@@ -474,9 +474,16 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //SETUP
         mySetup();
-        
         ServicePoint__c servPoint = [SELECT Id FROM ServicePoint__c];
         Account acc = [SELECT Id FROM Account][0];
+        
+        //ORDER (Record Type for Test: Switch In)
+        Order myOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, acc.Id, 'Bozza')[0];
+        myOrder.ServicePoint__c = servPoint.Id;
+        myOrder.RecordTypeId = constants.ORDER_RECORDTYPEID_SWITCHIN;
+        
+        insert myOrder;
+        
         Date myDate = Date.newInstance(2011, 11, 18);
         Time myTime = Time.newInstance(3, 3, 3, 0);
         DateTime dt = DateTime.newInstance(myDate, myTime);
@@ -486,7 +493,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         flin.servicePointId = servPoint.Id;
         flin.accountId = acc.Id;
         flin.caseCreatedDateTime = dt;
-        flin.metadataRecordName = 'Autolettura_da_processo';
+        flin.metadataRecordName = 'Autolettura_da_processo';//TODO: ALTERNATIVE TEST
         
         List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs> inputs;
         inputs = new List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs>{flin};
