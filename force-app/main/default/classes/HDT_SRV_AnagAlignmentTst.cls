@@ -8,6 +8,9 @@ public class HDT_SRV_AnagAlignmentTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         servPointList[0].CommoditySector__c = 'Gas';
         servPointList[0].Account__c = accList[1].Id;
+        servPointList[0].SupplyType__c = 'A-Domestico';
+        servPointList[0].Disconnectable__c = 'No';
+        servPointList[0].DisconnectibilityType__c = 'Rilevanza continuità serv. GAS';
         insert servPointList;
 
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
@@ -28,9 +31,12 @@ public class HDT_SRV_AnagAlignmentTst {
 
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
 
+        ServicePoint__c svPoint = [SELECT Id FROM ServicePoint__c LIMIT 1];
+
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList[0].BillingProfile__c = billingProfileList[0].Id;
         caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
+        caseList[0].ServicePoint__c  = svPoint.Id;
         insert caseList;
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
@@ -68,7 +74,7 @@ public class HDT_SRV_AnagAlignmentTst {
     @IsTest
     static void testUpdateAnagAlignmentCaseServiceCatalog(){
 
-        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c FROM Case LIMIT 1];
+        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c, ServicePoint__c FROM Case LIMIT 1];
         
         Test.startTest();
 
@@ -87,11 +93,10 @@ public class HDT_SRV_AnagAlignmentTst {
         
     }
 
-
     @IsTest
     static void testUpdateAnagAlignmentCaseVarMarcaturaUsoPdr(){
 
-        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c FROM Case LIMIT 1];
+        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c, ServicePoint__c FROM Case LIMIT 1];
         
         Test.startTest();
 
@@ -113,7 +118,7 @@ public class HDT_SRV_AnagAlignmentTst {
     @IsTest
     static void testUpdateAnagAlignmentCaseVarIndFornitura(){
 
-        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c FROM Case LIMIT 1];
+        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c, ServicePoint__c FROM Case LIMIT 1];
         
         Test.startTest();
 
@@ -135,7 +140,7 @@ public class HDT_SRV_AnagAlignmentTst {
     @IsTest
     static void testUpdateAnagAlignmentCaseVarTariffaResNonRes(){
 
-        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c FROM Case LIMIT 1];
+        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c, ServicePoint__c FROM Case LIMIT 1];
         
         Test.startTest();
 
@@ -160,32 +165,7 @@ public class HDT_SRV_AnagAlignmentTst {
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
 
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f4 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f5 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f6 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-
-        f1.name = 'COD_FLUSSO';
-        f1.value = '0200';
-        f2.name = 'COD_SERVIZIO';
-        f2.value = 'VS2';
-        f3.name = 'COD_PRESTAZIONE';
-        f3.value = 'A01';
-        f4.name = 'COD_PRESA';
-        f4.value = servPoint.ServicePointCode__c;
-        f5.name = 'COD_PRAT_DISTR';
-        f5.value = 'A00000000288_DL';
-        f6.name = 'requestId';
-        f6.value = '';
-
-        fieldList.add(f1);
-        fieldList.add(f2);
-        fieldList.add(f3);
-        fieldList.add(f4);
-        fieldList.add(f5);
-        fieldList.add(f6);
+        fieldList = createFieldsList(fieldList, '0200','VS2', 'A01', servPoint.ServicePointCode__c, 'A00000000288_DL', '');
 
         HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
 
@@ -206,32 +186,7 @@ public class HDT_SRV_AnagAlignmentTst {
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
 
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f4 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f5 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f6 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-
-        f1.name = 'COD_FLUSSO';
-        f1.value = '0200';
-        f2.name = 'COD_SERVIZIO';
-        f2.value = 'VS2';
-        f3.name = 'COD_PRESTAZIONE';
-        f3.value = 'A01';
-        f4.name = 'COD_PRESA';
-        f4.value = servPoint.ServicePointCode__c;
-        f5.name = 'COD_PRAT_DISTR';
-        f5.value = '';
-        f6.name = 'requestId';
-        f6.value = '';
-
-        fieldList.add(f1);
-        fieldList.add(f2);
-        fieldList.add(f3);
-        fieldList.add(f4);
-        fieldList.add(f5);
-        fieldList.add(f6);
+        fieldList = createFieldsList(fieldList, '0200', 'VS2', 'A01', servPoint.ServicePointCode__c, '', '');
 
         HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
 
@@ -251,38 +206,19 @@ public class HDT_SRV_AnagAlignmentTst {
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
 
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f4 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f5 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f6 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        
-        f1.name = 'COD_FLUSSO';
-        f1.value = '0200';
-        f2.name = 'COD_SERVIZIO';
-        f2.value = 'VS2';
-        f3.name = 'COD_PRESTAZIONE';
-        f3.value = 'N02';
-        f4.name = 'COD_PRESA';
-        f4.value = servPoint.ServicePointCode__c;
-        f5.name = 'COD_PRAT_DISTR';
-        f5.value = 'A00000000288_DL';
-        f6.name = 'requestId';
-        f6.value = '';
-        
-        fieldList.add(f1);
-        fieldList.add(f2);
-        fieldList.add(f3);
-        fieldList.add(f4);
-        fieldList.add(f5);
-        fieldList.add(f6);
+        fieldList = createFieldsList(fieldList, '0200', 'VS2', 'N02', servPoint.ServicePointCode__c, 'A00000000288_DL', '');
         
         HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
         
         Test.startTest();
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"PRESSIONE","valore":"200008867681"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
         
-        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock());
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
 
         Case cs = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(herokuWrapper);
 
@@ -298,45 +234,49 @@ public class HDT_SRV_AnagAlignmentTst {
 
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
 
-        AccountContactRelation accConRel = [SELECT Id, Roles FROM AccountContactRelation LIMIT 1];
-
-        System.debug('AccountContactRelation Roles: ' + accConRel.Roles);
-
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f4 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f5 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        HDT_WRP_MrrRequest.HDT_WRP_Field f6 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
-        
-        f1.name = 'COD_FLUSSO';
-        f1.value = '0200';
-        f2.name = 'COD_SERVIZIO';
-        f2.value = 'VS2';
-        f3.name = 'COD_PRESTAZIONE';
-        f3.value = 'F01';
-        f4.name = 'COD_PRESA';
-        f4.value = servPoint.ServicePointCode__c;
-        f5.name = 'COD_PRAT_DISTR';
-        f5.value = 'A00000000288_DL';
-        f6.name = 'requestId';
-        f6.value = '';
-        
-        fieldList.add(f1);
-        fieldList.add(f2);
-        fieldList.add(f3);
-        fieldList.add(f4);
-        fieldList.add(f5);
-        fieldList.add(f6);
+        fieldList = createFieldsList(fieldList,'0200','VS2', 'F01', servPoint.ServicePointCode__c,'A00000000288_DL','');
         
         HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
         
         Test.startTest();
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"IMPOSTE","valore":"200008867681"},{"campo":"STAMPADEL501GAS","valore":"200008867681"},{"campo":"ACCISE","valore":"200008867681"},{"campo":"CA","valore":"200008867681"},{"campo":"PRESSIONE","valore":"200008867681"},{"campo":"CALIBRO1","valore":"200008867681"},{"campo":"DESCRFATTURACOLL","valore":"200008867681"},{"campo":"OPZIONE","valore":"200008867681"},{"campo":"MOTIVOBLOCCOCALCOLO","valore":"200008867681"},{"campo":"ANNOFABBRCONT","valore":"2021"},{"campo":"DATACESSAZIONE","valore":"20210930"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
         
-        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock());
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
 
         Case cs = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(herokuWrapper);
+
+        System.assert(cs != null, 'cs == null');
+        System.assert(cs.Id != null, 'cs.Id == null');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testHandleResponse(){
+
+        ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
+        Case currentCase = [SELECT Id, Type, ServicePoint__c FROM Case LIMIT 1];
+
+        Test.startTest();
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"IMPOSTE","valore":"200008867681"},{"campo":"STAMPADEL501GAS","valore":"200008867681"},{"campo":"ACCISE","valore":"200008867681"},{"campo":"CA","valore":"200008867681"},{"campo":"PRESSIONE","valore":"200008867681"},{"campo":"CALIBRO1","valore":"200008867681"},{"campo":"DESCRFATTURACOLL","valore":"200008867681"},{"campo":"OPZIONE","valore":"200008867681"},{"campo":"MOTIVOBLOCCOCALCOLO","valore":"200008867681"},{"campo":"ANNOFABBRCONT","valore":"2021"},{"campo":"DATACESSAZIONE","valore":"20210930"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
+
+        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(servPoint.ServicePointCode__c, null);
+
+        Case cs = HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
 
         System.assert(cs != null, 'cs == null');
         System.assert(cs.Id != null, 'cs.Id == null');
@@ -349,7 +289,7 @@ public class HDT_SRV_AnagAlignmentTst {
     static void testHandleAnagAlignmentSObject(){
 
 
-        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c FROM Case LIMIT 1];
+        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c, ServicePoint__c FROM Case LIMIT 1];
 
         Test.startTest();
 
@@ -367,10 +307,17 @@ public class HDT_SRV_AnagAlignmentTst {
     @IsTest
     static void testHandleAnagAlignmentSObjectVarAnagrCli(){
 
-
-        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c FROM Case LIMIT 1];
+        Case cs = [Select Id, AccountId, ContactId, CommodityFormula__c, CausalCode__c, ServicePoint__c FROM Case LIMIT 1];
 
         Test.startTest();
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"PRESSIONE","valore":"200008867681"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
 
         List<Case> resVarAnagraficaCli = HDT_SRV_AnagAlignment.handleAnagAlignment(cs, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
         System.assert(resVarAnagraficaCli.size() > 0, 'resVarAnagraficaCli.size() > 0 or resVarAnagraficaCli == null');
@@ -413,7 +360,13 @@ public class HDT_SRV_AnagAlignmentTst {
         
         Test.startTest();
 
-        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock());
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"PRESSIONE","valore":"200008867681"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
 
         HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs inputs = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoFlowInputs();
         inputs.contractCode = 'codiceContratto';
@@ -430,18 +383,48 @@ public class HDT_SRV_AnagAlignmentTst {
         
     }
 
-    public class HDT_SRV_AnagAlignmentTstMock implements HttpCalloutMock {
-        // Implement this interface method
+    public class HDT_SRV_AnagAlignmentTstMock implements HttpCalloutMock{
+        HttpResponse response;
+        HDT_SRV_AnagAlignmentTstMock(HttpResponse r){
+            response = r;
+        }
         public HTTPResponse respond(HTTPRequest request) {
-            // Create a fake response
-            HttpResponse response = new HttpResponse();
-            response.setHeader('Content-Type', 'application/json');
-            response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"campo","valore":"valore"}]}}');
-            response.setStatusCode(200);
-            response.setStatus('OK');
             return response; 
         }
+    
     }
 
+    public static List<HDT_WRP_MrrRequest.HDT_WRP_Field> createFieldsList(List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList, String codFlusso, String codServizio, String codPrestazione, String codPresa, String codPratDistr, String reqId){
+
+        HDT_WRP_MrrRequest.HDT_WRP_Field f1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        HDT_WRP_MrrRequest.HDT_WRP_Field f2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        HDT_WRP_MrrRequest.HDT_WRP_Field f3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        HDT_WRP_MrrRequest.HDT_WRP_Field f4 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        HDT_WRP_MrrRequest.HDT_WRP_Field f5 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        HDT_WRP_MrrRequest.HDT_WRP_Field f6 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+
+        f1.name = 'COD_FLUSSO';
+        f1.value = codFlusso;
+        f2.name = 'COD_SERVIZIO';
+        f2.value = codServizio;
+        f3.name = 'COD_PRESTAZIONE';
+        f3.value = codPrestazione;
+        f4.name = 'COD_PRESA';
+        f4.value = codPresa;
+        f5.name = 'COD_PRAT_DISTR';
+        f5.value = codPratDistr;
+        f6.name = 'requestId';
+        f6.value = reqId;
+        
+        fieldList.add(f1);
+        fieldList.add(f2);
+        fieldList.add(f3);
+        fieldList.add(f4);
+        fieldList.add(f5);
+        fieldList.add(f6);
+
+        return fieldList;
+
+    }
 
 }
