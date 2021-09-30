@@ -67,7 +67,7 @@ public with sharing class HDT_QR_AnagAlignment {
             SupplyStreetName__c,
             SupplyStreetNumber__c,
             SupplyType__c,
-            SupplyStreetNumberExtension__c
+            SupplyStreetNumberExtension__c,
             // Campi sezione Tributi e Dati Commerciali
             VAT__c,
             ExciseEle__c,
