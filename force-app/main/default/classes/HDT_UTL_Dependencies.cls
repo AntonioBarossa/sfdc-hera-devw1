@@ -3,6 +3,7 @@
 * @date 13/07/2021
 * @description HDT_UTL_Dependencies – Classe di utilità per la gestione della sequenzializzazione dei processi
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_Dependencies {
     
     public static final String STATUS_BOZZA = 'Bozza';
@@ -53,7 +54,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                         incomingProcesses.add(sr);
                     }
                 }catch(Exception ex){
-                    System.debug(ex.getMessage());
+                    System.debug(LoggingLevel.ERROR, ex.getMessage());
                 }
             }
         }else if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
@@ -77,7 +78,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                     
                 }catch(Exception ex){
-                    System.debug(ex.getMessage());
+                    System.debug(LoggingLevel.ERROR, ex.getMessage());
                 }
             }
         }
@@ -147,7 +148,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                 processesToUpdate = getProcessesToUpdate(incomingProcesses, dependenciesMap);
             }
         } catch (Exception ex) {
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.ERROR, ex.getMessage());
         }
         return processesToUpdate;
     }
@@ -281,7 +282,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }catch(Exception ex){
-                System.debug(ex.getMessage());
+                System.debug(LoggingLevel.ERROR, ex.getMessage());
             }
             
             results.put('serviceRequest',serviceRequestsToBeSequenced);
@@ -289,7 +290,7 @@ public inherited sharing class HDT_UTL_Dependencies {
             results.put('order',ordersToBeUpdated);
 
         } catch (Exception ex) {
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.ERROR, ex.getMessage());
         }
 
         return results;
@@ -317,7 +318,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                 update serviceRequestsToBeSequenced;
             }
         }catch(Exception ex){
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.ERROR, ex.getMessage());
             Database.rollback(sp);
         }
     }
