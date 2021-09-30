@@ -65,7 +65,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 recordId+'\' LIMIT 1';
             system.debug(query);
             try{
-                genericSObject = (SObject) Database.query(query);
+                genericSObject = (SObject) Database.query(String.escapeSingleQuotes(query));
             }catch(Exception e){
                 throw new HDT_UTL_FormatTextScriptException(
                         'ERRORE DATABASE QUERY, SOQL: # '
