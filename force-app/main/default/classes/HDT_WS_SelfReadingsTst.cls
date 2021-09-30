@@ -221,7 +221,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
         
         System.assert('KO'.equalsIgnoreCase(resp.outcome));
-        System.assert('Required field missing: readings'.equalsIgnoreCase(resp.outcomeDescription));
+        System.assert('Required child object missing: readings'.equalsIgnoreCase(resp.outcomeDescription));
         
     }
     
