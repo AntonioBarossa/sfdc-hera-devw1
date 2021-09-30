@@ -27,7 +27,7 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             Order ord = new Order();
             ord.id = vo.Order__c;
             ord.SignedDate__c = vo.createddate.date();
-            ord.MethodSignedAccepted__c = 'Vocal Order';
+            ord.MethodSignedAccepted__c = 'web assistito';
             //orderToUpdate.add(ord);
             orderToUpdate.put(ord.id,ord);
         }
@@ -36,7 +36,7 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             Order ord = new Order();
             ord.id = childOrder.id;
             ord.SignedDate__c = orderToUpdate.get(ord.ParentOrder__c).SignedDate__c;
-            ord.MethodSignedAccepted__c = 'Vocal Order';
+            ord.MethodSignedAccepted__c = 'web assistito';
             orderToUpdate.put(ord.id,ord);
         }
     }
