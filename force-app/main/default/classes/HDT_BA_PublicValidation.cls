@@ -31,11 +31,11 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             //orderToUpdate.add(ord);
             orderToUpdate.put(ord.id,ord);
         }
-        List<order> childOrder = orderQr.getChildOrdersByParentIds(parentOrderId);
-        for(Order ord : childOrder){
+        List<order> childOrder = orderQr.getChildOrdersByParentIds(orderParentList);
+        for(Order child : childOrder){
             Order ord = new Order();
-            ord.id = childOrder.id;
-            ord.SignedDate__c = orderToUpdate.get(ord.ParentOrder__c).SignedDate__c;
+            ord.id = child.id;
+            ord.SignedDate__c = orderToUpdate.get(child.ParentOrder__c).SignedDate__c;
             ord.MethodSignedAccepted__c = 'web assistito';
             orderToUpdate.put(ord.id,ord);
         }
