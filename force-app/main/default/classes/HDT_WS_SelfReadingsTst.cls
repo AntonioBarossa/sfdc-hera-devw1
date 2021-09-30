@@ -473,11 +473,20 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void utl_isProcessReadingTest(){
         
         //SETUP
+        mySetup();
         
-        
+        ServicePoint__c servPoint = [SELECT Id FROM ServicePoint__c];
+        Account acc = [SELECT Id FROM Account];
+        Date myDate = Date.newInstance(2011, 11, 18);
+        Time myTime = Time.newInstance(3, 3, 3, 0);
+        DateTime dt = DateTime.newInstance(myDate, myTime);
         
         HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs flin;
         flin = new HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs();
+        flin.servicePointId = servPoint.Id;
+        flin.accountId = acc.Id;
+        flin.caseCreatedDateTime = dt;
+        flin.metadataRecordName = '';
         
         List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs> inputs;
         inputs = new List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs>{flin};
