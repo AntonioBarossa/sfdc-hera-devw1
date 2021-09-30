@@ -225,6 +225,37 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
     }
     
+    ///ERRORE 500
+    @isTest
+    private static void doPostTest_Error500() {
+        
+        //SETUP
+        Case myFakeCase = new Case();
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestBody = Blob.valueof(JSON.serialize(myFakeCase));
+        
+        RestContext.request =req;
+        RestContext.response = res;
+        
+        //TESTING
+        HDT_WS_SelfReadings.doPost();
+        
+        //ASSERTS
+        System.assertEquals(500, RestContext.response.statusCode);
+        
+        String responseWrap = RestContext.response.responseBody.toString();
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse resp;
+        resp = (HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse) JSON.deserialize(responseWrap, HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsResponse.class);
+        
+        System.assert('KO'.equalsIgnoreCase(resp.outcome));
+        System.assert(resp.outcomeDescription.contains('Error while parsing JSON body: '));
+        
+    }
+    
+    
     
     //TODO: POSSIBILE CHE VADA TESTATA A MANO PARTE DI HDT_UTL_SelfReadings
     ///TODO: CASI CON REQUEST OUTCOME NON 'OK' DI DEFAULT per upsertInboundSelfReading
