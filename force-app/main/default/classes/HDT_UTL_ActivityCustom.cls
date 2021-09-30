@@ -73,9 +73,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
         List<Account> accountListRetrieved = new List<Account>();
 
-        if (params.get('FiscalCode__c') != null && params.get('VATNumber__c') != null) {
+        if (String.isNotBlank(params.get('FiscalCode__c')) && String.isNotBlank(params.get('VATNumber__c'))) {
             accountListRetrieved = accountQr.getAccountByFiscalCodeAndVat(params.get('FiscalCode__c'), params.get('VATNumber__c'));
-        } else if(params.get('FiscalCode__c') != null){
+        } else if(String.isNotBlank(params.get('FiscalCode__c'))){
             accountListRetrieved = accountQr.getAccountByFiscalCode(params.get('FiscalCode__c'));
         } else {
             accountListRetrieved = accountQr.getAccountByVat(params.get('VATNumber__c'));
@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             ServicePointCode__c = params.get('ServicePointCode__c'),
             Account__c = !accountListRetrieved.isEmpty() ? accountListRetrieved[0].Id : null,
             Status__c = params.get('Status__c'),
-            EffectiveDate__c = params.get('EffectiveDate__c') != null ? Date.valueOf(params.get('EffectiveDate__c')) : null,
+            EffectiveDate__c = String.isNotBlank(params.get('EffectiveDate__c')) ? Date.valueOf(params.get('EffectiveDate__c')) : null,
             HerokuPracticeCode__c = params.get('HerokuPracticeCode__c')
         ));
 
