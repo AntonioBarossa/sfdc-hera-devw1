@@ -468,8 +468,30 @@ public with sharing class HDT_WS_SelfReadingsTst {
     }
     
     
-    //HDT_UTL_SelfReadings
-    //TODO: METODO isProcessReading di HDT_UTL_SelfReadings
+    //HDT_UTL_SelfReadings.isProcessReading
+    @isTest
+    private static void utl_isProcessReadingTest(){
+        
+        //SETUP
+        
+        
+        
+        HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs flin;
+        flin = new HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs();
+        
+        List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs> inputs;
+        inputs = new List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs>{flin};
+        
+        //TESTING
+        List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowOutputs> resultList;
+        resultList = HDT_UTL_SelfReadings.isProcessReading(inputs);
+        
+        HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowOutputs result = resultList[0];
+        
+        
+        //ASSERTS
+        
+    }
     
     
 }
