@@ -1437,6 +1437,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Civico','SupplyStreetNumber__c', this.typeVisibility('both'), true, true, '',''),                  
+                    new fieldData('Barrato','SupplyStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Localita','SupplyPlace__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Provincia','SupplyState__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Cap','SupplyPostalCode__c', this.typeVisibility('both'), true, true, '',''),                  
@@ -1480,6 +1481,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
+                    new fieldData('Barrato','BillingStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),            
                     {
                         'label': 'Civico',
                         'apiname': 'BillingStreetNumber__c',
