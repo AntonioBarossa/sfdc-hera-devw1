@@ -17,9 +17,12 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 
 			HDT_UTL_DataFactoryTst.pClickInstance();
 			HDT_UTL_DataFactoryTst.pClickCasePhase();
+			HDT_UTL_DataFactoryTst.pClickOrderPhase();
 			String caseId=constants.CASE_RECORDTYPEID_MOROSITA;
+			String orderId = constants.ORDER_RECORDTYPEID_DEFAULT;
 			HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', caseId, 'HDT_RT_Morosita');
 			HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'In Lavorazione', caseId, 'HDT_RT_Morosita');
+			HDT_UTL_DataFactoryTst.newPhaseTransition('n Lavorazione', 'Bozza', orderId, 'HDT_RT_Default');
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
@@ -69,14 +72,21 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			                        WHERE Name='test account0'
 			                        LIMIT 1];
 
+			List<Order> tOrder=[SELECT Id, Name
+			                        FROM Order
+			                        WHERE Name='testOrderName0'
+			                        LIMIT 1];
+
+			tOrder[0].Status = 'In Lavorazione';
+			update tOrder;
 			List<Order> getAccOrder=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto firmato');
 			List<Order> getAccOrder1=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto non firmato');
 			List<Order> getAccOrder2=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia della registrazione');
 
 			test.stopTest();
 
-			System.assertEquals(true, getAccOrder.isEmpty(), 'Order returned');
-			System.assertNotEquals(false, getAccOrder.isEmpty());
+			System.assertEquals(false, getAccOrder.isEmpty(), 'Order returned');
+			System.assertNotEquals(true, getAccOrder.isEmpty());
 		}
 	}
 
