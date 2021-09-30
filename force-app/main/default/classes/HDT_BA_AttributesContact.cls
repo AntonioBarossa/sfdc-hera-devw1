@@ -331,4 +331,5 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',errorMessage,listIdContentVersion);
 
     }
+	
 }
