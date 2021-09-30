@@ -2584,4 +2584,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return expDays;
 	}
 	
+	public static List<Asset> createAsset(Integer amount, Boolean doInsert, String companyOwner) {
+
+		List<Asset> assetList = new List<Asset>();
+
+		for (Integer i=0; i<amount; i++){
+
+			Asset asset = new Asset(
+				Name = 'testAsset',
+				CompanyOwner__c = companyOwner
+        	);
+
+			assetList.add(asset);
+		}
+
+		if (doInsert){
+
+			insert assetList;
+		}
+
+		return assetList;
+	}
 }
