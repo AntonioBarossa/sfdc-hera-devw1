@@ -486,7 +486,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         flin.servicePointId = servPoint.Id;
         flin.accountId = acc.Id;
         flin.caseCreatedDateTime = dt;
-        flin.metadataRecordName = '';
+        flin.metadataRecordName = 'Autolettura_da_processo';
         
         List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs> inputs;
         inputs = new List<HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs>{flin};
@@ -499,9 +499,12 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         
         //ASSERTS
-        
+        System.assert(result.isProcessReading, 'Asserzione fallita: result.isProcessReading non è true.');
         
     }
+    
+    //TODO: TEST CON METADATO NON TROVATO (metadataRecordName empty)
+    
     
     
 }
