@@ -8,7 +8,6 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
 
  
     public HDT_QBL_SIE34_3File2(String varRunId,Date varDate,String varFileType, List<String> varContentVersionIds ) {
-       System.debug('Start HDT_QBL_SIE34_3File2');
        this.runId               = varRunId;
        this.filterDate          = varDate;
        this.fileType            = varFileType;
@@ -16,9 +15,7 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
     }
  
  
-    public void execute(QueueableContext context) {
-       System.debug('HDT_QBL_SIE34_3File2.execute');
- 
+    public void execute(QueueableContext context) { 
        String status     = 'success'            ;
        String condition  = ' WHERE Cluster__c IN (\'Disattivazioni\',\'Morosità\') AND Type=\'Interruzione Fornitura\' AND Status !=\'Closed\' AND LastModifiedDate >=:filterDate ';
        String query      = 'SELECT Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,Subscription__r.SBQQ__ProductName__c FROM Case';
@@ -32,7 +29,7 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
             query = 'SELECT CancellationReasonCode__c,ServicePoint__r.SupplyStreetNumberExtension__c,Account.BillingStreetNumberExtension__c,Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,Subscription__r.SBQQ__ProductName__c FROM Case';
             List<Case> listCase2 = Database.query(query+condition);
             for (Case tempCase : listCase2) {
-             String row = Account.LastName__c                                                 +separator+                                                                                        
+            String row = Account.LastName__c                                                 +separator+                                                                                        
             tempCase.Account.FirstName__c                                                     +separator+                                                                                         
             tempCase.Account.LastName__c                                                      +separator+                                                                                        
             tempCase.Account.CustomerCode__c                                                  +separator+                                                                                            
@@ -91,9 +88,7 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
           errorMessage=e.getMessage();
           status='failed';
        }
-       System.debug('contentVersionIds'+contentVersionIds);
        Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
-       System.debug('jobId: '+jobID);
     }
   
  }
