@@ -37,6 +37,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
+        HDT_UTL_OrderProcess.updateServicePointToComplete(trigger.old,trigger.new);
        // HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
     }
     public override void afterUpdate() {

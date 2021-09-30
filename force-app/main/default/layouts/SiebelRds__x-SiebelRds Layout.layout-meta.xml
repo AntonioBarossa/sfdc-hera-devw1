@@ -1597,6 +1597,15 @@
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>
+        <fields>DESC_ALLEGATO__c</fields>
+        <fields>DisplayUrl</fields>
+        <fields>CREATED__c</fields>
+        <relatedList>SiebelDocumentActivity__x.ID_RDS__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
         <fields>CREATED__c</fields>
         <fields>ATTRIB_03__c</fields>
         <fields>ATTRIB_02__c</fields>

@@ -122,6 +122,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
+        Date tempStart = order.TemporaryConnectionStartDate__c;
+        Date tempEnd = order.TemporaryConnectionEndDate__c;
+        Boolean tempDate = tempEnd < tempStart;
+
+        if(order.TemporaryConnectionStartDate__c != null 
+        && order.TemporaryConnectionEndDate__c != null
+        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
+            throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
+        }
+
         exeChecks(order);
 
         orderSrv.updateRecord(order);
