@@ -196,7 +196,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     }
 
     public static Set<String> getFamilySconto(){
-        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED group by ProductFamily__c  ];
+        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED  group by ProductFamily__c  ];
         Set<String> famils = new Set<String>();
         for(AggregateResult ag : lgr){
             if(String.isNotBlank((String) ag.get('fam')))

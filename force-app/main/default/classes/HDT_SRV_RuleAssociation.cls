@@ -66,18 +66,18 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
         HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult = new HDT_WRP_ProductAssociation.HDT_WRP_InsertResult();
 
-        List<Product2> prod2list;
-        List<SBQQ__ProductFeature__c> productFeatureList;
-        Map<Id, Id> productIdFeatureIdMap;
+        //List<Product2> prod2list;
+        //List<SBQQ__ProductFeature__c> productFeatureList;
+        //Map<Id, Id> productIdFeatureIdMap;
 
-        System.debug('>>> PRODUCT ID: ' + configurationRuleToClone.SBQQ__Product__c);
+        System.debug('>>> PRODUCT RULE ID: ' + configurationRuleToClone.SBQQ__ProductRule__c);
 
         //prod2list = HDT_QR_ProductAssociation.getProductOption2recordBySkuId(prod2list, configurationRuleToClone.SBQQ__Product__c);
-//
+
         //System.debug('>>> prod2listsize ' + prod2list.size());
         //System.debug('>>> family ' + prod2list[0].Family);
 
-        productIdFeatureIdMap = new Map<Id, Id>();
+        //productIdFeatureIdMap = new Map<Id, Id>();
 
         //if(prod2list != null && prod2list.size() > 0){
         //    productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
@@ -129,7 +129,6 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
                     HDT_WRP_ProductAssociation.HDT_WRP_LineError lineError = new HDT_WRP_ProductAssociation.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.rowId = itemList[n].SBQQ__Product__c;
@@ -159,7 +158,6 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
                 if (!dr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
                     HDT_WRP_ProductAssociation.HDT_WRP_LineError lineError = new HDT_WRP_ProductAssociation.HDT_WRP_LineError();
                     for(Database.Error err : dr.getErrors()) {
                         lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';

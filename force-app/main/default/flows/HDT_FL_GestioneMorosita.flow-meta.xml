@@ -127,30 +127,30 @@
         <name>Assegna_Fase_In_Da_Inviare</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>996</locationX>
-        <locationY>2750</locationY>
+        <locationY>2990</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.CausalCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcola_Codice_Causale_0.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.OperationCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcola_Codice_Causale_0.OperationCode__c</elementReference>
@@ -201,16 +201,16 @@
         <name>Assegna_Fase_In_Lavorazione</name>
         <label>Assegna Fase In Lavorazione</label>
         <locationX>732</locationX>
-        <locationY>2630</locationY>
+        <locationY>2870</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -264,6 +264,22 @@
         </assignmentItems>
         <connector>
             <targetReference>GetInputCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
+        <locationX>864</locationX>
+        <locationY>2630</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.SelfCertificationAcquisitionAsl__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AutoCertAslUppercase</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Serivizio_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -606,7 +622,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Serivizio_0</targetReference>
+                <targetReference>GetCaseAggiornato</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -615,7 +631,7 @@
         <name>Serivizio_0</name>
         <label>Serivizio?</label>
         <locationX>864</locationX>
-        <locationY>2510</locationY>
+        <locationY>2750</locationY>
         <defaultConnector>
             <targetReference>Calcola_Codice_Causale_0</targetReference>
         </defaultConnector>
@@ -637,6 +653,11 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del cluster morosità</description>
+    <formulas>
+        <name>AutoCertAslUppercase</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!GetCaseAggiornato.SelfCertificationAcquisitionAsl__c}),&quot;&quot;,UPPER({!GetCaseAggiornato.SelfCertificationAcquisitionAsl__c}))</expression>
+    </formulas>
     <formulas>
         <name>DefaultAmount</name>
         <dataType>Currency</dataType>
@@ -813,7 +834,7 @@
         <name>Calcola_Codice_Causale_0</name>
         <label>Calcola Codice Causale</label>
         <locationX>996</locationX>
-        <locationY>2630</locationY>
+        <locationY>2870</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Fase_In_Da_Inviare</targetReference>
@@ -852,6 +873,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseAggiornato</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>864</locationX>
+        <locationY>2510</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValori</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetChildSospensione</name>
         <label>GetChildSospensione</label>
         <locationX>1518</locationX>
@@ -860,7 +902,7 @@
         <connector>
             <targetReference>CaseTrovato</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6 OR 7)</filterLogic>
         <filters>
             <field>ParentId</field>
             <operator>EqualTo</operator>
@@ -880,6 +922,34 @@
             <operator>NotEqualTo</operator>
             <value>
                 <elementReference>GetCreatedCase.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Comunicazione verso Heroku OK</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Inviato al DL</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Ammissibilità OK</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1056,8 +1126,8 @@
         <name>AggiornaCase_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>732</locationX>
-        <locationY>2750</locationY>
-        <inputReference>GetInputCase</inputReference>
+        <locationY>2990</locationY>
+        <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0_0_0</name>
@@ -1070,11 +1140,11 @@
         <name>AggiornaCase_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>996</locationX>
-        <locationY>2870</locationY>
+        <locationY>3110</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
-        <inputReference>GetInputCase</inputReference>
+        <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCreatedCase_0</name>
@@ -1511,7 +1581,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>996</locationX>
-        <locationY>2990</locationY>
+        <locationY>3230</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
