@@ -114,7 +114,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         }
 
         if (parentOrder.SignatureMethod__c=='Vocal Order') {
-            if (parentOrder.ServicePoint__r.SupplyType__c=='Domestico') {
+            if (parentOrder.ServicePoint__r.SupplyTypeTemp__c=='Domestico') {
                 script = 'HERA IMPRONTA ZERO GAS V9 - AZIENDE';
             }
             else {
