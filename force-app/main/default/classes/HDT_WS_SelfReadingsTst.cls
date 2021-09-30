@@ -230,7 +230,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void doPostTest_Error500() {
         
         //SETUP
-        Case myFakeCase = new Case();
+        Case myFakeCase = new Case();//WRONG TYPE PER CAUSARE ECCEZIONE
         
         //REST CONTEXT
         RestRequest req = new RestRequest();
