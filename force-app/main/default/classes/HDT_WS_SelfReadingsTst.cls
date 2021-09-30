@@ -493,6 +493,10 @@ public with sharing class HDT_WS_SelfReadingsTst {
         //ORDER (Record Type for Test: Switch In)
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         
+        String rtId = constants.ORDER_RECORDTYPEID_SWITCHIN;
+        String rtName = constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
+        
         Order myOrder = [SELECT Id FROM Order];
         myOrder.Phase__c = 'Da Inviare';
         update myOrder;
