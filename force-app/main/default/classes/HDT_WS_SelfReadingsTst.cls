@@ -8,7 +8,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     private static Boolean skipError_ACR = true;//USATO PER INDURRE ERRORE MISSING PRIMARY CONTACT ON ACCOUNT
     private static Boolean isGas = true;
-    private static Boolean isManualOrder = false;
+    private static Boolean isRegularOrder = true;
     
     //TODO: UNCOMMENT IN CLASSI TESTATE DEI DEBUG COME PREVISTO DA MERGE COMMIT
     
@@ -22,7 +22,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         
         List<Order> ordList;
-        if(isManualOrder){
+        if(isRegularOrder){
             ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
             
         } else {
@@ -485,7 +485,9 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void utl_isProcessReadingTest(){
         
         //SETUP
+        isRegularOrder = false;
         mySetup();
+        
         ServicePoint__c servPoint = [SELECT Id FROM ServicePoint__c];
         Account acc = [SELECT Id FROM Account][0];
         
@@ -494,9 +496,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         Order myOrder = [SELECT Id FROM Order];
         myOrder.Phase__c = 'Da Inviare';
-        
         update myOrder;
-        
         
         
         Date myDate = Date.newInstance(2011, 11, 18);
