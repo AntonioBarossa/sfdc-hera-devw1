@@ -468,6 +468,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             //selectedRecord.forEach(r => {
             //    r[this.detailTable] = [];
             //});
+
+            if(this.errorCheck(parameters, selectedRecord[0])){
+                return;
+            }
+
             var recordsString = JSON.stringify(selectedRecord);
             this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
         } else {
@@ -480,6 +485,26 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             );
         }
  
+    }
+
+    errorCheck(parameters, record){
+        var obj = JSON.parse(parameters);
+        console.log('>>> contract: ' + record.contratto);
+        console.log('>>> processType: ' + obj.processType);
+
+        if(obj.processType === 'Errore di Fatturazione' && (record.contratto === undefined || record.contratto.charAt(0) != '3')){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non è prsente il contratto',
+                    variant: 'warning'
+                })
+            );
+            return true;
+        }
+
+        return false;
+
     }
 
     serviceCatalogBackendOperation(recordsString, serviceOperation, parameters){

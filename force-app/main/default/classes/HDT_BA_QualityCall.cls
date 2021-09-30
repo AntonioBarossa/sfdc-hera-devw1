@@ -51,6 +51,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
 
+        String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
+
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
@@ -85,7 +87,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                                 Account__c = ord.AccountId,
                                 Type__c = 'Quality Call',
                                 Status__c = 'Creata',
-                                OwnerId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id
+                                OwnerId = comfortQualityQueId
                         );
         
                         if (ord.QualityCallUnique__c) {
