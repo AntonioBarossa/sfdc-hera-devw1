@@ -7,6 +7,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     private static Boolean skipError_ACR = true;//USATO PER INDURRE ERRORE MISSING PRIMARY CONTACT ON ACCOUNT
+    private static Boolean isGas = true;
     
     //TODO: UNCOMMENT IN CLASSI TESTATE DEI DEBUG COME PREVISTO DA MERGE COMMIT
     
@@ -196,7 +197,137 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
     }
     
-    //TODO: COMMODITY ELETTRICITà
+    //COMMODITY ELETTRICITà
+    @isTest
+    private static void doPostTest_NotGas() {
+        
+        //SETUP
+        mySetup();
+        Case myCase = [SELECT Id, Cluster__c , Type FROM Case];
+        Contract myContract = [SELECT Id, SAPContractCode__c FROM Contract];
+        
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData reading = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsData();
+        //reading.id;
+        reading.mru = 'TEST_MRU';
+        //reading.sendTo = 'TEST_SENDTO';
+        
+        reading.digits1 = 'T1';
+        reading.digits2 = 'T2';
+        reading.digits3 = 'T3';
+        reading.digits4 = 'T4';
+        reading.digits5 = 'T5';
+        reading.digits6 = 'T6';
+        reading.digits7 = 'T7';
+        reading.digits8 = 'T8';
+        reading.digits9 = 'T9';
+        
+        reading.date1 = Date.today();
+        reading.date2 = Date.today();
+        reading.date3 = Date.today();
+        reading.date4 = Date.today();
+        reading.date5 = Date.today();
+        reading.date6 = Date.today();
+        reading.date7 = Date.today();
+        reading.date8 = Date.today();
+        reading.date9 = Date.today();
+        
+        reading.band1 = 'B1';
+        reading.band2 = 'B2';
+        reading.band3 = 'B3';
+        reading.band4 = 'B4';
+        reading.band5 = 'B5';
+        reading.band6 = 'B6';
+        reading.band7 = 'B7';
+        reading.band8 = 'B8';
+        reading.band9 = 'B9';
+        
+        reading.value1 = 10.1;
+        reading.value2 = 10.2;
+        reading.value3 = 10.3;
+        reading.value4 = 10.4;
+        reading.value5 = 10.5;
+        reading.value6 = 10.6;
+        reading.value7 = 10.7;
+        reading.value8 = 10.8;
+        reading.value9 = 10.9;
+        
+        reading.serialNumber1 = 'TEST_SER_NUM_1';
+        reading.serialNumber2 = 'TEST_SER_NUM_2';
+        reading.serialNumber3 = 'TEST_SER_NUM_3';
+        reading.serialNumber4 = 'TEST_SER_NUM_4';
+        reading.serialNumber5 = 'TEST_SER_NUM_5';
+        reading.serialNumber6 = 'TEST_SER_NUM_6';
+        reading.serialNumber7 = 'TEST_SER_NUM_7';
+        reading.serialNumber8 = 'TEST_SER_NUM_8';
+        reading.serialNumber9 = 'TEST_SER_NUM_9';
+        
+        reading.register1 = 'TR1';
+        reading.register2 = 'TR2';
+        reading.register3 = 'TR3';
+        reading.register4 = 'TR4';
+        reading.register5 = 'TR5';
+        reading.register6 = 'TR6';
+        reading.register7 = 'TR7';
+        reading.register8 = 'TR8';
+        reading.register9 = 'TR9';
+        
+        reading.type1 = 'TEST_type1';
+        reading.type2 = 'TEST_type2';
+        reading.type3 = 'TEST_type3';
+        reading.type4 = 'TEST_type4';
+        reading.type5 = 'TEST_type5';
+        reading.type6 = 'TEST_type6';
+        reading.type7 = 'TEST_type7';
+        reading.type8 = 'TEST_type8';
+        reading.type9 = 'TEST_type9';
+        
+        reading.unit1 = 'TU1';
+        reading.unit2 = 'TU2';
+        reading.unit3 = 'TU3';
+        reading.unit4 = 'TU4';
+        reading.unit5 = 'TU5';
+        reading.unit6 = 'TU6';
+        reading.unit7 = 'TU7';
+        reading.unit8 = 'TU8';
+        reading.unit9 = 'TU9';
+        
+        
+        HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
+        srr.readings = reading;
+        srr.Id = myCase.Id;
+        srr.commodity = 'Energia Elettrica';
+        srr.contractCode = myContract.SAPContractCode__c;
+        srr.origin = 'Sportello';
+        srr.integrationId = '';
+        srr.serialNumber = '';
+        srr.readingDate = Date.today();
+        srr.outcome = 'KO';//KO INTENZIONALE
+        srr.cluster = myCase.Cluster__c;
+        srr.type = myCase.Type;
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        req.requestBody = Blob.valueof(JSON.serialize(srr));
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //CASE PHASE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari KO', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo', 'Check preliminari KO', rtId, rtName,'A','','','');
+        
+        
+        //TESTING
+        HDT_WS_SelfReadings.doPost();
+        
+        //ASSERTS
+        System.assertEquals(201, RestContext.response.statusCode);
+        
+    }
     
     
     
