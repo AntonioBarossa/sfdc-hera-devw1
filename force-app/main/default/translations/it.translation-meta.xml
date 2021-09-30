@@ -21,8 +21,12 @@
         <name>wrts_prcgvr__PhaseManager_OnlyTypeAllowedOnCondition</name>
     </customLabels>
     <customLabels>
-        <label>Consentito</label>
+        <label>Automatico</label>
         <name>wrts_prcgvr__Automatic</name>
+    </customLabels>
+    <customLabels>
+        <label>Manuale</label>
+        <name>wrts_prcgvr__Manual</name>
     </customLabels>
     <customLabels>
         <label>Cronologia Fasi</label>

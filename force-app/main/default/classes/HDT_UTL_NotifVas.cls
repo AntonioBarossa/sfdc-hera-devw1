@@ -255,29 +255,44 @@ public with sharing class HDT_UTL_NotifVas {
     * @param sObjMap 
     **/
     private static void updateRecords(Map<String,SObject> sObjMap) {
-        Savepoint sp = Database.setSavepoint();
+
+        Order orderToUpdate;
+        Case caseToUpdate;
+        List<SObject> recordsToUpdate = new List<SObject>();
+
         for (String sObjectName:sObjMap.keySet()) {
-            try {
-                switch on sObjectName {
-                    when 'Order' {
-                        Order record = (Order)sObjMap.get(sObjectName);
-                        orderSrv.updateRecord(record);
-                    }
-                    when 'Case' {
-                        Case record = (Case)sObjMap.get(sObjectName);
-                        caseSrv.updateRecord(record);
-                    }
-                    when else {
-                        SObject record = sObjMap.get(sObjectName);
-                        HDT_UTL_DatabaseService.updateSObject(record);
-                    }
+            switch on sObjectName {
+                when 'Order' {
+                    orderToUpdate = (Order)sObjMap.get(sObjectName);
                 }
-            } catch (Exception e) {
-                Database.rollback(sp);
-                System.debug(LoggingLevel.ERROR, e.getMessage());
-                System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-                throw new HDT_UTL_HeraException('Error while saving '+sObjectName);
+                when 'Case' {
+                    caseToUpdate = (Case)sObjMap.get(sObjectName);
+                }
+                when else {
+                    SObject record = sObjMap.get(sObjectName);
+                    recordsToUpdate.add(record);
+                }
             }
+        }
+
+        Savepoint sp = Database.setSavepoint();
+        try {
+            if (orderToUpdate!=null) {
+                orderSrv.updateRecord(orderToUpdate);
+            }
+
+            if (caseToUpdate!=null) {
+                caseSrv.updateRecord(caseToUpdate);
+            }
+
+            if (!recordsToUpdate.isEmpty()) {
+                HDT_UTL_DatabaseService.updateSObject(recordsToUpdate);
+            }
+        } catch (Exception e) {
+            Database.rollback(sp);
+            System.debug(LoggingLevel.ERROR, e.getMessage());
+            System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            throw new HDT_UTL_HeraException('Error while saving records ('+e.getMessage()+')');
         }
     }
 

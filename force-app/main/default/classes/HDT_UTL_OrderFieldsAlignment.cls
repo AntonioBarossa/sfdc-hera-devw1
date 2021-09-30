@@ -76,7 +76,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BillingStreetNumberExtension__c = billingProfile.InvoicingStreetNumberExtension__c;
         orderToUpdate.BillingPostalCode__c = billingProfile.InvoicingPostalCode__c;
         orderToUpdate.BillingCityCode__c = billingProfile.InvoicingCityCode__c;
-        orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
+        if(!'Bollettino postale'.equalsIgnoreCase(billingProfile.PaymentMethod__c)){
+            orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
+        }
         orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
         orderToUpdate.CreateContractAccount__c = billingProfile.CreateContractAccount__c;
         orderToUpdate.IbanCountry__c = billingProfile.IbanCountry__c;
