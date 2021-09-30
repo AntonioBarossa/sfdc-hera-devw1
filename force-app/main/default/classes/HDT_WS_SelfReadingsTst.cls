@@ -56,29 +56,29 @@ public with sharing class HDT_WS_SelfReadingsTst {
         reading.mru = 'TEST_MRU';
         reading.sendTo = 'TEST_SENDTO';
         
-        reading.digits1 = 'TEST_digits1';
-        reading.digits2 = 'TEST_digits2';
+        reading.digits1 = 'T1';
+        reading.digits2 = 'T2';
         
         reading.date1 = Date.today();
         reading.date2 = Date.today();
         
-        reading.band1 = 'TEST_band1';
-        reading.band2 = 'TEST_band2';
+        reading.band1 = 'B1';
+        reading.band2 = 'B2';
         
         reading.value1 = 10.1;
         reading.value2 = 10.2;
         
-        reading.serialNumber1 = 'TEST_serialNumber1';
-        reading.serialNumber2 = 'TEST_serialNumber2';
+        reading.serialNumber1 = 'TEST_SER_NUM_1';
+        reading.serialNumber2 = 'TEST_SER_NUM_2';
         
-        reading.register1 = 'TEST_register1';
-        reading.register2 = 'TEST_register2';
+        reading.register1 = 'TR1';
+        reading.register2 = 'TR2';
         
         reading.type1 = 'TEST_type1';
         reading.type2 = 'TEST_type2';
         
-        reading.unit1 = 'TEST_unit1';
-        reading.unit2 = 'TEST_unit2';
+        reading.unit1 = 'TU1';
+        reading.unit2 = 'TU2';
         
         
         HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest srr = new HDT_WRP_SelfReadings.HDT_WRP_SelfReadingsRequest();
