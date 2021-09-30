@@ -13,7 +13,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     private static final String VAS_SERVICE_TYPE = 'VAS Servizio';
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
     private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
+    private static final String PHASE_SEQUENZIALIZZATO = 'Sequenzializzato';
 
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     
     /**
@@ -24,9 +26,8 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     **/
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
-        system.debug(json.serialize(args));
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
+        //SObject transition = (SObject) argsMap.get('transition');
+        //SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('sender');
 
@@ -45,7 +46,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                 
             }
             when 'updatePhase'{
-                Id orderId = objectId;
                 Order currentOrder = (Order) sender;
                 Boolean isServiceType = (currentOrder.VASType__c==VAS_SERVICE_TYPE);
                 String newPhase = isServiceType?ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT:ORDER_PHASE_VAS_COMMUNICATION;
@@ -68,7 +68,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     **/
     @future(callout=true)
     private static void asyncCalloutFuture(Id sobjectId, String method){
-        system.debug('asyncCalloutFuture ');
         asyncCallout(sobjectId, method);
     }
 
@@ -82,6 +81,15 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         HDT_WS_ArrichmentDataEntityResponse res;
         String newPhase;
         String errorDescription;
+
+        //gabriele.rota@webresults.it | 2021-09-27
+        if (sobjectId.getSobjectType().getDescribe().getName()=='Order') {
+            Order currentOrder = orderQr.getRecordById(sobjectId);
+            if (currentOrder.Phase__c==PHASE_SEQUENZIALIZZATO) {
+                //l'Ordine è stato sequenzializzato, non deve essere inviato al Motore VAS
+                return;
+            }
+        }
 
         switch on method{
             when 'activation'{
@@ -115,8 +123,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             }
         }
 
-        system.debug('***HDT_QBL_AsycnronousCallout'+res);
-
         //do UpdatePhase
 
         if(String.isNotBlank(newPhase)){ 
@@ -136,7 +142,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         * @description Constructor
         * @author gabriele.rota@webresults.it | 2021-07-12 
         **/
-        public HDT_QBL_AsycnronousCallout(){}
+        public HDT_QBL_AsycnronousCallout(){
+            return;
+        }
 
         /**
         * @description Constructor with record id and method
@@ -181,7 +189,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         * @description Constructor
         * @author gabriele.rota@webresults.it | 2021-07-12 
         **/
-        public HDT_QBL_AsycnronousUpdate(){}
+        public HDT_QBL_AsycnronousUpdate(){
+            return;
+        }
 
         /**
         * @description Constructor with record id and new phase

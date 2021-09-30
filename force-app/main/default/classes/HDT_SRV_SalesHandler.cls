@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
 
-                                if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                     Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                     Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
@@ -123,9 +123,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                     
                                 }else{
-                                    if(mapRequestFields.get('TIPO_INTERVENTO')=='Lavoro Semplice'){
-                                        ord.QuotationType__c='Rapido';
-                                        //ord.ValidityDateEstimate__c=Date.today().addDays(5);//bug 466
+                                    switch on mapRequestFields.get('TIPO_INTERVENTO') {
+                                        when 'Lavoro Semplice' {
+                                            ord.QuotationType__c='Rapido';
+                                        }
+                                        when 'A Preventivo'{
+                                            ord.QuotationType__c='Analitico';
+                                        }
                                     }
                                 }
 
@@ -246,6 +250,13 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 ord.CancellationHerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                Datetime nowDate = Datetime.now();
+                                String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                if(mapRequestFields.get('ANNOTAZIONI_ANN') != null && mapRequestFields.get('ANNOTAZIONI_ANN') != '')
+                                {
+                                    ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                }
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
@@ -299,7 +310,7 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                 Boolean redirectPreventivo = false;
                                 switch on ordRetrieved.ProcessType__c{
-                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                    when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
                                         redirectPreventivo=true;
                                     }
                                 }

@@ -13,6 +13,27 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
 
+    public static void updateServicePointToComplete(List<Order> orderOld,List<Order> orderNew){
+        try{
+            Map<String,order> mapOrderOld = new Map<String,Order>();
+            set<String> listServiceId = new Set<String>();
+            for(Order o : orderOld){
+                mapOrderOld.put(o.id,o);
+            }
+            for(Order oNew : orderNew){
+                if(oNew.servicePoint__c != null && oNew.phase__c == 'Completata' && mapOrderOld.get(oNew.id).phase__c != 'Completata'){
+                    listServiceId.add(oNew.servicePoint__c);
+                }
+            }
+            if(listServiceId != null && !listServiceId.isEmpty()){
+                HDT_UTL_ServicePoint.updateServicePointImplantAndSupplytype(listServiceId);
+            }
+        }
+        catch(Exception e){
+            system.debug(e);
+        }
+    }
+
     public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
         for(Order newOrder : (List<Order>) newMap.values()) {
@@ -520,37 +541,37 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         return newOrdersList;
     }
 
-   /**
-   * @description 
-   * HRDTR-00_HRAWRM-638
-   **/
-   public static void overturningFields(List<Order> listOrder ){
-    List<SObject> listObjToUpdate = new List<SObject>();
+      /**
+     * @description 
+     * HRDTR-00_HRAWRM-638
+     **/
+    public static void overturningFields(List<Order> listOrder ){
+        Map<Id, Sobject> mapObjToUpdate = new Map<Id, Sobject>();
         for (Order temp : listOrder) {
             
             if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                 ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                 if (String.isBlank(String.valueOf(temp.ServicePoint__r.Account__c)) ||String.isBlank(String.valueOf(temp.ServicePoint__r.SAPImplantCode__c))) {
-                   // sp.Account__c=temp.AccountId;
+                    // sp.Account__c=temp.AccountId;
                     sp.SAPImplantCode__c=temp.SapContractCode__c;
-                    listObjToUpdate.add(sp);
+                    //listObjToUpdate.add(sp);
+                    mapObjToUpdate.put(sp.Id, sp);
                 }         
             }
             if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
                 if (String.isBlank(String.valueOf(temp.BillingProfile__r.ContractAccountCode__c)) && String.isNotBlank((temp.SapContractCode__c) )) {
                     BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
-                    listObjToUpdate.add(bill);
+                    //listObjToUpdate.add(bill);
+                    mapObjToUpdate.put(bill.id, bill);
                 }
             }
 
         }
-        if (listObjToUpdate!=null && listObjToUpdate.size()>0) {
-            System.debug('listObjToUpdate*****'+listObjToUpdate);
-
-           update  listObjToUpdate;
+        if(!mapObjToUpdate.values().isEmpty()){
+            update  mapObjToUpdate.values();
         }
 
-   }
+    }
     // START @Picchiri Credit check Date 04.06.21
     // Viene invocata da una modifica lato ordine
     // In questo metodo viene invocata la classe per la creazione della Activiti del Credit Check Entanti (Nuovo cliente) e Uscenti (Vecchio cliente)
@@ -805,6 +826,25 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if(!(String.isBlank(nonReqContract.Id))){
                     nonReqContract.Phase__c = 'Completata';
                     HDT_UTL_DatabaseService.updateSObject(nonReqContract);
+                }
+            }
+            //@frpanico closes open activities on "Annullato" or "Ripensato"
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            {                
+                List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+                try
+                {
+                    activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
+                    for(wrts_prcgvr__Activity__c activity : activities)
+                    {
+                        activity.Status__c = 'Annullata';
+                        activity.wrts_prcgvr__Status__c = 'Completed';
+                    }
+                    HDT_UTL_DatabaseService.updateSObject(activities);
+                }
+                catch(Exception e)
+                {
+                    System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
             }
 		}

@@ -664,14 +664,14 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>ProdOptAssociationCreateSection</shortDescription>
-        <value>Su questi elementi puoi associare il prodotto opzione</value>
+        <value>Su queste offerte commerciali puoi associare il prodotto opzione</value>
     </labels>
     <labels>
         <fullName>ProdOptAssociationDeleteSection</fullName>
         <language>it</language>
         <protected>false</protected>
         <shortDescription>ProdOptAssociationDeleteSection</shortDescription>
-        <value>Da questi elementi puoi eliminare il prodotto opzione</value>
+        <value>Da queste offerte commerciali puoi eliminare il prodotto opzione</value>
     </labels>
     <labels>
         <fullName>ProdOptAssociationConfirmSelection</fullName>

@@ -45,6 +45,10 @@
                 <behavior>Readonly</behavior>
                 <field>Campaign__c</field>
             </layoutItems>
+            <layoutItems> <!--HRAWRM-249 27/09/2021-->
+                <behavior>Edit</behavior>
+                <field>LoginChannel__c</field>
+            </layoutItems><!--HRAWRM-249 27/09/2021-->
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

@@ -151,9 +151,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
-            if(sendDlDate != null && sendDlDate != ''){
+            /*if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
-            }
+            }*/
             if(herokuCancellationCode != null && herokuCancellationCode != ''){
                 caseNew.CancellationHerokuPracticeCode__c = herokuCancellationCode;
             }
@@ -246,11 +246,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && !(currentPhase.indexOf('Annull') > -1)){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
             }
-            if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
+            /*if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
                 currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
-            }
+            }*/
             //@frpanico aggiunto DATA_EVENTO poiche DT_INVIO_DL sembra non venir inviato
-            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '')
+            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase != null && nextPhase.equalsIgnoreCase('Inviato al DL'))
             {
                 currentCase.SendToDistributorDate__c = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
             }
@@ -288,9 +288,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('FATTIB_TEC') != null && reqWrp.requestMap.get('FATTIB_TEC') != ''){
                 if(reqWrp.requestMap.get('FATTIB_TEC').equalsIgnoreCase('SI')){
-                    currentCase.TechnicalFeasibility__c = true;
+                    currentCase.TechnicalFeasibility__c = 'Si';
                 } else {
-                    currentCase.TechnicalFeasibility__c = false;
+                    currentCase.TechnicalFeasibility__c = 'No';
                 }
             }
             if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
@@ -432,11 +432,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
                 }
             }
-            updateFuture(JSON.serialize(currentCase));
             if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
-                currentCase.Phase__c = 'Piano Rata Annullato';
-                updateFuture(JSON.serialize(currentCase));
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                currentCase.Phase__c = 'Piano Rata Annullato';  
             }
+            updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
