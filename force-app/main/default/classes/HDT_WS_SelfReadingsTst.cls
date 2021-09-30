@@ -333,9 +333,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
     }
     
     
-    
-    //TODO: POSSIBILE CHE VADA TESTATA A MANO PARTE DI HDT_UTL_SelfReadings
-    ///TODO: CASI CON REQUEST OUTCOME NON 'OK' DI DEFAULT per upsertInboundSelfReading
+    //HDT_UTL_SelfReadings
+    //TODO: METODO isProcessReading di HDT_UTL_SelfReadings
     
     
 }
