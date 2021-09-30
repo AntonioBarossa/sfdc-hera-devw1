@@ -113,7 +113,6 @@ public with sharing class HDT_WS_SelfReadingsTst {
         HDT_WS_SelfReadings.doPost();
         
         //ASSERTS
-        //TODO: fixare test.
         System.assertEquals(201, RestContext.response.statusCode);
         
     }
