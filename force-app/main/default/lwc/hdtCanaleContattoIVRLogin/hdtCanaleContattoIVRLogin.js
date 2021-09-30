@@ -105,7 +105,8 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
 
         downloadFile({orderId : this.orderId,username : this.username,password : this.password}).then(res =>{
-            if(res.res != null && res.res != undefined){
+            console.log('********:' + JSON.stringify(res));
+            if(res.res == null || res.res == undefined){
             if(this.name = 'onClickDownloadPdf'){
                // let base64String = 'UFJPVkFET1dOTE9BRFBST1ZB';
                 if(res.type == 'zip'){
