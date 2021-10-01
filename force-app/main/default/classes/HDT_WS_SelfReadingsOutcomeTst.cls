@@ -8,6 +8,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     
+    //NOTA: non è stato possibile testare scarti automatici a causa di mancanza di record custom metadata appositi.
+    
     
     //TEST SETUP
     private static void mySetup(){
@@ -105,7 +107,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         singleData.caseId = myCase.Id;
         singleData.activityType = 'Esito KO da SAP';
         singleData.errorCode = 'ErrorCode Fittizio per Test';
-        singleData.errorDescription = 'errorDescription Fittizia per Test';
+        singleData.errorDescription = '';
         
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
         data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
@@ -163,7 +165,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
         singleData.caseId = myCase.Id;
         singleData.activityType = 'KO Pre-MDM';
-        singleData.errorCode = 'ErrorCode Fittizio per Test';
+        singleData.errorCode = '';
         singleData.errorDescription = 'errorDescription Fittizia per Test';
         
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
@@ -197,17 +199,59 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
     }
     
-    //TODO: AUTOMATIC DISCARD
     
-    
-    
-    //TODO: TESTARE activityType (Phase) MULTIPLI
-    
-    
-    
-    
-    //TODO: CASISTICHE ECCEZIONE
+    //CASISTICHE ECCEZIONE
     ///ERROR 400
+    @isTest
+    private static void doPostTest_Error_400() {
+        
+        //SETUP
+        mySetup();
+        
+        //CASE & PHASE
+        Case myCase = [SELECT Id FROM Case];
+        
+        //MANAGING BODY RESPONSE
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
+        myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
+        
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+        singleData.caseId = myCase.Id;
+        singleData.activityType = null;
+        singleData.errorCode = '';
+        singleData.errorDescription = '';
+        
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
+        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
+        myOutcomeRequest.data = data;
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        
+        req.requestBody = Blob.valueOf(JSON.serialize(myOutcomeRequest));
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //TESTING
+        Test.startTest();
+        HDT_WS_SelfReadingsOutcome.doPost();
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
+        
+        //ASSERTS
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
+        responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
+        
+        System.assertEquals(400, RestContext.response.statusCode, 'Status code non 400.');
+        
+    }
+    
     
     
     ///ERROR 500
