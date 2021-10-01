@@ -22,9 +22,9 @@ public class HDT_WS_PaperCampaignGetFileTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, res, 'A response was successfully created');
+        System.assertNotEquals(null, res, 'A response was not created');
         
-        System.assertEquals(null, res.body, 'The respose fields are set to null since the mock is not instantiated');
+        System.assertEquals(null, res.body, 'The respose fields should be set to null since the mock is not instantiated');
         
     }
     
@@ -39,9 +39,9 @@ public class HDT_WS_PaperCampaignGetFileTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, res, 'A response was successfully created');
+        System.assertNotEquals(null, res, 'A response was not created');
         
-        System.assertEquals(null, res.body, 'The respose fields are set to null since the mock is not instantiated');
+        System.assertEquals(null, res.body, 'The respose fields should be set to null since the mock is not instantiated');
         
     }
     
@@ -64,13 +64,13 @@ public class HDT_WS_PaperCampaignGetFileTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, resFile, 'A response was successfully created');
+        System.assertNotEquals(null, resFile, 'A response was not created');
         
-        System.assertEquals('test64', resFile.data.fileBase64, 'Value of the field fileBase64 successfully set');
+        System.assertEquals('test64', resFile.data.fileBase64, 'Value of the field fileBase64 not successfully set');
         
-        System.assertNotEquals(null, resId, 'A response was successfully created');
+        System.assertNotEquals(null, resId, 'A response was not created');
         
-        System.assertEquals('testtype', resId.data.type, 'Value of the field Type successfully set');
+        System.assertEquals('testtype', resId.data.type, 'Value of the field Type not successfully set');
         
     }
 }
