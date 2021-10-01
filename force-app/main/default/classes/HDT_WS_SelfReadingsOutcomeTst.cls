@@ -140,6 +140,67 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
     
     
     
+    
+    @isTest
+    private static void doPostTest_ESITO_KO_PREMDM() {
+        
+        //SETUP
+        mySetup();
+        
+        //CASE & PHASE
+        Case myCase = [SELECT Id FROM Case];
+        
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Pre-MDM', 'Bozza', rtId, rtName,'A','','','');
+        
+        
+        //MANAGING BODY RESPONSE
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
+        myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
+        
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+        singleData.caseId = myCase.Id;
+        singleData.activityType = 'KO Pre-MDM';
+        singleData.errorCode = '';
+        singleData.errorDescription = '';
+        
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
+        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
+        myOutcomeRequest.data = data;
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        
+        req.requestBody = Blob.valueOf(JSON.serialize(myOutcomeRequest));
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //TESTING
+        Test.startTest();
+        HDT_WS_SelfReadingsOutcome.doPost();
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
+        
+        //ASSERTS
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
+        responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
+        
+        System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
+        System.assertEquals('KO Pre-MDM', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
+        
+    }
+    
+    //TODO: AUTOMATIC DISCARD
+    
+    
+    
     //TODO: TESTARE activityType (Phase) MULTIPLI
     
     
