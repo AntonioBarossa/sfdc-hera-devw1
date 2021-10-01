@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>CommoditySector__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Gas</value>
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Voltura Gas</value>
+        <value xsi:type="xsd:string">Voltura</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>
