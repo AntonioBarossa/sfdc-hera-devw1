@@ -762,6 +762,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>1</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>RecordTypeId</field>
             <value>
                 <elementReference>GetInputCase.RecordTypeId</elementReference>
