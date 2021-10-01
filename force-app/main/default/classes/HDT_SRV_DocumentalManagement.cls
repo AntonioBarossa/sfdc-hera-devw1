@@ -434,13 +434,13 @@ public class HDT_SRV_DocumentalManagement{
 							record.put('MarketingPrivacy__c', value);
 							individualRecord.MarketingPrivacy__c = value;
 							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
-							individualRecord.PrivacyMarketingChoiceSource__c = 'post-sales';
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
 						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
 							record.put('ProfilingPrivacy__c', value);
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
-							individualRecord.PrivacyProfilingChoiceSource__c = 'post-sales';
+							individualRecord.PrivacyProfilingChoiceSource__c = 'CONTRATTO';
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
 					}
