@@ -2583,5 +2583,34 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return expDays;
 	}
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAssignmentRule method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<AssignmentRule__c> createAssignmentRule(Integer amount, Boolean doInsert,Double rulePriority, String type) {
+        
+        List<AssignmentRule__c> rules = new List<AssignmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            AssignmentRule__c r = new AssignmentRule__c(
+                RulePriority__c = rulePriority,
+        		Type__c = type
+            );
+            
+            rules.add(r);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
 	
 }
