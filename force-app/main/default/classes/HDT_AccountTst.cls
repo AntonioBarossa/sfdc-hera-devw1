@@ -26,7 +26,7 @@ public class HDT_AccountTst {
                        
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
             
-            System.assertEquals(1, accs.size(), 'One Account successfully inserted');
+            System.assertEquals(1, accs.size(), 'Account not inserted');
             
         }
      }
