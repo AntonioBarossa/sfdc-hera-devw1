@@ -6,6 +6,13 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
     private final String NOTMAPPED=''      ;
 
  
+    /**
+    * @description  
+    * @param varRunId 
+    * @param varDate 
+    * @param varFileType 
+    * @param varContentVersionIds 
+    **/
     public HDT_QBL_SIE34_2SMEGas(String varRunId,Date varDate,String varFileType,List<String> varContentVersionIds) {
        this.runId             = varRunId                    ;
        this.filterDate        = varDate                     ;
