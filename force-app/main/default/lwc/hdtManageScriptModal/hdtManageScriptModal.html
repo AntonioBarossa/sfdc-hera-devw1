@@ -25,13 +25,13 @@ Changes:
 
             <template if:true={hasScriptType}>
                 <template if:false={isDecisional}>
-                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
+                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
                         child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
                     </c-hdt-manage-script-card>
                 </template>
 
                 <template if:true={isDecisional}>
-                    <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId}
+                    <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
                         child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
                     </c-hdt-manage-script-decisional-card>
                 </template>
@@ -57,13 +57,13 @@ Changes:
                         
                         <template if:true={hasScriptType}>
                             <template if:false={isDecisional}>
-                                <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
+                                <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
                                     child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
                                 </c-hdt-manage-script-card>
                             </template>
 
                             <template if:true={isDecisional}>
-                                <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId}
+                                <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
                                     child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
                                 </c-hdt-manage-script-decisional-card>
                             </template>

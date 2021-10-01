@@ -28,6 +28,7 @@
     <rule ref="category/apex/bestpractices.xml/AvoidGlobalModifier"/>
     <rule ref="category/apex/bestpractices.xml/ApexAssertionsShouldIncludeMessage"/>
     <rule ref="category/apex/performance.xml/AvoidDebugStatements"/>
+    <rule ref="category/apex/performance.xml/OperationWithLimitsInLoop"/>
     <rule ref="category/apex/errorprone.xml/EmptyCatchBlock"/>
     <rule ref="category/apex/security.xml/ApexSOQLInjection"/>
     

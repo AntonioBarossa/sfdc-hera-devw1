@@ -13,6 +13,7 @@ public inherited sharing class HDT_QR_AmountQuote {
                     AND Commodity__c =: commodity
                     AND Name =: processType
                     AND MeterManufactureYear__c =: year
+                    WITH SECURITY_ENFORCED
                     LIMIT 1
                 ];
         if(priceQuoteList.size()>0){
@@ -21,6 +22,7 @@ public inherited sharing class HDT_QR_AmountQuote {
             return [SELECT Amount__c FROM AdminPriceQuote__c 
             WHERE
             Name = 'Default'
+            WITH SECURITY_ENFORCED
             LIMIT 1
             ];
         }
