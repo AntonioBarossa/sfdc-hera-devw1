@@ -157,6 +157,7 @@ public inherited sharing class HDT_UTL_Order {
             HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
             List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordScartoDiscordante(newOrder.ServicePoint__c,newOrder.AccountId);
             if(listActivity != null && !listActivity.isEmpty()){
+                system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
                 wr.wrts_prcgvr__Status__c = 'Completed';
                 actSrv.updateRecord(wr);
@@ -171,7 +172,7 @@ public inherited sharing class HDT_UTL_Order {
     }
     @AuraEnabled
     public static void travasaOrder(Order oldOrder, order orderToUpdate){
-
+        system.debug('DENTRO TRAVASO DATO DISCORDANTE');
         orderToUpdate.exciseEle__c =  oldOrder.exciseEle__c;
         orderToUpdate.ExciseGas__c =  oldOrder.ExciseGas__c;
         orderToUpdate.vat__c = oldOrder.vat__c;
@@ -212,6 +213,9 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.SelfCertificationConnection__c = oldOrder.SelfCertificationConnection__c;
         orderToUpdate.RequestOption__c = oldOrder.RequestOption__c;
         orderToUpdate.MeterClass__c =oldOrder.MeterClass__c;
+        orderToUpdate.PrecheckResultSII__c = oldOrder.PrecheckResultSII__c;
+        orderToUpdate.Step__c = oldOrder.Step__c - 1;
+        orderToUpdate.RateCategory__c = oldOrder.RateCategory__c;
         orderToUpdate.WithdrawalClass__c = oldOrder.WithdrawalClass__c;
         orderToUpdate.SupplyType__c = oldOrder.SupplyType__c;
         orderToUpdate.DistributorCode__c = oldOrder.DistributorCode__c;
