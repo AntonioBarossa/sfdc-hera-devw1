@@ -121,7 +121,7 @@ public class HDT_BA_AttributesContactTst {
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
-        System.assertEquals(false, lista.isEmpty(),'ConsentLead did not execute correctly');
+        System.assertEquals(false, lista.isEmpty(),'AttributesContact did not execute correctly');
     }
     
     @isTest
@@ -141,7 +141,7 @@ public class HDT_BA_AttributesContactTst {
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
-        System.assertEquals(false, lista.isEmpty(),'ConsentLead did not execute correctly');
+        System.assertEquals(false, lista.isEmpty(),'AttributesContact did not execute correctly');
     }
     
     @isTest
@@ -163,7 +163,7 @@ public class HDT_BA_AttributesContactTst {
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
-        System.assertEquals(false, lista.isEmpty(),'ConsentLead did not execute correctly');
+        System.assertEquals(false, lista.isEmpty(),'AttributesContact did not execute correctly');
     }
     
     
@@ -185,7 +185,7 @@ public class HDT_BA_AttributesContactTst {
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
-        System.assertEquals(false, lista.isEmpty(),'ConsentLead did not execute correctly');
+        System.assertEquals(false, lista.isEmpty(),'AttributesContact did not execute correctly');
     }
 
 }

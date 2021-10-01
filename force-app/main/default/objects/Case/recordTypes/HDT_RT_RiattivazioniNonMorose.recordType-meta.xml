@@ -8961,6 +8961,10 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
+            <fullName>Alexa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>APP</fullName>
             <default>false</default>
         </values>
