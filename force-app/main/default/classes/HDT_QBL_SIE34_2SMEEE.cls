@@ -377,7 +377,9 @@ public with sharing class HDT_QBL_SIE34_2SMEEE implements Queueable  {
                 body=body+'\n'+row; 
              }
           }
-         contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP(EE)OUT_PREVENTIVI_SME.txt','PP(EE)OUT_PREVENTIVI_SME'));
+         if (listCase!=null && listCase.size()>0) {
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP(EE)OUT_PREVENTIVI_SME.txt','PP(EE)OUT_PREVENTIVI_SME'));
+         }
          Id jobID2SMEGas = System.enqueueJob(new HDT_QBL_SIE34_2SMEGas(runId,filterDate, fileType,contentVersionIds));
        } 
        catch (Exception e) {

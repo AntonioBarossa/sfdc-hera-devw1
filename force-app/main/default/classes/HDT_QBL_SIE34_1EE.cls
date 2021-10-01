@@ -219,7 +219,9 @@ public with sharing class HDT_QBL_SIE34_1EE implements Queueable  {
             }
            
         }
-        contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_EE.txt','OUT_OP_EE'));
+        if (listOrderItem!=null && listOrderItem.size()>0 ) {
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_EE.txt','OUT_OP_EE'));
+        }
         Id jobIDCall = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
      
     } 
