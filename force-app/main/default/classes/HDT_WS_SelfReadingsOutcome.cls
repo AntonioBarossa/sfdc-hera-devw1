@@ -74,10 +74,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
             }
         }
         System.debug('handleRequest - errorCodes size: ' + errorCodes.size());
-        System.debug('handleRequest - errorCodes: ' + errorCodes);
-        
         System.debug('handleRequest - errorCodesDescriptionSet size: ' + errorCodesDescriptionSet.size());
-        System.debug('handleRequest - errorCodesDescriptionSet: ' + errorCodesDescriptionSet);
 
         Map<String, Boolean> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodesDescriptionSet);
 
