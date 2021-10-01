@@ -79,9 +79,9 @@ public class HDT_BA_CommercialCodeTst {
         Test.stopTest();
         
         CampaignMember  cm2 = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
-        System.assertNotEquals(cm1.PromoCommercialCode__c,cm2.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c updated by the batch'); 
+        System.assertNotEquals(cm1.PromoCommercialCode__c,cm2.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c not updated by the batch'); 
         
         List<CommercialCode__c> commercialCodes = [select id from CommercialCode__c];
-    	System.assertEquals(100, commercialCodes.size(), 'The number of CommercialCodes in the system doubles the number of CampaignMembers');
+    	System.assertEquals(100, commercialCodes.size(), 'The number of CommercialCodes in the system does not double the number of CampaignMembers');
     }
 }

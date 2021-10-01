@@ -34,13 +34,13 @@ public class HDT_WS_PaperProcessingTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, res1, 'A response was successfully created');
+        System.assertNotEquals(null, res1, 'A response was not created');
         
-        System.assertEquals(null, res1.body, 'The respose fields are set to null since the mock is not instantiated');
+        System.assertEquals(null, res1.body, 'The respose fields should be set to null since the mock is not instantiated');
         
-        System.assertNotEquals(null, res2, 'A response was successfully created');
+        System.assertNotEquals(null, res2, 'A response was not created');
         
-        System.assertEquals(null, res2.body, 'The respose fields are set to null since the mock is not instantiated');
+        System.assertEquals(null, res2.body, 'The respose fields should be set to null since the mock is not instantiated');
 
     }
 }
