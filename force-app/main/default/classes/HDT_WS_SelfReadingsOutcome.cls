@@ -99,14 +99,17 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorCode);
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
+                    System.debug('Stacktrace: ' + e.getStackTraceString());
                 }
             }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
                     isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorDescription);
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
+                    System.debug('Stacktrace: ' + e.getStackTraceString());
                 }
             }
+            
             if (isAutomaticDiscard) {
                 caseToUpdate.Status = 'Closed';
                 String errorDescription = caseToUpdate.Phase__c; // Esito KO pre-MDM oppure Esito KO da SAP
