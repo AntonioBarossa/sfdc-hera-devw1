@@ -127,6 +127,11 @@ public inherited sharing class HDT_QR_SelfReadings {
             }
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
+            System.debug('HDT_QR_SelfReadings: accountId => ' + accountId);
+            System.debug('HDT_QR_SelfReadings: servicePointId => ' + servicePointId);
+            System.debug('HDT_QR_SelfReadings: recordTypeIds => ' + recordTypeIds);
+            System.debug('HDT_QR_SelfReadings: badPhases => ' + badPhases);
+            System.debug('HDT_QR_SelfReadings: badStates => ' + badStates);
             orders = Database.query(query);
 
             //System.debug('HDT_QR_SelfReadings: orders => ' + orders);
