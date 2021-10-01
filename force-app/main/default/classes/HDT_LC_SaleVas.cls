@@ -177,7 +177,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
                 
                 //removing assets which already have a deactivation Case
-                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status<>'Bozza' AND Type='Disattivazione VAS'
+                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'
                     AND AssetId IN :recordMap.keySet() WITH SECURITY_ENFORCED];
                 for (Case assetCase:assetsCases) {
                     recordMap.remove(assetCase.AssetId);
