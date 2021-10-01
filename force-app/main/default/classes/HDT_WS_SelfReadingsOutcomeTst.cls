@@ -18,5 +18,14 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         //SETUP
         
         
+        //REST
+        
+        
+        //TESTING
+        
+        
+        //ASSERTS
+        
+        
     }
 }
