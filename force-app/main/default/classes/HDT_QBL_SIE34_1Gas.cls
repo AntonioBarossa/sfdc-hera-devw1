@@ -224,7 +224,7 @@ public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
           }
         contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_GAS.txt','OUT_OP_GAS'));
         System.debug('contentVersionIds'+contentVersionIds);
-        Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+        Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_1EE(runId,filterDate, fileType,contentVersionIds));
 
        } 
        catch (Exception e) {
