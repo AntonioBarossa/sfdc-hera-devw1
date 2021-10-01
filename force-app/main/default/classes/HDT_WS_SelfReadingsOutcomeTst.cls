@@ -212,19 +212,9 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         Case myCase = [SELECT Id FROM Case];
         
         //MANAGING BODY RESPONSE
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
-        myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
-        
-        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
-        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
-        singleData.caseId = myCase.Id;
-        singleData.activityType = null;
-        singleData.errorCode = '';
-        singleData.errorDescription = '';
-        
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
         data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
-        myOutcomeRequest.data = data;
+        myOutcomeRequest.data = null;
         
         
         //REST CONTEXT
