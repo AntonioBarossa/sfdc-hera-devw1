@@ -57,9 +57,9 @@ public class HDT_UTL_ServiceCatalogOrFilterTst {
         
         Test.stopTest();
         
-        System.assertEquals(true, res, 'Found in catalog');
+        System.assertEquals(true, res, 'Not found in catalog');
         
-        System.assertNotEquals(null, res, 'Result returned correctly');
+        System.assertNotEquals(null, res, 'Result not returned correctly');
         
     }
     
@@ -81,9 +81,9 @@ public class HDT_UTL_ServiceCatalogOrFilterTst {
         
         Test.stopTest();
         
-        System.assertEquals(true, res, 'Found in catalog');
+        System.assertEquals(true, res, 'Not found in catalog');
         
-        System.assertNotEquals(null, res, 'Result returned correctly');
+        System.assertNotEquals(null, res, 'Result not returned correctly');
         
     }
 }
