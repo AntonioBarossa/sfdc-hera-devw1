@@ -108,6 +108,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Individual indv = indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
+                    
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
@@ -283,6 +285,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
@@ -452,6 +455,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
@@ -642,6 +646,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
@@ -831,6 +836,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
