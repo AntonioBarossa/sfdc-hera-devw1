@@ -82,6 +82,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         List<Order> activeOrders = queryHandler.accountOrders(accountId, servicePointId, recordTypeIds, badPhases, badStates);
+        System.debug('activeOrders size: ' + activeOrders.size());
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {

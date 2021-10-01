@@ -490,7 +490,6 @@ public with sharing class HDT_WS_SelfReadingsTst {
         mySetup();
         
         ServicePoint__c servPoint = [SELECT Id FROM ServicePoint__c];
-        Account acc = [SELECT Id FROM Account][0];
         
         //ORDER (Record Type for Test: Switch In)
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
@@ -499,7 +498,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         String rtName = constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
         
-        Order myOrder = [SELECT Id FROM Order];
+        Order myOrder = [SELECT Id, AccountId FROM Order];
         myOrder.Phase__c = 'Da Inviare';
         update myOrder;
         
@@ -511,7 +510,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs flin;
         flin = new HDT_UTL_SelfReadings.HDT_UTL_SelfReadingsFlowInputs();
         flin.servicePointId = servPoint.Id;
-        flin.accountId = acc.Id;
+        flin.accountId = myOrder.AccountId;
         flin.caseCreatedDateTime = dt;
         flin.metadataRecordName = 'Autolettura_da_processo';//TODO: ALTERNATIVE TEST
         
