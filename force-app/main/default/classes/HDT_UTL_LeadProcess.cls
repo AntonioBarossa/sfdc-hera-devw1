@@ -40,6 +40,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 if(campaign != null && !campaign.isEmpty()){
                     System.debug('PROVA WSFORM5');
                     Lead newLead= new Lead();
+                    newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
@@ -216,6 +217,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD WINBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
@@ -385,6 +387,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
@@ -561,6 +564,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
@@ -755,6 +759,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.Phone= mapRequestFields.get('TELEFONO');
