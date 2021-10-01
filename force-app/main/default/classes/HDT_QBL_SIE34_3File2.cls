@@ -22,75 +22,78 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
 
        String separator  = ';';
     
-       try {
+         try {
         
             String body  ='';
            // String header='rag_sociale,nome,cognome,business_partner,pod,apparecchiatura,data_cessazione,cod_fiscale,p_iva,telefono,distributore,servizio,rds_creata_da,via,civico,suffisso,cap,localita,comune,provincia,codice_offerta,via_recapito,via_legale,civico_legale,suffisso_legale,cap_legale,localita_legale,comune_legale,provincia_legale,percentuale_iva,tipo_ordine,indirizzo_esteso_recapito,offerta_commerciale,decode,X_CODICE_CAUSALE';
             
-            List<Case> listCase2 = Database.query(query+condition);
+            List<Case> listCase = Database.query(query+condition);
             
-            for (Case tempCase : listCase2) {
-            String row = 
-            tempCase.Account.LastName__c                                                      +separator+                                                                                        
-            tempCase.Account.FirstName__c                                                     +separator+                                                                                         
-            tempCase.Account.LastName__c                                                      +separator+                                                                                        
-            tempCase.Account.CustomerCode__c                                                  +separator+                                                                                            
-            tempCase.PODPDRFormula__c                                                         +separator+                                                                                     
-            NOTMAPPED                                                                         +separator+   
-            tempCase.ServicePoint__r.MeterType__c                                             +separator+                                                                                                 
-            tempCase.NotPerformedBefore__c                                                    +separator+                                                                                          
-            tempCase.Account.FiscalCode__c                                                    +separator+                                                                                          
-            tempCase.Account.VATNumber__c                                                     +separator+                                                                                         
-            tempCase.PhoneNumber__c                                                           +separator+                                                                                   
-            tempCase.Distributor__c                                                           +separator+                                                                                   
-            tempCase.CommodityFormula__c                                                      +separator+                                                                                        
-            tempCase.CreatedBy.Name                                                           +separator+                                                                                   
-            tempCase.ServicePoint__r.SupplyStreet__c                                          +separator+                                                                                                    
-            tempCase.ServicePoint__r.SupplyStreetNumber__c                                    +separator+                                                                                                          
-            tempCase.ServicePoint__r.SupplyStreetNumberExtension__c                           +separator+                                                                                                                   
-            tempCase.ServicePoint__r.SupplyPostalCode__c                                      +separator+                                                                                                        
-            tempCase.ServicePoint__r.SupplyPlace__c                                           +separator+                                                                                                   
-            tempCase.ServicePoint__r.SupplyCity__c                                            +separator+                                                                                                  
-            tempCase.ServicePoint__r.SupplyProvince__c                                        +separator+                                                                                                      
-            tempCase.CaseNumber                                                               +separator+                                                                               
-            tempCase.DeliveryAddress__c                                                       +separator+                                                                                               
-            NOTMAPPED                                                                         +separator+   
-            NOTMAPPED                                                                         +separator+   
-            NOTMAPPED                                                                         +separator+   
-            NOTMAPPED                                                                         +separator+   
-            NOTMAPPED                                                                         +separator+   
-            NOTMAPPED                                                                         +separator+   
-            tempCase.Account.BillingStreetName__c                                             +separator+                                                                                                 
-            tempCase.Account.BillingStreetNumber__c                                           +separator+                                                                                                    
-            tempCase.Account.BillingStreetNumberExtension__c                                  +separator+                                                                                                            
-            tempCase.Account.BillingPostalCode                                                +separator+                                                                                               
-            tempCase.Account.BillingPlace__c                                                  +separator+                                                                                            
-            tempCase.Account.BillingCity                                                      +separator+                                                                                         
-            tempCase.Account.BillingState                                                     +separator+                                                                                          
-            tempCase.VATPercentage__c                                                         +separator+                                                                                     
-            tempCase.SubProcess__c                                                            +separator+                                                                                  
-            NOTMAPPED                                                                         +separator+   
-            tempCase.DeliveryAddress__c                                                       +separator+                                                                                               
-            NOTMAPPED                                                                         +separator+   
-            tempCase.Subscription__r.SBQQ__ProductName__c                                     +separator+                                                                                                                                     
-            NOTMAPPED                                                                         +separator+                                                                                            
-            tempCase.CancellationReasonCode__c                                                ;   
-             row = row.replaceAll('null', '');  
-             if (String.isBlank(body)) {
-                body=row;
-             }
-             else {
-                body=body+'\n'+row; 
-             }
+            for (Case tempCase : listCase) {
+                  String row = 
+                  tempCase.Account.LastName__c                                                      +separator+                                                                                        
+                  tempCase.Account.FirstName__c                                                     +separator+                                                                                         
+                  tempCase.Account.LastName__c                                                      +separator+                                                                                        
+                  tempCase.Account.CustomerCode__c                                                  +separator+                                                                                            
+                  tempCase.PODPDRFormula__c                                                         +separator+                                                                                     
+                  NOTMAPPED                                                                         +separator+   
+                  tempCase.ServicePoint__r.MeterType__c                                             +separator+                                                                                                 
+                  tempCase.NotPerformedBefore__c                                                    +separator+                                                                                          
+                  tempCase.Account.FiscalCode__c                                                    +separator+                                                                                          
+                  tempCase.Account.VATNumber__c                                                     +separator+                                                                                         
+                  tempCase.PhoneNumber__c                                                           +separator+                                                                                   
+                  tempCase.Distributor__c                                                           +separator+                                                                                   
+                  tempCase.CommodityFormula__c                                                      +separator+                                                                                        
+                  tempCase.CreatedBy.Name                                                           +separator+                                                                                   
+                  tempCase.ServicePoint__r.SupplyStreet__c                                          +separator+                                                                                                    
+                  tempCase.ServicePoint__r.SupplyStreetNumber__c                                    +separator+                                                                                                          
+                  tempCase.ServicePoint__r.SupplyStreetNumberExtension__c                           +separator+                                                                                                                   
+                  tempCase.ServicePoint__r.SupplyPostalCode__c                                      +separator+                                                                                                        
+                  tempCase.ServicePoint__r.SupplyPlace__c                                           +separator+                                                                                                   
+                  tempCase.ServicePoint__r.SupplyCity__c                                            +separator+                                                                                                  
+                  tempCase.ServicePoint__r.SupplyProvince__c                                        +separator+                                                                                                      
+                  tempCase.CaseNumber                                                               +separator+                                                                               
+                  tempCase.DeliveryAddress__c                                                       +separator+                                                                                               
+                  NOTMAPPED                                                                         +separator+   
+                  NOTMAPPED                                                                         +separator+   
+                  NOTMAPPED                                                                         +separator+   
+                  NOTMAPPED                                                                         +separator+   
+                  NOTMAPPED                                                                         +separator+   
+                  NOTMAPPED                                                                         +separator+   
+                  tempCase.Account.BillingStreetName__c                                             +separator+                                                                                                 
+                  tempCase.Account.BillingStreetNumber__c                                           +separator+                                                                                                    
+                  tempCase.Account.BillingStreetNumberExtension__c                                  +separator+                                                                                                            
+                  tempCase.Account.BillingPostalCode                                                +separator+                                                                                               
+                  tempCase.Account.BillingPlace__c                                                  +separator+                                                                                            
+                  tempCase.Account.BillingCity                                                      +separator+                                                                                         
+                  tempCase.Account.BillingState                                                     +separator+                                                                                          
+                  tempCase.VATPercentage__c                                                         +separator+                                                                                     
+                  tempCase.SubProcess__c                                                            +separator+                                                                                  
+                  NOTMAPPED                                                                         +separator+   
+                  tempCase.DeliveryAddress__c                                                       +separator+                                                                                               
+                  NOTMAPPED                                                                         +separator+   
+                  tempCase.Subscription__r.SBQQ__ProductName__c                                     +separator+                                                                                                                                     
+                  NOTMAPPED                                                                         +separator+                                                                                            
+                  tempCase.CancellationReasonCode__c                                                ;   
+                  row = row.replaceAll('null', '');  
+                  if (String.isBlank(body)) {
+                     body=row;
+                  }
+                  else {
+                     body=body+'\n'+row; 
+                  }
+               }
+               if (listCase!=null && listCase.size()>0 ) {
+                  contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_FUORI_RETE.txt','OUT_CESSAZIONE_FUORI_RETE'));
+               }
+               Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+         } 
+         catch (Exception e) {
+            errorMessage=e.getMessage();
+            status='failed';
+            Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+
        }
-       contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_FUORI_RETE.txt','OUT_CESSAZIONE_FUORI_RETE'));
- 
-       } 
-       catch (Exception e) {
-          errorMessage=e.getMessage();
-          status='failed';
-       }
-       Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
     }
   
  }
