@@ -83,9 +83,9 @@ public class HDT_LC_CompleteCaseTst {
         
         Test.stopTest();
         
-        System.assertEquals('Il case deve essere "In Lavorazione" per procedere con la chiusura', res, 'The method returns the correct string');
+        System.assertEquals('Il case deve essere "In Lavorazione" per procedere con la chiusura', res, 'The method does not return the correct string');
         
-        System.assertNotEquals(null, res, 'String correctly returned');
+        System.assertNotEquals(null, res, 'String not returned');
         
     }
     
@@ -100,9 +100,9 @@ public class HDT_LC_CompleteCaseTst {
         
         Test.stopTest();
         
-        System.assertEquals('success', res, 'The method returns the correct string');
+        System.assertEquals('success', res, 'The method does not return the correct string');
         
-        System.assertNotEquals([Select phase__c from Case where id =: caseId].phase__c , 'In Lavorazione', 'Case updated successfully');
+        System.assertNotEquals([Select phase__c from Case where id =: caseId].phase__c , 'In Lavorazione', 'Case not updated');
         
     }
     
@@ -117,9 +117,9 @@ public class HDT_LC_CompleteCaseTst {
         
         Test.stopTest();
         
-        System.assertEquals('Per poter chiudere il case, l\'activity  deve essere in stato "Completato"', res, 'The method returns the correct string');
+        System.assertEquals('Per poter chiudere il case, l\'activity  deve essere in stato "Completato"', res, 'The method does not return the correct string');
         
-        System.assertNotEquals(null, res, 'String correctly returned');
+        System.assertNotEquals(null, res, 'String not returned');
         
     }
 }
