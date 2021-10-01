@@ -10,7 +10,6 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static Boolean isGas = true;
     private static Boolean isRegularOrder = true;
     
-    //TODO: UNCOMMENT IN CLASSI TESTATE DEI DEBUG COME PREVISTO DA MERGE COMMIT
     
     
     //TEST SETUP

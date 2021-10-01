@@ -128,12 +128,13 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
             
-            //TODO: COMMENT/REMOVE DEBUG
+            /*
             System.debug('utl_isProcessReadingTest: accountId => ' + accountId);
             System.debug('utl_isProcessReadingTest: servicePointId => ' + servicePointId);
             System.debug('utl_isProcessReadingTest: recordTypeIds => ' + recordTypeIds);
             System.debug('utl_isProcessReadingTest: badPhases => ' + badPhases);
             System.debug('utl_isProcessReadingTest: badStates => ' + badStates);
+            */
             orders = Database.query(query);
 
             //System.debug('HDT_QR_SelfReadings: orders => ' + orders);
