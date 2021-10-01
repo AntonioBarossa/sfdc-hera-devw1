@@ -17,6 +17,7 @@ export default class HdtManageScriptCard extends LightningElement {
 
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
+    @api activityId;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api hasLink;
 
@@ -139,8 +140,7 @@ export default class HdtManageScriptCard extends LightningElement {
 
     saveRecLink(){
         let link = this._linkReitek;
-        link = "http://recording-link--test/"+new Date().getTime();
-        saveReitekLink({recordId : this.recordId, reitekLink: link})
+        saveReitekLink({recordId : this.recordId, activityId: this.activityId, reitekLink: link})
             .then(() => {
                 this.dispatchEvent(new ShowToastEvent({
                     variant: "success",
