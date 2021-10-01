@@ -27,6 +27,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
             
         } else {
             Order myOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza')[0];
+            myOrder.recordTypeId = constants.ORDER_RECORDTYPEID_SWITCHIN;
             ordList = new List<Order>{myOrder};
             insert ordList;
 
