@@ -1,6 +1,13 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getLeadInfo from '@salesforce/apex/HDT_LC_SoldBy.getLeadInfo';
+import updateLead from '@salesforce/apex/HDT_LC_SoldBy.updateLead';
+import getChannelAgency from '@salesforce/apex/HDT_LC_SoldBy.getChannelAgency';
+import getAgents from '@salesforce/apex/HDT_LC_SoldBy.getAgents';
+import handleAutomaticAgentAssign from '@salesforce/apex/HDT_LC_SoldBy.handleAutomaticAgentAssign';
 
 export default class HdtSoldBy extends LightningElement {
+    @api recordId;
     openModal = false;
     showEmptyMessage = false;
     @track tableData = [];
@@ -8,6 +15,26 @@ export default class HdtSoldBy extends LightningElement {
     completeListcolumnsAgent = [];
     disabledBack = true;
     disabledSave = true;
+    @track recordInfo;
+    loading = false;
+    disabledAgency = true;
+    disabledNextAgency = false;
+    channelSelection = '';
+    @track completeList = [];
+    @track originalData = [];
+    totalPages = 0;
+    totalPages2 = 0;
+    @track pages = [];
+    @track pages2 = [];
+    currentPage = 0;
+    currentPage2 = 0;
+    hiddenFilterAgent = true;
+    @track hiddenAgency = false;
+    @track additionalData=[];
+    @track agentListForFilter = [];
+    selectedFromCompleteList = {};
+    @track showpage1 = true;
+    @track showpage2 = false;
 
     closeModal() {
         this.showpage1 = true;
@@ -17,12 +44,9 @@ export default class HdtSoldBy extends LightningElement {
     }
 
     handleAgencySelection() {
-
-        this.openModal = true;
         this.disabledNextAgency = true;
         this.showEmptyMessage = false;
-        let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
-        console.log("Channel", Channel)
+        let channel = this.template.querySelector('[data-name="Channel__c"]').value;
        
         this.completeListcolumns = [
             { label: 'Nome Agenzia', fieldName: 'AgencyName__c', type: 'text' },
@@ -30,7 +54,11 @@ export default class HdtSoldBy extends LightningElement {
 
         ];
 
-        getChannelAgency({ Channel: this.ChannelSelection }).then(data => {
+        this.loading = true;
+        getChannelAgency({channel: channel }).then(data => {
+            this.loading = false;
+            this.openModal = true;
+
 
             this.completeList = [...data];
 
@@ -45,12 +73,7 @@ export default class HdtSoldBy extends LightningElement {
             }
         }).catch(error => {
             console.log('Error: ', JSON.stringify(error));
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+            this.showErrorMessage('Errore recupero lista agenzia');
         });
 
     }
@@ -103,6 +126,32 @@ export default class HdtSoldBy extends LightningElement {
         }
     }
 
+    get showPaginationButtons2() {
+        return this.totalPages2 > 1;
+    }
+
+    get getCurrentPage2() {
+        if (this.totalPages2 === 0) {
+            return 0;
+        } else {
+            return this.currentPage2 + 1;
+        }
+    }
+
+    nextPage2() {
+        if (this.currentPage2 < this.totalPages2 - 1) {
+            this.currentPage2++;
+        }
+        this.reLoadTable2();
+    }
+
+    previousPage2() {
+        if (this.currentPage2 > 0) {
+            this.currentPage2--;
+        }
+        this.reLoadTable2();
+    }
+
     nextPage() {
         if (this.currentPage < this.totalPages - 1) {
             this.currentPage++;
@@ -145,7 +194,6 @@ export default class HdtSoldBy extends LightningElement {
             self.createTable(data); // redesign table
             self.currentPage = 0; // reset page
         }, 1000);
-
     }
 
     handleSearchInputKeyChange(event) {
@@ -161,7 +209,7 @@ export default class HdtSoldBy extends LightningElement {
     handleAdditionalFilter() {
         this.openModal = true;
         this.showEmptyMessage = false;
-        let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
+        let channel = this.template.querySelector('[data-name="Channel__c"]').value;
 
         this.completeListcolumnsAgent = [
             { label: 'Nome Agente', fieldName: 'AgentFirstName__c', type: 'text' },
@@ -171,11 +219,7 @@ export default class HdtSoldBy extends LightningElement {
 
         ];
 
-        console.log("Channel", Channel);
-        console.log("this.selectedFromCompleteList.AgencyName__c", this.selectedFromCompleteList.AgencyName__c);
-
-
-        getAgents({AgencyName:this.selectedFromCompleteList.AgencyName__c, Channel:Channel}).then(data => {
+        getAgents({agencyName:this.selectedFromCompleteList.AgencyName__c, channel:channel}).then(data => {
             
 
             this.completeListAgent = [...data];
@@ -202,15 +246,9 @@ export default class HdtSoldBy extends LightningElement {
                 this.showEmptyMessage = false;
             }
 
-
         }).catch(error => {
             console.log('Error: ', JSON.stringify(error));
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+            this.showErrorMessage('Errore recupero tabela');
         });
     }
 
@@ -253,8 +291,9 @@ export default class HdtSoldBy extends LightningElement {
 
         if (Object.keys(this.selectedFromCompleteList).length != 0) {
 
-            let saleUpdateAgent = { 
-                Id: this.saleRecord.Id,
+            let leadUpdateAgent = { 
+                Id: this.recordId,
+                Channel__c: this.channelSelection,
                 Agency__c: this.selectedFromCompleteList.AgencyName__c,
                 AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c,
                 VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c,
@@ -266,22 +305,84 @@ export default class HdtSoldBy extends LightningElement {
                 AreaManager__c: this.selectedFromCompleteListAgent.AreaManager__c
             };
 
-            this.updateSaleRecord(saleUpdateAgent);
+            this.updateLeadRecord(leadUpdateAgent);
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
-            //this.toggle();
             this.openModal = false;
-            //this.template.querySelector('[data-name="Agency__c"]').setAttribute('value', this.selectedFromCompleteList.AgencyName__c);
-            this.template.querySelector("[data-id='Agency__c']").value = this.selectedFromCompleteList.AgencyName__c;
-            this.template.querySelector("[data-id='CommercialId']").value = this.selectedFromCompleteListAgent.AgentCode__c;
-            this.template.querySelector("[data-id='VendorFirstName__c']").value = this.selectedFromCompleteListAgent.AgentFirstName__c;
-            this.template.querySelector("[data-id='VendorLastName__c']").value = this.selectedFromCompleteListAgent.AgentLastName__c;
-
         }
 
     }
 
-    connectedCallback(){
-        console.log('hdtSoldBy mounted');
+    updateLeadRecord(leadUpdateAgent){
+        this.loading = true;
+        updateLead ({lead: leadUpdateAgent}).then(data =>{
+            this.loading = false;
+            this.showSuccessMessage('Venduto Da calcolato con successo');
+        }).catch(error => {
+            this.loaded = false;
+            console.log(error);
+            this.showErrorMessage('Errore aggiornamento');
+        });
+    }
+
+    showErrorMessage(errorMessage){
+        const toastErrorMessage = new ShowToastEvent({
+            title: 'Errore',
+            message: errorMessage,
+            variant: 'error'
+        });
+        this.dispatchEvent(toastErrorMessage);
+    }
+
+    showSuccessMessage(successMessage){
+        const toastErrorMessage = new ShowToastEvent({
+            title: 'Successo',
+            message: successMessage,
+            variant: 'success'
+        });
+        this.dispatchEvent(toastErrorMessage);
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('endaction'));
+    }
+
+    automaticCalculation(channel){
+        this.loading = true;
+        handleAutomaticAgentAssign ({channel:channel,leadId:this.recordId}).then(data =>{
+            this.loading = false;
+            this.showSuccessMessage('Venduto Da calcolato con successo');
+        }).catch(error => {
+            this.loaded = false;
+            console.log(error);
+            this.showErrorMessage('Errore di calcolo su canale ' + channel);
+        });
+    }
+
+    async connectedCallback(){
+        try {
+            this.loading = true;
+            this.recordInfo = await getLeadInfo({ id: this.recordId });
+            console.log('hdtSoldBy mounted: ' + JSON.stringify(this.recordInfo));
+        } catch (error) {
+            console.log('Error: ', JSON.stringify(error));
+            this.showErrorMessage('Errore nel recupero del record');
+        }
+
+        this.loading = false;
+
+        if (this.recordInfo.CreatedBy.LoginChannel__c == 'Sportello') {
+            console.log('keltin enter here');
+            this.automaticCalculation('Sportello');
+        }
+        else if (this.recordInfo.CreatedBy.LoginChannel__c == 'Telefono Outbound' || this.recordInfo.CreatedBy.LoginChannel__c == 'Teleselling') {
+            this.automaticCalculation('Teleselling Outbound');
+        }
+        else if (this.recordInfo.CreatedBy.LoginChannel__c == 'Telefono Inbound' || this.recordInfo.CreatedBy.LoginChannel__c == 'Teleselling') {
+            this.automaticCalculation('Teleselling Inbound');
+        }
+    }
+
+    handleChannelSelection(event){
+        this.channelSelection = event.target.value;
+        this.disabledAgency = false;
     }
 }

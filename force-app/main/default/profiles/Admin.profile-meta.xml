@@ -1057,6 +1057,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.LowerChannelAgency__c</field>
         <readable>true</readable>
     </fieldPermissions>
