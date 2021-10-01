@@ -64,6 +64,9 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         RestContext.response = res;
         
         //TESTING
+        HDT_WS_SelfReadingsOutcome.doPost();
+        
+        //RETRIEVING DATA
         Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
