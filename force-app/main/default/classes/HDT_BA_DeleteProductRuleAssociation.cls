@@ -64,7 +64,7 @@ public without sharing class HDT_BA_DeleteProductRuleAssociation implements Data
         notification = new HDT_WRP_ProductAssociation.HDT_WRP_Notification();
         notification.targetId = productRuleIdToDelete;
         notification.userId = Userinfo.getUserId();
-        notification.title = Label.ProdOptAssociationNotification_Title;
+        notification.title = Label.ProdRuleAssociationNotification_DeleteTitle;
 
         if(errorCounter > 0){
             notification.body = 'Attenzione, si sono verificati [' + String.valueOf(errorCounter) + '] errori';

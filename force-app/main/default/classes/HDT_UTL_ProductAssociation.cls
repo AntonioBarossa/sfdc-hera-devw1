@@ -103,13 +103,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                     respRunBatchObj.success = true;
                 }
-            }	
-            //when 'all' {
-            //    //run batch for all Product2 record -> recordList == 0
-            //    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), '');
-            //    Id batchId = Database.executeBatch(createAssociationBatch);
-            //    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
-            //}
+            }
             when 'filter' {
                 //run batch for all Product2 using where condition
 
@@ -145,22 +139,16 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     Schema.DescribeSObjectResult objRes = objtype.getDescribe();
              
                     if(objRes.isDeletable ()){
-                        //try{
-                            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
-                            errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
+                        List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
+                        errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
 
-                            if(errorData.size() > 0){
-                                respRunBatchObj.success = false;
-                                respRunBatchObj.message = 'Si sono verificati [' + String.valueOf(errorData.size()) + '] errori.';
-                            } else {
-                                respRunBatchObj.success = true;
-                                respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
-                            }
-
-                        //} catch(Exception ex){
-                        //    respRunBatchObj.success = false;
-                        //    respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
-                        //}
+                        if(errorData.size() > 0){
+                            respRunBatchObj.success = false;
+                            respRunBatchObj.message = 'Si sono verificati [' + String.valueOf(errorData.size()) + '] errori.';
+                        } else {
+                            respRunBatchObj.success = true;
+                            respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
+                        }
                     }
                     
                 } else {
@@ -169,13 +157,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                     respRunBatchObj.success = true;
                 }
-            }	
-            //when 'all' {
-            //    //run batch for all Product2 record -> recordList == 0
-            //    HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), '');
-            //    Id batchId = Database.executeBatch(deleteAssociationBatch);
-            //    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
-            //}
+            }
             when 'filter' {
                 //run batch for all Product2 using where condition
 
