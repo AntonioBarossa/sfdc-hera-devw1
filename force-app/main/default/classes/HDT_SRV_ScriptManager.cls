@@ -7,6 +7,8 @@
 **/
 public inherited sharing class HDT_SRV_ScriptManager {
 
+    private static final String ORDER_RT_VAS = 'HDT_RT_VAS';
+
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
     
@@ -21,22 +23,30 @@ public inherited sharing class HDT_SRV_ScriptManager {
         HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
 
         Order parentOrder = orderQr.getRecordById(orderParentId);
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId);
-
-        Order targetOrder = orderQr.getRecordById(childOrders.get(0).Id);
-        List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(targetOrder.SBQQ__Quote__c);
-        Id productId = quoteLineList[0].SBQQ__Product__c;
-
-        config.scriptTarget = targetOrder.Id;
-
-        if (parentOrder.SignatureMethod__c=='OTP Remoto' || parentOrder.SignatureMethod__c=='OTP Coopresenza') {
-            config.scriptName = 'Mini Vocal Order';
+        
+        for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
+            if (childOrder.RecordType.DeveloperName!=ORDER_RT_VAS) {
+                config.scriptTarget = childOrder.Id;
+                break;
+            }
         }
 
-        if (parentOrder.SignatureMethod__c=='Vocal Order') {
-            List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE ScriptType__c='Processo' AND Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
-            if (!scripts.isEmpty()) {
-                config.scriptName = scripts[0].Name;
+        if (String.isNotBlank(config.scriptTarget)) {
+            Order targetOrder = orderQr.getRecordById(config.scriptTarget);
+
+            List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(targetOrder.SBQQ__Quote__c);
+            Id productId = quoteLineList[0].SBQQ__Product__c;
+
+            switch on parentOrder.SignatureMethod__c {
+                when 'OTP Remoto','OTP Coopresenza' {
+                    config.scriptName = 'Mini Vocal Order';
+                }
+                when 'Vocal Order' {
+                    List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE ScriptType__c='Processo' AND Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
+                    if (!scripts.isEmpty()) {
+                        config.scriptName = scripts[0].Name;
+                    }
+                }
             }
         }
 
