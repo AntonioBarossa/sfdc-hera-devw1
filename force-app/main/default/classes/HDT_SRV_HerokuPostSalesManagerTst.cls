@@ -412,7 +412,6 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         HDT_WRP_HerokuPostSalesManager wrapper = new HDT_WRP_HerokuPostSalesManager('flowTest', 'phase','idTest', 'herokuCode', 'dlCode', 'codiceContrattoTest', 'contractStatus');
 
         System.assertEquals('idTest', wrapper.requestMap.get('recordId'), 'recordId != idTest');
-        System.assertEquals('codiceContrattoTest', wrapper.requestMap.get('contractCode'), 'contractCode != codiceContrattoTest');
 
         Test.stopTest();
         

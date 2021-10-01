@@ -949,6 +949,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.LastUsedPostelEmail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.LegalFormType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6979,6 +6984,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>City__c.MunicipalityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ProvinceName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.RegionCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.RegionName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>City__c.Province__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8676,6 +8701,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSendTracking__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentalActivity__c.ActivityType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8727,6 +8757,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalActivity__c.IsMigrated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocumentalActivity__c.IsPostelAttachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12447,6 +12482,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.AtecoCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.HerAteco__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

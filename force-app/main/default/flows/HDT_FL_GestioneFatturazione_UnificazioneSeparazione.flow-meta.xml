@@ -5,7 +5,7 @@
         <name>Set_Descrizione_Account</name>
         <label>Set Descrizione Account</label>
         <locationX>2467</locationX>
-        <locationY>923</locationY>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>FinalDescription</assignToReference>
             <operator>Assign</operator>
@@ -33,6 +33,11 @@
             <targetReference>Next_Step</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>aggiungiAltriBp_SI_choice</name>
+        <choiceText>Si</choiceText>
+        <dataType>String</dataType>
+    </choices>
     <choices>
         <name>NoChoice</name>
         <choiceText>No</choiceText>
@@ -82,6 +87,22 @@
         </value>
     </choices>
     <choices>
+        <name>wannaAddMoreBPs_No_choice</name>
+        <choiceText>No</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>wannaAddMoreBPs_Yes_choice</name>
+        <choiceText>Si</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <choices>
         <name>YesChoice</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
@@ -89,6 +110,31 @@
             <stringValue>Si</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>BPAdded_decision</name>
+        <label>Aggiunti BP?</label>
+        <locationX>2011</locationX>
+        <locationY>751</locationY>
+        <defaultConnector>
+            <targetReference>Input_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>BPAdded_decision_yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>wannaAddMoreBPs_Yes_choice</leftValueReference>
+                <operator>WasSelected</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Account</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Tipo_Operazione</name>
         <label>Tipo Operazione?</label>
@@ -189,8 +235,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>2704</locationX>
-        <locationY>621</locationY>
+        <locationX>2705</locationX>
+        <locationY>609</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -289,7 +335,7 @@
     <recordLookups>
         <name>Get_Account_Master</name>
         <label>Get Account Master</label>
-        <locationX>2267</locationX>
+        <locationX>2313</locationX>
         <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -353,10 +399,10 @@
         <description>Valorizzato da arricchimento dati ma necessario solo per il ramo Unificazione/Separazione bolletta.</description>
         <name>Rimozione_Tipo_Fattura_Collettiva</name>
         <label>Rimozione Tipo Fattura Collettiva</label>
-        <locationX>1820</locationX>
-        <locationY>781</locationY>
+        <locationX>1684</locationX>
+        <locationY>809</locationY>
         <connector>
-            <targetReference>Selezione_Account</targetReference>
+            <targetReference>wannaAddMoreBPsScreen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -396,8 +442,8 @@
     <recordUpdates>
         <name>Set_Fase_In_Lavorazione</name>
         <label>Set Fase In Lavorazione</label>
-        <locationX>3009</locationX>
-        <locationY>619</locationY>
+        <locationX>3010</locationX>
+        <locationY>607</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -459,8 +505,8 @@
     <screens>
         <name>Input_Dati</name>
         <label>Input Dati</label>
-        <locationX>2468</locationX>
-        <locationY>619</locationY>
+        <locationX>2467</locationX>
+        <locationY>607</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -858,8 +904,8 @@
     <screens>
         <name>Selezione_Account</name>
         <label>Selezione Account</label>
-        <locationX>1824</locationX>
-        <locationY>924</locationY>
+        <locationX>2025</locationX>
+        <locationY>925</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -932,14 +978,24 @@
                 <name>saveDraft</name>
             </outputParameters>
         </fields>
+        <fields>
+            <name>wannaAddMoreBPs_radioButtons</name>
+            <choiceReferences>wannaAddMoreBPs_Yes_choice</choiceReferences>
+            <choiceReferences>wannaAddMoreBPs_No_choice</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>wannaAddMoreBPs_Yes_choice</defaultSelectedChoiceReference>
+            <fieldText>Vuoi aggiungere altri BP?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Selezione_Account_Master</name>
         <label>Selezione Account Master</label>
-        <locationX>2037</locationX>
-        <locationY>924</locationY>
+        <locationX>2174</locationX>
+        <locationY>925</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1152,6 +1208,34 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>wannaAddMoreBPsScreen</name>
+        <label>Vuoi aggiungere altri BP?</label>
+        <locationX>1684</locationX>
+        <locationY>983</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>BPAdded_decision</targetReference>
+        </connector>
+        <fields>
+            <name>wannaAddMoreBpText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family: Arial, sans-serif;&quot;&gt;Vuoi aggiungere altri BP?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>wannaAddMoreBPsButtons</name>
+            <choiceReferences>wannaAddMoreBPs_Yes_choice</choiceReferences>
+            <choiceReferences>wannaAddMoreBPs_No_choice</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>wannaAddMoreBPs_Yes_choice</defaultSelectedChoiceReference>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>650</locationX>
         <locationY>591</locationY>
@@ -1163,8 +1247,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2713</locationX>
-        <locationY>827</locationY>
+        <locationX>2714</locationX>
+        <locationY>815</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
