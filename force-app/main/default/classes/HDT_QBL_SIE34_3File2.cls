@@ -31,7 +31,7 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
             
             for (Case tempCase : listCase2) {
             String row = 
-            Account.LastName__c                                                               +separator+                                                                                        
+            tempCase.Account.LastName__c                                                      +separator+                                                                                        
             tempCase.Account.FirstName__c                                                     +separator+                                                                                         
             tempCase.Account.LastName__c                                                      +separator+                                                                                        
             tempCase.Account.CustomerCode__c                                                  +separator+                                                                                            
