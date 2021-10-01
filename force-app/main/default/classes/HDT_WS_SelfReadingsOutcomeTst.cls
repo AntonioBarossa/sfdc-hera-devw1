@@ -33,7 +33,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
         String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
         
         
         //MANAGING BODY RESPONSE
@@ -44,15 +44,12 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
         singleData.caseId = myCase.Id;
         singleData.activityType = 'Esito OK da SAP';
+        singleData.errorCode = '';
+        singleData.errorDescription = '';
         
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
         data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
         myOutcomeRequest.data = data;
-        
-        
-        
-        
-        
         
         
         //REST CONTEXT
@@ -65,11 +62,11 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         request.requestBody = Blob.valueOf(JSON.serialize(myOutcomeRequest));
         
         //TESTING
-        
-        
+        Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
         System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
+        System.assertEquals('Esito OK da SAP', myCaseUpdated.Phase__c, 'Case del test non è in Phase Esito OK da SAP.');
         
     }
     
