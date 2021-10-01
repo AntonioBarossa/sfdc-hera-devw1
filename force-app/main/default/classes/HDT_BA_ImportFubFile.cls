@@ -61,12 +61,12 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
             contactPointPhoneNumbers.add(cpp);
         }
 
-        Database.QueryLocator query2 = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE parentId IN :koList');
-        Database.QueryLocatorIterator it2 =  query2.iterator();
+        Database.QueryLocator queryKo = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE parentId IN :koList');
+        Database.QueryLocatorIterator itKo =  queryKo.iterator();
 
-        while (it2.hasNext())
+        while (itKo.hasNext())
         {
-            ContactPointPhone cpp = (ContactPointPhone)it2.next();
+            ContactPointPhone cpp = (ContactPointPhone)itKo.next();
             cpp.LastOutcomeFUB__c = 'KO';
             cpp.LastResultDateFUB__c = todayDate;
             contactPointPhoneNumbersKO.add(cpp);
