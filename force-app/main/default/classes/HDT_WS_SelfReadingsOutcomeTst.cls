@@ -5,6 +5,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
     
     
     //DATA
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    
     
     
     //TEST SETUP
@@ -56,15 +58,18 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
         
-        RestContext.request =req;
-        RestContext.response = res;
+        req.requestBody = Blob.valueOf(JSON.serialize(myOutcomeRequest));
         
-        request.requestBody = Blob.valueOf(JSON.serialize(myOutcomeRequest));
+        RestContext.request = req;
+        RestContext.response = res;
         
         //TESTING
         Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
+        responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
+        
         System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
         System.assertEquals('Esito OK da SAP', myCaseUpdated.Phase__c, 'Case del test non è in Phase Esito OK da SAP.');
         
