@@ -120,6 +120,11 @@
         <default>false</default>
         <label>Consociate IVA ordinaria-28</label>
     </customValue>
+    <customValue>
+        <fullName>GENERICI 20%-02</fullName>
+        <default>false</default>
+        <label>GENERICI 20%-02</label>
+    </customValue>
     <masterLabel>Percentuale IVA</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

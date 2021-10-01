@@ -131,7 +131,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
-        isAmendmentAllowed=isAmendmentAllowed;//**** 2809 LG disattivato per errore ||isScontiBonus(ord);
+        isAmendmentAllowed=isAmendmentAllowed||isScontiBonus(ord);
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
         system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
@@ -196,7 +196,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     }
 
     public static Set<String> getFamilySconto(){
-        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED group by ProductFamily__c  ];
+        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED  group by ProductFamily__c  ];
         Set<String> famils = new Set<String>();
         for(AggregateResult ag : lgr){
             if(String.isNotBlank((String) ag.get('fam')))

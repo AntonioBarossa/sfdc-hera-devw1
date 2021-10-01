@@ -250,7 +250,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
             }*/
             //@frpanico aggiunto DATA_EVENTO poiche DT_INVIO_DL sembra non venir inviato
-            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase.equalsIgnoreCase('Inviato al DL'))
+            if(reqWrp.requestMap.get('DATA_EVENTO') != null && reqWrp.requestMap.get('DATA_EVENTO') != '' && nextPhase != null && nextPhase.equalsIgnoreCase('Inviato al DL'))
             {
                 currentCase.SendToDistributorDate__c = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
             }
@@ -288,9 +288,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('FATTIB_TEC') != null && reqWrp.requestMap.get('FATTIB_TEC') != ''){
                 if(reqWrp.requestMap.get('FATTIB_TEC').equalsIgnoreCase('SI')){
-                    currentCase.TechnicalFeasibility__c = true;
+                    currentCase.TechnicalFeasibility__c = 'Si';
                 } else {
-                    currentCase.TechnicalFeasibility__c = false;
+                    currentCase.TechnicalFeasibility__c = 'No';
                 }
             }
             if(reqWrp.requestMap.get('NOTE') != null && reqWrp.requestMap.get('NOTE') != ''){
@@ -432,11 +432,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
                 }
             }
-            updateFuture(JSON.serialize(currentCase));
             if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
-                currentCase.Phase__c = 'Piano Rata Annullato';
-                updateFuture(JSON.serialize(currentCase));
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                currentCase.Phase__c = 'Piano Rata Annullato';  
             }
+            updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
@@ -481,7 +481,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
-            }
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
+            currentCase.Phase__c = 'KO Definitivo';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
@@ -529,6 +533,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String containerCaseNumber = '';
         String herokuCode = '';
         String containerId = '';
+        String priorita = '';
         Contract contract;
         ServicePoint__c sp;
         Account account;
@@ -550,6 +555,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+            priorita = reqWrp.requestMap.get('PRIORITA');
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -637,6 +643,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             if(String.isNotBlank(ufficioCompetente)){
                                 currentCase.CompetentOffice__c = ufficioCompetente;
+                            }
+                            //@frpanico Added "PRIORITA"
+                            if(String.isNotBlank(priorita))
+                            {
+                                currentCase.Priority = priorita.equalsIgnoreCase('3') ? 'Alta' : priorita.equalsIgnoreCase('2') ? 'Media' : 'Bassa';
                             }
                             //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
                             if(String.isNotBlank(containerCaseNumber)){
