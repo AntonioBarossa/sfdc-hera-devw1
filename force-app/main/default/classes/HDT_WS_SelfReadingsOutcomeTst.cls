@@ -74,7 +74,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
         System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
-        System.assertEquals('Esito OK da SAP', myCaseUpdated.Phase__c, 'Case del test non è in Phase Esito OK da SAP.');
+        System.assertEquals('Esito OK da SAP', myCaseUpdated.Phase__c, 'Phase errata: ' + myCaseUpdated.Phase__c);
         
     }
     
