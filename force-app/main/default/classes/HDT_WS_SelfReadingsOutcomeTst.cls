@@ -215,8 +215,6 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
         myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
         
-        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
-        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
         myOutcomeRequest.data = null;
         
         
