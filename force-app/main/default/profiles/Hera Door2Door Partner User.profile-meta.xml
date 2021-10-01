@@ -15823,7 +15823,7 @@
         <field>Product2.PriceEurGiorno__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+	 <fieldPermissions>
         <editable>true</editable>
         <field>Product2.PriceF0__c</field>
         <readable>true</readable>
