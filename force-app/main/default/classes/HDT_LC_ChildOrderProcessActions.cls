@@ -530,6 +530,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @param String cancellationReason
      * @description Execute child order process cancel actions
      */
+    @TestVisible
     private static Decimal getFixedFee(Id orderId, String searchKey){
         decimal fixedFeeExclVat;
         Order ord = new HDT_QR_Order().getRecordByOrderId(orderId)[0];  
