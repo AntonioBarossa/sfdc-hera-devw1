@@ -52,7 +52,7 @@ public with sharing class HDT_QBL_SIE34_2SMEGas implements Queueable  {
           for (Case tempCase : listCase) {
                String name=String.isNotBlank(tempCase.FirstName__c)? ' ' +tempCase.FirstName__c:'';
 
-                String row = 
+               String row = 
                tempCase.CaseNumber                                                +separator+                                  
                tempCase.CaseNumber                                                +separator+                                  
                tempCase.CreatedDate                                               +separator+                                   
