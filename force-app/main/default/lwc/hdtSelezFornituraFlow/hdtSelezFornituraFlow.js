@@ -99,7 +99,7 @@ const DATA_ACCESS_MAP = {
         emptyMessage: 'Non ci sono subscriptions',
         columns: [
             {label: 'Subscription #', fieldName: 'Name', type: 'text'},
-            {label: 'Product Name', fieldName: 'SBQQ__ProductName__c', type: 'text'}
+            {label: 'VAS', fieldName: 'SBQQ__ProductName__c', type: 'text'}
         ]
     },
     'ASSETS_FROM_CONTRACT':{
@@ -113,7 +113,7 @@ const DATA_ACCESS_MAP = {
         },
         columns: [
             {label: 'Nome asset', fieldName: 'Name', type: 'text'},
-            {label: 'Product Name', fieldName: 'ProductName', type: 'text'}
+            {label: 'VAS', fieldName: 'ProductName', type: 'text'}
         ]
     },
     //Segnalazioni VAS - END
