@@ -498,9 +498,11 @@ public with sharing class HDT_WS_SelfReadingsTst {
         String rtName = constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
         
-        Order myOrder = [SELECT Id, AccountId FROM Order];
+        Order myOrder = [SELECT Id, AccountId, ServicePoint__c, RecordTypeId, Phase__c, Status FROM Order];
         myOrder.Phase__c = 'Da Inviare';
         update myOrder;
+        
+        System.debug('utl_isProcessReadingTest Order: ' + myOrder);
         
         
         Date myDate = Date.newInstance(2011, 11, 18);
