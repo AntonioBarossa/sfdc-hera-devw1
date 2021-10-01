@@ -104,8 +104,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
         singleData.caseId = myCase.Id;
         singleData.activityType = 'Esito KO da SAP';
-        singleData.errorCode = '';
-        singleData.errorDescription = '';
+        singleData.errorCode = 'ErrorCode Fittizio per Test';
+        singleData.errorDescription = 'errorDescription Fittizia per Test';
         
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
         data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
@@ -163,8 +163,8 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
         singleData.caseId = myCase.Id;
         singleData.activityType = 'KO Pre-MDM';
-        singleData.errorCode = '';
-        singleData.errorDescription = '';
+        singleData.errorCode = 'ErrorCode Fittizio per Test';
+        singleData.errorDescription = 'errorDescription Fittizia per Test';
         
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
         data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
