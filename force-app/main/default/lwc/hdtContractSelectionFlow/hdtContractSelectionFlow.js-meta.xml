@@ -37,6 +37,8 @@
         <property name="nextLabel" type="String" label="Next Label" description="The Label of the Next Button" role="inputOnly"/>
 
         <property name="results" type="String" label="results" description="results" role="outputOnly"/>
+
+        <property name="numSelectedContracts" type="Integer" label="Numero Contratti Selezionati" description="Numero Contratti Selezionati" role="outputOnly"/>
         
         <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
             
