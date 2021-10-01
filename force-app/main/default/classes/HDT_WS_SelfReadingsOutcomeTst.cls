@@ -246,6 +246,43 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
     
     
     ///ERROR 500
+    @isTest
+    private static void doPostTest_Error_500() {
+        
+        //SETUP
+        mySetup();
+        
+        //CASE & PHASE
+        Case myCase = [SELECT Id FROM Case];
+        
+        //MANAGING BODY RESPONSE
+        String myOutcomeRequest = '{Object';
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        
+        req.requestBody = Blob.valueOf(myOutcomeRequest);
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //TESTING
+        Test.startTest();
+        HDT_WS_SelfReadingsOutcome.doPost();
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
+        
+        //ASSERTS
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
+        responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
+        
+        System.assertEquals(400, RestContext.response.statusCode, 'Status code non 400.');
+        
+    }
     
     
     
