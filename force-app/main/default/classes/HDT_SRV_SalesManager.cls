@@ -36,7 +36,7 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
 
         switch on method{
             when 'activation', 'deactivation', 'service26' {
-                if(system.isQueueable()){
+                if(system.isQueueable() || system.isBatch()){
                     asyncCalloutFuture(objectId, method);
                 }else{
                     system.enqueueJob(new HDT_QBL_AsycnronousCallout(
