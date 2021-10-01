@@ -1,6 +1,11 @@
 public inherited sharing class HDT_TRH_Knowledge {
     public void handleUpdate() {
 
+
+        //@frpanico 01/10/2021
+        //Refactoring: Trigger is meant for one record only
+        
+
         for (Knowledge__kav article :(List<Knowledge__kav >) Trigger.new){
 
             if(Trigger.isUpdate && Trigger.isBefore){    

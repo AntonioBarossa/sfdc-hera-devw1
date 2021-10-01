@@ -481,11 +481,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
-        }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
-            currentCase.Phase__c = 'KO Definitivo';
-            currentCase.Status = 'Closed';
-            updateFuture(JSON.serialize(currentCase));
-        }
+            }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
@@ -555,7 +551,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
-            priorita = reqWrp.requestMap.get('PRIORITA');
+            priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -647,7 +643,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             //@frpanico Added "PRIORITA"
                             if(String.isNotBlank(priorita))
                             {
-                                currentCase.Priority = priorita.equalsIgnoreCase('3') ? 'Alta' : priorita.equalsIgnoreCase('2') ? 'Media' : 'Bassa';
+                                currentCase.Priority = priorita;
                             }
                             //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
                             if(String.isNotBlank(containerCaseNumber)){
