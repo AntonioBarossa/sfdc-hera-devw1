@@ -90,9 +90,9 @@ public class HDT_LC_RequestVisitD2DCreateFormTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, result, 'An activity was successfully created');
+        System.assertNotEquals(null, result, 'An activity was not created');
         
-        System.assertEquals(1,[SELECT id, consumption__c FROM Lead where consumption__c =: consumption].size(), 'One Lead correctly updated');
+        System.assertEquals(1,[SELECT id, consumption__c FROM Lead where consumption__c =: consumption].size(), 'One Lead not correctly updated');
 
     }
     
@@ -110,9 +110,9 @@ public class HDT_LC_RequestVisitD2DCreateFormTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, result, 'An activity was successfully created');
+        System.assertNotEquals(null, result, 'An activity was not created');
         
-        System.assertEquals(1,[SELECT id, consumption__c FROM Contact where consumption__c =: consumption].size(), 'One Contact correctly updated');
+        System.assertEquals(1,[SELECT id, consumption__c FROM Contact where consumption__c =: consumption].size(), 'One Contact not correctly updated');
 
     }
 }
