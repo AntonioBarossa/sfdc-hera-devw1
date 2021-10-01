@@ -31,6 +31,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }when 'calculateSignModeDriver' {
                     return calculateSignModeDriver(inputs,formParams);
                 }
+                when 'handleAmountVas'{
+                    return handleAmountVas(inputs,formParams);
+                 }
                 when else {
                     return '';
                 }
@@ -40,7 +43,26 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         return result;
     }
-
+    private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        try{
+            List<SObject> itemVasList = inputs.get('ItemVAS');
+            Double amountNoIva = 0;
+            Double fixedAmountNoIva = 0;
+            Integer quantity = 0;
+            if (itemVasList == null) return '||';
+            Integer i = 0;
+            for (SObject singleVas : itemVasList) {
+                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams));
+                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'PriceNetDiscounted__c', i, inputs, formParams));
+                quantity += Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
+                i++;
+            }
+            return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+        }catch(Exception ex){
+            return '||';
+        }
+       
+    }
     private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String context = (String) formParams.get('Contesto');
         if(!context.equalsIgnoreCase('Order')) return '';

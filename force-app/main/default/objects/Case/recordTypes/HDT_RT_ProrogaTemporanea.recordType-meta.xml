@@ -7774,6 +7774,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazione verso Heroku KO</fullName>
             <default>false</default>
         </values>

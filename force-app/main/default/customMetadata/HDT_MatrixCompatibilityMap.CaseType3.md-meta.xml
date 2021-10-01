@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Allineamento Canone RAI</value>
+        <value xsi:type="xsd:string">Allineamento Canone Rai</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>
