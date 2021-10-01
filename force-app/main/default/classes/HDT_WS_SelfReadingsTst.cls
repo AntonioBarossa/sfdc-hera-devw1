@@ -24,6 +24,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
         Contact contactOne = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id)[0];
         Contact contactTwo = HDT_UTL_DataFactoryTst.createContact(1, true, acc[1].Id)[0];
         
+        ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
+        
         //ORDER
         List<Order> ordList;
         if(isRegularOrder){
@@ -33,6 +35,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
             Order myOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza')[0];
             myOrder.recordTypeId = constants.ORDER_RECORDTYPEID_SWITCHIN;
             myOrder.Contact__c = contactOne.Id;
+            myOrder.ServicePoint__c = servPoint.Id;
             ordList = new List<Order>{myOrder};
             insert ordList;
             
@@ -42,7 +45,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
             AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, acc[0].Id, contactTwo.Id);
         }
         
-        ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
+        
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].Id);
         
         //CASE
