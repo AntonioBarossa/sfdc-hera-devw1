@@ -28,6 +28,8 @@ public inherited sharing class HDT_QR_SelfReadings {
         /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
             recordList.add(singleRecord);
         }*/
+        System.debug('firstQuery.values() size:' + firstQuery.values().size());
+        
         return firstQuery.values();
     }
 
