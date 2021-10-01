@@ -248,7 +248,10 @@ public inherited sharing class HDT_QR_Order {
             MeterSN__c,                     // 0110 LG Dati discordanti
             Resident__c,                    // 0110 LG Dati discordanti
             RemiCode__c,                    // 0110 LG Dati discordanti
-            SupplyCity__c,                   // 0110 LG Dati discordanti
+            SupplyCity__c,
+            CommercialProduct__c,
+            CommercialProductCode__c,
+            CommercialProductVersion__c,                    // 0110 LG Dati discordanti
             SupplyStreetName__c,             // 0110 LG Dati discordanti
             SupplyStreetNumber__c,             // 0110 LG Dati discordanti
             SupplyStreetNumberExtension__c,     // 0110 LG Dati discordanti
