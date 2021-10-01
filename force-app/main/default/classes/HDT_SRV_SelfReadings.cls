@@ -235,30 +235,34 @@ public with sharing class HDT_SRV_SelfReadings {
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
-
+        Map<String,Object> dataBody = body.get('data') != null? (Map<String, Object>) body.get('data') : new Map<String,Object>();
+        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'KO';
         // SAP restituisce codice 502 in caso di check preliminare non superato.
-        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+        if ((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (outcome != null && outcome.equalsIgnoreCase('KO'))) {
             retWrap.isResponseOk = false;
+            String errorMessage = '';
             List<Object> errorDetails = (List<Object>) body.get('errorDetails');
-            if (errorDetails != null && !errorDetails.isEmpty()) {
+            if(errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
-                String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
-                HDT_QR_Case queryCase = new HDT_QR_Case();
-                List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
-                if (!cases.isEmpty()) {
-                    Case currentReadingCase = cases[0];
-                    if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                        readingCaseToUpdate.Status = 'Closed';
-                    }
-                    String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
-                    String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
-                    readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
-                    if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
-                    }
-                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+            }else{
+                errorMessage = (String)dataBody.get('message');
+            }
+            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
+            HDT_QR_Case queryCase = new HDT_QR_Case();
+            List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
+            if(!cases.isEmpty()) {
+                Case currentReadingCase = cases[0];
+                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                    readingCaseToUpdate.Status = 'Closed';
                 }
+                String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
+                String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
+                readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
+                if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
+                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                }
+                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
             }
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.

@@ -432,11 +432,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Description = nowDateFormat + ': ' + message + '\n' + description;
                 }
             }
-            updateFuture(JSON.serialize(currentCase));
             if(currentCase.Phase__c == 'Acconto Paperless Non Pagato'){
-                currentCase.Phase__c = 'Piano Rata Annullato';
-                updateFuture(JSON.serialize(currentCase));
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+                currentCase.Phase__c = 'Piano Rata Annullato';  
             }
+            updateFuture(JSON.serialize(currentCase));
             return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
@@ -529,6 +529,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String containerCaseNumber = '';
         String herokuCode = '';
         String containerId = '';
+        String priorita = '';
         Contract contract;
         ServicePoint__c sp;
         Account account;
@@ -550,6 +551,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
+            priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -637,6 +639,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             }
                             if(String.isNotBlank(ufficioCompetente)){
                                 currentCase.CompetentOffice__c = ufficioCompetente;
+                            }
+                            //@frpanico Added "PRIORITA"
+                            if(String.isNotBlank(priorita))
+                            {
+                                currentCase.Priority = priorita;
                             }
                             //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
                             if(String.isNotBlank(containerCaseNumber)){
