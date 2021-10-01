@@ -101,6 +101,22 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         System.debug('createServicePoint_tmp received servicepoint string ' + servicePoint);
         
         ServicePoint__c servicePointObject = (ServicePoint__c)JSON.deserialize(servicePoint, ServicePoint__c.class);
+        servicePointObject.ImplantTypeTemp__c = servicePointObject.ImplantType__c;
+        servicePointObject.SupplyTypeTemp__c = servicePointObject.SupplyType__c;
+        servicePointObject.SupplyType__c = null;
+        servicePointObject.ImplantType__c = null;
+        
+        /*try{
+            Map<String, Object> servMap = new Map<String, Object>( servicePointObject.getPopulatedFieldsAsMap() );
+            servMap.put('ImplantTypeTemp__c',servMap.get('ImplantType__c'));//remove( 'MeterStatus__c' );
+            servMap.put('SupplyTypeTemp__c',servMap.get('SupplyType__c'));
+            servMap.remove('ImplantType__c');
+            servMap.remove('SupplyType__c');
+            servicePointObject = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
+            System.debug(servicePointObject);
+        }catch(Exception e){
+            System.debug('ERRORE utilizzo vecchia versione');
+        }*/
 
         System.debug('createServicePoint_tmp converted servicepoint string ' + servicePointObject);
 
@@ -257,6 +273,21 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         system.debug('ServicePoint : ' + servicePoint);
         system.debug('sale : ' + sale);
         system.debug('isSap = ' +  sap);
+        servicePoint.ImplantTypeTemp__c = servicePoint.ImplantType__c;
+        servicePoint.SupplyTypeTemp__c = servicePoint.SupplyType__c;
+        servicePoint.SupplyType__c = null;
+        servicePoint.ImplantType__c = null;
+        /* try{
+            Map<String, Object> servMap = new Map<String, Object>( servicePoint.getPopulatedFieldsAsMap() );
+            servMap.put('ImplantTypeTemp__c',servMap.get('ImplantType__c'));//remove( 'MeterStatus__c' );
+            servMap.put('SupplyTypeTemp__c',servMap.get('SupplyType__c'));
+            servMap.remove('ImplantType__c');
+            servMap.remove('SupplyType__c');
+            servicePoint = (ServicePoint__c) JSON.deserialize( JSON.serialize( servMap ), ServicePoint__c.class );
+            System.debug(servicePoint);
+        }catch(Exception e){
+            System.debug('ERRORE utilizzo vecchia versione');
+        }*/
         if(sap == false){
             system.debug('entra in updateRecord');
            // serviceSp.updateRecord(servicePoint);

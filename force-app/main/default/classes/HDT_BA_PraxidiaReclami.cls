@@ -9,8 +9,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
     String generateFile = header;
     public Iterable<Case> start(Database.BatchableContext context) {
 
-        List<Case> dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
-
+        dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
         return this.dtos;
     }
 
@@ -72,7 +71,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
 
     }
     public void finish(Database.BatchableContext context) {
-        System.debug('BeforeEnter');
+        System.debug('BeforeEnter:' + wrapReclamiList);
         For(HDT_WRP_CampaignPraxidia.reclami fr : wrapReclamiList){
             String rowFile = '';
             rowFile = fr.idJob = ';';
