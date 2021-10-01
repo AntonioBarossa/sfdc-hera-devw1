@@ -4,7 +4,7 @@
  * @version 1.0
  * @description: Apex Test Class of the relative Apex Class "HDT_LC_ReportNavigatorController"
  * @history
- * @Created 29/09/2021
+ * @Created 01/10/2021
  * Modified By:
  **/
 @isTest(SeeAllData=true)
