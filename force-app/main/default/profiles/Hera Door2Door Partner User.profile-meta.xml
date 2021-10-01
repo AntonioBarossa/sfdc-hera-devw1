@@ -12305,6 +12305,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.HerAteco__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AttributesCatalogDesc__c</field>
         <readable>true</readable>
     </fieldPermissions>
