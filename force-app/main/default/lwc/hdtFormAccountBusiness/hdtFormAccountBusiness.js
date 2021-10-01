@@ -614,8 +614,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     console.log("LOG11:" + this.personFiscalCode.value);
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
                     console.log("LOG12:" + prova);
-                    var keyCode= prova;
-
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
@@ -625,7 +623,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             this.gender= fiscData.gender;
                         }
                         if(this.birthDate === undefined || this.birthDate.trim()===''){
-                            console.log('this.birthDate: '+this.birthDate);
                             this.birthDate= fiscData.birthDate;
                         }
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
