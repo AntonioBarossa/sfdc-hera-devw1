@@ -29,9 +29,9 @@ public class HDT_LC_ReportNavigatorControllerTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, ex, 'Exception successfully thrown');
+        System.assertNotEquals(null, ex, 'Exception not thrown');
         
-        System.assertEquals('Script-thrown exception', msg, 'Report not found because the input was a random string');
+        System.assertEquals('Script-thrown exception', msg, 'Report found when the input was a random string');
 
     }
     
@@ -46,9 +46,9 @@ public class HDT_LC_ReportNavigatorControllerTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, result, 'Result successfully returned');
+        System.assertNotEquals(null, result, 'Result not returned');
         
-        System.assertEquals([SELECT id FROM Report WHERE DeveloperName =: reportName].id, result, 'Report id successfully returned');
+        System.assertEquals([SELECT id FROM Report WHERE DeveloperName =: reportName].id, result, 'Report id not returned');
 
     }
 }
