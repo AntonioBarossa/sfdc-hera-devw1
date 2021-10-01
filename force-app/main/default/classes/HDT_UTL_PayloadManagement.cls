@@ -28,7 +28,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleFlagDeliveryAddress(inputs,formParams);
                 }when 'handleFlagPaperless' {
                     return handleFlagPaperless(inputs,formParams);
+                }when 'calculateSignModeDriver' {
+                    return calculateSignModeDriver(inputs,formParams);
                 }
+                when 'handleAmountVas'{
+                    return handleAmountVas(inputs,formParams);
+                 }
                 when else {
                     return '';
                 }
@@ -38,7 +43,26 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         return result;
     }
-
+    private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        try{
+            List<SObject> itemVasList = inputs.get('ItemVAS');
+            Double amountNoIva = 0;
+            Double fixedAmountNoIva = 0;
+            Integer quantity = 0;
+            if (itemVasList == null) return '||';
+            Integer i = 0;
+            for (SObject singleVas : itemVasList) {
+                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams));
+                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'PriceNetDiscounted__c', i, inputs, formParams));
+                quantity += Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
+                i++;
+            }
+            return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+        }catch(Exception ex){
+            return '||';
+        }
+       
+    }
     private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String context = (String) formParams.get('Contesto');
         if(!context.equalsIgnoreCase('Order')) return '';
@@ -917,6 +941,24 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         System.debug('calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
         System.debug('calculateIndemnityBox boxType output: ' + boxType);
         return boxType;
+    }
+
+    // Calcola il driver MODALITA_FIRMA, che è un driver PRIMARIO e quindi o ha un valore configurato su Engage1, oppure deve essere vuoto.
+    private String calculateSignModeDriver(Map<String,List<sObject>> inputs, Map<String,Object> formParams) {
+        String context = (String) formParams.get('Contesto');
+        String signModeForm = HDT_UTL_DocumentalManagement.getValue('FormParameters', 'signMode', 0, inputs, formParams);
+        if (String.isNotBlank(signModeForm)) {
+            return signModeForm == 'Vocal Order' ? signModeForm : '';
+        }
+
+        String signMode = '';
+        if (context == 'Order') {
+            signMode = HDT_UTL_DocumentalManagement.getValue('Order', 'SignatureMethod__c', 0, inputs, formParams);
+        }/*  else if (context == 'Case') {
+            signMode = HDT_UTL_DocumentalManagement.getValue('Case', 'SignMode__c', 0, inputs, formParams);
+        } */ // al momento Engage1 non ha configurato nessun plico post-sales con driver MODALITA_FIRMA valorizzato.
+
+        return signMode == 'Vocal Order' ? signMode : '';
     }
 
     // Restituisce la data nel formato richiesto da Engage1

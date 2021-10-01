@@ -228,7 +228,7 @@
             <name>Note_di_apertura_text</name>
             <fieldText>Note di apertura</fieldText>
             <fieldType>LargeTextArea</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>

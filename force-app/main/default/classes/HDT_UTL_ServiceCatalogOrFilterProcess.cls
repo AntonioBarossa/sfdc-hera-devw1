@@ -495,7 +495,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             'Cluster__c' => new List<String>
                 {'Reclami', 'Preventivi', 'Fatturazione', 'Morosità', 'Variazioni'},
             'Type' => new List<String>
-                {'Unificazione/Separazione BP-CA-Bolletta'}
+                {'Unificazione/Separazione BP-CA-Bolletta','Allineamento Canone Rai'}
         }
     };
 

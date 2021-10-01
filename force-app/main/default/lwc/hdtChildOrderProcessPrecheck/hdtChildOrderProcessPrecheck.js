@@ -362,7 +362,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.selectedProcessObject.processType != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
             this.callCreditCheckSAP();
         }
         console.log('****13');

@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ContextObjectFormula__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL(ScriptType__c, &quot;Processo&quot;), TEXT(contextObject__c),
-TEXT(ParentSection__r.contextObject__c))</formula>
+    <formula>IF(ISPICKVAL(ScriptType__c, &quot;Processo&quot;), TEXT(ContextObject__c),
+TEXT(ParentSection__r.ContextObject__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Oggetto di Riferimento Formula</label>
     <required>false</required>
