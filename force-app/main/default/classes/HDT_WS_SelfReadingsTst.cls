@@ -508,7 +508,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         System.debug('utl_isProcessReadingTest Order: ' + myOrder);
         
         
-        Date myDate = Date.newInstance(2011, 11, 18);
+        Date myDate = Date.newInstance(2021, 10, 1);
         Time myTime = Time.newInstance(3, 3, 3, 0);
         DateTime dt = DateTime.newInstance(myDate, myTime);
         
