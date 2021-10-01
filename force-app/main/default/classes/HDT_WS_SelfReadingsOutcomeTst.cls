@@ -77,7 +77,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
-        System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
+        System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Esito OK da SAP', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
         
     }
@@ -135,7 +135,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
-        System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
+        System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Esito KO da SAP', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
         
     }
@@ -194,7 +194,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
-        System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
+        System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
         System.assertEquals('Esito KO pre-MDM', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
         
     }
@@ -239,7 +239,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
-        System.assertEquals(400, RestContext.response.statusCode, 'Status code non 400.');
+        System.assertEquals(400, RestContext.response.statusCode, 'Status code errato.');
         
     }
     
@@ -280,7 +280,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
-        System.assertEquals(400, RestContext.response.statusCode, 'Status code non 400.');
+        System.assertEquals(500, RestContext.response.statusCode, 'Status code errato.');
         
     }
     
