@@ -1,0 +1,54 @@
+/**
+ * Header of the class "HDT_LC_ReportNavigatorControllerTst"
+ * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+ * @version 1.0
+ * @description: Apex Test Class of the relative Apex Class "HDT_LC_ReportNavigatorController"
+ * @history
+ * @Created 29/09/2021
+ * Modified By:
+ **/
+@isTest(SeeAllData=true)
+public class HDT_LC_ReportNavigatorControllerTst {
+    
+	@isTest
+    static void test1(){
+        
+        Exception ex;
+        String msg;
+        
+        Test.startTest();
+        
+        try{
+            
+        	Id result = HDT_LC_ReportNavigatorController.getReportId('randomstring');
+            
+        }catch(Exception e){
+            ex = e;
+            msg = e.getMessage();
+        }
+        
+        Test.stopTest();
+        
+        System.assertNotEquals(null, ex, 'Exception successfully thrown');
+        
+        System.assertEquals('Script-thrown exception', msg, 'Report not found because the input was a random string');
+
+    }
+    
+    @isTest
+    static void test2(){
+        
+        String reportName = [Select DeveloperName From Report LIMIT 1].DeveloperName;
+        
+        Test.startTest();
+        
+        Id result = HDT_LC_ReportNavigatorController.getReportId(reportName);
+        
+        Test.stopTest();
+        
+        System.assertNotEquals(null, result, 'Result successfully returned');
+        
+        System.assertEquals([SELECT id FROM Report WHERE DeveloperName =: reportName].id, result, 'Report id successfully returned');
+
+    }
+}
