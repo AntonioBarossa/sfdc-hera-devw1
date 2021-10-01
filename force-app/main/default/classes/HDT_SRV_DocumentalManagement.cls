@@ -514,7 +514,11 @@ public class HDT_SRV_DocumentalManagement{
 			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
-				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+				try{
+					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+				}catch(Exception ex){
+					System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+				}
 			}
 			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
