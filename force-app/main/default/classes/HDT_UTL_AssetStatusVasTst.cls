@@ -57,11 +57,11 @@ public class HDT_UTL_AssetStatusVasTst {
             List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(10,true,orderId,pointId,productId,entryId);
             
             
-            List<Asset> assets = new List<Asset>();
-            Asset asset1 = new Asset(Name = 'asset1', SBQQ__OrderProduct__c = orderItems[0].id, SBQQ__RootAsset__c = null);
-            Asset asset2 = new Asset(Name = 'asset2', SBQQ__OrderProduct__c = orderItems[1].id, SBQQ__RootAsset__c = null);
-            assets.add(asset1);
-            assets.add(asset2);
+            List<Asset> assets = UTL_DataFactoryTst.createAsset(2,false);
+            assets[0].SBQQ__OrderProduct__c = orderItems[0].id;
+            assets[0].SBQQ__RootAsset__c = null;
+            assets[1].SBQQ__OrderProduct__c = orderItems[1].id;
+            assets[1].SBQQ__RootAsset__c = null;
             insert assets;
             
         }
@@ -78,8 +78,8 @@ public class HDT_UTL_AssetStatusVasTst {
             
         Test.stopTest();
         
-        System.assertNotEquals(constants.ORDER_RECORDTYPEID_DEFAULT, orders[0].RecordTypeId, 'Orders record type correctly modified');
+        System.assertNotEquals(constants.ORDER_RECORDTYPEID_DEFAULT, orders[0].RecordTypeId, 'Orders record type not modified');
         
-        System.assertEquals('Attivo', assets[0].DigitalAssetStatus, 'Assets field value successfully modified');        
+        System.assertEquals('Attivo', assets[0].DigitalAssetStatus, 'Assets field value not modified');        
     }
 }
