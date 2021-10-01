@@ -383,8 +383,10 @@ public with sharing class HDT_QBL_SIE34_2MMGas implements Queueable  {
                 body=body+'\n'+row; 
              }
           }
-        contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP(GAS)OUT_PREVENTIVI_MM.txt','PP(GAS)OUT_PREVENTIVI_MM'));
-        Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+         if (listCase!=null && listCase.size()>0) {
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP(GAS)OUT_PREVENTIVI_MM.txt','PP(GAS)OUT_PREVENTIVI_MM'));
+         }
+         Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
 
        } 
        catch (Exception e) {
