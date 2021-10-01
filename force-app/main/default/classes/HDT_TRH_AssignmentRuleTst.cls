@@ -24,9 +24,9 @@ public class HDT_TRH_AssignmentRuleTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(1.0, rules[0].RulePriority__c, 'AssignmentRule successfully updated');
+        System.assertNotEquals(1.0, rules[0].RulePriority__c, 'AssignmentRule not updated');
         
-        System.assertEquals(1, [SELECT id FROM AssignmentRule__c].size(), 'AssignmentRule successfully inserted');
+        System.assertEquals(1, [SELECT id FROM AssignmentRule__c].size(), 'AssignmentRule not inserted');
         
     }
 }
