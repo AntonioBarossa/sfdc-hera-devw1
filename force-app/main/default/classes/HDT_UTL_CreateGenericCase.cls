@@ -24,7 +24,11 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'Type',
                 'Subprocess__c',
                 'RecordTypeId',
-                'ServiceRequestID__c'
+                'ServiceRequestID__c',
+                'CreatedDate',
+                'CreatedById',
+                'OwnerId',
+                'LastModifiedById'
             };
         Case childCase = new Case();
         
@@ -196,6 +200,5 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         return newCase;
     }
-
 
 }

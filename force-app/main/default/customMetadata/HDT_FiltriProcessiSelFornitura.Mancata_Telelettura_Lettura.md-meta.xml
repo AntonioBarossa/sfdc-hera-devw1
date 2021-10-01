@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Mancata Telelettura /Lettura</label>
+    <label>Mancata Telelettura/lettura</label>
     <protected>false</protected>
     <values>
         <field>ContrattiCliente__c</field>
@@ -24,10 +24,10 @@
     </values>
     <values>
         <field>TipoProcesso__c</field>
-        <value xsi:type="xsd:string">Mancata Telelettura/Lettura</value>
+        <value xsi:type="xsd:string">Mancata Telelettura/lettura</value>
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
+        <value xsi:type="xsd:string">Energia Elettrica</value>
     </values>
 </CustomMetadata>

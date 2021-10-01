@@ -390,4 +390,33 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
 
     //FINE Test method per classe HDT_SRV_DataEnrichmentPostSales
 
+
+    //INIZIO Test Costruttori classe HDT_WRP_HerokuPostSalesManager
+    @IsTest
+    static void testFirstConstructorHerokuPostSalesManager(){
+        
+        Test.startTest();
+        HDT_WRP_HerokuPostSalesManager wrapper = new HDT_WRP_HerokuPostSalesManager('test', 'result','errorMessage', 'refReq', 'communicationChannel', 'reqId', 'herokuCode', 'dlCode');
+
+        System.assertEquals('test', wrapper.responseMap.get('requestType'), 'requestType != test');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testSecondConstructorHerokuPostSalesManager(){
+        
+        Test.startTest();
+
+        HDT_WRP_HerokuPostSalesManager wrapper = new HDT_WRP_HerokuPostSalesManager('flowTest', 'phase','idTest', 'herokuCode', 'dlCode', 'codiceContrattoTest', 'contractStatus');
+
+        System.assertEquals('idTest', wrapper.requestMap.get('recordId'), 'recordId != idTest');
+
+        Test.stopTest();
+        
+    }
+
+    //FINE Test Costruttori classe HDT_WRP_HerokuPostSalesManager
+
 }

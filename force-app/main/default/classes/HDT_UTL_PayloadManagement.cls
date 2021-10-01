@@ -28,7 +28,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleFlagDeliveryAddress(inputs,formParams);
                 }when 'handleFlagPaperless' {
                     return handleFlagPaperless(inputs,formParams);
+                }when 'calculateSignModeDriver' {
+                    return calculateSignModeDriver(inputs,formParams);
                 }
+                when 'handleAmountVas'{
+                    return handleAmountVas(inputs,formParams);
+                 }
                 when else {
                     return '';
                 }
@@ -38,7 +43,26 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         return result;
     }
-
+    private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        try{
+            List<SObject> itemVasList = inputs.get('ItemVAS');
+            Double amountNoIva = 0;
+            Double fixedAmountNoIva = 0;
+            Integer quantity = 0;
+            if (itemVasList == null) return '||';
+            Integer i = 0;
+            for (SObject singleVas : itemVasList) {
+                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams));
+                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'PriceNetDiscounted__c', i, inputs, formParams));
+                quantity += Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
+                i++;
+            }
+            return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+        }catch(Exception ex){
+            return '||';
+        }
+       
+    }
     private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String context = (String) formParams.get('Contesto');
         if(!context.equalsIgnoreCase('Order')) return '';
@@ -231,12 +255,18 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String variableAmount = '';
         Double totalAmount;
         String result='';
+        String caseType = '';
+        String supplyType = '';
+        String cluster = '';
         switch on context {
             when 'Case' {
                 amount = HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', 0, inputs, formParams);
                 fixedAmount = HDT_UTL_DocumentalManagement.getValue('Case', 'FixedAmount__c', 0, inputs, formParams);
                 variableAmount = HDT_UTL_DocumentalManagement.getValue('Case', 'VariableAmount__c', 0, inputs, formParams);
                 iva = HDT_UTL_DocumentalManagement.getValue('Case', 'VATPercentage__c', 0, inputs, formParams);
+                caseType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
+                supplyType = HDT_UTL_DocumentalManagement.getValue('Case', 'SupplyType__c', 0, inputs, formParams);
+                cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
             }
             when else {
                 //quotationType = ''; //da ordine manca il campo
@@ -255,7 +285,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     ivaAmount = ((amountDouble/100)*ivaInteger);
             }
             totalAmount = amountDouble + ivaAmount;
-            result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;
+
+            if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) && context.equalsIgnoreCase('Case') && cluster.equalsIgnoreCase('Preventivi')){
+                //variableAmount è l'importo prestazione calcolato come amount - fixedAmount
+                //fixed amount è solo quotaVend se Variazione potenza dom sennò è quotaDistr + quotaVend| Se l'offerta è Placet togliere la quota Vend
+                if(caseType.contains('Potenza') && supplyType.equalsIgnoreCase('Domestico')){
+                    fixedAmount = '23';
+                }else {
+                    fixedAmount = '48,81';
+                }
+                variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+            }
+            result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
+            
         }else {
             result = '|||||';
         }
@@ -506,16 +548,17 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
         }
 
+        preventivoCounter = 0;
         for (Integer i = 0; i < orders.size(); i++) {
             String processType = HDT_UTL_DocumentalManagement.getValue('OrderList', 'ProcessType__c', i, inputs, formParams);
             if (processType != 'Prima Attivazione con modifica') {
                 continue;
             }
-
+            preventivoCounter++;
             String[] record = new List<String>();
-            // Il primo 310|540 è già presente, evitiamo di aggiungerlo una seconda volta.
-            // Se i = 0 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
-            if (i > 0 || String.isNotBlank(payloadSection)) {
+            // Il primo 310|50 è già presente, evitiamo di aggiungerlo una seconda volta.
+            // Se preventivoCounter = 1 ma payloadSection è valorizzato, dobbiamo comunque aggiungerlo perchè non siamo più al primo giro.
+            if (preventivoCounter > 1 || String.isNotBlank(payloadSection)) {
                 record.add('00310');
                 record.add('50');
             }
@@ -530,7 +573,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'SupplyAddressFormula__c', i, inputs, formParams));     // Indirizzo del lavoro
             record.add(HDT_UTL_DocumentalManagement.getValue('OrderList', 'Phase__c', i, inputs, formParams));                    // Stato
             // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
-            if (i < orders.size() - 1) {
+            if (preventivoCounter != numPreventiviOrders) {
                 record.add(endLine);
             }
             payloadSection += String.join(record, div);
@@ -900,10 +943,29 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         return boxType;
     }
 
+    // Calcola il driver MODALITA_FIRMA, che è un driver PRIMARIO e quindi o ha un valore configurato su Engage1, oppure deve essere vuoto.
+    private String calculateSignModeDriver(Map<String,List<sObject>> inputs, Map<String,Object> formParams) {
+        String context = (String) formParams.get('Contesto');
+        String signModeForm = HDT_UTL_DocumentalManagement.getValue('FormParameters', 'signMode', 0, inputs, formParams);
+        if (String.isNotBlank(signModeForm)) {
+            return signModeForm == 'Vocal Order' ? signModeForm : '';
+        }
+
+        String signMode = '';
+        if (context == 'Order') {
+            signMode = HDT_UTL_DocumentalManagement.getValue('Order', 'SignatureMethod__c', 0, inputs, formParams);
+        }/*  else if (context == 'Case') {
+            signMode = HDT_UTL_DocumentalManagement.getValue('Case', 'SignMode__c', 0, inputs, formParams);
+        } */ // al momento Engage1 non ha configurato nessun plico post-sales con driver MODALITA_FIRMA valorizzato.
+
+        return signMode == 'Vocal Order' ? signMode : '';
+    }
+
     // Restituisce la data nel formato richiesto da Engage1
     private static String getFormattedDate(Date dateToFormat) {
         Datetime dt = dateToFormat;
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
     }
+    
 }

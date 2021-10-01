@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Attivo,Inattivo</value>
+        <value xsi:type="xsd:string">Attivo,Cessato</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>

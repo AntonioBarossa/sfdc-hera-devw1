@@ -20,9 +20,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     public static Map<String,Object> init(String Id){
         Map<String,Object> result = new Map<String,Object>();
 
-        List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+        User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
 
-        result.put('userProfile', user[0].Profile.Name);
+        result.put('loginChannel', user.LoginChannel__c);
 
         return result;
     }
@@ -122,10 +122,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
-        //02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni
-        Order orderFull = orderQr.getRecordById(order.Id);
-        if (orderFull.IsCloned__c && orderFull.Phase__c=='Bozza') {
-            order.Phase__c = 'Documentazione Validata';
+        Date tempStart = order.TemporaryConnectionStartDate__c;
+        Date tempEnd = order.TemporaryConnectionEndDate__c;
+        Boolean tempDate = tempEnd < tempStart;
+
+        if(order.TemporaryConnectionStartDate__c != null 
+        && order.TemporaryConnectionEndDate__c != null
+        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
+            throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
         }
 
         exeChecks(order);
@@ -135,7 +139,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     private static void exeChecks(Order order){
         //Check RequestOption__c (Opzione di Distribuzione) START
-        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+        if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.ImplantType__c != null && order.PowerCommitted__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -144,7 +148,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if (calculatedRequestOption != oldOrder.RequestOption__c) {
                 throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
             }
-        } else if(order.RequestOption__c != null){
+        } else if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.RequestOption__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 

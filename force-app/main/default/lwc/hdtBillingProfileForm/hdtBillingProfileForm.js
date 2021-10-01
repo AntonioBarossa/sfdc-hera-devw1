@@ -224,20 +224,20 @@ export default class hdtBillingProfileForm extends LightningElement {
             
         }).catch(error => {
             this.loading = false;
-            let errorMessage = '';
+            // let errorMessage = '';
 
-            if (error.body.message !== undefined) {
-                errorMessage = error.body.message;
-            } else if(error.message !== undefined){
-                errorMessage = error.message;
-            } else if(error.body.pageErrors !== undefined){
-                errorMessage = error.body.pageErrors[0].message;
-            }
+            // if (error.body.message !== undefined) {
+            //     errorMessage = error.body.message;
+            // } else if(error.message !== undefined){
+            //     errorMessage = error.message;
+            // } else if(error.body.pageErrors !== undefined){
+            //     errorMessage = error.body.pageErrors[0].message;
+            // }
 
-            console.log('Error: ', errorMessage);
+            // console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: errorMessage,
+                message: 'Errore',
                 variant: 'error',
                 mode: 'sticky'
             });
@@ -325,10 +325,64 @@ export default class hdtBillingProfileForm extends LightningElement {
                 case 'Legale Rappresentante':
                     let indexLegalAgent = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'LegalAgent__c');
                     this.tipologiaIntestatarioFields[indexLegalAgent].visibility = true;
+
+                    if (this.cloneObject.LegalAgent__c !== undefined && this.cloneObject.LegalAgent__c !== '' && this.cloneObject.LegalAgent__c !== null) {
+                        this.tipologiaIntestatarioFields[indexLegalAgent].value = this.cloneObject.LegalAgent__c;
+
+                        getLegalAccount({contactId: this.cloneObject.LegalAgent__c}).then(data =>{
+                            this.loading = false;
+            
+                            this.setTipologiaIntestatario({
+                                fiscalCode: data.FiscalCode__c,
+                                firstName: data.FirstName,
+                                lastName: data.LastName
+                            });
+            
+                        }).catch(error => {
+                            this.loading = false;
+                            const toastErrorMessage = new ShowToastEvent({
+                                title: 'Errore',
+                                message: 'Error',
+                                variant: 'error',
+                                mode: 'sticky'
+                            });
+                            this.dispatchEvent(toastErrorMessage);
+                            console.log('Errore - handleCollectFieldsData: ', JSON.stringify(error));
+                        });
+                    }
+
                     break;
                 case 'Pagatore Alternativo':
                     let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'OtherPayer__c');
                     this.tipologiaIntestatarioFields[indexOtherPayer].visibility = true;
+
+                    if (this.cloneObject.OtherPayer__c !== undefined && this.cloneObject.OtherPayer__c !== null && this.cloneObject.OtherPayer__c !== '') {
+
+                        this.tipologiaIntestatarioFields[indexOtherPayer].value = this.cloneObject.OtherPayer__c;
+
+                        getAccountOwnerInfo({accountId: this.cloneObject.OtherPayer__c}).then(data =>{
+                            this.loading = false;
+            
+                            this.setTipologiaIntestatario({
+                                fiscalCode: data.FiscalCode__c,
+                                firstName: data.FirstName__c,
+                                lastName: data.LastName__c
+                            });
+            
+                        }).catch(error => {
+                            this.loading = false;
+                            const toastErrorMessage = new ShowToastEvent({
+                                title: 'Errore',
+                                // message: error.body.message,
+                                message: 'Error',
+                                variant: 'error',
+                                mode: 'sticky'
+                            });
+                            this.dispatchEvent(toastErrorMessage);
+                            // console.log('Errore: ',error.body.message);
+                        });
+                    }
+
                     break;
                 default:
                     break;
@@ -337,6 +391,15 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     handleCollectFieldsData(event){
         this.dataToSubmit[event.target.fieldName] = event.target.value;
+
+        let notApplicableFields = ['SignatoryType__c','LegalAgent__c','OtherPayer__c','BillSendingMethod__c'];
+
+        if (!notApplicableFields.includes(event.target.fieldName) && event.target.fieldName !== undefined) {
+            let elem = this.fields.find(el => el.fieldName === event.target.fieldName);
+            if(elem){
+                elem.value = event.target.value;
+            }
+        }
 
         if (event.target.name === 'SignatoryType__c') {
             this.dataToSubmit[event.target.name] = event.target.value;
@@ -362,13 +425,12 @@ export default class hdtBillingProfileForm extends LightningElement {
                     this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: error.body.message,
                         message: 'Error',
                         variant: 'error',
                         mode: 'sticky'
                     });
                     this.dispatchEvent(toastErrorMessage);
-                    console.log('Errore - handleCollectFieldsData: ', error.body.message);
+                    console.log('Errore - handleCollectFieldsData: ', JSON.stringify(error));
                 });
             } else {
                 this.setTipologiaIntestatario({

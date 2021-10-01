@@ -2,6 +2,29 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>AssegnaStatoAcitivty</name>
+        <label>AssegnaStatoAcitivty</label>
+        <locationX>314</locationX>
+        <locationY>1214</locationY>
+        <assignmentItems>
+            <assignToReference>GetActivityRichiestaParere.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetActivityRichiestaParere.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaActivity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
@@ -35,7 +58,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -120,7 +143,7 @@
         <name>Assign_To_Collection_0</name>
         <label>Assign To Collection</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
             <operator>Add</operator>
@@ -178,7 +201,7 @@
         <locationX>182</locationX>
         <locationY>974</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_0_0</targetReference>
+            <targetReference>GetActivityRichiestaParere</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Reclamo</defaultConnectorLabel>
         <rules>
@@ -249,6 +272,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetActivityRichiestaParere</name>
+        <label>GetActivityRichiestaParere</label>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaStatoAcitivty</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCaseAggiornato.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
         <locationX>182</locationX>
@@ -291,10 +335,20 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>AggiornaActivity</name>
+        <label>AggiornaActivity</label>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
+        <connector>
+            <targetReference>AssegnaValori_0_0</targetReference>
+        </connector>
+        <inputReference>GetActivityRichiestaParere</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
         <locationX>182</locationX>
-        <locationY>1430</locationY>
+        <locationY>1790</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <screens>

@@ -150,7 +150,7 @@ public with sharing class HDT_UTL_VasManagement {
         **/
         public HDT_WRP_VASReq(Order currentOrder, Case currentCase) {
             this(currentOrder);
-            this.keyServizio = currentCase.CaseNumber;
+            //this.keyServizio = currentCase.CaseNumber;
         }
     }
 
@@ -175,6 +175,8 @@ public with sharing class HDT_UTL_VasManagement {
 
             //numDocRif = null
             statoPratica = currentCase.VasStatus__c;
+
+            dataCessazione = Date.today();
         }
     }
 
@@ -230,7 +232,7 @@ public with sharing class HDT_UTL_VasManagement {
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
-            dataAttivazione = currentOrder.VasServiceActivationDate__c;
+            dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
             nrRate = parentOrderItem?.Product2?.NumberRateMonthly__c;
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
 

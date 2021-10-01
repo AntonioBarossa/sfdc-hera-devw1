@@ -4,7 +4,7 @@
     <fields>Name</fields>
     <fields>AccountId</fields>
     <fields>CloseDate</fields>
-    <fields>Amount</fields>
+    <!-- <fields>Amount</fields> HRAWRM-249 -->
     <fields>OwnerId</fields>
     <label>New Awesome Compact Layout</label>
 </CompactLayout>

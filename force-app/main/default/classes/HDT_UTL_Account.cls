@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 16/07/2021
+* @description HDT_UTL_Note
+* @history Lorenzo – 16/07/2021 – created class
+*/
 public with sharing class HDT_UTL_Account {
     @auraEnabled
     public static String checkIsBackoffice(){
@@ -69,7 +75,7 @@ public with sharing class HDT_UTL_Account {
         req.account.indirizzo.cap	        = a.BillingPostalCode;
         req.account.indirizzo.provincia	    = a.BillingState;
         req.account.indirizzo.via	        = a.BillingStreetName__c ;
-        req.account.partner	                = a.Code__c;
+        req.account.partner	                = a.CustomerCode__c;
         req.account.cellulare	            = a.MobilePhone__c;
         req.account.indirizzo.piano	        = a.BuildingFloor__c;
         req.account.emailCont	            = a.PrimaryEmail__c  ;
@@ -116,7 +122,7 @@ public with sharing class HDT_UTL_Account {
         req.ordine.destinatarioDivergente.partitaIva	        = a.VATNumber__c;
         req.ordine.destinatarioDivergente.telefono	            = c.phone;
         req.ordine.destinatarioDivergente.cognome	            = a.LastName__c;
-        req.account.partner	                                    = a.Code__c;
+        req.account.partner	                                    = a.CustomerCode__c;
         req.account.cellulare	                                = a.MobilePhone__c;
         req.ordine.emailInvioBolletta	                        = c.email;
         req.account.fax	                                        = a.fax;
@@ -160,7 +166,7 @@ public with sharing class HDT_UTL_Account {
         HDT_WS_RichCreBpCaResponse resCreate;
         if ('success'.equalsIgnoreCase(res.status)) {
             if (!'Errore'.equalsIgnoreCase(res.data.tipoAttivita)) {
-                acc.Code__c = res.data.codiceBP;
+                acc.CustomerCode__c = res.data.codiceBP;
                 update acc;
             }
           
@@ -170,7 +176,7 @@ public with sharing class HDT_UTL_Account {
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
                 System.debug('resCreate AMM : ' + resCreate);
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.Code__c = resCreate.data.codiceBP; 
+                    acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
                 } // TODO gestire l'errore 
             }
@@ -179,7 +185,7 @@ public with sharing class HDT_UTL_Account {
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 System.debug('resCreate BP : ' + resCreate);
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.Code__c = resCreate.data.codiceBP; 
+                    acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
                 } // TODO gestire l'errore 
             }
@@ -191,7 +197,7 @@ public with sharing class HDT_UTL_Account {
         HDT_WS_RichCreBpCaResponse resCreate;
         if ('success'.equalsIgnoreCase(res.status)) {
             if (!'Errore'.equalsIgnoreCase(res.data.tipoAttivita)) {
-                acc.Code__c = res.data.codiceBP;
+                acc.CustomerCode__c = res.data.codiceBP;
                // update acc;
             }
             else if('Grandi Condomini'.equalsIgnoreCase(acc.Category__c) || 'Piccoli Condomini'.equalsIgnoreCase(acc.Category__c)) {
@@ -199,7 +205,7 @@ public with sharing class HDT_UTL_Account {
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.Code__c = resCreate.data.codiceBP; 
+                    acc.CustomerCode__c = resCreate.data.codiceBP; 
                  //   update acc;
                 } // TODO gestire l'errore 
             }
@@ -207,7 +213,7 @@ public with sharing class HDT_UTL_Account {
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    acc.Code__c = resCreate.data.codiceBP; 
+                    acc.CustomerCode__c = resCreate.data.codiceBP; 
                    // update acc;
                 } // TODO gestire l'errore 
             }

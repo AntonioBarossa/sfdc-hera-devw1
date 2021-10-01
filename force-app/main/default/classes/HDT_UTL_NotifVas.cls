@@ -48,6 +48,13 @@ public with sharing class HDT_UTL_NotifVas {
         }
 
         setResponse(mrrResponseItem, processExc);
+
+        //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
+        Case logCase = new Case();
+        logCase.Causal__c = 'CALLIN-Vas.'+request.header.fields.get(0).value;
+        logCase.Note__c = JSON.serializePretty(request);
+        logCase.Description = RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem);
+        insert logCase;
     }
     
     /**
@@ -146,21 +153,33 @@ public with sharing class HDT_UTL_NotifVas {
                 }
             }
             when 'Case' {
-                List<Case> cases = new HDT_QR_Case().getRecordByPracticeNumber(sObjectKey);
-                if (!cases.isEmpty()) {
-                    sObjMap.put('Case', cases.get(0));
-                }
-                if (cases.get(0).Order__r!=null) {
-                    sObjMap.put('Order', cases.get(0).Order__r);
-                }
-                if (cases.get(0).Asset!=null) {
-                    sObjMap.put('Asset', cases.get(0).Asset);
-                }
-                if (cases.get(0).Subscription__r!=null) {
-                    sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
+                List<Order> orders = orderQr.getRecordByOrderNumber(sObjectKey);
+                if (!orders.isEmpty()) {
+                    sObjMap.put('Order', orders.get(0));
+
+                    Id orderId = orders.get(0).Id;
+
+                    List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
+                        WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId)
+                        WITH SECURITY_ENFORCED LIMIT 1];
+
+                    if (!cases.isEmpty()) {
+                        sObjMap.put('Case', cases.get(0));
+
+                        if (cases.get(0).Asset!=null) {
+                            sObjMap.put('Asset', cases.get(0).Asset);
+                        }
+                        if (cases.get(0).Subscription__r!=null) {
+                            sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
+                        }
+                    }
                 }
             }
         }
+
+        System.debug('sObjMap.keySet()');
+        System.debug(sObjMap.keySet());
 
         if (sObjMap.isEmpty()) {
             throw new HDT_UTL_HeraException('KEY_SERVIZIO: No records found');
@@ -236,29 +255,44 @@ public with sharing class HDT_UTL_NotifVas {
     * @param sObjMap 
     **/
     private static void updateRecords(Map<String,SObject> sObjMap) {
-        Savepoint sp = Database.setSavepoint();
+
+        Order orderToUpdate;
+        Case caseToUpdate;
+        List<SObject> recordsToUpdate = new List<SObject>();
+
         for (String sObjectName:sObjMap.keySet()) {
-            try {
-                switch on sObjectName {
-                    when 'Order' {
-                        Order record = (Order)sObjMap.get(sObjectName);
-                        orderSrv.updateRecord(record);
-                    }
-                    when 'Case' {
-                        Case record = (Case)sObjMap.get(sObjectName);
-                        caseSrv.updateRecord(record);
-                    }
-                    when else {
-                        SObject record = sObjMap.get(sObjectName);
-                        HDT_UTL_DatabaseService.updateSObject(record);
-                    }
+            switch on sObjectName {
+                when 'Order' {
+                    orderToUpdate = (Order)sObjMap.get(sObjectName);
                 }
-            } catch (Exception e) {
-                Database.rollback(sp);
-                System.debug(LoggingLevel.ERROR, e.getMessage());
-                System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-                throw new HDT_UTL_HeraException('Error while saving '+sObjectName);
+                when 'Case' {
+                    caseToUpdate = (Case)sObjMap.get(sObjectName);
+                }
+                when else {
+                    SObject record = sObjMap.get(sObjectName);
+                    recordsToUpdate.add(record);
+                }
             }
+        }
+
+        Savepoint sp = Database.setSavepoint();
+        try {
+            if (orderToUpdate!=null) {
+                orderSrv.updateRecord(orderToUpdate);
+            }
+
+            if (caseToUpdate!=null) {
+                caseSrv.updateRecord(caseToUpdate);
+            }
+
+            if (!recordsToUpdate.isEmpty()) {
+                HDT_UTL_DatabaseService.updateSObject(recordsToUpdate);
+            }
+        } catch (Exception e) {
+            Database.rollback(sp);
+            System.debug(LoggingLevel.ERROR, e.getMessage());
+            System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            throw new HDT_UTL_HeraException('Error while saving records ('+e.getMessage()+')');
         }
     }
 
@@ -269,7 +303,7 @@ public with sharing class HDT_UTL_NotifVas {
     * @param targetRecord 
     **/
     private static void populateFieldsFromRequest(Map<String, String> requestMap, SObject targetRecord) {
-        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_MOTORE_VAS') );
+        targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_VAS') );
         targetRecord.put('VasStatus__c', requestMap.get('STATO_PRATICA') );
         targetRecord.put('VasStatusDescription__c', requestMap.get('ESITO') );
         targetRecord.put('VasPolicyNumber__c', requestMap.get('NUMERO_POLIZZA') );

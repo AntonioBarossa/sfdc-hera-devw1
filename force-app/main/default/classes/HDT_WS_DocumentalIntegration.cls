@@ -10,6 +10,8 @@ public with sharing class HDT_WS_DocumentalIntegration {
             req.setTimeout(120000);
             Http http = new Http();
             HTTPResponse res = http.send(req);
+            // da scommentare solo per debug temporanei, la response può essere molto grande e causare un heap size exception.
+            //System.debug('Engage1 response: ' + res.getBody());
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
                 System.debug(JSON.serialize(responseBodyMap.get('data')));
@@ -96,10 +98,20 @@ public with sharing class HDT_WS_DocumentalIntegration {
                         throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
                     }
                     when 'PROGRESS' {
-                        throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non ancora completata)');
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non ancora completata)');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
                     }
                     when 'TERMINATE' {
-                        responseWrap.content = (String) responseData.get('zipBase64');
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non disponibile o non completata)');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
                     }
                 }
             }
