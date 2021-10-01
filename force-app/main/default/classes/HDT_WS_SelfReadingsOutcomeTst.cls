@@ -152,7 +152,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
         String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Pre-MDM', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO pre-MDM', 'Bozza', rtId, rtName,'A','','','');
         
         
         //MANAGING BODY RESPONSE
@@ -193,7 +193,7 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         
         System.assertEquals(201, RestContext.response.statusCode, 'Status code non 201.');
-        System.assertEquals('KO Pre-MDM', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
+        System.assertEquals('Esito KO pre-MDM', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
         
     }
     
