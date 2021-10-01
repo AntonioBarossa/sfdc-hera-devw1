@@ -378,7 +378,6 @@
         <fields>AttachmentDescription__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>ErrorDescription__c</fields>
-        <fields>NAME</fields>
         <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
     </relatedLists>
     <relatedLists>
