@@ -77,7 +77,7 @@ public class HDT_BA_CampaignBollettaTst {
         
         List<CampaignMember> listaCM = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference' and isWsBollettaInvoked__c = true];              
         
-        System.assertEquals(50, listaCM.size(), 'All the CampaignMember field isWsBollettaInvoked__c are set to true after the batch');
-        System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c is updated by the batch');
+        System.assertEquals(50, listaCM.size(), 'CampaignMembers field isWsBollettaInvoked__c were not set to true by the batch');
+        System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c was not updated by the batch');
     }
 }
