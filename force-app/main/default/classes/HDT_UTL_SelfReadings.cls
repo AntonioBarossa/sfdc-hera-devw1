@@ -93,6 +93,9 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
             Date minimumDate = contractStartDate.addDays(Integer.valueOf(configs[0].ReadingDateDecrease__c));
             Date maximumDate = contractStartDate.addDays(Integer.valueOf(configs[0].ReadingDateIncrease__c));
+            System.debug('minimum Date: ' + minimumDate);
+            System.debug('maximum Date: ' + maximumDate);
+            System.debug('caseCreated Date: ' + caseCreatedDate);
 
             if (caseCreatedDate > minimumDate && caseCreatedDate < maximumDate) {
                 System.debug('Trovato processo elegibile per innesco autolettura da processo.');
