@@ -23,9 +23,9 @@ public class HDT_WS_RecallMeConfirmRequestTst {
         req.username = 'test';
         req.communicationType= 'test';
         
-        System.assertEquals('test', req.username, 'Value of the field username successfully set');
+        System.assertEquals('test', req.username, 'Value of the field username not set');
         
-        System.assertNotEquals(null, req, 'Request successfully created');
+        System.assertNotEquals(null, req, 'Request not created');
 
     }
 }

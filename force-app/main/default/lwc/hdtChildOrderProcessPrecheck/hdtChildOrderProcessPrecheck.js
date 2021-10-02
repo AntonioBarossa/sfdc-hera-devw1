@@ -617,7 +617,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
-            externalCustomerId:this.order.Account.FiscalCode__c,
+            externalCustomerId:this.order.Account.FiscalCode__c? this.order.Account.FiscalCode__c : this.order.Account.VATNumber__c,
             secondaryCustomerId:secondaryCustomerId,
             bpClass:bpClass,
             bpCategory:this.order.Account.Category__c,
