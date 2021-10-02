@@ -404,17 +404,19 @@ public class HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
 				Contact caseContact = (Contact) caseRecord.Contact;
-				individualId = caseContact.IndividualId;
+				if (caseContact != null){
+					individualId = caseContact.IndividualId;
+				}
 			}else{
 				Order orderRecord = (Order) record;
 				Contact orderContact = (Contact) orderRecord.Contact__r;
-				if (orderContact == null){
+				if (orderContact != null){
+					individualId = orderContact.IndividualId;
+				}else{
 					System.debug('Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
-					return;
 				}
 			}
 			Individual individualRecord = new Individual();
-			individualRecord.Id = individualId;
 
 			if(record.getSobjectType() == Case.getSobjectType()){
 				//Settare phase del case in completata
@@ -445,10 +447,11 @@ public class HDT_SRV_DocumentalManagement{
 						}
 					}
 				}
-				HDT_UTL_DatabaseService.updateSObject(individualRecord);
 			}else{
-				//in caso di order aggiornare privacy individual
+				Boolean datiCatastaliCompilati = false;
+				//Boolean leggeOttantaCompilata = false; // TODO: come si chiamano i radio button della legge 80?
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					System.debug('Checking radiobutton: ' + JSON.serialize(singleRadio));
 					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
 					String privacyCompany;
@@ -468,15 +471,30 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
+						// Verifica radiobutton nei modulo opzionali (dati catastali, legge 80)
+						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1') && singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+							datiCatastaliCompilati = true;
+						}
 					}
 				}
+				try {
+					if (datiCatastaliCompilati){ // TODO: gestire anche leggeOttantaCompilata
+						record.put('IsDocusignAttachment__c', True);
+						HDT_UTL_DatabaseService.updateSObject(record);
+					}
+				}catch(Exception ex){
+					System.debug('Errore DML: ' + ex.getMessage());
+				}
+			}
+
+			if (individualId != null){
+				individualRecord.Id = individualId;
 				try {
 					HDT_UTL_DatabaseService.updateSObject(individualRecord);
 				}catch(Exception ex){
 					System.debug('Errore DML: ' + ex.getMessage());
 				}
 			}
-			
 		}
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
