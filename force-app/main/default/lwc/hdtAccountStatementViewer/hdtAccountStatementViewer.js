@@ -488,6 +488,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     errorCheck(parameters, record){
+        console.log('>>> parameters: ' + parameters);
+
+        if(parameters === null || parameters === undefined || parameters === ''){
+            return false;
+        }
+
         var obj = JSON.parse(parameters);
         console.log('>>> contract: ' + record.contratto);
         console.log('>>> processType: ' + obj.processType);
@@ -496,7 +502,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Attenzione',
-                    message: 'Non è prsente il contratto',
+                    message: 'Non è presente il contratto',
                     variant: 'warning'
                 })
             );
