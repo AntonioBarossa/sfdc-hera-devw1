@@ -2213,4 +2213,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return comfQualityCallList;
 	}
 
+	public static List<ScriptConfig__c> createScriptConfig (Integer amount, Boolean doInsert) {
+
+		List<ScriptConfig__c> createScriptConfigList = new List<ScriptConfig__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ScriptConfig__c sc = new ScriptConfig__c();
+			sc.Name = 'Hera';
+			sc.ScriptType__c = 'Processo';	
+			
+			createScriptConfigList.add(sc);
+		}
+
+		if (doInsert){
+
+			insert createScriptConfigList;
+		}
+
+		return createScriptConfigList;
+	}
+
 }

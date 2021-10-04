@@ -14,23 +14,15 @@ public class HDT_LC_DecisionalScriptControllerTst {
     static void allData(){
        
       
-       ScriptConfig__c sc = new ScriptConfig__c();
-        sc.Name = 'Hera';
-        sc.ScriptType__c = 'Processo';	
-        sc.CheckVisibility__c = 'frida';
-        sc.ContextObject__c = 'Case';
-        sc.SectionLabel__c = 'label';
-        sc.LabelOption1__c = 'Roma';
-        sc.LabelOption2__c = 'Milano';
-        sc.LabelOption3__c = 'Tirana';
-        sc.NextSection__c = 5;
-        insert sc;
+      List<ScriptConfig__c> scList = HDT_UTL_DataFactoryTst.createScriptConfig(2,false);
+
+        insert scList[0];
         
-        ScriptConfig__c scon= new ScriptConfig__c();
+        ScriptConfig__c scon= scList[1];
         scon.TextScript__c= '<p>Fine</p>';
         scon.ScriptType__c = 'Processo';
         scon.SectionOrder__c = 1;
-        scon.ParentSection__c = sc.Id;
+        scon.ParentSection__c = scList[0].Id;
 
         insert scon;
 
