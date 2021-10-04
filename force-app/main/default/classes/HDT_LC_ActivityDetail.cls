@@ -23,15 +23,25 @@ public with sharing class HDT_LC_ActivityDetail {
 
         list<wrts_prcgvr__Activity__c> activity = [SELECT Id, Name, wrts_prcgvr__ActivityTemplate__c, Order__c, Order__r.OrderNumber, Case__c, Case__r.CaseNumber, Account__c, Account__r.Name //>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile //>>>marco.arci@webresults.it Aggiunta Account
                                                     FROM wrts_prcgvr__Activity__c 
-                                                    WHERE Id=:idActivity]; 
+                                                    WHERE Id=:idActivity
+                                                    WITH SECURITY_ENFORCED]; 
         if(activity!=null && !activity.isEmpty() && activity[0].wrts_prcgvr__ActivityTemplate__c!=null){
-            activityTemplate = [SELECT Id, wrts_prcgvr__FieldsTemplate__c FROM wrts_prcgvr__ActivityTemplate__c WHERE Id=:activity[0].wrts_prcgvr__ActivityTemplate__c];
+            activityTemplate = [SELECT Id, wrts_prcgvr__FieldsTemplate__c 
+                                FROM wrts_prcgvr__ActivityTemplate__c 
+                                WHERE Id=:activity[0].wrts_prcgvr__ActivityTemplate__c 
+                                WITH SECURITY_ENFORCED];
         }
         if(activityTemplate!=null && !activityTemplate.isEmpty() && activityTemplate[0].wrts_prcgvr__FieldsTemplate__c!=null){
-            fieldsTemplate = [SELECT Id FROM wrts_prcgvr__FieldsTemplate__c WHERE Id=:activityTemplate[0].wrts_prcgvr__FieldsTemplate__c];
+            fieldsTemplate = [SELECT Id FROM wrts_prcgvr__FieldsTemplate__c 
+                              WHERE Id=:activityTemplate[0].wrts_prcgvr__FieldsTemplate__c 
+                              WITH SECURITY_ENFORCED];
         }
         if(fieldsTemplate!=null && !fieldsTemplate.isEmpty()){
-            dynamicSection = [SELECT Id, wrts_prcgvr__Layout__c, wrts_prcgvr__Order__c FROM wrts_prcgvr__DynamicSection__c WHERE wrts_prcgvr__Layout__c IN: fieldsTemplate order by wrts_prcgvr__Order__c];
+            dynamicSection = [SELECT Id, wrts_prcgvr__Layout__c, wrts_prcgvr__Order__c 
+                              FROM wrts_prcgvr__DynamicSection__c 
+                              WHERE wrts_prcgvr__Layout__c IN: fieldsTemplate
+                              WITH SECURITY_ENFORCED
+                              ORDER BY wrts_prcgvr__Order__c];
         }
     /////////////////////
         if(dynamicSection!=null && !dynamicSection.isEmpty()){
@@ -41,7 +51,10 @@ public with sharing class HDT_LC_ActivityDetail {
                 mapSectionField.put(dynamicSection[i].Id,listOfFields);
             }
     //////////////////////      
-            list<wrts_prcgvr__DynamicField__c> dynamicField = [SELECT Id, wrts_prcgvr__Section__c, wrts_prcgvr__ObjectName__c, wrts_prcgvr__Field__c FROM wrts_prcgvr__DynamicField__c WHERE wrts_prcgvr__Section__c IN: dynamicSection];
+            list<wrts_prcgvr__DynamicField__c> dynamicField = [SELECT Id, wrts_prcgvr__Section__c, wrts_prcgvr__ObjectName__c, wrts_prcgvr__Field__c 
+                                                               FROM wrts_prcgvr__DynamicField__c 
+                                                               WHERE wrts_prcgvr__Section__c IN: dynamicSection
+                                                               WITH SECURITY_ENFORCED];
     /////////////////////       
             for(wrts_prcgvr__DynamicField__c item: dynamicField){
                 for(Id mapItem: mapSectionField.keySet()){
@@ -82,9 +95,9 @@ public with sharing class HDT_LC_ActivityDetail {
                 }
                 objectFields.get(field.wrts_prcgvr__ObjectName__c).fieldList.add(field);
             }
-            system.debug(JSON.serializePretty(objectFields));
+            //system.debug(JSON.serializePretty(objectFields));
         }
-        system.debug(JSON.serializePretty(objectFields));
+        //system.debug(JSON.serializePretty(objectFields));
         return objectFields;
     }
 }
