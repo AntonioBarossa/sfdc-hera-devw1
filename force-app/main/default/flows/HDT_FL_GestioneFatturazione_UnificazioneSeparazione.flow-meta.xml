@@ -20,8 +20,8 @@
     <assignments>
         <name>Set_Descrizione_Contratti</name>
         <label>Set Descrizione Contratti</label>
-        <locationX>2712</locationX>
-        <locationY>446</locationY>
+        <locationX>2932</locationX>
+        <locationY>447</locationY>
         <assignmentItems>
             <assignToReference>FinalDescription</assignToReference>
             <operator>Assign</operator>
@@ -37,6 +37,22 @@
         <name>aggiungiAltriBp_SI_choice</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>FatturazioneConAltriContrattiChoice</name>
+        <choiceText>&lt;span style=&quot;font-family: Calibri, sans-serif; font-size: 11pt;&quot;&gt;Fatturazione con altri contratti&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Fatturazione con altri contratti</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>FatturazioneSeparataChoice</name>
+        <choiceText>Fatturazione separata</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Fatturazione separata</stringValue>
+        </value>
     </choices>
     <choices>
         <name>NoChoice</name>
@@ -235,8 +251,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>2705</locationX>
-        <locationY>609</locationY>
+        <locationX>2919</locationX>
+        <locationY>607</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -307,6 +323,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>TipoFatturaCollettivaFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Tipo_Fatturazione_Collettiva}), {!Get_Case_Arricchito.Note__c}, {!Get_Case_Arricchito.Note__c} &amp; &apos; - &apos; &amp; &apos;Tipo fattura collettiva selezionata: &apos; &amp; {!Tipo_Fatturazione_Collettiva})</expression>
+    </formulas>
+    <formulas>
         <name>TipoOperazioneCAFormula</name>
         <dataType>String</dataType>
         <expression>IF({!CreaNuovoCA} == &apos;Si&apos;, TEXT({!Refresh_Case.OperationType__c}) &amp; &apos; - CreaCA&apos;, TEXT({!Refresh_Case.OperationType__c}))</expression>
@@ -351,6 +372,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Arricchito</name>
+        <label>Get Case Arricchito</label>
+        <locationX>2623</locationX>
+        <locationY>607</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Tipo_Fattura_Collettiva</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -442,8 +484,8 @@
     <recordUpdates>
         <name>Set_Fase_In_Lavorazione</name>
         <label>Set Fase In Lavorazione</label>
-        <locationX>3010</locationX>
-        <locationY>607</locationY>
+        <locationX>3188</locationX>
+        <locationY>605</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -527,6 +569,30 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_Tipo_Fattura_Collettiva</name>
+        <label>Update Tipo Fattura Collettiva</label>
+        <locationX>2774</locationX>
+        <locationY>606</locationY>
+        <connector>
+            <targetReference>Next_Step</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>TipoFatturaCollettivaFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>Input_Dati</name>
         <label>Input Dati</label>
@@ -536,12 +602,21 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Next_Step</targetReference>
+            <targetReference>Get_Case_Arricchito</targetReference>
         </connector>
         <fields>
             <name>DT2</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Tipo_Fatturazione_Collettiva</name>
+            <choiceReferences>FatturazioneConAltriContrattiChoice</choiceReferences>
+            <choiceReferences>FatturazioneSeparataChoice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Tipo Fatturazione Collettiva</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Form2</name>
@@ -1266,8 +1341,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2714</locationX>
-        <locationY>815</locationY>
+        <locationX>2941</locationX>
+        <locationY>819</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
