@@ -9,6 +9,7 @@ import getScriptNameFromCampaign from '@salesforce/apex/HDT_LC_CampaignsControll
 export default class hdtCampaignMemberButtonList2 extends NavigationMixin(LightningElement) {
     @api objectApiName;
     @api recordId;
+    @api reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}';
     @track surveyIcon;
     @wire(getScriptNameFromCampaign, {memberId: '$recordId'}) scriptName;
 

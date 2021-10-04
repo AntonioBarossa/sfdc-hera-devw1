@@ -2,9 +2,7 @@
     <div class="slds-grid">
         <!-- <lightning-button label="Script Aiuto Vendita" title="Script Aiuto Vendita" onclick={scriptHelpSaleClick}
             class="slds-m-right_xx-small"></lightning-button> -->
-            <template if:true={scriptName.data}>
-                <c-hdt-manage-script-modal class="slds-m-right_xx-small" script-process-name={scriptName.data} button-label="scriptAiutoVendita" record-id={recordId}></c-hdt-manage-script-modal>
-            </template>
+        <c-hdt-manage-script-modal class="slds-m-right_xx-small" script-process-name={scriptName.data} button-label="scriptAiutoVendita" record-id={recordId}></c-hdt-manage-script-modal>
         <div>
             <lightning-button label="Survey" title="Survey" onclick={surveyClick} class="slds-m-right_xx-small">
             </lightning-button>
