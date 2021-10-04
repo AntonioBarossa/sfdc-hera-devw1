@@ -19,7 +19,8 @@ public with sharing class HDT_WS_RecallMeTst {
     @isTest
     static void testPostRecallMe(){
         
-	   Test.setMock(HttpCalloutMock.class, new HDT_WS_RecallMeMock());
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
 
        HDT_WS_RecallMeRequest req = new HDT_WS_RecallMeRequest();
        req.startRange = System.now().getTime();
@@ -37,7 +38,8 @@ public with sharing class HDT_WS_RecallMeTst {
     @isTest
     static void testPostRecallMeAppointment(){
         
-        Test.setMock(HttpCalloutMock.class, new HDT_WS_RecallMeMock());
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
         
     	HDT_WS_RecallMeConfirmRequest req = new HDT_WS_RecallMeConfirmRequest();
         req.timestamp = System.now().getTime();
@@ -52,40 +54,5 @@ public with sharing class HDT_WS_RecallMeTst {
         System.assertNotEquals(null, res, 'A response was successfully created');
         System.assertEquals(200, res.statusCode, 'The call has been successful');
 
-    }
-    
-        public class HDT_WS_RecallMeMock implements HTTPCalloutMock{
-        
-        public HTTPResponse respond(HTTPRequest request){
-            
-            HttpResponse response = new HttpResponse();
-            String body;
-			List<HDT_WebServiceConfiguration__c> webServiceConfigurations = HDT_WebServiceConfiguration__c.getAll().values();
-
-        	for(HDT_WebServiceConfiguration__c wsc : webServiceConfigurations) {
-                if(request.getEndpoint() == wsc.Endpoint__c) {
-                    if (wsc.Name == 'postSlotRequest') {
-                    HDT_WS_RecallMeResponse dataresponse = new HDT_WS_RecallMeResponse(); 
-                    List<HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap> reslt= new List<HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap>(); 
-                    HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap resWrap= new HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap();  
-                    resWrap.startTime = Long.valueOf(String.valueOf(System.now().getTime()));
-                    resWrap.endTime = Long.valueOf(String.valueOf(System.now().getTime()));
-                    resWrap.availability = 9;
-                    reslt.add(resWrap);
-                    dataresponse.result = reslt;
-                    dataresponse.status = 'success';
-        
-                    body = JSON.serialize(dataresponse);
-                    response.setStatusCode(200);
-                    response.setBody(body);    
-                    }else if(wsc.Name == 'postAppointment'){
-                        response.setStatusCode(200);
-                        response.setStatus('success'); 
-                    }
-                }
-            }
-            return response;
-
-        }
     }
 }
