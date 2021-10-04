@@ -10,7 +10,7 @@ public with sharing class HDT_LC_ActivityDetail {
         @AuraEnabled public String objectName {get; set;}//>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
         @AuraEnabled public list<wrts_prcgvr__DynamicField__c> fieldList {get; set;}
 
-        HDT_WRP_ObjectFieldData(){}
+        //HDT_WRP_ObjectFieldData(){}
     }
     ///
     @AuraEnabled
