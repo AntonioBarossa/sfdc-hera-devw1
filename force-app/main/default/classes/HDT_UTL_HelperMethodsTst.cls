@@ -6,11 +6,12 @@
  */
 @isTest
 private class HDT_UTL_HelperMethodsTst {
+    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
     @testSetup 
     static void setup() {
         List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
-          
-        List<User> user= HDT_UTL_DataFactoryTst.createUserCommunity(1,true);
+        Profile p = [SELECT Id FROM Profile WHERE Name LIKE '%Community%' LIMIT 1];
+		User tUser=HDT_UTL_DataFactoryTst.createCommunityUser(new Contact(), p.Id, true);
 
     }
     
@@ -31,7 +32,7 @@ private class HDT_UTL_HelperMethodsTst {
     @isTest
     static void testCheckCommunityLogin() {
 
-     User user=[SELECT  id FROM User WHERE username='test0_HDT_UTL_HelperMethodsTst@test.com'];
+     User user=[SELECT  id FROM User WHERE Email = 'commuser@test.com'];
 
      system.runAs(user){
         HDT_UTL_HelperMethods help= new HDT_UTL_HelperMethods();
