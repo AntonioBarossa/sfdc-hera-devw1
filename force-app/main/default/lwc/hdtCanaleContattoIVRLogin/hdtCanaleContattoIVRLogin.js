@@ -105,15 +105,22 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
 
         downloadFile({orderId : this.orderId,username : this.username,password : this.password}).then(res =>{
-           // console.log('********:' + JSON.stringify(res));
+            console.log('********:' + JSON.stringify(res));
             if(res.res == null || res.res == undefined){
             if(this.name = 'onClickDownloadPdf'){
                // let base64String = 'UFJPVkFET1dOTE9BRFBST1ZB';
                 if(res.type == 'zip'){
                     this.downloadZip(res.base64,'Plico');
                 }
-                else{
+                else if(res.type == 'pdf'){
                     this.downloadPdf(res.base64,'Plico');
+                }
+                else{
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Errore',
+                        message: res.errorMessage,
+                        variant: 'error'
+                    }));
                 }
             }   
             }
