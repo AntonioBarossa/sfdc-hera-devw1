@@ -40,7 +40,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
 
                 if (isVasOrder && isParentAsset) {
                     asset.DigitalAssetStatus = ASSET_ACTIVE_STATUS;//setting status to active
-                    asset.VasPracticeCode__c = currentOrder.VasPracticeCode__c;//copying Vas fields from order
+                    asset.VasPracticeCode__c = String.isNotBlank(asset.VasPracticeCode__c)? asset.VasPracticeCode__c : currentOrder.VasPracticeCode__c;//copying Vas fields from order
                 }
             }
         }

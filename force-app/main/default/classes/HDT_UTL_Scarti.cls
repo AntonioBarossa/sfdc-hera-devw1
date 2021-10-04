@@ -425,12 +425,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 
                         String procField = String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c));
                         String contrField = String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c));
-                        if(String.isBlank(procField) || String.isBlank(procField) ){
-                            continue;
-                        }else if(curRule.ProcessValue__c.equalsIgnoreCase(procField)
-                            && contrField.containsIgnoreCase(curRule.ControllingValue__c)){
+
+                        if(String.isNotBlank(procField) && String.isNotBlank(contrField) 
+                            && curRule.ProcessValue__c?.equalsIgnoreCase(contrField)
+                            && contrField?.containsIgnoreCase(curRule.ControllingValue__c)
+                        ){
                             outcome = true;
-                            break;
+                            break;  
                         }
                     }
                 }

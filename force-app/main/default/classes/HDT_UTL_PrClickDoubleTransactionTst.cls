@@ -58,7 +58,7 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
     	System.assertNotEquals(0, jobsScheduled.size(), 'expecting one queued job');
         
-        System.assertEquals(null, result, 'The returned result should be null');
+        System.assertEquals(null, result, 'The returned result should not be null');
 
     }
 }

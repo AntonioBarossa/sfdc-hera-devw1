@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Tipo Processo</label>
-    <length>40</length>
+    <length>255</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
