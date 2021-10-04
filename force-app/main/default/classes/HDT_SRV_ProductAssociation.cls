@@ -3,7 +3,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
     public static Integer batchLimit = 10;
 
     public static Object getAsyncApexJob(String objType){
-        System.debug('>>> objType: ' + objType);
+        System.debug(logginglevel.DEBUG, '>>> objType: ' + objType);
 
         List<String> apexJobClass = new List<String>();
 
@@ -29,7 +29,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
             }
 
         } catch(Exception ex){
-            System.debug('>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');
+            System.debug(logginglevel.DEBUG, '>>> ERROR: ' + ex.getMessage() + ' [' + ex.getLineNumber() + ']');
         }
 
         return fieldSetList;
@@ -37,11 +37,11 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Object getProductList(String filterString, String optionalSkuId, String dmlContext, Boolean usePagination, String pageNumber){
 
-        System.debug('>>> filterString: ' + filterString);
-        System.debug('>>> optionalSkuId: ' + optionalSkuId);
-        System.debug('>>> dmlContext: ' + dmlContext);
-        System.debug('>>> usePagination: ' + usePagination);
-        System.debug('>>> pageNumber: ' + pageNumber);
+        System.debug(logginglevel.DEBUG, '>>> filterString: ' + filterString);
+        System.debug(logginglevel.DEBUG, '>>> optionalSkuId: ' + optionalSkuId);
+        System.debug(logginglevel.DEBUG, '>>> dmlContext: ' + dmlContext);
+        System.debug(logginglevel.DEBUG, '>>> usePagination: ' + usePagination);
+        System.debug(logginglevel.DEBUG, '>>> pageNumber: ' + pageNumber);
 
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj respObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj();
 
@@ -50,14 +50,14 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
             if(!usePagination){
                 Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(queryString);
-                System.debug('>>> recordCounter: ' + recordCounter);
+                System.debug(logginglevel.DEBUG, '>>> recordCounter: ' + recordCounter);
                 respObj.recordCounter = String.valueOf(recordCounter);
             }
             
             queryString += generateOffSetString(pageNumber);
             respObj.prodList = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(respObj.prodList, queryString);
             respObj.success = true;
-            System.debug('>>> RECORDS TOT: ' + respObj.prodList.size());
+            System.debug(logginglevel.DEBUG, '>>> RECORDS TOT: ' + respObj.prodList.size());
 
         } catch (Exception ex){
             respObj.success = false;
@@ -78,12 +78,12 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
     public static Object runProductOptionAssociation(String optionalSkuId, String productOptionObj, List<String> recordList, String executionType, String filterString, String dmlContext){
         
-        System.debug('>>> optionalSkuId: ' + optionalSkuId);
-        System.debug('>>> productOptionObj: ' + productOptionObj);
-        System.debug('>>> recordList: ' + recordList);
-        System.debug('>>> executionType: ' + executionType);
-        System.debug('>>> filterString: ' + filterString);
-        System.debug('>>> dmlContext: ' + dmlContext);   
+        System.debug(logginglevel.DEBUG, '>>> optionalSkuId: ' + optionalSkuId);
+        System.debug(logginglevel.DEBUG, '>>> productOptionObj: ' + productOptionObj);
+        System.debug(logginglevel.DEBUG, '>>> recordList: ' + recordList);
+        System.debug(logginglevel.DEBUG, '>>> executionType: ' + executionType);
+        System.debug(logginglevel.DEBUG, '>>> filterString: ' + filterString);
+        System.debug(logginglevel.DEBUG, '>>> dmlContext: ' + dmlContext);   
 
         HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj;
 
@@ -119,18 +119,18 @@ public inherited sharing class HDT_SRV_ProductAssociation {
             optionIdToNumber = HDT_UTL_ProductAssociation.createNumberProductOptionMap(results);
         }
 
-        System.debug('>>> OptionalSKU ' + productOptionToClone.SBQQ__OptionalSKU__c);
+        System.debug(logginglevel.DEBUG, '>>> OptionalSKU ' + productOptionToClone.SBQQ__OptionalSKU__c);
 
         prod2list = HDT_QR_ProductAssociation.getProductOption2recordBySkuId(prod2list, productOptionToClone.SBQQ__OptionalSKU__c);
 
-        System.debug('>>> prod2listsize ' + prod2list.size());
-        System.debug('>>> family ' + prod2list[0].Family);
+        System.debug(logginglevel.DEBUG, '>>> prod2listsize ' + prod2list.size());
+        System.debug(logginglevel.DEBUG, '>>> family ' + prod2list[0].Family);
 
         skuIdFeatureIdMap = new Map<Id, Id>();
 
         if(prod2list != null && prod2list.size() > 0){
             productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
-            System.debug('>>> productFeatureList ' + productFeatureList.size());
+            System.debug(logginglevel.DEBUG, '>>> productFeatureList ' + productFeatureList.size());
             skuIdFeatureIdMap = HDT_UTL_ProductAssociation.generateSkuIdFeatureIdMap(productFeatureList, skuIdFeatureIdMap);
         }
 
@@ -155,7 +155,7 @@ public inherited sharing class HDT_SRV_ProductAssociation {
 
                 productOptionList.add(newRecord);
             }
-            System.debug('>>> record to insert: ' + String.valueOf(productOptionList));
+            System.debug(logginglevel.DEBUG, '>>> record to insert: ' + String.valueOf(productOptionList));
             insertResult.errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
             insertResult.errorData = databaseInsert(productOptionList, insertResult.errorData);
 

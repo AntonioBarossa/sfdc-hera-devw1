@@ -88,7 +88,7 @@
         <inputParameters>
             <name>beneficiary</name>
             <value>
-                <elementReference>GetCaseAggiornato2.AccountholderTypeBeneficiary__c</elementReference>
+                <elementReference>GetCaseAggiornato2.Beneficiary__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -380,7 +380,7 @@
             <assignToReference>Get_Case_Aggiornato.DeliveryAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.Account.BillingAddressFormula__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.ShippingAddressFormula__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -424,7 +424,7 @@
             <assignToReference>Get_Case_Aggiornato.DeliveryAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_Aggiornato.BeneficiaryAccount__r.BillingAddressFormula__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.BeneficiaryAccount__r.ShippingAddressFormula__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

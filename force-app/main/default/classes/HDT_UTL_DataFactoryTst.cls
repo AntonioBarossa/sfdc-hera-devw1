@@ -1504,10 +1504,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static void createDriverJson(){
-		Id folderId=[SELECT Id
-		             FROM Folder
-		             WHERE DeveloperName=:'DocumentalPayloadAdministration'
-		             LIMIT 1].Id;
+		Id folderId=[SELECT Id FROM Folder WHERE DeveloperName= :'DocumentalPayloadAdministration' LIMIT 1].Id;
 		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
 		docPayloadAdminList=HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
 		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap=new Map<String, List<DocumentalPayloadAdministration__c>>();
@@ -1758,6 +1755,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert documents;
 		}
 		return documents;
+	}
+	
+	
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Id orderId, Id caseId){
+		return createDocumentalActivity(amount, true, orderId, caseId);
 	}
 	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
