@@ -160,7 +160,7 @@ public inherited sharing class HDT_UTL_Order {
                 system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
                 wr.wrts_prcgvr__Status__c = 'Completed';
-                actSrv.updateRecord(wr);
+                //actSrv.updateRecord(wr);
                 Order oldOrder = orderQr.getRecordById(wr.order__c);
                 travasaOrder(oldOrder,newOrder);
                 //return true;
@@ -224,7 +224,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.DistributorCode__c = oldOrder.DistributorCode__c;
         orderToUpdate.PressureLevel__c = oldOrder.PressureLevel__c;
         orderToUpdate.RequestPhase__c = oldOrder.RequestPhase__c;
-        orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+       // orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
         orderToUpdate.PowerRequested__c = oldOrder.PowerRequested__c;
         orderToUpdate.EnergyService__c = oldOrder.EnergyService__c;
         orderToUpdate.LiftingPeople__c = oldOrder.LiftingPeople__c;
