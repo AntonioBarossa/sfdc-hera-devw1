@@ -237,8 +237,11 @@ public inherited sharing class HDT_QR_Contact {
      * @return List<Contact>
      */
     public List<Contact> getRecordByIndividual(String individualId, String fields) {
+        List<Contact> contacts = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED');
+        
+        SObjectAccessDecision decision = Security.stripInaccessible(AccessType.READABLE, contacts);
 
-        return Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED');
+        return decision.getRecords();
 
     }
 }
