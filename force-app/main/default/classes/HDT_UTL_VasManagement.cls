@@ -227,12 +227,12 @@ public with sharing class HDT_UTL_VasManagement {
             OrderItem parentOrderItem;
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
-                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
-                items.add(reqItem);
-
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
                     parentOrderItem = ordItem;
+                    continue;
                 }
+                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
+                items.add(reqItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
