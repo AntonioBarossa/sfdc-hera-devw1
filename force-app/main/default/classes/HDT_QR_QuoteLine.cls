@@ -133,11 +133,64 @@ public inherited sharing class HDT_QR_QuoteLine {
     }
 
     /**
-    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-    * @description getQuoteLineAnalisiConsumi
-    * @param mainQuoteLineIds
-    * @return List<SBQQ__QuoteLine__c>
-    */
+    * @description 
+    * @author federico.defelice@webresults.it | 23-09-2021 
+    * @param saleId 
+    * @return List<SBQQ__QuoteLine__c> 
+    **/
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredFamilyBonus(String saleId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__ProductFamily__c IN :famils
+            AND SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
+            WITH SECURITY_ENFORCED
+            Order by BillingProfile__c NULLS LAST, Name
+        ];
+    }
+
+        /**
+    * @description 
+    * @author federico.defelice@webresults.it | 23-09-2021 
+    * @param saleId 
+    * @return List<SBQQ__QuoteLine__c> 
+    **/
+    public List<SBQQ__QuoteLine__c> getRecordsByQuoteFilteredFamilyBonus(String quoteId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__ProductFamily__c IN :famils
+            AND SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
+            WITH SECURITY_ENFORCED
+            Order by BillingProfile__c NULLS LAST, Name
+        ];
+    }
+
+
     public List<SBQQ__QuoteLine__c> getQuoteLineAnalisiConsumi(List<String> mainQuoteLineIds){
         return [
             SELECT
@@ -326,7 +379,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Product__r.Version__c,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
-            ServicePoint__c
+            ServicePoint__c,
+            SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
             AND SBQQ__Product__r.Name IN ('POD','PDR')
@@ -349,9 +403,35 @@ public inherited sharing class HDT_QR_QuoteLine {
             Id,
             SBQQ__Product__r.Name,
             SBQQ__Product__r.ProductCode,
-            SBQQ__Product__r.Version__c
+            SBQQ__Product__r.Version__c,
+            DelayEffectiveDate__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__RequiredBy__c = null
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 27/09/2021
+    * @description Get primary quoteLine list
+    * @param quoteIdList - SBQQ__Quote__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getPrimaryRecords(List<String> quoteIdList){
+
+        return [
+            SELECT
+            Id,
+            SBQQ__Product__r.Name,
+            SBQQ__Product__r.ProductCode,
+            SBQQ__Product__r.Version__c,
+            DelayEffectiveDate__c,
+            SBQQ__Quote__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c IN :quoteIdList
             AND SBQQ__RequiredBy__c = null
             WITH SECURITY_ENFORCED
         ];

@@ -27,7 +27,7 @@ export default class HdtCampaignNewOverride extends LightningElement {
 
             this.template.querySelector('[data-id="companyOwner"]').reportValidity();
 
-        } else if(nameSize<70) {//HRAWRM-620 20/09/2021
+        } else if(nameSize<=70) {//HRAWRM-620 20/09/2021
             this.template.querySelector('lightning-record-edit-form').submit();
         }
         

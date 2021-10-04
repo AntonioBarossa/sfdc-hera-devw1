@@ -73,9 +73,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
         List<Account> accountListRetrieved = new List<Account>();
 
-        if (params.get('FiscalCode__c') != null && params.get('VATNumber__c') != null) {
+        if (String.isNotBlank(params.get('FiscalCode__c')) && String.isNotBlank(params.get('VATNumber__c'))) {
             accountListRetrieved = accountQr.getAccountByFiscalCodeAndVat(params.get('FiscalCode__c'), params.get('VATNumber__c'));
-        } else if(params.get('FiscalCode__c') != null){
+        } else if(String.isNotBlank(params.get('FiscalCode__c'))){
             accountListRetrieved = accountQr.getAccountByFiscalCode(params.get('FiscalCode__c'));
         } else {
             accountListRetrieved = accountQr.getAccountByVat(params.get('VATNumber__c'));
@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             ServicePointCode__c = params.get('ServicePointCode__c'),
             Account__c = !accountListRetrieved.isEmpty() ? accountListRetrieved[0].Id : null,
             Status__c = params.get('Status__c'),
-            EffectiveDate__c = params.get('EffectiveDate__c') != null ? Date.valueOf(params.get('EffectiveDate__c')) : null,
+            EffectiveDate__c = String.isNotBlank(params.get('EffectiveDate__c')) ? Date.valueOf(params.get('EffectiveDate__c')) : null,
             HerokuPracticeCode__c = params.get('HerokuPracticeCode__c')
         ));
 
@@ -121,7 +121,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     }
     @AuraEnabled
     public static boolean validaActivityVocal(String recordid, String validazione){
-        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdAccise(recordid);
+        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
         act.validation__c = validazione;
         boolean res = false;
         if(validazione == 'Si'){
@@ -130,8 +130,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Order ord = new Order();
             ord.id = act.order__c;
             ord.DocumentPackage__c = 'Validato';
-            ord.phase__c = 'Documentazione Gestita';
-            ord.status = 'Activated';
+            //ord.phase__c = 'Documentazione Gestita';
+            //ord.status = 'Activated';
             orderSrv.updateRecord(ord);
         }
         activityCustomSrv.updateRecord(act);
@@ -141,7 +141,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     }
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
-        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdAccise(recordid);
+        wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
         
         act.validation__c = validazione;
         String res = '';
@@ -157,7 +157,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
         else{
             Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
-            List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Validazione Documentale');
+            List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
             if(actCusList != null && !actCusList.isEmpty()){
                 if(actCusList[0].wrts_prcgvr__status__c == 'Completed'){
                     act.wrts_prcgvr__status__c = 'Completed';
@@ -168,7 +168,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }
             }
             else {
-                wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'));
+                wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'));
                 activityCustomSrv.createRecord(act2);
                 res = 'Creata';
             }    

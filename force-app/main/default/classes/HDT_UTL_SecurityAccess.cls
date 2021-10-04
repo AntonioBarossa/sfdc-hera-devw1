@@ -1,6 +1,8 @@
 /**
 * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-* @description HDT_UTL_SecurityAccess
+* @date 13/11/2020
+* @description HDT_UTL_SecurityAccess Class
+* @history Keltin Mesonjesi 13/11/2020 – Created Class
 */
 public inherited sharing class HDT_UTL_SecurityAccess {
 

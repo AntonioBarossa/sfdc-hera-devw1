@@ -338,10 +338,11 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     try {
-                        updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
-                            oldEmail: this.oldEmailValue,
-                            newPhone: resultWrapper.phone,
-                            newMail: resultWrapper.email});
+                        updateContactForScartoDocumentale({accountId:this.accountId, 
+                                                            oldPhone: this.oldPhoneValue,
+                                                            oldEmail: this.oldEmailValue,
+                                                            newPhone: resultWrapper.phone,
+                                                            newMail: resultWrapper.email});
                     } catch (error) {
                       console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
                     }
@@ -445,7 +446,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 }).then(result => {
                     this.handleGoNext();
                 }).catch(error => {
-                    this.showToast('Errore nell\'invio del documento al cliente.');
+                    this.showMessage('Errore nell\'invio del documento al cliente.','error');
                     console.error(error);
                 });
             }

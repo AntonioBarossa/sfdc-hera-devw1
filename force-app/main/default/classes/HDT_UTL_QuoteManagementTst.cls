@@ -8,7 +8,16 @@ public with sharing class HDT_UTL_QuoteManagementTst {
     
     //TEST SETUP
     
-    
+    @TestSetup
+    static void setup(){
+        
+        QuoteManagement__c qm = new QuoteManagement__c();
+        qm.Commodity__c = 'Energia Elettrica';
+        qm.Operation_type__c = 'Verifica GdM';
+        insert qm;
+
+    }
+
     //TESTS
     
 
@@ -121,6 +130,21 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         
         //ASSERTS
         System.assert(power != null);
+        
+    }
+
+    @IsTest
+    static void testQueryAddInformation(){
+        
+        //TESTING
+        Test.startTest();
+
+        QuoteManagement__c qm = HDT_QR_QuoteManagement.queryAddInformation('Energia Elettrica', 'Verifica GdM');
+
+        //ASSERTS
+        System.assertNotEquals(null, qm, 'QuoteManagement__c = null');
+
+        Test.stopTest();
         
     }
 

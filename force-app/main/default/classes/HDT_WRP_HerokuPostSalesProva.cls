@@ -1,13 +1,13 @@
-global inherited sharing class HDT_WRP_HerokuPostSalesProva {
+public inherited sharing class HDT_WRP_HerokuPostSalesProva {
 
-    global class HDT_WRP_MultiResponse{
+    public class HDT_WRP_MultiResponse{
 
         public List<HDT_WRP_Response> responses;
 
     }
 
 
-    global class HDT_WRP_Response{
+    public class HDT_WRP_Response{
 
         public String code;
         public String description;
@@ -17,7 +17,7 @@ global inherited sharing class HDT_WRP_HerokuPostSalesProva {
 
     }
 
-    global class HDT_WRP_Header{
+    public class HDT_WRP_Header{
 
         public List<HDT_WRP_Field> fields;
         public String requestId;
@@ -27,7 +27,7 @@ global inherited sharing class HDT_WRP_HerokuPostSalesProva {
 
     }
 
-    global class HDT_WRP_Field{
+    public class HDT_WRP_Field{
 
         public String fieldType;
         public String name;
@@ -35,7 +35,7 @@ global inherited sharing class HDT_WRP_HerokuPostSalesProva {
 
     }
 
-    global class HDT_WRP_Wobject{
+    public class HDT_WRP_Wobject{
 
         public List<HDT_WRP_Field> fields;
         public String id;

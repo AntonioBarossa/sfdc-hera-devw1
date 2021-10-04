@@ -41,8 +41,10 @@ public inherited sharing class HDT_UTL_Morosita {
         containerCase.RecordTypeId = currentCase.RecordTypeId;
         containerCase.ServicePoint__c = currentCase.ServicePoint__c;
         containerCase.CompanyOwner__c = currentCase.CompanyOwner__c;
+        containerCase.CompetentOffice__c = currentCase.CompetentOffice__c;
         containerCase.Phase__c = 'Bozza';
         containerCase.Status = 'New';
+        containerCase.Priority = currentCase.Priority != null && currentCase.Priority != '' ? currentCase.Priority : '1';
         containerId = JSON.serialize(containerCase);
         
         return containerId;

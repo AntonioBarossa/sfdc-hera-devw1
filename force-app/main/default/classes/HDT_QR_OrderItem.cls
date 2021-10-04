@@ -30,6 +30,32 @@ public inherited sharing class HDT_QR_OrderItem {
         ];
     }
 
+    public List<OrderItem> getRecordsByOrderIdFilteredFamilyBonus(List<Id> listOrderId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+
+        return [
+            SELECT
+            ServicePoint__c,
+            ServicePoint__r.Name,
+            ServicePoint__r.ServicePointCode__c,
+            OrderId,
+            Order.OrderNumber,
+            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
+            SBQQ__RequiredBy__c,
+            Product2.Name
+            FROM 
+            OrderItem 
+            WHERE
+            OrderId IN :listOrderId 
+            AND Order.SBQQ__Quote__r.SBQQ__Type__c != 'Amendment'
+            AND Product2.Family IN :famils
+            WITH SECURITY_ENFORCED
+            Order by BillingProfile__c NULLS LAST
+        ];
+    }
+
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 08/01/2020
@@ -111,6 +137,7 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.Version__c,
             Product2.ProductCode,
             Product2.Name,
+            Product2.DescriptionSAP__c,
             VASBillingMode__c
             FROM 
             OrderItem 

@@ -21,7 +21,7 @@ public with sharing class HDT_LC_ActivityDetail {
         list<wrts_prcgvr__FieldsTemplate__c> fieldsTemplate = new list<wrts_prcgvr__FieldsTemplate__c>();
         list<wrts_prcgvr__DynamicSection__c> dynamicSection = new list<wrts_prcgvr__DynamicSection__c>();
 
-        list<wrts_prcgvr__Activity__c> activity = [SELECT Id, Name, wrts_prcgvr__ActivityTemplate__c, Order__c, Order__r.OrderNumber, Case__c, Case__r.CaseNumber //>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
+        list<wrts_prcgvr__Activity__c> activity = [SELECT Id, Name, wrts_prcgvr__ActivityTemplate__c, Order__c, Order__r.OrderNumber, Case__c, Case__r.CaseNumber, Account__c, Account__r.Name //>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile //>>>marco.arci@webresults.it Aggiunta Account
                                                     FROM wrts_prcgvr__Activity__c 
                                                     WHERE Id=:idActivity]; 
         if(activity!=null && !activity.isEmpty() && activity[0].wrts_prcgvr__ActivityTemplate__c!=null){
@@ -69,6 +69,12 @@ public with sharing class HDT_LC_ActivityDetail {
                             wrp.objectId = (Id)activity[0].get('Case__c');
                             wrp.objectName = (String)activity[0].Case__r.CaseNumber;//>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
                         }
+                        //>>>START marco.arci@webresults.it Aggiunta Account nel wrapper
+                        else if(field.wrts_prcgvr__ObjectName__c=='Account'){
+                            wrp.objectId = (Id)activity[0].get('Account__c');
+                            wrp.objectName = (String)activity[0].Account__r.Name;
+                        }
+                        //>>>END marco.arci@webresults.it Aggiunta Account nel wrapper
                     }
                     wrp.fieldList = new list<wrts_prcgvr__DynamicField__c>();
 

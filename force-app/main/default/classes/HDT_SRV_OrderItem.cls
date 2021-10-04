@@ -48,4 +48,17 @@ public inherited sharing class HDT_SRV_OrderItem {
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
     }
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 24-09-2021 
+    * @param objectsList 
+    **/
+    public void updateRecords(List<OrderItem> objectsList){
+        for (OrderItem item : objectsList) {
+            List<String> fields = helperMethods.getObjAttrList(item);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+        HDT_UTL_DatabaseService.updateSObject(objectsList);
+    }
 }

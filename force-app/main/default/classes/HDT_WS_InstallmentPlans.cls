@@ -1,11 +1,14 @@
-global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
+public inherited sharing class HDT_WS_InstallmentPlans{
 
-    //OLD
+    //classe non più utilizzata
+    
+    /*
 
     HDT_SRV_InstallmentPlans installmentsSrv = new HDT_SRV_InstallmentPlans();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
-
+    
     global Object execute(Object args){
+        /*
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
 
@@ -48,5 +51,8 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
         paymentsUtl.handleResponse(recordId, process, response);
 
         return responseReturn;
+
     }
+    
+    */
 }

@@ -154,4 +154,21 @@ public inherited sharing class HDT_QR_Account {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get Account by Id
+     * @param customerCode
+     * @return List<Account>
+     */
+    public List<Account> getAccountByCustomerCode(String customerCode){
+        return [
+            SELECT
+            Id,
+            Name
+            FROM Account 
+            WHERE CustomerCode__c = :customerCode
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

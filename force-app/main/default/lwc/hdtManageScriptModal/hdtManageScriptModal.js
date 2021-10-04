@@ -15,40 +15,57 @@
 
 
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+import isDecisionalScript from '@salesforce/apex/HDT_LC_DecisionalScriptController.isDecisionalScript';
 
 export default class HdtManageScriptModal extends LightningElement {
 
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
+    @api activityId;
     @api buttonLabel;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api linkReitek;
-    openModal;
+    @api hasLink;
+    @api isInsideModal = false;
+    @api openModal = false;
+    isDecisional;
+
+    get hasScriptType() {
+        return (this.isDecisional!=null);
+    }
     
-    
-    connectedCallback(){// stub parameters for test purpose
-        if(!this.scriptProcessName){
-            this.scriptProcessName='Mini Vocal Order';
-            this.buttonLabel='OTP';
-            this.recordId='8011X000002SkvlQAC';
-            this.childAdditionalInfo='orderNumber';
+    connectedCallback(){
+        if (this.openModal) {
+            this.checkScriptType();
         }
     }
 
-
-    
-
     showModal(){
-        this.openModal=true;
+        this.checkScriptType();
     }
 
     closeModal(){
-        this.openModal=false;
+        this.openModal = false;
     }
 
+    handleCloseEvt(){
+        console.log("handleCloseEvt");
+        this.dispatchEvent(new CustomEvent('close'));
+    }
 
-
-
-
+    checkScriptType() {
+        return isDecisionalScript({processName: this.scriptProcessName}).then(isDecisional => {
+            this.isDecisional = isDecisional;
+            this.openModal = true;
+        },error => {
+            this.dispatchEvent(new ShowToastEvent({
+                variant: 'error',
+                title: 'Non è stato possibile determinare il tipo dello script',
+                message: error
+            }));
+        });
+    }
 
 }

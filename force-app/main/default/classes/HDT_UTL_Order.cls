@@ -194,6 +194,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.SupplyCity__c = oldOrder.SupplyCity__c;
         orderToUpdate.SupplyStreetName__c = oldOrder.SupplyStreetName__c;
         orderToUpdate.SupplyStreetNumber__c = oldOrder.SupplyStreetNumber__c;
+        orderToUpdate.SupplyStreetNumberExtension__c = oldOrder.SupplyStreetNumberExtension__c;
         orderToUpdate.SupplyPlace__c = oldOrder.SupplyPlace__c;
         orderToUpdate.SupplyPostalCode__c = oldOrder.SupplyPostalCode__c;
         orderToUpdate.SupplyCountry__c = oldOrder.SupplyCountry__c;
@@ -224,6 +225,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.IsRemoteManaged__c = oldOrder.IsRemoteManaged__c;
         orderToUpdate.CustomerRequestDate__c = oldOrder.CustomerRequestDate__c;
         orderToUpdate.Commodity__c = oldOrder.Commodity__c;
+        orderToUpdate.isDatoDiscordante__c = true;
         update orderToUpdate;
     }
 

@@ -160,6 +160,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         HDT_UTL_DatabaseService.updateSObject(nonReqContr);
                     }
                 }
+                if(caseNew.Cluster__c == 'Autolettura'){
+                    // Annullamento dopo l'invio al DL
+                    if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
+                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione M01/M02','Gestione M01/M02');
+                    }
+                    // Annullamento dopo la validazione da MDM ma prima dell'invio al DL
+                    else if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Esito OK da SAP') && !caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
+                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP');
+                    }
+                }
                 return true;
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
