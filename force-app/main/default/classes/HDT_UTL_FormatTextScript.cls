@@ -63,7 +63,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 //'FROM wrts_prcgvr__Activity__c where Id = \''+
                 ' FROM '+objectName+' where Id = \''+
                 recordId+'\' LIMIT 1';
-            system.debug(query);
             try{
                 genericSObject = (SObject) Database.query(query);
             }catch(Exception e){
@@ -122,7 +121,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                                             .get(fieldOrRelation)
                                             .getDescribe()
                                             .getType().name();
-                system.debug(dataFieldType);
                 switch on dataFieldType{
                     when 'STRING'{
                         fieldValue = (String) relation.get(fieldOrRelation);
@@ -167,10 +165,8 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         //controlla su CS o CMT se il valore va sovrascritto (ossia se c'è una corrispondenza tra fieldApiName e ObjectApiName),
         // se sì converti in decimal, aumenta, riconverti in stringa, altrimenti rimanda indietro il valore che ti è arrivato
 
-        System.debug('overwriteValue: '+fieldValue);
         String key = sobjectApiName+'-'+fieldApiName;
         if (overrideMap.containsKey(key.toLowerCase())) {
-            System.debug('containsKey: '+key);
             HDT_CallScriptValue__mdt overrideValue = overrideMap.get(key.toLowerCase());
             List<String> formatParams = new List<String>{fieldValue};
 
@@ -183,11 +179,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
 
-    protected List<String> getDataBinded(String Text){
+    protected List<String> getDataBinded(String text){
         //this method catches all dynamic fields in the text
         //generally can be used to extract all regex occurence in a string
         List<String> bindedFields = new List<String>();
-        Matcher matcher=Pattern.compile(regEx).matcher(Text);
+        Matcher matcher=Pattern.compile(regEx).matcher(text);
          
         while(matcher.find()){
             //String preFormatData = matcher.group(0);
@@ -195,7 +191,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             //bindedFields.add(preFormatData.trim().toLowerCase());
             bindedFields.add(matcher.group(1).toLowerCase());
         }
-        system.debug(bindedFields);
         return bindedFields;
     }
 

@@ -21,18 +21,20 @@ public inherited sharing class HDT_SRV_ScriptManager {
     public static HDT_WRP_ScriptConfig getOrderScriptConfig(Id orderParentId){
 
         HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
+        config.scriptTarget = orderParentId;
 
         Order parentOrder = orderQr.getRecordById(orderParentId);
         
+        Id commOfferOrderId;
         for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
             if (childOrder.RecordType.DeveloperName!=ORDER_RT_VAS) {
-                config.scriptTarget = childOrder.Id;
+                commOfferOrderId = childOrder.Id;
                 break;
             }
         }
 
-        if (String.isNotBlank(config.scriptTarget)) {
-            Order targetOrder = orderQr.getRecordById(config.scriptTarget);
+        if (String.isNotBlank(commOfferOrderId)) {
+            Order targetOrder = orderQr.getRecordById(commOfferOrderId);
 
             List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(targetOrder.SBQQ__Quote__c);
             Id productId = quoteLineList[0].SBQQ__Product__c;
@@ -42,10 +44,8 @@ public inherited sharing class HDT_SRV_ScriptManager {
                     config.scriptName = 'Mini Vocal Order';
                 }
                 when 'Vocal Order' {
-                    List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE ScriptType__c='Processo' AND Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
-                    if (!scripts.isEmpty()) {
-                        config.scriptName = scripts[0].Name;
-                    }
+                    Product2 commOffer = [SELECT Script__r.Name FROM Product2 WHERE Id=:productId WITH SECURITY_ENFORCED LIMIT 1];
+                    config.scriptName = commOffer.Script__r?.Name;
                 }
             }
         }
