@@ -7,9 +7,7 @@
 
 
 @IsTest
-public class HDT_SRV_ServiceTwentySixTst {
-    
-    
+public class HDT_SRV_ServiceTwentySixTst {    
     
     @TestSetup
     static void makedata(){     

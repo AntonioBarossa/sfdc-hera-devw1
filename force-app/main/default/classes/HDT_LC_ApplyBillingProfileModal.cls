@@ -25,22 +25,40 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         System.debug('sendingBillMode: ' + sendingBillMode);
 
         quoteLineSrv.checkReadAccess('SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SBQQ__RequiredBy__r.SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
-        
-        System.debug('query result pod/pdr: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, paymentMethod, sendingBillMode));
+
         List<SBQQ__QuoteLine__c> listPodPdr = quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, paymentMethod, sendingBillMode);
+        System.debug('query result pod/pdr: ' + listPodPdr);
         
-        System.debug('query result vas: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId));
+        
         List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId);
+        System.debug('query result vas: ' + listVas);
         
-        System.debug('query result listVasCambioOfferta: ' + quoteLineQr.getQuoteLinesWithCambioOfferta(saleId));
+        //***2809 LG disattivato per problemi visibilita */
+        //List<SBQQ__QuoteLine__c> listBonus =   quoteLineQr.getRecordsBySaleFilteredFamilyBonus(saleId);
+        //system.debug('query result sconti: '+listBonus );
+        //listBonus = getBonusPerOffer(listBonus);
+        List<SBQQ__QuoteLine__c> listBonus = new List<SBQQ__QuoteLine__c>();
+        /****** */
         List<SBQQ__QuoteLine__c> listVasCambioOfferta = quoteLineQr.getQuoteLinesWithCambioOfferta(saleId);
+        System.debug('query result listVasCambioOfferta: ' + listVasCambioOfferta);
 
         Map<String, List<SBQQ__QuoteLine__c>> quoteLineMap = new Map<String, List<SBQQ__QuoteLine__c>>();
         quoteLineMap.put('listPodPdr', listPodPdr);
         quoteLineMap.put('listVas', listVas);
         quoteLineMap.put('listVasCambioOfferta', listVasCambioOfferta);
+       quoteLineMap.put('listBonus', listBonus);
 
         return quoteLineMap;
+    }
+
+    public static List<SBQQ__QuoteLine__c> getBonusPerOffer(List<SBQQ__QuoteLine__c> allBonus){
+        Map<id, SBQQ__QuoteLine__c> aQuoteLinePerOffer = new Map<id, SBQQ__QuoteLine__c>();
+        for(SBQQ__QuoteLine__c line : allBonus ){
+            if(!aQuoteLinePerOffer.containsKey(line.SBQQ__RequiredBy__c)){
+                aQuoteLinePerOffer.put(line.SBQQ__RequiredBy__c, line);
+            }
+        }
+        return aQuoteLinePerOffer.values();
     }
 
     /**

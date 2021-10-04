@@ -171,15 +171,33 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Order
                     WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
+            //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
-                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:searchString WITH SECURITY_ENFORCED];
+                Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
+                
+                //removing assets which already have a deactivation Case
+                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'
+                    AND AssetId IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case assetCase:assetsCases) {
+                    recordMap.remove(assetCase.AssetId);
+                }
+                records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED];
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Status<>'Bozza' AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
             }
+            //Disattivazione VAS - END
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract

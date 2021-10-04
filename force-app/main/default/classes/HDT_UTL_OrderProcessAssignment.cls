@@ -85,8 +85,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),//Processo Amend
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),//Processo Amend
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', true, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), null, true, false, true, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
@@ -129,6 +131,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
+        isAmendmentAllowed=isAmendmentAllowed||isScontiBonus(ord);
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
         system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
@@ -141,13 +144,12 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug('getAvailableProcesses - isAmendmentAllowed: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
         system.debug('getAvailableProcesses - isSwitchOut: ' + ord.IsWinback__c);
 
-
         for (HDT_WRP_Process process : allProcesses) {
             if (
                 process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c)
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
                 && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
-                && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null)
+                && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse == isChangeUse
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
                 && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
@@ -161,6 +163,18 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
 
         return utilityOrderProcessAssignment(availableProcesses);
+    }
+
+    private static boolean isScontiBonus(Order ord){
+        system.debug('entra sconti');
+        List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+        if(!items.isEmpty()){
+            system.debug('entra sconti2');
+            OrderItem itm =  items[0];
+            return getFamilySconto().contains(itm.Product2.Family);
+        }
+        return false;
+
     }
     
     public static Boolean isCambioOfferta(Order ord){
@@ -181,6 +195,16 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return result;
     }
 
+    public static Set<String> getFamilySconto(){
+        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED  group by ProductFamily__c  ];
+        Set<String> famils = new Set<String>();
+        for(AggregateResult ag : lgr){
+            if(String.isNotBlank((String) ag.get('fam')))
+                famils.add((String) ag.get('fam'));
+        }
+        return famils;
+    }
+
     public static Boolean isSwitchInRipristinatorio(Order ord){
         
         Boolean result = false;
@@ -188,7 +212,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
         
         if (ord.ServicePoint__c != null) {
-            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('Gestione Switch in Ripristinatorio', 'Completed', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
         }
 
         system.debug('HDT_UTL_OrderProcessAssignment.isSwitchInRipristinatorio activityList: ' + activityList);
@@ -208,8 +232,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     public static void switchInRipristinatorioAction(Order ord) {
 
         system.debug('HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction START');
-            
-        List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+        List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePointNotStatus('Gestione Switch in Ripristinatorio', 'Completed', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+
+        //List<wrts_prcgvr__Activity__c> activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
 
         activityCustomSrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityList[0].Id,
