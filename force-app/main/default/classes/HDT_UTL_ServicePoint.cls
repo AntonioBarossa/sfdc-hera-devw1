@@ -1,3 +1,9 @@
+/**
+ * @author Luca Molino (luca.molino@engdb.com.br)
+ * @date 23/03/2021
+ * @description HDT_UTL_ServicePoint Class
+ * @history Luca Molino – 23/03/2021 – Created Class
+ */
 public with sharing class HDT_UTL_ServicePoint {
 
     private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
@@ -308,6 +314,13 @@ public with sharing class HDT_UTL_ServicePoint {
                 && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))
                 ){
                     spNew.SupplyisAddressVerified__c = true;
+                }
+
+                if(mapRes.get('BP') != null){
+                    List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
+                    if (!accBp.isEmpty()) {
+                        spNew.Account__c = accBp[0].Id;
+                    }
                 }
 
 

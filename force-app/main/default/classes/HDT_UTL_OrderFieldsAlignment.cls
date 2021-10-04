@@ -76,7 +76,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BillingStreetNumberExtension__c = billingProfile.InvoicingStreetNumberExtension__c;
         orderToUpdate.BillingPostalCode__c = billingProfile.InvoicingPostalCode__c;
         orderToUpdate.BillingCityCode__c = billingProfile.InvoicingCityCode__c;
-        orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
+        if(!'Bollettino postale'.equalsIgnoreCase(billingProfile.PaymentMethod__c)){
+            orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
+        }
         orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
         orderToUpdate.CreateContractAccount__c = billingProfile.CreateContractAccount__c;
         orderToUpdate.IbanCountry__c = billingProfile.IbanCountry__c;
@@ -335,6 +337,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
             orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
             orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
+            orderToUpdate.CommercialProductLink__c = quoteLineList[0].SBQQ__Product__c;//gabriele.rota@webresults.it - 01/10/2021
         }
 
     }

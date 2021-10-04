@@ -29,9 +29,9 @@ public class HDT_WS_PraxidiaIntegrationTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, res, 'A response was successfully created');
+        System.assertNotEquals(null, res, 'A response was not successfully created');
         
-        System.assertEquals(null, res.body, 'The respose fields are set to null since the mock is not instantiated');
+        System.assertEquals(null, res.body, 'The respose fields should be set to null since the mock is not instantiated');
 
     }
 }
