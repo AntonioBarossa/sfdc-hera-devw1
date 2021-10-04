@@ -284,7 +284,7 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
           if (listCase!=null && listCase.size()>0 ) {
              contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_RDS_PIATTE.txt','OUT_RDS_PIATTE'));
           }
-         Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
+         Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();

@@ -104,12 +104,12 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
          if (listCase!=null && listCase.size()>0 ) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_IN_RETE.txt','OUT_CESSAZIONE_IN_RETE'));
          }
-        Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_3File2(runId,filterDate, fileType,contentVersionIds));
+        Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34_3File2(runId,filterDate, fileType,contentVersionIds));
       } 
       catch (Exception e) {
          errorMessage=e.getMessage();
          status='failed';
-         Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+         Id jobId = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
       }
      
    }

@@ -115,7 +115,7 @@ public with sharing class HDT_QBL_SIE34_7 implements Queueable  {
           if (listOrderItem!=null && listOrderItem.size()>0 ) {
              contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_VAS.txt','OUT_VAS'));
           }
-         Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
+         Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();

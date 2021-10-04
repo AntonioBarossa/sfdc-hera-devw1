@@ -58,12 +58,12 @@ public with sharing class HDT_QBL_SIE34_2SME implements Queueable  {
          if (String.isNotBlank(body)) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_SME.txt','PP_OUT_PREVENTIVI_SME'));
          }
-         Id jobID2SMEGas = System.enqueueJob(new HDT_QBL_SIE34_2MM(runId,filterDate, fileType,contentVersionIds));
+         Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34_2MM(runId,filterDate, fileType,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          Id jobId = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
        }
       
     }
