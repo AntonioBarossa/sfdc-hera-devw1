@@ -282,6 +282,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Campi_da_salvare_su_bozza</targetReference>
+            </connector>
             <label>Salva in bozza</label>
         </rules>
     </decisions>
@@ -437,6 +440,33 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Campi_da_salvare_su_bozza</name>
+        <label>Salva in Bozza</label>
+        <locationX>3078</locationX>
+        <locationY>844</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>FinalDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ReadingDate__c</field>
+            <value>
+                <elementReference>DataLetturaCliente</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <description>Valorizzato da arricchimento dati ma necessario solo per il ramo Unificazione/Separazione bolletta.</description>
         <name>Rimozione_Tipo_Fattura_Collettiva</name>
@@ -617,6 +647,23 @@
             <fieldText>Tipo Fatturazione Collettiva</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.OperationType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Unificazione bolletta</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Query_Case.OperationType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Separazione bolletta</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Form2</name>
@@ -1341,8 +1388,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2941</locationX>
-        <locationY>819</locationY>
+        <locationX>2921</locationX>
+        <locationY>923</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
