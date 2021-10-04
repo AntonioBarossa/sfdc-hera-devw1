@@ -31,8 +31,12 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
                 canceledOrderIds.add( newOrder.Id );
             }
         }
+        if(canceledOrderIds.isEmpty())
+            return;
 
         List<Order> vasOrdersToCancel = [SELECT Id FROM Order WHERE RecordTypeId=:VAS_RT AND OrderReference__c IN :canceledOrderIds WITH SECURITY_ENFORCED];
+        if(vasOrdersToCancel.isEmpty())
+            return;
         for (Order vasOrder:vasOrdersToCancel) {
             vasOrder.Phase__c = PHASE_CANCELLED;
             vasOrder.Status = STATUS_CANCELLED;

@@ -19,7 +19,8 @@ public with sharing class HDT_QR_ContentVersion {
 
         return [SELECT Id, ContentDocumentId, VersionData, Title, FileType  
                 FROM ContentVersion 
-                WHERE Id =: contentVersionId];
+                WHERE Id =: contentVersionId
+                WITH SECURITY_ENFORCED];
     }
 
     /**​

@@ -17,8 +17,10 @@ public with sharing class HDT_QR_FileTemplate {
 
     public List<FileTemplate__c> getRecordByTemplateName(String templateName) {
 
-        return [SELECT Id, Name, HeadLineIndex__c, FileTemplateName__c, FileTemplateApiName__c, FileDelimiter__c, FileExtension__c, FileType__c, 
-                       (SELECT Id, Name, FileTemplate__c, HeaderApiName__c, HeaderName__c, Index__c, Mandatory__c, DataType__c, ValidationRegex__c, SobjectType__c FROM FileTemplateColumns__r) 
-                FROM FileTemplate__c WHERE FileTemplateApiName__c =: templateName];
+        String query = 'SELECT Id, Name, HeadLineIndex__c, FileTemplateName__c, FileTemplateApiName__c, FileDelimiter__c, FileExtension__c, FileType__c, ' +
+                       '       (SELECT Id, Name, FileTemplate__c, HeaderApiName__c, HeaderName__c, Index__c, Mandatory__c, DataType__c, ValidationRegex__c, SobjectType__c FROM FileTemplateColumns__r) ' +
+                        'FROM FileTemplate__c WHERE FileTemplateApiName__c =: templateName';
+
+        return Database.query(String.escapeSingleQuotes(query));
     }
 }
