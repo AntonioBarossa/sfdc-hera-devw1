@@ -27,8 +27,8 @@ public class HDT_WS_CampagenDmDmpTst {
         
         HDT_WS_CampagenDmDmpDataResponse res = HDT_WS_CampagenDmDmp.callService(runId,status,fileType,errorMessage,contentVersionIds);
         
-        System.assertNotEquals(null, res, 'A response was successfully created');
-        System.assertEquals(null, res.data.testata, 'The respose fields are set to null since the mock is not instantiated');
+        System.assertNotEquals(null, res, 'A response was not successfully created');
+        System.assertEquals(null, res.data.testata, 'The respose fields should be set to null since the mock is not instantiated');
 
     }
 }

@@ -66,6 +66,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         // END @Picchiri Credit Check 04.06.21
 
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+
+        HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);
+        
     }
 
     //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Orders at a time.
