@@ -1,10 +1,10 @@
-global with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock {
+public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock {
     
     public Boolean successfullReturn = true;
 
-    global HTTPResponse respond(HTTPRequest req) {
-        system.debug('Marketing Cloud utils Mock');
-        system.debug('endpoint ' + req.getEndpoint());
+    public HTTPResponse respond(HTTPRequest req) {
+        // system.debug('Marketing Cloud utils Mock');
+        // system.debug('endpoint ' + req.getEndpoint());
         HttpResponse res = new HttpResponse();
         res.setHeader('Content-Type', 'application/json');
         String body;
@@ -28,6 +28,20 @@ global with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                     } else {
                         res.setStatusCode(404);
                     }
+
+                } else if (wsc.Name == 'VAS.Service26') {
+                    
+                    HDT_WS_ArrichmentDataEntityResponse arrichimentoDatiResponse = new HDT_WS_ArrichmentDataEntityResponse();
+
+                    if (successfullReturn) {
+                        
+                        body = JSON.serialize(arrichimentoDatiResponse);
+                        res.setStatusCode(200);
+                        res.setBody(body);
+                    } else {
+                        res.setStatusCode(400);
+                    }
+
                 }
             }
         }
