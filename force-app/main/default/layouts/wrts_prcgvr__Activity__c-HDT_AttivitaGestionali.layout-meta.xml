@@ -43,7 +43,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>QuoteLine__c</field>
+                <field>QuoteLine__c</field><!-- QuoteLine Concetta 29/09/2021-->
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

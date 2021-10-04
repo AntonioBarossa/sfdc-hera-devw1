@@ -49,6 +49,8 @@ const FIELDS = [
     'Order.ShippingStreetNumber__c',
     'Order.ShippingStreetNumberExtension__c',
     'Order.ShippingIsAddressVerified__c',
+    'Order.Contact__r.MobilePhone',
+    'Order.Contact__r.Email',
     'Order.Account.PrimaryEmail__c',
     'Order.Account.Id',
     'Order.Account.MobilePhone__c',
@@ -205,7 +207,10 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 contractSigned = this.orderRecord.fields.ContractSigned__c.value;
                 var contactEmail = '';
 				var contactPhone = '';
-				if(this.orderRecord.fields.Account.value != null){
+                if(this.orderRecord.fields.Contact__r.value != null){
+					contactEmail = this.orderRecord.fields.Contact__r.value.fields.Email.value;
+					contactPhone = this.orderRecord.fields.Contact__r.value.fields.MobilePhone.value;
+				}else if(this.orderRecord.fields.Account.value != null){
 					contactEmail = this.orderRecord.fields.Account.value.fields.PrimaryEmail__c.value;
 					contactPhone = this.orderRecord.fields.Account.value.fields.MobilePhone__c.value;
 				}

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data / Data fattura</label>
+    <label>Data scadenza fattura</label>
     <required>false</required>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

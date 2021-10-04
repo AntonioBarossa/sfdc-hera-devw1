@@ -17,6 +17,7 @@ export default class HdtManageScriptCard extends LightningElement {
 
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
+    @api activityId;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api hasLink;
 
@@ -138,20 +139,19 @@ export default class HdtManageScriptCard extends LightningElement {
     // }
 
     saveRecLink(){
-        let link= this._linkReitek;
-        saveReitekLink({recordId : this.recordId, reitekLink: link})
-            .then(result=>{
+        let link = this._linkReitek;
+        saveReitekLink({recordId : this.recordId, activityId: this.activityId, reitekLink: link})
+            .then(() => {
                 this.dispatchEvent(new ShowToastEvent({
                     variant: "success",
                     title: "Link Salvato",
                     message: "L'operazione di salvataggio del link è andata a buon fine"
                 }));
                 this.closeModal();
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error);
                 this.showGenericErrorToast();
-            });
-        
+            })
     }
 
     enableConfirmButton(){

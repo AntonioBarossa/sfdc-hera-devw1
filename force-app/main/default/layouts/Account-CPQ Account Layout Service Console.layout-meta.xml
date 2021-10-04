@@ -223,8 +223,8 @@
     </quickActionList>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
-        <fields>OPPORTUNITY.CREATED_DATE</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.CREATED_DATE</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
         <sortField>OPPORTUNITY.CREATED_DATE</sortField>
@@ -232,10 +232,15 @@
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ParentOrder__c</fields>
+        <fields>ORDERS.CREATED_DATE</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
+        <fields>Sale__c</fields>
+        <fields>Channel__c</fields>
         <fields>ServicePointCodeFormula__c</fields>
         <fields>ProcessType__c</fields>
+        <fields>WizardCompletedDate__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>

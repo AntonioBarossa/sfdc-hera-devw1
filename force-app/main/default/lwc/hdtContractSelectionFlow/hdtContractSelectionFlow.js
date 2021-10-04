@@ -8,6 +8,7 @@ export default class HdtContractSelectionFlow extends LightningElement {
     @api searchVariant;
     @api searchPlaceholder;
     @api results;
+    @api numSelectedContracts;
     @api accountId;
     @api selectionType;
     @api concatenate;
@@ -55,12 +56,15 @@ export default class HdtContractSelectionFlow extends LightningElement {
 
     connectedCallback(){
         this.showSelector = false;
+        this.numSelectedContracts = 0;
         this.getConfiguration();
     }
 
     handleRecordSelection(event){
         if (this.concatenate === true) {
             console.log('Concatenazione di tutti i codici contratto selezionati...');
+            console.log('num selected record: ' + event.detail.selectedRows.length);
+            this.numSelectedContracts = event.detail.selectedRows.length;
             this.results = '';
             for (var selectedRow in event.detail.selectedRows) {
                 this.results += event.detail.selectedRows[0].SAPContractCode__c + '; ';

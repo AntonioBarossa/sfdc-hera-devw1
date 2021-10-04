@@ -1,7 +1,8 @@
-global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+public inherited sharing class HDT_WS_Paperless {
 
     //OLD
 
+    /*
     HDT_SRV_Paperless paperlessSrv = new HDT_SRV_Paperless();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
@@ -49,6 +50,6 @@ global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interface
         return responseReturn;
 
     }
-
+    */
 }
 
