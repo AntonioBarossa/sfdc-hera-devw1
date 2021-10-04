@@ -17,8 +17,8 @@ public with sharing class HDT_ContactTst {
 
 
        
-        system.assertNotEquals('',  con.id , 'Contact is not created correctly  (id of Contact is not available)');
-
+        system.assertNotEquals('',  con.id , 'Contact is not created correctly  (Trigger on Contact)');
+        system.assertEquals(true, con.id != null , 'Contact is empty');
 
     }
 }
