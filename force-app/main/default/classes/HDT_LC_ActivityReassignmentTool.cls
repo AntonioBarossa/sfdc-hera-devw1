@@ -7,7 +7,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         'Chat',
         'Consip',
         'Da PGM',
-        'Helpdesk',
+        // 'Helpdesk',
         'PA',
         'Protocollo',
         'ServiziSociali',
