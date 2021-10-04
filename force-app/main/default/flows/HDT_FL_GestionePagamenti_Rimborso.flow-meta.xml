@@ -88,7 +88,7 @@
         <inputParameters>
             <name>beneficiary</name>
             <value>
-                <elementReference>GetCaseAggiornato2.Beneficiary__c</elementReference>
+                <elementReference>GetCaseAggiornato2.AccountholderTypeBeneficiary__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
