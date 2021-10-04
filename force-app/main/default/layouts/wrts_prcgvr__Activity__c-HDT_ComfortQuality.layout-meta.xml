@@ -185,7 +185,7 @@
         <platformActionListItems>
             <actionName>IsotopeSubscription</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>11</sortOrder>
+            <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Edit</actionName>
