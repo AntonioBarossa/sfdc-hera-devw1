@@ -141,6 +141,7 @@ public inherited sharing class HDT_QR_Contract {
             SELECT
             Name,
             AccountId,
+            BillingProfile__c,
             ServicePoint__c,
             ContractNumber,
             Status 
