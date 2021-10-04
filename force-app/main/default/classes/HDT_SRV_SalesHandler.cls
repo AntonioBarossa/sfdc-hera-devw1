@@ -511,6 +511,42 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                 }
             }
+            when 'SIE34_7'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_6'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
             when 'SIE34_3'{
                 System.debug('SIE34');
                 if (request.objects.get(0).fields.get(0) != null ) {
@@ -541,7 +577,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_2SMEEE(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_2'));
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_2'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
