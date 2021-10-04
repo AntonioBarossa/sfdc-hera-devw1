@@ -1,5 +1,15 @@
 public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse setSaveResponse(HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse, String message, Boolean dataError){
+        saveResponse.success = false;
+        saveResponse.message = message;
+        
+        if(!dataError){
+            saveResponse.dataError = false;
+        }
+        return saveResponse;
+    }
+
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteriaHelper(String productId, String record, HDT_WRP_EligibilityCriteria.HDT_WRP_Region obj){
         //List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
@@ -21,17 +31,19 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
            if(objRes.isCreateable() && objRes.isUpdateable()){
                upsert criteria;
            } else {
-               saveResponse.success = false;
-               saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
-               saveResponse.dataError = false;
-               return saveResponse;                
+               //saveResponse.success = false;
+               //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
+               //saveResponse.dataError = false;
+               //return saveResponse;
+               return setSaveResponse(saveResponse, Label.HDT_EligCriteria_ErrorObj, false); 
            }
 
         } catch (Exception e){
-            saveResponse.success = false;
-            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-            saveResponse.dataError = false;
-            return saveResponse;
+            //saveResponse.success = false;
+            //saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            //saveResponse.dataError = false;
+            //return saveResponse;
+            return setSaveResponse(saveResponse, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']', false);
         }
 
         if(!criteria.EligibleForAllCities__c){
@@ -39,9 +51,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             Boolean deleteResponse = handleRecordDelete(isUpsert, criteria.Id);
 
             if(!deleteResponse){
-                saveResponse.success = false;
-                saveResponse.message = Label.HDT_EligCriteria_DeleteError;
-                return saveResponse;
+                //saveResponse.success = false;
+                //saveResponse.message = Label.HDT_EligCriteria_DeleteError;
+                //return saveResponse;
+                return setSaveResponse(saveResponse, Label.HDT_EligCriteria_DeleteError, true);  
             }
 
             List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
@@ -74,9 +87,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             Boolean deleteResponse = handleRecordDelete(isUpsert, criteria.Id);
 
             if(!deleteResponse){
-                saveResponse.success = false;
-                saveResponse.message = Label.HDT_EligCriteria_DeleteError;
-                return saveResponse;
+                //saveResponse.success = false;
+                //saveResponse.message = Label.HDT_EligCriteria_DeleteError;
+                //return saveResponse;
+                return setSaveResponse(saveResponse, Label.HDT_EligCriteria_DeleteError, true); 
             }
 
             saveResponse.success = true;
@@ -124,17 +138,19 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             if(objRes.isCreateable()){
                 insert newCriteria;
             } else {
-                saveResponse.success = false;
-                saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
-                saveResponse.dataError = false;
-                return saveResponse;                
+                //saveResponse.success = false;
+                //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
+                //saveResponse.dataError = false;
+                //return saveResponse;
+                return setSaveResponse(saveResponse, Label.HDT_EligCriteria_ErrorObj, false);               
             }
 
         } catch (Exception e){
-            saveResponse.success = false;
-            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-            saveResponse.dataError = false;
-            return saveResponse;
+            //saveResponse.success = false;
+            //saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            //saveResponse.dataError = false;
+            //return saveResponse;
+            return setSaveResponse(saveResponse, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']', false); 
         }
 
         if(!crtiteriaToClone.EligibleForAllCities__c){
