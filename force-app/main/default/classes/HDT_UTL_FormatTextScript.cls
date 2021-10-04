@@ -58,13 +58,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
         String query = makeSelectStatement(fieldsToQuery);
         Sobject genericSObject;
-        if(STRING.isNotBlank(query)){
-            query+=
-                //'FROM wrts_prcgvr__Activity__c where Id = \''+
-                ' FROM '+objectName+' where Id = \''+
-                recordId+'\' LIMIT 1';
+        if(String.isNotBlank(query)){
             try{
-                genericSObject = (SObject) Database.query(query);
+                genericSObject = (SObject) Database.query(
+                    String.escapeSingleQuotes(query) + ' FROM '+String.escapeSingleQuotes(objectName)+' WHERE Id = :recordId LIMIT 1'
+                );
             }catch(Exception e){
                 throw new HDT_UTL_FormatTextScriptException(
                         'ERRORE DATABASE QUERY, SOQL: # '
