@@ -1,3 +1,9 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 17/09/2021
+ * @description HDT_TRH_Order Test Class
+ * @history Keltin Mesonjesi – 17/09/2021 – Created Class
+ */
 public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){}
@@ -27,9 +33,12 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
         
+       // HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
-        
+        HDT_UTL_OrderProcess.updateServicePointToComplete(trigger.old,trigger.new);
+       // HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
     }
     public override void afterUpdate() {
         HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
@@ -57,6 +66,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         // END @Picchiri Credit Check 04.06.21
 
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+
+        HDT_UTL_OrderTriggerVas.cancelLinkedVasOrders(Trigger.newMap, Trigger.oldMap);
+        
     }
 
     //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Orders at a time.

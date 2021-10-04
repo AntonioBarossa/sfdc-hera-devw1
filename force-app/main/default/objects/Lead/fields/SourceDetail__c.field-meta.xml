@@ -40,6 +40,26 @@
                 <default>false</default>
                 <label>prodotti HVAC</label>
             </value>
+            <value>
+                <fullName>landing page standard</fullName>
+                <default>false</default>
+                <label>landing page standard</label>
+            </value>
+            <value>
+                <fullName>landing page proattivo</fullName>
+                <default>false</default>
+                <label>landing page proattivo</label>
+            </value>
+            <value>
+                <fullName>SOL Hera</fullName>
+                <default>false</default>
+                <label>SOL Hera</label>
+            </value>
+            <value>
+                <fullName>APP My Hera</fullName>
+                <default>false</default>
+                <label>APP My Hera</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

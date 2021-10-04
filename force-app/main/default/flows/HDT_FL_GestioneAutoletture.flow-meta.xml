@@ -67,7 +67,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Dati_Autolettura_da_processo</targetReference>
+            <targetReference>UpdateCaseForVoltura</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -436,7 +436,7 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>1137</locationX>
+        <locationX>1138</locationX>
         <locationY>551</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -563,8 +563,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Dati_Autolettura_da_processo</name>
         <label>Set Dati Autolettura da processo</label>
-        <locationX>1331</locationX>
-        <locationY>106</locationY>
+        <locationX>1333</locationX>
+        <locationY>58</locationY>
         <connector>
             <targetReference>Set_Codice_Venditore</targetReference>
         </connector>
@@ -658,6 +658,42 @@ TODO: Formula da adeguare in Wave 2.</description>
             <field>ReadingDate__c</field>
             <value>
                 <elementReference>ReadingCustomerDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateCaseForVoltura</name>
+        <label>UpdateCaseForVoltura</label>
+        <locationX>1265</locationX>
+        <locationY>188</locationY>
+        <connector>
+            <targetReference>Set_Codice_Venditore</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <elementReference>CausalCodeProcessReading</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Autolettura da processo</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VulturePracticeReference__c</field>
+            <value>
+                <elementReference>Cerca_Processi_di_vendita_elegibili.orderId</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

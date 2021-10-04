@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsPostelAttachment__c</fullName>
+    <description>Allegato Postel</description>
+    <externalId>false</externalId>
+    <formula>AND(DocumentalSystem__c = &apos;Postel&apos;, NOT(ISBLANK(AttachmentCode__c)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Allegato Postel</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
