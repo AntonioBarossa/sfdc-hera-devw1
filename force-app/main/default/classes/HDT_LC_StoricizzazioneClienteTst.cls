@@ -53,7 +53,7 @@ public class HDT_LC_StoricizzazioneClienteTst {
             List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer2 = HDT_LC_StoricizzazioneCliente.getExternalCustomer('testVN', 'id', 'ASC', 'Partita Iva');
             List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer3 = HDT_LC_StoricizzazioneCliente.getExternalCustomer('testCC', 'id', 'DESC', 'Codice Cliente');
             
-            System.assertNotEquals(null, listaCustomer1, 'A list of account should be returned');
+            System.assertNotEquals(null, listaCustomer1, 'A list of account is not returned');
             
             List <Account> accounts = [select id from Account where CustomerMarking__c = 'Azienda'];
             List <Id> accountsId = new List<Id>();
@@ -66,7 +66,7 @@ public class HDT_LC_StoricizzazioneClienteTst {
                 customerId.add(a.id);
             }
             
-            System.assertEquals(accountsId, customerId, 'The account with CustomerMarking__c = Azienda should be returned');
+            System.assertEquals(accountsId, customerId, 'The account with CustomerMarking__c = Azienda is not returned');
 
             Test.stopTest();
         }        
