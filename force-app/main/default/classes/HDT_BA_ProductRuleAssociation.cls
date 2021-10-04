@@ -34,7 +34,7 @@ public without sharing class HDT_BA_ProductRuleAssociation implements Database.B
             }
         }
 
-        System.debug('>>> QUERY: ' + queryString);
+        System.debug(logginglevel.DEBUG, '>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 
