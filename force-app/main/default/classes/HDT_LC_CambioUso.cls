@@ -72,6 +72,8 @@ public with sharing class HDT_LC_CambioUso {
                 c.bankaccountSignatoryFiscalCode__c = bp.bankAccountSignatoryFiscalCode__c;
                 c.ibanCin_iban__c = bp.ibanCIN_Iban__c;
                 c.bankAccountSignatoryFirstName__c = bp.bankAccountSignatoryFirstName__c;
+                c.BankAccountSignatoryLastName__c = bp.BankAccountSignatoryLastName__c;
+                c.AccountClass__c = bp.AccountClass__c;
             }
 
             //List<Contract> contractList = contractQr.getActiveRecordsByAccountIdAndServicePointId(c1.accountId,srv[0].id);
