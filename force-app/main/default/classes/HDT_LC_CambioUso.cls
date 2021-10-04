@@ -4,7 +4,8 @@ public with sharing class HDT_LC_CambioUso {
     private static HDT_QR_ServicePoint srvQr = new HDT_QR_ServicePoint(); 
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
    // private static HDT_QR_CausalCodeCalculation causalCodeQR = new HDT_QR_CausalCodeCalculation();
-
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private static HDT_QR_BillingProfile billQr = new HDT_QR_BillingProfile();
     private static Map<String,String> mapIvaIdToValue2 = new Map<String,String>{
     '01' => 'Iva 10% (Cod. 01)',
 '02' => 'Iva 22% (Cod. 02)',
@@ -59,11 +60,24 @@ public with sharing class HDT_LC_CambioUso {
                     break;
                 }
             }
-        
+            Case c = new case(); 
+            if('Si'.equalsIgnorecase(addebito)){
+                List<Contract> contractList = contractQr.getActiveRecordsByAccountIdAndServicePointId(c1.accountId,srv[0].id);
+                BillingProfile__c bp = billQr.getRecordById(contractList[0].billingProfile__c);
+                c.billingProfile__c = contractList[0].billingProfile__c;
+                c.IbanAbi__c = bp.ibanAbi__c;
+                c.ibanCAB__c = bp.ibanCAB__c;
+                c.ibanCin__c = bp.ibanCin__c;
+                c.ibanCodeNumber__c = bp.ibanCodeNumber__c;
+                c.bankaccountSignatoryFiscalCode__c = bp.bankAccountSignatoryFiscalCode__c;
+                c.ibanCin_iban__c = bp.ibanCIN_Iban__c;
+                c.bankAccountSignatoryFirstName__c = bp.bankAccountSignatoryFirstName__c;
+            }
+
+            //List<Contract> contractList = contractQr.getActiveRecordsByAccountIdAndServicePointId(c1.accountId,srv[0].id);
             System.debug('*****1:' + srv);
             Map<String,String> agc = HDT_UTL_Sales.getAgentNameAndCode(srv[0],srv[0].Account__r.CustomerMarking__c);
             //HDT_CausalCodeCalculation__mdt mcc = causalCodeQR.calculateCausalCode();
-            Case c = new case(); 
             c.id = caseId;
             System.debug('*****3:');
             c.SupplyType__c = tipoFornitura;
@@ -82,8 +96,8 @@ public with sharing class HDT_LC_CambioUso {
             c.Disconnectable__c = srv[0].Disconnectable__c;
             c.Note__c = note;
             System.debug('*****4:');
-            c.phase__c = 'Da Inviare';
-            c.status = 'In Lavorazione';
+           // c.phase__c = 'Da Inviare';
+           // c.status = 'In Lavorazione';
             caseSrv.updateRecord(c);
             
         }
