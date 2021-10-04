@@ -3,7 +3,7 @@
     <fullName>PriceF0__c</fullName>
     <description>Prezzo F0 del dato record di Prodotto nella funzionalità di Configurazione Offerta Tecnica</description>
     <externalId>false</externalId>
-    <label>Prezzo F0</label>
+    <label>Prezzo Eur/kWh/smc</label>
     <precision>10</precision>
     <required>false</required>
     <scale>5</scale>

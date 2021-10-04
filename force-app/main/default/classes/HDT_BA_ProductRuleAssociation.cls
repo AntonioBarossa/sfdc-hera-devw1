@@ -34,7 +34,7 @@ public without sharing class HDT_BA_ProductRuleAssociation implements Database.B
             }
         }
 
-        System.debug('>>> QUERY: ' + queryString);
+        System.debug(logginglevel.DEBUG, '>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 
@@ -59,7 +59,7 @@ public without sharing class HDT_BA_ProductRuleAssociation implements Database.B
         notification = new HDT_WRP_ProductAssociation.HDT_WRP_Notification();
         notification.targetId = confRuleToClone.SBQQ__ProductRule__c;
         notification.userId = Userinfo.getUserId();
-        notification.title = Label.ProdOptAssociationNotification_Title;
+        notification.title = Label.ProdRuleAssociationNotification_Title;
 
         if(errorCounter > 0){
             notification.body = 'Attenzione, si sono verificati [' + String.valueOf(errorCounter) + '] errori';
