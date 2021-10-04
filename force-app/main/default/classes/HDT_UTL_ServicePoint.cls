@@ -1,3 +1,9 @@
+/**
+ * @author Luca Molino (luca.molino@engdb.com.br)
+ * @date 23/03/2021
+ * @description HDT_UTL_ServicePoint Class
+ * @history Luca Molino – 23/03/2021 – Created Class
+ */
 public with sharing class HDT_UTL_ServicePoint {
 
     private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
