@@ -1,3 +1,9 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
+ * @date 15/06/2021
+ * @description HDT_UTL_LeadProcess Classes
+ * @history Lorenzo Gulotta 15/06/2021 – Created Class
+ */
 public with sharing class HDT_UTL_LeadProcess {
     
     private static HDT_QR_Account acQr= new HDT_QR_Account();

@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 09/08/2021
+* @description HDT_LC_CopiaContratto
+* @history Lorenzo – 09/08/2021 – created class
+*/
 public with sharing class HDT_LC_CopiaContratto {
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
@@ -108,8 +114,10 @@ public with sharing class HDT_LC_CopiaContratto {
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
             s.wrts_prcgvr__status__c = 'Completed';
             activitySrv.updateRecord(s);
-            Case c = caseQr.getRecordById(s.case__c);
-            c.phase__c	='In Lavorazione';
+           // Case c = caseQr.getRecordById(s.case__c);
+            Case c = new Case();
+            c.Id = s.Case__c;
+            c.Phase__c	='In Lavorazione';
             caseSrv.updateRecord(c);
             return true;
         }
