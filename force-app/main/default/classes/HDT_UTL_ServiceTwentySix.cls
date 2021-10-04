@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                 fromCondition;
                 system.debug(query);
                 //mapSobjs = new Map<id, SObject>( (List<SObject>) Database.query(query));
-                lSobjs= (List<SObject>) Database.query(query);
+                lSobjs= (List<SObject>) Database.query(String.escapeSingleQuotes(query));
             }
             return lSobjs;
         }
