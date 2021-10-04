@@ -11,6 +11,7 @@ const columns = [
     { label: 'Telefono Cellulare', fieldName: 'contactMobilePhone' },
     { label: 'Telefono fisso', fieldName: 'contactHomePhone' },
     { label: 'Email', fieldName: 'contactEmail' },
+    { label: 'BP Interlocutore', fieldName: 'bpInterlocutor' },
     {
         type: 'action',
         typeAttributes: { rowActions: actions },

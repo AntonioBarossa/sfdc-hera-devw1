@@ -60,15 +60,15 @@ public with sharing class HDT_LC_ReletedListAccount {
         for (AccountContactRelation temp : listAccountContactRelation) {
             HDT_WRP_AccountContactRelation n= new HDT_WRP_AccountContactRelation();
 
-            n.AccountId             = temp.AccountId            ;
-            n.contactId             = temp.ContactId            ;
-            n.contactName           = temp.Contact.name         ;
-            n.roles                 = temp.Roles                ;
-            n.contactHomePhone      = temp.Contact.HomePhone    ;
-            n.contactMobilePhone    = temp.Contact.MobilePhone  ;
-            n.contactEmail          = temp.Contact.Email        ;
-            n.contactIndividualId   = temp.Contact.IndividualId ;
-
+            n.AccountId             = temp.AccountId                ;
+            n.contactId             = temp.ContactId                ;
+            n.contactName           = temp.Contact.name             ;
+            n.roles                 = temp.Roles                    ;
+            n.contactHomePhone      = temp.Contact.HomePhone        ;
+            n.contactMobilePhone    = temp.Contact.MobilePhone      ;
+            n.contactEmail          = temp.Contact.Email            ;
+            n.contactIndividualId   = temp.Contact.IndividualId     ;
+            n.bpInterlocutor        = temp.Contact.BPInterlocutor__c;
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021
@@ -97,6 +97,7 @@ public with sharing class HDT_LC_ReletedListAccount {
        public String contactMobilePhone='';
        public String contactEmail='';
        public String contactIndividualId='';
+       public String bpInterlocutor='';
     }
     //HRAWRM-500 End 04/10/2021
 
