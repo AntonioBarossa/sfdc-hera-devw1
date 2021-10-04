@@ -131,7 +131,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = ord.SBQQ__Quote__r.AmendmentAllowed__c;
         Boolean isReseller = ord.ServicePoint__r.isReseller__c;//ord.Account.CompanyOwner__c.equalsIgnoreCase('reseller') || ord.ServicePoint__r.isReseller__c;
         //isReseller=false;
-        isAmendmentAllowed=isAmendmentAllowed;//**** 2809 LG disattivato per errore ||isScontiBonus(ord);
+        isAmendmentAllowed=isAmendmentAllowed||isScontiBonus(ord);
 
         system.debug('getAvailableProcesses - isOwnAccount: ' + isOwnAccount);
         system.debug('getAvailableProcesses - plugPresence: ' + plugPresence);
@@ -149,7 +149,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 process.meterStatus.contains(ord.ServicePoint__r.MeterStatus__c)
                 && (process.marketOrigin.contains(ord.MarketOrigin__c) || process.marketOrigin.isEmpty())
                 && (process.plugPresence == plugPresence || process.commodity == 'HDT_RT_Gas')//aggiustamento plug presence gas
-                && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null)
+                && (process.isOwnAccount == isOwnAccount || process.isOwnAccount == null || (process.processType == 'Voltura Ele' && ord.ServicePoint__r.Account__c == null))
                 && process.isChangeUse == isChangeUse
                 && process.isSwitchInRipristinatorio == isSwitchInRipristinatorio(ord)
                 && process.isAttivazioneConModifica == isAttivazioneConModifica(ord)
@@ -196,7 +196,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     }
 
     public static Set<String> getFamilySconto(){
-        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED group by ProductFamily__c  ];
+        List<AggregateResult> lgr = [select ProductFamily__c fam  from Service26Config__c WITH SECURITY_ENFORCED  group by ProductFamily__c  ];
         Set<String> famils = new Set<String>();
         for(AggregateResult ag : lgr){
             if(String.isNotBlank((String) ag.get('fam')))

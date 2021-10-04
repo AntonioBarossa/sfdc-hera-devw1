@@ -4,19 +4,19 @@ import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociat
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
+    { label: 'Nome Prodotto', fieldName: 'Name' },
     { label: 'Codice prodotto', fieldName: 'ProductCode' },
     { label: 'Versione', fieldName: 'Version__c' },
-    { label: 'Nome Prodotto', fieldName: 'Name' },
     { label: 'Servizio', fieldName: 'Service__c' },
     { label: 'Descrizione prodotto', fieldName: 'DescriptionSAP__c' },
-    { label: 'Famiglia di prodotti', fieldName: 'Family'},
+    //{ label: 'Famiglia di prodotti', fieldName: 'Family'},
     { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'}
 ];
 
 const fieldsList = [
     'ProductCode',
     'Version__c',
-    'Name',
+    //'Name',
     'DescriptionSAP__c',
     'CategoryFamily__c',
     'Status__c',
@@ -75,6 +75,18 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     totRecs;//pagination
     fromRec;//pagination
     toRec;//pagination
+    criteriaObj = {};
+    //value = 'In Sviluppo';
+
+    //get options() {
+    //    return [
+    //        //{ label: 'Annullata', value: 'Annullata'},
+    //        { label: 'Confermata', value: 'Confermata'},
+    //        { label: 'In Sviluppo', value: 'In Sviluppo'},
+    //        { label: 'Vendibile', value: 'Vendibile'},
+    //        { label: 'Scaduta', value: 'Scaduta'}
+    //    ];
+    //}
 
     connectedCallback(){
         console.log('>>> PRODUCT OPTION OBJ: ' + this.junctionObj);
@@ -83,16 +95,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
         this.illustrationMessage = this.labels.cl_ResultText;
         this.page = 1;
-
-        //switch (this.objType) {
-        //    case 'SBQQ__ProductOption__c':
-        //        this.columns = productOptionColumns;
-        //        this.fieldsList = productOptionFieldsList;
-        //        break;
-        //    case 'SBQQ__ConfigurationRule__c':
-        //        this.columns = configurationRuleColumns;
-        //        this.fieldsList = configurationRuleFieldsList;
-        //}
 
         this.label.confirmSelectedTitle = this.labels.cl_ConfirmSelection;
         this.label.closeTitle = this.labels.cl_Close;
@@ -129,15 +131,32 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     }
 
+    onChangeHandler(event){
+        this.criteriaObj[event.currentTarget.name] = event.detail.value;
+    }
+
     applyFilter(event){
         console.log('>>>> APPLY FILTER');
-        this.spinner = true;
-        var criteriaObj = {};
+        
+        //var criteriaObj = {};
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
-          criteriaObj[field.fieldName] = field.value;
+          this.criteriaObj[field.fieldName] = field.value;
         });
 
-        var jsonRecord = JSON.stringify(criteriaObj);
+        if(this.criteriaObj.Status__c != undefined && this.criteriaObj.Status__c === 'Annullata'){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non puoi filtrare per questo stato',
+                    variant: 'warning',
+                }),
+            );
+            return;
+        }
+
+        this.spinner = true;
+
+        var jsonRecord = JSON.stringify(this.criteriaObj);
         console.log(jsonRecord);
         this.filterString = jsonRecord;
         console.log('>>>> FILTER STRING: ' + this.filterString);

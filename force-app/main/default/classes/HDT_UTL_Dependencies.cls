@@ -3,6 +3,7 @@
 * @date 13/07/2021
 * @description HDT_UTL_Dependencies – Classe di utilità per la gestione della sequenzializzazione dei processi
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_Dependencies {
     
     public static final String STATUS_BOZZA = 'Bozza';
@@ -27,7 +28,6 @@ public inherited sharing class HDT_UTL_Dependencies {
     * @param3 String tipology : tipologia process Case|Order
     */
     public static void processSequentializationBefore(Map<Id,SObject> newSObjectMap,Map<Id,SObject> oldSObjectMap, String tipology){
-        
         List<ServiceRequest__c> incomingProcesses = new List<ServiceRequest__c>();
         Map<Id,Order> orders = new Map<Id,Order>();
         Map<Id,Case> cases = new Map<Id,Case>();
@@ -53,7 +53,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                         incomingProcesses.add(sr);
                     }
                 }catch(Exception ex){
-                    System.debug(ex.getMessage());
+                    System.debug(LoggingLevel.ERROR, ex.getMessage());
                 }
             }
         }else if(tipology.equalsIgnoreCase(TIPOLOGY_POSTSALES)){
@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                     
                 }catch(Exception ex){
-                    System.debug(ex.getMessage());
+                    System.debug(LoggingLevel.ERROR, ex.getMessage());
                 }
             }
         }
@@ -130,7 +130,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                         + 'FROM DependenciesMatrix__c '
                         + conditions 
                         + ' WITH SECURITY_ENFORCED';
-            
+
             DependenciesMatrix__c[] dependencies = Database.query(queryDependenciesMatrix);
 
             Map<String,List<List<String>>> dependenciesMap = new Map<String,List<List<String>>>();
@@ -147,7 +147,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                 processesToUpdate = getProcessesToUpdate(incomingProcesses, dependenciesMap);
             }
         } catch (Exception ex) {
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.ERROR, ex.getMessage());
         }
         return processesToUpdate;
     }
@@ -175,12 +175,16 @@ public inherited sharing class HDT_UTL_Dependencies {
             List<String> matchValueBillings = new List<String>();
             List<String> matches = new List<String>();
 
+            String incomingServicePoint = '';
+
             for(ServiceRequest__c sr : incomingProcesses){
                 if(dependenciesMap.containsKey(sr.ProcessType__c)){
                     for(List<String> blockingMatches : dependenciesMap.get(sr.ProcessType__c)){
                         String blockingMatch = blockingMatches.get(1);
                         if(blockingMatch.equalsIgnoreCase(MATCH_SERVICE_POINT)){
-                            matchValueServicePoints.add(sr.ServicePointCode__c);
+                            incomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
+                            incomingServicePoint = incomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:incomingServicePoint;
+                            matchValueServicePoints.add(incomingServicePoint);
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_ACCOUNT)){
                             matchValueAccounts.add(sr.Account__c);
                         }else if(blockingMatch.equalsIgnoreCase(MATCH_BILLING)){
@@ -222,11 +226,6 @@ public inherited sharing class HDT_UTL_Dependencies {
                             }
                             bmatches.add(blockingMatches[0]);
                         }
-                    }
-                    String incomingServicePoint = '';
-                    if(servicePoint){
-                        incomingServicePoint = (String)sr.ServicePointCode__c==null?(String)sr.Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c:(String)sr.ServicePointCode__c;
-                        incomingServicePoint = incomingServicePoint==null?(String)sr.Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c:incomingServicePoint;
                     }
                     
                     for(ServiceRequest__c srBlocking : srBlockings){
@@ -281,7 +280,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }catch(Exception ex){
-                System.debug(ex.getMessage());
+                System.debug(LoggingLevel.ERROR, ex.getMessage());
             }
             
             results.put('serviceRequest',serviceRequestsToBeSequenced);
@@ -289,7 +288,7 @@ public inherited sharing class HDT_UTL_Dependencies {
             results.put('order',ordersToBeUpdated);
 
         } catch (Exception ex) {
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.ERROR, ex.getMessage());
         }
 
         return results;
@@ -317,7 +316,7 @@ public inherited sharing class HDT_UTL_Dependencies {
                 update serviceRequestsToBeSequenced;
             }
         }catch(Exception ex){
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.ERROR, ex.getMessage());
             Database.rollback(sp);
         }
     }

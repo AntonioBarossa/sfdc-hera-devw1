@@ -134,8 +134,8 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr2.argomentoRds = 'ND';
                 fr2.statoRds = wr.o.Phase__c != null ? wr.o.Phase__c : '';
                 fr2.codiceAcr = '';//wr.o.Account.ACRSegmentation__c;
-                fr2.postazione = '';//wr.o.Station__c;
-                fr2.gruppoCreatore = '';//wr.o.CreatorGroup__c;
+                fr2.postazione = wr.o.LoginWorkstation__c;
+                fr2.gruppoCreatore = wr.o.CreatorGroup__c;
                 fr2.gruppoAssegnatario = 'ND';
                 fr2.creazioneDi = wr.o.Createdby.Name;
                 fr2.canaleDiAcquisizione = wr.o.Channel__c != null ? wr.o.Channel__c : '';
