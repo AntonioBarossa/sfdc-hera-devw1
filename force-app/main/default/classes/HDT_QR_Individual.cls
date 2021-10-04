@@ -13,10 +13,10 @@ public inherited sharing class HDT_QR_Individual {
      * @param String id
      * @param String fields
      * @return Individual individual
-     */
+     */ //
     public Individual getRecordById(String id, String fields){
 
-        String query = 'SELECT '+ fields +
+        String query = 'SELECT '+ String.escapeSingleQuotes(fields) +
                 ' FROM Individual WHERE Id = :id WITH SECURITY_ENFORCED LIMIT 1';
         List<Individual> individual = Database.query(query);
         Individual indv = new Individual();

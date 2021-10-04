@@ -1,3 +1,9 @@
+/**
+* @author Erico Capozzo (enrico.capozzo@webresults.it)
+* @date 12/07/2021
+* @description HDT_BA_ConsentContact
+* @history Erico Capozzo – 12/07/2021 – created class
+*/
 public without sharing class HDT_BA_ConsentContact  implements Database.Batchable<SObject>, Database.Stateful,Database.AllowsCallouts {
 	
 	
@@ -38,7 +44,7 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 			
 			// logica duplicati Contact start
 			for (Contact tempContact : scope) {
-				
+             
 				if (mapContactByEmail.get(tempContact.Email)==null) {
 					mapContactByEmail.put(tempContact.Email, tempContact);
 				}
@@ -55,10 +61,10 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 			}
 			// logica duplicati Contact end  
 			
-			
+ 
 			// Controllo se ci sono altri Contact nei chunk successivi 
 			List<Contact> listContactNotInChunk = [SELECT id,Email,CreatedDate,IndividualId,Individual.CreatedDate,Individual.ProfilingPrivacy__c,Individual.PrivacyProfilingChoiceDate__c FROM Contact WHERE  (Email IN:mapContactByEmail.keySet() )AND (Id NOT IN :mapContactByEmail.values() AND IndividualId!=null) ORDER BY Email,Individual.PrivacyProfilingChoiceDate__c,Individual.CreatedDate];
-			if (listContactNotInChunk!=null && !listContactNotInChunk.isEmpty()) {	
+            if (listContactNotInChunk!=null && !listContactNotInChunk.isEmpty()) {	
 				for (Contact tempContact : listContactNotInChunk) {
 					Contact actualContact=mapContactByEmail.get(tempContact.Email);
 					if ( mapContactByEmail.get(tempContact.Email)!=null

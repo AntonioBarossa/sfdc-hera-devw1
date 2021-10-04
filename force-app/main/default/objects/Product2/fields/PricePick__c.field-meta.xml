@@ -3,9 +3,9 @@
     <fullName>PricePick__c</fullName>
     <externalId>false</externalId>
     <label>Prezzo Picco</label>
-    <precision>18</precision>
+    <precision>10</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>5</scale>
     <trackHistory>false</trackHistory>
     <type>Currency</type>
 </CustomField>

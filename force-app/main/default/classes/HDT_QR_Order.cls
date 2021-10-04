@@ -241,6 +241,41 @@ public inherited sharing class HDT_QR_Order {
             Contact__c, //HRAWRM-418
             OutgoingCreditCheckResult__c,
             IncomingCreditCheckResult__c,
+            DisconnectibilityPhone__c,          // 0110 LG Dati discordanti
+            MaxRequiredPotential__c,           // 0110 LG Dati discordanti
+            HerokuPracticeCode__c,             // 0110 LG Dati discordanti
+            UseCategory__c,                   // 0110 LG Dati discordanti
+            MeterSN__c,                     // 0110 LG Dati discordanti
+            Resident__c,                    // 0110 LG Dati discordanti
+            RemiCode__c,                    // 0110 LG Dati discordanti
+            SupplyCity__c,                   // 0110 LG Dati discordanti
+            SupplyStreetName__c,             // 0110 LG Dati discordanti
+            SupplyStreetNumber__c,             // 0110 LG Dati discordanti
+            SupplyStreetNumberExtension__c,     // 0110 LG Dati discordanti
+            SupplyPlace__c,                      // 0110 LG Dati discordanti
+            SupplyPostalCode__c,               // 0110 LG Dati discordanti
+            SupplyCountry__c,                   // 0110 LG Dati discordanti
+            SAPImplantCode__c,                 // 0110 LG Dati discordanti
+            servicepointcode__c,
+            ratecategory__c,
+            SupplyCityCode__c,
+            SupplyState__c,
+            Disconnectable__c,
+            DisconnectibilityType__c,
+            InstanceSelfCertification__c,
+            ConnectionMandate__c,
+            SelfCertificationConnection__c,
+            MeterClass__c,
+            PrecheckResultSII__c,
+            WithdrawalClass__c,
+            DistributorCode__c,
+            PressureLevel__c,
+            EnergyService__c,
+            IsRemoteManaged__c,
+            CustomerRequestDate__c,
+            Commodity__c,
+            LiftingPeople__c,
+            MeterType__c,
             CreditCheckDescription__c,
             DocumentPackage__c,
             IsCloned__c,                                     // [ 02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni ]
