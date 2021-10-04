@@ -54,7 +54,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
         private String dinamicFieldValue(String fieldPath, SObject relation){
-            return getFieldValue(fieldPath, relation);
+            String retValue = getFieldValue(fieldPath, relation);
+            return retValue=='null'? '' : retValue;
         }
     }
     
