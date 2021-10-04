@@ -717,12 +717,17 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
 
+            List<wrts_prcgvr__Activity__c> currActivities;
+            Id parentObjId;
             for(SObject handlesItem: toHandle){
-                if(String.isBlank((string)handlesItem.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('CaseID__c')}));
-                }else if(String.isBlank((string)handlesItem.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('OrderID__c')}));
+                if(String.isNotBlank((string)handlesItem.get('OrderID__c'))){
+                    parentObjId = (String)handlesItem.get('OrderID__c');
+                }else if(String.isNotBlank((string)handlesItem.get('CaseID__c'))){ 
+                    parentObjId = (String)handlesItem.get('CaseID__c');
                 }
+                currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
+                currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
+                insertedActivities.addAll(currActivities);
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
         }
