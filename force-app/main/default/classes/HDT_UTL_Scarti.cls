@@ -57,7 +57,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     }
 
     public void execute(QueueableContext context) {
-        //system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
+        system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
         updatePraticaForScartoDocumentaleQueue(newActivities, oldActivities);
     }
 
@@ -206,7 +206,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param sourceData - List<Map<String,String>>
     */
     public static void createAttivitaTracciaturaHeroku(List<Map<String,String>> sourceData){
-        //System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
+        System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
         
         Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
@@ -246,7 +246,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
         
-        //System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByTemplateCode' + dataForSalesHandlingByTemplateCode);
+        System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByTemplateCode' + dataForSalesHandlingByTemplateCode);
         if(!dataForSalesHandlingByTemplateCode.keySet().isEmpty()){
             Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber FROM Order WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()]);
             for(Order curOrder : orders.values()){
@@ -264,7 +264,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
         
-        //System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
+        System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
 
@@ -278,15 +278,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return wrts_prcgvr__Activity__c
     */
     public static wrts_prcgvr__Activity__c createActivityByObjectIdAndTemplateName(String objectId, String templateName){
-        //system.debug('HDT_UTL_Scarti objectId ' + objectId);
-        //system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        system.debug('HDT_UTL_Scarti objectId ' + objectId);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
         try{
             Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
-            //system.debug('HDT_UTL_Scarti template ' + template);
+            system.debug('HDT_UTL_Scarti template ' + template);
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
-                //system.debug('HDT_UTL_Scarti end ' + activities.get(0));
+                system.debug('HDT_UTL_Scarti end ' + activities.get(0));
                 /*
                 if(Schema.Account.SObjectType == Id.valueOf(objectId).getSobjectType()){
                     activities.get(0).Account__c = objectId;
@@ -294,11 +294,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 */
                 return activities.get(0);
             }
-            //system.debug('HDT_UTL_Scarti end');
+            system.debug('HDT_UTL_Scarti end');
             return null;
         }
         catch(Exception e){
-            //system.debug('HDT_UTL_Scarti catch ' + e);
+            system.debug('HDT_UTL_Scarti catch ' + e);
             return null;
         }
     }
@@ -312,23 +312,23 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return list<wrts_prcgvr__Activity__c>
     */
     public static list<wrts_prcgvr__Activity__c> createActivityByObjectIdAndTemplateNameBulk(list<String> objectIds, String templateName){
-        //system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
-        //system.debug('HDT_UTL_Scarti templateName ' + templateName);
+        system.debug('HDT_UTL_Scarti objectIds ' + objectIds);
+        system.debug('HDT_UTL_Scarti templateName ' + templateName);
         try{
             Map<String, wrts_prcgvr__ActivityTemplate__c> template = getTemplatesMapByName(new Set<String>{templateName});
-            //system.debug('HDT_UTL_Scarti template ' + template);
+            system.debug('HDT_UTL_Scarti template ' + template);
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> resultActivities = new List<wrts_prcgvr__Activity__c>();
                 for(String singleObjectId: objectIds){
                     List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>singleObjectId});
-                    //system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
+                    system.debug('HDT_UTL_Scarti single activity ' + activities.get(0));
                     resultActivities.add(activities.get(0));
                 }
-                //system.debug('HDT_UTL_Scarti end ' + resultActivities);
+                system.debug('HDT_UTL_Scarti end ' + resultActivities);
                 return resultActivities;
             }
-            //system.debug('HDT_UTL_Scarti end');
+            system.debug('HDT_UTL_Scarti end');
             return null;
         }
         catch(Exception e){
@@ -346,7 +346,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return Boolean
     */
     public static Boolean checkActivityCreation(Id recordId, String templateName){
-        //System.debug('checkActivityCreation_start_' + recordId + '_' + templateName);
+        System.debug('checkActivityCreation_start_' + recordId + '_' + templateName);
         Map<String, wrts_prcgvr__ActivityTemplate__c> templateMap = getTemplatesMapByName(new Set<String>{templateName});
         if(!templateMap.isEmpty()){
             List<wrts_prcgvr__ActivityAction__c> actions = [SELECT Id, wrts_prcgvr__Field__c, wrts_prcgvr__Value__c 
@@ -399,10 +399,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 logicFields += ','+currString;
             }
 			//END>>>modifica modifica marco.arci@webresults.it
-            //system.debug('logicFields: '+logicFields);
+            system.debug('logicFields: '+logicFields);
             if(Schema.Case.SObjectType == recordId.getSobjectType()){
                 String queryString = 'SELECT Id' + logicFields + ' FROM Case WHERE Id = \'' + recordId + '\'';
-                //system.debug('queryString: '+queryString);
+                system.debug('queryString: '+queryString);
                 List<Case> parentCase = Database.query(queryString);
                 if(!parentCase.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
@@ -416,7 +416,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             if(Schema.Order.SObjectType == recordId.getSobjectType()){
                 String queryString = 'SELECT Id' + logicFields + ' FROM Order WHERE Id = \'' + recordId + '\'';
-                //system.debug('queryString: '+queryString);
+                system.debug('queryString: '+queryString);
                 List<Order> parentOrder = Database.query(queryString);
                 if(!parentOrder.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
@@ -463,8 +463,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     //////////////////////////////////////////////////////////////////////////
     @AuraEnabled
     public static void updatePraticaForScartoDocumentaleQueue(List<wrts_prcgvr__Activity__c> newActivities, List<wrts_prcgvr__Activity__c> oldActivities){
-        //System.debug('updatePraticaForScartoDocumentale start newActivities: ' + JSON.serializePretty(newActivities));
-        //System.debug('updatePraticaForScartoDocumentale start oldActivities: ' + JSON.serializePretty(oldActivities));
+        System.debug('updatePraticaForScartoDocumentale start newActivities: ' + JSON.serializePretty(newActivities));
+        System.debug('updatePraticaForScartoDocumentale start oldActivities: ' + JSON.serializePretty(oldActivities));
         try{
         Map<id,wrts_prcgvr__Activity__c> oldMapActivities = new Map<Id,wrts_prcgvr__Activity__c>(oldActivities);
         String oldPhone; 
@@ -494,8 +494,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                      WHERE Id in :relatedIds
                                      WITH SECURITY_ENFORCED]);
 
-        //System.debug('updatePraticaForScartoDocumentale relatedCases: ' + JSON.serializePretty(relatedCases));
-        //System.debug('updatePraticaForScartoDocumentale relatedOrders: ' + JSON.serializePretty(relatedOrders));
+        System.debug('updatePraticaForScartoDocumentale relatedCases: ' + JSON.serializePretty(relatedCases));
+        System.debug('updatePraticaForScartoDocumentale relatedOrders: ' + JSON.serializePretty(relatedOrders));
         
         for(wrts_prcgvr__Activity__c currActivity : activities){
                 if(currActivity.Case__c != null){
@@ -515,7 +515,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     updateContactForScartoDocumentale(relatedOrders.get(currActivity.Order__c).AccountId, oldPhone, oldEmail, currActivity.NewMobile__c, currActivity.NewEmail__c);
                 }
         }
-        //System.debug('updatePraticaForScartoDocumentale end relatedObjectsToUpdate: ' + JSON.serializePretty(relatedObjectsToUpdate));
+        System.debug('updatePraticaForScartoDocumentale end relatedObjectsToUpdate: ' + JSON.serializePretty(relatedObjectsToUpdate));
         if(!relatedObjectsToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(relatedObjectsToUpdate);
         }
@@ -537,11 +537,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     @AuraEnabled
     public static void updateContactForScartoDocumentale(Id accountId, String oldPhone, String oldEmail, String newPhone, String newMail){
-        //System.debug('updateContactForScartoDocumentale start accountId: ' + accountId);
-        //System.debug('updateContactForScartoDocumentale start oldPhone: ' + oldPhone );
-        //System.debug('updateContactForScartoDocumentale start oldEmail: ' + oldEmail);
-        //System.debug('updateContactForScartoDocumentale start newPhone: ' + newPhone);
-        //System.debug('updateContactForScartoDocumentale start newMail: ' + newMail);
+        System.debug('updateContactForScartoDocumentale start accountId: ' + accountId);
+        System.debug('updateContactForScartoDocumentale start oldPhone: ' + oldPhone );
+        System.debug('updateContactForScartoDocumentale start oldEmail: ' + oldEmail);
+        System.debug('updateContactForScartoDocumentale start newPhone: ' + newPhone);
+        System.debug('updateContactForScartoDocumentale start newMail: ' + newMail);
         try{
         List<Contact> relatedContacts = [SELECT Id, IndividualId
                                          FROM Contact 
@@ -595,7 +595,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     }
                 }
             }
-            //System.debug('updateContactForScartoDocumentale end recordsForDML: ' + JSON.serializePretty(recordsForDML));
+            System.debug('updateContactForScartoDocumentale end recordsForDML: ' + JSON.serializePretty(recordsForDML));
             if(!recordsForDML.isEmpty()){
                 HDT_UTL_DatabaseService.upsertSObject(recordsForDML);
             }
@@ -615,7 +615,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return List<wrts_prcgvr__Activity__c> 
     */
     public static List<wrts_prcgvr__Activity__c> setLookupFields(List<wrts_prcgvr__Activity__c> inputData){
-        //System.debug('setLookupFields start' + inputData);
+        System.debug('setLookupFields start' + inputData);
         list<string> codiciClienti= new list<String>();
         set<string> activityTypes= new set<string>();
 
@@ -629,8 +629,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 activityTypes.add(activity.Type__c);
             }
         }
-        //System.debug('setLookupFields codiciClienti' + codiciClienti);
-        //System.debug('setLookupFields activityTypes' + activityTypes);
+        System.debug('setLookupFields codiciClienti' + codiciClienti);
+        System.debug('setLookupFields activityTypes' + activityTypes);
 
         map<string,Id> mapActivityTemplates= new map<string,Id>();
         list<wrts_prcgvr__ActivityTemplate__c> activityTemplates=[SELECT Id, Name 
@@ -672,7 +672,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 activity2.RecordTypeId = rtScarto.Id;
             }
         }
-        //System.debug('setLookupFields end' + inputData);
+        System.debug('setLookupFields end' + inputData);
         return inputData;
     }
 
@@ -717,12 +717,17 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
 
+            List<wrts_prcgvr__Activity__c> currActivities;
+            Id parentObjId;
             for(SObject handlesItem: toHandle){
-                if(String.isBlank((string)handlesItem.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('CaseID__c')}));
-                }else if(String.isBlank((string)handlesItem.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('OrderID__c')}));
+                if(String.isNotBlank((string)handlesItem.get('OrderID__c'))){
+                    parentObjId = (String)handlesItem.get('OrderID__c');
+                }else if(String.isNotBlank((string)handlesItem.get('CaseID__c'))){ 
+                    parentObjId = (String)handlesItem.get('CaseID__c');
                 }
+                currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
+                currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
+                insertedActivities.addAll(currActivities);
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
         }
@@ -776,7 +781,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 
         
         if(!toUpdate.IsEmpty()){
-            //system.debug('lista NON vuota -> Aggiorno'+toUpdate);
+            system.debug('lista NON vuota -> Aggiorno'+toUpdate);
             HDT_UTL_DatabaseService.updateSObject(toUpdate);
         }
     }
