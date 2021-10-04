@@ -20,8 +20,17 @@ public inherited sharing class HDT_QR_SelfReadings {
         List<String> errorTypes = new List<String>();
         errorTypes.add('Esito KO pre-MDM');
         errorTypes.add('Esito KO da SAP');
-        List<HDT_SelfReadingError__mdt> configs = [SELECT Id, ErrorCode__c, IsAutomaticDiscard__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND ErrorCode__c IN :errorCodes WITH SECURITY_ENFORCED];
-        return configs;
+        Map<Id, HDT_SelfReadingError__mdt> firstQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND ErrorCode__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        Map<Id, HDT_SelfReadingError__mdt> secondQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND Description__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        //List<HDT_SelfReadingError__mdt> configs = [SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND (ErrorCode__c IN :errorCodes OR Description__c IN:errorCodes) WITH SECURITY_ENFORCED];
+        firstQuery.putAll(secondQuery);
+        List<HDT_SelfReadingError__mdt> recordList = new List<HDT_SelfReadingError__mdt>();
+        /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
+            recordList.add(singleRecord);
+        }*/
+        System.debug('firstQuery.values() size:' + firstQuery.values().size());
+        
+        return firstQuery.values();
     }
 
     public Id getReadingId(String objectName, Id objectId, String commodity) {
@@ -99,12 +108,12 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             String query = 'SELECT Id, EffectiveDate__c, CreatedDate, RecordType.DeveloperName FROM Order';
 
-            if (String.isNotBlank(accountId)) {
+           /* if (String.isNotBlank(accountId)) {
                 query += ' WHERE AccountId = :accountId';
-            }
+            }*/
 
             if (String.isNotBlank(servicePointId)) {
-                query += ' AND ServicePoint__c = :servicePointId';
+                query += ' WHERE ServicePoint__c = :servicePointId';
             }
 
             if (!recordTypeIds.isEmpty()) {
@@ -120,6 +129,14 @@ public inherited sharing class HDT_QR_SelfReadings {
             }
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
+            
+            /*
+            System.debug('utl_isProcessReadingTest: accountId => ' + accountId);
+            System.debug('utl_isProcessReadingTest: servicePointId => ' + servicePointId);
+            System.debug('utl_isProcessReadingTest: recordTypeIds => ' + recordTypeIds);
+            System.debug('utl_isProcessReadingTest: badPhases => ' + badPhases);
+            System.debug('utl_isProcessReadingTest: badStates => ' + badStates);
+            */
             orders = Database.query(query);
 
             //System.debug('HDT_QR_SelfReadings: orders => ' + orders);

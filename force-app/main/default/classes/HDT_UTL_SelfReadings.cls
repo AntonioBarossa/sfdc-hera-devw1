@@ -82,6 +82,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         List<Order> activeOrders = queryHandler.accountOrders(accountId, servicePointId, recordTypeIds, badPhases, badStates);
+        System.debug('activeOrders size: ' + activeOrders.size());
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {
@@ -317,7 +318,11 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         for (HDT_SelfReadingError__mdt conf : configs) {
-            isAutomaticDiscardMap.put(conf.ErrorCode__c, conf.IsAutomaticDiscard__c);
+            if(String.isNotBlank(conf.ErrorCode__c)){
+                isAutomaticDiscardMap.put(conf.ErrorCode__c, conf.IsAutomaticDiscard__c);
+            }else {
+                isAutomaticDiscardMap.put(conf.Description__c, conf.IsAutomaticDiscard__c);
+            }
         }
 
         return isAutomaticDiscardMap;

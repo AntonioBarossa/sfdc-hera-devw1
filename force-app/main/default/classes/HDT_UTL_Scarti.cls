@@ -49,11 +49,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 		
     }
 	*/
+    global HDT_UTL_Scarti(){}//need empty constructor for Dynamically creating instance of this class
 
     public HDT_UTL_Scarti(List<wrts_prcgvr__Activity__c> newActs, List<wrts_prcgvr__Activity__c> oldActs) {
         this.newActivities = newActs;
         this.oldActivities = oldActs;
     }
+
     public void execute(QueueableContext context) {
         system.debug('HDT_UTL_Scarti execute start QueueableContext: ' + context);
         updatePraticaForScartoDocumentaleQueue(newActivities, oldActivities);
@@ -287,6 +289,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
                 system.debug('HDT_UTL_Scarti end ' + activities.get(0));
+                /*
+                if(Schema.Account.SObjectType == Id.valueOf(objectId).getSobjectType()){
+                    activities.get(0).Account__c = objectId;
+                }
+                */
                 return activities.get(0);
             }
             system.debug('HDT_UTL_Scarti end');
@@ -418,12 +425,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 
                         String procField = String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c));
                         String contrField = String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c));
-                        if(String.isBlank(procField) || String.isBlank(procField) ){
-                            continue;
-                        }else if(curRule.ProcessValue__c.equalsIgnoreCase(procField)
-                            && contrField.containsIgnoreCase(curRule.ControllingValue__c)){
+
+                        if(String.isNotBlank(procField) && String.isNotBlank(contrField) 
+                            && curRule.ProcessValue__c?.equalsIgnoreCase(contrField)
+                            && contrField?.containsIgnoreCase(curRule.ControllingValue__c)
+                        ){
                             outcome = true;
-                            break;
+                            break;  
                         }
                     }
                 }
@@ -520,8 +528,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             System.debug('updatePraticaForScartoDocumentale errorStackTraceString: ' + e.getStackTraceString());
         }
     }
-    //////////////////////////////////////////////////////////////////////////
-
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)

@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <c:hdtPaperCampaignGetFile recordId="{!v.recordId}" objectApiName="{!v.sObjectName}" onafterSave="{!c.afterSave}" ></c:hdtPaperCampaignGetFile>
+
+</aura:component>

@@ -638,21 +638,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 	
 	
-	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
+	public static List<Reading__c> createReadingMeterCorrector(Integer amount, Boolean doInsert, String caseId){
 		
 		List<Reading__c> readings = new List<Reading__c>();
 		
 		for (Integer i=0; i<amount; i++){
 			
 			Reading__c reading = new Reading__c();
-			
-			/*
-			//CAMPI USATI PER READINGS NON-GAS
-			
-			reading.ReadingValue1__c = 1;
-			reading.ReadingRegister1__c = 'TST';
-			
-			*/
 			
 			reading.CaseGas__c = caseId;
 			
@@ -686,6 +678,107 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return readings;
 	}
 	
+	//reading meter/corrector
+	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			reading.ReadingValue1__c = 1;
+			reading.ReadingRegister1__c = 'TST';
+			reading.ReadingType1__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber1__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand1__c = 'BD';
+			reading.ReadingUnit1__c = 'UNI';
+			reading.ReadingDigitNumber1__c = 'DN';
+			reading.ReadingDate1__c = Date.today();
+			
+			reading.ReadingValue2__c = 1;
+			reading.ReadingRegister2__c = 'TST';
+			reading.ReadingType2__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber2__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand2__c = 'BD';
+			reading.ReadingUnit2__c = 'UNI';
+			reading.ReadingDigitNumber2__c = 'DN';
+			reading.ReadingDate2__c = Date.today();
+			
+			reading.ReadingValue3__c = 1;
+			reading.ReadingRegister3__c = 'TST';
+			reading.ReadingType3__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber3__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand3__c = 'BD';
+			reading.ReadingUnit3__c = 'UNI';
+			reading.ReadingDigitNumber3__c = 'DN';
+			reading.ReadingDate3__c = Date.today();
+			
+			reading.ReadingValue4__c = 1;
+			reading.ReadingRegister4__c = 'TST';
+			reading.ReadingType4__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber4__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand4__c = 'BD';
+			reading.ReadingUnit4__c = 'UNI';
+			reading.ReadingDigitNumber4__c = 'DN';
+			reading.ReadingDate4__c = Date.today();
+			
+			reading.ReadingValue5__c = 1;
+			reading.ReadingRegister5__c = 'TST';
+			reading.ReadingType5__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber5__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand5__c = 'BD';
+			reading.ReadingUnit5__c = 'UNI';
+			reading.ReadingDigitNumber5__c = 'DN';
+			reading.ReadingDate5__c = Date.today();
+			
+			reading.ReadingValue6__c = 1;
+			reading.ReadingRegister6__c = 'TST';
+			reading.ReadingType6__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber6__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand6__c = 'BD';
+			reading.ReadingUnit6__c = 'UNI';
+			reading.ReadingDigitNumber6__c = 'DN';
+			reading.ReadingDate6__c = Date.today();
+			
+			reading.ReadingValue7__c = 1;
+			reading.ReadingRegister7__c = 'TST';
+			reading.ReadingType7__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber7__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand7__c = 'BD';
+			reading.ReadingUnit7__c = 'UNI';
+			reading.ReadingDigitNumber7__c = 'DN';
+			reading.ReadingDate7__c = Date.today();
+			
+			reading.ReadingValue8__c = 1;
+			reading.ReadingRegister8__c = 'TST';
+			reading.ReadingType8__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber8__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand8__c = 'BD';
+			reading.ReadingUnit8__c = 'UNI';
+			reading.ReadingDigitNumber8__c = 'DN';
+			reading.ReadingDate8__c = Date.today();
+			
+			reading.ReadingValue9__c = 1;
+			reading.ReadingRegister9__c = 'TST';
+			reading.ReadingType9__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber9__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand9__c = 'BD';
+			reading.ReadingUnit9__c = 'UNI';
+			reading.ReadingDigitNumber9__c = 'DN';
+			reading.ReadingDate9__c = Date.today();
+			
+			reading.CaseEle__c = caseId;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
+	}
 	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
@@ -2462,5 +2555,173 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return visitAssigRulesList;
 	}
+	/**
+     * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
+     * @date 28/09/2021
+     * @description createDaysToExpiration Method
+     * @history Sabina Levonja - 28/09/2021– Created method
+     */
+	public static List<CS_DaysToExpiration__c> createDaysToExpiration(Integer amount, Boolean doInsert,String numberOfDays, String type) {
+
+		List<CS_DaysToExpiration__c> expDays = new List<CS_DaysToExpiration__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_DaysToExpiration__c exp = new CS_DaysToExpiration__c(
+				Name = 'Vendita',
+				NumberOfDays__c = numberOfDays,
+				Type__c = type
+			);
+
+			expDays.add(exp);
+		}
+
+		if (doInsert){
+
+			insert expDays;
+		}
+
+		return expDays;
+	}
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAssignmentRule method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<AssignmentRule__c> createAssignmentRule(Integer amount, Boolean doInsert,Double rulePriority, String type) {
+        
+        List<AssignmentRule__c> rules = new List<AssignmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            AssignmentRule__c r = new AssignmentRule__c(
+                Name = 'testAssignmentRule'+i,
+                RulePriority__c = rulePriority,
+        		Type__c = type
+            );
+            
+            rules.add(r);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createVasSupplierTable method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<VasSupplierTable__c> createVasSupplierTable(Integer amount, Boolean doInsert) {
+        
+        List<VasSupplierTable__c> tables = new List<VasSupplierTable__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            VasSupplierTable__c v = new VasSupplierTable__c();
+            
+            tables.add(v);
+        }
+        
+        if (doInsert){
+            
+            insert tables;
+        }
+        
+        return tables;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAsset method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<Asset> createAsset(Integer amount, Boolean doInsert) {
+        
+        List<Asset> assets = new List<Asset>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            Asset a = new Asset(
+                Name = 'testAsset' + i
+            );
+            
+            assets.add(a);
+        }
+        
+        if (doInsert){
+            
+            insert assets;
+        }
+        
+        return assets;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createFieldsTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__FieldsTemplate__c> createFieldsTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__FieldsTemplate__c> templates = new List<wrts_prcgvr__FieldsTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__FieldsTemplate__c template = new wrts_prcgvr__FieldsTemplate__c(
+                Name = 'testFieldTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityTemplate__c> createActivityTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__ActivityTemplate__c> templates = new List<wrts_prcgvr__ActivityTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c(
+                Name = 'testActivityTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
 	
 }
