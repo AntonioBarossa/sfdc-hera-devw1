@@ -81,7 +81,7 @@ public class HDT_SRV_AccountStatementReadingCheckTst {
         
         //TESTING
         HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail TestObject1;
-        TestObject1 = new HDT_WRP_ButtonObjDetail.HDT_WRP_ButtonObjDetail('labelTemp1', 'nameTemp', true, 'typeTemp', 'parametersTemp');
+        TestObject1 = new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail('labelTemp1', 'nameTemp', true, 'typeTemp', 'parametersTemp');
         
         HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail TestObject2;
         TestObject2 = new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail('labelTemp2', 'nameTemp', true, 'typeTemp', 'parametersTemp', 'accesskeyTemp');
