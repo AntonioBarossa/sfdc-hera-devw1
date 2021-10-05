@@ -36,7 +36,7 @@ public with sharing class HDT_TRH_DocumentalActivityTst{
 		                                       LIMIT 1];
 
 		System.assertEquals(cases[0].Id, testDocActivity.CaseId__c, 'Document Activity not Inserted');
-		System.assertNotEquals('', testDocActivity.CaseId__c);
+		System.assertNotEquals('', testDocActivity.CaseId__c, 'Attenzione!');
 		Test.stopTest();
 	}
 }
