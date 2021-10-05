@@ -65,7 +65,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 recordId+'\' LIMIT 1';
             system.debug(query);
             try{
-                genericSObject = (SObject) Database.query(query);
+                genericSObject = (SObject) Database.query(String.escapeSingleQuotes(query));
             }catch(Exception e){
                 throw new HDT_UTL_FormatTextScriptException(
                         'ERRORE DATABASE QUERY, SOQL: # '
@@ -125,17 +125,22 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 system.debug(dataFieldType);
                 switch on dataFieldType{
                     when 'STRING'{
-                        fieldValue= (String) relation.get(fieldOrRelation);
+                        fieldValue = (String) relation.get(fieldOrRelation);
                     }
                     when 'DATETIME'{
-                        fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
+                        fieldValue = ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
                     }
                     when 'DATE'{
-                        DateTime tempDate = (DATE) relation.get(fieldOrRelation);
-                        fieldValue= tempDate.day()+'/'+tempDate.month()+'/'+tempDate.year();
+                        Date d = (DATE) relation.get(fieldOrRelation);
+                        if(d!=null){
+                            DateTime tempDate = DateTime.newInstance(d.year(), d.month(), d.day());
+                            fieldValue = tempDate.format('dd/MM/yyyy');
+                        }else{
+                            fieldValue = 'null';
+                        }
                     }
                     when else {
-                        fieldValue= STRING.valueOf(relation.get(fieldOrRelation));
+                        fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
                     }
                 }
                 

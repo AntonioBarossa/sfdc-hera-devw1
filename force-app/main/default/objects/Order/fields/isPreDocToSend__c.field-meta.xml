@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>isPreDocToSend__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo di tracciamento per identificare se inviare il modulo informativo</description>
+    <externalId>false</externalId>
+    <label>Modulo da inviare</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+    
+</CustomField>

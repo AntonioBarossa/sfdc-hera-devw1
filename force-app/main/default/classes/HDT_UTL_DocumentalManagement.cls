@@ -240,7 +240,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
+					// l'email sull'account potrebbe non essere quella inserita nella modale dell'EC, che non tracciamo da nessuna parte.
+					//documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 			}
@@ -260,7 +261,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			switch on sObjName {
 				when 'Case' {
 					documentalActivity.CaseId__c = (Id) requestId;
-					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					//System.debug('### Account Id: '+processRecord.get('AccountId'));
 				}
 				when 'Order' {
 					documentalActivity.OrderId__c = (Id) requestId;
@@ -270,7 +271,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
-			documentalActivity.ErrorDescription__c = errorMessage;
+			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
 
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 		} catch (Exception ex) {

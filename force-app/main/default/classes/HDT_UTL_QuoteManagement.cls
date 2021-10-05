@@ -2,7 +2,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 
     @InvocableMethod
     public static List<QuoteManagement__c> addRequiredInformation(List<HDT_UTL_FlowInputs> inputs){
-		System.debug('dentro classe' + inputs);
+		//System.debug('dentro classe' + inputs);
 		
 		List<QuoteManagement__c> toReturnQuoteManagement = new List<QuoteManagement__c>();
 		QuoteManagement__c quoteManagement = new QuoteManagement__c();
@@ -31,14 +31,19 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 	
 	private static QuoteManagement__c menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
 
+		//@frpanico unused variables seller, supplyType fix
+
+		string seller;
+		string supplyType;
+
 		String localDispatcher 		= inputs[0].localDispatcher; 
-		String seller 				= inputs[0].seller;
+		seller 						= inputs[0].seller;
 		String voltage 				= inputs[0].voltage;
 		Decimal powerAvailable 		= inputs[0].powerAvailable;
 		Decimal powerCommitted 		= inputs[0].powerCommitted;
 		String connectionType 		= inputs[0].connectionType;
 		Decimal powerRequested 		= inputs[0].powerRequested;
-		String supplyType 			= inputs[0].supplyType;
+		supplyType 					= inputs[0].supplyType;
 		String phaseType 			= inputs[0].phaseType;
 		String energyUseType		= inputs[0].energyUseType;
 		String displacementDistance	= inputs[0].displacementDistance;
@@ -97,6 +102,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		+'AND (PhaseVoltage__c = \'' + voltagePhase + '\' OR PhaseVoltage__c = null)';
 		String fields = 'Id,CausalCode__c, QuoteType__c,OperationCode__c';
 		
+		
 		return HDT_QR_QuoteManagement.queryString(fields, conditions);
 
 	}
@@ -104,7 +110,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 
 	public static boolean checkLocalDispatcher(String localDispatcher){
 		if(localDispatcher != null && String.isNotBlank(localDispatcher)){
-			Integer dispatcherList = [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: localDispatcher];
+			Integer dispatcherList = [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: localDispatcher WITH SECURITY_ENFORCED];
 			if(dispatcherList != null && dispatcherList > 0){
 				return true;
 			}else{

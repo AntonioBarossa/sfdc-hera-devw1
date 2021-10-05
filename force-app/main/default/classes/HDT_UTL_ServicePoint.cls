@@ -1,7 +1,15 @@
+/**
+ * @author Luca Molino (luca.molino@engdb.com.br)
+ * @date 23/03/2021
+ * @description HDT_UTL_ServicePoint Class
+ * @history Luca Molino – 23/03/2021 – Created Class
+ */
 public with sharing class HDT_UTL_ServicePoint {
 
     private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
+    private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
     public HDT_UTL_ServicePoint() {
 
     }
@@ -308,6 +316,13 @@ public with sharing class HDT_UTL_ServicePoint {
                     spNew.SupplyisAddressVerified__c = true;
                 }
 
+                if(mapRes.get('BP') != null){
+                    List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
+                    if (!accBp.isEmpty()) {
+                        spNew.Account__c = accBp[0].Id;
+                    }
+                }
+
 
 		system.debug('spNew*****************' + spNew);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
@@ -390,8 +405,32 @@ public with sharing class HDT_UTL_ServicePoint {
     return result;
     }
 	
-	
-	
+	public static void updateServicePointImplantAndSupplytype(Set<String> servicePointIdListSet){
+        List<String> listServiceId = new List<String>();
+        listServiceId.addAll(servicePointIdListSet);
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordByIdList(listServiceId,'Id,SupplyTypeTemp__c,ImplantTypeTemp__c');
+        for(servicePoint__c sr : servicePointList){
+            sr.supplytype__c = sr.supplytypeTemp__c;
+            sr.implantType__c = sr.implanttypetemp__c;
+        }
+        serviceSrv.updateRecordRemiCode(servicePointList);
+    }
+    public static void blockblankonfield(List<ServicePoint__c> oldList , List<ServicePoint__c> newList){
+        Map<String,ServicePoint__c> oldMap = new Map<String,Servicepoint__c>();
+        for(ServicePoint__c srvO : oldList){
+            oldMap.put(srvO.id,srvO);
+        }
+        for(ServicePoint__c srv : newList){
+            if(srv.SupplyType__c == null || srv.ImplantType__c == null){ 
+                if(srv.SupplyType__c == null && oldMap.get(srv.id).supplyType__c != null){
+                    srv.SupplyType__c = oldMap.get(srv.id).supplyType__c;
+                }
+                if(srv.ImplantType__c == null && oldMap.get(srv.id).ImplantType__c != null){
+                    srv.ImplantType__c = oldMap.get(srv.id).ImplantType__c;
+                }
+            }
+        }
+    }
 	@AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject mapFieldsAddressWithWrapObject(Map<String,String> mapObject,Map<String,Boolean> mapBooleanObject,Map<String,String> mapApiName){
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject START');

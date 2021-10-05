@@ -10,7 +10,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
 
         System.debug('# Filter -> ' + filter);
 
-        myQuery = 'SELECT ' + setAsKey + ',' + searchBy + ' ';
+        myQuery = 'SELECT ' + String.escapeSingleQuotes(setAsKey)  + ',' + String.escapeSingleQuotes(searchBy) + ' ';
 
         if(enableDetails){
             myQuery += ',' + String.join(detailFields, ',') + ' '; 
@@ -45,7 +45,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
         }
         
         if(!String.isEmpty(searchBy) && !String.isEmpty(searchTerm)){
-            statementList.add(searchBy + ' LIKE  \'%' + searchTerm + '%\'');
+            statementList.add(String.escapeSingleQuotes(searchBy) + ' LIKE  \'%' + String.escapeSingleQuotes(searchTerm) + '%\'');
         }        
         
         if(statementList.size()>0){

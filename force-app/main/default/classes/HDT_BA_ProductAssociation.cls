@@ -25,49 +25,20 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
                 queryString += 'FROM Product2 ';
                 queryString += 'WHERE Id IN :idList';
             }
-            //when 'all' {
-            //    // 2 - RUN BATCH FOR ALL PRODUCT2
-            //    List<String> familyList = HDT_UTL_ProductAssociation.getFamilyList();
-            //    queryString += 'FROM Product2 ';
-            //    queryString += 'WHERE Status__c=\'In Sviluppo\' AND Family IN :familyList';
-            //}
             when 'filter' {
                 // 3 - RUN BATCH FOR PRODUCT2 TO FILTER WITH WHERE CONDITION
                 queryString += filterString;
             }
+            when else {
+                queryString = null;
+            }
         }
 
-        System.debug('>>> QUERY: ' + queryString);
+        System.debug(logginglevel.DEBUG, '>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 
     public void execute(Database.BatchableContext bc, List<Product2> chunkList){
-
-        /*List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
-        SBQQ__ProductOption__c newRecord;
-        for(Product2 product : chunkList){
-            newRecord = new SBQQ__ProductOption__c();
-            newRecord = productOptionToClone.clone(false, true, false, false);
-            newRecord.SBQQ__ConfiguredSKU__c = product.Id;
-            productOptionList.add(newRecord);
-        }
-        System.debug('>>> record to insert: ' + productOptionList.size());
-
-        HDT_WRP_ProductAssociation.HDT_WRP_InsertResult insertResult = new HDT_WRP_ProductAssociation.HDT_WRP_InsertResult();
-        
-        if(productOptionList.size() > 0){
-            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
-            errorData = HDT_SRV_ProductAssociation.databaseInsert(productOptionList, errorData);
-
-            if(errorData.size() > 0){
-                insertResult.success = false;
-                insertResult.message = 'Error during product option insert';
-                errorCounter += errorData.size();
-            } else {
-                insertResult.success = true;
-                //insertResult.message = 'No product option record found';
-            }
-        }*/
 
         List<String> recordList = new List<String>();
         for(Product2 product : chunkList){

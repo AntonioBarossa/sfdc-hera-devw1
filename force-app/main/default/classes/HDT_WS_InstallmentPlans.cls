@@ -1,4 +1,4 @@
-global inherited sharing class HDT_WS_InstallmentPlans{
+public inherited sharing class HDT_WS_InstallmentPlans{
 
     //classe non più utilizzata
     

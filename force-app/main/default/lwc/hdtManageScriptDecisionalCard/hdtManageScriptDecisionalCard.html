@@ -48,9 +48,11 @@
                             variant="success">
                         </lightning-button>
                     </template>
-                    <lightning-button icon-name="utility:check" label="Salva E Chiudi" disabled variant="brand"
-                        onclick={saveRecLink} data-id="scriptModalBt">
-                    </lightning-button>
+                    <template if:true={isLastPage}>
+                        <lightning-button icon-name="utility:check" label="Chiudi" variant="brand"
+                            onclick={saveRecLink} data-id="scriptModalBt">
+                        </lightning-button>
+                    </template>
                 </div>
             </template>
         </div>

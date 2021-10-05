@@ -24,7 +24,7 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
+    public void execute(Database.BatchableContext bc, List<CampaignMember> scope) {
         List<PaperCommunication__C> ppWrapList = new List<PaperCommunication__C>();
         for(CampaignMember cm : scope) {
             PaperCommunication__C pc = new PaperCommunication__c();
@@ -42,6 +42,6 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
     }
 
     public void finish(Database.BatchableContext bc){
-
+        System.debug('FinishRequiredForBatch');
     }
 }

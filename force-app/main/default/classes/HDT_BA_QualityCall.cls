@@ -6,7 +6,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -49,6 +49,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>> ordersAlreadyAssigned: ' + ordersAlreadyAssigned);
         system.debug('>> ordersAlreadyAssigned size: ' + ordersAlreadyAssigned.size());
 
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
+        String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
+
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
@@ -57,7 +61,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if (ord.ActivityQualityToBeCanceled__c) {
+                if (ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c)) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 } else {
@@ -83,7 +87,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                                 Account__c = ord.AccountId,
                                 Type__c = 'Quality Call',
                                 Status__c = 'Creata',
-                                OwnerId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id
+                                OwnerId = comfortQualityQueId,
+                                ActivatedDate__c = ord.ActivatedDate,
+                                LoginChannel__c = ord.LoginChannel__c
                         );
         
                         if (ord.QualityCallUnique__c) {

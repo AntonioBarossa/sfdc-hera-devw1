@@ -20,12 +20,19 @@ global with sharing class HDT_WS_SelfReadings {
                 responseWrap.readingId = outcomeResponse.readingId;
                 responseWrap.integrationId = requestWrap.integrationId;
             } catch (Exception e) {
+                /*
+                System.debug('Exception (ERROR 400): ' + e.getMessage());
+                System.debug('STACK TRACE STRING: ' + e.getStackTraceString());
+                */
                 response.statusCode = 400;
                 responseWrap.outcome = 'KO';
                 responseWrap.outcomeDescription = e.getMessage();
             }
         } catch (Exception e) {
-            System.debug('Exception: ' + e.getMessage());
+            /*
+            System.debug('Exception (ERROR 500): ' + e.getMessage());
+            System.debug('STACK TRACE STRING: ' + e.getStackTraceString());
+            */
             response.statusCode = 500;
             responseWrap.outcome = 'KO';
             responseWrap.outcomeDescription = 'Error while parsing JSON body: ' + e.getMessage();

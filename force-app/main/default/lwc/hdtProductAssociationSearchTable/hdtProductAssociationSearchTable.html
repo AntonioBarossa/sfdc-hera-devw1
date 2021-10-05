@@ -6,6 +6,7 @@
             modal-body={modalObj.body}
             operation={modalObj.operation}
             onconfirm={modalResponse}
+            enforce-confirmation={enforceConfirmation}
         ></c-hdt-confirmation-modal>
     </template>
 
@@ -39,6 +40,12 @@
                         onsubmit={handleSubmit}
                     >
                         <div class="slds-grid slds-wrap slds-m-top_small slds-m-bottom_small">
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="slds-m-around_x-small">
+                                    <!--<lightning-input-field field-name="Name" ></lightning-input-field>-->
+                                    <lightning-input name="Name" type="text" label="Nome Prodotto" variant="label-inline" onchange={onChangeHandler} ></lightning-input>
+                                </div>
+                            </div>
                             <template iterator:it={fieldsList}>
                                 <div key={it.value} class="slds-col slds-size_1-of-4">
                                     <div class="slds-m-around_x-small">
@@ -46,21 +53,33 @@
                                     </div>
                                 </div>
                             </template>
+                            <!--<div class="slds-col slds-size_1-of-4">
+                                <div class="slds-m-around_x-small">
+                                    <lightning-combobox
+                                        name="Status__c"
+                                        label="Stato"
+                                        value={value}
+                                        variant="label-inline"
+                                        options={options}
+                                        onchange={onChangeHandler}
+                                    ></lightning-combobox>
+                                </div>
+                            </div>-->
                         </div>
 
-                        <div class="slds-grid slds-wrap">
+                        <div class="slds-grid slds-wrap slds-grid_align-center">
                             <!-- Filter Button -->
-                            <div class="slds-col slds-size_2-of-12 slds-m-left_small">
+                            <div class="slds-col slds-size_1-of-12 slds-m-left_small">
                                 <div class="slds-m-bottom_small">
                                     <lightning-button label="Applica filtro" name="applyFilter" onclick={applyFilter} variant="neutral" icon-name="utility:search"></lightning-button>
                                 </div>
                             </div>
                             <!-- counter -->
-                            <div class="slds-col slds-size_2-of-12">
+                            <div class="slds-col slds-size_1-of-12">
                               <div if:true={showResultTable} class="slds-text-heading_small slds-border_bottom" >{counterText}{counter}</div>
                             </div>
                             <!-- Pagination buttons -->
-                            <div if:true={showPagination} class="slds-col slds-size_4-of-12 slds-m-left_large">
+                            <div if:true={showPagination} class="slds-col slds-size_2-of-12 slds-m-left_large">
                                 <lightning-button-group>
                                     <template if:true={hasPrev}>
                                             <lightning-button icon-name="utility:jump_to_left"

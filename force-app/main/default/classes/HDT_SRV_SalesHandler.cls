@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
 
-                                if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                     Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                     Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
@@ -123,9 +123,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                     }
                                     
                                 }else{
-                                    if(mapRequestFields.get('TIPO_INTERVENTO')=='Lavoro Semplice'){
-                                        ord.QuotationType__c='Rapido';
-                                        //ord.ValidityDateEstimate__c=Date.today().addDays(5);//bug 466
+                                    switch on mapRequestFields.get('TIPO_INTERVENTO') {
+                                        when 'Lavoro Semplice' {
+                                            ord.QuotationType__c='Rapido';
+                                        }
+                                        when 'A Preventivo'{
+                                            ord.QuotationType__c='Analitico';
+                                        }
                                     }
                                 }
 
@@ -181,6 +185,21 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                
+                                //Start HRAWRM-657 21/09/2021
+                                List<Id> listRecType = new List<Id>();
+                                Id rtTemporaryNewActivation        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId();
+                                Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
+                                listRecType.add(rtTemporaryNewActivation);
+                                listRecType.add(rtConnectionwithActivation);
+                                if (listRecType.contains(ord.recordtypeId )   ) {
+                                    ord.ServicePointCode__c = mapRequestFields.get('POD');
+                                    ord.ServicePoint__r.Name= mapRequestFields.get('POD');
+                                    ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
+                                }
+                                //End HRAWRM-657 21/09/2021
+                                
+                                
                                 switch on mapRequestFields.get('COD_FLUSSO'){
                                     when 'E150F'{
                                         utlTechData.handleE150Flow(mapRequestFields, ord);
@@ -231,6 +250,13 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 ord.CancellationHerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                Datetime nowDate = Datetime.now();
+                                String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                if(mapRequestFields.get('ANNOTAZIONI_ANN') != null && mapRequestFields.get('ANNOTAZIONI_ANN') != '')
+                                {
+                                    ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                }
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
@@ -284,10 +310,23 @@ public with sharing class HDT_SRV_SalesHandler {
 
                                 Boolean redirectPreventivo = false;
                                 switch on ordRetrieved.ProcessType__c{
-                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                    when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
                                         redirectPreventivo=true;
                                     }
                                 }
+                                //Start HRAWRM-657 21/09/2021
+                                List<Id> listRecordType = new List<Id>();
+                                Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
+                                Id rtChangeOffer        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId();
+                                Id rtVultureWithSwitch  = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
+                                listRecordType.add(rtSwitchIn);
+                                listRecordType.add(rtChangeOffer);
+                                listRecordType.add(rtVultureWithSwitch);
+
+                                if (!listRecordType.contains(ord.recordtypeId )   ) {
+                                    ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
+                                }
+                                //End HRAWRM-657 21/09/2021
 
                                 if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
@@ -448,20 +487,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         
                     }
                     else {
-                     
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
@@ -481,20 +507,100 @@ public with sharing class HDT_SRV_SalesHandler {
                         RestContext.response.statusCode = 200;
                     }
                     else {
-                       
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_7'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_6'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_3'{
+                System.debug('SIE34');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_2'{
+                System.debug('SIE34_2');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_2'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_1'{
+                System.debug('SIE34_1');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_1'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
@@ -526,7 +632,20 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+    private static void mapError(String msg, HDT_WRP_MrrResponse.HDT_WRP_Field responseField,HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject,HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem){
+        responseField.fieldType = 'TEXT';
+        responseField.name = 'ESITO';
+        responseField.value = 'KO';
 
+        responseFieldError.fieldType = 'TEXT';
+        responseFieldError.name = 'ERROR_MESSAGE';
+        responseFieldError.value = msg;
+
+        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+        mrrResponseItem.objects.add(responseObject);
+
+        RestContext.response.statusCode = 400;
+    }
     private static void updateServicePoint(ServicePoint__c sp){
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
