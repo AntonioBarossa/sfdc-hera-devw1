@@ -47,6 +47,7 @@ public class HDT_UTL_NewsNotificationCenterTst {
         Test.startTest();
 
         String result = HDT_UTL_NewsNotificationCenter.sendNotification(article);
+
         System.assertEquals(null, result, 'result != null');
 
         Test.stopTest();
@@ -61,11 +62,55 @@ public class HDT_UTL_NewsNotificationCenterTst {
         Test.startTest();
 
         String result = HDT_UTL_NewsNotificationCenter.sendNotification(article);
+
         System.assertEquals(null, result, 'result != null');
 
         Test.stopTest();
         
     }
 
+    @IsTest
+    static void getArticleRecordType(){
+        
+        Test.startTest();
+        
+        HDT_QR_Knowledge k = new HDT_QR_Knowledge();
+        List<RecordType> rtList = k.getArticleRecordType();
+
+        System.assert(rtList.size() > 0, 'rtList.size() = 0 or rtList = null');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void getArticleToClone(){
+
+        Knowledge__kav article = [SELECT Id FROM Knowledge__kav WITH SECURITY_ENFORCED LIMIT 1];
+        
+        Test.startTest();
+        
+        HDT_QR_Knowledge k = new HDT_QR_Knowledge();
+        Knowledge__kav returnedArticle = k.getArticleToClone(article.Id);
+
+        System.assertNotEquals(null, returnedArticle, 'returnedArticle = null');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void getArticleCreated(){
+        
+        Test.startTest();
+
+        HDT_QR_Knowledge k = new HDT_QR_Knowledge();
+        Knowledge__kav returnedArticle = k.getArticleCreated('Test Original Title', 'original');
+
+        System.assertNotEquals(null, returnedArticle, 'returnedArticle = null');
+
+        Test.stopTest();
+        
+    }
 
 }
