@@ -5,7 +5,6 @@
 * @history Lorenzo – 16/07/2021 – created class
 */
 public with sharing class HDT_UTL_Account {
-    @auraEnabled
     private static Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
     private static Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
 
