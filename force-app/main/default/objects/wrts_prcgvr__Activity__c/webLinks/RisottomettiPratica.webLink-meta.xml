@@ -9,5 +9,8 @@
     <masterLabel>Risottometti Pratica</masterLabel>
     <openType>sidebar</openType>
     <protected>false</protected>
-    <url>/flow/HDT_FL_Risottometti_Pratica?activityId={!wrts_prcgvr__Activity__c.Id}</url>
+    <url>/flow/HDT_FL_Risottometti_Pratica?activityId={!wrts_prcgvr__Activity__c.Id}
+&amp;retURL=IF(ISBLANK({!wrts_prcgvr__Activity__c.Order__c}), /lightning/r/Case/{!wrts_prcgvr__Activity__c.Case__c}/view,
+        IF(ISBLANK({!wrts_prcgvr__Activity__c.Case__c}), /lightning/r/Order/{!wrts_prcgvr__Activity__c.Order__c}/view, null)
+        )</url>
 </WebLink>

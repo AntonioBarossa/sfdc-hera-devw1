@@ -53,11 +53,12 @@ public inherited sharing class HDT_SRV_Reimbursement {
 
         pretty = paymentsUtl.createBodyRequest(inputList);
 
-        System.debug('SRV_Reimbursement bodyRequest--> '+pretty);
+        // System.debug('SRV_Reimbursement bodyRequest--> '+pretty);
 
         result = reimbursementWs.calloutAccountBalance(pretty);
 
-        if(result == 'N'){
+        //if result == 'Y' return true
+        if(result == 'Y'){
 
             flag = true;
 
