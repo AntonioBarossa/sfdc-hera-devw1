@@ -13,7 +13,7 @@ public with sharing class HDT_QBL_SIE34CallService implements Queueable,Database
         this.contentVersionIds  =contentVersionIds  ;
     }
     public void execute(QueueableContext context) {
-        System.debug('HDT_QBL_SIE34CallService.execute');
+        //System.debug('HDT_QBL_SIE34CallService.execute');
         HDT_WS_SIE34.callService(runId,status,fileType,errorMessage,contentVersionIds);
         
     }

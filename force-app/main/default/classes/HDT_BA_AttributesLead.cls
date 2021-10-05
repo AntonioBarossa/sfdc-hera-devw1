@@ -20,7 +20,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 		return Database.getQueryLocator(query);
 	}
 	
-	public void execute(Database.BatchableContext BC, List<Lead> scope) {
+	public void execute(Database.BatchableContext bc, List<Lead> scope) {
 		Map<String, Lead> mapLeadByEmail       = new Map<String, Lead>();
 		Map<String, Contact> mapContactByEmail = new Map<String, Contact>();
 		List<Contact> listContacts             = new List<Contact>();
