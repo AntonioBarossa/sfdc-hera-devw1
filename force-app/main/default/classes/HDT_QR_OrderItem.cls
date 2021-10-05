@@ -32,7 +32,6 @@ public inherited sharing class HDT_QR_OrderItem {
 
     public List<OrderItem> getRecordsByOrderIdFilteredFamilyBonus(List<Id> listOrderId){
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
-        famils.add('Promozione');
         return [
             SELECT
             ServicePoint__c,

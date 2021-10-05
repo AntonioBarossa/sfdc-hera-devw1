@@ -57,6 +57,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
         private String dinamicFieldValue(String fieldPath, SObject relation){
             String retValue = getFieldValue(fieldPath, relation);
+            //retValue = fieldPath.equalsIgnoreCase('DurationVAS__c')? '999999' : retValue;
             return retValue=='null'? '' : retValue;
         }
     }
