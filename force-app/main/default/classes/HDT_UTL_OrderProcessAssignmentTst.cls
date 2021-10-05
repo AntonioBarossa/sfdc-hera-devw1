@@ -4,6 +4,10 @@
  * @description HDT_UTL_OrderProcessAssignment Test Classes
  * @history valere - 20/09/2021– Created Class
  */
+
+
+
+
 @isTest
 private class HDT_UTL_OrderProcessAssignmentTst {
 
@@ -22,7 +26,8 @@ private class HDT_UTL_OrderProcessAssignmentTst {
       'plugPresence'=>'NO',
       'powerRequested'=>2,
       'recordTypeId'=>recordTypeId,
-      'commoditySector'=>'Gas'
+      'commoditySector'=>'Gas',
+      'supplyCity'=>'supplyCity'
     });
    
 
@@ -67,27 +72,57 @@ private class HDT_UTL_OrderProcessAssignmentTst {
       'SBQQ__Quote'=>quotes[0].id,
       'accountId'=>accountList[0].id
     });
-  }
-    
-  @isTest
-  static void testInitProcesses() {
-      List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processes = HDT_UTL_OrderProcessAssignment.initProcesses();
-      System.assertEquals(23, processes.size(),'we created 23  HDT_WRP_Process');
-      System.assertNotEquals(2, processes.size(),'we have created more than two HDT_WRP_Process');
-  }
 
+
+    List<MatriceRemiCode__c> remiList= HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompagny(1,true, new Map<String,Object> {
+      'salesCompany'=>'salesCompany',
+      'comune'=>'supplyCity'
+    });
+
+
+    List<MatriceRemiCode__c> secondRemiList= HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompagny(1,true, new Map<String,Object> {
+      'salesCompany'=>null,
+      'comune'=>'supplyCity'
+    });
+
+
+    List<Service26Config__c> serviceList= HDT_UTL_DataFactoryTst.createService26Config(1,true);
+
+
+    
+    // create Profile and User
+
+    Profile p = [SELECT Id FROM Profile LIMIT 1];
+
+	
+    User user = HDT_UTL_DataFactoryTst.createInternalUser(p.id,true);
+
+           
+    //Create Custom setting 
+	
+    HDT_Process_Sale_Partner_Community__c csobj= HDT_UTL_DataFactoryTst.createSalePartnerCommunity(user,true);
+
+  }
+  
   @isTest 
   static void testGetAvailableProcessesWithDevelopperNameGas() {
-	  Order oneOrder = [select id,Name,AccountId,MarketOrigin__c,PowerRequested__c,PowerCommitted__c,IsWinback__c,
-                      ServicePoint__r.MeterStatus__c,ServicePoint__r.Account__c, ServicePoint__r.PlugPresence__c,ServicePoint__r.ServicePointCode__c,
-                      SBQQ__Quote__r.AllowChangeUse__c,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.RecordType.DeveloperName,SBQQ__Quote__r.ContractReference__c
-                      FROM Order 
-                      WHERE PowerRequested__c=10];
+
+    User user=[SELECT ProfileID FROM User WHERE Email='crmuser@test.com' LIMIT 1];
       
-    List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processes = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(oneOrder);
-    System.assertEquals(0, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
-    System.assertNotEquals(2, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
-  }
+    system.runAs(user){
+      Order oneOrder = [select id,Name,AccountId,MarketOrigin__c,PowerRequested__c,PowerCommitted__c,IsWinback__c,VoltageLevel__c,PowerAvailable__c,
+      ServicePoint__r.MeterStatus__c,ServicePoint__r.Account__c, ServicePoint__r.PlugPresence__c,ServicePoint__r.ServicePointCode__c,
+      SBQQ__Quote__r.AllowChangeUse__c,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.RecordType.DeveloperName,SBQQ__Quote__r.ContractReference__c,
+      ServicePoint__r.isReseller__c
+      FROM Order 
+      WHERE PowerRequested__c=10];
+
+        List<HDT_UTL_OrderProcessAssignment.HDT_WRP_Process> processes = HDT_UTL_OrderProcessAssignment.getAvailableProcesses(oneOrder);
+        System.assertEquals(0, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
+        System.assertNotEquals(2, processes.size(),'there is no process available because there is no order that does not have a Ripristinatorio');
+
+    }
+	  }
 
   @isTest 
   static void switchInRipristinatorioAction() {
@@ -108,9 +143,22 @@ private class HDT_UTL_OrderProcessAssignmentTst {
   static void testFieldsTransition() {     
     Sale__c sale = [SELECT Id FROM Sale__c WHERE Name='testSaleName0' LIMIT 1];
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
-    System.assertEquals('Remi', field,' there is no ServicePoint linked to a sale');
-    System.assertEquals('code', field,' there is no ServicePoint linked to a sale');
+  
+    System.assertEquals('Subentro', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
+    System.assertNotEquals('code', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
   }
+
+  
+
+  @isTest 
+  static void testGetFamilySconto(){   
+    Set<String> FamilySconto=HDT_UTL_OrderProcessAssignment.getFamilySconto();
+
+    System.assertEquals(true, FamilySconto.contains('Bonus Eur/Giorno'),' there is no ServicePoint linked to a sale');
+    System.assertNotEquals(false, FamilySconto.contains('Bonus Eur/Giorno'),' there is no ServicePoint linked to a sale');
+  
+  }
+
 
 
 }

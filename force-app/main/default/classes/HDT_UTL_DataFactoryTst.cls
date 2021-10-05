@@ -1458,6 +1458,36 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return saleServiceItemList;
 	}
 
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<Service26Config__c> createService26Config(Integer amount, Boolean doInsert){
+
+		List<Service26Config__c> serviceList=new List<Service26Config__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  Service26Config__c service=new Service26Config__c();
+	  
+		  //service.Name='test';
+		  service.ProductFamily__c='Bonus Eur/Giorno';
+	  
+	  
+		  serviceList.add(service);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert serviceList;
+		}
+	  
+		return serviceList;
+	  } 
+	  
+
+
 	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
 		List<DocumentalPayloadAdministration__c> lstSobj=new List<DocumentalPayloadAdministration__c>();
 		DocumentalPayloadAdministration__c sobj=new DocumentalPayloadAdministration__c();
@@ -2213,6 +2243,37 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return matriceRemiCode;
 	}
 
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompagny(Integer amount, Boolean doInsert,Map<String,Object> params){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+	  
+		  mRemiCode.RemiCode__c='test';
+		  mRemiCode.SalesCompany__c=(String)params.get('salesCompany');
+		  mRemiCode.Comune__c=(String)params.get('comune');
+	  
+	  
+		  matriceRemiCode.add(mRemiCode);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert matriceRemiCode;
+		}
+	  
+		return matriceRemiCode;
+	  }
+
+
 	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
 
 		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
@@ -2415,6 +2476,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			servPoint.PowerRequested__c =(Integer)params.get('powerRequested');
 			servPoint.CommoditySector__c = (String)params.get('commoditySector');
 			servPoint.RecordTypeId=(String)params.get('recordTypeId');
+			servPoint.SupplyCity__c=(String)params.get('supplyCity');
 			servPointList.add(servPoint);
 		}
 
@@ -2569,6 +2631,22 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return quoteList;
+	}
+
+	
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static HDT_Process_Sale_Partner_Community__c createSalePartnerCommunity(User user, Boolean doInsert){
+
+		HDT_Process_Sale_Partner_Community__c salePartnerCommunity=new HDT_Process_Sale_Partner_Community__c(Name='Community',SetupOwnerId = user.ProfileID);
+		if (doInsert){
+
+			insert salePartnerCommunity;
+		}
+		return salePartnerCommunity;
 	}
 
 }
