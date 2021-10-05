@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>SendMode3__c</field>
-        <value xsi:type="xsd:string">Stampa Cartacea</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SignMode__c</field>

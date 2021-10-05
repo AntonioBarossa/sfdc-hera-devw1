@@ -16,7 +16,7 @@ import IMPLANT_TYPE from '@salesforce/schema/Order.ImplantType__c';
 import checkLogin from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkLogin';
 import checkContractualEnvelope from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
 import checkListenVO from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkListenVO';
-import checkFinalConfirmationOfTheContract from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkFinalConfirmationOfTheContract';
+import checkFinalConfirmationOfTheContract from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
 import getOrderSiblings from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblings';
 import getOrderSiblingsDocumentalActivity from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblingsDocumentalActivity';
 import downloadFile from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.downloadDocument'
@@ -51,7 +51,8 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
         let username = this.template.querySelector('[data-id = "usernameField"]').value;
         let password = this.template.querySelector('[data-id = "passwordField"]').value;
-
+        this.username = this.template.querySelector('[data-id = "usernameField"]').value;
+        this.password = this.template.querySelector('[data-id = "passwordField"]').value;
        // console.log('prova  ' + username);
        // console.log('test  ' + password);
 
@@ -87,6 +88,13 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         link.download = `${fileName}.pdf`
         link.click();
       }
+      downloadZip(base64String, fileName) {
+        const source = `data:application/pdf;base64,${base64String}`;
+        const link = document.createElement("a");
+        link.href = source;
+        link.download = `${fileName}.zip`
+        link.click();
+      }
      /*  onClickDownloadPdf(){
         let base64String = 'base64';
         this.downloadPdf(base64String,'UFJPVkFET1dOTE9BRFBST1ZB');
@@ -96,11 +104,32 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
     handleContractualEnvelope(event) {
 
 
-        downloadFile({orderId : this.orderId}).then(res =>{
-        
+        downloadFile({orderId : this.orderId,username : this.username,password : this.password}).then(res =>{
+            console.log('********:' + JSON.stringify(res));
+            if(res.res == null || res.res == undefined){
             if(this.name = 'onClickDownloadPdf'){
                // let base64String = 'UFJPVkFET1dOTE9BRFBST1ZB';
-            this.downloadPdf(res.base64,'Plico');
+                if(res.type == 'zip'){
+                    this.downloadZip(res.base64,'Plico');
+                }
+                else if(res.type == 'pdf'){
+                    this.downloadPdf(res.base64,'Plico');
+                }
+                else{
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Errore',
+                        message: res.errorMessage,
+                        variant: 'error'
+                    }));
+                }
+            }   
+            }
+            else{
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Si è verificato un errore!',
+                    variant: 'error'
+                }));
             }
         
         });
@@ -180,11 +209,32 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
         checkFinalConfirmationOfTheContract({
 
-            orderId: this.orderId
+            orderId: this.orderId,
+            username: this.username,
+            password: this.password
 
         }).then(result => {
-
-            this.orderId = result;
+            if(result == 'success'){
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Contratto Validato',
+                    variant: 'success'
+                }));
+            }else if(result == 'Validato'){
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Contratto già validato in precedenza',
+                    variant: 'warning'
+                }));
+            }
+            else{
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Si è verificato un errore!',
+                    variant: 'error'
+                }));
+            }
+           /* this.orderId = result;
             if (result.ParentOrder__c != null) {
                 this.parentOrderId = result.ParentOrder__c;
                 getOrderSiblings({
@@ -196,7 +246,7 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                 });
             }
             console.log('Il Padre' + result.ParentOrder__c);
-            console.log(JSON.stringify(result));
+            console.log(JSON.stringify(result));*/
         }).catch(err => {
             console.log(JSON.stringify(err));
         });

@@ -31,13 +31,13 @@ public class HDT_UTL_FormatTextScriptTest {
         string formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
         system.debug(formattedText);
         system.debug(configChild.name+' '+config.Name);
-        system.assertEquals(formattedText.replaceAll('<[^>]+>',''),configChild.name+' '+config.Name);
+        system.assertEquals(formattedText.replaceAll('<[^>]+>',''),configChild.name+' '+config.Name, 'Data is not formatted as expected');
         inp.textScript='{{ LastModifiedDate }} {{ StartRecording__c }}';
         formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];        
-    	system.assertEquals((DateTime.now().format('dd/MM/yyyy')+' '+configChild.StartRecording__c).replaceAll('\\p{C}', '?'), formattedText.replaceAll('\\p{C}', '?').replaceAll('<[^>]+>',''));
+    	system.assertEquals((DateTime.now().format('dd/MM/yyyy')+' '+configChild.StartRecording__c).replaceAll('\\p{C}', '?'), formattedText.replaceAll('\\p{C}', '?').replaceAll('<[^>]+>',''), 'Data is not formatted as expected');
         inp.textScript='{{owner.Name}}';
         formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];        
-        system.assertEquals(formattedText,'<b>*valore mancante*</b>');
+        system.assertEquals(formattedText,'<b>*valore mancante*</b>', 'Data is not formatted as expected');
         system.debug('CPU TIME: '+Limits.getCpuTime());
     }
 
@@ -51,10 +51,10 @@ public class HDT_UTL_FormatTextScriptTest {
         inp.recordId=configChild.id;
         inp.textScript='test';
         String formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
-        system.assertEquals(formattedText, 'test');
+        system.assertEquals(formattedText, 'test', 'Data is not get right');
         inp.textScript='{{globaltag.today}}';
         formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
-		system.assertEquals(formattedText.replaceAll('<[^>]+>',''), DateTime.now().format('dd/MM/yyyy'));
+		system.assertEquals(formattedText.replaceAll('<[^>]+>',''), DateTime.now().format('dd/MM/yyyy'), 'Data is not formatted as expected');
         system.debug('CPU TIME: '+Limits.getCpuTime());
 
     }
@@ -71,7 +71,7 @@ public class HDT_UTL_FormatTextScriptTest {
             inp.textScript='{{ test }}';
         	String formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
         }catch(Exception e){
-            system.assertEquals(e.getTypeName(), 'HDT_UTL_FormatTextScript.HDT_UTL_FormatTextScriptException');
+            system.assertEquals(e.getTypeName(), 'HDT_UTL_FormatTextScript.HDT_UTL_FormatTextScriptException', 'Unexpected Exception Launched');
         }
         system.debug('CPU TIME: '+Limits.getCpuTime());
 	}

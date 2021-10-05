@@ -23,6 +23,7 @@ export default class HdtManageScriptModal extends LightningElement {
 
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
+    @api activityId;
     @api buttonLabel;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api linkReitek;

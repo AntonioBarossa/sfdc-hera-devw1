@@ -20,15 +20,13 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action logic
-     * @param String selectedOption
-     * @param Order order
-     * @param Contract contract
-     * @param String supplyCity
-     * @param String accountId
-     * @param Sale sale
+     * @param selectedOption
+     * @param order
+     * @param contract
+     * @param supplyCity
+     * @param accountId
+     * @param sale
      */
-
-     
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
@@ -44,6 +42,12 @@ public inherited sharing class HDT_LC_SaleVas {
             
         }
     }
+
+    /**
+     * @description transitionCheck
+     * @param salesId
+     * @return Boolean
+     */
     @AuraEnabled
     public static boolean transitionCheck(String salesId){
         Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -66,6 +70,14 @@ public inherited sharing class HDT_LC_SaleVas {
         System.debug('*****VUOIANNA2:' + check);
         return check;
     }
+
+    /**
+     * @description transitionCheck2
+     * @param salesId
+     * @param comune
+     * @param tipologia
+     * @return wrapReturn
+     */
     @AuraEnabled
     public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
         Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -98,15 +110,22 @@ public inherited sharing class HDT_LC_SaleVas {
         System.debug('*****VUOIANNA2:' + check);
         return wrpRes;
     }
+
+    /**
+     * @description wrapReturn
+     */
     public class wrapReturn{
         @AuraEnabled public boolean res = true;
+        /**
+        * @description messRes
+        */
         @AuraEnabled public string messRes {get;set;}
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active orders based on accountId when 'Ordini in corso' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Order>
      */
     @AuraEnabled
@@ -115,6 +134,12 @@ public inherited sharing class HDT_LC_SaleVas {
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
+
+    /**
+     * @description getOrdersListNotActive
+     * @param accountId
+     * @return List<Order>
+     */
     @AuraEnabled
     public static List<Order> getOrdersListNotActive(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
@@ -124,7 +149,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Contact>
      */
     @AuraEnabled
@@ -138,7 +163,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Federico de Felice (federico.defelice@webresults.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Contact>
      */
     @AuraEnabled
@@ -171,15 +196,33 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Order
                     WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
+            //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
-                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:searchString WITH SECURITY_ENFORCED];
+                Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
+                
+                //removing assets which already have a deactivation Case
+                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'
+                    AND AssetId IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case assetCase:assetsCases) {
+                    recordMap.remove(assetCase.AssetId);
+                }
+                records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED];
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Status<>'Bozza' AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
             }
+            //Disattivazione VAS - END
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
@@ -209,7 +252,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get map with lists of active contracts and orders
-     * @param String accountId
+     * @param accountId
      * @return Map<String,List<SObject>>
      */
     @AuraEnabled
@@ -231,9 +274,10 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check for duplicated contract/order reference in current sale
-     * @param String saleId
-     * @param String objectId (OrderReference__c/ContractReference__c)
-     * @param String type (contract or order)
+     * @param saleId
+     * @param objectId (OrderReference__c/ContractReference__c)
+     * @param type (contract or order)
+     * @return Boolean
      */
     private static Boolean isDuplicated(String saleId, String objectId, String type) {
         Boolean result = false;
@@ -255,8 +299,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
-     * @param Order order
-     * @param String supplyCity
+     * @param order
+     * @param supplyCity
+     * @param sale
      */
     public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
         
@@ -306,8 +351,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Contratti Attivi'
-     * @param Contract contract
-     * @param String supplyCity
+     * @param contract
+     * @param supplyCity
+     * @param sale
      */
     public static void handleActiveContractConfirm(Contract contract, String supplyCity, Sale__c sale){
         
@@ -357,8 +403,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for "VAS Stand Alone" option
-     * @param String supplyCity
-     * @param String accountId
+     * @param supplyCity
+     * @param accountId
+     * @param sale
      */
     public static void handleVasStandAloneConfirm(String supplyCity, String accountId, Sale__c sale){
         

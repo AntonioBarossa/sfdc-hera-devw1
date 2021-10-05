@@ -29,7 +29,7 @@ public class HDT_UTL_FormatTextScriptInvocableTst {
         
         Test.stopTest();
         
-        System.assertEquals('firstText', formattedText[0], 'First input returned correctly');
+        System.assertEquals('firstText', formattedText[0], 'First input not returned correctly');
         
         System.assertNotEquals(2, formattedText.size(), 'The second input should be ignored');
         

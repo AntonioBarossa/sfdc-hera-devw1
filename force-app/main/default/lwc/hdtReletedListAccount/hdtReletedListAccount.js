@@ -206,9 +206,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     getAllContact(){
         contactList({ accountId: this.recordId } )
         .then(result => {
-            console.log(JSON.stringify('result '+result));
-            
-            this.contacts = result;
+            this.contacts =JSON.parse(result);  //HRAWRM-500 Start 04/10/2021
             this.numberOfContacts=this.contacts.length;
         })
         .catch(error => {

@@ -52,8 +52,8 @@ public class HDT_WS_CampagenDmDmpDataResponseTst {
         
         Test.stopTest();
                 
-        System.assertEquals('test4', res.data.testata.messaggio, 'Value of the field messaggio successfully set');
-        System.assertNotEquals(null, res.errorDetails[0].additionalInfo, 'Value of the field additionalInfo successfully set');
+        System.assertEquals('test4', res.data.testata.messaggio, 'Value of the field messaggio not set');
+        System.assertNotEquals(null, res.errorDetails[0].additionalInfo, 'Value of the field additionalInfo not set');
             
     }
 
