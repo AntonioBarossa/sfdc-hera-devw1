@@ -16,7 +16,7 @@ public with sharing class HDT_UTL_LeadProcess {
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         Map<String,String> mapRequestFields = new Map<String,String>();
         Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
-        System.debug('PROVA WSFORM');
+       // System.debug('PROVA WSFORM');
         if (request.objects.get(0).fields.get(0) != null) {
             
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 }
                 
             }
-            System.debug('PROVA WSFORM2');
+           // System.debug('PROVA WSFORM2');
             Boolean isValidated= true;
             if((mapRequestFields.get('COMPANYOWNER') == null || mapRequestFields.get('COMPANYOWNER') == '') || 
             (mapRequestFields.get('CELLULARE') == null|| mapRequestFields.get('CELLULARE')== '') || 
@@ -39,12 +39,12 @@ public with sharing class HDT_UTL_LeadProcess {
             (mapRequestFields.get('AGENZIA') == null || mapRequestFields.get('AGENZIA') == '') ){
                 isValidated= false;
             }
-            System.debug('PROVA WSFORM3');
+            //System.debug('PROVA WSFORM3');
             if(isValidated){
-                System.debug('PROVA WSFORM4');
+               // System.debug('PROVA WSFORM4');
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
-                    System.debug('PROVA WSFORM5');
+                   // System.debug('PROVA WSFORM5');
                     Lead newLead= new Lead();
                     newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
                     newLead.recordTypeId=leadRecordTypeId;
@@ -98,7 +98,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     //HRAWRM-388 03/09/2021
                     newLead.ContactReason__c='Info commerciali';
                     //HRAWRM-388 03/09/2021
-                    System.debug('PROVA WSFORM6');
+                    //System.debug('PROVA WSFORM6');
                     
                     
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
@@ -122,7 +122,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
-                    System.debug('PROVA WSFORM7');
+                   // System.debug('PROVA WSFORM7');
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
@@ -231,6 +231,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
                     newLead.WebFormField02__c = mapRequestFields.get('CAMPO_02');
@@ -401,6 +402,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
@@ -580,6 +582,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
                     newLead.WebFormField02__c = mapRequestFields.get('CAMPO_02');
@@ -778,6 +781,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     if(contactId != null && contactId != ''){
                         newLead.Contact__c = contactId;
                     }
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.State= mapRequestFields.get('COMUNE');
@@ -929,17 +933,17 @@ public with sharing class HDT_UTL_LeadProcess {
         Integer hour=Integer.valueOf(myTime.get(0).substringAfter('T'));
         Integer minutes=Integer.valueOf(myTime.get(1).replace('Z', ''));
          
-        System.debug('year : '+year);
+       /* System.debug('year : '+year);
         System.debug('month : '+month);
         System.debug('day : '+day);
         System.debug('hour : '+hour);
-        System.debug('minutes : '+minutes);
+        System.debug('minutes : '+minutes);*/
         DateTime myDateTime = DateTime.newInstance(year, month, day, hour, minutes, 0);
         Timezone tz = Timezone.getTimeZone('Europe/Rome');
         Integer diff= (tz.getOffset(myDateTime)/1000)/60;
         DateTime newDateTime = myDateTime.addMinutes(diff);
 
-        System.debug('targetDatetime '+newDateTime);
+       // System.debug('targetDatetime '+newDateTime);
         return newDateTime;
     }
 }
