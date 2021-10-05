@@ -65,7 +65,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 LowPriorityQueue__c
             FROM AssignmentRule__c
             WHERE
-                (RuleStartDate__c < TOMORROW OR RuleStartDate__c = null) AND (RuleEndDate__c > TODAY OR RuleEndDate__c = null)
+                Deactivated__c = false AND
+                (RuleStartDate__c <= :Datetime.now() OR RuleStartDate__c = null) AND
+                (RuleEndDate__c > :Datetime.now() OR RuleEndDate__c = null)
             ORDER BY RulePriority__c ASC
         ];
     }
@@ -127,7 +129,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
             for(Database.SaveResult result : results) {
                 if(!result.isSuccess()) {
-                    System.debug(result.getErrors());
+                    System.debug(result.getId() + ' | ' + result.getErrors());
                 }
             }
         }
@@ -152,7 +154,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     public String getQuery(AssignmentRule__c rule) {
         Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
         // INITIALIZING QUERY'S STATIC PART
-        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND wrts_prcgvr__Priority__c != null'};
+        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Not Started\', \'Aperta\')'};
         String mapping;
         String value;
         String condition;

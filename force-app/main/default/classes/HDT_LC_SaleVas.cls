@@ -20,15 +20,13 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action logic
-     * @param String selectedOption
-     * @param Order order
-     * @param Contract contract
-     * @param String supplyCity
-     * @param String accountId
-     * @param Sale sale
+     * @param selectedOption
+     * @param order
+     * @param contract
+     * @param supplyCity
+     * @param accountId
+     * @param sale
      */
-
-     
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
@@ -44,6 +42,12 @@ public inherited sharing class HDT_LC_SaleVas {
             
         }
     }
+
+    /**
+     * @description transitionCheck
+     * @param salesId
+     * @return Boolean
+     */
     @AuraEnabled
     public static boolean transitionCheck(String salesId){
         Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -52,9 +56,6 @@ public inherited sharing class HDT_LC_SaleVas {
         //System.debug('*****MAVUOIANNA:'+ transitionlist);
         //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
         wrapReturn wrpRes = new wrapReturn();
-
-
-
 
         if(HDT_UTL_Sales.isTransitionNoUp(sal)){
             check = false;
@@ -66,6 +67,14 @@ public inherited sharing class HDT_LC_SaleVas {
         System.debug('*****VUOIANNA2:' + check);
         return check;
     }
+
+    /**
+     * @description transitionCheck2
+     * @param salesId
+     * @param comune
+     * @param tipologia
+     * @return wrapReturn
+     */
     @AuraEnabled
     public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
         Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -98,15 +107,22 @@ public inherited sharing class HDT_LC_SaleVas {
         System.debug('*****VUOIANNA2:' + check);
         return wrpRes;
     }
+
+    /**
+     * @description wrapReturn
+     */
     public class wrapReturn{
         @AuraEnabled public boolean res = true;
+        /**
+        * @description messRes
+        */
         @AuraEnabled public string messRes {get;set;}
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active orders based on accountId when 'Ordini in corso' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Order>
      */
     @AuraEnabled
@@ -115,6 +131,12 @@ public inherited sharing class HDT_LC_SaleVas {
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
+
+    /**
+     * @description getOrdersListNotActive
+     * @param accountId
+     * @return List<Order>
+     */
     @AuraEnabled
     public static List<Order> getOrdersListNotActive(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
@@ -124,7 +146,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Contact>
      */
     @AuraEnabled
@@ -138,7 +160,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Federico de Felice (federico.defelice@webresults.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Contact>
      */
     @AuraEnabled
@@ -177,7 +199,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
                 
                 //removing assets which already have a deactivation Case
-                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status<>'Bozza' AND Type='Disattivazione VAS'
+                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'
                     AND AssetId IN :recordMap.keySet() WITH SECURITY_ENFORCED];
                 for (Case assetCase:assetsCases) {
                     recordMap.remove(assetCase.AssetId);
@@ -227,7 +249,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get map with lists of active contracts and orders
-     * @param String accountId
+     * @param accountId
      * @return Map<String,List<SObject>>
      */
     @AuraEnabled
@@ -249,12 +271,12 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check for duplicated contract/order reference in current sale
-     * @param String saleId
-     * @param String objectId (OrderReference__c/ContractReference__c)
-     * @param String type (contract or order)
+     * @param saleId
+     * @param objectId (OrderReference__c/ContractReference__c)
+     * @param type (contract or order)
+     * @return Boolean
      */
     private static Boolean isDuplicated(String saleId, String objectId, String type) {
-        Boolean result = false;
 
         List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
 
@@ -273,8 +295,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
-     * @param Order order
-     * @param String supplyCity
+     * @param order
+     * @param supplyCity
+     * @param sale
      */
     public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
         
@@ -285,7 +308,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
-        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = order.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -324,8 +347,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Contratti Attivi'
-     * @param Contract contract
-     * @param String supplyCity
+     * @param contract
+     * @param supplyCity
+     * @param sale
      */
     public static void handleActiveContractConfirm(Contract contract, String supplyCity, Sale__c sale){
         
@@ -336,7 +360,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
-        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = contract.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -375,8 +399,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for "VAS Stand Alone" option
-     * @param String supplyCity
-     * @param String accountId
+     * @param supplyCity
+     * @param accountId
+     * @param sale
      */
     public static void handleVasStandAloneConfirm(String supplyCity, String accountId, Sale__c sale){
         

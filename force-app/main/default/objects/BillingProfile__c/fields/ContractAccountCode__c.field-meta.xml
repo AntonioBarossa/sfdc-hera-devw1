@@ -3,7 +3,7 @@
     <fullName>ContractAccountCode__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Codice Contract Account Sap</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Conto Contrattuale</label>
     <length>15</length>
     <required>false</required>

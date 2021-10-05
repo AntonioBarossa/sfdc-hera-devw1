@@ -30,9 +30,9 @@ public class HDT_WS_RecallMeResponseTst {
         
         Test.stopTest();
         
-        System.assertEquals(12, res.result[0].availability, 'Value of the field availability successfully set');
+        System.assertEquals(12, res.result[0].availability, 'Value of the field availability not set');
         
-        System.assertNotEquals(0, res.result.size(), 'One element added in the field result');
+        System.assertNotEquals(0, res.result.size(), 'One element not added successfully in the field result');
         
     }
 }
