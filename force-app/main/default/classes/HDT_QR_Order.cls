@@ -965,7 +965,8 @@ public inherited sharing class HDT_QR_Order {
             QualityCall__c,
             QualityCallUnique__c,
             ConfirmCustomerContract__c,
-            CancellationReason__c
+            CancellationReason__c,
+            CommercialProduct__c
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true

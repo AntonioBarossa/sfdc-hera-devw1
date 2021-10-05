@@ -1,3 +1,10 @@
+<!--
+  @description       : Component for launching script from Activity record page
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-10-05
+  @last modified by  : gabriele.rota@webresults.it
+-->
 <aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="HDT_LC_ActivityScriptLauncher">
 
     <aura:attribute name="recordId" type="String" />
@@ -7,6 +14,13 @@
     <aura:attribute name="isLoading" type="Boolean" default="true"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!--Workaround for setting modal width-->
+    <aura:html tag="style">
+        .slds-modal__container {
+            min-width: 64vw;
+        }
+    </aura:html>
 
     <div class="slds-is-relative" style="min-height: 150px">
         <aura:if isTrue="{!v.isLoading}">
