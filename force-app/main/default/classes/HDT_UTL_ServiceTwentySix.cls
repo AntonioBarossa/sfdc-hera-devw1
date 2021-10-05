@@ -23,7 +23,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
     private static Set<String> prodFields;
     private static HDT_QR_Sobject utl = new HDT_QR_Sobject();
     private static Id ordId;
-   
+
+    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description', 'product2.description'};
+
     private inherited sharing class HDT_QR_Sobject extends HDT_UTL_FormatTextScript{
 
         private List<SObject> getSObj(Set<Id> listIds, List<String> fieldsToQuery, String fromCondition){
@@ -261,9 +263,4 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         return '';
 
     }
-    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description', 'product2.description'};
-
-
-
-
 }
