@@ -12,7 +12,15 @@ public with sharing class HDT_LC_AccountAlertsTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
+        
+        //BILLING PROFILE
+        
+        
+        //CONTRACT
+        Contract myContract = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].id)[0];
+        
+        insert myContract;
+        
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
