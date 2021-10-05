@@ -30,6 +30,13 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         mySetup();
         
         Case myCaseForHeroku = [SELECT Id FROM Case];
+        myCaseForHeroku.Phase__c = 'Esito OK da SAP';
+        
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
+        
         
         
         //PREPARING EVENT
@@ -37,6 +44,7 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         event.SerializedCase__c = JSON.serialize(myCaseForHeroku);
         
         //TESTING
+        Database.SaveResult sr = EventBus.publish(event);
         
         
         //RETRIEVING DATA
