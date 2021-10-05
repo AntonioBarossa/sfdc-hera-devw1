@@ -5,6 +5,7 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
     
     
     //DATA
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     
     //TEST SETUP
