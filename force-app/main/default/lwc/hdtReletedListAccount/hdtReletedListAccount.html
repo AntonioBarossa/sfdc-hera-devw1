@@ -32,27 +32,25 @@
                         <span class="slds-assistive-text"></span>
                     </a>
                 </footer>
+                <!-- HRAWRM-500 Start 04/10/2021
+                <lightning-layout multiple-rows="true" pull-to-boundary="small"> -->
 
-                <lightning-layout multiple-rows="true" pull-to-boundary="small">
 
 
-
-                    <template for:each={contacts} for:item="c">
-                        <lightning-layout-item  padding="around-small" key={c.Id} size="5">
-    
-    
+                    <!-- <template for:each={contacts} for:item="c">
+                        <lightning-layout-item  padding="around-small" key={c.Id} size="5">    
                             <c-hdt-contact-tab accountcontactrel={c}></c-hdt-contact-tab>
                         </lightning-layout-item>
     
     
-                    </template>
-                </lightning-layout>
+                    </template> -->
+                <!-- </lightning-layout> -->
+                <c-hdt-custom-table mydata={contacts}></c-hdt-custom-table >
+                <!--HRAWRM-500 End 04/10/2021-->
 
             </article>
         </div>
-
     </article>
-    
     <template if:true={showModal}>
         <!-- <c-hdt-form-referente accountid={recordId} ></c-hdt-form-referente> -->
 

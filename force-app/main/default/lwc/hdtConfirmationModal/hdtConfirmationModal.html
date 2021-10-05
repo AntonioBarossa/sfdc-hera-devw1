@@ -11,6 +11,18 @@
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                 <!--<p>{modalBody}</p>-->
                 <div class="slds-text-heading_medium">{modalBody}</div>
+
+                <div if:true={enforceConfirmation} class="slds-grid slds-gutters slds-m-top_large slds-m-bottom_large">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="checkbox"
+                            label="Ho preso visione del messaggio"
+                            name="allSafeCheckbox"
+                            required
+                        ></lightning-input>
+                    </div>
+                </div>
+
             </div>
             <footer class="slds-modal__footer slds-modal__footer_directional">
                 <button class="slds-button slds-button_neutral" data-id="close" onclick={buttonClick} >Annulla</button>
