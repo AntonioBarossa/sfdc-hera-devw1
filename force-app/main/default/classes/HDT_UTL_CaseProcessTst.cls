@@ -173,7 +173,6 @@ public with sharing class HDT_UTL_CaseProcessTst {
             
             HDT_UTL_CaseProcess.manageCancellationProcess(newCasesList, oldMap);
             newCasesList[0].Type = 'Reclamo Scritto/Rich. Info';
-            update newCasesList;
             HDT_UTL_CaseProcess.manageCancellationProcess(newCasesList, oldMap);
 
 
