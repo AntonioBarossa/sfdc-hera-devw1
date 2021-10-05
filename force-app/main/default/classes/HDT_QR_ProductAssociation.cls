@@ -9,7 +9,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         if(objRes.isAccessible()){
             selectQuery = 'SELECT count() ' + queryString;
         }
-        System.debug('>>> queryString: ' + selectQuery);
+        System.debug(logginglevel.DEBUG, '>>> queryString: ' + selectQuery);
         return Database.countQuery(selectQuery);
     }
 
@@ -22,7 +22,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
         if(objRes.isAccessible()){
             selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c ' + queryString;
-            System.debug('>>> queryString: ' + selectQuery);
+            System.debug(logginglevel.DEBUG, '>>> queryString: ' + selectQuery);
 
             prodList = Database.query(selectQuery);
         }

@@ -1,8 +1,8 @@
 @isTest
 public class HDT_LC_HighlightsTabTst {
     
-    @TestSetup
-    static void setup(){
+    
+    private static void mySetup(){
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
 
@@ -34,7 +34,10 @@ public class HDT_LC_HighlightsTabTst {
 
     @IsTest
     static void testGetKpis(){
-
+        
+        //SETUP
+        mySetup();
+        
         Account acc = [SELECT Id FROM Account LIMIT 1];
 
         Case cs = [SELECT Id, Status, Cluster__c, Reason__c, Phase__c FROM Case LIMIT 1];
@@ -45,8 +48,8 @@ public class HDT_LC_HighlightsTabTst {
         System.debug('Case Reason__c: ' + cs.Reason__c);
         System.debug('Case Phase__c: ' + cs.Phase__c);
         
+        //TESTING
         Test.startTest();
-
         Map<String,Object> kpis = HDT_LC_HighlightsTab.getKpis(acc.Id);
 
         System.assert(kpis != null, 'Map == null');

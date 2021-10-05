@@ -314,9 +314,10 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     FROM wrts_prcgvr__Activity__c
                     where 
                     RecordType.developername = 'HDT_RT_Scarto'
+                    AND type__c = 'Gestione dati discordanti'
                     AND account__c = :accountid
                     AND order__r.servicePoint__c = :servicePoint
-                    AND wrts_prcgvr__Status__c = 'Not Started'
+                    AND wrts_prcgvr__Status__c = 'Aperta'
                     WITH SECURITY_ENFORCED 
                 ];
         }

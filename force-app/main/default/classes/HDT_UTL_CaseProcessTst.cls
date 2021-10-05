@@ -21,14 +21,12 @@ public with sharing class HDT_UTL_CaseProcessTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(2, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);    
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);    
  
         caseList[0].recordTypeId = rtId;
         caseList[0].Phase__c = 'Bozza';
         caseList[0].Status = 'New';
-        caseList[1].recordTypeId = rtId;
-        caseList[1].Phase__c = 'Da Inviare';
-        caseList[1].Status = 'In Lavorazione';
+        
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
         update caseList;
 
@@ -67,8 +65,8 @@ public with sharing class HDT_UTL_CaseProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(newMap != null);
-        System.assert(oldMap != null);
+        System.assert(newMap != null, 'Attenzione, la mappa non può essere vuota!');
+        System.assert(oldMap != null, 'Attenzione, la mappa non può essere vuota!');
 
     }
 
@@ -80,14 +78,18 @@ public with sharing class HDT_UTL_CaseProcessTst {
         System.debug(debugString);
         
         //SETUP              
-        
-        List<Case> newCasesList = [Select Id, AccountId, Contact.Id, RecordTypeId, RecordType.Name, Phase__c from Case where Phase__c = 'Da Inviare'];
+        List<Case> newCasesList = new List<Case>();
         List<Case> oldCasesList = [Select Id, AccountId, Contact.Id, RecordTypeId, RecordType.Name, Phase__c from Case where Phase__c = 'Bozza'];
+        newCasesList.add(oldCasesList[0]);
+        newCasesList[0].Phase__c = 'Annullato';
+        newCasesList[0].RecordTypeId = oldCasesList[0].RecordTypeId;
+        newCasesList[0].RecordType.Name = oldCasesList[0].RecordType.Name;
+        update newCasesList;
 
         //TESTING
         Test.startTest();
         Try{
-            
+             
             HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(newCasesList, oldCasesList);
 
 
@@ -97,8 +99,8 @@ public with sharing class HDT_UTL_CaseProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(newCasesList != null);
-        System.assert(oldCasesList != null);
+        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
+        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
 
     }
 
@@ -118,14 +120,17 @@ public with sharing class HDT_UTL_CaseProcessTst {
         newCasesList[0].RecordTypeId = oldCasesList[0].RecordTypeId;
         newCasesList[0].RecordType.Name = oldCasesList[0].RecordType.Name;
         newCasesList[0].Type = 'Variazione indirizzo di fornitura';
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', newCasesList[0].RecordTypeId, newCasesList[0].RecordType.Name,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', newCasesList[0].RecordTypeId, newCasesList[0].RecordType.Name,'A','','','');
-        update newCasesList;
         Map<Id, Case> oldMap = new Map<Id, Case>(oldCasesList);
 
-        wrts_prcgvr__ActivityTemplate__c myAT = new wrts_prcgvr__ActivityTemplate__c();
+        List<wrts_prcgvr__ActivityTemplate__c> myATList = new List<wrts_prcgvr__ActivityTemplate__c>();
+        wrts_prcgvr__ActivityTemplate__c myAt = new wrts_prcgvr__ActivityTemplate__c();
         myAT.Name = 'Annullamento Allineamento';
-        insert myAT;
+        myAT.wrts_prcgvr__Assignees__c = 'Mario Rossi';
+        myAT.wrts_prcgvr__Subject__c = 'Annullamento Allineamento';
+        myAT.wrts_prcgvr__DueDateField__c = 'myDueDateField';
+        myATList.add(myAt);
+
+        insert myATList;
         
         //TESTING
         Test.startTest();
@@ -144,8 +149,8 @@ public with sharing class HDT_UTL_CaseProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(newCasesList != null);
-        System.assert(oldCasesList != null);
+        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
+        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
 
     }
 
@@ -158,8 +163,11 @@ public with sharing class HDT_UTL_CaseProcessTst {
         
         //SETUP      
         
-        List<Case> newCasesList = [Select Id, Status from Case where Status = 'In Lavorazione'];
+        List<Case> newCasesList = new List<Case>();
         List<Case> oldCasesList = [Select Id, Status from Case where Status = 'New'];
+        newCasesList.add(oldCasesList[0]);
+        newCasesList[0].Status = 'In Lavorazione';
+        update newCasesList;
         
         //TESTING
         Test.startTest();
@@ -174,8 +182,8 @@ public with sharing class HDT_UTL_CaseProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(newCasesList != null);
-        System.assert(oldCasesList != null);
+        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
+        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
 
     }
 
@@ -186,12 +194,15 @@ public with sharing class HDT_UTL_CaseProcessTst {
         String debugString = TEST_NAME + ' - ' + 'updateServiceRequestTest';
         System.debug(debugString);
         
-        //SETUP      
-        
+        //SETUP
+
+        List<ServiceRequest__c> mySRList = HDT_UTL_DataFactoryTst.createServiceRequest(1, true);
         List<Case> newCasesList = new List<Case>();
         List<Case> oldCasesList = [Select Id, Status from Case where Status = 'New'];
         newCasesList.add(oldCasesList[0]);
         newCasesList[0].Status = 'In Lavorazione';
+        mySRList[0].Case__c = newCasesList[0].Id;
+        update mySRList;
         update newCasesList;
         
         //TESTING
@@ -207,8 +218,8 @@ public with sharing class HDT_UTL_CaseProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(newCasesList != null);
-        System.assert(oldCasesList != null);
+        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
+        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
 
     }
 
@@ -239,7 +250,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
+        System.assert(caseList != null, 'Attenzione, la lista non può essere vuota!');
 
     }
 
