@@ -36,8 +36,9 @@ public class HDT_LC_DecisionalScriptControllerTst {
        confList = [SELECT Id,Name,ScriptType__c,CheckVisibility__c,ContextObject__c from ScriptConfig__c];
 
         HDT_LC_DecisionalScriptController.isDecisionalScript('test');
-         System.assertEquals(false,confList.isEmpty(),'Method return is right');
-         System.assertNotEquals(true,confList.isEmpty(),'Method return is wrong');
+        
+         System.assertEquals(false,confList.isEmpty(), 'The confList is empty since the parameter was null');
+         System.assertNotEquals(true,confList.isEmpty(),'The confList is not empty');
 
         Test.stopTest();
         
@@ -60,8 +61,8 @@ public class HDT_LC_DecisionalScriptControllerTst {
 
         HDT_LC_DecisionalScriptController.getScriptPage('Hera',myConfId,1);
         
-         System.assertEquals(false,checkList.isEmpty(),'Process return is right');
-         System.assertNotEquals(true,checkList.isEmpty(),'Process return is wrong');
+         System.assertEquals(false,checkList.isEmpty(),'The method didnt returned the expected HDT_WRP_ScriptOutput given the right parameters');
+         System.assertNotEquals(true,checkList.isEmpty(),'The confList is not expected to be empty');
                 Test.stopTest();
 
     }
