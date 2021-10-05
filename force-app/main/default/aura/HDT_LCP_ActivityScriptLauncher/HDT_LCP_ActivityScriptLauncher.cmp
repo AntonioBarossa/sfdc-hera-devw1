@@ -14,13 +14,25 @@
         </aura:if>
 
         <aura:if isTrue="{!v.scriptName}">
-            <c:hdtManageScriptModal scriptProcessName="{!v.scriptName}"
-                recordId="{!v.scriptTarget}"
-                activityId="{!v.recordId}"
-                isInsideModal="true"
-                openModal="true"
-                onclose="{!c.handleCloseAction}">
-            </c:hdtManageScriptModal>
+            <lightning:tabset>
+                <lightning:tab label="Script">
+                    <c:hdtManageScriptModal scriptProcessName="{!v.scriptName}"
+                        recordId="{!v.scriptTarget}"
+                        activityId="{!v.recordId}"
+                        isInsideModal="true"
+                        openModal="true"
+                        onclose="{!c.handleCloseAction}">
+                    </c:hdtManageScriptModal>
+                </lightning:tab>
+
+                <lightning:tab label="Riepilogo">
+                    <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}"
+                        onresultevent="{!c.handleResultEvent}"
+                    >
+                    </c:hdtOrdersForComfortQualityList>
+                </lightning:tab>
+            </lightning:tabset>
+
         </aura:if>
     </div>
 
