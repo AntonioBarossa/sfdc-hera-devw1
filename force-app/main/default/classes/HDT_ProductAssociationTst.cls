@@ -461,4 +461,12 @@ public class HDT_ProductAssociationTst {
 
     }
 
+    @isTest
+    public static void groupMembers(){
+        Test.startTest();
+        Boolean result = HDT_UTL_ProductAssociation.getEnabledUser();
+        Test.stopTest();
+        System.assertEquals(false, result, 'User not enabled');
+    }
+
 }
