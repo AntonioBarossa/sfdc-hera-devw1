@@ -69,7 +69,6 @@ public with sharing class HDT_LC_AccountAlertsTst {
         //ALERT WITH BillSendingMethod__c
         AlertConfiguration__c myAlertConfig = new AlertConfiguration__c();
         myAlertConfig.AccountCategory__c = acc.Category__c;
-        myAlertConfig.AlertRule__c = 'Emissione bolletta';
         myAlertConfig.BillSendingMethod__c = 'Bolletta per e-mail';
         insert myAlertConfig;
         
