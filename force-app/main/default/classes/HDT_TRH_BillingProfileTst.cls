@@ -17,8 +17,9 @@ public with sharing class HDT_TRH_BillingProfileTst{
 		
             BillingProfile__c testBillProf = [SELECT Id,ContractAccountCode__c FROM BillingProfile__c WHERE ContractAccountCode__c='200008867681' LIMIT 1];
 		
-            System.assertEquals('200008867681', testBillProf.ContractAccountCode__c, 'Billing Profile not Inserted');
-            System.assertNotEquals(null, testBillProf.Id);
+			
+            System.assertEquals('200008867681', testBillProf.ContractAccountCode__c, 'BillingProfile ContractAccountCode__c field is not Inserted(BillingProfile Trigger)');
+            System.assertNotEquals(null, testBillProf.Id,'BillingProfile id is empty (BillingProfile Trigger)');
 			Test.stopTest();
 		}
 	}
