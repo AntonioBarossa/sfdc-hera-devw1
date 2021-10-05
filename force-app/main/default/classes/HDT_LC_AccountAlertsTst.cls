@@ -162,5 +162,28 @@ public with sharing class HDT_LC_AccountAlertsTst {
     }
     
     
+    //COPERTURA TESTS HDT_QR_AlertConfiguration
+    //getRecordsByAccountCategory
+    @isTest
+    private static void getRecordsByAccountCategoryTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'getRecordsByAccountCategoryTest';
+        System.debug(debugString);
+        
+        //SETUP
+        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME')[0];
+        AlertConfiguration__c myAlertConfig = new AlertConfiguration__c(AccountCategory__c = acc.Category__c);
+        insert myAlertConfig;
+        
+        //TESTING
+        HDT_QR_AlertConfiguration myObjectToTest = new HDT_QR_AlertConfiguration();
+        List<AlertConfiguration__c> result = myObjectToTest.getRecordsByAccountCategory(myAlertConfig.AccountCategory__c);
+        
+        //ASSERTS
+        System.assertEquals(1, result.size(), 'Lista result incorretta.');
+        
+    }
+    
     
 }
