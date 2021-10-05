@@ -240,7 +240,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             return utl.dinamicFieldValue(posField?.split('OrderItem\\.')[1], ordItem);
         }
         if(prodFields.contains(posField.toLowerCase())){
-            return STRING.valueOf(relatedProduct.get(posField));
+            //return STRING.valueOf(relatedProduct.get(posField));
+            return utl.dinamicFieldValue(posField, relatedProduct);
         }
         return posField;
     }
@@ -248,7 +249,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
     private String getCustomChecks(String posField, SObject OrdItem){
         switch on posField.split('\\.')[1]{
             when 'isAnalisiConsumi'{
-                return utl.dinamicFieldValue('Product2.Description', OrdItem).containsIgnoreCase('analisi consumi') ? 'x' : '';
+                return utl.dinamicFieldValue('Product2.Description', OrdItem).containsIgnoreCase('analisi consumi') ? 'X' : '';
             }
             when 'isConstraint'{
                 Boolean check = String.isBlank( utl.dinamicFieldValue('Product2.ConstraintExemption__c', OrdItem) );
