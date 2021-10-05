@@ -27,6 +27,7 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
     private static void coverageIncreaseTest() {
         
         //SETUP
+        mySetup();
         
         Case myCaseForHeroku = [SELECT Id FROM Case];
         
