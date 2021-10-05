@@ -7,7 +7,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         'Chat',
         'Consip',
         'Da PGM',
-        'Helpdesk',
+        // 'Helpdesk',
         'PA',
         'Protocollo',
         'ServiziSociali',
@@ -110,7 +110,9 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                 AssigneeType__c = 'Utente',
                 OwnerId = assigneeId,
                 WorkGroup__c = workGroup,
-                Agency__c = agency
+                Agency__c = agency,
+                ManuallyReassigned__c = true,
+                Queue__c = null
             );
 
             if(String.isNotBlank(wrapperId)) {

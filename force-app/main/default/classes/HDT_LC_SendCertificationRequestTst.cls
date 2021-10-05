@@ -80,9 +80,9 @@ public class HDT_LC_SendCertificationRequestTst {
 
         Test.stopTest();
         
-        System.assertEquals(false, mapp.get('error'), 'Certification successfully created');
+        System.assertEquals(false, mapp.get('error'), 'Certification not created');
         
-        System.assertNotEquals(null, mapp, 'Map correctly returned');
+        System.assertNotEquals(null, mapp, 'Map not returned');
         
     }
     
@@ -98,9 +98,9 @@ public class HDT_LC_SendCertificationRequestTst {
         
         Test.stopTest();
         
-        System.assertEquals(true, mapp.get('error'), 'The map contains the exception data');
+        System.assertEquals(true, mapp.get('error'), 'The map does not contain the exception data');
         
-        System.assertNotEquals(null, mapp, 'The map is returned correctly');
+        System.assertNotEquals(null, mapp, 'The map is not returned correctly');
         
     }
     
@@ -116,9 +116,9 @@ public class HDT_LC_SendCertificationRequestTst {
         
         Test.stopTest();
         
-        System.assertEquals(false, mapp.get('error'), 'Certification successfully created');
+        System.assertEquals(false, mapp.get('error'), 'Certification not created');
         
-        System.assertNotEquals(null, mapp, 'Map correctly returned');
+        System.assertNotEquals(null, mapp, 'Map  not returned');
         
     }
     
@@ -134,9 +134,9 @@ public class HDT_LC_SendCertificationRequestTst {
         
         Test.stopTest();
 
-        System.assertEquals(true, mapp.get('error'), 'Certification not created because the Account is not a Customer Account');
+        System.assertEquals(true, mapp.get('error'), 'Certification created when the Account is not a Customer Account');
         
-        System.assertNotEquals(null, mapp, 'Map correctly returned');
+        System.assertNotEquals(null, mapp, 'Map not returned');
         
     }
   @isTest
@@ -151,9 +151,9 @@ public class HDT_LC_SendCertificationRequestTst {
         
         Test.stopTest();
         
-        System.assertEquals(true, mapp.get('error'), 'Certification not created because the Contact Point was already certified');
+        System.assertEquals(true, mapp.get('error'), 'Certification created when the Contact Point was already certified');
         
-        System.assertNotEquals(null, mapp, 'Map correctly returned');
+        System.assertNotEquals(null, mapp, 'Map not returned');
         
     }
     
@@ -169,9 +169,9 @@ public class HDT_LC_SendCertificationRequestTst {
         
         Test.stopTest();
         
-        System.assertEquals(true, mapp.get('error'), 'Certification not created because the field SendToMarketingCloud__c was true');
+        System.assertEquals(true, mapp.get('error'), 'Certification created when the field SendToMarketingCloud__c was true');
         
-        System.assertNotEquals(null, mapp, 'Map correctly returned');
+        System.assertNotEquals(null, mapp, 'Map not returned');
         
     }
   @isTest
@@ -191,9 +191,9 @@ public class HDT_LC_SendCertificationRequestTst {
         
         Test.stopTest();
 
-        System.assertEquals(true, mapp.get('error'), 'Certification not created because a Lead with same parentId was found');
+        System.assertEquals(true, mapp.get('error'), 'Certification created when a Lead with same parentId was found');
         
-        System.assertNotEquals(null, mapp, 'Map correctly returned');
+        System.assertNotEquals(null, mapp, 'Map not returned');
         
         
     }

@@ -7,6 +7,8 @@
 
 public with sharing class HDT_WRP_MrrRequest {
 
+    Public List<HDT_WRP_Request> requests;
+
     Public with sharing class HDT_WRP_Header {
         Public String requestId;
         Public String requestTimeStamp;
@@ -40,6 +42,4 @@ public with sharing class HDT_WRP_MrrRequest {
 
     }
 
-    Public List<HDT_WRP_Request> requests;
-    
 }

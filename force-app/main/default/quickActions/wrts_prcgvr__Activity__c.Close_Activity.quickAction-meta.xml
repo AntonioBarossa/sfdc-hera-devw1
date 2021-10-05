@@ -4,6 +4,10 @@
         <field>Status__c</field>
         <literalValue>Chiusa</literalValue>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>wrts_prcgvr__Status__c</field>
+        <literalValue>Chiusa</literalValue>
+    </fieldOverrides>
     <label>Chiudi Attività</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <quickActionLayout>

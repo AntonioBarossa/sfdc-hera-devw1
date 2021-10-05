@@ -18,18 +18,16 @@
                         <h2 class="slds-modal__title slds-hyphenate">Time Slots</h2>
                     </header>
                     <div class="slds-modal__content scrollable slds-p-around--medium">
-                        <div class="slds-grid">
+                        <div class="slds-grid slds-grid_vertical-align-end slds-p-bottom--small">
                             <lightning-input type="date" data-id="dateR" onchange={handleDateChange} variant="standard" name="startRange" label="Data" value={startRangeValue}></lightning-input>
-                            <br/>
-                            <lightning-button variant="neutral" label="Richiedi Slot"  onclick={getSlotValues}></lightning-button>
-                            <br/>
+                            <lightning-button class="slds-p-left--small" variant="neutral" label="Richiedi Slot"  onclick={getSlotValues}></lightning-button>
                         </div>
                         <lightning-datatable class='timeSlotDT' key-field="startDate" data={dataList} columns={columnsList}
                             max-row-selection="1" onrowselection={handleRowSelection2}>
                         </lightning-datatable>
                     </div>
                     <footer class="slds-modal__footer">
-                        <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
+                        <lightning-button class="slds-p-right--small" variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
                         </lightning-button>
                         <lightning-button variant="brand" name="" type="submit" label="Chiudi" onclick={closeModal}>
                         </lightning-button>

@@ -162,6 +162,7 @@ public with sharing class HDT_UTL_VasManagement {
         String nrContrattoIp;
         String numDocRif;
         String statoPratica;
+        Date dataDecorrenza;//temp 01/20/21
 
         /**
         * @description Constructor with order and case
@@ -177,6 +178,9 @@ public with sharing class HDT_UTL_VasManagement {
             statoPratica = currentCase.VasStatus__c;
 
             dataCessazione = Date.today();
+
+            dataDecorrenza = Date.today();//temp 01/20/21
+            
         }
     }
 
