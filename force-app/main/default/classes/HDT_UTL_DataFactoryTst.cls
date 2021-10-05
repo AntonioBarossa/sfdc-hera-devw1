@@ -1458,36 +1458,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return saleServiceItemList;
 	}
 
-	/**
-	 * @author Valere (valere@noeli-it.net)
-	 * @date 05/10/2021
-	 */
-	public static List<Service26Config__c> createService26Config(Integer amount, Boolean doInsert){
-
-		List<Service26Config__c> serviceList=new List<Service26Config__c>();
-	  
-		for (Integer i=0; i<amount; i++){
-	  
-		  Service26Config__c service=new Service26Config__c();
-	  
-		  //service.Name='test';
-		  service.ProductFamily__c='Bonus Eur/Giorno';
-	  
-	  
-		  serviceList.add(service);
-	  
-		}
-	  
-		if (doInsert){
-	  
-		  insert serviceList;
-		}
-	  
-		return serviceList;
-	  } 
-	  
-
-
 	public static List<DocumentalPayloadAdministration__c> createDocumentalPayloadAdm(){
 		List<DocumentalPayloadAdministration__c> lstSobj=new List<DocumentalPayloadAdministration__c>();
 		DocumentalPayloadAdministration__c sobj=new DocumentalPayloadAdministration__c();
@@ -1534,10 +1504,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static void createDriverJson(){
-		Id folderId=[SELECT Id
-		             FROM Folder
-		             WHERE DeveloperName=:'DocumentalPayloadAdministration'
-		             LIMIT 1].Id;
+		Id folderId=[SELECT Id FROM Folder WHERE DeveloperName= :'DocumentalPayloadAdministration' LIMIT 1].Id;
 		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
 		docPayloadAdminList=HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
 		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap=new Map<String, List<DocumentalPayloadAdministration__c>>();
@@ -1788,6 +1755,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert documents;
 		}
 		return documents;
+	}
+	
+	
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Id orderId, Id caseId){
+		return createDocumentalActivity(amount, true, orderId, caseId);
 	}
 	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
@@ -2243,37 +2215,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return matriceRemiCode;
 	}
 
-
-	/**
-	 * @author Valere (valere@noeli-it.net)
-	 * @date 05/10/2021
-	 */
-	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompagny(Integer amount, Boolean doInsert,Map<String,Object> params){
-
-		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
-	  
-		for (Integer i=0; i<amount; i++){
-	  
-		  MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
-	  
-		  mRemiCode.RemiCode__c='test';
-		  mRemiCode.SalesCompany__c=(String)params.get('salesCompany');
-		  mRemiCode.Comune__c=(String)params.get('comune');
-	  
-	  
-		  matriceRemiCode.add(mRemiCode);
-	  
-		}
-	  
-		if (doInsert){
-	  
-		  insert matriceRemiCode;
-		}
-	  
-		return matriceRemiCode;
-	  }
-
-
 	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
 
 		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
@@ -2456,184 +2397,414 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return comfQualityCallList;
 	}
 
+
+	public static List<BrandSalesCompany__c> createBrandSalesCompany (Integer amount, Boolean doInsert) {
+
+		List<BrandSalesCompany__c> brandSalesCoList = new List<BrandSalesCompany__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BrandSalesCompany__c brandSaleCo = new BrandSalesCompany__c(
+				Name = 'testName'
+			);
+
+			brandSalesCoList.add(brandSaleCo);
+		}
+
+		if (doInsert){
+
+			insert brandSalesCoList;
+		}
+
+		return brandSalesCoList;
+	}
+
+	public static List<SMSTracking__c> createSmsTracking (Integer amount, Boolean doInsert, Id contactId) {
+
+		List<SMSTracking__c> smsTrackList = new List<SMSTracking__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SMSTracking__c smsTrack=new SMSTracking__c(
+				FromName__c='testSms',
+				CompanyOwner__c='HERA COMM',
+				ContactID__c=contactId,
+				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
+				MessageID__c=12321421,
+				Mobile__c='234234234',
+				MobileMessageTrackingID__c=12343143,
+				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
+			);
+			
+			smsTrackList.add(smsTrack);
+		}
+
+		if (doInsert){
+
+			insert smsTrackList;
+		}
+
+		return smsTrackList;
+	}
+
+	public static List<et4ae5__IndividualEmailResult__c> createIndividualEmailResult (Integer amount, Boolean doInsert, Id triggeredSendId) {
+
+		List<et4ae5__IndividualEmailResult__c> indEmailRes = new List<et4ae5__IndividualEmailResult__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__IndividualEmailResult__c ier = new et4ae5__IndividualEmailResult__c(
+				Name = 'tester',
+				EmailAddress__c = 'my@email.com',
+				et4ae5__TriggeredSendDefinition__c = triggeredSendId
+			);
+
+			indEmailRes.add(ier);
+		}
+
+		if (doInsert){
+
+			insert indEmailRes;
+		}
+
+		return indEmailRes;
+	}
+
+	public static List<et4ae5__Automated_Send__c> createTriggeredSend (Integer amount, Boolean doInsert) {
+
+		List<et4ae5__Automated_Send__c> trigSendList = new List<et4ae5__Automated_Send__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__Automated_Send__c autoSend = new et4ae5__Automated_Send__c(
+				Name = 'automaticSent'
+			);
+
+			trigSendList.add(autoSend);
+		}
+
+		if (doInsert){
+
+			insert trigSendList;
+		}
+
+		return trigSendList;
+	}
+
+	public static List<HDT_FulfillmentDateMatrix__c> createFullfillmentDateMatrix (Integer amount, Boolean doInsert) {
+
+		List<HDT_FulfillmentDateMatrix__c> fullfDateMatrixList = new List<HDT_FulfillmentDateMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			HDT_FulfillmentDateMatrix__c fullfDateMatrix = new HDT_FulfillmentDateMatrix__c(
+				Name = 'testFulDatMx'+i
+			);
+
+			fullfDateMatrixList.add(fullfDateMatrix);
+		}
+
+		if (doInsert){
+
+			insert fullfDateMatrixList;
+		}
+
+		return fullfDateMatrixList;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 15/09/2021
+     * @description createPercentageRulesForAssigningVisits Method
+     * @history valere - 15/09/2021– Created method
+     */
+	public static List<PercentageRulesForAssigningVisits__c> createPercentageRulesForAssigningVisits(Integer amount, Boolean doInsert,String name,Id visitAssignmentRulesId){
+
+		List<PercentageRulesForAssigningVisits__c> pfs=new List<PercentageRulesForAssigningVisits__c>();
+
+		for (Integer i=0; i<amount; i++){
+			pfs.add(new PercentageRulesForAssigningVisits__c(name=name, VisitAssignmentRules__c = visitAssignmentRulesId));
+		}
+
+		if (doInsert) insert pfs;
+
+		return pfs;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 15/09/2021
+     * @description createVisitAssignmentRules Method
+     * @history valere - 15/09/2021– Created method
+     */
+	public static List<VisitAssignmentRules__c> createVisitAssignmentRules (Integer amount, Boolean doInsert,String name) {
+
+		List<VisitAssignmentRules__c> visitAssigRulesList = new List<VisitAssignmentRules__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VisitAssignmentRules__c visitAssigRule = new VisitAssignmentRules__c(
+				Name = name
+			);
+
+			visitAssigRulesList.add(visitAssigRule);
+		}
+
+		if (doInsert){
+
+			insert visitAssigRulesList;
+		}
+
+		return visitAssigRulesList;
+	}
+	/**
+     * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
+     * @date 28/09/2021
+     * @description createDaysToExpiration Method
+     * @history Sabina Levonja - 28/09/2021– Created method
+     */
+	public static List<CS_DaysToExpiration__c> createDaysToExpiration(Integer amount, Boolean doInsert,String numberOfDays, String type) {
+
+		List<CS_DaysToExpiration__c> expDays = new List<CS_DaysToExpiration__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_DaysToExpiration__c exp = new CS_DaysToExpiration__c(
+				Name = 'Vendita',
+				NumberOfDays__c = numberOfDays,
+				Type__c = type
+			);
+
+			expDays.add(exp);
+		}
+
+		if (doInsert){
+
+			insert expDays;
+		}
+
+		return expDays;
+	}
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAssignmentRule method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<AssignmentRule__c> createAssignmentRule(Integer amount, Boolean doInsert,Double rulePriority, String type) {
+        
+        List<AssignmentRule__c> rules = new List<AssignmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            AssignmentRule__c r = new AssignmentRule__c(
+                Name = 'testAssignmentRule'+i,
+                RulePriority__c = rulePriority,
+        		Type__c = type
+            );
+            
+            rules.add(r);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createVasSupplierTable method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<VasSupplierTable__c> createVasSupplierTable(Integer amount, Boolean doInsert) {
+        
+        List<VasSupplierTable__c> tables = new List<VasSupplierTable__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            VasSupplierTable__c v = new VasSupplierTable__c();
+            
+            tables.add(v);
+        }
+        
+        if (doInsert){
+            
+            insert tables;
+        }
+        
+        return tables;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAsset method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<Asset> createAsset(Integer amount, Boolean doInsert) {
+        
+        List<Asset> assets = new List<Asset>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            Asset a = new Asset(
+                Name = 'testAsset' + i
+            );
+            
+            assets.add(a);
+        }
+        
+        if (doInsert){
+            
+            insert assets;
+        }
+        
+        return assets;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createFieldsTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__FieldsTemplate__c> createFieldsTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__FieldsTemplate__c> templates = new List<wrts_prcgvr__FieldsTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__FieldsTemplate__c template = new wrts_prcgvr__FieldsTemplate__c(
+                Name = 'testFieldTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityTemplate__c> createActivityTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__ActivityTemplate__c> templates = new List<wrts_prcgvr__ActivityTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c(
+                Name = 'testActivityTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
+	
+	public static List<Asset> createAsset(Integer amount, Boolean doInsert, String companyOwner) {
+
+		List<Asset> assetList = new List<Asset>();
+
+		for (Integer i=0; i<amount; i++){
+
+			Asset asset = new Asset(
+				Name = 'testAsset',
+				CompanyOwner__c = companyOwner
+        	);
+
+			assetList.add(asset);
+		}
+
+		if (doInsert){
+
+			insert assetList;
+		}
+
+		return assetList;
+	}
+
 	/**
 	 * @author Valere (valere@noeli-it.net)
-	 * @date 20/09/2021
+	 * @date 05/10/2021
 	 */
-	public static List<ServicePoint__c> createServicePoint(Integer amount, Boolean doInsert, Map<String,Object> params){
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
 
-		List<ServicePoint__c> servPointList=new List<ServicePoint__c>();
-
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+	  
 		for (Integer i=0; i<amount; i++){
+	  
+		  MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+	  
+		  mRemiCode.RemiCode__c='test';
 
-			ServicePoint__c servPoint=new ServicePoint__c();
-
-			servPoint.Name='testServicePoint'+i;
-			servPoint.ServicePointCode__c='Code';
-			servPoint.MeterStatus__c=(String)params.get('meterStatus');
-			servPoint.Account__c=(String)params.get('accountId');
-			servPoint.PlugPresence__c=(String)params.get('plugPresence');
-			servPoint.PowerRequested__c =(Integer)params.get('powerRequested');
-			servPoint.CommoditySector__c = (String)params.get('commoditySector');
-			servPoint.RecordTypeId=(String)params.get('recordTypeId');
-			servPoint.SupplyCity__c=(String)params.get('supplyCity');
-			servPointList.add(servPoint);
+		  for(String key :params.keySet()) {
+			  mRemiCode.put(key, params.get(key));
+		  }	  
+	  
+		  matriceRemiCode.add(mRemiCode);
+	  
 		}
-
+	  
 		if (doInsert){
-			insert servPointList;
+	  
+		  insert matriceRemiCode;
 		}
-
-		return servPointList;
-	}
-
-
-	/**
-	* @author Valere (valere@noeli-it.net)
-	* @date 20/09/2021
-	*/
-	public static List<wrts_prcgvr__Activity__c> createActivityCustom(Integer amount, Boolean doInsert,Map<String,Object> params){
-
-		List<wrts_prcgvr__Activity__c> activityCustomList=new List<wrts_prcgvr__Activity__c>();
-
-		for (Integer i=0; i<amount; i++){
-			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
-			actCustom.Account__c=(String)params.get('accountId');
-			actCustom.Type__c=(String)params.get('type');
-			actCustom.Status__c=(String)params.get('status');
-			actCustom.ServicePointCode__c=(String)params.get('servicePointCode');
-			activityCustomList.add(actCustom);
-		}
-
-		if (doInsert){
-			insert activityCustomList;
-		}
-
-		return activityCustomList;
+	  
+		return matriceRemiCode;
 	}
 
 	/**
-	* @author Valere (valere@noeli-it.net)
-	* @date 20/09/2021
-	*/
-	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, String phase,Map<String,Object> params){
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<Service26Config__c> createService26Config(Integer amount, Boolean doInsert){
 
-		HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
-		List<Order> orderList=new List<Order>();
-		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
+		List<Service26Config__c> serviceList=new List<Service26Config__c>();
+	  
 		for (Integer i=0; i<amount; i++){
-			Order ord=new Order();
-			ord.RecordTypeId=rt;
-			ord.Name='testOrderName'+i;
-			ord.Status='Draft';
-			ord.EffectiveDate=Date.today();
-			ord.AccountId=accId;
-			ord.EstimateAmount__c=1000;
-			ord.PowerQuote__c=1000;
-			ord.AdministrativeBurden__c=1;
-			ord.EstimatedVAT__c=1;
-			ord.ValidityDateEstimate__c=Date.today().addDays(30);
-			ord.Phase__c=phase;
-			ord.CIAccoutn__c='Richiesto';
-			ord.QuickQuote__c='Richiesto';
-			ord.ChamberCommerceRegistration__c='Richiesto';
-			ord.Instance326__c='Richiesto';
-			ord.DocumentLow80__c='Richiesto';
-			ord.AutorizationVolturaThirdTrader__c='Richiesto';
-			ord.ContractSigned__c=true;
-			ord.SignedDate__c=Date.today();
-			ord.SignatureMethod__c='Vocal Order';
-			ord.DocSendingMethod__c='E-mail';
-			ord.servicePoint__c=(String)params.get('servicePoint');
-			ord.powerRequested__c=(Integer)params.get('powerRequested');
-			ord.SBQQ__Quote__c=(String)params.get('SBQQ__Quote');
-			orderList.add(ord);
+	  
+		  Service26Config__c service=new Service26Config__c();
+	  
+		  //service.Name='test';
+		  service.ProductFamily__c='Bonus Eur/Giorno';
+	  
+	  
+		  serviceList.add(service);
+	  
 		}
-
+	  
 		if (doInsert){
-			insert orderList;
+	  
+		  insert serviceList;
 		}
-
-		return orderList;
+	  
+		return serviceList;
 	}
-
-	/**
-	* @author Valere (valere@noeli-it.net)
-	* @date 20/09/2021
-	*/
-	public static List<Sale__c> createSale(Integer amount, Boolean doInsert,  Map<String,Object> params){
-
-		List<Sale__c> salesList=new List<Sale__c>();
-
-		for (Integer i=0; i<amount; i++){
-			Sale__c sale=new Sale__c();
-			sale.Name='testSaleName'+i;
-			sale.Status__c=(String)params.get('status');
-			sale.Account__c=(String)params.get('accountId');
-			sale.isTransition__c=(boolean)params.get('transition');
-			salesList.add(sale);
-		}
-
-		if (doInsert){
-			insert salesList;
-		}
-
-		return salesList;
-	}
-
-	/**
-	* @author Valere (valere@noeli-it.net)
-	* @date 20/09/2021
-	*/
-	public static List<Opportunity> createOpportunity(Integer amount, Boolean doInsert, Map<String,Object> params){
-
-		List<Opportunity> oppList=new List<Opportunity>();
-
-		for (Integer i=0; i<amount; i++){
-			Opportunity opp=new Opportunity();
-			opp.Name='testOpportunity'+i;
-			opp.CloseDate=Date.today().addDays(30);
-			opp.StageName='Negotiation';
-			opp.Sale__c=(String)params.get('sale');
-			oppList.add(opp);
-		}
-
-		if (doInsert){
-			insert oppList;
-		}
-
-		return oppList;
-	}
-
-	/**
-	* @author Valere (valere@noeli-it.net)
-	* @date 20/09/2021
-	*/
-	public static List<SBQQ__Quote__c> createQuote (Integer amount, Boolean doInsert, Map<String,Object> params) {
-
-		List<SBQQ__Quote__c> quoteList=new List<SBQQ__Quote__c>();
-
-		for (Integer i=0; i<amount; i++){
-
-			SBQQ__Quote__c quote=new SBQQ__Quote__c();
-			quote.SBQQ__Type__c=(String)params.get('type');
-			quote.OrderReference__c=(String)params.get('orderId');
-			quote.SBQQ__Opportunity2__c=(String)params.get('opportunityId');
-			quote.Sale__c=(String)params.get('saleId');
-			quote.AllowChangeUse__c=(Boolean)params.get('allowChangeUse');
-			quote.AmendmentAllowed__c=(Boolean)params.get('amendmentAllowed');
-			quote.SBQQ__Primary__c=(Boolean)params.get('SBQQ__Primary');
-			quoteList.add(quote);
-		}
-
-		if (doInsert){
-			insert quoteList;
-		}
-
-		return quoteList;
-	}
-
-	
 
 	/**
 	 * @author Valere (valere@noeli-it.net)
@@ -2648,5 +2819,4 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return salePartnerCommunity;
 	}
-
 }

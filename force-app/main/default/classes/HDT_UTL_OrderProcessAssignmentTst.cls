@@ -5,102 +5,84 @@
  * @history valere - 20/09/2021– Created Class
  */
 
-
-
-
 @isTest
 private class HDT_UTL_OrderProcessAssignmentTst {
+
+  private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
 
 	@testSetup 
   static void setup() {
         
 		List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
-      
-    Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Gas' AND sObjectType = 'ServicePoint__c'].Id;
-
  
-    List<ServicePoint__c> servicePointList= HDT_UTL_DataFactoryTst.createServicePoint(1,true,new Map<String,Object>{
-      'servicePointCode'=>'code',
-      'meterStatus'=>'Bozza',
-      'accountId'=>accountList[0].id,
-      'plugPresence'=>'NO',
-      'powerRequested'=>2,
-      'recordTypeId'=>recordTypeId,
-      'commoditySector'=>'Gas',
-      'supplyCity'=>'supplyCity'
-    });
-   
+    List<ServicePoint__c> servicePointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+    servicePointList.get(0).MeterStatus__c = 'Bozza';
+    servicePointList.get(0).Account__c= accountList[0].id;
+    servicePointList.get(0).PlugPresence__c= 'NO';
+    servicePointList.get(0).PowerRequested__c = 2;
+    servicePointList.get(0).CommoditySector__c = 'Gas';
+    servicePointList.get(0).RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_GAS;
+    servicePointList.get(0).SupplyCity__c = 'supplyCity';
 
-    List<wrts_prcgvr__Activity__c> activities= HDT_UTL_DataFactoryTst.createActivityCustom(1,true, new Map<String,Object>{
-          'type'=>'Gestione Switch in Ripristinatorio',
-          'status'=>'Creata',
-          'accountId'=>accountList[0].id,
-          'servicePointCode'=>'Code'
-    });
+    insert servicePointList;
 
-    List<Order> firstOrderList= HDT_UTL_DataFactoryTst.createOrder(1, true, accountList[0].id,'Bozza');
-    // Create a scale  
-    List<Sale__c> saleList= HDT_UTL_DataFactoryTst.createSale(1, true, new Map<String,Object> {
-      'transition'=>true,
-      'status'=>'Bozza',
-      'accountId'=>accountList[0].id
-    });
-    // create a quote 
-     List<Opportunity> opp= HDT_UTL_DataFactoryTst.createOpportunity(1, true, new Map<String,Object>{
-       'sale'=>saleList[0].id
-     });
-    List<SBQQ__Quote__c> quotes= HDT_UTL_DataFactoryTst.createQuote (1, true,new Map<String,Object>{
-      'allowChangeUse'=>false,
-      'amendmentAllowed'=>false,
-      'type'=>'Quote',
-      'orderId'=>firstOrderList[0].id,
-      'opportunityId'=>opp[0].id,
-      'saleId'=>saleList[0].id,
-      'SBQQ__Primary'=>true
-    });
-    // createSaleServiceItem
-    List<SaleServiceItem__c> saleServiceList= HDT_UTL_DataFactoryTst.createSaleServiceItem(1,true,opp[0].id, quotes[0].id,servicePointList[0].id);
+    List<wrts_prcgvr__Activity__c> activities= HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accountList.get(0).Id);
+    activities.get(0).Type__c = 'Gestione Switch in Ripristinatorio';
+    activities.get(0).Status__c = 'Creata';
+    activities.get(0).ServicePointCode__c = servicePointList.get(0).ServicePointCode__c;
+
+    insert activities;
+
+    List<Order> firstOrderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accountList[0].id,'Bozza');
+
+    List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, false, accountList.get(0).Id, 'Bozza');
+    saleList.get(0).isTransition__c = true;
+
+    insert saleList;
+
+    List<Opportunity> opp = HDT_UTL_DataFactoryTst.createOpportunity(1, false);
+    opp.get(0).Sale__c = saleList[0].id;
+
+    insert opp;
+
+    List<SBQQ__Quote__c> quotes= HDT_UTL_DataFactoryTst.createQuote(1, false, firstOrderList[0].id, opp.get(0).Id, saleList.get(0).Id, 'Quote');
+    quotes.get(0).AllowChangeUse__c = false;
+    quotes.get(0).AmendmentAllowed__c = false;
+    quotes.get(0).SBQQ__Primary__c = true;
+
+    insert quotes;
+
+    List<SaleServiceItem__c> saleServiceList = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opp[0].id, quotes[0].id,servicePointList[0].id);
     
-    Opportunity opps=[select id,SBQQ__PrimaryQuote__c
-                           FROM Opportunity WHERE  SBQQ__PrimaryQuote__c =: quotes[0].id
-                            
-                           LIMIT 1];
+    List<Order> orderForAllTest = HDT_UTL_DataFactoryTst.createOrder(1, false, accountList[0].id, 'Bozza');
+    orderForAllTest.get(0).servicePoint__c = servicePointList.get(0).Id;
+    orderForAllTest.get(0).powerRequested__c = 10;
+    orderForAllTest.get(0).SBQQ__Quote__c = quotes[0].id;
     
-    List<Order> orderForAllTest= HDT_UTL_DataFactoryTst.createOrder(1,true, accountList[0].id,'Bozza',new Map<String,Object> {
-      'servicePoint'=>servicePointList[0].id,
-      'powerRequested'=>10,
-      'SBQQ__Quote'=>quotes[0].id,
-      'accountId'=>accountList[0].id
+    insert orderForAllTest;
+
+    List<MatriceRemiCode__c> remiList = HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompany(1,false, new Map<String,Object> {
+      'SalesCompany__c'=>'salesCompany',
+      'Comune__c'=>'supplyCity'
     });
 
+    remiList.addAll(HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompany(1,false, new Map<String,Object> {
+      'SalesCompany__c'=>null,
+      'SalesCompany__c'=>'supplyCity'
+    }));
 
-    List<MatriceRemiCode__c> remiList= HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompagny(1,true, new Map<String,Object> {
-      'salesCompany'=>'salesCompany',
-      'comune'=>'supplyCity'
-    });
-
-
-    List<MatriceRemiCode__c> secondRemiList= HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompagny(1,true, new Map<String,Object> {
-      'salesCompany'=>null,
-      'comune'=>'supplyCity'
-    });
-
+    insert remiList;
 
     List<Service26Config__c> serviceList= HDT_UTL_DataFactoryTst.createService26Config(1,true);
-
-
     
     // create Profile and User
-
-    Profile p = [SELECT Id FROM Profile LIMIT 1];
-
 	
-    User user = HDT_UTL_DataFactoryTst.createInternalUser(p.id,true);
+    User user = HDT_UTL_DataFactoryTst.createInternalUser(HDT_UTL_DataFactoryTst.getProfileId(utlConstants.SYSTEM_ADMINISTRATOR_NAME),true);
 
            
     //Create Custom setting 
 	
-    HDT_Process_Sale_Partner_Community__c csobj= HDT_UTL_DataFactoryTst.createSalePartnerCommunity(user,true);
+    HDT_Process_Sale_Partner_Community__c csobj = HDT_UTL_DataFactoryTst.createSalePartnerCommunity(user,true);
 
   }
   
@@ -144,7 +126,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     Sale__c sale = [SELECT Id FROM Sale__c WHERE Name='testSaleName0' LIMIT 1];
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
   
-    System.assertEquals('Subentro', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
+    System.assertEquals('Subentro_Remi', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
     System.assertNotEquals('code', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
   }
 
