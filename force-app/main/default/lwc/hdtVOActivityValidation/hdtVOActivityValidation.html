@@ -1,0 +1,23 @@
+<template>
+    <template if:true={showFunction}>
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large">
+        </lightning-spinner>
+        <!--<lightning-button onclick={save} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Valida" title="Riassegna"></lightning-button>-->
+    <!-- <lightning-button onclick={reject} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Rigetta" title="Riassegna"></lightning-button>-->
+        <lightning-layout>
+            <lightning-layout-item padding="horizontal-large" size="12">
+                <lightning-record-edit-form record-id={recordId} object-api-name="wrts_prcgvr__Activity__c">
+                    <div class="slds-grid slds-wrap slds-m-top_small">
+                        <lightning-input-field required
+                            class="slds-size_1-of-3" field-name="Validation__c" data-id="Validation__c" data-name="Validation__c"
+                            variant="label-stacked" ></lightning-input-field>
+                    </div>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        </lightning-layout>
+        <footer class="slds-modal__footer">
+                <lightning-button variant="brand" name="" type="button" label="Salva" onclick={save} disabled={isDisabledField}>
+                </lightning-button>
+        </footer>
+    </template>
+</template>

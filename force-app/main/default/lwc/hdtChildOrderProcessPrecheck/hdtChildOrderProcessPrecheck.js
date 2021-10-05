@@ -362,7 +362,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcessObject.recordType === 'HDT_RT_Voltura' ||this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcessObject.recordType === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcessObject.recordType === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcessObject.recordType === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
             this.callCreditCheckSAP();
         }
         console.log('****13');
@@ -454,7 +454,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         } else {
             console.log('enter with value');
             this.options = [];
-            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? "Prima Attivazione" : this.order.ProcessType__c;
+            // fix LG 2009 richiesta da CZ da Room
+            let label = new RegExp("^Prima Attivazione").test(this.order.ProcessType__c) ? this.order.ProcessType__c == 'Prima Attivazione con modifica' ? this.order.ProcessType__c : "Prima Attivazione" : this.order.ProcessType__c;
             this.options.push({label: label, value: this.order.ProcessType__c});
             this.selectedProcessObject = {processType: this.order.ProcessType__c, recordType: this.order.RecordType.DeveloperName}
             this.value = this.selectedProcessObject.processType;
@@ -530,13 +531,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     return `${testoFinale}\n${elem}`;
                 }, result.errorDetails[0].code);
                 console.log(message);
-                let toastErrorMessage = new ShowToastEvent({
+                /*let toastErrorMessage = new ShowToastEvent({
                     title: 'CreditCheck KO',
                     message: message,
                     variant: 'warning', 
                     mode:'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(toastErrorMessage);*/
                 //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
             }
             
@@ -616,7 +617,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             jobTitle:this.order.ChannelTransCode__c,
             internalCustomerId:this.order.Account.CustomerCode__c,
             companyName:companyName,
-            externalCustomerId:this.order.Account.FiscalCode__c,
+            externalCustomerId:this.order.Account.FiscalCode__c? this.order.Account.FiscalCode__c : this.order.Account.VATNumber__c,
             secondaryCustomerId:secondaryCustomerId,
             bpClass:bpClass,
             bpCategory:this.order.Account.Category__c,
@@ -638,11 +639,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["district"] = this.order.ServicePoint__r.SupplyProvince__c;
             data["postCode"] = this.order.ServicePoint__r.SupplyPostalCode__c;
 
-            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumptionStandardM3__c;
+            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumption__c;
         }
         console.log("this.3"); 
 
-        if(this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura'){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_Subentro' || this.selectedProcessObject.recordType === 'HDT_RT_Voltura') && (this.order.Account.Id != this.order.ServicePoint__r?.Account__r?.Id) ){
             console.log("this.31:" + JSON.stringify(this.order.Account.RecordType.DeveloperName)); 
             console.log("this.310:" + JSON.stringify(this.order.ServicePoint__r)); 
             if(this.order.ServicePoint__r?.Account__r?.RecordType?.DeveloperName === 'HDT_RT_Residenziale'){
@@ -792,7 +793,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
         console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
 
-        while(count <= 5
+        while(count <= 8
             && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
             && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
             ){

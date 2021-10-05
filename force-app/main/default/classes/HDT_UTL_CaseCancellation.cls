@@ -34,7 +34,7 @@ public inherited sharing class HDT_UTL_CaseCancellation {
     public static HDT_UTL_ResponseCancellationReason getCancellationReason(HDT_UTL_RequestCancellationReason input) {
         HDT_UTL_ResponseCancellationReason toReturn;
         try{
-            List<String> listDescription = new List<String>();
+            //List<String> listDescription = new List<String>();
             String queryCmd = 'SELECT Technical_Causal_Cancellation_Reason__c, CancellationReasonDescription__c FROM HDT_TechnicalCancellationReason__mdt WHERE (Causal_Process_to_Cancell__c = \''
             + input.causalCode +'\' OR Causal_Process_to_Cancell__c = null) AND SelectedProcessCancellationReason__c = \''
             + input.processCancellationReason +'\' AND (SelectedProcessCancellationReason__c = null) WITH SECURITY_ENFORCED';

@@ -14,8 +14,8 @@ public inherited sharing class HDT_SRV_QuoteLineGroup {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize security access instance
-    * @param String fields - Fields to check for access
-    * @param String crud - crud operation passed as a string (create, read, update, delete)
+    * @param fields - Fields to check for access
+    * @param crud - crud operation passed as a string (create, read, update, delete)
     */
     public void checkAccessInit(String fields, String crud){
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__QuoteLineGroup__c', fields, crud);
@@ -25,7 +25,7 @@ public inherited sharing class HDT_SRV_QuoteLineGroup {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
-     * @param String fields
+     * @param fields
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
@@ -34,7 +34,7 @@ public inherited sharing class HDT_SRV_QuoteLineGroup {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Check if current user has create permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkCreateAccess(String fields){
         checkAccessInit(fields, CREATEPERMISSION);
@@ -43,7 +43,7 @@ public inherited sharing class HDT_SRV_QuoteLineGroup {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create SBQQ__QuoteLineGroup__c record
-     * @param SBQQ__QuoteLineGroup__c quoteLineGroup
+     * @param quoteLineGroup
      * @return SBQQ__QuoteLineGroup__c
      */
     public SBQQ__QuoteLineGroup__c createRecord(SBQQ__QuoteLineGroup__c quoteLineGroup){
@@ -59,7 +59,7 @@ public inherited sharing class HDT_SRV_QuoteLineGroup {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Create records in bulk
-    * @param List<SBQQ__QuoteLine__c> objectsList
+    * @param quoteLineGroupList
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLineGroup__c> createRecords(List<SBQQ__QuoteLineGroup__c> quoteLineGroupList){

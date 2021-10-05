@@ -9,15 +9,26 @@
  */
 public  class HDT_WS_MotoreVas {
 
+    private static final String WS_CONFIG_ACTIVATION = 'VAS.Activation';
+    private static final String WS_CONFIG_DEACTIVATION = 'VAS.Deactivation';
+
     /**
     * @description Send VAS activation callout
     * @author gabriele.rota@webresults.it | 2021-07-12 
     * @param orderId  
-    * @return HDT_WS_Response 
+    * @return HDT_WS_ArrichmentDataEntityResponse 
     **/
-    public static HDT_WS_Response activationCallout(Id orderId){
+    public static HDT_WS_ArrichmentDataEntityResponse activationCallout(Id orderId){
         HDT_UTL_VasManagement.HDT_WRP_VASReq req = HDT_UTL_VasManagement.getActivationRequest(orderId);
-        HDT_WS_Response res = (HDT_WS_Response) HDT_WS_HTTPServiceCall.sendRequest('VAS.Activation', req,HDT_WS_ArrichmentDataEntityResponse.class);
+        HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest(WS_CONFIG_ACTIVATION, req,HDT_WS_ArrichmentDataEntityResponse.class);
+
+        //23/09/2021 - gabriele.rota@webresults.it - Temporary Logging
+        Case logCase = new Case();
+        logCase.Causal__c = 'CALLOUT-'+WS_CONFIG_ACTIVATION;
+        logCase.Note__c = JSON.serializePretty(req);
+        logCase.Description = JSON.serialize(res);
+        Database.insert(logCase);
+
         return res;
     } 
 
@@ -25,11 +36,19 @@ public  class HDT_WS_MotoreVas {
     * @description Send VAS deactivation callout
     * @author gabriele.rota@webresults.it | 2021-07-12 
     * @param caseId  
-    * @return HDT_WS_Response 
+    * @return HDT_WS_ArrichmentDataEntityResponse 
     **/
-    public static HDT_WS_Response deactivationCallout(Id caseId){
+    public static HDT_WS_ArrichmentDataEntityResponse deactivationCallout(Id caseId){
         HDT_UTL_VasManagement.HDT_WRP_VASReq req = HDT_UTL_VasManagement.getDeactivationRequest(caseId);
-        HDT_WS_Response res = (HDT_WS_Response) HDT_WS_HTTPServiceCall.sendRequest('VAS.Deactivation', req,HDT_WS_ArrichmentDataEntityResponse.class);
+        HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest(WS_CONFIG_DEACTIVATION, req,HDT_WS_ArrichmentDataEntityResponse.class);
+
+        //23/09/2021 - gabriele.rota@webresults.it - Temporary Logging
+        Case logCase = new Case();
+        logCase.Causal__c = 'CALLOUT-'+WS_CONFIG_DEACTIVATION;
+        logCase.Note__c = JSON.serializePretty(req);
+        logCase.Description = JSON.serialize(res);
+        Database.insert(logCase);
+
         return res;
     }
 }

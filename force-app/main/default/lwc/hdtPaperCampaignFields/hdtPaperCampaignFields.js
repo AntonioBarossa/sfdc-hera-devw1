@@ -2,6 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 
 export default class HdtPaperCampaignFields extends LightningElement {
     @api paperRecordId;
+    @api reqrec;  // Start HRAWRM-621 16/09/2021
     @track campaignName;
 
     handleFormLoad() {
@@ -19,7 +20,7 @@ export default class HdtPaperCampaignFields extends LightningElement {
             }
         });
         console.log(notValid);
-        if (notValid.length > 0) {
+        if (notValid.length > 0 && this.reqrec==true) {
             let msg = "Completa tutti i campi obbligatori";
             this.dispatchEvent(new CustomEvent('erroroccurred', { detail: { msg } }));
         } else {

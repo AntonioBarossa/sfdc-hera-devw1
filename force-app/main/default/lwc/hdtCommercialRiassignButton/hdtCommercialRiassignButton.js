@@ -3,6 +3,7 @@ import getRecord from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByIdS';
 import riassegna from '@salesforce/apex/HDT_UTL_ActivityCustom.riassegnaComCod';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import cambia from '@salesforce/apex/HDT_UTL_ActivityCustom.cambiaphaseComm';
+import { getRecordNotifyChange  } from 'lightning/uiRecordApi';
 
 export default class HdtCommercialRiassignButton extends LightningElement {
 
@@ -55,13 +56,19 @@ export default class HdtCommercialRiassignButton extends LightningElement {
             recordId : this.recordId,
             causale : this.causale
         }).then(result => {
+            console.log('prerefresh');
             if(result){
-                const event = new ShowToastEvent({
+                console.log('prerefreshPOST');
+               // this.isRiassignButton = false;
+               // this.isApproveFase = true;
+                /*const event = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Approvazione Inviata',
                     variant: 'success',
                 });
-                this.dispatchEvent(event);
+                this.dispatchEvent(event);*/
+                //this.dispatchEvent(new CustomEvent('refreshpage'));
+                window.location.reload();
             }
         });
      
@@ -72,13 +79,15 @@ export default class HdtCommercialRiassignButton extends LightningElement {
             recordId : this.recordId,
             causale : 'Si'
         }).then(result => {
+            console.log('prerefresh');
             if(result == true){
-                const event = new ShowToastEvent({
+               /* const event = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Approvato',
                     variant: 'success',
                 });
-                this.dispatchEvent(event);
+                this.dispatchEvent(event);*/
+                window.location.reload();
             }
         });
      
@@ -91,12 +100,13 @@ export default class HdtCommercialRiassignButton extends LightningElement {
             causale : 'No'
         }).then(result => {
             if(result){
-                const event = new ShowToastEvent({
+               /* const event = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Rifiutato',
                     variant: 'success',
                 });
-                this.dispatchEvent(event);
+                this.dispatchEvent(event);*/
+                window.location.reload();
             }
         });
      

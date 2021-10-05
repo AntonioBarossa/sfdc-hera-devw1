@@ -5,7 +5,7 @@ public class HDT_WS_RecallMeRequest extends HDT_WS_Request {
     @AuraEnabled Public Long idUser;
     @AuraEnabled Public String username;
     @AuraEnabled Public String ecid;
-    @AuraEnabled Public String token;
+   // @AuraEnabled Public String token;
 
    /* public HDT_WS_RecallMeRequest(String body){
         Map<String, Object> obj = (Map<String, Object>) JSON.deserializeUntyped(body);

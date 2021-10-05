@@ -1,11 +1,298 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ProcessValue__c</fullName>
+    <description>Valore da utilizzare per il controllo sul processo/cluster di appartenenza</description>
     <externalId>false</externalId>
     <label>Valore processo</label>
-    <length>255</length>
     <required>true</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>ParentObject__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sospensione Fornitura</fullName>
+                <default>false</default>
+                <label>Sospensione Fornitura</label>
+            </value>
+            <value>
+                <fullName>Processo non trovato</fullName>
+                <default>false</default>
+                <label>Processo non trovato</label>
+            </value>
+            <value>
+                <fullName>Riattivazione Fornitura</fullName>
+                <default>false</default>
+                <label>Riattivazione Fornitura</label>
+            </value>
+            <value>
+                <fullName>Variazione Potenza</fullName>
+                <default>false</default>
+                <label>Variazione Potenza</label>
+            </value>
+            <value>
+                <fullName>Interruzione Fornitura</fullName>
+                <default>false</default>
+                <label>Interruzione Fornitura</label>
+            </value>
+            <value>
+                <fullName>Chiusura Contatore</fullName>
+                <default>false</default>
+                <label>Chiusura Contatore</label>
+            </value>
+            <value>
+                <fullName>Modifica Impianto</fullName>
+                <default>false</default>
+                <label>Modifica Impianto</label>
+            </value>
+            <value>
+                <fullName>Risoluzione No Disalimentabile</fullName>
+                <default>false</default>
+                <label>Risoluzione No Disalimentabile</label>
+            </value>
+            <value>
+                <fullName>Spostamento Contatore</fullName>
+                <default>false</default>
+                <label>Spostamento Contatore</label>
+            </value>
+            <value>
+                <fullName>Risoluzione No Sospensione</fullName>
+                <default>false</default>
+                <label>Risoluzione No Sospensione</label>
+            </value>
+            <value>
+                <fullName>Verifica GDM</fullName>
+                <default>false</default>
+                <label>Verifica GDM</label>
+            </value>
+            <value>
+                <fullName>Rimozione Impianto</fullName>
+                <default>false</default>
+                <label>Rimozione Impianto</label>
+            </value>
+            <value>
+                <fullName>Consegna copia chiave GdM</fullName>
+                <default>false</default>
+                <label>Consegna copia chiave GdM</label>
+            </value>
+            <value>
+                <fullName>Nuovo Impianto</fullName>
+                <default>false</default>
+                <label>Nuovo Impianto</label>
+            </value>
+            <value>
+                <fullName>Richiesta lettura cliente</fullName>
+                <default>false</default>
+                <label>Richiesta lettura cliente</label>
+            </value>
+            <value>
+                <fullName>Recesso per Altri Motivi</fullName>
+                <default>false</default>
+                <label>Recesso per Altri Motivi</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Connessione con Attivazione</fullName>
+                <default>false</default>
+                <label>Connessione con Attivazione</label>
+            </value>
+            <value>
+                <fullName>Proroga Temporanea</fullName>
+                <default>false</default>
+                <label>Proroga Temporanea</label>
+            </value>
+            <value>
+                <fullName>Riattivazione non morose</fullName>
+                <default>false</default>
+                <label>Riattivazione non morose</label>
+            </value>
+            <value>
+                <fullName>Subentro Gas</fullName>
+                <default>false</default>
+                <label>Subentro Gas</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Ele</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Ele</label>
+            </value>
+            <value>
+                <fullName>Temporanea - Nuova Attivazione</fullName>
+                <default>false</default>
+                <label>Temporanea - Nuova Attivazione</label>
+            </value>
+            <value>
+                <fullName>Risoluzione Punto Sospeso</fullName>
+                <default>false</default>
+                <label>Risoluzione Punto Sospeso</label>
+            </value>
+            <value>
+                <fullName>Autolettura</fullName>
+                <default>false</default>
+                <label>Autolettura</label>
+            </value>
+            <value>
+                <fullName>Switch in Gas</fullName>
+                <default>false</default>
+                <label>Switch in Gas</label>
+            </value>
+            <value>
+                <fullName>Subentro Ele</fullName>
+                <default>false</default>
+                <label>Subentro Ele</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione In delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione In delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Fuori delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Fuori delibera</label>
+            </value>
+            <value>
+                <fullName>Switch in Ele</fullName>
+                <default>false</default>
+                <label>Switch in Ele</label>
+            </value>
+            <value>
+                <fullName>Risoluzione NO Contatore</fullName>
+                <default>false</default>
+                <label>Risoluzione NO Contatore</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Subentro</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Sospensione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Processo non trovato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Riattivazione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Variazione Potenza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Interruzione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Chiusura Contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Modifica Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Risoluzione No Disalimentabile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Spostamento Contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Risoluzione No Sospensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Verifica GDM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Rimozione Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Consegna copia chiave GdM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Nuovo Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Richiesta lettura cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Recesso per Altri Motivi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Risoluzione Punto Sospeso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <valueName>Autolettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Connessione con Attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Proroga Temporanea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Riattivazione non morose</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Subentro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Prima Attivazione Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Temporanea - Nuova Attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Switch in Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Subentro Ele</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Prima Attivazione In delibera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Prima Attivazione Fuori delibera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Switch in Ele</valueName>
+        </valueSettings>
+    </valueSet>
 </CustomField>

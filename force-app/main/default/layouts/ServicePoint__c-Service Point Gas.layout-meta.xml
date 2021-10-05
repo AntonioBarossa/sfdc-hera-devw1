@@ -15,11 +15,11 @@
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Distributor__c</field>
+                <behavior>Readonly</behavior>
+                <field>DistributorNameFormula__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ServicePointCode__c</field>
             </layoutItems>
         </layoutColumns>
@@ -160,14 +160,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SupplySAPCityCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SupplySAPStreetCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>SupplyIsAddressVerified__c</field>
             </layoutItems>
         </layoutColumns>
@@ -234,10 +226,17 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>CommercialProduct__c</fields>
+        <fields>SAPContractCode__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>Contract.ServicePoint__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>CASES.STATUS</fields>
         <relatedList>Case.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -262,7 +261,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002SmKF</masterLabel>
+        <masterLabel>00h1j000002TFng</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

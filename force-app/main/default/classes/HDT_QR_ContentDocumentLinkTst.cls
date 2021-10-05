@@ -17,7 +17,9 @@ public with sharing class HDT_QR_ContentDocumentLinkTst {
 
         Id contentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersion[0].Id].ContentDocumentId;
 
-        List<ContentDocumentLink> contentDocLinkList = HDT_UTL_DataFactoryTst.createContentDocumentLink(1, true, oppList[0].Id, contentDocumentId);
+        Database.update(new ContentDocument(Id = contentDocumentId, Description = 'testClassDescription'));
+
+        HDT_UTL_DataFactoryTst.createContentDocumentLink(1, true, oppList[0].Id, contentDocumentId);
         
     }
 
@@ -26,18 +28,35 @@ public with sharing class HDT_QR_ContentDocumentLinkTst {
 
         Test.startTest();
 
-        List<ContentDocumentLink> cdl = new List<ContentDocumentLink>();
+        Opportunity opp = [SELECT id FROM Opportunity WHERE Name = 'testOpportunity0' LIMIT 1];
+
+        HDT_QR_ContentDocumentLink qCdl = new HDT_QR_ContentDocumentLink();
+
+        List<ContentDocumentLink> cdl = qCdl.getRecordsByEntity(opp.Id);
+
+        System.assertEquals(opp.Id, cdl[0].LinkedEntityId, 'The Content Document Link was not retrieve correctly');
+
+        System.assertNotEquals(cdl[0].ShareType, null, 'The Share Type of the Content Document Link was not correct');
+
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void testGetRecordsByEntityAndContentDocumentDescription(){
+        
+        Test.startTest();
 
         Opportunity opp = [SELECT id FROM Opportunity WHERE Name = 'testOpportunity0' LIMIT 1];
 
         HDT_QR_ContentDocumentLink qCdl = new HDT_QR_ContentDocumentLink();
 
-        cdl = qCdl.getRecordsByEntity(opp.Id);
+        List<ContentDocumentLink> cdl = qCdl.getRecordsByEntityAndContentDocumentDescription(opp.Id, 'testClassDescription');
 
-        System.assertEquals('V', cdl[0].ShareType);
+        System.assertEquals(opp.Id, cdl[0].LinkedEntityId, 'The Content Document Link was not retrieve correctly');
 
-        System.assertNotEquals(cdl[0].ShareType, null);
-
+        System.assertNotEquals(cdl[0].ShareType, null, 'The Share Type of the Content Document Link was not correct');
+        
         Test.stopTest();
+        
     }
 }

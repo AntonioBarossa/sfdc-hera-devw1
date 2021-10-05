@@ -1,5 +1,4 @@
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
-    
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
         'SAPStep__c' => 'SAPStep__c IN (###)',
@@ -14,7 +13,6 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'UserCreatorChannel__c' => 'Case__r.Origin IN (###)',
         'BPCode__c' => 'Account__r.CustomerCode__c IN (###)',
         'Segment__c' => 'Account__r.Segment__c IN (###)',
-        'SAPStep__c' => 'SAPStep__c IN (###)',
         'FirstLevelOpinion__c' => 'Case__r.FirstLevelOpinion__c IN (###)',
         'SecondLevelOpinion__c' => 'Case__r.SecondLevelOpinion__c IN (###)',
         'CreatorAgency__c' => 'Order__r.CreatedBy.UserCompany__c IN (###)',
@@ -24,7 +22,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Distributor__c' => '(Case__r.DistributorName__c IN (###) OR Order__r.DistributorFormula__c IN (###))',
         'Market__c' => '(Case__r.Market__c IN (###) OR Order__r.Market__c IN (###))',
         'Vendor__c' => '(Case__r.SalesCompany__c IN (###) OR Order__r.SalesCompany__c IN (###))',
-        'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
+        // 'SalesAgency__c' => 'Order__r.Agency__c IN (###)',
         'MacroProcess__c' => '(Case__r.Cluster__c IN (###) OR Order__r.Cluster__c IN (###))',
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.ProcessType__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
@@ -67,7 +65,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 LowPriorityQueue__c
             FROM AssignmentRule__c
             WHERE
-                (RuleStartDate__c < TOMORROW OR RuleStartDate__c = null) AND (RuleEndDate__c > TODAY OR RuleEndDate__c = null)
+                Deactivated__c = false AND
+                (RuleStartDate__c <= :Datetime.now() OR RuleStartDate__c = null) AND
+                (RuleEndDate__c > :Datetime.now() OR RuleEndDate__c = null)
             ORDER BY RulePriority__c ASC
         ];
     }
@@ -119,7 +119,6 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                     );
                     if(queue.DailyCapacity__c != null) queueUsageMap.put(queue.QueueId__c, ++queueUsage);
                     processedActivitiesMap.put(processedActivity.Id, processedActivity);
-                    if(processedActivitiesMap.size() == 10000) break; // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
                 }
                 if(processedActivitiesMap.size() == 10000) break; // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
             }
@@ -130,7 +129,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
             for(Database.SaveResult result : results) {
                 if(!result.isSuccess()) {
-                    System.debug(result.getErrors());
+                    System.debug(result.getId() + ' | ' + result.getErrors());
                 }
             }
         }
@@ -155,7 +154,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     public String getQuery(AssignmentRule__c rule) {
         Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
         // INITIALIZING QUERY'S STATIC PART
-        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND wrts_prcgvr__Priority__c != null'};
+        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false AND ManuallyReassigned__c = false AND wrts_prcgvr__Priority__c != null AND wrts_prcgvr__Status__c IN (\'Not Started\', \'Aperta\')'};
         String mapping;
         String value;
         String condition;

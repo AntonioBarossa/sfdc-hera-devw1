@@ -14,9 +14,39 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize order process component
-    * @param String orderId
+    * @param orderId
     * @return Map<String, Object>
     */
+
+    @AuraEnabled
+    public static Map<String, Object> isCommunity(){
+
+        Map<String, Object> result = new Map<String, Object>();
+
+        try {
+
+            Id siteId = Site.getSiteId(); 
+            
+            if (siteId != null) {
+                result.put('isCommunity', true);
+            } else {
+                result.put('isCommunity', false);
+            }
+
+            result.put('error', false);
+            
+            
+        } catch (Exception e) {
+            
+            result.put('error', true);
+            result.put('errorMessage', e.getMessage());
+            result.put('errorStackTrace', e.getStackTraceString());
+            
+        }
+
+        return result;
+    }
+
     @AuraEnabled
     public static Map<String, Object> controllerInit(String orderId) {
 
@@ -24,7 +54,8 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         
         orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status,SBQQ__Quote__r.IsVAS__c,SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__c,SBQQ__Quote__r.AllowChangeUse__c');
         Order ord = orderQr.getRecordById(orderId);
-
+		System.debug(ord);
+        System.debug(ord.RecordType.DeveloperName);
         if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
             HDT_UTL_OrderFieldsAlignment.alignFields(ord);
             ord = orderQr.getRecordById(orderId);
@@ -65,9 +96,9 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize order process component
-    * @param String orderId
-    * @param String processo - Dropdown selection for child order process
-    * @param String parentOrderId
+    * @param orderId
+    * @param processo - Dropdown selection for child order process
+    * @param parentOrderId
     */
     @AuraEnabled
     public static void saveOption(String orderId,String processo,String parentOrderId) {//Reference: String ordineVendita
@@ -82,19 +113,10 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         //Reference: List<Ordine_di_Vendita__c> ordvenLis = [Select id,stato__c from Ordine_di_Vendita__c Where id = :ordineVendita and (stato__c = 'Bozza' OR stato__c = 'Sospeso')];
         List<Order> ordvenLis = orderQr.getRecordByIdFilterStatus(parentOrderId, 'Draft');
-
-        if(!ordvenLis.isEmpty()) {
-            // ordvenLis[0].Status = 'In Lavorazione';
-            // orderSrv.updateRecord(ordvenLis[0]);
-        }
         
         // ord.Status = 'In Lavorazione' ;
 
        	// Reference: if(!rList.isEmpty()) {
-        if(recordTypeId != '') {
-            // Reference: ord.RecordTypeId = rList[0].id;
-            // ord.RecordTypeId = recordTypeId;
-        }
 
         // orderSrv.updateRecord(ord);
     }
@@ -102,7 +124,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Refresh order
-    * @param String orderId
+    * @param orderId
     * @return Order
     */
     @AuraEnabled

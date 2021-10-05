@@ -12,10 +12,26 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
-        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+        
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false, accList[0].Id);
+        billingProfileList[0].InvoicingStreetName__c = 'Roma';
+        billingProfileList[0].InvoicingStreetNumber__c = '15';
+        billingProfileList[0].InvoicingStreetNumberExtension__c = '20100 ITALIA';
+        billingProfileList[0].InvoicingCity__c = 'ROMA';
+        billingProfileList[0].InvoicingProvince__c = 'RM';
+        billingProfileList[0].InvoicingPostalCode__c = '10190';
+        billingProfileList[0].InvoicingCountry__c = 'ITALIA';
+
+        insert billingProfileList;
+
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList[0].Type = 'Sollecito Emissione Bolletta';
+        caseList[1].Type = 'Unificazione/Separazione BP-CA-Bolletta';
+        insert caseList;
+
         List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
         '{"name": "Case","label": "Caso","sObjectType": "Case","queryable": true,"fields": ['
         +'{"name": "CreatedDate","label": "DT_RIC_UTENTE"},'
@@ -120,7 +136,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
         System.assertEquals(statusCode, 400);
-        System.assertEquals(richPassCase.size(), 2);
+        System.assertEquals(richPassCase.size(), 3);
     }   
     @isTest
     static void handleRichPassResponseFieldTst()
@@ -148,5 +164,33 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.stopTest();
         System.Assert(responseFieldList != null);
     }
+
+    //INIZIO Test Costruttori classe HDT_WRP_HerokuPostSalesManager
+    @IsTest
+    static void testFirstConstructorHerokuPostSalesManager(){
+        
+        Test.startTest();
+        HDT_WRP_HerokuPostSalesManager wrapper = new HDT_WRP_HerokuPostSalesManager('test', 'result','errorMessage', 'refReq', 'communicationChannel', 'reqId', 'herokuCode', 'dlCode');
+
+        System.assertEquals('test', wrapper.responseMap.get('requestType'), 'requestType != test');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testSecondConstructorHerokuPostSalesManager(){
+        
+        Test.startTest();
+
+        HDT_WRP_HerokuPostSalesManager wrapper = new HDT_WRP_HerokuPostSalesManager('flowTest', 'phase','idTest', 'herokuCode', 'dlCode', 'codiceContrattoTest', 'contractStatus');
+
+        System.assertEquals('idTest', wrapper.requestMap.get('recordId'), 'recordId != idTest');
+
+        Test.stopTest();
+        
+    }
+
+    //FINE Test Costruttori classe HDT_WRP_HerokuPostSalesManager
 
 }

@@ -24,17 +24,15 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			conditionMap =' (Email!=null OR Email!=\'\') AND (IndividualId!=null) AND Email NOT IN:setEmailContactProcessed   ';
 		}
 
-        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate FROM Contact  WHERE '+conditionMap+'  ORDER BY Email,CreatedDate';
+        String query = 'SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRiskCtrl__c ,Email,CreatedDate FROM Contact  WHERE '+conditionMap+'  ORDER BY Email,CreatedDate';
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext BC, List<Contact> scope) {
-        System.debug('HDT_BA_AttributesContact execute ');
 
-        System.debug('HDT_BA_AttributesLead execute ');
 
 		Map<String, Contact> mapContactByEmail = new Map<String, Contact>();
-		List<Contact> listContacts             = new List<Contact>();
+		//List<Contact> listContacts             = new List<Contact>();
 	
 		
 		Map<String, String> mapApiNameToAttribute = new Map<String, String>{'email'=>'email',
@@ -66,7 +64,7 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			// logica duplicati Contact end
 			
 			
-			List<Contact> listContactNotInChunk = [ SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRisk__c,Email,CreatedDate FROM Contact  
+			List<Contact> listContactNotInChunk = [ SELECT id,Company__c,CompanyOwner__c,Account.ChurnkRiskCtrl__c ,Email,CreatedDate FROM Contact  
 			WHERE   (Email IN:mapContactByEmail.keySet() AND Email NOT IN:setEmailContactProcessed  AND Id NOT IN :mapContactByEmail.values())  ORDER BY Email,CreatedDate];
 			
 			if (listContactNotInChunk!=null && !listContactNotInChunk.isEmpty()) {	
@@ -109,13 +107,13 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 					att.email=tempContact.Email;
 					att.contactCompany=tempContact.Company__c;
 					att.contactCompanyOwner=tempContact.CompanyOwner__c;
-					att.accountChurnRisk=tempContact.Account.ChurnkRisk__c;
+					att.accountChurnRisk=tempContact.Account.ChurnkRiskCtrl__c ;
 					mapEmailAttributes.put(tempContact.Email, att);
 				}
 				/*else {
 					HDT_WRP_Attributes actualAtt=mapEmailAttributes.get(tempContact.Email);
 					actualAtt.contactCompany=String.isNotBlank(tempContact.Company__c)? actualAtt.contactCompany+','+tempContact.Company__c:actualAtt.contactCompany;
-					actualAtt.accountChurnRisk=String.isNotBlank(tempContact.Account.ChurnkRisk__c)? actualAtt.accountChurnRisk+','+tempContact.Account.ChurnkRisk__c:actualAtt.accountChurnRisk;
+					actualAtt.accountChurnRisk=String.isNotBlank(tempContact.Account.ChurnkRiskCtrl__c )? actualAtt.accountChurnRisk+','+tempContact.Account.ChurnkRiskCtrl__c :actualAtt.accountChurnRisk;
 					mapEmailAttributes.put(tempContact.Email, actualAtt);
 					
 				}*/
@@ -188,8 +186,9 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 			
 			for (HDT_WRP_Attributes tempWrp : mapEmailAttributes.values()) {
 				row=String.isBlank(row)?row:row+'\n';
-				row=row+'hem:sha256:'+HDT_UTL_Utils.codingSha256(tempWrp.email)+'^';
-
+				String codeRow='hem:sha256:'+HDT_UTL_Utils.codingSha256(tempWrp.email)+'^';
+				row=row+codeRow;
+				
 				if (String.isNotBlank(tempWrp.contactCompany)) {
 					row = row+mapApiNameToAttribute.get('contactCompany')+':'+tempWrp.contactCompany+';';
 				}
@@ -288,9 +287,14 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 					row = row+mapApiNameToAttribute.get('accountCustomerQuality')+':'+tempWrp.accountCustomerQuality+';';
 				}
 				Integer indexSep  = row.lastIndexOf(';');
+				Integer indexSepAtt  = row.lastIndexOf('^');
+
 				Integer rowLenght = row.length();
 				if ((indexSep+1)==rowLenght) {
 					 row=row.substring(0, indexSep);
+				}
+				if ((indexSepAtt+1)==rowLenght) {
+					 row=row.replace(codeRow, '').removeEnd('\n');
 				}
 			}
 			if (String.isNotBlank(row)) {
@@ -311,18 +315,15 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 
 		}
 		catch (Exception e) {
-			System.debug('Exception : '+e.getMessage());
-			System.debug('lineNumber : '+e.getLineNumber());
 			status='failed';
 			errorMessage=e.getMessage();
 		}
 
     }
 
-    public void finish(Database.BatchableContext bc){
-        System.debug('Finish HDT_BA_ConsentContact ');
-		
+    public void finish(Database.BatchableContext bc){		
 		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',errorMessage,listIdContentVersion);
 
     }
+	
 }
