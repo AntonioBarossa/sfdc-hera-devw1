@@ -21,7 +21,6 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	}
 	
 	public void execute(Database.BatchableContext BC, List<Lead> scope) {
-		System.debug('HDT_BA_AttributesLead execute ');
 		Map<String, Lead> mapLeadByEmail       = new Map<String, Lead>();
 		Map<String, Contact> mapContactByEmail = new Map<String, Contact>();
 		List<Contact> listContacts             = new List<Contact>();
@@ -377,7 +376,7 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	public void finish(Database.BatchableContext bc){
 		HDT_BA_AttributesContact attrContact = new HDT_BA_AttributesContact(fileNumber,runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
 		Id batchprocessid = Database.executeBatch(attrContact,1000);
-
+		
 	}
 	
 }
