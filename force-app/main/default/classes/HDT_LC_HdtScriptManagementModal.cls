@@ -66,7 +66,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         system.debug('fields to query '+allFieldsToQuery);
-        String textToFormat='';
+        //String textToFormat='';
         SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
         system.debug('id '+recordId);
         List<HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_WRP_ScriptOutput>();

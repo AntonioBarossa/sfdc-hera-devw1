@@ -18,6 +18,7 @@ export default class HdtContractSelectionFlow extends LightningElement {
     @api nextLabel;
     @api saveDraft;
     @api cancelCase;
+    @api firstContract;
     @api availableActions = [];
     
     @track queryParams;
@@ -66,6 +67,11 @@ export default class HdtContractSelectionFlow extends LightningElement {
             console.log('num selected record: ' + event.detail.selectedRows.length);
             this.numSelectedContracts = event.detail.selectedRows.length;
             this.results = '';
+            if (this.firstContract != null && this.firstContract !== undefined) {
+                console.log('concatenazione primo contratto: ' + this.firstContract);
+                this.results = this.firstContract + '; ';
+                this.numSelectedContracts++;
+            }
             for (var selectedRow in event.detail.selectedRows) {
                 this.results += event.detail.selectedRows[0].SAPContractCode__c + '; ';
             }
