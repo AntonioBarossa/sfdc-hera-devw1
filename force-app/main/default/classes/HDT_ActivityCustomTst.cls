@@ -14,7 +14,7 @@ public with sharing class HDT_ActivityCustomTst {
 
         List<wrts_prcgvr__Activity__c> testActCust = HDT_UTL_DataFactoryTst.createActivityCustom(1,true, acct.id);
 
-        system.assertNotEquals('', testActCust[0].id , 'ActivityCustom is not created correctly (ActivityCustom id is not available)');
-
+        system.assertNotEquals('', testActCust[0].id , 'ActivityCustom is not created (ActivityCustom trigger)');
+        system.assertEquals(true, testActCust[0].id != null,'ActivityCustom is not created (ActivityCustom trigger)' );
     }
 }
