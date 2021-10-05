@@ -16,8 +16,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 15/02/2021
-     * @param Order order
      * @description Execute child order process save actions
+     * @param order
+     * @param lastStepData
      */
     @AuraEnabled
     public static void save(Order order, Map<String,Object> lastStepData){
@@ -432,8 +433,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param String objectApiName
-     * @param SObject objectToUpdate
+     * @param objectApiName
+     * @param objectToUpdate
      * @description Save child order as draft
      */
     @AuraEnabled
@@ -460,10 +461,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param String objectApiName
-     * @param SObject objectToUpdate
-     * @param String diffObjectApiName
-     * @param SObject diffObjectToUpdate
+     * @param objectApiName
+     * @param objectToUpdate
+     * @param diffObjectApiName
+     * @param diffObjectToUpdate
      * @description Save child order as draft with diff fields
      */
     @AuraEnabled
@@ -509,8 +510,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param Order order
-     * @param String cancellationReason
+     * @param order
+     * @param cancellationReason
      * @description Execute child order process cancel actions
      */
     @AuraEnabled
@@ -527,8 +528,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Federico de Felice (federico.defelice@webresults.it)
      * @date 14/07/2021
-     * @param Order order
-     * @param String cancellationReason
+     * @param orderId
+     * @param searchKey
+     * @return Decimal
      * @description Execute child order process cancel actions
      */
     @TestVisible
