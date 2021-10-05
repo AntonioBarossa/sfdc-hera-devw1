@@ -2,7 +2,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
     public static Boolean getEnabledUser(){
         List<GroupMember> groupMembers;
-        groupMembers = HDT_QR_ProductAssociation.getGroupMembers(groupMembers, UserInfo.getUserId(), 'CpqAssociationTool');
+        groupMembers = HDT_QR_ProductAssociation.getGroupMembers(groupMembers, UserInfo.getUserId(), 'HDT_PG_CpqAssociationTool');
         return (groupMembers.size()==0) ? false : true;
     }
 
@@ -17,7 +17,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
         List<String> whereConditionList = new List<String>();
         if(!String.isEmpty(filterProduct.Name)){
-            whereConditionList.add('(Name LIKE \'%' + String.escapeSingleQuotes(filterProduct.Name) + '%\'');
+            whereConditionList.add('Name LIKE \'%' + String.escapeSingleQuotes(filterProduct.Name) + '%\'');
         }
 
         if(!String.isEmpty(filterProduct.TypeOffer__c)){
