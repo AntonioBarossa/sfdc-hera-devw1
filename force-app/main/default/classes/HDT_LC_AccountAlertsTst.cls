@@ -14,11 +14,13 @@ public with sharing class HDT_LC_AccountAlertsTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         
         //BILLING PROFILE
-        
+        BillingProfile__c myBilling = HDT_UTL_DataFactoryTst.createBillingProfile(1, false, acc[0].Id)[0];
+        myBilling.BillSendingMethod__c = 'Bolletta per e-mail';
+        insert myBilling;
         
         //CONTRACT
         Contract myContract = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].id)[0];
-        
+        myContract.BillingProfile__c = myBilling.Id;
         insert myContract;
         
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
