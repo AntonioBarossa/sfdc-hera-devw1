@@ -2747,4 +2747,76 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return assetList;
 	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+	  
+		  mRemiCode.RemiCode__c='test';
+
+		  for(String key :params.keySet()) {
+			  mRemiCode.put(key, params.get(key));
+		  }	  
+	  
+		  matriceRemiCode.add(mRemiCode);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert matriceRemiCode;
+		}
+	  
+		return matriceRemiCode;
+	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<Service26Config__c> createService26Config(Integer amount, Boolean doInsert){
+
+		List<Service26Config__c> serviceList=new List<Service26Config__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  Service26Config__c service=new Service26Config__c();
+	  
+		  //service.Name='test';
+		  service.ProductFamily__c='Bonus Eur/Giorno';
+	  
+	  
+		  serviceList.add(service);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert serviceList;
+		}
+	  
+		return serviceList;
+	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static HDT_Process_Sale_Partner_Community__c createSalePartnerCommunity(User user, Boolean doInsert){
+
+		HDT_Process_Sale_Partner_Community__c salePartnerCommunity=new HDT_Process_Sale_Partner_Community__c(Name='Community',SetupOwnerId = user.ProfileID);
+		if (doInsert){
+
+			insert salePartnerCommunity;
+		}
+		return salePartnerCommunity;
+	}
 }

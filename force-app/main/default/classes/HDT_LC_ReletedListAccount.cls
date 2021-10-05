@@ -10,7 +10,7 @@ public with sharing class HDT_LC_ReletedListAccount {
 
     @AuraEnabled
     public static Contact insertContact(Map<String,String> dataContact, Map<String,String> contactAddress){
-        System.debug('HDT_LC_ReletedListAccount');
+       // System.debug('HDT_LC_ReletedListAccount');
         Date birthdate = (dataContact.get('birthDate') != null && dataContact.get('birthDate') != '' ? Date.valueOf(dataContact.get('birthDate')) : null );
         Account account= new Account(BirthDate__c=birthdate,BirthProvince__c=dataContact.get('birthplace'),FirstName__c= dataContact.get('firstName'), LastName__c= dataContact.get('lastName'), FiscalCode__c= dataContact.get('fiscalCode') ,PhonePrefix__c= dataContact.get('phonePrefix') ,Phone= dataContact.get('phoneNumber'),MobilePhonePrefix__c= dataContact.get('mobilePhonePrefix'),MobilePhone__c =dataContact.get('mobilePhone'),Name= dataContact.get('name'),PrimaryEmail__c= dataContact.get('email') ,RecordTypeId= dataContact.get('recordTypeId'),Category__c= dataContact.get('category'),CustomerMarking__c= dataContact.get('customerMarking'), Gender__c= dataContact.get('gender'), OtherPhone__c= dataContact.get('otherPhoneNumber'),DegreeOfStudies__c= dataContact.get('education'),Profession__c=dataContact.get('profession')
         );
@@ -79,7 +79,7 @@ public with sharing class HDT_LC_ReletedListAccount {
     }
     @AuraEnabled
     public static String getRecordTypeAccount(String accountId) {
-        System.debug('getContactList accId: '+accountId);
+       // System.debug('getContactList accId: '+accountId);
         if (String.isBlank(accountId)) {
             return null;
         }
