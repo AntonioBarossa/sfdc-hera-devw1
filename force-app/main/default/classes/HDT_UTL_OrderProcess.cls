@@ -568,27 +568,32 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @description 
      * HRDTR-00_HRAWRM-638
      **/
-    public static void overturningFields(List<Order> listOrder ){
+    public static void overturningFields(List<Order> oldList, List<Order> listOrder ){
         Map<Id, Sobject> mapObjToUpdate = new Map<Id, Sobject>();
+        Map<String,Order> mapOld = new Map<String,Order>();
+        for(Order old : oldList){
+            mapOld.put(old.id,old);
+        }
         for (Order temp : listOrder) {
-            
-            if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
-                ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
-                if (String.isBlank(String.valueOf(temp.ServicePoint__r.Account__c)) ||String.isBlank(String.valueOf(temp.ServicePoint__r.SAPImplantCode__c))) {
+            if(mapOld.get(temp.id).phase__c != 'Completata' && temp.Phase__c = 'Completata'){
+                if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
+                    ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
+                    sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
                     // sp.Account__c=temp.AccountId;
-                    sp.SAPImplantCode__c=temp.SapContractCode__c;
-                    //listObjToUpdate.add(sp);
+                    sp.SAPImplantCode__c=temp.SapImplantCode__c;
+                    sp.account__c = temp.AccountId;
+                        //listObjToUpdate.add(sp);
                     mapObjToUpdate.put(sp.Id, sp);
-                }         
-            }
-            if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
-                if (String.isBlank(String.valueOf(temp.BillingProfile__r.ContractAccountCode__c)) && String.isNotBlank((temp.SapContractCode__c) )) {
-                    BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
-                    //listObjToUpdate.add(bill);
-                    mapObjToUpdate.put(bill.id, bill);
+                }
+                if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
+                    if (String.isNotBlank((temp.SapContractCode__c) )) {
+                        BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
+                        //listObjToUpdate.add(bill);
+                        mapObjToUpdate.put(bill.id, bill);
+                    }
                 }
             }
-
         }
         if(!mapObjToUpdate.values().isEmpty()){
             update  mapObjToUpdate.values();
