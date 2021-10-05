@@ -48,10 +48,10 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, Phase FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
-        System.assert('Esito OK da SAP'.equalsIgnoreCase(myUpdatedCase.Phase), 'Phase non aggiornata da Job.');
+        System.assert('Esito OK da SAP'.equalsIgnoreCase(myUpdatedCase.Phase__c), 'Phase non aggiornata da Job.');
         
     }
     
