@@ -208,7 +208,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
-				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c,LastUsedPostelEmail__c';
 				fromString = 'Account';
 				whereString = 'Id = \''+requestId + '\'';
 			}
@@ -235,14 +235,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					// l'email sull'account potrebbe non essere quella inserita nella modale dell'EC, che non tracciamo da nessuna parte.
-					//documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('LastUsedPostelEmail__c');
 				}
 			}
 			
