@@ -84,7 +84,7 @@ public with sharing class HDT_LC_AccountAlertsTst {
         //ASSERTS
         System.assert(String.isNotBlank(jsonResult));
         System.assert(result != null);
-        System.assertEquals(2, result.size());
+        System.assertEquals(2, result.size(), 'Result inconsistente');
         
     }
     
