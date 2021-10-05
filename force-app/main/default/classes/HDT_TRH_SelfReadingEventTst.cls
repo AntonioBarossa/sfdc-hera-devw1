@@ -89,10 +89,10 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        List<Case> myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        List<Case> myUpdatedCases = [SELECT Id, Phase__c FROM Case WHERE PHASE = :'Esito OK da SAP'];
         
         //ASSERTS
-        //System.assert('Esito OK da SAP'.equalsIgnoreCase(myUpdatedCase.Phase__c), 'Phase non aggiornata da Job.');
+        System.assertEquals(49, myUpdatedCases.size(), 'Errore nello scheduling dei case da aggiornare e degli eccessi.');
         
         
     }
