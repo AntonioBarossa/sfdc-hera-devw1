@@ -482,7 +482,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''  ){
 
 		                HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
-		                Id batchprocessid = Database.executeBatch(ba,1000);
+		                Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
                         
                     }
@@ -503,7 +503,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){   
                         HDT_BA_AttributesLead ba = new HDT_BA_AttributesLead(localMapRequestFields.get('runId')); 
-		                Id batchprocessid = Database.executeBatch(ba,1000);
+		                Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -521,7 +521,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -539,7 +539,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -548,7 +548,7 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
             }
             when 'SIE34_3'{
-                System.debug('SIE34');
+                //System.debug('SIE34');
                 if (request.objects.get(0).fields.get(0) != null ) {
                     Map<String,String> localMapRequestFields = new Map<String,String>();
 
@@ -558,7 +558,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -567,7 +567,7 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
             }
             when 'SIE34_2'{
-                System.debug('SIE34_2');
+                //System.debug('SIE34_2');
                 if (request.objects.get(0).fields.get(0) != null ) {
                     Map<String,String> localMapRequestFields = new Map<String,String>();
 
@@ -577,7 +577,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_2'));
+                        System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_2'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -586,7 +586,7 @@ public with sharing class HDT_SRV_SalesHandler {
                 }
             }
             when 'SIE34_1'{
-                System.debug('SIE34_1');
+               // System.debug('SIE34_1');
                 if (request.objects.get(0).fields.get(0) != null ) {
                     Map<String,String> localMapRequestFields = new Map<String,String>();
 
@@ -596,7 +596,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        Id jobIDSIE34 = System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_1'));
+                        System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_1'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -650,7 +650,7 @@ public with sharing class HDT_SRV_SalesHandler {
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
         }catch(Exception e){
-            system.debug('Exception Update ServicePoint');
+           // system.debug('Exception Update ServicePoint');
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
