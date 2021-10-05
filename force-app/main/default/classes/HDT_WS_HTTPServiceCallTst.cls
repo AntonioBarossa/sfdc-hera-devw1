@@ -39,8 +39,8 @@ public with sharing class HDT_WS_HTTPServiceCallTst {
         HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,req,HDT_WS_ArrichmentDataEntityResponse.class);
 	
         Test.stopTest();
-        system.assertEquals(200, resp.statusCode,'status code 200');
-        system.assertNotEquals(500, resp.statusCode,'status code 500');
+        system.assertEquals(200, resp.statusCode,'status code is not 200');
+        system.assertNotEquals(500, resp.statusCode,'status code is not 500');
     }
 
     @isTest
@@ -54,8 +54,8 @@ public with sharing class HDT_WS_HTTPServiceCallTst {
         HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,reqList,HDT_WS_ArrichmentDataEntityResponse.class);
 
         Test.stopTest();
-        system.assertEquals(200, resp.statusCode,'status code 200');
-        system.assertNotEquals(500, resp.statusCode,'status code 500');
+        system.assertEquals(200, resp.statusCode,'status code is not 200');
+        system.assertNotEquals(500, resp.statusCode,'status code is not 500');
     }
 
     @isTest
@@ -67,8 +67,8 @@ public with sharing class HDT_WS_HTTPServiceCallTst {
 
         HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,reqMap,HDT_WS_ArrichmentDataEntityResponse.class);
         Test.stopTest();
-        system.assertEquals(200, resp.statusCode,'status code 200');
-        system.assertNotEquals(500, resp.statusCode,'status code 500');
+        system.assertEquals(200, resp.statusCode,'status code is not 200');
+        system.assertNotEquals(500, resp.statusCode,'status code is not 500');
     }
 
 }
