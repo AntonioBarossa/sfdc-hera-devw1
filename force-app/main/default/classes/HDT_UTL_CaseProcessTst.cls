@@ -152,9 +152,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
         List<Case> newCasesList = new List<Case>();
         List<Case> oldCasesList = [Select Id, RecordTypeId, RecordType.Name, Phase__c, Type from Case where Phase__c = 'Bozza'];
         newCasesList.add(oldCasesList[0]);
-        newCasesList[0].Phase__c = 'Annullato';
-        newCasesList[0].RecordTypeId = oldCasesList[0].RecordTypeId;
-        newCasesList[0].RecordType.Name = oldCasesList[0].RecordType.Name;
+        newCasesList[0].Phase__c = 'Annullato';        
         Map<Id, Case> oldMap = new Map<Id, Case>(oldCasesList);
 
         List<wrts_prcgvr__ActivityTemplate__c> myATList = new List<wrts_prcgvr__ActivityTemplate__c>();
@@ -173,6 +171,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
             
             HDT_UTL_CaseProcess.manageCancellationProcess(newCasesList, oldMap);
             newCasesList[0].Type = 'Reclamo Scritto/Rich. Info';
+            update newCasesList;
             HDT_UTL_CaseProcess.manageCancellationProcess(newCasesList, oldMap);
 
 
