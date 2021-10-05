@@ -74,9 +74,9 @@ public with sharing class HDT_LC_AccountAlertsTst {
         insert myAlertConfig;
         
         //ALERT WITHOUT BillSendingMethod__c
-        AlertConfiguration__c myAlertConfig = new AlertConfiguration__c();
-        myAlertConfig.AccountCategory__c = acc.Category__c;
-        insert myAlertConfig;
+        AlertConfiguration__c myAlertConfig2 = new AlertConfiguration__c();
+        myAlertConfig2.AccountCategory__c = acc.Category__c;
+        insert myAlertConfig2;
         
         //TESTING
         String jsonResult = HDT_LC_AccountAlerts.getAvailableRulesFor(acc.Category__c, acc.Id);
