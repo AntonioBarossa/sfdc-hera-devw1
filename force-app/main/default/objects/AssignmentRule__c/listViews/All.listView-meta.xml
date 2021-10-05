@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Deactivated__c</columns>
+    <columns>RuleStartDate__c</columns>
+    <columns>RuleEndDate__c</columns>
+    <columns>Type__c</columns>
+    <columns>RulePriority__c</columns>
+    <columns>HighPriorityQueue__c</columns>
+    <columns>LowPriorityQueue__c</columns>
+    <columns>MediumPriorityQueue__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Tutte le Regole</label>
+</ListView>
