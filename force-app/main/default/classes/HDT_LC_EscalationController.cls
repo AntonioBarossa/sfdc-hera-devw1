@@ -34,6 +34,9 @@ public with sharing class HDT_LC_EscalationController {
                     recordTypeName = 'HDT_RT_EscalationOrder';
                     parentEntityField = 'Order__c';
                 }
+                when else {
+                    recordTypeName = 'HDT_RT_EscalationGeneric';
+                }
             }
             
             String recordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(recordTypeName).getRecordTypeId();

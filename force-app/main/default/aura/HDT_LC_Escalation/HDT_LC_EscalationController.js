@@ -1,19 +1,17 @@
 ({
     doGetRecordData : function(component, event, helper) {
-        if(component.get("v.recordId")) {
-            var action = component.get("c.getRecordData");
-            action.setParams({recordId: component.get("v.recordId")});
-            action.setCallback(this, function(response) {
-                const data = JSON.parse(response.getReturnValue());
-                if(data.error) {
-                    console.log(data.error);
-                } else {
-                    component.set("v.parentEntityField", data.parentEntityField);
-                    component.set("v.recordTypeId", data.recordTypeId);
-                }
-            });
-            $A.enqueueAction(action);
-        }
+        var action = component.get("c.getRecordData");
+        action.setParams({recordId: component.get("v.recordId")});
+        action.setCallback(this, function(response) {
+            const data = JSON.parse(response.getReturnValue());
+            if(data.error) {
+                console.log(data.error);
+            } else {
+                component.set("v.parentEntityField", data.parentEntityField);
+                component.set("v.recordTypeId", data.recordTypeId);
+            }
+        });
+        $A.enqueueAction(action);
     },
     onTypeChange: function(component, event, helper) {
         let newValue =  event.getSource().get("v.value") ; 
