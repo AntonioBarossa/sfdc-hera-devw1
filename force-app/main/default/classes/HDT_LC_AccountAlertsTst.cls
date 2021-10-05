@@ -23,7 +23,7 @@ public with sharing class HDT_LC_AccountAlertsTst {
         myContract.BillingProfile__c = myBilling.Id;
         insert myContract;
         
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, myContract.id, ordList[0].id);
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
