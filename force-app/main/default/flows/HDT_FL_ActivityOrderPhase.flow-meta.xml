@@ -101,7 +101,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>finishText</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;Rilavorazione dell&apos;ordine {!getOrder.OrderNumber} eseguita correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getOrder.OrderNumber} rilavorato correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
