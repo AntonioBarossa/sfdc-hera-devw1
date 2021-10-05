@@ -52,9 +52,9 @@ public with sharing class HDT_LC_AccountAlertsTst {
         System.debug(debugString);
         
         //SETUP
+        mySetup();
         
-        
-        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME')[0];
+        Account acc = [SELECT Id, Category__c FROM Account];
         AlertConfiguration__c myAlertConfig = new AlertConfiguration__c(AccountCategory__c = acc.Category__c);
         insert myAlertConfig;
         
