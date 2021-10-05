@@ -18,8 +18,4 @@ public inherited sharing class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
         HDT_UTL_QuoteProcess.amendProcessManagementAfter(Trigger.New);
         system.debug('Quote afterInsert END');
     }
- 	public override void beforeDelete(){}
- 	public override void afterDelete(){}
-    public override void beforeUpdate(){}
-    public override void afterUpdate(){}
 }

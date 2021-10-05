@@ -1,3 +1,7 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @description HDT_UTL_OrderFieldsAlignment – Align Order fields with Service Point, Account, Billing Profile
+*/
 public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
@@ -337,6 +341,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
             orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
             orderToUpdate.VasServiceActivationDate__c = quoteLineList[0].DelayEffectiveDate__c;
+            orderToUpdate.CommercialProductLink__c = quoteLineList[0].SBQQ__Product__c;//gabriele.rota@webresults.it - 01/10/2021
         }
 
     }
@@ -378,6 +383,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
     }
 
+    /**
+    * @description getRecordsByIdWithFields
+    * @param implantType - String
+    * @param powerContractual - Decimal
+    * @return String
+    */
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
 
         String result = '';
@@ -426,6 +437,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         return result;
     }
 
+    /**
+    * @description alignFields
+    * @param order - Order
+    */
     public static void alignFields(Order order) {
 
         Order orderToUpdate = new Order();
@@ -462,8 +477,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 //only for Amend Bonus
                 orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
                 orderToUpdate.BillingProfile__c=mixedData.billProf;
-                if(orderToUpdate.BillingProfile__c!=null)
+                if(orderToUpdate.BillingProfile__c!=null){
                     alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
+                }
             }
         }
 

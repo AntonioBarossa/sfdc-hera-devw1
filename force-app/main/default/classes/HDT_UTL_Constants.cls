@@ -73,7 +73,14 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
 
-    //Order RecordType Default
+    //Order RecordType VAS
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_VAS = 'HDT_RT_VAS';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_VAS =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_VAS).getRecordTypeId();
+
+    //Order RecordType Cambio Offerta
     @AuraEnabled
     public final String ORDER_RECORDTYPE_CAMBIO_OFFERTA = 'HDT_RT_CambioOfferta';
     @AuraEnabled
@@ -150,6 +157,12 @@ public with sharing class HDT_UTL_Constants {
     public final String CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI).getRecordTypeId();
 
+    //Case RecordType PostSalesVAS
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS = 'HDT_RT_PostSalesVAS';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_POST_SALES_VAS =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS).getRecordTypeId();
 
     // Order RecordType Riattivazione Non Morose
     @AuraEnabled

@@ -20,7 +20,7 @@ public inherited sharing class HDT_LC_SaleActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale as draft
-     * @param Sale__c sale
+     * @param sale
      */
     @AuraEnabled
     public static void saveDraft(Sale__c sale){
@@ -36,15 +36,20 @@ public inherited sharing class HDT_LC_SaleActions {
     private static void reassignQlSconti(List<SBQQ__QuoteLine__c> primaryQlSconto,  List<SBQQ__QuoteLine__c> allQlSconto){
         Map<id, SBQQ__QuoteLine__c> mapOfferToPrimary = new Map<id, SBQQ__QuoteLine__c>();
         list<SBQQ__QuoteLine__c> listToUpdate = new list<SBQQ__QuoteLine__c>();
-        set<Id> idsPrimary = new Map<id, SBQQ__QuoteLine__c>( primaryQlSconto ).keySet();
+        Map<id, SBQQ__QuoteLine__c> mapPrimaryQlSconto= new Map<id, SBQQ__QuoteLine__c>( primaryQlSconto );
+        set<Id> idsPrimary = mapPrimaryQlSconto.keySet();
 
         for(SBQQ__QuoteLine__c ql : primaryQlSconto ){
             mapOfferToPrimary.put(ql.SBQQ__RequiredBy__c, ql);
         }
         for(SBQQ__QuoteLine__c ql : allQlSconto ){
+            SBQQ__QuoteLine__c qlUp = new SBQQ__QuoteLine__c(Id=ql.Id);
             if(!(idsPrimary.contains(ql.id) || idsPrimary.contains(ql.SBQQ__RequiredBy__c))){
-                SBQQ__QuoteLine__c qlUp = new SBQQ__QuoteLine__c(Id=ql.Id);
                 qlUp.SBQQ__RequiredBy__c= mapOfferToPrimary.get(ql.SBQQ__RequiredBy__c)?.Id;
+                listToUpdate.add(qlUp);
+            }else if(ql.SBQQ__RequiredBy__r?.BillingProfile__c!=null){
+                qlUp.BillingProfile__c=ql.SBQQ__RequiredBy__r?.BillingProfile__c;
+                mapPrimaryQlSconto.get(ql.Id).BillingProfile__c=ql.SBQQ__RequiredBy__r?.BillingProfile__c;
                 listToUpdate.add(qlUp);
             }
         }
@@ -59,7 +64,8 @@ public inherited sharing class HDT_LC_SaleActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale
-     * @param Sale__c sale
+     * @param sale
+     * @param campaignMemberId
      */
     @AuraEnabled
     public static void save(Sale__c sale, String campaignMemberId){
@@ -77,7 +83,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         List<SBQQ__QuoteLine__c> allQlSconto = quoteLineQr.getRecordsBySaleFilteredFamilyBonus(sale.Id);
         List<SBQQ__QuoteLine__c> primaryQlSconto=HDT_LC_ApplyBillingProfileModal.getBonusPerOffer(allQlSconto);
-        quoteLinesListForBillingCheck.addAll(primaryQlSconto);
+        quoteLinesList.addAll(primaryQlSconto);
         reassignQlSconti(primaryQlSconto, allQlSconto);
 
         
@@ -164,7 +170,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
             if (quoteLine.BillingProfile__c != null) {
                 system.debug('quoteLine with problem: ' + quoteLine);
-                groupToAssign = mapLineGroup.get(quoteLine.Id).Id;
+                groupToAssign = mapLineGroup.get(quoteLine.Id)?.Id;
 
                 // if(quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.BillingProfile__c != null){
                 //     groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c).Id;
@@ -216,7 +222,11 @@ public inherited sharing class HDT_LC_SaleActions {
         }
     }
 
-
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Save sale backup
+     * @param sale
+     */
     @AuraEnabled
     public static void saveBackup(Sale__c sale){
         
@@ -321,8 +331,8 @@ public inherited sharing class HDT_LC_SaleActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale
-     * @param Sale__c sale
-     * @param String CancellationReason__c
+     * @param sale
+     * @param cancellationReason
      */
     @AuraEnabled
     public static void cancel(Sale__c sale, String cancellationReason){

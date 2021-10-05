@@ -30,10 +30,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleFlagPaperless(inputs,formParams);
                 }when 'calculateSignModeDriver' {
                     return calculateSignModeDriver(inputs,formParams);
-                }
-                when 'handleAmountVas'{
+                }when 'calculateDriverCatalogo'{
+                    return calculateDriverCatalogo(inputs,formParams);
+                }when 'handleAmountVas'{
                     return handleAmountVas(inputs,formParams);
-                 }
+                }
                 when else {
                     return '';
                 }
@@ -959,6 +960,42 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         } */ // al momento Engage1 non ha configurato nessun plico post-sales con driver MODALITA_FIRMA valorizzato.
 
         return signMode == 'Vocal Order' ? signMode : '';
+    }
+
+    /*
+     Calcola il driver secondario CATALOGO in base alla price list presente sull'Order. Le price list disponibili sono le seguenti:
+        Energia Elettrica Domestico
+        Energia Elettrica Non Domestico
+        Gas Domestico (A-Domestico)
+        Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)
+        VAS ELE
+        VAS GAS
+        VAS Standalone
+    */
+    private String calculateDriverCatalogo(Map<String,List<sObject>> inputs, Map<String,Object> formParams) {
+        String context = (String) formParams.get('Contesto');
+        if (context != 'Order') {
+            return '';
+        }
+
+        String orderId = HDT_UTL_DocumentalManagement.getValue('Order', 'Id', 0, inputs, formParams);
+        Order orderData = HDT_QR_DocumentalConfiguration.getOrderPriceBook(orderId);
+        String priceBookName = orderData.SBQQ__Quote__r?.SBQQ__PriceBook__r?.Name;
+
+        if (String.isBlank(priceBookName)) {
+            return '';
+        }
+
+        if (priceBookName.containsIgnoreCase('non domestico')) {
+            return 'SME Offerte a scaffale';
+        }
+
+        if (priceBookName.containsIgnoreCase('vas')) {
+            return '';
+        }
+
+        // TODO WAVE 3: adeguare per i valori FUI|TUTELA|SALVAGUARDIA
+        return 'MM Offerte a scaffale';
     }
 
     // Restituisce la data nel formato richiesto da Engage1

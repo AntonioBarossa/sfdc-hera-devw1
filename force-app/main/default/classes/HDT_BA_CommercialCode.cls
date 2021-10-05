@@ -19,7 +19,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
+    public void execute(Database.BatchableContext bc, List<CampaignMember> scope) {
         //get existing campaginMembers
         Database.QueryLocator query = Database.getQueryLocator('Select Id, FirstName, LastName, CampaignId, PromoCommercialCode__c, Campaign.CodeManagementModel__c, Campaign.PrefixCode__c, Campaign.CodeGenerationRule__c, PromoCommercialCode__r.FullCode__c FROM CampaignMember WHERE CampaignId = :campaignId AND Campaign.CodeGenerationRule__c != \'Manuale\' AND PromoCommercialCode__c  != \'\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')');
         Database.QueryLocatorIterator existingMembers =  query.iterator();
@@ -29,7 +29,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
         while (existingMembers.hasNext()){
             CampaignMember cm = (CampaignMember)existingMembers.next();
             String code = cm.PromoCommercialCode__r.FullCode__c;
-            Integer maxNumber = 0;
+           // Integer maxNumber = 0;
             if (cm.Campaign.CodeGenerationRule__c == 'PrefissoProgressivo') {
                 code = code.removeStart(cm.Campaign.PrefixCode__c);
             } else if (cm.Campaign.CodeGenerationRule__c == 'Prefisso + Nome + Cognome + Progressivo') {

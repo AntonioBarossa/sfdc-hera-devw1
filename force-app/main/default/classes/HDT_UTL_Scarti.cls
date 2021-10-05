@@ -212,8 +212,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
         tracciamentoTemplateNames.addAll(TRACCIAMENTOHEROKUPOSTSALES.values());
         Map<String, wrts_prcgvr__ActivityTemplate__c> templatesMap = getTemplatesMapByName(tracciamentoTemplateNames);
-        
-        Map<String, List<Map<String,String>>> dataPerTemplateCode = new Map<String, List<Map<String,String>>>(); 
 
         Map<String, Map<String,String>> dataForSalesHandlingByTemplateCode = new Map<String, Map<String,String>>();
 
@@ -425,12 +423,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 
                         String procField = String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c));
                         String contrField = String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c));
-                        if(String.isBlank(procField) || String.isBlank(procField) ){
-                            continue;
-                        }else if(curRule.ProcessValue__c.equalsIgnoreCase(procField)
-                            && contrField.containsIgnoreCase(curRule.ControllingValue__c)){
+
+                        if(String.isNotBlank(procField) && String.isNotBlank(contrField) 
+                            && curRule.ProcessValue__c?.equalsIgnoreCase(contrField)
+                            && contrField?.containsIgnoreCase(curRule.ControllingValue__c)
+                            ){
                             outcome = true;
-                            break;
+                            break;  
                         }
                     }
                 }
@@ -472,7 +471,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         String oldEmail;
         List<wrts_prcgvr__Activity__c> activities = new list<wrts_prcgvr__Activity__c>();
         List<id> relatedIds = new list<id>();
-        Map<string,SObject> relatedObject = new Map<string,SObject>();
         list<SObject> relatedObjectsToUpdate = new list<SObject>();
 
         for(wrts_prcgvr__Activity__c currActivity : newActivities){
@@ -654,7 +652,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             accIdsPerBPcode.put(singleAccount.CustomerCode__c, singleAccount.Id);
         }
         for(wrts_prcgvr__Activity__c activity2: inputData){
-            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)) activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            if(activity2.Account__c == null && !String.isBlank(activity2.BPCode__c)){
+                activity2.Account__c = accIdsPerBPcode.get(activity2.BPCode__c);
+            }
             if(activity2.wrts_prcgvr__ActivityTemplate__c == null){
                 if('CanoneRAI'.equalsIgnoreCase(activity2.Type__c)){
                     if(activity2.RecordTypeId != rtScarto.Id){
@@ -717,12 +717,17 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
 
+            List<wrts_prcgvr__Activity__c> currActivities;
+            Id parentObjId;
             for(SObject handlesItem: toHandle){
-                if(String.isBlank((string)handlesItem.get('OrderID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('CaseID__c')}));
-                }else if(String.isBlank((string)handlesItem.get('CaseID__c'))){ 
-                    insertedActivities.addAll((wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => handlesItem.get('OrderID__c')}));
+                if(String.isNotBlank((string)handlesItem.get('OrderID__c'))){
+                    parentObjId = (String)handlesItem.get('OrderID__c');
+                }else if(String.isNotBlank((string)handlesItem.get('CaseID__c'))){ 
+                    parentObjId = (String)handlesItem.get('CaseID__c');
                 }
+                currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
+                currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
+                insertedActivities.addAll(currActivities);
             }
             HDT_UTL_DatabaseService.insertSObject(insertedActivities);
         }

@@ -68,9 +68,9 @@ public class HDT_UTL_ActivityProcessTst {
         
         List<wrts_prcgvr__Activity__c> activitiesAfter = [select id,CreditCheckReason__c from wrts_prcgvr__Activity__c];
         
-        System.assertEquals(15, activitiesAfter.size(), 'An activity is created for each order');
+        System.assertEquals(15, activitiesAfter.size(), 'An activity is not created for each order');
         
-        System.assertNotEquals(activitiesBefore.size(), activitiesAfter.size(), 'Activities created');
+        System.assertNotEquals(activitiesBefore.size(), activitiesAfter.size(), 'Activities not created');
                 
     }
 }
