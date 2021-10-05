@@ -126,12 +126,10 @@ public inherited sharing class HDT_UTL_Dependencies {
                 }
             }
 
-            String queryDependenciesMatrix = 'SELECT Id, IncomingProcessType__c, BlockingProcessType__c, MatchingField__c '                                           
-                        + 'FROM DependenciesMatrix__c '
-                        + conditions 
-                        + ' WITH SECURITY_ENFORCED';
-
-            DependenciesMatrix__c[] dependencies = Database.query(queryDependenciesMatrix);
+            DependenciesMatrix__c[] dependencies = Database.query('SELECT Id, IncomingProcessType__c, BlockingProcessType__c, MatchingField__c '                                           
+            + 'FROM DependenciesMatrix__c '
+            + conditions 
+            + ' WITH SECURITY_ENFORCED');
 
             Map<String,List<List<String>>> dependenciesMap = new Map<String,List<List<String>>>();
             for(DependenciesMatrix__c dependency : dependencies){
@@ -194,15 +192,14 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }
-            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
-                                    + 'FROM ServiceRequest__c '
-                                    + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
-                                    + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
-                                    + 'ProcessType__c IN :matches '
-                                    + 'WITH SECURITY_ENFORCED';
-
+           
             try{
-                srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
+                srBlockings = (List<ServiceRequest__c>)Database.query('SELECT ID, Case__c, Order__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
+                + 'FROM ServiceRequest__c '
+                + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
+                + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
+                + 'ProcessType__c IN :matches '
+                + 'WITH SECURITY_ENFORCED');
 
                 String rtVas = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
                 for(ServiceRequest__c sr : incomingProcesses){
