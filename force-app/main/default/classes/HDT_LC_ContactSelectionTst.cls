@@ -42,6 +42,9 @@ public class HDT_LC_ContactSelectionTst {
         List<AccountContactRelation> acrList = [SELECT Id, AccountId, Roles FROM AccountContactRelation WHERE AccountId = :accIdSet];
         for(AccountContactRelation acr : acrList) acr.Roles = 'Amministratore condominio';
         update acrList;
+        List<Contact> contList = [SELECT Id, AccountId, ContactCode__c FROM Contact WHERE AccountId = :accIdSet];
+        for(Contact cont : contList) cont.ContactCode__c = '1900';
+        update contList;
 
         Test.startTest();
 
