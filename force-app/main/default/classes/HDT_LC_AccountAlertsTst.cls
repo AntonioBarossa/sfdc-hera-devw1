@@ -20,7 +20,7 @@ public with sharing class HDT_LC_AccountAlertsTst {
         
         //CONTRACT
         Contract myContract = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].id)[0];
-        myContract.Status = 'Activated';
+        myContract.Status = 'Attivo';
         myContract.BillingProfile__c = myBilling.Id;
         insert myContract;
         
