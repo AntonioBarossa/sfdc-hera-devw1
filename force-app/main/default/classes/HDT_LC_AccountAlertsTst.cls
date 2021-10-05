@@ -65,20 +65,27 @@ public with sharing class HDT_LC_AccountAlertsTst {
         mySetup();
         
         Account acc = [SELECT Id, Category__c FROM Account];
+        
+        //ALERT WITH BillSendingMethod__c
         AlertConfiguration__c myAlertConfig = new AlertConfiguration__c();
         myAlertConfig.AccountCategory__c = acc.Category__c;
         myAlertConfig.AlertRule__c = 'Emissione bolletta';
         myAlertConfig.BillSendingMethod__c = 'Bolletta per e-mail';
         insert myAlertConfig;
         
+        //ALERT WITHOUT BillSendingMethod__c
+        AlertConfiguration__c myAlertConfig = new AlertConfiguration__c();
+        myAlertConfig.AccountCategory__c = acc.Category__c;
+        insert myAlertConfig;
+        
         //TESTING
         String jsonResult = HDT_LC_AccountAlerts.getAvailableRulesFor(acc.Category__c, acc.Id);
-        AlertConfiguration__c result = ((List<AlertConfiguration__c>) JSON.deserialize(jsonResult, List<AlertConfiguration__c>.class))[0];
+        List<AlertConfiguration__c> result = (List<AlertConfiguration__c>) JSON.deserialize(jsonResult, List<AlertConfiguration__c>.class);
         
         //ASSERTS
         System.assert(String.isNotBlank(jsonResult));
         System.assert(result != null);
-        System.assertEquals(myAlertConfig.Id, result.Id);
+        System.assertEquals(2, result.size());
         
     }
     
