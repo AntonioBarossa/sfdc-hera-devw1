@@ -113,7 +113,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv = indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv = indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     
@@ -288,7 +288,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c, PrivacyMarketingChoiceDate__c ');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
@@ -460,7 +460,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
@@ -653,7 +653,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
@@ -847,7 +847,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
