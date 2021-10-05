@@ -25,7 +25,7 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
     
     //COVERAGE INCREASE TEST
     @isTest
-    private static void coverageIncreaseTest() {
+    private static void coverageIncreaseTest_SingleCase() {
         
         //SETUP
         mySetup();
@@ -38,8 +38,6 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
         
-        
-        
         //PREPARING EVENT
         HDT_PEV_SelfReading__e event = new HDT_PEV_SelfReading__e();
         event.SerializedCase__c = JSON.serialize(myCaseForHeroku);
@@ -49,12 +47,19 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         Database.SaveResult sr = EventBus.publish(event);
         Test.stopTest();
         
-        
         //RETRIEVING DATA
-        
+        Case myUpdatedCase = [SELECT Id, Phase FROM Case];
         
         //ASSERTS
-        
+        System.assert('Esito OK da SAP'.equalsIgnoreCase(myUpdatedCase.Phase), 'Phase non aggiornata da Job.');
         
     }
+    
+    /*
+    @isTest
+    private static void coverageIncreaseTest_TooManyCases() {
+        
+    }*/
+    
+    
 }
