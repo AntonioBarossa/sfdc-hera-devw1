@@ -8,15 +8,15 @@ public with sharing class HDT_LC_AccountAlertsTst {
     //TEST SETUP
     private static void mySetup(){
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         
         //BILLING PROFILE
         BillingProfile__c myBilling = HDT_UTL_DataFactoryTst.createBillingProfile(1, false, acc[0].Id)[0];
         myBilling.BillSendingMethod__c = 'Bolletta per e-mail';
         insert myBilling;
+        
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         
         //CONTRACT
         Contract myContract = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].id)[0];
