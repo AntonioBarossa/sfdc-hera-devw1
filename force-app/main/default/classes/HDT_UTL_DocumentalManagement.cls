@@ -230,18 +230,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					System.debug('### Account Id: '+processRecord.get('AccountId'));
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Type__c = 'Plico';
 				}
 				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('LastUsedPostelEmail__c');
+					documentalSendTracking.Type__c = 'Estratto Conto';
 				}
 			}
 			
