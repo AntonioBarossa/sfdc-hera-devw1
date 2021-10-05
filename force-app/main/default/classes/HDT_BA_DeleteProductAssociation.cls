@@ -33,7 +33,7 @@ public without sharing class HDT_BA_DeleteProductAssociation implements Database
 
                 List<Product2> productFiltered;
                 productFiltered = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(productFiltered, filterProductString);
-                System.debug('>>>> PRODUCT FILTERED ' + productFiltered.size());
+                System.debug(logginglevel.DEBUG, '>>>> PRODUCT FILTERED ' + productFiltered.size());
                 
                 queryStringTemp += 'WHERE SBQQ__ConfiguredSKU__c IN :productFiltered AND SBQQ__OptionalSKU__c = :optionalSkuIdToDelete';
                 queryString = queryStringTemp;
@@ -43,15 +43,15 @@ public without sharing class HDT_BA_DeleteProductAssociation implements Database
             }
         }
 
-        System.debug('>>> QUERY: ' + queryString);
+        System.debug(logginglevel.DEBUG, '>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 
     public void execute(Database.BatchableContext bc, List<SBQQ__ProductOption__c> chunkList){
-        System.debug('>>> EXECUTE');
-        System.debug('>>> delete: ' + chunkList.size());
+        System.debug(logginglevel.DEBUG, '>>> EXECUTE');
+        System.debug(logginglevel.DEBUG, '>>> delete: ' + chunkList.size());
         for(SBQQ__ProductOption__c prodOpt : chunkList){
-            System.debug('>>> ' + prodOpt.Id);
+            System.debug(logginglevel.DEBUG, '>>> ' + prodOpt.Id);
         }
 
         List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;

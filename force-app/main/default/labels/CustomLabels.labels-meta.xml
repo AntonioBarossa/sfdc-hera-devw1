@@ -646,6 +646,20 @@
         <value>Associazione massiva prodotti opzione</value>
     </labels>
     <labels>
+        <fullName>ProdRuleAssociationNotification_DeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdRuleAssociationNotification_DeleteTitle</shortDescription>
+        <value>Rimozione massiva regole prodotti</value>
+    </labels>
+    <labels>
+        <fullName>ProdRuleAssociationNotification_Title</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdRuleAssociationNotification_Title</shortDescription>
+        <value>Associazione massiva regole prodotti</value>
+    </labels>
+    <labels>
         <fullName>ProdOptAssociationCreateTitle</fullName>
         <language>it</language>
         <protected>false</protected>

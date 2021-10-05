@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                 fromCondition;
                 system.debug(query);
                 //mapSobjs = new Map<id, SObject>( (List<SObject>) Database.query(query));
-                lSobjs= (List<SObject>) Database.query(query);
+                lSobjs= (List<SObject>) Database.query(String.escapeSingleQuotes(query));
             }
             return lSobjs;
         }
@@ -54,7 +54,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
         private String dinamicFieldValue(String fieldPath, SObject relation){
-            return getFieldValue(fieldPath, relation);
+            String retValue = getFieldValue(fieldPath, relation);
+            return retValue=='null'? '' : retValue;
         }
     }
     
@@ -105,7 +106,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //If there's already a query on order items (or on Order), modify this method to get that list
         ordId=OrderId;
         Order order = [SELECT 
-                        (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description FROM OrderItems), 
+                        (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description, Product2.Description FROM OrderItems), 
                         CommodityFormula__c, OrderNumber, ServicePointCode__c, ActivationMode__c,
                         HerokuPracticeCode__c, SupplyType__c, SupplyTypeTechnical__c
                         FROM Order WHERE Id=:OrderId WITH SECURITY_ENFORCED];
@@ -174,9 +175,10 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                     productIds.add(item.Product2Id);
                 }
                 for(Service26Config__c position : Operando.Service26Configs__r){
+                    system.debug('ivaste '+json.serialize(position));
                     if(prodFields.contains(Position.Field__c?.toLowerCase())){
                         fieldsToQuery.add(Position.Field__c?.toLowerCase());
-                    }else if(Position.Field__c?.startsWith('OrderItem.')){
+                    }else if(STring.isNotBlank(Position.Field__c) && Position.Field__c.startsWith('OrderItem.')){
                         ordItemFields.add(Position.Field__c.split('OrderItem\\.')[1].toLowerCase());
                     }
                 }
@@ -258,7 +260,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         return '';
 
     }
-    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description'};
+    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description', 'product2.description'};
 
 
 
