@@ -45,7 +45,9 @@ public with sharing class HDT_TRH_SelfReadingEventTst {
         event.SerializedCase__c = JSON.serialize(myCaseForHeroku);
         
         //TESTING
+        Test.startTest();
         Database.SaveResult sr = EventBus.publish(event);
+        Test.stopTest();
         
         
         //RETRIEVING DATA
