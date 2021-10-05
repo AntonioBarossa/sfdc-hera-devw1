@@ -368,8 +368,6 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 			
 		}
 		catch (Exception e) {
-			System.debug('Exception : '+e.getMessage());
-			System.debug('lineNumber : '+e.getLineNumber());
 			status='failed';
 			errorMessage=e.getMessage();
 		}
@@ -377,7 +375,6 @@ public with sharing class HDT_BA_AttributesLead implements Database.Batchable<SO
 	}
 	
 	public void finish(Database.BatchableContext bc){
-		System.debug('Finish HDT_BA_AttributesLead ');
 		HDT_BA_AttributesContact attrContact = new HDT_BA_AttributesContact(fileNumber,runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
 		Id batchprocessid = Database.executeBatch(attrContact,1000);
 
