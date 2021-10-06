@@ -1,33 +1,18 @@
 public with sharing class HDT_LC_ActivityReassignmentTool {
-    private static Set<String> dynamicWorkGroupChannels = new Set<String>{
+    private static Set<String> dynamicWorkGroupChannels = new Set<String> {
         'Assistente web',
         'Back office',
-        'Callback',
-        'Camper',
-        'Chat',
-        'Consip',
-        'Da PGM',
-        // 'Helpdesk',
+        'Consip ',
         'PA',
         'Protocollo',
         'ServiziSociali',
-        'Sportello',
         'Staff',
         'Supporto agenzie',
         'Supporto GDA',
-        'Telefono Inbound',
-        'Telefono Outbound',
-        'Teleselling',
-        'Vendita Business',
-        'Vendita Condomini',
-        'Vendita MM',
-        'Vendita TopBusiness',
-        // 'Social',
-        'Back office Teleselling',
-        'Back office Vendita',
-        '',
-        null
+        'Back office Vendita ',
+        'Back office Teleselling'
     };
+
 
     @AuraEnabled
     public static List<Map<String,String>> getWorkGroups(String queryString) {
