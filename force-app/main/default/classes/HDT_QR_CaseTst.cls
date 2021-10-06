@@ -142,7 +142,14 @@ public class HDT_QR_CaseTst {
     }
     
     //getRecordByPracticeNumber
-    
+    @isTest
+    static void getRecordByPracticeNumberTest() {
+        Case myCase = [SELECT Id, CaseNumber FROM Case];
+        HDT_QR_Case myTestObject = new HDT_QR_Case();
+        
+        Case result = myTestObject.getRecordByPracticeNumber(myCase.CaseNumber);
+        System.assertEquals(myCase.Id, result.Id, 'Case non è il medesimo');
+    }
     
     //getCaseModificaContratti
     
