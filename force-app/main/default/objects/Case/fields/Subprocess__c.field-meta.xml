@@ -119,11 +119,6 @@
                 <label>Incorporazione societaria</label>
             </value>
             <value>
-                <fullName>Incorporazione societaria</fullName>
-                <default>false</default>
-                <label>Incorporazione societaria</label>
-            </value>
-            <value>
                 <fullName>In Continuità</fullName>
                 <default>false</default>
                 <label>In Continuità</label>
