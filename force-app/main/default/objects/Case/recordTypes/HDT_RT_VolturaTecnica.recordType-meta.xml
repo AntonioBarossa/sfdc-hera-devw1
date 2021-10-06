@@ -9706,14 +9706,6 @@
             <fullName>Variazione Gruppo IVA</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>In Continuità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recupero</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SupplyType__c</picklist>
