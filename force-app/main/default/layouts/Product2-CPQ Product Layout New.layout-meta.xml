@@ -178,10 +178,6 @@
                 <behavior>Edit</behavior>
                 <field>PricePickOut__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Script__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

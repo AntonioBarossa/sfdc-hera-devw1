@@ -37,15 +37,19 @@ public inherited sharing class HDT_SRV_ScriptManager {
             Order targetOrder = orderQr.getRecordById(commOfferOrderId);
 
             List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(targetOrder.SBQQ__Quote__c);
-            Id productId = quoteLineList[0].SBQQ__Product__c;
+            String productName = quoteLineList[0].SBQQ__Product__r.ProductCode;
 
             switch on parentOrder.SignatureMethod__c {
                 when 'OTP Remoto','OTP Coopresenza' {
                     config.scriptName = 'Mini Vocal Order';
                 }
                 when 'Vocal Order' {
-                    Product2 commOffer = [SELECT Script__r.Name FROM Product2 WHERE Id=:productId WITH SECURITY_ENFORCED LIMIT 1];
-                    config.scriptName = commOffer.Script__r?.Name;
+                    for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
+                        if (scriptPerOffer.OfferCode__c==productName) {
+                            config.scriptName = scriptPerOffer.ScriptName__c;
+                            break;
+                        }
+                    }
                 }
             }
         }
