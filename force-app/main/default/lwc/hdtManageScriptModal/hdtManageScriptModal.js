@@ -48,6 +48,7 @@ export default class HdtManageScriptModal extends LightningElement {
 
     closeModal(){
         this.openModal = false;
+        this.handleCloseEvt();
     }
 
     handleCloseEvt(){

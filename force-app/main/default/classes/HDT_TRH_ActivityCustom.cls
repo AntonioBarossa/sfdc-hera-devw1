@@ -12,9 +12,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         HDT_UTL_Scarti.setLookupFields(trigger.new);
     }
 
- 	public override void beforeDelete(){}
- 	public override void afterDelete(){}
-  	public override void afterUndelete(){}
+ 	//public override void beforeDelete(){}
+ //	public override void afterDelete(){}
+  //	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
         System.debug('beforeUpdate');
