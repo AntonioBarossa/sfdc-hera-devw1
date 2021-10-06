@@ -15,7 +15,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         return code;
     }
 
-    public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
+    //Metodo Deprecato
+    /* public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
         HDT_UserInputFlow__mdt cl = [SELECT FieldsJSON__c 
         FROM HDT_UserInputFlow__mdt 
         WHERE ProcessType__c = 'prova callout' 
@@ -30,7 +31,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         } else {
             return null;
         }
-    }
+    } */
 
     public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
