@@ -64,6 +64,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 				// return handleBPCodeSearch(queryString);
 				queryString = queryString + '%';
 				result.accounts = getAccountByBPCode(queryString);
+				System.debug('account Id: ' + result.accounts.get(0).Id);
 				result.contacts = getContactTitolare(result.accounts.get(0).Id);
 			} else {
 				queryString = '%' + queryString + '%';
