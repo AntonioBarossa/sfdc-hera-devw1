@@ -110,7 +110,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     private static void initTest_IsLead() {
         
         //SETUP
-        isAccount = true;
+        isLead = true;
         mySetup();
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         

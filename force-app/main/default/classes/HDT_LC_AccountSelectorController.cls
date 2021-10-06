@@ -38,6 +38,8 @@ public with sharing class HDT_LC_AccountSelectorController {
 					result.accounts = handleAccount(activity.Contact__c, activity.Id);
 					
 				} else if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
+					
+					System.debug('Init - result.preFilter: ' + result.preFilter);
 					result.contacts = getContacts(result.preFilter);
 					System.debug('Init - result.contacts: ' + result.contacts);
 					result.leads = getLeads(result.preFilter);
