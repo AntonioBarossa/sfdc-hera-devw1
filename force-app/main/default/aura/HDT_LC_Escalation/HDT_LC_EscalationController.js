@@ -9,6 +9,7 @@
             } else {
                 component.set("v.parentEntityField", data.parentEntityField);
                 component.set("v.recordTypeId", data.recordTypeId);
+                component.set("v.showForm", true);
             }
         });
         $A.enqueueAction(action);
@@ -21,7 +22,6 @@
         event.preventDefault(); // stop form submission
         var eventFields = event.getParam("fields");
         eventFields[component.get("v.parentEntityField")] = component.get("v.recordId");
-        eventFields["RecordTypeId"] = component.get("v.recordTypeId");
         component.find('recordEditForm').submit(eventFields);
 
         // SHOW TOAST

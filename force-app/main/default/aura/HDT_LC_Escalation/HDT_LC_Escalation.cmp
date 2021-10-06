@@ -2,25 +2,28 @@
     <aura:attribute name="parentEntityField" type="String"/>
     <aura:attribute name="recordTypeId" type="String"/>
     <aura:attribute name="showMalfunctionFields" type="Boolean"/>
+    <aura:attribute name="showForm" type="Boolean"/>
 
     <aura:handler name="init" value="{! this }" action="{! c.doGetRecordData }" />
 
-    <lightning:recordEditForm aura:id="recordEditForm" objectApiName="wrts_prcgvr__Activity__c" onsubmit="{! c.onRecordSubmit }">
-        <lightning:inputField fieldName="Type__c" required="true" onchange="{! c.onTypeChange }"/>
-        <lightning:inputField fieldName="Subject__c" required="true"/>
-        <lightning:inputField fieldName="Note__c" required="true"/>
-        <aura:if isTrue="{! v.showMalfunctionFields }">
-            <lightning:inputField fieldName="MalfunctionDate__c" required="true"/>
-            <lightning:inputField fieldName="MalfunctionDescription__c" required="true"/>
-            <lightning:inputField fieldName="MalfunctioningFeature__c" required="true"/>
-            <lightning:inputField fieldName="MalfunctionsCount__c" required="true"/>
-            <lightning:inputField fieldName="CustomerImpact__c" required="true"/>
-            <lightning:inputField fieldName="OperationImpacts__c" required="true"/>
-            <lightning:inputField fieldName="ExpectedBehavior__c" required="true"/>
-            <lightning:inputField fieldName="AnomalyExample__c" required="true"/>
-        </aura:if>
-        <div class="slds-align_absolute-center">
-            <lightning:button class="slds-m-top_small" type="submit" label="Salva"/>
-        </div>
-    </lightning:recordEditForm>
+    <aura:if isTrue="{! v.showForm }">
+        <lightning:recordEditForm aura:id="recordEditForm" objectApiName="wrts_prcgvr__Activity__c" recordTypeId="{! v.recordTypeId }" onsubmit="{! c.onRecordSubmit }">
+            <lightning:inputField fieldName="Type__c" required="true" onchange="{! c.onTypeChange }"/>
+            <lightning:inputField fieldName="Subject__c" required="true"/>
+            <lightning:inputField fieldName="Note__c" required="true"/>
+            <aura:if isTrue="{! v.showMalfunctionFields }">
+                <lightning:inputField fieldName="MalfunctionDate__c" required="true"/>
+                <lightning:inputField fieldName="MalfunctionDescription__c" required="true"/>
+                <lightning:inputField fieldName="MalfunctioningFeature__c" required="true"/>
+                <lightning:inputField fieldName="MalfunctionsCount__c" required="true"/>
+                <lightning:inputField fieldName="CustomerImpact__c" required="true"/>
+                <lightning:inputField fieldName="OperationImpacts__c" required="true"/>
+                <lightning:inputField fieldName="ExpectedBehavior__c" required="true"/>
+                <lightning:inputField fieldName="AnomalyExample__c" required="true"/>
+            </aura:if>
+            <div class="slds-align_absolute-center">
+                <lightning:button class="slds-m-top_small" type="submit" label="Salva"/>
+            </div>
+        </lightning:recordEditForm>
+    </aura:if>
 </aura:component>
