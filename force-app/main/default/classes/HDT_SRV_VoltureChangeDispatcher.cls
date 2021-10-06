@@ -1,6 +1,7 @@
 public with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr.Interfaces_1_0.IApexAction
 {
- 
+    private static final Boolean dmLive = false;
+    private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     public Object execute(Object args)
     {
         Map<String, Object> argsMap = (Map<String,Object>)args;
@@ -12,7 +13,10 @@ public with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr
         {
             when 'cloneOrder'
             {
-                
+                if(dmLive)
+                {
+                    voltureChangeSrv.cloneOrderAndUpdate(sender);
+                }
             }
         }
 
