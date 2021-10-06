@@ -13,12 +13,17 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     private static void mySetup() {
         //ACCOUNT
         Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
+        
         //CONTACT
-        Contact contact = new Contact(
-            AccountId = account.Id,
-            LastName = 'Rossi'
-        );
-        insert contact;
+        Contact contact;
+        if(!isLead){
+            contact = new Contact(
+                AccountId = account.Id,
+                LastName = 'Rossi'
+            );
+            insert contact;
+        }
+        
         //LEAD
         Lead myLead = HDT_UTL_DataFactoryTst.createLead(1, false)[0];
         myLead.VATNumber__c = account.VATNumber__c;
