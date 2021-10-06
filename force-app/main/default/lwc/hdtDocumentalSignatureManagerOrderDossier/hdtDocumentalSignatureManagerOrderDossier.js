@@ -147,14 +147,14 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     get isScriptBtnVisible(){
         if (this.orderRecord) {
 
-            let hiddenEdit = true;
+            /*let hiddenEdit = true;
             if(this.orderParentRecord.Step__c <= this.currentStep || this.orderParentRecord.Status === 'Completed'){
                 hiddenEdit = true;
             } else if(this.orderParentRecord.Step__c > this.currentStep){
                 hiddenEdit = false;
-            }
+            }*/
 
-            return this.orderRecord.fields.Status.value=='In Lavorazione' && !hiddenEdit && (
+            return this.orderRecord.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && (
                 this.orderRecord.fields.SignatureMethod__c.value=='Vocal Order' || 
                 this.orderRecord.fields.SignatureMethod__c.value=='OTP Remoto' || 
                 this.orderRecord.fields.SignatureMethod__c.value=='OTP Coopresenza'
