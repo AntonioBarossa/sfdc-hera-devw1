@@ -40,12 +40,6 @@ public with sharing class HDT_TRH_DocumentalActivityTst{
 		dA2.CaseId__c = caseList[1].Id;
 		dA2.OrderId__c = ordList[1].Id;
 
-		dA1.ParentProcessId__c = caseList[0].CaseNumber;
-		dA1.ProcessId__c = ordList[0].OrderNumber;
-
-		dA2.ParentProcessId__c = ordList[1].OrderNumber;
-		dA2.ProcessId__c = caseList[1].CaseNumber;
-
 		docActList.add(dA1);
 		docActList.add(dA2);
 
