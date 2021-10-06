@@ -60,7 +60,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         Contact con = [SELECT Id FROM Contact];
         
         //ASSERTS
-        HDT_LC_AccountSelectorController.HDT_UTL_Struct utlStruct = JSON.deserialize(result, HDT_LC_AccountSelectorController.HDT_UTL_Struct.class);
+        HDT_LC_AccountSelectorController.HDT_UTL_Struct utlStruct = (HDT_LC_AccountSelectorController.HDT_UTL_Struct) JSON.deserialize(result, HDT_LC_AccountSelectorController.HDT_UTL_Struct.class);
         System.assertEquals(1, utlStruct.accounts.size(), 'Non è stato recuperato il numero corretto di Account.');
         System.assertEquals(acc.Id, updatedActivity.Account__c, 'Non è stata aggiornata Activity (Account).');
         System.assertEquals(con.Id, updatedActivity.Contact__c, 'Problema rilevato su Activity (Contact).');

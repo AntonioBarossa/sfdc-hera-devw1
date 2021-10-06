@@ -2,14 +2,14 @@ public with sharing class HDT_LC_AccountSelectorController {
 	
 	@TestVisible
 	private class HDT_UTL_Struct {
-		Boolean isCall;
-		String preFilter;
-		String accountId;
-		String contactId;
-		String leadId;
-		List<Account> accounts;
-		List<Contact> contacts;
-		List<Lead> leads;
+		@TestVisible Boolean isCall;
+		@TestVisible String preFilter;
+		@TestVisible String accountId;
+		@TestVisible String contactId;
+		@TestVisible String leadId;
+		@TestVisible List<Account> accounts;
+		@TestVisible List<Contact> contacts;
+		@TestVisible List<Lead> leads;
 	}
 	
 	@AuraEnabled
