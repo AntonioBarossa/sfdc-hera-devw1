@@ -119,9 +119,19 @@
                 <label>Incorporazione societaria</label>
             </value>
             <value>
-                <fullName>Errore di Lettura</fullName>
+                <fullName>Incorporazione societaria</fullName>
                 <default>false</default>
-                <label>Errore di Lettura</label>
+                <label>Incorporazione societaria</label>
+            </value>
+            <value>
+                <fullName>In Continuità</fullName>
+                <default>false</default>
+                <label>In Continuità</label>
+            </value>
+            <value>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+                <label>Recupero</label>
             </value>
             <value>
                 <fullName>Errore Stima Consumi</fullName>
@@ -241,6 +251,14 @@
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>Incorporazione societaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>In Continuità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Recupero</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
