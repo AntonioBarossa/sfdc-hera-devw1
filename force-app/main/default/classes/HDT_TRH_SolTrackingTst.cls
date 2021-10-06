@@ -47,7 +47,7 @@ public with sharing class HDT_TRH_SolTrackingTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myList != null);        
+        System.assert(myList != null, 'Attenzione, myList non può essere null!');        
     }
 
 }

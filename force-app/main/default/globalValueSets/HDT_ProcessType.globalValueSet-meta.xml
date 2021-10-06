@@ -726,6 +726,11 @@
         <label>Switch out dal SII</label>
     </customValue>
     <customValue>
+        <fullName>Switch out dal SII - GAS</fullName>
+        <default>false</default>
+        <label>Switch out dal SII - GAS</label>
+    </customValue>
+    <customValue>
         <fullName>Switch Out per voltura- EE</fullName>
         <default>false</default>
         <label>Switch Out per voltura- EE</label>
@@ -1380,12 +1385,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Switch out dal SII - EE</label>
-    </customValue>
-    <customValue>
-        <fullName>Switch out dal SII - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Switch out dal SII - GAS</label>
     </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>
