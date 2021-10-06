@@ -147,14 +147,14 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     get isScriptBtnVisible(){
         if (this.orderRecord) {
 
-            let hiddenEdit = true;
+            /*let hiddenEdit = true;
             if(this.orderParentRecord.Step__c <= this.currentStep || this.orderParentRecord.Status === 'Completed'){
                 hiddenEdit = true;
             } else if(this.orderParentRecord.Step__c > this.currentStep){
                 hiddenEdit = false;
-            }
+            }*/
 
-            return this.orderRecord.fields.Status.value=='In Lavorazione' && !hiddenEdit && (
+            return this.orderRecord.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && (
                 this.orderRecord.fields.SignatureMethod__c.value=='Vocal Order' || 
                 this.orderRecord.fields.SignatureMethod__c.value=='OTP Remoto' || 
                 this.orderRecord.fields.SignatureMethod__c.value=='OTP Coopresenza'
@@ -212,10 +212,10 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 if(this.orderRecord.fields.Contact__r.value != null){
 					contactEmail = this.orderRecord.fields.Contact__r.value.fields.Email.value;
 					contactPhone = this.orderRecord.fields.Contact__r.value.fields.MobilePhone.value;
-				}else if(this.orderRecord.fields.Account.value != null){
+				}/* else if(this.orderRecord.fields.Account.value != null){
 					contactEmail = this.orderRecord.fields.Account.value.fields.PrimaryEmail__c.value;
 					contactPhone = this.orderRecord.fields.Account.value.fields.MobilePhone__c.value;
-				}
+				} */
                 var orderEmail = this.orderRecord.fields.ShippingMail__c.value;
                 if(orderEmail != null && orderEmail != '')
                     email = orderEmail;

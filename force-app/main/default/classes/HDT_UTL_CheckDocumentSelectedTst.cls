@@ -88,7 +88,7 @@ public with sharing class HDT_UTL_CheckDocumentSelectedTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
+        System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
         
     }
 

@@ -287,6 +287,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             Ecid__c
             FROM CampaignMember 
             WHERE id = :id
+            WITH SECURITY_ENFORCED
         ];
         return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
     }
