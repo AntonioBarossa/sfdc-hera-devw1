@@ -907,8 +907,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('C.F. Precdente intestatario','PreviousHolderFiscalCode__c', true, false, false, '',''),   
                     new fieldData('Ragione sociale precedente intestatario','PreviousHoldeCompanyName__c', true, false, false, '',''),   
                     new fieldData('P.Iva precedente intestatario','PreviousHolderVatNumber__c', true, false, false, '',''),   
-                    new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),   
-                    new fieldData('Voltura Tecnica','IsTechnicalTransfer__c', true, false, false, '','')
+                    new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','')//,   
+                    // LG 0610 HRAWRM-442 new fieldData('Voltura Tecnica','IsTechnicalTransfer__c', true, false, false, '','')
                 ]
             },
             {
