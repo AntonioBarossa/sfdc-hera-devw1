@@ -1,4 +1,6 @@
 public with sharing class HDT_LC_AccountSelectorController {
+	
+	@TestVisible
 	private class HDT_UTL_Struct {
 		Boolean isCall;
 		String preFilter;
@@ -41,7 +43,8 @@ public with sharing class HDT_LC_AccountSelectorController {
 						String contactId = result.contacts.get(0).Id;
 						result.contactId = contactId;
 						result.accounts = handleAccount(contactId, activity.Id);
-						if(result.accounts.size() == 1) result.accountId = result.accounts.get(0).Id;
+						if(result.accounts.size() == 1) 
+							result.accountId = result.accounts.get(0).Id;
 					} else if(result.contacts.isEmpty() && result.leads.size() == 1) {
 						String leadId = result.leads.get(0).Id;
 						handleLead(leadId, activity.Id);
