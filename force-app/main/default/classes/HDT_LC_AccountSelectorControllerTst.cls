@@ -124,8 +124,6 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         
         //RETRIEVING DATA
         wrts_prcgvr__Activity__c updatedActivity = [SELECT Id, Lead__c FROM wrts_prcgvr__Activity__c];
-        Account acc = [SELECT Id FROM Account];
-        Contact con = [SELECT Id FROM Contact];
         Lead lea = [SELECT Id FROM Lead];
         
         //ASSERTS
