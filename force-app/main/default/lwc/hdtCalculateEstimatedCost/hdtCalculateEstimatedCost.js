@@ -56,8 +56,10 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     }
 
     submitDetails() {
-        if(this.quoteType=="")
+        if(!this.quoteType){
+            this.isModalOpen = false;
             return;
+        }
         const fields = {};
         fields['Id'] = this.recordId;
         fields['QuotationType__c'] = this.quoteType;
