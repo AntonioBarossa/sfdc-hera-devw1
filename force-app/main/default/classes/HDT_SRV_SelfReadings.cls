@@ -236,7 +236,7 @@ public with sharing class HDT_SRV_SelfReadings {
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
         Map<String,Object> dataBody = body.get('data') != null? (Map<String, Object>) body.get('data') : new Map<String,Object>();
-        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'KO';
+        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'OK';
         // SAP restituisce codice 502 in caso di check preliminare non superato.
         if ((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (outcome != null && outcome.equalsIgnoreCase('KO'))) {
             retWrap.isResponseOk = false;

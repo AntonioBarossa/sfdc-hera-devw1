@@ -58,14 +58,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
         String query = makeSelectStatement(fieldsToQuery);
         Sobject genericSObject;
-        if(STRING.isNotBlank(query)){
-            query+=
-                //'FROM wrts_prcgvr__Activity__c where Id = \''+
-                ' FROM '+objectName+' where Id = \''+
-                recordId+'\' LIMIT 1';
-            system.debug(query);
+        if(String.isNotBlank(query)){
             try{
-                genericSObject = (SObject) Database.query(String.escapeSingleQuotes(query));
+                genericSObject = (SObject) Database.query(
+                    String.escapeSingleQuotes(query) + ' FROM '+String.escapeSingleQuotes(objectName)+' WHERE Id = :recordId LIMIT 1'
+                );
             }catch(Exception e){
                 throw new HDT_UTL_FormatTextScriptException(
                         'ERRORE DATABASE QUERY, SOQL: # '
@@ -122,7 +119,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                                             .get(fieldOrRelation)
                                             .getDescribe()
                                             .getType().name();
-                system.debug(dataFieldType);
                 switch on dataFieldType{
                     when 'STRING'{
                         fieldValue = (String) relation.get(fieldOrRelation);
@@ -138,6 +134,9 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                         }else{
                             fieldValue = 'null';
                         }
+                    }when 'CURRENCY'{
+                        fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
+                        fieldValue = String.isNotBlank(fieldValue)? fieldValue : '0';
                     }
                     when else {
                         fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
@@ -167,10 +166,8 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         //controlla su CS o CMT se il valore va sovrascritto (ossia se c'è una corrispondenza tra fieldApiName e ObjectApiName),
         // se sì converti in decimal, aumenta, riconverti in stringa, altrimenti rimanda indietro il valore che ti è arrivato
 
-        System.debug('overwriteValue: '+fieldValue);
         String key = sobjectApiName+'-'+fieldApiName;
         if (overrideMap.containsKey(key.toLowerCase())) {
-            System.debug('containsKey: '+key);
             HDT_CallScriptValue__mdt overrideValue = overrideMap.get(key.toLowerCase());
             List<String> formatParams = new List<String>{fieldValue};
 
@@ -183,11 +180,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
 
-    protected List<String> getDataBinded(String Text){
+    protected List<String> getDataBinded(String text){
         //this method catches all dynamic fields in the text
         //generally can be used to extract all regex occurence in a string
         List<String> bindedFields = new List<String>();
-        Matcher matcher=Pattern.compile(regEx).matcher(Text);
+        Matcher matcher=Pattern.compile(regEx).matcher(text);
          
         while(matcher.find()){
             //String preFormatData = matcher.group(0);
@@ -195,7 +192,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             //bindedFields.add(preFormatData.trim().toLowerCase());
             bindedFields.add(matcher.group(1).toLowerCase());
         }
-        system.debug(bindedFields);
         return bindedFields;
     }
 
@@ -208,7 +204,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         for(String field : listFields){
             if((!field.startsWith('globaltag') && !field.startsWith('constant')) || field.startsWith('globaltag.redirlink')){//exclude global tags from query
                 //querySelectStatement=querySelectStatement+', '+field;
-                fieldsToSelect.add(field.removeStart('globaltag.redirlink.'));
+                fieldsToSelect.add(field.removeStart('globaltag.redirlink.').trim());
             }
         }
         querySelectStatement = String.join(new List<String>(fieldsToSelect), ', ');
@@ -226,7 +222,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         String tagValue='';
         switch on tagName{
             when 'today'{
-                tagValue=Date.Today().format();
+                tagValue = Date.Today().format();
+            }
+            when 'now'{
+                tagValue = Datetime.now().format('HH:mm');
             }
             when 'section__d'{
                 //maybe deprecated, you can safely remove this when output and isFirstSection class variable
