@@ -73,6 +73,9 @@ public with sharing class HDT_LC_AccountSelectorController {
 			}
 			return JSON.serialize(result);
 		} catch (Exception e) {
+			System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
 			throw new AuraHandledException(e.getMessage());
 		}
 	}

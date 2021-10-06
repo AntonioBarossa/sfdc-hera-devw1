@@ -40,7 +40,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         
         Boolean caught = false;
         try{
-            HDT_LC_AccountSelectorController.search('100Bandaluso');         
+            HDT_LC_AccountSelectorController.search('1000000000000000');         
         } catch (Exception e) {
             caught = true;
             System.debug('seach - exception message: ' + e.getMessage());
