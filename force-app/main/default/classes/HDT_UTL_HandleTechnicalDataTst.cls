@@ -1,7 +1,11 @@
+/**
+ * @author Valere (valere@noeli-it.net)
+ * @date 6/10/2021
+ * @description HDT_UTL_VasManagementTst Test Class
+ * @history valere - 6/10/2021– Created Class
+ */
 @isTest
 private class HDT_UTL_HandleTechnicalDataTst {
-
-
 
 @testSetup 
   static void setup() {
