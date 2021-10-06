@@ -151,12 +151,4 @@ public class HDT_QR_CaseTst {
         System.assertEquals(myCase.Id, result.Id, 'Case non è il medesimo');
     }
     
-    //getCaseModificaContratti
-    
-    
-    //getChildCase
-    
-    
-    //
-
 }
