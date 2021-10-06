@@ -121,7 +121,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         wrts_prcgvr__Activity__c updatedActivity = [SELECT Id, Lead__c FROM wrts_prcgvr__Activity__c];
         Account acc = [SELECT Id FROM Account];
         Contact con = [SELECT Id FROM Contact];
-        Lead lea = [SELECT Id FROM lead];
+        Lead lea = [SELECT Id FROM Lead];
         
         //ASSERTS
         HDT_LC_AccountSelectorController.HDT_UTL_Struct utlStruct = (HDT_LC_AccountSelectorController.HDT_UTL_Struct) JSON.deserialize(result, HDT_LC_AccountSelectorController.HDT_UTL_Struct.class);
