@@ -1386,12 +1386,6 @@
         <isActive>false</isActive>
         <label>Switch out dal SII - EE</label>
     </customValue>
-    <customValue>
-        <fullName>Switch out dal SII - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Switch out dal SII - GAS</label>
-    </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>
     <sorted>false</sorted>
