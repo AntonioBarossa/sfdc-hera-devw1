@@ -6,8 +6,8 @@ public with sharing class HDT_WS_DeactivateCampaign {
         Map<String,String> getParams = new Map<String,String>{
             'workPlanName' => campaignId,
             'mostRecentOnly' => 'true',
-            'dateTime' => dt,
-            'token' => token
+            'dateTime' => String.valueOf(getTime),
+            'token' => String.valueOf(token)
         };
         wrapRequestObject reqObj = new wrapRequestObject();
         reqObj.params = getParams;

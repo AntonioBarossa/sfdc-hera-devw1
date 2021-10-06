@@ -36,9 +36,9 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
 
             List<AggregateResult> campaignsWithReitekStatusSend = [SELECT COUNT(id) members, CampaignId from CampaignMember WHERE isToSendStatusReitek__c = true AND CampaignId IN :deactivateCampaignsId GROUP BY CampaignId ];
 
-            for (AggregateResultAg res : campaignsWithReitekStatusSend) {
+            for (AggregateResult res : campaignsWithReitekStatusSend) {
                 if ((Decimal) res.get('members') > 0) {
-                    campaignIdsToBatch.add(res.get('CampaignId'));
+                    campaignIdsToBatch.add((Id)res.get('CampaignId'));
                 } 
             }
 
