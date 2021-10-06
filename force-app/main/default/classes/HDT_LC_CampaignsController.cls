@@ -410,7 +410,7 @@ public inherited sharing class HDT_LC_CampaignsController {
         if (String.isBlank(id)) {
             return null;
         }
-        List<String> listFiels = new List<String>{'name'};
+      //  List<String> listFiels = new List<String>{'name'};
         List<Account> listAcc =accountQr.getAccountById(id);
         Account currentAccount = listAcc.get(0);
         

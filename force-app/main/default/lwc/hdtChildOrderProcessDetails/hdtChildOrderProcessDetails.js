@@ -847,7 +847,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'Switchout',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && (this.order.SwitchOutDate__c),
+                processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn') && (this.order.SwitchOutDate__c != null),
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
                     new fieldData('Data Cessazione Switchout','SwitchOutDate__c', this.typeVisibility('both'), false, true, '','')
@@ -1437,6 +1437,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Comune','SupplyCity__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Via','SupplyStreetName__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Civico','SupplyStreetNumber__c', this.typeVisibility('both'), true, true, '',''),                  
+                    new fieldData('Barrato','SupplyStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Localita','SupplyPlace__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Provincia','SupplyState__c', this.typeVisibility('both'), true, true, '',''),                  
                     new fieldData('Cap','SupplyPostalCode__c', this.typeVisibility('both'), true, true, '',''),                  
@@ -1480,6 +1481,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
+                    new fieldData('Barrato','BillingStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),            
                     {
                         'label': 'Civico',
                         'apiname': 'BillingStreetNumber__c',

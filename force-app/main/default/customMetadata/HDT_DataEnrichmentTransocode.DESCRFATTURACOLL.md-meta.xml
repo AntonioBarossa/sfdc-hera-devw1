@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>SapField__c</field>
-        <value xsi:type="xsd:string">DESCRFATTURACOLL</value>
+        <value xsi:type="xsd:string">DESCRFATTURAZCOLL</value>
     </values>
     <values>
         <field>SfdcField__c</field>

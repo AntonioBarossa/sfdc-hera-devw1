@@ -1826,6 +1826,14 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Amm%2E Precheck KO SII</fullName>
             <default>false</default>
         </values>

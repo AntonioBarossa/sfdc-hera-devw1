@@ -5,10 +5,24 @@
                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-id="close" onclick={buttonClick} >
                     <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
                 </button>
-                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{modalHeader}</h2>
+                <!--<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{modalHeader}</h2>-->
+                <div class="slds-text-heading_large">{modalHeader}</div>
             </header>
             <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                <p>{modalBody}</p>
+                <!--<p>{modalBody}</p>-->
+                <div class="slds-text-heading_medium">{modalBody}</div>
+
+                <div if:true={enforceConfirmation} class="slds-grid slds-gutters slds-m-top_large slds-m-bottom_large">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            type="checkbox"
+                            label="Ho preso visione del messaggio"
+                            name="allSafeCheckbox"
+                            required
+                        ></lightning-input>
+                    </div>
+                </div>
+
             </div>
             <footer class="slds-modal__footer slds-modal__footer_directional">
                 <button class="slds-button slds-button_neutral" data-id="close" onclick={buttonClick} >Annulla</button>

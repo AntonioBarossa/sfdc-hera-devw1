@@ -396,6 +396,16 @@
         <enabled>true</enabled>
         <name>HDT_FulfillmentDateMatrix__c</name>
     </customSettingAccesses>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>VocalOrderPublicConfirm__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>VocalOrderPublicConfirm__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.CalculatedValue__c</field>
@@ -448,6 +458,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SupplyTypeTemp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.ImplantTypeTemp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SwitchOutDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -473,12 +493,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ResidentialStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SupplyStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BillingStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.RateCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.MethodSignedAccepted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.LoginChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ActivatedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -789,6 +834,56 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Consumption__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.AgencyCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.VendorLastName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.VendorFirstName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.CommercialId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.UpperChannelAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.LowerChannelAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.IsMonitoring__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.AreaManager__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1234,6 +1329,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.LastNameRcuFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.LastUsedPostelEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6906,7 +7006,26 @@
         <field>City__c.BelfioreCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.MunicipalityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.ProvinceName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.RegionCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>City__c.RegionName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>City__c.Province__c</field>
@@ -7175,6 +7294,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.birthCity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.BPInterlocutor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8576,6 +8700,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSendTracking__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentalActivity__c.ActivityType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8622,6 +8751,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalActivity__c.IsMigrated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocumentalActivity__c.IsPostelAttachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12236,6 +12370,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.HerAteco__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AttributesCatalogDesc__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15749,7 +15888,7 @@
         <field>Product2.PriceEurGiorno__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+	 <fieldPermissions>
         <editable>true</editable>
         <field>Product2.PriceF0__c</field>
         <readable>true</readable>
@@ -29207,6 +29346,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.RuleChosenQueue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.SAPStep__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29303,6 +29447,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.WaitingTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.WorkGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30994,7 +31143,16 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>DiscardAnnullmentRule__c</object>
         <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>  
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>VocalOrderPublicConfirm__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>    
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

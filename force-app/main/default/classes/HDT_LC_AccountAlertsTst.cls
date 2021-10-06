@@ -6,6 +6,27 @@ public with sharing class HDT_LC_AccountAlertsTst {
     
     
     //TEST SETUP
+    private static void mySetup(){
+        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        
+        //BILLING PROFILE
+        BillingProfile__c myBilling = HDT_UTL_DataFactoryTst.createBillingProfile(1, false, acc[0].Id)[0];
+        myBilling.BillSendingMethod__c = 'Bolletta per e-mail';
+        insert myBilling;
+        
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        
+        //CONTRACT
+        Contract myContract = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].id)[0];
+        myContract.Status = 'Attivo';
+        myContract.BillingProfile__c = myBilling.Id;
+        insert myContract;
+        
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, myContract.id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+    }
     
     
     //TESTS
@@ -42,18 +63,29 @@ public with sharing class HDT_LC_AccountAlertsTst {
         System.debug(debugString);
         
         //SETUP
-        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME')[0];
-        AlertConfiguration__c myAlertConfig = new AlertConfiguration__c(AccountCategory__c = acc.Category__c);
+        mySetup();
+        
+        Account acc = [SELECT Id, Category__c FROM Account];
+        
+        //ALERT WITH BillSendingMethod__c
+        AlertConfiguration__c myAlertConfig = new AlertConfiguration__c();
+        myAlertConfig.AccountCategory__c = acc.Category__c;
+        myAlertConfig.BillSendingMethod__c = 'Bolletta per e-mail';
         insert myAlertConfig;
+        
+        //ALERT WITHOUT BillSendingMethod__c
+        AlertConfiguration__c myAlertConfig2 = new AlertConfiguration__c();
+        myAlertConfig2.AccountCategory__c = acc.Category__c;
+        insert myAlertConfig2;
         
         //TESTING
         String jsonResult = HDT_LC_AccountAlerts.getAvailableRulesFor(acc.Category__c, acc.Id);
-        AlertConfiguration__c result = ((List<AlertConfiguration__c>) JSON.deserialize(jsonResult, List<AlertConfiguration__c>.class))[0];
+        List<AlertConfiguration__c> result = (List<AlertConfiguration__c>) JSON.deserialize(jsonResult, List<AlertConfiguration__c>.class);
         
         //ASSERTS
         System.assert(String.isNotBlank(jsonResult));
         System.assert(result != null);
-        System.assertEquals(myAlertConfig.Id, result.Id);
+        System.assertEquals(2, result.size(), 'Result inconsistente');
         
     }
     
@@ -160,6 +192,31 @@ public with sharing class HDT_LC_AccountAlertsTst {
         System.assertEquals(con.mobilePhone, result.mobilePhone);
         
     }
+    
+    
+    //COPERTURA TESTS HDT_QR_AlertConfiguration
+    //getRecordsByAccountCategory
+    @isTest
+    private static void getRecordsByAccountCategoryTest(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'getRecordsByAccountCategoryTest';
+        System.debug(debugString);
+        
+        //SETUP
+        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME')[0];
+        AlertConfiguration__c myAlertConfig = new AlertConfiguration__c(AccountCategory__c = acc.Category__c);
+        insert myAlertConfig;
+        
+        //TESTING
+        HDT_QR_AlertConfiguration myObjectToTest = new HDT_QR_AlertConfiguration();
+        List<AlertConfiguration__c> result = myObjectToTest.getRecordsByAccountCategory(myAlertConfig.AccountCategory__c);
+        
+        //ASSERTS
+        System.assertEquals(1, result.size(), 'Lista result incorretta.');
+        
+    }
+    
     
     
     

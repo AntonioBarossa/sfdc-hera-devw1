@@ -140,8 +140,7 @@ public inherited sharing class HDT_LC_EditQuote {
 
                 quoteLineSrv.updateRecords(quoteLinesToUpdate);
 
-                //***Commented For Error LG 28/09 */
-               // bonusScontiNotAmend(quoteId);
+                bonusScontiNotAmend(quoteId);
 
 
             } else {

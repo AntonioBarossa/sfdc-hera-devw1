@@ -14,16 +14,28 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     }
     
     @AuraEnabled
-    public static Order checkContractualEnvelope(String orderId ){
-        try {
-            System.debug('It\'s inside the method checkContractualEnvelope');
-            //  ConsumptionCode__c consumptionCode = consumptionCodeQr.getRecordById(consumptionCodeId);
-              Order order = orderQr.getRecordById(orderId);
-            System.debug('********');
-              return order;    
-        } catch (Exception e) {
-            System.debug(e.getMessage()); 
-            throw new AuraHandledException(e.getMessage());
+    public static String checkContractualEnvelope(String orderId,String username,String password ){
+        if(orderId == checkLogin(username,password).id){
+            try {
+                System.debug('It\'s inside the method checkContractualEnvelope');
+                //  ConsumptionCode__c consumptionCode = consumptionCodeQr.getRecordById(consumptionCodeId);
+               // Order order = orderQr.getRecordById(orderId);
+                List<VocalOrderPublicConfirm__c> voList = HDT_QR_VocalOrderPublicConfirm.getVocalPublicConfirm(orderId);
+                if(voList != null && voList.isEmpty()){
+                    VocalOrderPublicConfirm__c vo = new VocalOrderPublicConfirm__c();
+                    vo.order__c = orderId;
+                    HDT_SRV_VocalOrderPublicConfirm.createRecord(vo);
+                    return 'success';
+                }
+                System.debug('********');
+                return 'Validato';//order;    
+            } catch (Exception e) {
+                System.debug(e.getMessage()); 
+                throw new AuraHandledException(e.getMessage());
+            }
+        }
+        else{
+            return 'Errore';
         }
     }
             
@@ -36,22 +48,30 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
   
     }
     @AuraEnabled
-    public static Map<String, String> downloadDocument(String orderId){
+    public static Map<String, String> downloadDocument(String orderId,String username,String password){
+        map<String,String> mapReturn = new Map<String,String>();
         try {
-            HDT_LC_CanaleIVRNoShare qrsha = new HDT_LC_CanaleIVRNoShare();
-            DocumentalActivity__c dc = qrsha.getActivityByOrder(orderId);
-            map<String,String> mapReturn = new Map<String,String>();
-            //mapReturn.put('base64','UFJPVkFET1dOTE9BRFBST1ZB');
-            //String s = HDT_LC_DocumentSignatureManager.showOriginalDocument(dc.id);
-           // System.debug('*********:'+ s);
-            mapReturn = qrsha.getPlico(dc.id); 
-            System.debug('*********:'+ mapReturn);//(Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
-           /*  Order ord = orderQr.getRecordById(orderId);
-            String recordId = ord.DocumentalActivity__c;
-            mapReturn = HDT_LC_DocumentSignatureManager.showOriginalDocument(recordId);
-            return serializedOutput; */
-            return mapReturn;
-        } catch (Exception e) {
+                String id = checkLogin(username,password).id;
+                if(id == orderId){
+                    HDT_LC_CanaleIVRNoShare qrsha = new HDT_LC_CanaleIVRNoShare();
+                    DocumentalActivity__c dc = qrsha.getActivityByOrder(orderId);
+                    //mapReturn.put('base64','UFJPVkFET1dOTE9BRFBST1ZB');
+                    //String s = HDT_LC_DocumentSignatureManager.showOriginalDocument(dc.id);
+                // System.debug('*********:'+ s);
+                    mapReturn = qrsha.getPlico(dc.id); 
+                    System.debug('*********:'+ mapReturn);//(Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
+                /*  Order ord = orderQr.getRecordById(orderId);
+                    String recordId = ord.DocumentalActivity__c;
+                    mapReturn = HDT_LC_DocumentSignatureManager.showOriginalDocument(recordId);
+                    return serializedOutput; */
+                    return mapReturn;
+                }
+                else{
+                    mapReturn.put('res','NonPossibile');
+                    return mapReturn;
+                }
+            }
+         catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
@@ -122,7 +142,6 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
       String password = day + month + year.substring(2,4);
       System.debug('********:4User');
-      System.debug(password);
       Order newOrder = new Order();
       newOrder.Id = childOrder.parentOrder__c;
       newOrder.UniqueCredentials__c = username + '_' + password;
@@ -132,6 +151,8 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     }
       
 }
+
+
 
 @AuraEnabled
    public static void generateUsernameAndPassword(String orderchild,String parentOrder){
@@ -162,7 +183,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
         String password = day + month + year.substring(2,4);
         System.debug('********:4User');
-        System.debug(password);
+        //System.debug(password);
         Order newOrder = new Order();
         newOrder.Id = parentOrder;
         newOrder.UniqueCredentials__c = username + '_' + password;
