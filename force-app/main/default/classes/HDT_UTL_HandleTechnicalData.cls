@@ -152,9 +152,9 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
             ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
         }
-        if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
-            //ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
-        }
+        /*if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
+            ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
+        }*/
         if (!String.isBlank(mapRequestFields.get('N_CIFRE_MIS'))) {
             sp.MeterDigitNumber__c = mapRequestFields.get('N_CIFRE_MIS');
         }
@@ -182,10 +182,10 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('ACC_MIS'))) {
             sp.MeterAccessible__c = mapRequestFields.get('ACC_MIS');
         }
-        if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
+        /*if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
             //Gestire caso CLASSE_PRELIEVO
             //sp.WithdrawalClass__c = mapRequestFields.get('COD_PROF_PREL');
-        }
+        }*/
         if (!String.isBlank(mapRequestFields.get('COD_REMI'))) {
             ord.RemiCode__c = mapRequestFields.get('COD_REMI');
         }
