@@ -333,11 +333,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PetitionerAssigneeStructure__c</field>
-            <table>wrts_prcgvr__Activity__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>SAPStep__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
