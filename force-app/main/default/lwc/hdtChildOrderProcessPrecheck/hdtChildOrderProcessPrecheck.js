@@ -639,7 +639,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["district"] = this.order.ServicePoint__r.SupplyProvince__c;
             data["postCode"] = this.order.ServicePoint__r.SupplyPostalCode__c;
 
-            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumption__c;
+            data["details"][0] = { ...data["details"][0], "annualConsumption":this.order.ServicePoint__r.AnnualConsumption__c};
         }
         console.log("this.3"); 
 
