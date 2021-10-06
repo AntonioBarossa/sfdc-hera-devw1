@@ -73,8 +73,8 @@ public with sharing class HDT_TRH_TaskTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myTask != null);
-        System.assert(myTask2 != null);
+        System.assert(myTask != null, 'Attenzione, myTask non può essere null!');
+        System.assert(myTask2 != null, 'Attenzione, myTask2 non può essere null!');
         
     }
 
