@@ -33,13 +33,18 @@ public with sharing class HDT_LC_AccountSelectorController {
 				} else if(String.isNotBlank(activity.ClientNumber__c)) {
 					result.preFilter = activity.ClientNumber__c;
 				}
+				
+				System.debug('Init - String.isBlank(activity.Account__c): ' + String.isBlank(activity.Account__c));
+				System.debug('Init - String.isNotBlank(activity.Contact__c): ' + String.isNotBlank(activity.Contact__c));
+				System.debug('Init - String.isBlank(activity.Lead__c): ' + String.isBlank(activity.Lead__c));
+				System.debug('Init - String.isNotBlank(result.preFilter): ' + String.isNotBlank(result.preFilter));
+				System.debug('Init - result.preFilter: ' + result.preFilter);
 
 				if(String.isBlank(activity.Account__c) && String.isNotBlank(activity.Contact__c)) {
 					result.accounts = handleAccount(activity.Contact__c, activity.Id);
 					
 				} else if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
 					
-					System.debug('Init - result.preFilter: ' + result.preFilter);
 					result.contacts = getContacts(result.preFilter);
 					System.debug('Init - result.contacts: ' + result.contacts);
 					result.leads = getLeads(result.preFilter);

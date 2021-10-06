@@ -43,7 +43,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
             activity = new wrts_prcgvr__Activity__c(
                 wrts_prcgvr__Status__c = 'Not Started',
                 Type__c = 'Sportello',
-                VATNumber__c = account.VATNumber__c
+                FiscalCode__c = '%LastNameTest%'
             );
         } else {
             activity = new wrts_prcgvr__Activity__c(
