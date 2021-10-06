@@ -89,7 +89,7 @@ public with sharing class HDT_UTL_MorositaTst {
         
         //ASSERTS
         System.assert(containerId != null, 'Attenzione, containerId non può essere null!');
-        System.assert(myCase.Id != null 'Attenzione, myCase.Id non può essere null!');
+        System.assert(myCase.Id != null, 'Attenzione, myCase.Id non può essere null!');
         
     }
 

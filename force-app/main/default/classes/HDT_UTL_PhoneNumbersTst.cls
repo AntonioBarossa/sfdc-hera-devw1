@@ -72,7 +72,7 @@ public with sharing class HDT_UTL_PhoneNumbersTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phoneNumber != null 'Attenzione, phoneNumber non può essere null!');        
+        System.assert(phoneNumber != null, 'Attenzione, phoneNumber non può essere null!');        
     }
 
 

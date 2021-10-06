@@ -151,8 +151,8 @@ public with sharing class HDT_UTL_CaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null 'Attenzione, caseList non può essere null!');
-        System.assert(idCase != null 'Attenzione, idCase non può essere null!');
+        System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
+        System.assert(idCase != null, 'Attenzione, idCase non può essere null!');
         
     }
 
