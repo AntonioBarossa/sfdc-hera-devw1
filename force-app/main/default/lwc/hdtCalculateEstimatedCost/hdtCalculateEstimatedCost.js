@@ -76,7 +76,8 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
         console.log(JSON.stringify(fields));
 
         updateOrder({order: fields}).then(() => {
-            this.sendToast('Success', 'Dati preventivo salvati', 'success');
+            if(this.isRapido)
+                this.sendToast('Success', 'Dati preventivo salvati', 'success');
         })
         .catch(error => {
             this.sendToast('Errore salvataggio preventivo',  error.body.message, 'error');
