@@ -3,7 +3,7 @@ public with sharing class HDT_TRH_DocumentalActivityTst{
 
 	//DEBUG
 
-	public static final String TEST_NAME = 'HDT_UTL_MorositaTst';
+	public static final String TEST_NAME = 'HDT_TRH_DocumentalActivityTst';
 
 
 	//SETUP
@@ -35,10 +35,12 @@ public with sharing class HDT_TRH_DocumentalActivityTst{
 		DocumentalActivity__c dA1 = new DocumentalActivity__c();
 		DocumentalActivity__c dA2 = new DocumentalActivity__c();
 
-		dA1.CaseId__c = caseList[0].Id;
-		dA1.OrderId__c = ordList[0].Id;
-		dA2.CaseId__c = caseList[1].Id;
-		dA2.OrderId__c = ordList[1].Id;
+
+		dA1.ParentProcessId__c = caseList[0].CaseNumber;
+		dA1.ProcessId__c = ordList[0].OrderNumber;
+
+		dA2.ParentProcessId__c = ordList[1].OrderNumber;
+		dA2.ProcessId__c = caseList[1].CaseNumber;
 
 		docActList.add(dA1);
 		docActList.add(dA2);
