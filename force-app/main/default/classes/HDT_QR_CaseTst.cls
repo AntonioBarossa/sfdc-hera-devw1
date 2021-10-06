@@ -147,7 +147,7 @@ public class HDT_QR_CaseTst {
         Case myCase = [SELECT Id, CaseNumber FROM Case];
         HDT_QR_Case myTestObject = new HDT_QR_Case();
         
-        Case result = myTestObject.getRecordByPracticeNumber(myCase.CaseNumber);
+        Case result = myTestObject.getRecordByPracticeNumber(myCase.CaseNumber)[0];
         System.assertEquals(myCase.Id, result.Id, 'Case non è il medesimo');
     }
     
