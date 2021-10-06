@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
         String query = 'SELECT '+ fields +
                 ' FROM ContactPointPhone WHERE Id = :contactPhoneId LIMIT 1';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
 
         if(contPhone != null && contPhone.size() > 0){
 			res = contphone[0];
@@ -38,7 +38,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
         String query = 'SELECT '+ fields +
                 ' FROM ContactPointPhone WHERE ParentId = :individualId LIMIT 1';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
 
         if(contPhone != null && contPhone.size() > 0){
 			res = contphone[0];
@@ -54,7 +54,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
         String query = 'SELECT '+ fields +
                 ' FROM ContactPointPhone WHERE ParentId = :individualId ';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
 
         return contphone;
 
@@ -64,7 +64,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
         String query = 'SELECT '+ fields +
                 ' FROM ContactPointPhone WHERE ParentId IN :individualId ';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
 
         return contphone;
 
@@ -74,7 +74,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
         String query = 'SELECT '+ fields +
                 ' FROM ContactPointEmail WHERE ParentId IN :individualId ';
-        List <ContactPointEmail> contemail = Database.query(query);
+        List <ContactPointEmail> contemail = Database.query(String.escapeSingleQuotes(query));
 
         return contemail;
 
@@ -84,7 +84,7 @@ public inherited sharing class HDT_QR_ContactPoint {
 
         String query = 'SELECT '+ fields +
                 ' FROM ContactPointEmail WHERE ParentId = :individualId ';
-        List <ContactPointEmail> contemail = Database.query(query);
+        List <ContactPointEmail> contemail = Database.query(String.escapeSingleQuotes(query));
 
         return contemail;
 
@@ -145,7 +145,7 @@ public inherited sharing class HDT_QR_ContactPoint {
     public static ContactPointEmail searchContactPointEmail (String email){
         ContactPointEmail res;
         String query = 'SELECT Id FROM ContactPointEmail WHERE EmailAddress  = :email';
-        List <ContactPointEmail> contemail = Database.query(query);
+        List <ContactPointEmail> contemail = Database.query(String.escapeSingleQuotes(query));
         
         if(contEmail != null && contEmail.size() > 0){
 			res = contemail[0];
@@ -159,7 +159,7 @@ public inherited sharing class HDT_QR_ContactPoint {
     public static ContactPointEmail searchContactPointEmailSOL (String email){
         ContactPointEmail res;
         String query = 'SELECT Id,parentid FROM ContactPointEmail WHERE EmailAddress  = :email AND Type__c = \'E-mail SOL\' ';
-        List <ContactPointEmail> contemail = Database.query(query);
+        List <ContactPointEmail> contemail = Database.query(String.escapeSingleQuotes(query));
         
         if(contEmail != null && contEmail.size() > 0){
 			res = contemail[0];
@@ -173,7 +173,7 @@ public inherited sharing class HDT_QR_ContactPoint {
     public static List<ContactPointPhone> searchPointPhone (String ParentId){
         
         String query = 'SELECT Id FROM ContactPointPhone WHERE ParentId  = :ParentId';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
         return contphone;
             
     }
@@ -181,7 +181,7 @@ public inherited sharing class HDT_QR_ContactPoint {
     public static ContactPointPhone searchContactPointPhone (String phone){
         ContactPointPhone res;
         String query = 'SELECT Id FROM ContactPointPhone WHERE PhoneType = :phone';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
         if(contPhone != null && contPhone.size() > 0){
 			res = contphone[0];
 		}
@@ -193,7 +193,7 @@ public inherited sharing class HDT_QR_ContactPoint {
     public static List<ContactPointEmail> searchPointEmail (String ParentId){
         
         String query = 'SELECT Id FROM ContactPointEmail WHERE ParentId  = :ParentId';
-        List <ContactPointEmail> contemail = Database.query(query);
+        List <ContactPointEmail> contemail = Database.query(String.escapeSingleQuotes(query));
         return contemail;
             
     }
@@ -213,7 +213,7 @@ public inherited sharing class HDT_QR_ContactPoint {
    
    public static List<ContactPointEmail> getOldContactEmails(List<String> id,List<String> email){
         String query = 'SELECT Id,Status__c, ParentId FROM ContactPointEmail WHERE ParentId IN :id AND EmailAddress IN :email';
-        List <ContactPointEmail> contemail = Database.query(query);
+        List <ContactPointEmail> contemail = Database.query(String.escapeSingleQuotes(query));
         return contemail; 
     }
 
@@ -233,7 +233,7 @@ public inherited sharing class HDT_QR_ContactPoint {
     public static List<ContactPointPhone> getOldContactsPhone (List<String> id,List<String> phone){
 
         String query = 'SELECT Id,Status__c,isPrimary, ParentId FROM ContactPointPhone WHERE ParentId IN :id AND TelephoneNumber IN :phone';
-        List <ContactPointPhone> contphone = Database.query(query);
+        List <ContactPointPhone> contphone = Database.query(String.escapeSingleQuotes(query));
         return contphone; 
     }
 
@@ -250,7 +250,7 @@ public inherited sharing class HDT_QR_ContactPoint {
         String query = 'SELECT '+ fields +
                 ' FROM ' + objectType + ' WHERE Id = :recordId';
         
-        return Database.query(query);
+        return Database.query(String.escapeSingleQuotes(query));
 
     }
     

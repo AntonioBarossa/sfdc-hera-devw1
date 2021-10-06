@@ -8,7 +8,7 @@ public inherited sharing class HDT_QR_ServiceRequest {
     public static List<ServiceRequest__c> getServiceRequestByOrderCaseIds(Set<Id> ids, String field){
 
         String query = 'SELECT  Id, Status__c, Order__c, Case__c, Order__r.OrderNumber, Case__r.CaseNumber,Type__c FROM ServiceRequest__c WHERE '+field+' IN :ids WITH SECURITY_ENFORCED';
-        List<ServiceRequest__c> srvRequests = Database.query(query);   
+        List<ServiceRequest__c> srvRequests = Database.query(String.escapeSingleQuotes(query));   
         return srvRequests;
     }
 
