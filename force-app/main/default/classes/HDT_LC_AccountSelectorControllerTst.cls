@@ -1,38 +1,107 @@
 @isTest
 public with sharing class HDT_LC_AccountSelectorControllerTst {
-    // private static String contactId;
-    // private static String activityId;
-
-    @testsetup
-    private static void createData() {
+    
+    //DEBUG
+    
+    
+    //DATA
+    private static Boolean isAccount = false;
+    
+    
+    //TEST SETUP
+    private static void mySetup() {
+        //ACCOUNT
         Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
-        
+        //CONTACT
         Contact contact = new Contact(
             AccountId = account.Id,
             LastName = 'Rossi'
         );
-
         insert contact;
-        // contactId = contact.Id;
-
-        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-            wrts_prcgvr__Status__c = 'Not Started',
-            Type__c = 'Sportello',
-            Contact__c = contact.Id
-        );
+        //LEAD
+        
+        
+        //ACTIVITY
+        wrts_prcgvr__Activity__c activity;
+        if(isAccount){
+            activity = new wrts_prcgvr__Activity__c(
+                wrts_prcgvr__Status__c = 'Not Started',
+                Type__c = 'Sportello',
+                FiscalCode__c = 'Rossi',
+                Account__c = account.Id
+            );
+        } else {
+            activity = new wrts_prcgvr__Activity__c(
+                wrts_prcgvr__Status__c = 'Not Started',
+                Type__c = 'Sportello',
+                Contact__c = contact.Id
+            );
+        }
 
         insert activity;
         // activityId = activity.Id;
     }
-
+    
+    
+    //TESTS
     @isTest 
-    private static void init() {
+    private static void initTest_NoAccount() {
+        
+        //SETUP
+        mySetup();
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
-        HDT_LC_AccountSelectorController.init(activity.Id);
+        
+        //TESTING
+        String result = HDT_LC_AccountSelectorController.init(activity.Id);
+        
+        //RETRIEVING DATA
+        wrts_prcgvr__Activity__c updatedActivity = [SELECT Id, Account__c, Contact__c FROM wrts_prcgvr__Activity__c];
+        Account acc = [SELECT Id FROM Account];
+        Contact con = [SELECT Id FROM Contact];
+        
+        //ASSERTS
+        HDT_LC_AccountSelectorController.HDT_UTL_Struct utlStruct = JSON.deserialize(result, HDT_LC_AccountSelectorController.HDT_UTL_Struct.class);
+        System.assertEquals(1, utlStruct.accounts.size(), 'Non è stato recuperato il numero corretto di Account.');
+        System.assertEquals(acc.Id, updatedActivity.Account__c, 'Non è stata aggiornata Activity (Account).');
+        System.assertEquals(con.Id, updatedActivity.Contact__c, 'Problema rilevato su Activity (Contact).');
+        System.assertEquals(1, utlStruct.accounts.size(), 'Non è stato recuperato il numero corretto di Account.');
+        
     }
+    
+    
+    @isTest 
+    private static void initTest_NoContact() {
+        
+        //SETUP
+        isAccount = true;
+        mySetup();
+        wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
+        
+        //TESTING
+        String result = HDT_LC_AccountSelectorController.init(activity.Id);
+        
+        //RETRIEVING DATA
+        wrts_prcgvr__Activity__c updatedActivity = [SELECT Id, Account__c, Contact__c FROM wrts_prcgvr__Activity__c];
+        Account acc = [SELECT Id FROM Account];
+        Contact con = [SELECT Id FROM Contact];
+        
+        //ASSERTS
+        HDT_LC_AccountSelectorController.HDT_UTL_Struct utlStruct = JSON.deserialize(result, HDT_LC_AccountSelectorController.HDT_UTL_Struct.class);
+        System.assertEquals(1, utlStruct.accounts.size(), 'Non è stato recuperato il numero corretto di Account.');
+        System.assertEquals(1, utlStruct.contacts.size(), 'Non è stato recuperato il numero corretto di Contact.');
+        System.assertEquals(acc.Id, updatedActivity.Account__c, 'Non è stata aggiornata Activity (Account).');
+        System.assertEquals(con.Id, updatedActivity.Contact__c, 'Non è stata aggiornata Activity (Contact).');
+        System.assertEquals(acc.Id, utlStruct.accountId, 'Result accountId non è corretto.');
+        System.assertEquals(1, utlStruct.accounts.size(), 'Non è stato recuperato il numero corretto di Account.');
+    }
+    
+    //TODO: VARIANTE DI INIT CON LEAD
+    
+    
 
     @isTest 
     private static void search() {
+        mySetup();
         HDT_LC_AccountSelectorController.search('queryString');
         
         Account acc = [SELECT Id, CustomerCode__c FROM Account];
@@ -52,9 +121,9 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     }
     
     
-    
     @isTest 
     private static void handleAccountSerialized() {
+        mySetup();
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         Contact contact = [SELECT Id FROM Contact];
         HDT_LC_AccountSelectorController.handleAccountSerialized(contact.Id, activity.Id);
@@ -74,13 +143,11 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     }
     
     
-    
     @isTest 
     public static void reset() {
+        mySetup();
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         HDT_LC_AccountSelectorController.reset(activity.Id);
     }
-    
-    
     
 }
