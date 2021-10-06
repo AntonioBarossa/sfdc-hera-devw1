@@ -1504,10 +1504,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static void createDriverJson(){
-		Id folderId=[SELECT Id
-		             FROM Folder
-		             WHERE DeveloperName=:'DocumentalPayloadAdministration'
-		             LIMIT 1].Id;
+		Id folderId=[SELECT Id FROM Folder WHERE DeveloperName= :'DocumentalPayloadAdministration' LIMIT 1].Id;
 		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
 		docPayloadAdminList=HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
 		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap=new Map<String, List<DocumentalPayloadAdministration__c>>();
@@ -1758,6 +1755,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert documents;
 		}
 		return documents;
+	}
+	
+	
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Id orderId, Id caseId){
+		return createDocumentalActivity(amount, true, orderId, caseId);
 	}
 	
 	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
@@ -2583,6 +2585,146 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return expDays;
 	}
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAssignmentRule method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<AssignmentRule__c> createAssignmentRule(Integer amount, Boolean doInsert,Double rulePriority, String type) {
+        
+        List<AssignmentRule__c> rules = new List<AssignmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            AssignmentRule__c r = new AssignmentRule__c(
+                Name = 'testAssignmentRule'+i,
+                RulePriority__c = rulePriority,
+        		Type__c = type
+            );
+            
+            rules.add(r);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createVasSupplierTable method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<VasSupplierTable__c> createVasSupplierTable(Integer amount, Boolean doInsert) {
+        
+        List<VasSupplierTable__c> tables = new List<VasSupplierTable__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            VasSupplierTable__c v = new VasSupplierTable__c();
+            
+            tables.add(v);
+        }
+        
+        if (doInsert){
+            
+            insert tables;
+        }
+        
+        return tables;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAsset method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<Asset> createAsset(Integer amount, Boolean doInsert) {
+        
+        List<Asset> assets = new List<Asset>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            Asset a = new Asset(
+                Name = 'testAsset' + i
+            );
+            
+            assets.add(a);
+        }
+        
+        if (doInsert){
+            
+            insert assets;
+        }
+        
+        return assets;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createFieldsTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__FieldsTemplate__c> createFieldsTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__FieldsTemplate__c> templates = new List<wrts_prcgvr__FieldsTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__FieldsTemplate__c template = new wrts_prcgvr__FieldsTemplate__c(
+                Name = 'testFieldTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityTemplate__c> createActivityTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__ActivityTemplate__c> templates = new List<wrts_prcgvr__ActivityTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c(
+                Name = 'testActivityTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
 	
 	public static List<Asset> createAsset(Integer amount, Boolean doInsert, String companyOwner) {
 

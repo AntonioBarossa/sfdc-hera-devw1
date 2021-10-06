@@ -370,6 +370,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && recordCase.IbanIsForeign__c){
+                currentCase.Phase__c = 'Elaborazione Manuale';
             }else{
                 currentCase.Phase__c = nextPhase;
                 Map<String, Object> extraParams = new Map<String,Object>();
@@ -482,7 +484,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
-            currentCase.Phase__c = 'KO Definitivo';
+            currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }
@@ -555,7 +557,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
-            priorita = reqWrp.requestMap.get('PRIORITA');
+            priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -647,7 +649,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             //@frpanico Added "PRIORITA"
                             if(String.isNotBlank(priorita))
                             {
-                                currentCase.Priority = priorita.equalsIgnoreCase('3') ? 'Alta' : priorita.equalsIgnoreCase('2') ? 'Media' : 'Bassa';
+                                currentCase.Priority = priorita;
                             }
                             //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
                             if(String.isNotBlank(containerCaseNumber)){

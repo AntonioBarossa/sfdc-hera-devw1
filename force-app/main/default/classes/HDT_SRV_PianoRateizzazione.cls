@@ -16,7 +16,7 @@ public inherited sharing class HDT_SRV_PianoRateizzazione {
         }else {
             caseToUpdate.Phase__c = 'Comunicazione Heroku OK';
         }
-        update caseToUpdate;
+       HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         
     }
 }

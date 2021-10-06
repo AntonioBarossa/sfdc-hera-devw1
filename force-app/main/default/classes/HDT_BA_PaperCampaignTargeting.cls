@@ -28,8 +28,8 @@ public with sharing class HDT_BA_PaperCampaignTargeting implements Database.Batc
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
-        List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
+    public void execute(Database.BatchableContext bc, List<CampaignMember> scope) {
+        //List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
         for(CampaignMember cm : scope) { 
             cm.paperProcess__c = this.paperProcessingId;
         }

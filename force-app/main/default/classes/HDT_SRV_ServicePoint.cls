@@ -16,7 +16,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Init security access check
-     * @param String fields to check
+     * @param fields to check
      * @param crud Define read, update, create, delete
      */
     public void checkAccessInit(String fields, String crud){
@@ -28,7 +28,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
-     * @param String fields
+     * @param fields
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
@@ -37,7 +37,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Check if current user has create permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkCreateAccess(String fields){
         checkAccessInit(fields, CREATEPERMISSION);
@@ -46,7 +46,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Check if current user has update permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
@@ -55,7 +55,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create ServicePoint__c record
-     * @param ServicePoint__c servicePoint
+     * @param servicePoint
      * @return ServicePoint__c servicePoint
      */
     public ServicePoint__c createRecord(ServicePoint__c servicePoint) {
@@ -78,7 +78,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Update ServicePoint__c
-     * @param ServicePoint__c servicePoint
+     * @param servicePoint
      */
     public void updateRecord(ServicePoint__c servicePoint){
 
@@ -94,6 +94,11 @@ public inherited sharing class HDT_SRV_ServicePoint {
         }
 
     }
+
+    /**
+     * @description updateRecordRemiCode
+     * @param servicePointList
+     */
     public void updateRecordRemiCode(List<ServicePoint__c> servicePointList){
 
  

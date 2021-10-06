@@ -51,7 +51,7 @@ public with sharing class HDT_LC_CopiaContratto {
             recTypeId= rc.Id;
         }
         if('Copia della registrazione'.equalsIgnoreCase(tipoFirma)){
-            List<ContentDocumentLink> listContentDocument = [Select id from ContentDocumentLink Where LinkedEntityid = :caseId];
+            List<ContentDocumentLink> listContentDocument = [Select id from ContentDocumentLink Where LinkedEntityid = :caseId WITH SECURITY_ENFORCED];
             if(listContentDocument != null && !listContentDocument.isEmpty()){
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio registrazione');
                 System.debug(activity);
