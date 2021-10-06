@@ -6,6 +6,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     
     //DATA
     private static Boolean isAccount = false;
+    private static Boolean isLead = false;
     
     
     //TEST SETUP
@@ -19,16 +20,25 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         );
         insert contact;
         //LEAD
-        
+        Lead myLead = HDT_UTL_DataFactoryTst.createLead(1, false)[0];
+        myLead.VATNumber__c = account.VATNumber__c;
+        insert myLead;
         
         //ACTIVITY
         wrts_prcgvr__Activity__c activity;
         if(isAccount){
+            //FISCAL CODE
             activity = new wrts_prcgvr__Activity__c(
                 wrts_prcgvr__Status__c = 'Not Started',
                 Type__c = 'Sportello',
-                FiscalCode__c = 'Rossi',
-                Account__c = account.Id
+                FiscalCode__c = 'Rossi'
+            );
+        } else if(isLead){
+            //VAT NUMBER
+            activity = new wrts_prcgvr__Activity__c(
+                wrts_prcgvr__Status__c = 'Not Started',
+                Type__c = 'Sportello',
+                VATNumber__c = account.VATNumber__c
             );
         } else {
             activity = new wrts_prcgvr__Activity__c(
@@ -95,7 +105,29 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         System.assertEquals(1, utlStruct.accounts.size(), 'Non è stato recuperato il numero corretto di Account.');
     }
     
-    //TODO: VARIANTE DI INIT CON LEAD
+    
+    @isTest 
+    private static void initTest_IsLead() {
+        
+        //SETUP
+        isAccount = true;
+        mySetup();
+        wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
+        
+        //TESTING
+        String result = HDT_LC_AccountSelectorController.init(activity.Id);
+        
+        //RETRIEVING DATA
+        wrts_prcgvr__Activity__c updatedActivity = [SELECT Id, Lead__c FROM wrts_prcgvr__Activity__c];
+        Account acc = [SELECT Id FROM Account];
+        Contact con = [SELECT Id FROM Contact];
+        Lead lea = [SELECT Id FROM lead];
+        
+        //ASSERTS
+        HDT_LC_AccountSelectorController.HDT_UTL_Struct utlStruct = (HDT_LC_AccountSelectorController.HDT_UTL_Struct) JSON.deserialize(result, HDT_LC_AccountSelectorController.HDT_UTL_Struct.class);
+        System.assertEquals(lea.Id, updatedActivity.Lead__c, 'Non è stata aggiornata Activity (Lead).');
+        System.assertEquals(utlStruct.leadId, updatedActivity.Lead__c, 'Non è stato restituito il result corretto.');
+    }
     
     
 
