@@ -204,7 +204,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         for(String field : listFields){
             if((!field.startsWith('globaltag') && !field.startsWith('constant')) || field.startsWith('globaltag.redirlink')){//exclude global tags from query
                 //querySelectStatement=querySelectStatement+', '+field;
-                fieldsToSelect.add(field.removeStart('globaltag.redirlink.'));
+                fieldsToSelect.add(field.removeStart('globaltag.redirlink.').trim());
             }
         }
         querySelectStatement = String.join(new List<String>(fieldsToSelect), ', ');
@@ -222,7 +222,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         String tagValue='';
         switch on tagName{
             when 'today'{
-                tagValue=Date.Today().format();
+                tagValue = Date.Today().format();
+            }
+            when 'now'{
+                tagValue = Datetime.now().format('HH:mm');
             }
             when 'section__d'{
                 //maybe deprecated, you can safely remove this when output and isFirstSection class variable
