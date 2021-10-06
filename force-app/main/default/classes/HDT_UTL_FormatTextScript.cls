@@ -134,6 +134,9 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                         }else{
                             fieldValue = 'null';
                         }
+                    }when 'CURRENCY'{
+                        fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
+                        fieldValue = String.isNotBlank(fieldValue)? fieldValue : '0';
                     }
                     when else {
                         fieldValue = STRING.valueOf(relation.get(fieldOrRelation));

@@ -88,6 +88,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     @track disabled = false;
     @api recordId;
     //FINE EVERIS DOCUMENTALE
+
+    openAfterScriptModal = false;
     
     @api scriptMap = {};
 
@@ -596,6 +598,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         });
     }
 
-    
+    handleScriptModalClose(){
+        console.log('keltin close script modal');
+        this.openAfterScriptModal = true;
+    }
 
 }
