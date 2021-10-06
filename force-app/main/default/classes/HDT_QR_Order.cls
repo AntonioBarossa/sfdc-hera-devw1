@@ -186,6 +186,8 @@ public inherited sharing class HDT_QR_Order {
 			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
             OrderReference__c,
+            OrderReference__r.SBQQ__Quote__c,
+            SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
             ActivationStreetName__c,
