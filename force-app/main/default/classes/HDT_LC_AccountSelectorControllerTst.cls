@@ -3,19 +3,10 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     // private static String contactId;
     // private static String activityId;
 
-    @testsetup private static void createData() {
+    @testsetup 
+    private static void createData() {
         Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
-
-        // Account account = new Account(
-        //     Name = 'abc',
-        //     CustomerCode__c = '100123',
-        //     CompanyOwner__c = 'HERA COMM',
-        //     Category__c = 'Accedi',
-        //     CustomerMarking__c = 'Condominio'
-        // );
-
-        // insert account;
-
+        
         Contact contact = new Contact(
             AccountId = account.Id,
             LastName = 'Rossi'
@@ -34,21 +25,38 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         // activityId = activity.Id;
     }
 
-    @isTest private static void init() {
+    @isTest 
+    private static void init() {
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         HDT_LC_AccountSelectorController.init(activity.Id);
     }
 
-    @isTest private static void search() {
+    @isTest 
+    private static void search() {
         HDT_LC_AccountSelectorController.search('queryString');
-        HDT_LC_AccountSelectorController.search('1003616210');
+        
+        Account acc = [SELECT Id, CustomerCode__c FROM Account];
+        HDT_LC_AccountSelectorController.search(acc.CustomerCode__c);
+        
+        Boolean caught = false;
+        try{
+            HDT_LC_AccountSelectorController.search('100Bandaluso');         
+        } catch (Exception e) {
+            caught = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        System.assert(caught, 'Eccezione non avvenuta.');
+        
     }
 
     // @isTest private static void handleLead() {
     //     HDT_LC_AccountSelectorController.handleLead('leadId', 'activityId');
     // }
 
-    @isTest private static void handleAccountSerialized() {
+    @isTest 
+    private static void handleAccountSerialized() {
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         Contact contact = [SELECT Id FROM Contact];
         HDT_LC_AccountSelectorController.handleAccountSerialized(contact.Id, activity.Id);
@@ -58,7 +66,8 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     //     HDT_LC_AccountSelectorController.updateActivity('activityId', 'contactId', 'accountId', 'leadId');
     // }
 
-    @isTest public static void reset() {
+    @isTest 
+    public static void reset() {
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         HDT_LC_AccountSelectorController.reset(activity.Id);
     }
