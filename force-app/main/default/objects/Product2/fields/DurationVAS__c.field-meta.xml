@@ -4,7 +4,7 @@
     <description>VAS - Durata</description>
     <externalId>false</externalId>
     <label>VAS - Durata</label>
-    <precision>4</precision>
+    <precision>6</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
