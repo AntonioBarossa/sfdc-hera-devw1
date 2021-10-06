@@ -2,12 +2,8 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public List<CampaignMember> campaignMembers;
-    public Campaign campaign;
-    public HDT_BA_CampaignBolletta(String campaignId) {
-        Campaign cmp = [SELECT Name, Description, StaticTextMessageBill__c, Channel__c FROM Campaign WHERE Id = :campaignId AND Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
-        this.campaign = cmp;
-        this.campaignMembers = [SELECT ContractReference__c,PromoCommercialCode__r.fullcode__c FROM CampaignMember WHERE CampaignId = :campaignId AND ContractReference__c != null AND isWsBollettaInvoked__c = false WITH SECURITY_ENFORCED];
-        System.debug('campaginName - '+ cmp.Name);
+    public HDT_BA_CampaignBolletta(List<String> campaignIds) {
+        this.campaignMembers = [SELECT ContractReference__c, PromoCommercialCode__r.fullcode__c, Campaign.Name, Campaign.Description, Campaign.StaticTextMessageBill__c, Campaign.Channel__c FROM CampaignMember WHERE CampaignId IN :campaignIds AND ContractReference__c != null AND isWsBollettaInvoked__c = false AND Campaign.Channel__c INCLUDES ('Bolletta') WITH SECURITY_ENFORCED];
     }
 
     public Iterable<CampaignMember> start(Database.BatchableContext bc) {
@@ -20,10 +16,10 @@ public with sharing class HDT_BA_CampaignBolletta implements Database.Batchable<
 
         for (CampaignMember cm : scope) {
                 HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest wsReq = new HDT_WS_CampaignBolletta.HDT_WS_CampaignBollettaRequest();
-                wsReq.campaignId = this.campaign.Id;
-                wsReq.campaignName = this.campaign.Name;
-                wsReq.campaignDescription = this.campaign.Description;
-                wsReq.comunicationText = this.campaign.StaticTextMessageBill__c == null ? cm.PromoCommercialCode__r.fullcode__c : this.campaign.StaticTextMessageBill__c + ' ' + cm.PromoCommercialCode__r.fullcode__c;
+                wsReq.campaignId = cm.CampaignId;
+                wsReq.campaignName = cm.Campaign.Name;
+                wsReq.campaignDescription = cm.Campaign.Description;
+                wsReq.comunicationText = cm.Campaign.StaticTextMessageBill__c == null ? cm.PromoCommercialCode__r.fullcode__c : cm.Campaign.StaticTextMessageBill__c + ' ' + cm.PromoCommercialCode__r.fullcode__c;
                 wsReq.contractCode = cm.ContractReference__c != null ? cm.ContractReference__c : '';
                 
                 System.debug(wsReq);
