@@ -116,7 +116,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         }
         
         mapPhaseAndStatus(statusMapping, sObjMap);
-        
+        system.debug('ivaste '+json.serialize(sObjMap));
         updateRecords(sObjMap);
     }
 
@@ -300,14 +300,17 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         Savepoint sp = Database.setSavepoint();
         try {
             if (orderToUpdate!=null) {
+                system.debug('ivaste ord updated');
                 orderSrv.updateRecord(orderToUpdate);
             }
 
             if (caseToUpdate!=null) {
+                system.debug('ivaste case updated');
                 caseSrv.updateRecord(caseToUpdate);
             }
 
             if (!recordsToUpdate.isEmpty()) {
+                system.debug('ivaste else updated');
                 HDT_UTL_DatabaseService.updateSObject(recordsToUpdate);
             }
         } catch (Exception e) {
