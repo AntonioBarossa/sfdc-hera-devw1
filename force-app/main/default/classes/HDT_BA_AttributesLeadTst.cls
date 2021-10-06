@@ -10,15 +10,15 @@
 
 @isTest
 public class HDT_BA_AttributesLeadTst {
-	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
     @TestSetup
     static void makedata(){
         
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-		internalUser.UserPermissionsMarketingUser=true;
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserPermissionsMarketingUser=true;
 
-		insert internalUser;
+        insert internalUser;
 
         System.runAs(internalUser){        
             
@@ -106,7 +106,7 @@ public class HDT_BA_AttributesLeadTst {
         
         Test.startTest();
         
-		HDT_BA_AttributesLead al = new HDT_BA_AttributesLead(paramRunId);
+        HDT_BA_AttributesLead al = new HDT_BA_AttributesLead(paramRunId);
         Id batchId = Database.executeBatch(al,200);
         
         Test.stopTest();
@@ -116,6 +116,6 @@ public class HDT_BA_AttributesLeadTst {
         System.assertNotEquals(null, cvs, 'ContentVersions not created');
         
         System.assertEquals(2, cvs.size(), 'AttributesLead did not work correctly');
-              
+            
     }
 }
