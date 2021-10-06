@@ -11,7 +11,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020
     * @description Get records related to SBQQ__Quote__c.Vendita__c
-    * @param String saleId – Sale__c.Id
+    * @param saleId – Sale__c.Id
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySale(String saleId){
@@ -42,8 +42,8 @@ public inherited sharing class HDT_QR_QuoteLine {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c
-    * @param String saleId – Sale__c.Id
-    * @param String paymentMethod
+    * @param saleId – Sale__c.Id
+    * @param paymentMethod
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethod(String saleId, String paymentMethod){
@@ -72,9 +72,9 @@ public inherited sharing class HDT_QR_QuoteLine {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c that have no ContractReference__c or OrderReference__c
-    * @param String saleId – Sale__c.Id
-    * @param String paymentMethod
-    * @param String sendingBillMode
+    * @param saleId – Sale__c.Id
+    * @param paymentMethod
+    * @param sendingBillMode
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodPodPdr(String saleId, String paymentMethod, String sendingBillMode){
@@ -104,7 +104,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c that have no ContractReference__c or OrderReference__c
-    * @param String saleId – Sale__c.Id
+    * @param saleId – Sale__c.Id
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodforVas(String saleId){
@@ -205,6 +205,12 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getChildAnalisi
+    * @param mainQuoteLineId
+    * @return List<SBQQ__QuoteLine__c>
+    */
     public List<SBQQ__QuoteLine__c> getChildAnalisi(List<String> mainQuoteLineId){
 
         return [
@@ -222,8 +228,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c not null
-    * @param String saleId – Sale__c.Id
-    * @param String paymentMethod
+    * @param saleId – Sale__c.Id
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodNotNull(String saleId){
@@ -242,6 +247,12 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getRecordsBySaleForBillingCheck
+    * @param saleId
+    * @return List<SBQQ__QuoteLine__c>
+    */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleForBillingCheck(String saleId){
 
         return [
@@ -258,6 +269,12 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getRecordsByQuoteFilteredPaymentMethodNotNull
+    * @param quoteId
+    * @return List<SBQQ__QuoteLine__c>
+    */
     public List<SBQQ__QuoteLine__c> getRecordsByQuoteFilteredPaymentMethodNotNull(String quoteId){
 
         return [
@@ -274,6 +291,12 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getRecordsForContractOrderRefVas
+    * @param quoteId
+    * @return List<SBQQ__QuoteLine__c>
+    */
     public List<SBQQ__QuoteLine__c> getRecordsForContractOrderRefVas(String quoteId){
 
         return [
@@ -292,8 +315,8 @@ public inherited sharing class HDT_QR_QuoteLine {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c not null
-    * @param String contractId – SBQQ__Quote__r.ContractReference__c
-    * @param String paymentMethod
+    * @param contractId – SBQQ__Quote__r.ContractReference__c
+    * @param saleId
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsByContractFilteredPaymentMethodNotNull(String contractId, String saleId){
@@ -316,8 +339,8 @@ public inherited sharing class HDT_QR_QuoteLine {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by SBQQ__RequiredBy__c
-    * @param String saleId – Sale__c.Id
-    * @param List<String> listIdToQuery
+    * @param saleId – Sale__c.Id
+    * @param listIdToQuery
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredByRequired(String saleId, List<String> listIdToQuery){
@@ -343,7 +366,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020
     * @description Get records by quoteId and Product.Name "POD"
-    * @param String quoteId - SBQQ__Quote__c
+    * @param quoteId - SBQQ__Quote__c
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsByQuoteIdAndProductPod(String quoteId){
@@ -371,7 +394,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 26/04/2021
     * @description Get primary quoteLine
-    * @param String quoteId - SBQQ__Quote__c
+    * @param quoteId - SBQQ__Quote__c
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getPrimaryRecord(String quoteId){
@@ -420,7 +443,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 25/03/2021
     * @description Get records by quoteId
-    * @param String quoteId - SBQQ__Quote__c
+    * @param quoteId - SBQQ__Quote__c
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsByQuoteId(String quoteId){
@@ -444,7 +467,8 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020
     * @description Get records by quoteId and Product.Name "POD"
-    * @param String contractId - SBQQ__Quote__r.ContractReference__c
+    * @param contractId - SBQQ__Quote__r.ContractReference__c
+    * @param saleId
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsByContractAndProductPod(String contractId, String saleId){
@@ -472,7 +496,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020
     * @description Get records by saleId and Product.Name "POD"
-    * @param String saleId - Sale__c
+    * @param saleId - Sale__c
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getActiveRecordsBySaleIdAndProductPod(String saleId){
@@ -499,7 +523,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 02/02/2021
     * @description Get records that are displayed on "Configura Prodotti" section of Selling Wizard
-    * @param String saleId - Sale__c
+    * @param saleId - Sale__c
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getActiveRecords(String saleId){
@@ -525,7 +549,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 04/06/2021
     * @description Get linked quotelines
-    * @param String quoteId - SBQQ__Quote__c
+    * @param quoteId - SBQQ__Quote__c
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getLinkedQuoteLines(String quoteId){
@@ -554,7 +578,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 16/07/2021
     * @description Get quotelines with cambio offerta
-    * @param String quoteId - SBQQ__Quote__c
+    * @param saleId
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getQuoteLinesWithCambioOfferta(String saleId){
