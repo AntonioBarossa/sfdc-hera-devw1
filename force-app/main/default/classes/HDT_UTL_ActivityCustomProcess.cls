@@ -82,7 +82,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Id rtNewCustomer = activityRTInfos.get('HDT_RT_CreditCheckKO').getRecordTypeId();
         Set<Id> oldCustOrderIds = new Set<Id>();
 
-        for(Order o : orderMap.get('oldCustomer')){
+        for(Order o : orderMap.get('oldCustomer')){ 
             oldCustOrderIds.add(o.id);
         }
         Map<id, Order> ordersToGetOldCustomer = new Map<Id,Order>([SELECT AccountId, ServicePoint__r.Account__c FROM Order WHERE ID IN :oldCustOrderIds ]);
