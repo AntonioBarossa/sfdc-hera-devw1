@@ -883,4 +883,11 @@
         <shortDescription>ConfRuleConfirmFilterCreateBody</shortDescription>
         <value>Attenzione! In questo modo la regola verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
     </labels>
+    <labels>
+        <fullName>Cpq_ProductAssociation_EnabledProfile</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
+        <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
+    </labels>
 </CustomLabels>

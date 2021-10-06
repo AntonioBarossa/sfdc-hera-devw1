@@ -1,6 +1,11 @@
 public inherited sharing class HDT_LC_ProductAssociation {
 
     @AuraEnabled
+    public static Boolean getEnabledUser(){
+        return HDT_UTL_ProductAssociation.getEnabledUser();
+    }
+
+    @AuraEnabled
     public static Object getAsyncApexJob(String objType){
         return HDT_SRV_ProductAssociation.getAsyncApexJob(objType);
     }
