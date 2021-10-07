@@ -67,17 +67,59 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING objectString (ItemVAS not null)
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result = myObjectToTest.execute('handleAmountVas', inputs, formParams);
+        String result1 = myObjectToTest.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
-        System.debug('result: ' + result);
-        System.assert(!'||'.equalsIgnoreCase(result), 'Stringa identica.');
+        System.debug('result1: ' + result1);
+        System.assert(!'||'.equalsIgnoreCase(result1), 'Result identico.');
+        
+        
+        //TESTING objectString (ItemVAS equals null)
+        inputs.put('ItemVAS', null);
+        String result2 = myObjectToTest.execute('handleAmountVas', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert('||'.equalsIgnoreCase(result2), 'Result non è identico.');
+        
+        
     }
     
     
     //handleFlagDeliveryAddress
-    
-    
+    @isTest
+    private static void handleAmountVasTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Order myItem = [SELECT Id, ContractId FROM Order];
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
+        
+        //TESTING context IS Order
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert( , '');
+        
+        
+        //TESTING context Not Order
+        String result2 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert(''.equalsIgnoreCase(result2), 'Risultato non è stringa vuota.');
+    }
     
     //handleFlagPaperless
     
