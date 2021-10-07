@@ -15,7 +15,7 @@ public with sharing class HDT_WS_DeactivateCampaign {
     }
 
     public static wrapResponseGetData callDeactivateCampaign(List<wrapRequestObject> requestList) {
-        return  (wrapResponseGetData)HDT_WS_HTTPServiceCall.sendRequest('nomeApi', requestList, wrapResponseGetData.class);
+        return  (wrapResponseGetData)HDT_WS_HTTPServiceCall.sendRequest('arrestocampaign', requestList, wrapResponseGetData.class);
     }
 
     public class wrapResponseGetData extends HDT_WS_Response{

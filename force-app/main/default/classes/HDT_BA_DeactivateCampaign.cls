@@ -10,12 +10,12 @@ public with sharing class HDT_BA_DeactivateCampaign implements Database.Batchabl
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext bc, List<CampaignMember> scope) {
+    public void execute(Database.BatchableContext bc, List<Campaign> scope) {
         List<HDT_WS_DeactivateCampaign.wrapRequestObject> requestList = new List<HDT_WS_DeactivateCampaign.wrapRequestObject>();
         //prepare request list
-        for(CampaignMember cm : scope) {
+        for(Campaign c : scope) {
             HDT_WS_DeactivateCampaign.wrapRequestObject req = new HDT_WS_DeactivateCampaign.wrapRequestObject();
-            req = HDT_WS_DeactivateCampaign.requestDeactivateCampaign(cm.Id);
+            req = HDT_WS_DeactivateCampaign.requestDeactivateCampaign(c.Id);
             requestList.add(req);        
         }
 
