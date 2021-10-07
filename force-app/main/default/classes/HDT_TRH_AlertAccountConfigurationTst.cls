@@ -52,8 +52,8 @@ public with sharing class HDT_TRH_AlertAccountConfigurationTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myAlert != null);
-        System.assert(myAlertAccConfig != null);
+        System.assert(myAlert != null, 'Attenzione,myAlert non può essere null!');
+        System.assert(myAlertAccConfig != null, 'Attenzione, myAlertAccConfig non può essere null!');
     }
 
 
