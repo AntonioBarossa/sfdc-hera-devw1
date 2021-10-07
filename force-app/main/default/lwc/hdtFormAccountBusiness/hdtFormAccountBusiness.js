@@ -41,6 +41,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
+    requiredVat=true;
+    requiredFiscalCode=false;
     customerType='Organizzazione';
     gender;
     birthDate;
@@ -236,7 +238,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
     }
-
     handleChange(event){
         this.markingValue= event.detail.value;
         let key = this.categoryData.controllerValues[event.target.value];
@@ -270,6 +271,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
+        this.checkRequiredVat(this.markingValue);
    }
 
     handleCalculation(){
@@ -845,4 +847,16 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         event.target.value = inputVal.toString().slice(0,-1);
     }
     }
+    checkRequiredVat(Marking){
+        if(Marking=='Condominio'){
+            this.requiredVat= false;
+            this.makerequired=true;
+        }
+        else{
+            this.requiredVat=true;
+            this.makerequired=false;
+        }
+    }
+
+    
 }
