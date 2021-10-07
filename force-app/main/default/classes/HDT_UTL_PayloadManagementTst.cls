@@ -42,13 +42,14 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         Map<String,Object> formParams = new Map<String,Object>();
         
-        //TESTING 
+        
+        //TESTING objectString (ItemVAS not null)
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result = myObjectToTest.handleAmountVas(inputs, formParams);
         
         //ASSERTS
-        
-        
+        String toTest = myItem.UnitPrice + '|' + myItem.PriceNetDiscounted__c + '|' + myItem.Quantity;
+        System.assert(toTest.equalsIgnoreCase(result), 'Stringa differente - result: ' + result + ' - toTest' + toTest);
     }
     
     
