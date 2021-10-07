@@ -233,6 +233,25 @@ export default class HdtRecordEditFormFlowSales extends NavigationMixin(Lightnin
                         this.dispatchEvent(closeclickedevt); 
                     console.log(result);
                 }
+                else if(result == 'success2'){
+                    const event = new ShowToastEvent({
+                        message: 'Attività Approvativa Creata',
+                        variant: 'success',
+                        mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        this[NavigationMixin.Navigate]({
+                            type: 'standard__recordPage',
+                            attributes: {
+                                recordId: this.recordid,
+                                objectApiName: 'Case',
+                                actionName: 'view'
+                            }
+                        });
+                        const closeclickedevt = new CustomEvent('closeaction');
+                        this.dispatchEvent(closeclickedevt); 
+                    console.log(result);
+                }
                 else if(result == 'annulla'){
                     const event = new ShowToastEvent({
                         message: 'l\'approvazione ha dato esito KO, annulla il caso',

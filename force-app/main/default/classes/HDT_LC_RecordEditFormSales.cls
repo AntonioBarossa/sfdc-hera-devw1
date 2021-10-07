@@ -55,7 +55,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug('LOG_ACTIVITY_MISSING2:');
                 System.debug(activity);
-                activitySrv.createRecord(activity);
+                //activitySrv.createRecord(activity);
                 System.debug('LOG_ACTIVITY_MISSING2:');
                 return false;
             }else{
@@ -97,7 +97,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 }
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug(activity);
-                //activitySrv.createRecord(activity);
+                activitySrv.createRecord(activity);
                 return 'success';
             }
             else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Completed' && activities[0].approved__c == 'No'){
@@ -105,6 +105,14 @@ public with sharing class HDT_LC_RecordEditFormSales {
             }
             else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Completed'){
                 return 'aperta';
+            }
+            else if(activities != null && activities.isEmpty()){
+                cs.status = 'In Lavorazione';
+                cs.Phase__c = 'In Lavorazione';
+                caseSRV.updateRecord(cs);
+                wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Approvazione Bonus Commerciale');
+                activitySrv.createRecord(activity);
+                return 'success2';
             }
             else{
                 return 'errore';

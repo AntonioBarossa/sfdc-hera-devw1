@@ -53,7 +53,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             s.approved__c = causale;
 
             activityCustomSrv.updateRecord(s);
-            activityCustomSrv.createRecord(sToCreate);
+            //activityCustomSrv.createRecord(sToCreate);
             Case c = caseQr.getRecordById(s.case__c);
             c.phase__c	='In Lavorazione';
             update c;
