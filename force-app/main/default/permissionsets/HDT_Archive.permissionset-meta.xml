@@ -739,6 +739,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelContract__x.LineageID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelContract__x.MODIFIEDDATE_AZURE__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -895,6 +900,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelContract__x.X_DOMIC_DESCR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelContract__x.X_DOM_STATUS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
