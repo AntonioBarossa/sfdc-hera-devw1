@@ -29,7 +29,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
 		List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pricebookId);
         
         //ORDER
-        pClickOrderPhase();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, true, accList[0].Id, saleList, pricebookId);
         
         //ORDER ITEMS
