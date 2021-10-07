@@ -2,12 +2,18 @@
 public with sharing class HDT_UTL_PayloadManagementTst {
     
     //DEBUG
+    public static final String TEST_NAME = 'HDT_UTL_PayloadManagementTst';
     
     //DATA
     
     
     //TEST SETUP
     private static void mySetup(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - mySetup';
+        
+        //BODY
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
@@ -26,7 +32,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, true, accList[0].Id, saleList, pricebookId);
         
         //ORDER ITEMS
-        List<OrderItem> orderItems=HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
+        List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
+        System.debug(debugString + ' - orderItems: ' + orderItems);
         
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
