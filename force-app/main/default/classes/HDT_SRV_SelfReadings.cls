@@ -236,7 +236,7 @@ public with sharing class HDT_SRV_SelfReadings {
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
         Map<String,Object> dataBody = body.get('data') != null? (Map<String, Object>) body.get('data') : new Map<String,Object>();
-        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'OK';
+        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'KO';
         // SAP restituisce codice 502 in caso di check preliminare non superato.
         if ((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (outcome != null && outcome.equalsIgnoreCase('KO'))) {
             retWrap.isResponseOk = false;
@@ -253,16 +253,19 @@ public with sharing class HDT_SRV_SelfReadings {
             List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
             if(!cases.isEmpty()) {
                 Case currentReadingCase = cases[0];
-                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    readingCaseToUpdate.Status = 'Closed';
-                }
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO');
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                    readingCaseToUpdate.Status = 'Closed';
+                    readingCaseToUpdate.Phase__c = 'KO Definitivo';
+                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                }
+                
             }
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
@@ -374,6 +377,8 @@ public with sharing class HDT_SRV_SelfReadings {
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
                 closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
+            }when 'Web', 'App', 'APP'{
+                closeCase = true;
             }
             when else {
                 // TODO

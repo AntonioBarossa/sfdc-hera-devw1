@@ -383,4 +383,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         formParams.put('Archiviato', 'Y');
         HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
     }
+
+    public void closeRiattivazione(SObject inputCase)
+    {
+        Case currentCase = (Case)inputCase;
+        if(currentCase.Type.equalsIgnoreCase('Riattivazione Fornitura') && (currentCase.HerokuPracticeCode__c == null || currentCase.HerokuPracticeCode__c == ''))
+        {
+            currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+        }
+        updateFuture(JSON.serialize(currentCase));
+    }
+
+    @Future
+    private static void updateFuture(String serializedCase)
+    {
+        Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
+        HDT_UTL_DatabaseService.updateSobject(currentCase);
+    }
 }
