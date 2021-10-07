@@ -51,6 +51,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void handleAmountVasTest(){
         
         //SETUP
+        mySetup();
+        
         OrderItem myItem = [SELECT Id, UnitPrice, PriceNetDiscounted__c, Quantity FROM OrderItem];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
