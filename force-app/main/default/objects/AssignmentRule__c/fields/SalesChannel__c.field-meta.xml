@@ -4,9 +4,93 @@
     <description>campo activity da matchare.</description>
     <externalId>false</externalId>
     <label>Canale di vendita</label>
-    <length>64</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Agenzie</fullName>
+                <default>false</default>
+                <label>Agenzie</label>
+            </value>
+            <value>
+                <fullName>Agenzie SME</fullName>
+                <default>false</default>
+                <label>Agenzie SME</label>
+            </value>
+            <value>
+                <fullName>Associazioni</fullName>
+                <default>false</default>
+                <label>Associazioni</label>
+            </value>
+            <value>
+                <fullName>Back office</fullName>
+                <default>false</default>
+                <label>Back office</label>
+            </value>
+            <value>
+                <fullName>Business Agent</fullName>
+                <default>false</default>
+                <label>Business Agent</label>
+            </value>
+            <value>
+                <fullName>Consip</fullName>
+                <default>false</default>
+                <label>Consip</label>
+            </value>
+            <value>
+                <fullName>HC Point</fullName>
+                <default>false</default>
+                <label>HC Point</label>
+            </value>
+            <value>
+                <fullName>Punti Hera</fullName>
+                <default>false</default>
+                <label>Punti Hera</label>
+            </value>
+            <value>
+                <fullName>Reseller</fullName>
+                <default>false</default>
+                <label>Reseller</label>
+            </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>Telefono</fullName>
+                <default>false</default>
+                <label>Telefono</label>
+            </value>
+            <value>
+                <fullName>Teleselling Inbound</fullName>
+                <default>false</default>
+                <label>Teleselling Inbound</label>
+            </value>
+            <value>
+                <fullName>Teleselling Outbound</fullName>
+                <default>false</default>
+                <label>Teleselling Outbound</label>
+            </value>
+            <value>
+                <fullName>Vendita Condomini</fullName>
+                <default>false</default>
+                <label>Vendita Condomini</label>
+            </value>
+            <value>
+                <fullName>Vendita TopBusiness</fullName>
+                <default>false</default>
+                <label>Vendita TopBusiness</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>
