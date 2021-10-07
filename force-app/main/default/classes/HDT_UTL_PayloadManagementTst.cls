@@ -111,7 +111,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ASSERTS
         System.debug('result1: ' + result1);
-        System.assert( 'IF', result1);
+        System.assert('IF'.equalsIgnoreCase(result1), 'Risultato non è IF');
         
         
         //TESTING regular
@@ -124,11 +124,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         //TESTING context Not Order
-        String result2 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        String result3 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert(''.equalsIgnoreCase(result2), 'Risultato non è stringa vuota.');
+        System.debug('result3: ' + result3);
+        System.assert(''.equalsIgnoreCase(result3), 'Risultato non è stringa vuota.');
         */
     }
     
