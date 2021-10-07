@@ -151,7 +151,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         itemVasList.add(myItem);
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
-        inputs.put('Order', itemVasList);
+        inputs.put('Case', itemVasList);
         
         
         Map<String,Object> formParams = new Map<String,Object>();
