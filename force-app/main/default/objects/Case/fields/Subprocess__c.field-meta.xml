@@ -192,6 +192,7 @@
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>Recupero</valueName>
         </valueSettings>
+        <valueSettings>
             <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
             <valueName>BP</valueName>
         </valueSettings>
