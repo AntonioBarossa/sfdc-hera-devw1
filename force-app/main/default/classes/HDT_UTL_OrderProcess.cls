@@ -542,6 +542,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @return List<Order>
      */
     public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
+        Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
         Map<String,Order> orderMapOld = new Map<String,Order>();
         List<Order> ordersToUpdate = new List<Order>();        
         for (Order oldOrder : oldOrdersList) {
@@ -555,7 +556,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
-                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c) { //Fabiana 15/09/2021
+                if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& !newOrder.SBQQ__Contracted__c && !old.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) { //Fabiana 15/09/2021 //Sandy 05/10 Flusso Bonus e Sconti richiede chiusura e contracted in due transazioni distinte
                     newOrder.SBQQ__Contracted__c=true; 
                 }
             }
@@ -568,27 +569,32 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * @description 
      * HRDTR-00_HRAWRM-638
      **/
-    public static void overturningFields(List<Order> listOrder ){
+    public static void overturningFields(List<Order> oldList, List<Order> listOrder ){
         Map<Id, Sobject> mapObjToUpdate = new Map<Id, Sobject>();
+        Map<String,Order> mapOld = new Map<String,Order>();
+        for(Order old : oldList){ 
+            mapOld.put(old.id,old);
+        }
         for (Order temp : listOrder) {
-            
-            if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
-                ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
-                if (String.isBlank(String.valueOf(temp.ServicePoint__r.Account__c)) ||String.isBlank(String.valueOf(temp.ServicePoint__r.SAPImplantCode__c))) {
+            if(mapOld.get(temp.id).phase__c != 'Completata' && temp.Phase__c == 'Completata'){
+                if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
+                    ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
+                    sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;    
                     // sp.Account__c=temp.AccountId;
-                    sp.SAPImplantCode__c=temp.SapContractCode__c;
-                    //listObjToUpdate.add(sp);
+                    sp.SAPImplantCode__c=temp.SapImplantCode__c; 
+                    sp.account__c = temp.AccountId;
+                        //listObjToUpdate.add(sp);
                     mapObjToUpdate.put(sp.Id, sp);
-                }         
-            }
-            if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
-                if (String.isBlank(String.valueOf(temp.BillingProfile__r.ContractAccountCode__c)) && String.isNotBlank((temp.SapContractCode__c) )) {
-                    BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
-                    //listObjToUpdate.add(bill);
-                    mapObjToUpdate.put(bill.id, bill);
+                }
+                if (String.isNotBlank( String.valueOf( temp.BillingProfile__c))) {
+                    if (String.isNotBlank((temp.SapContractCode__c) )) {
+                        BillingProfile__c bill=new BillingProfile__c(id=temp.BillingProfile__c ,ContractAccountCode__c=temp.SapContractCode__c);
+                        //listObjToUpdate.add(bill);
+                        mapObjToUpdate.put(bill.id, bill);
+                    }
                 }
             }
-
         }
         if(!mapObjToUpdate.values().isEmpty()){
             update  mapObjToUpdate.values();
@@ -846,13 +852,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		String oldPhase = orderOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-                return true;
-			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
-                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-				return true;
-			}
             if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
                 Case nonReqContract = new Case();
                 HDT_QR_Case caseQr = new HDT_QR_Case(); 
@@ -881,6 +880,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
             }
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            {
+                orderNew.Status = 'Annullato';
+            }
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                return true;
+			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+				return true;
+			}
+
 		}
 		return false;
 	}

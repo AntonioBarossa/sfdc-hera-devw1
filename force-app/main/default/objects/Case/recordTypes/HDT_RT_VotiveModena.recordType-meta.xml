@@ -9603,6 +9603,14 @@
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>
+            <fullName>In Continuità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recupero</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Accise - Agevolazione cliente</fullName>
             <default>false</default>
         </values>

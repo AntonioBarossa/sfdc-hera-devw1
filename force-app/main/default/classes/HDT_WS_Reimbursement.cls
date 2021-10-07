@@ -1,5 +1,11 @@
 public inherited sharing class HDT_WS_Reimbursement {
 
+    /**@frpanico 05/10/2021 Modified Class
+     * Aggiunta Response success
+     * Refactoring della gestione response
+     */
+
+
     public String calloutAccountBalance(String requestString){
 
         HttpRequest request = new HttpRequest();
@@ -23,58 +29,25 @@ public inherited sharing class HDT_WS_Reimbursement {
 
         }
 
-        if(response != null){
-
-            switch on response.getStatusCode(){
-
-                when 500{
-
-                    HDT_WRP_ErrorResponse errorResponse = 
-                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
-
-                    //System.debug('WS_Reimbursement errorResponse--> ' + errorResponse);
-
-                    result = 'Error';
-
-                }
-
-                when 200{
-
-                    result = 'Ok';
-                    //CAPIRE LA STRUTTURA DELLA RISPOSTA POSITIVA;
-
-                }
-
-
+        if(response != null)
+        {
+            String responseBody = response.getBody();
+            Map<String, Object> responseMap = (Map<String,Object>)JSON.deserializeUntyped(responseBody);
+            //If the response return success get 'saldo'
+            if(String.valueOf(responseMap.get('status')) == 'success')
+            {
+                Map<String, Object> dataMap = (Map<String,Object>)responseMap.get('data');
+                return String.valueOf(dataMap.get('saldo'));
             }
-
+            //else return 'Error'
+            else
+            {
+                result = 'Error';
+            }
         }
-
-        // System.debug('WS_Reimbursement StatusCode --> ' + response.getStatusCode());
-        // System.debug('WS_Reimbursement Body --> ' + response.getBody());
 
         return result;
 
     }
-
-    // Wrappers for response 
-
-    public class HDT_WRP_ErrorResponse{
-
-        public String status;
-        public String correlationId;
-        public String timestamp;
-        public List<HDT_WRP_Error> errorDetails;
-    }
-
-
-    public class HDT_WRP_Error{
-
-        public string code;
-        public string message;
-        public string additionalInfo;
-
-    }
-
 
 }

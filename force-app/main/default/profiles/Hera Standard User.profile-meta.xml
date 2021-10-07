@@ -116,6 +116,10 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>HDT_LC_EscalationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ReportNavigatorController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1018,6 +1022,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.IsMigrated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.IsSOL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26487,6 +26496,11 @@
             <field>User.FiscalCode__c</field>
             <readable>true</readable>
         </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.UserAgencyCode__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
@@ -29501,11 +29515,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.PersonalData__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.PetitionerAssigneeStructure__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34325,7 +34334,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -34380,7 +34389,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

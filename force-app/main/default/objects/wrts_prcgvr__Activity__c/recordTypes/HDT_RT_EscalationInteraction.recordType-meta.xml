@@ -287,17 +287,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PetitionerAssigneeStructure__c</picklist>
-        <values>
-            <fullName>CVM %2B Corp Mui</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esercizio Clienti</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>PraxidiaPostWorkAction__c</picklist>
         <values>
             <fullName>Contattare tramite email</fullName>

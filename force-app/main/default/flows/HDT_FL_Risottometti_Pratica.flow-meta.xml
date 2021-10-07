@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Redirect_to_case</name>
-        <label>Redirect to case</label>
-        <locationX>2660</locationX>
-        <locationY>491</locationY>
-        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
-        <actionType>component</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>getActivity.Case__c</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
-        <name>Redirect_to_order</name>
-        <label>Redirect to order</label>
-        <locationX>2665</locationX>
-        <locationY>643</locationY>
-        <actionName>c:HDT_LCP_RedirectToRecord</actionName>
-        <actionType>component</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>getActivity.Order__c</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
         <name>activityToUpdate</name>
@@ -75,6 +43,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.DiscardResubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -429,8 +404,8 @@
     <decisions>
         <name>parentObjectDecision_0_0_0_0_0_0</name>
         <label>parentObjectDecision</label>
-        <locationX>2456</locationX>
-        <locationY>588</locationY>
+        <locationX>2465</locationX>
+        <locationY>586</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Order_3_0</name>
@@ -443,7 +418,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Redirect_to_order</targetReference>
+                <targetReference>endTextFlow</targetReference>
             </connector>
             <label>Order</label>
         </rules>
@@ -458,7 +433,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Redirect_to_case</targetReference>
+                <targetReference>endTextFlow_0</targetReference>
             </connector>
             <label>Case</label>
         </rules>
@@ -701,6 +676,38 @@
         </connector>
         <inputReference>orderRecord</inputReference>
     </recordUpdates>
+    <screens>
+        <name>endTextFlow</name>
+        <label>endTextFlow</label>
+        <locationX>2665</locationX>
+        <locationY>645</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getOrder.OrderNumber} risottomesso correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>endTextFlow_0</name>
+        <label>endTextFlow</label>
+        <locationX>2659</locationX>
+        <locationY>504</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getCase.CaseNumber} risottomesso correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>377</locationY>

@@ -1,6 +1,8 @@
 public without sharing class HDT_UTL_ActivityCustomProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
         HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
@@ -82,7 +84,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Id rtNewCustomer = activityRTInfos.get('HDT_RT_CreditCheckKO').getRecordTypeId();
         Set<Id> oldCustOrderIds = new Set<Id>();
 
-        for(Order o : orderMap.get('oldCustomer')){
+        for(Order o : orderMap.get('oldCustomer')){ 
             oldCustOrderIds.add(o.id);
         }
         Map<id, Order> ordersToGetOldCustomer = new Map<Id,Order>([SELECT AccountId, ServicePoint__r.Account__c FROM Order WHERE ID IN :oldCustOrderIds ]);
@@ -123,8 +125,9 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
         }
 
-        if(!listActivity.isEmpty()){            
-            insert listActivity;
+        if(!listActivity.isEmpty()){   
+            activitySrv.createRecordWithFieldCheck(listActivity);    
+            //insert listActivity;
         }
         
     
@@ -145,16 +148,17 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Set<Id> orderIdToAnnullamento = new Set<Id>();        
         for(wrts_prcgvr__Activity__c act : newActList){
             if(act.Status__c == 'KO Definitivo'){
-                orderIdToAnnullamento.add(act.Order__c);                
+                orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
 
         System.debug('orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
-        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento];
+        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
         for(Order order : orderToAnnullamento){        
             order.Status = 'Annullato';                
         }
-        update orderToAnnullamento;
+        orderSrv.updateRecords(orderToAnnullamento);
+        //update orderToAnnullamento;
     }
 
 

@@ -219,7 +219,7 @@ public with sharing class HDT_LC_LastBill {
                 gen.writeStringField('billNumber', billNumber.replaceAll('^0+', ''));
                 gen.writeStringField('channel', 'CRM');
                 gen.writeStringField('date', dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0]);
-                gen.writeStringField('type', 'Bolletta');
+                gen.writeStringField('documentType', 'Bollette');
                 gen.writeStringField('company', companyCode);
                 gen.writeEndObject();
                 jsonObjString = gen.getAsString();

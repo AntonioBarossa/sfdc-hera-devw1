@@ -16,7 +16,8 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
         //fake code
 
-        HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = new HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse();
+        //Deprecato
+        // HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = new HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse();
 
         //fake code
 

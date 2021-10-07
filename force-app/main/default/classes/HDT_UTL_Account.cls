@@ -5,20 +5,23 @@
 * @history Lorenzo – 16/07/2021 – created class
 */
 public with sharing class HDT_UTL_Account {
-    @auraEnabled
+    private static Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+    private static Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+
+    @AuraEnabled
     public static String checkIsBackoffice(){
-        boolean res = false;
+       // boolean res = false;
         List<UserRole> usRole = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Id IN (SELECT UserRoleId 
         FROM User 
-        WHERE Id = :UserInfo.getUserId())];
+        WHERE Id = :UserInfo.getUserId()) WITH SECURITY_ENFORCED];
         String role = usRole[0].Developername;
         return role;
     }
 
     public static HDT_WS_RicCreBpCaRequest callBpCaSearch(Account a,contact c ){
         HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
-        Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-        Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+        //Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+       // Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
 
         String recordType = '';
         if(a.recordtypeId == accRecordTypeIdResidenziale){
@@ -42,8 +45,8 @@ public with sharing class HDT_UTL_Account {
         HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
         String recordType = '';
 
-        Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-        Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+       // Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+       // Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
         
        //Start HRAWRM-437 02/09/2021
         req.account.nome=a.Name;
@@ -89,8 +92,8 @@ public with sharing class HDT_UTL_Account {
     public static HDT_WS_RicCreBpCaRequest callAmCaCreate(Account a,contact c ){
         HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
         String recordType = '';
-        Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-        Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+        //Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        //Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
 
         if(a.recordtypeId == accRecordTypeIdResidenziale){
             recordType = 'Persona fisica';
@@ -151,7 +154,7 @@ public with sharing class HDT_UTL_Account {
     public static void makeRequest( Account acc,Contact cont){
         HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
         HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-        System.debug('Response SRC : ' + res);
+       // System.debug('Response SRC : ' + res);
         analizeResponse(res,acc,cont);
     }
     
@@ -174,7 +177,7 @@ public with sharing class HDT_UTL_Account {
                 // amministratore di condominio viene identificato  dalla category 
                 req = callAmCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert amministratore
-                System.debug('resCreate AMM : ' + resCreate);
+               // System.debug('resCreate AMM : ' + resCreate);
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                     acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
@@ -183,7 +186,7 @@ public with sharing class HDT_UTL_Account {
             else if ( 'BP non rilevato'.equalsIgnoreCase(res.data.commenti)){
                 req=callBpCaCreate(acc,cont);
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                System.debug('resCreate BP : ' + resCreate);
+              //  System.debug('resCreate BP : ' + resCreate);
                 if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
                     acc.CustomerCode__c = resCreate.data.codiceBP; 
                     update acc;
@@ -220,7 +223,7 @@ public with sharing class HDT_UTL_Account {
         } // TODO else per la gestione dell'errore
         return acc;
     }
-    public static String getStateIso(String State){
+    public static String getStateIso(String state){
         String varIso='';
         Map<String, String> mapIso = new Map<String, String>{'EMIRATI ARABI UNITI'=>'AE','ANTIGUA/BARBUDA'=>'AG','ANGUILLA'=>'AI','ALBANIA'=>'AL','ARMENIA'=>'AM','ANTILLE OLANDESI'=>'AN','ANGOLA'=>'AO','ARGENTINA'=>'AR','SAMOA (USA)'=>'AS','AUSTRIA'=>'AT','AUSTRALIA'=>'AU','ARUBA'=>'AW','AZERBAIGIAN'=>'AZ','BOSNIA-ERZEGOVINA'=>'BA','BARBADOS'=>'BB','BANGLADESH'=>'BD','BELGIO'=>'BE',
         'BURKINA FASO'=>'BF','BULGARIA'=>'BG','BAHREIN'=>'BH','BURUNDI'=>'BI','BENIN'=>'BJ','BERMUDE'=>'BM','BRUNEI'=>'BN','BOLIVIA'=>'BO','BRASILE'=>'BR','BAHAMA'=>'BS','BHUTAN'=>'BT','BOTSWANA'=>'BW','BIELORUSSIA'=>'BY','BELIZE'=>'BZ','CANADA'=>'CA','ISOLE COCOS'=>'CC','REP. DEMOCRATICA CO'=>'CD','CENTRAFRICA'=>'CF','REPUBBLICA DEL CONG'=>'CG','SVIZZERA'=>'CH','COSTA D\'AVORIO'=>'CI','ARCIPELAGO DI COOK'=>'CK','CILE'=>'CL','CAMERUN'=>'CM','CINA'=>'CN','COLOMBIA'=>'CO','COSTA RICA'=>'CR','CUBA'=>'CU',
@@ -233,8 +236,8 @@ public with sharing class HDT_UTL_Account {
         'ASCENSION'=>'SH','SLOVENIA'=>'SI','REPUBBLICA SLOVACCA'=>'SK','SIERRA LEONE'=>'SL','SAN MARINO'=>'SM','SENEGAL'=>'SN','SOMALIA'=>'SO','SURINAME'=>'SR','SAO TOME\' E PRINCIP'=>'ST','UNIONE SOVIETICA'=>'SU','SALVADOR'=>'SV','SIRIA'=>'SY','SWAZILAND'=>'SZ','TURKS E CAICOS'=>'TC',
         'CIAD'=>'TD','ANTARTIDE FRANCESE'=>'TF','TOGO'=>'TG','TAILANDIA'=>'TH','TAGISKISTAN'=>'TJ','ISOLE TOKELAU'=>'TK','TURKMENISTAN'=>'TM','TUNISIA'=>'TN','TONGA'=>'TO','TIMOR ORIENTALE'=>'TP','TURCHIA'=>'TR','TRINIDAD E TOBAGO'=>'TT','TUVALU'=>'TV','TAIWAN'=>'TW','TANZANIA'=>'TZ','UCRAINA'=>'UA','UGANDA'=>'UG','ISOLE MINORI (USA)'=>'UM','STATI UNITI D\'AMERI'=>'US','URUGUAY'=>'UY','UZBEKISTAN'=>'UZ','CITTA\' DEL VATICANO'=>'VA','SAINT VINCENT E GRE'=>'VC','VENEZUELA'=>'VE','ISOLE VERGINI (BRIT'=>'VG','ISOLE VERGINI (USA)'=>'VI',
         'VIETNAM'=>'VN','VANUATU'=>'VU','WALLIS E FUTUNA'=>'WF','SAMOA OCCIDENTALI'=>'WS','KOSOVO'=>'XZ','YEMEN'=>'YE','MAYOTTE'=>'YT','SERBIA E MONTENEGRO'=>'YU','SUD AFRICA'=>'ZA','ZAMBIA'=>'ZM','ZAIRE'=>'ZR','ZIMBABWE'=>'ZW'};
-        if (String.isNotBlank (State)) {
-            varIso=mapIso.get(State.toUpperCase())!=null ?mapIso.get(State.toUpperCase()):'';
+        if (String.isNotBlank (state)) {
+            varIso=mapIso.get(state.toUpperCase())!=null ?mapIso.get(state.toUpperCase()):'';
         }
         return varIso;
         
