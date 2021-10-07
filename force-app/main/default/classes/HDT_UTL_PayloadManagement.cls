@@ -50,6 +50,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         try{
             List<SObject> itemVasList = inputs.get('ItemVAS');
+            System.debug('itemVasList: ' + itemVasList);
+            
             Double amountNoIva = 0;
             Double fixedAmountNoIva = 0;
             Integer quantity = 0;
