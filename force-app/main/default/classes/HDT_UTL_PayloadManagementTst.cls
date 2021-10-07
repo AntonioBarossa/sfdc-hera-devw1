@@ -105,7 +105,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Order');
         
-        //TESTING blank ContractId
+        //TESTING Regular
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
         
@@ -114,13 +114,16 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.assert('IF'.equalsIgnoreCase(result1), 'Risultato non è IF');
         
         
-        //TESTING regular
-        //myItem.ContractId = '';
+        
+        //TESTING Blank Contract Id
+        Contract con = [SELECT Id FROM Contract];
+        myItem.ContractId = con.Id;
         String result2 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
-        /*
+        
         //ASSERTS
         System.debug('result2: ' + result2);
         System.assert(''.equalsIgnoreCase(result2), 'Risultato non è stringa vuota.');
+        
         
         
         //TESTING context Not Order
@@ -130,7 +133,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //ASSERTS
         System.debug('result3: ' + result3);
         System.assert(''.equalsIgnoreCase(result3), 'Risultato non è stringa vuota.');
-        */
+        
     }
     
     //handleFlagPaperless
