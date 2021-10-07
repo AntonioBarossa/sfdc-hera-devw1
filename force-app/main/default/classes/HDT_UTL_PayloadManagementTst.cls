@@ -36,8 +36,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     //TESTS
     
-    //execute
-    //TODO: IMPLEMENTAZIONE (A PESO LEGGERO)
+    //execute - TESTATO VIA IMPIEGO DI ALTRI METODI
     
     
     //handleAmountVas
