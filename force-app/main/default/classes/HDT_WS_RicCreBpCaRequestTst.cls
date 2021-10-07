@@ -27,7 +27,8 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
         System.runAs(u){
             
             Test.startTest();
-            HDT_WS_RicCreBpCaRequestAddress address = new HDT_WS_RicCreBpCaRequestAddress();
+            HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
+            req.HDT_WS_RicCreBpCaRequestAddress address = new req.HDT_WS_RicCreBpCaRequestAddress();
             
             address.comune='MILANO';
             address.nazione ='ITALIA';
@@ -40,7 +41,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             address.provincia ='MILANO';
             address.via ='Veneto';
 
-            HDT_WS_RicCreBpCaRequestGrupIva2 gruppoIva = new HDT_WS_RicCreBpCaRequestGrupIva2();
+            req.HDT_WS_RicCreBpCaRequestGrupIva2 gruppoIva = new req.HDT_WS_RicCreBpCaRequestGrupIva2();
             gruppoIva.adesione='test';
             gruppoIva.partitaIva='test';
             gruppoIva.dataInizio=Date.today();
@@ -48,7 +49,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             
 
 
-            HDT_WS_RicCreBpCaRequestAccount acc = new HDT_WS_RicCreBpCaRequestAccount();
+            req.HDT_WS_RicCreBpCaRequestAccount acc = new req.HDT_WS_RicCreBpCaRequestAccount();
             acc.nome='test';
             acc.alias='test';
             acc.partner='test';
@@ -66,7 +67,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             acc.indirizzo=address;
             acc.gruppoIva=gruppoIva;
 
-            HDT_WS_RicCreBpCaRequestbank reqBank = new HDT_WS_RicCreBpCaRequestbank();
+            req.HDT_WS_RicCreBpCaRequestbank reqBank = new req.HDT_WS_RicCreBpCaRequestbank();
             reqBank.filiale='test';
             reqBank.nome='test';
             reqBank.comune='test';
@@ -74,7 +75,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             reqBank.nazione='test';
 
 
-            HDT_WS_RicCreBpCaRequestdateBank datiBancari = new HDT_WS_RicCreBpCaRequestdateBank();
+            req.HDT_WS_RicCreBpCaRequestdateBank datiBancari = new req.HDT_WS_RicCreBpCaRequestdateBank();
             datiBancari.banca=reqBank;
             datiBancari.abi='test';
             datiBancari.cab='test';
@@ -88,7 +89,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             datiBancari.metodoPagamento='test';
             datiBancari.metodoPagamentoAlternativo='test';
 
-            HDT_WS_RicCreBpCaRequestDestination reqDest = new HDT_WS_RicCreBpCaRequestDestination();
+            req.HDT_WS_RicCreBpCaRequestDestination reqDest = new req.HDT_WS_RicCreBpCaRequestDestination();
             reqDest.nome='test';
             reqDest.fax='test';
             reqDest.email='test';
@@ -99,13 +100,13 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             reqDest.cognome='test';
             reqDest.indirizzo=address;
             
-            HDT_WS_RicCreBpCaRequestBilling reqBilling = new HDT_WS_RicCreBpCaRequestBilling();
+            req.HDT_WS_RicCreBpCaRequestBilling reqBilling = new req.HDT_WS_RicCreBpCaRequestBilling();
             reqBilling.codiceUfficio='test';
             reqBilling.fatturaXML='test';
             reqBilling.mailPec='test';
             reqBilling.modello='test';
 
-            HDT_WS_RicCreBpCaRequestGrupIva gruppoIva2 = new HDT_WS_RicCreBpCaRequestGrupIva();
+            req.HDT_WS_RicCreBpCaRequestGrupIva gruppoIva2 = new req.HDT_WS_RicCreBpCaRequestGrupIva();
             gruppoIva2.idOggetto='';
             gruppoIva2.contoContrattuale='';
             gruppoIva2.emailInvioBolletta='';
@@ -116,7 +117,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             gruppoIva2.destinatarioDivergente=reqDest;
             gruppoIva2.fattura=reqBilling;
 
-            HDT_WS_RicCreBpCaRequest req = new HDT_WS_RicCreBpCaRequest();
+            
             req.account=acc;
             req.ordine=gruppoIva2;
             req.cancellaBPAlternativo='test';
@@ -126,7 +127,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             req.numeroSR='test';
 
             system.assertEquals(req.cancellaBPAlternativo,'test','the field cancellaBPAlternativo is not valorized');
-            system.assertNotEquals(req.cancellaBPAlternativo,'','the field cancellaBPAlternativo is valorized');
+            system.assertNotEquals(req.cancellaBPAlternativo,'test','the field cancellaBPAlternativo is valorized');
 
             Test.stopTest();
         } 
