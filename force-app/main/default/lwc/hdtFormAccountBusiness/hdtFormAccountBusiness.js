@@ -41,6 +41,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
+    requiredVat=true;
+    requiredFiscalCode=false;
     customerType='Organizzazione';
     gender;
     birthDate;
@@ -236,7 +238,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
     }
-
     handleChange(event){
         this.markingValue= event.detail.value;
         let key = this.categoryData.controllerValues[event.target.value];
@@ -255,7 +256,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
             this.customerType='Persona fisica';
             this.makerequired= true;
-        }else{
+            this.requiredVat=true; //HRAWRM-776 07/10/2021
+        }
+        else if(this.markingValue.includes("Condominio")  ){
+            this.requiredVat= false;
+            this.makerequired=true;
+
+        }//HRAWRM-776 07/10/2021
+        else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
@@ -266,10 +274,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.requiredVat=true;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
+       
    }
 
     handleCalculation(){
@@ -845,4 +855,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         event.target.value = inputVal.toString().slice(0,-1);
     }
     }
+    
+
+    
 }

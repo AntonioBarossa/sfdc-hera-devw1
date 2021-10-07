@@ -4,6 +4,7 @@
     <columns>ExternalId</columns>
     <columns>DisplayUrl</columns>
     <columns>FST_NAME__c</columns>
+    <columns>REFERENCE_TYPE_CD__c</columns>
     <columns>X_RAG_SOCIALE__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>

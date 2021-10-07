@@ -16,9 +16,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @param Order orderParent
     */
     @AuraEnabled
-    public static void save(Order orderParent){
+    public static void save(Order orderParent){ 
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
         List<Order> ordersToUpdate = new List<Order>();
         
         Order orderToUpdate = new Order(
@@ -48,6 +49,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     new Order(
                         Id = childOrd.Id,
                         Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                    )
+                );
+            } else if(childOrd.RecordType.DeveloperName == 'HDT_RT_VAS' && mapChildOrders.get(childOrd?.OrderReference__c) != null ){
+                ordersToUpdate.add(//get CCheck Result from offer
+                    new Order(
+                        Id = childOrd.Id,
+                        CreditCheckDescription__c=mapChildOrders.get(childOrd?.OrderReference__c)?.CreditCheckDescription__c,
+                        IncomingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.IncomingCreditCheckResult__c,
+                        OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
                     )
                 );
             }
