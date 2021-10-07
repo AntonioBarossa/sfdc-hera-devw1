@@ -220,7 +220,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     handleSave(readingCustomerDate){
 
         try {
-            if (!this.isProcessReading) {
+            if (!this.isProcessReading || this.commodity === 'Energia Elettrica') {
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
