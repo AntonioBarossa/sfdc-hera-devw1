@@ -2,6 +2,7 @@ public with sharing class HDT_LC_CompleteCase {
     public static HDT_QR_Case caseQr = new HDT_QR_Case();
     public static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     public static HDT_QR_Recordtype rctype = new HDT_QR_Recordtype();
+    public static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     @AuraEnabled
     public static String completeCase(String caseId){
         try {
