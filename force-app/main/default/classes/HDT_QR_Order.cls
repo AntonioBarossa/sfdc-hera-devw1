@@ -509,7 +509,11 @@ public inherited sharing class HDT_QR_Order {
             ComfortCallDaysDue__c,
             QualityCall__c,
             QualityCallUnique__c,
-            Contact__r.Email
+            Contact__r.Email,
+            CreditCheckDescription__c,
+            IncomingCreditCheckResult__c,
+            OutgoingCreditCheckResult__c,
+            OrderReference__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -967,7 +971,8 @@ public inherited sharing class HDT_QR_Order {
             QualityCall__c,
             QualityCallUnique__c,
             ConfirmCustomerContract__c,
-            CancellationReason__c
+            CancellationReason__c,
+            CommercialProduct__c
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
