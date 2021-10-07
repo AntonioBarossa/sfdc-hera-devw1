@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_LeadProcess {
     private static HDT_SRV_CampaignMember cmSrv= new HDT_SRV_CampaignMember();
     private static HDT_QR_Individual indvQr= new HDT_QR_Individual();
     private static HDT_QR_Lead leadQr= new HDT_QR_Lead();
+    private static HDT_SRV_ContentDocumentLink cdlSrv = new HDT_SRV_ContentDocumentLink();
     
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formCallback(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
@@ -497,9 +498,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
-                        cdl.LinkedEntityId = l.Id;
-                        cdl.ContentDocumentId = cvdl.contentDocumentId;
-                        Insert cdl;
+                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
                     }              
                     
                     responseField.fieldType = 'TEXT';
