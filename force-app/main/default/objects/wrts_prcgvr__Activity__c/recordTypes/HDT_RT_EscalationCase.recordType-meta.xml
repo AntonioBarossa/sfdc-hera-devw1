@@ -1967,6 +1967,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Supporto legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Supporto pagamenti</fullName>
             <default>false</default>
         </values>
