@@ -57,7 +57,7 @@ public class HDT_UTL_AssetStatusVasTst {
             List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(10,true,orderId,pointId,productId,entryId);
             
             
-            List<Asset> assets = UTL_DataFactoryTst.createAsset(2,false);
+            List<Asset> assets = HDT_UTL_DataFactoryTst.createAsset(2,false);
             assets[0].SBQQ__OrderProduct__c = orderItems[0].id;
             assets[0].SBQQ__RootAsset__c = null;
             assets[1].SBQQ__OrderProduct__c = orderItems[1].id;
