@@ -113,7 +113,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.debug('result1: ' + result1);
         System.assert('IF'.equalsIgnoreCase(result1), 'Risultato non è IF');
         
-        
+        //TODO: TESTARE CASO NON "IF". Attualmente non possibile.
         
         //TESTING Blank Contract Id
         Contract con = [SELECT Id FROM Contract];
