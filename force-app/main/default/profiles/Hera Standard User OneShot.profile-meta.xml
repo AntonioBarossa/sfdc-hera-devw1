@@ -26447,6 +26447,11 @@
             <field>User.FiscalCode__c</field>
             <readable>true</readable>
         </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.UserAgencyCode__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable> 

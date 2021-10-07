@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_Account {
     private static Id accRecordTypeIdResidenziale = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
     private static Id accRecordTypeIdBusiness = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
 
-
+    @AuraEnabled
     public static String checkIsBackoffice(){
        // boolean res = false;
         List<UserRole> usRole = [SELECT Id, Name, DeveloperName FROM UserRole WHERE Id IN (SELECT UserRoleId 
