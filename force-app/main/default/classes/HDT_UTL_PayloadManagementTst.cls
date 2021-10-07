@@ -58,7 +58,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING objectString (ItemVAS not null)
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result = myObjectToTest.handleAmountVas(inputs, formParams);
+        String result = myObjectToTest.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
         String toTest = myItem.UnitPrice + '|' + myItem.PriceNetDiscounted__c + '|' + myItem.Quantity;
