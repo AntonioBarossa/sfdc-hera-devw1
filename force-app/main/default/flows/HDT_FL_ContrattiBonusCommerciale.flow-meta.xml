@@ -183,7 +183,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>SelectContract</elementReference>
+                <elementReference>contractid</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -334,12 +334,21 @@
             <targetReference>get_Contract</targetReference>
         </connector>
         <fields>
-            <name>SelectContract</name>
-            <choiceReferences>contracts</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Seleziona Contratto</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>false</isRequired>
+            <name>Selezione_Contratto</name>
+            <extensionName>c:hdtSelezFornituraFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>contractid</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -372,6 +381,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>contractid</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>ProcessType</name>
