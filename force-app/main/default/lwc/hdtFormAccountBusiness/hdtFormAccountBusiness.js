@@ -256,7 +256,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
             this.customerType='Persona fisica';
             this.makerequired= true;
-        }else{
+            this.requiredVat=true; //HRAWRM-776 07/10/2021
+        }
+        else if(this.markingValue.includes("Condominio")  ){
+            this.requiredVat= false;
+            this.makerequired=true;
+
+        }//HRAWRM-776 07/10/2021
+        else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
@@ -267,11 +274,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.requiredVat=true;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
-        this.checkRequiredVat(this.markingValue);
+       
    }
 
     handleCalculation(){
@@ -847,16 +855,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         event.target.value = inputVal.toString().slice(0,-1);
     }
     }
-    checkRequiredVat(Marking){
-        if(Marking=='Condominio'){
-            this.requiredVat= false;
-            this.makerequired=true;
-        }
-        else{
-            this.requiredVat=true;
-            this.makerequired=false;
-        }
-    }
+    
 
     
 }
