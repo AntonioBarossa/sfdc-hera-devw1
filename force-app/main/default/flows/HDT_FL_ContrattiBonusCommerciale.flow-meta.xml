@@ -343,6 +343,12 @@
                     <elementReference>AccountId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>groupOptions</name>
+                <value>
+                    <stringValue>CONTRACT_BONUS_COMM</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
