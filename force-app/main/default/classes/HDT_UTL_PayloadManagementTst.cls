@@ -88,7 +88,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     //handleFlagDeliveryAddress
     @isTest
-    private static void handleAmountVasTest(){
+    private static void handleFlagDeliveryAddressTest(){
         
         //SETUP
         mySetup();
