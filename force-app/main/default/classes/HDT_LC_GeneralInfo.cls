@@ -124,7 +124,8 @@ public inherited sharing class HDT_LC_GeneralInfo {
         List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
 
         if (user[0].UserRole != null) {
-            result.put('userRole', user[0].UserRole.DeveloperName );
+            result.put('userRole', user[0].UserRole.DeveloperName);
+            result.put('userProfile', user[0].Profile.Name);
         }
 
         return result;
