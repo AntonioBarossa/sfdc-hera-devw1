@@ -142,7 +142,6 @@ export default class HdtSelfReadingRegister extends LightningElement {
             this.isVisible = (this.rowObj.id <= readingObj.length);
             var indexSerialNumberEle = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
             this.registerObj[indexSerialNumberEle].disabled = !this.isProcessReading;
-            this.registerObj[indexSerialNumberEle].required = this.isProcessReading;
         } else if (this.commodity === 'Gas') {
             this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
         }
@@ -221,14 +220,14 @@ export default class HdtSelfReadingRegister extends LightningElement {
     handleSave(readingCustomerDate){
 
         try {
-            if (!this.isProcessReading || this.commodity === 'Energia Elettrica') {
+            if (!this.isProcessReading) {
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
                     } 
                 });
-            } else if (this.rowObj.id === 'Meter') {
-                // Per l'autolettura da processo richiedo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
+            } else if (this.rowObj.id === 'Meter' || (this.isVisible && this.commodity === 'Energia Elettrica')) {
+                // Per l'autolettura da processo GAS richiediamo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: il campo ' + element.label + ' deve essere valorizzato.';
