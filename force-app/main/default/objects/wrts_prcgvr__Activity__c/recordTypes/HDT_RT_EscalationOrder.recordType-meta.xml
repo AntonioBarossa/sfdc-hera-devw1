@@ -287,13 +287,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PetitionerAssigneeStructure__c</picklist>
-        <values>
-            <fullName>Sales%26Marketing Service</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>PraxidiaPostWorkAction__c</picklist>
         <values>
             <fullName>Contattare tramite email</fullName>

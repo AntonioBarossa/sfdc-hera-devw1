@@ -186,6 +186,8 @@ public inherited sharing class HDT_QR_Order {
 			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
             OrderReference__c,
+            OrderReference__r.SBQQ__Quote__c,
+            SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
             ActivationStreetName__c,
@@ -507,7 +509,11 @@ public inherited sharing class HDT_QR_Order {
             ComfortCallDaysDue__c,
             QualityCall__c,
             QualityCallUnique__c,
-            Contact__r.Email
+            Contact__r.Email,
+            CreditCheckDescription__c,
+            IncomingCreditCheckResult__c,
+            OutgoingCreditCheckResult__c,
+            OrderReference__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

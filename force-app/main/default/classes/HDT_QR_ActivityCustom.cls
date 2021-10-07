@@ -474,4 +474,13 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     WITH SECURITY_ENFORCED 
             ];
         }
+        public static List<wrts_prcgvr__Activity__c> getRecordByEcid(String ecid){
+            return [SELECT 
+                    Id
+                    FROM wrts_prcgvr__Activity__c
+                    where ecid__c = :ecid
+                    AND wrts_prcgvr__Status__c = 'Aperta'
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
 }

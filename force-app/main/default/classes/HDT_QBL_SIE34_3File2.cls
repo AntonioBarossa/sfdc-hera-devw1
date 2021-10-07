@@ -1,17 +1,17 @@
 public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
     private String runId                    ;   
-    private Date filterDate                 ;
+    private Datetime filterDate                 ;
     private String fileType                 ;
     private String errorMessage             ;
     private List<String> contentVersionIds  ;
     private final String NOTMAPPED=''       ;
 
  
-    public HDT_QBL_SIE34_3File2(String varRunId,Date varDate,String varFileType, List<String> varContentVersionIds ) {
-       this.runId               = varRunId;
-       this.filterDate          = varDate;
-       this.fileType            = varFileType;
-       this.contentVersionIds   = varContentVersionIds;
+    public HDT_QBL_SIE34_3File2(String varRunId,Datetime varDate,String varFileType, List<String> varContentVersionIds ) {
+       this.runId               = varRunId               ;
+       this.filterDate          = varDate                ;
+       this.fileType            = varFileType            ;
+       this.contentVersionIds   = varContentVersionIds   ;
     }
  
  

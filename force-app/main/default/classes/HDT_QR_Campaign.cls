@@ -34,6 +34,7 @@ public with sharing class HDT_QR_Campaign {
             Id,
             Name,
          //   LavorazioneFUB__c,
+            MacroActivityEasyCIM__c,
             MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,
             AssignmentType__c
             FROM Campaign
