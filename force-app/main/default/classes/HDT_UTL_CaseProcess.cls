@@ -3,7 +3,7 @@ public with sharing class HDT_UTL_CaseProcess {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
-
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
 
@@ -16,9 +16,10 @@ public with sharing class HDT_UTL_CaseProcess {
                     SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c,
                     PraxidiaUpdateDate__c = newCase.PraxidiaDateOutcome__c  
                 ));
-            }
+            } 
         }
-        update accountsToUpdate;
+        accountSrv.updateRecordsWithCheck(accountsToUpdate);
+        //update accountsToUpdate; 
     }
 
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
@@ -236,7 +237,7 @@ public with sharing class HDT_UTL_CaseProcess {
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
-		
+            System.debug('*******Error:' + e);
 		}
     }
 

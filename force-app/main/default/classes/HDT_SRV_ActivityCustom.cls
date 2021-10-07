@@ -68,6 +68,14 @@ public inherited sharing class HDT_SRV_ActivityCustom {
         return activity;
     }
 
+    public List<wrts_prcgvr__Activity__c> createRecordWithFieldCheck(List<wrts_prcgvr__Activity__c> activity){
+        List<String> fields = helperMethods.getObjAttrList(activity);
+        checkUpdateAccess(String.join(fields, ','));
+        HDT_UTL_DatabaseService.insertSObject(activity);
+
+        return activity;
+    }
+
     public void updateRecord(wrts_prcgvr__Activity__c activity){
         List<String> fields = helperMethods.getObjAttrList(activity);
         checkUpdateAccess(String.join(fields, ','));

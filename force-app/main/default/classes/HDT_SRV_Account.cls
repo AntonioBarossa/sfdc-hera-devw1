@@ -84,6 +84,14 @@ public inherited sharing class HDT_SRV_Account {
 
     }
 
+    public void updateRecordsWithCheck(List<Account> account){
+
+        List<String> fields = helperMethods.getObjAttrList(account);
+        checkUpdateAccess(String.join(fields, ','));
+        HDT_UTL_DatabaseService.updateSObject(account);
+
+    }
+
     /**
      * @description updateRecordsNoShare
      * @param account
