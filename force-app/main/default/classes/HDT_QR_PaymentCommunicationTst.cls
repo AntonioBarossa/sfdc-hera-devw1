@@ -49,7 +49,7 @@ public with sharing class HDT_QR_PaymentCommunicationTst {
         
         //TESTING
         HDT_QR_PaymentCommunication myObjectToTest = new HDT_QR_PaymentCommunication();
-        DocumentSelected__c result = myObjectToTest.getDocumentSelectedByCase(myDocSelected.Id);
+        DocumentSelected__c result = myObjectToTest.getDocumentSelectedByCase(myDocSelected.Id)[0];
         
         //ASSERTS
         System.assertEquals(myDocSelected.Id, result.Id, 'Test fallito.');
