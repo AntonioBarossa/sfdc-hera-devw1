@@ -19,7 +19,7 @@ public with sharing class HDT_SRV_VoltureChangeManager
         Order inputOrder = (Order)sobj;
         inputOrder.Phase__c = 'Annullato';
         /*TODO: add other fields of annullment if needed*/
-        HDT_UTL_VoltureChangeManager.updateOrderFuture(inputOrder);
+        HDT_UTL_VoltureChangeManager.updateOrderFuture(JSON.serialize(inputOrder));
 
 
     }
