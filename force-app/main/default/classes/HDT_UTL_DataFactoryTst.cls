@@ -2824,7 +2824,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-    public static List<Contract> createContractNW(Integer amount, Boolean doInsert, Map<String,Object> params){
+    public static List<Contract> createContractNw(Integer amount, Boolean doInsert, Map<String,Object> params){
 
         List<Contract> contractList=new List<Contract>();
     
@@ -2851,7 +2851,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-    public static List<Order> createOrderWithPricebookNW(Integer amount, Boolean doInsert, List<Sale__c> sales, Map<String,Object> params){
+    public static List<Order> createOrderWithPricebookNw(Integer amount, Boolean doInsert, List<Sale__c> sales, Map<String,Object> params){
 
 		List<Order> orderList=new List<Order>();
 
@@ -2883,29 +2883,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			ord.SignatureMethod__c='Vocal Order';
 			ord.DocSendingMethod__c='E-mail';
 			ord.Sale__c=sales[i].Id;
-			ord.Pricebook2Id=(String)params.get('standardPricebookId');
-            ord.SalesCompany__c=(String)params.get('SalesCompany');
-            ord.CustomerCode__c=(String)params.get('CustomerCode');
-			ord.CustomerFiscalCode__c=(String)params.get('CustomerFiscalCode');
-            ord.CustomerVATNumber__c=(String)params.get('CustomerVATNumber');
-            ord.ServicePointCode__c=(String)params.get('ServicePointCode');
-            ord.OrderReference__c=(String)params.get('OrderReference');
-            ord.ContractReference__c=(String)params.get('ContractReference');
-            ord.CustomerName__c=(String)params.get('CustomerName');
-            ord.CommercialProduct__c=(String)params.get('CommercialProduct');
-            ord.CommercialProductVersion__c=(String)params.get('CommercialProductVersion');
-            ord.ContractAccountCode__c=(String)params.get('ContractAccountCode');
-            ord.VasServiceActivationDate__c=(Date)params.get('VasServiceActivationDate');
-            ord.ShippingStreetToponym__c=(String)params.get('ShippingStreetToponym');
-            ord.ShippingStreetName__c=(String)params.get('ShippingStreetName');
-            ord.ShippingStreetNumber__c=(String)params.get('ShippingStreetNumber');
-            ord.ShippingCity__c=(String)params.get('ShippingCity');
-            ord.ShippingPlace__c=(String)params.get('ShippingPostalCode');
-            ord.ShippingPostalCode__c=(String)params.get('ShippingPostalCode');
-            ord.ShippingProvince__c=(String)params.get('ShippingProvince');
-            ord.PhoneNumber__c=(String)params.get('PhoneNumber');
-            ord.ShippingMail__c=(String)params.get('ShippingMail');
-            ord.SignedDate__c=(Date)params.get('SignedDate');
+			for(String key :params.keySet()) {
+				ord.put(key, params.get(key));
+			}
             
             orderList.add(ord);
 		}
@@ -2922,15 +2902,15 @@ public with sharing class HDT_UTL_DataFactoryTst{
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-    public static List<Case> createCaseNW(Integer amount, Boolean doInsert, Map<String,Object> params){
-		return createCaseMorositaNW(amount, doInsert, params);
+    public static List<Case> createCaseNw(Integer amount, Boolean doInsert, Map<String,Object> params){
+		return createCaseMorositaNw(amount, doInsert, params);
 	}
 	
     /**
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-	public static List<Case> createCaseMorositaNW(Integer amount, Boolean doInsert, Map<String,Object> params){
+	public static List<Case> createCaseMorositaNw(Integer amount, Boolean doInsert, Map<String,Object> params){
 		
 		List<Case> caseList=new List<Case>();
 		
@@ -2970,7 +2950,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-    public static List<Product2> createProduct2NW(Integer amount, Boolean doInsert, Map<String,Object> params){
+    public static List<Product2> createProduct2Nw(Integer amount, Boolean doInsert, Map<String,Object> params){
 
             List<Product2> productList=new List<Product2>();
     
@@ -2995,7 +2975,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-    public static SBQQ__Quote__c createEmptyQuoteNW(){
+    public static SBQQ__Quote__c createEmptyQuoteNw(){
         SBQQ__Quote__c quote = new SBQQ__Quote__c();
         insert quote;
 		return quote;
@@ -3005,7 +2985,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
      * @author Valere (valere@noeli-it.net)
      * @date 6/10/2021
      */
-    public static SBQQ__Subscription__c createSubscriptionNW(String contactId){
+    public static SBQQ__Subscription__c createSubscriptionNw(String contactId){
         SBQQ__Subscription__c mySubscription = new SBQQ__Subscription__c(
             SBQQ__Contract__c=contactId,
             SBQQ__Quantity__c=10
