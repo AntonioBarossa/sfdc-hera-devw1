@@ -34,6 +34,7 @@ public inherited sharing class HDT_QR_Case {
             PODPDRFormula__c,
             Phase__c,
             Type,
+            ServicePoint__r.CommoditySector__c,
             RecordType.DeveloperName
             FROM Case
             where Id = :Id

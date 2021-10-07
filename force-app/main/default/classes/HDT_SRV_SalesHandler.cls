@@ -450,24 +450,53 @@ public with sharing class HDT_SRV_SalesHandler {
 
             }
             when 'WSLead_Callback'{
-                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200; 
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
             }
             when 'WSLead_Winback'{
-                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
             }
             when 'WSLead_CariBoll'{
-                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+              
             }
             when 'WSLead_HVAC'{
-                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;  
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+
             }
             when 'WSLead_SOL'{
-                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+
             }
             when 'CMPDMP_PRV'{
                
@@ -640,11 +669,10 @@ public with sharing class HDT_SRV_SalesHandler {
         responseFieldError.fieldType = 'TEXT';
         responseFieldError.name = 'ERROR_MESSAGE';
         responseFieldError.value = msg;
-
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
         mrrResponseItem.objects.add(responseObject);
-
         RestContext.response.statusCode = 400;
+
     }
     private static void updateServicePoint(ServicePoint__c sp){
         try{
@@ -654,5 +682,6 @@ public with sharing class HDT_SRV_SalesHandler {
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
+    
 
 }

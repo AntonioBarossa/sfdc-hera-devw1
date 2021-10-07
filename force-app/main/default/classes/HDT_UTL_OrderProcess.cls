@@ -852,13 +852,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 		String oldPhase = orderOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-                return true;
-			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
-                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-				return true;
-			}
             if(orderNew.Cluster__c.equalsIgnoreCase('Volutra')){
                 Case nonReqContract = new Case();
                 HDT_QR_Case caseQr = new HDT_QR_Case(); 
@@ -887,6 +880,18 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
             }
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            {
+                orderNew.Status = 'Annullato';
+            }
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                return true;
+			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
+                orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+				return true;
+			}
+
 		}
 		return false;
 	}
