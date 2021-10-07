@@ -23,12 +23,14 @@ export default class HdtManageScriptModal extends LightningElement {
 
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
+    @api activityId;
     @api buttonLabel;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
     @api linkReitek;
     @api hasLink;
     @api isInsideModal = false;
     @api openModal = false;
+    isScriptConfirmed = false;
     isDecisional;
 
     get hasScriptType() {
@@ -46,12 +48,16 @@ export default class HdtManageScriptModal extends LightningElement {
     }
 
     closeModal(){
+        console.log("closeModal");
         this.openModal = false;
+        this.dispatchEvent(new CustomEvent('close'));
     }
 
-    handleCloseEvt(){
-        console.log("handleCloseEvt");
-        this.dispatchEvent(new CustomEvent('close'));
+    confirmModal(){
+        console.log("confirmModal");
+        this.isScriptConfirmed = true;
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('confirm'));
     }
 
     checkScriptType() {

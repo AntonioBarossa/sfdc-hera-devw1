@@ -15,7 +15,15 @@ Changes:
 <template>
     <template if:false={isInsideModal}>
         <template if:true={scriptProcessName}>
-            <lightning-button label={buttonLabel} onclick={showModal} variant="brand"> </lightning-button>
+
+            <template if:false={isScriptConfirmed}>
+                <lightning-button label={buttonLabel} onclick={showModal} variant="brand"> </lightning-button>
+            </template>
+
+            <template if:true={isScriptConfirmed}>
+                <lightning-button label={buttonLabel} disabled variant="brand"> </lightning-button>
+            </template>
+
         </template>
     </template>
 
@@ -25,14 +33,14 @@ Changes:
 
             <template if:true={hasScriptType}>
                 <template if:false={isDecisional}>
-                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
-                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
+                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
                     </c-hdt-manage-script-card>
                 </template>
 
                 <template if:true={isDecisional}>
-                    <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId}
-                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
+                    <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
                     </c-hdt-manage-script-decisional-card>
                 </template>
             </template>
@@ -57,14 +65,14 @@ Changes:
                         
                         <template if:true={hasScriptType}>
                             <template if:false={isDecisional}>
-                                <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
-                                    child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
+                                <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                                    child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
                                 </c-hdt-manage-script-card>
                             </template>
 
                             <template if:true={isDecisional}>
-                                <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId}
-                                    child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={handleCloseEvt}>
+                                <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                                    child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
                                 </c-hdt-manage-script-decisional-card>
                             </template>
                         </template>

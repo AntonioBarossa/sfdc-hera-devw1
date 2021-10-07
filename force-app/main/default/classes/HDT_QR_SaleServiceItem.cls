@@ -10,10 +10,10 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
-     * @param Sale__c sale
-     * @param ServicePoint__c servicePoint
-     * @param Map<String,String> calculatedStringValues
-     * @param Map<String,Decimal> calculatedDecimalValues
+     * @param sale
+     * @param servicePoint
+     * @param calculatedStringValues
+     * @param calculatedDecimalValues
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> queryExsistingCityAndType(Sale__c sale, ServicePoint__c servicePoint, Map<String,String> calculatedStringValues, Map<String,Decimal> calculatedDecimalValues){
@@ -56,7 +56,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get records filtered by Opportunity__r.Sale__c
-     * @param String saleId
+     * @param saleId
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> getRecordsBySaleId(String saleId){
@@ -88,6 +88,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ORDER BY Opportunity__r.CreatedDate ASC
         ];
     }
+
+    /**
+     * @description getRecordsBySaleIdFilter
+     * @param saleId
+     * @return List<SaleServiceItem__c>
+     */
     public List<SaleServiceItem__c> getRecordsBySaleIdFilter(String saleId){
 
         return [SELECT 
@@ -119,6 +125,11 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ];
     }
 
+    /**
+     * @description getSaleByServicePoint
+     * @param servicepoint
+     * @return List<SaleServiceItem__c>
+     */
     public List<SaleServiceItem__c> getSaleByServicePoint(String servicepoint){
 
         return [SELECT 
@@ -145,6 +156,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ORDER BY CreatedDate DESC
         ];
     }
+
+    /**
+     * @description getSaleByServicePointFilter
+     * @param servicepoint
+     * @return List<SaleServiceItem__c>
+     */
     public List<SaleServiceItem__c> getSaleByServicePointFilter(String servicepoint){
 
         return [SELECT 
@@ -173,6 +190,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ORDER BY CreatedDate DESC
         ];
     }
+
+    /**
+     * @description getSaleByServicePointFilterCode
+     * @param servicepointCode
+     * @return List<SaleServiceItem__c>
+     */
     public List<SaleServiceItem__c> getSaleByServicePointFilterCode(String servicepointCode){
 
         return [SELECT 
@@ -204,7 +227,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get active records filtered by Opportunity__r.Sale__c
-     * @param String saleId
+     * @param saleId
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> getActiveRecordsBySaleId(String saleId){
@@ -233,7 +256,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get records filtered by Opportunity.Id
-     * @param String opportunityId
+     * @param opportunityId
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> getRecordsByOpportunityId(String opportunityId){
@@ -254,7 +277,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 16/11/2020
     * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
-    * @param String quoteId – SBQQ__Quote__c.Id
+    * @param quoteId – SBQQ__Quote__c.Id
     * @return List<SaleServiceItem__c>
     */
     public List<SaleServiceItem__c> getRecordsByQuote(String quoteId){
@@ -275,7 +298,8 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 13/03/2021
     * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
-    * @param String contractId – Quote__r.ContractReference__c
+    * @param contractId – Quote__r.ContractReference__c
+    * @param saleId
     * @return List<SaleServiceItem__c>
     */
     public List<SaleServiceItem__c> getRecordsByContract(String contractId, String saleId){
@@ -294,6 +318,13 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getActiveRecordsByQuoteAndOpportunity
+    * @param quotes
+    * @param opportunities
+    * @return List<SaleServiceItem__c>
+    */
     public List<SaleServiceItem__c> getActiveRecordsByQuoteAndOpportunity(List<String> quotes, List<String> opportunities){
 
         return [SELECT 
@@ -318,6 +349,13 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getRecordsWithContractsByServicePointAndAccount
+    * @param servicePointId
+    * @param accountId
+    * @return List<SaleServiceItem__c>
+    */
     public List<SaleServiceItem__c> getRecordsWithContractsByServicePointAndAccount(String servicePointId, String accountId){
 
         return [

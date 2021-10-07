@@ -15,7 +15,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         return code;
     }
 
-    public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
+    //Metodo Deprecato
+    /* public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
         HDT_UserInputFlow__mdt cl = [SELECT FieldsJSON__c 
         FROM HDT_UserInputFlow__mdt 
         WHERE ProcessType__c = 'prova callout' 
@@ -30,7 +31,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         } else {
             return null;
         }
-    }
+    } */
 
     public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
@@ -366,9 +367,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
                 //no action needed
+            }else if(currentPhase.equalsIgnoreCase('Annullato') && nextPhase.equalsIgnoreCase('Completata'))
+            {
+                //no action needed
             }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
+                currentCase.Phase__c = 'Elaborazione Manuale';
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && recordCase.IbanIsForeign__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
             }else{
                 currentCase.Phase__c = nextPhase;
@@ -482,7 +488,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
-            currentCase.Phase__c = 'KO Definitivo';
+            currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));
         }
@@ -555,7 +561,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             contoContrattuale = reqWrp.requestMap.get('CONTO_CONTRATTUALE');
             containerCaseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
             herokuCode = reqWrp.requestMap.get('COD_PRAT_UTENTE');
-            priorita = reqWrp.requestMap.get('PRIORITA');
+            priorita = String.valueOf(reqWrp.requestMap.get('PRIORITA'));
             if(String.isNotBlank(tipoProcesso)){
                 processType = tipoProcesso;
             }
@@ -647,7 +653,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             //@frpanico Added "PRIORITA"
                             if(String.isNotBlank(priorita))
                             {
-                                currentCase.Priority = priorita.equalsIgnoreCase('3') ? 'Alta' : priorita.equalsIgnoreCase('2') ? 'Media' : 'Bassa';
+                                currentCase.Priority = priorita;
                             }
                             //If SALESFORCE_KEY (aka containerCaseNumber) is not null the container exists
                             if(String.isNotBlank(containerCaseNumber)){

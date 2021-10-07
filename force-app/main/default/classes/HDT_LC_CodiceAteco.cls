@@ -27,10 +27,11 @@ public inherited sharing class HDT_LC_CodiceAteco {
     }
 
     @AuraEnabled
-    public static void saveAtecoCode(Order order, String atecoCode){
+    public static void saveAtecoCode(Order order, Map<String,String> params){
         orderSrv.updateRecord(new Order(
             Id = order.Id,
-            AtecoCode__c = atecoCode
+            AtecoCode__c = params.get('atecoCode'),
+            HerAteco__c = params.get('istatCode')
         ));
     }
 }
