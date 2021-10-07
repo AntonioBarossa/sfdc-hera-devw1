@@ -173,7 +173,25 @@
                 <default>false</default>
                 <label>Billing Profile</label>
             </value>
+            <value>
+                <fullName>In Continuità</fullName>
+                <default>false</default>
+                <label>In Continuità</label>
+            </value>
+            <value>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+                <label>Recupero</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>In Continuità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Recupero</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
             <valueName>BP</valueName>
