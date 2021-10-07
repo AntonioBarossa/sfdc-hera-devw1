@@ -70,6 +70,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         String result = myObjectToTest.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
+        System.debug('result: ' + result);
         System.assert(!'||'.equalsIgnoreCase(result), 'Stringa identica.');
     }
     
