@@ -480,7 +480,8 @@ public inherited sharing class HDT_QR_CampaignMember {
             SELECT Id,
             Contact.AccountId,
             CampaignId,
-            Status
+            Status,
+            Ecid__c
             FROM CampaignMember 
             WHERE ContactId = :contact
             AND CampaignId = :campaign
