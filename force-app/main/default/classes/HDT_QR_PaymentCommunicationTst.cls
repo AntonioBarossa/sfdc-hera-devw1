@@ -46,11 +46,12 @@ public with sharing class HDT_QR_PaymentCommunicationTst {
         
         //SETUP
         mySetup();
+        Case myCase = [SELECT Id FROM Case];
         DocumentSelected__c myDocSelected = [SELECT Id FROM DocumentSelected__c];
         
         //TESTING
         HDT_QR_PaymentCommunication myObjectToTest = new HDT_QR_PaymentCommunication();
-        DocumentSelected__c result = myObjectToTest.getDocumentSelectedByCase(myDocSelected.Id)[0];
+        DocumentSelected__c result = myObjectToTest.getDocumentSelectedByCase(myCase.Id)[0];
         
         //ASSERTS
         System.assertEquals(myDocSelected.Id, result.Id, 'Test fallito.');
