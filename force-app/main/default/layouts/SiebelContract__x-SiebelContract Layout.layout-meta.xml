@@ -106,6 +106,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>X_USG_UNIT__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>X_NUM_RECESS__c</field>
             </layoutItems>
             <layoutItems>
@@ -132,12 +136,12 @@
                 <behavior>Readonly</behavior>
                 <field>X_DEPOSITO_OBIET__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_END_CONTRACT__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_OLD_CONTRACT_CD__c</field>
@@ -281,10 +285,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_INVIO_BOLLETTA__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_USG_UNIT__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
