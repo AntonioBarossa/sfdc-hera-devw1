@@ -1,7 +1,7 @@
 public without sharing class HDT_UTL_ActivityCustomProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
-    private static HDT_SRV_ActivityCustom activitySrv = new HDT_QR_Activity();
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
