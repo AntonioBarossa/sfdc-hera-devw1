@@ -39,6 +39,8 @@ public class HDT_UTL_GestAppAutomaticCreationCaseTst {
         Test.stopTest();     
         
           System.assertEquals(true, gestApp.execute(myMap), 'The Activity Custom is not created');
+          System.assertNotEquals(false, gestApp.execute(myMap), 'The Activity Custom is not created');
+
 
 
     }
