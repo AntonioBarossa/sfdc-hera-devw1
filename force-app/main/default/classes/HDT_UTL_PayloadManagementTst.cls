@@ -200,6 +200,53 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //calculateCompanyCode
+    ///Order
+    @isTest
+    private static void calculateCompanyCodeTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
+        
+        //TESTING Context Order
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        
+        //ASSERTS
+        /*
+        System.debug('result1: ' + result1);
+        System.assert('N'.equalsIgnoreCase(result1), 'Risultato non è N');
+        */
+    }
+    
+    
+    ///Case
+    
+    
+    
+    ///Account
+    
+    
+    
+    ///EC GC
+    
+    
+    
+    ///else
+    
+    
+    
+    
     
     
     
