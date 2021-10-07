@@ -1625,7 +1625,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				'{"fieldType": "TEXT","name": "COD_CAUSALE","value": "234234"},'+
 				'{"fieldType": "TEXT","name": "FATTIB_TEC","value": "SI"},'+
 				'{"fieldType": "TEXT","name": "RECORD_ID","value": "'+recordId+'"},'+
-				'{"fieldType": "TEXT","name": "TESTO_ERRR","value": ""},'+
 				'{"fieldType": "TEXT","name": "FASE","value": "'+phase+'"},'+
 				'{"fieldType": "TEXT","name": "METHOD","value": "'+method+'"},'+
 				'{"fieldType": "TEXT","name": "VERTRAG","value": "3010147771"},'+
