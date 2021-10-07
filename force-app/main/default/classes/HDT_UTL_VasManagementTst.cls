@@ -22,12 +22,12 @@ public class HDT_UTL_VasManagementTst {
         Update standardPricebook;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact (1,true,accountList[0].id);
         List<ServicePoint__c> servicepointList = HDT_UTL_DataFactoryTst.createServicePoint (1,true);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContractNW (1,true,new Map<String,Object>{
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContractNw (1,true,new Map<String,Object>{
             'ServicePoint'=>servicepointList[0].id,
             'accountId'=>accountList[0].id
         }); 
         List<Order> orderListSale= HDT_UTL_DataFactoryTst.createOrder(1, true, accountList[0].id, saleslist);
-        List<Order> orderListWithPricebook= HDT_UTL_DataFactoryTst.createOrderWithPricebookNW(1, true, saleslist, new Map<String,Object>{
+        List<Order> orderListWithPricebook= HDT_UTL_DataFactoryTst.createOrderWithPricebookNw(1, true, saleslist, new Map<String,Object>{
             'SalesCompany'=>'Hera Comm Marche',
             'CustomerCode'=>'TestCustomerCode',
             'accountId'=>accountList[0].id,
@@ -52,9 +52,9 @@ public class HDT_UTL_VasManagementTst {
             'ShippingMail'=>'Test@SM.com',
             'SignedDate'=>date.today()
         } );     
-        SBQQ__Subscription__c mySubscription = HDT_UTL_DataFactoryTst.createSubscriptionNW(contractList[0].id);
+        SBQQ__Subscription__c mySubscription = HDT_UTL_DataFactoryTst.createSubscriptionNw(contractList[0].id);
 
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseNW(1, true, new Map<String,Object>{
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseNw(1, true, new Map<String,Object>{
             'accountId'=>accountList[0].id,
             'ContractReference'=>contractList[0].id,
             'contactID'=>contactList[0].id,
@@ -66,12 +66,12 @@ public class HDT_UTL_VasManagementTst {
 
         List<string> strValuesList = new List<string>();
         strValuesList.add('teststrValues');
-        List<Product2> Product2List = HDT_UTL_DataFactoryTst.createProduct2NW(3, true, new Map<String,Object>{
+        List<Product2> Product2List = HDT_UTL_DataFactoryTst.createProduct2Nw(3, true, new Map<String,Object>{
             'NumberRateMonthly'=>10           
         } );
         // Product2List[0].NumberRateMonthly__c=10;
         // insert Product2List;
-        SBQQ__Quote__c quote = HDT_UTL_DataFactoryTst.createEmptyQuoteNW();
+        SBQQ__Quote__c quote = HDT_UTL_DataFactoryTst.createEmptyQuoteNw();
         List<SBQQ__QuoteLine__c> QuoteLineList= HDT_UTL_DataFactoryTst.createQuoteLines(Product2List[0].id, quote.id, 1, true);
         List<PricebookEntry> pricebookentryList= HDT_UTL_DataFactoryTst.createPricebookEntry(Product2List, true, standardPricebook.Id);
     }
