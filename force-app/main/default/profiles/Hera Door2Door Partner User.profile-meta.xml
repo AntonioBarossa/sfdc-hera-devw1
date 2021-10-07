@@ -496,6 +496,11 @@
         <field>Order.ResidentialStreetNumberExtension__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.UniqueAutentication__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
      <fieldPermissions>
         <editable>true</editable>
         <field>Order.SupplyStreetNumberExtension__c</field>
