@@ -1,3 +1,9 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 21/04/21
+* @description HDT_LC_FormAccountBusiness
+* @history Sabina Levonja – 21/04/21 – created class
+*/
 public with sharing class HDT_LC_FormAccountBusiness {
 
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();

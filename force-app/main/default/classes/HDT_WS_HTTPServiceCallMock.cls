@@ -58,7 +58,7 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         if (successfullReturn) {
                             dataresponse.status = 'success';
                             dataresponse.data.tipoAttivita = 'Errore';
-                            dataresponse.data.codiceBP = 'test';
+                            dataresponse.data.codiceBP = 'test'+Integer.valueof((math.random() * 1000));
                             dataresponse.data.commenti = 'BP non rilevato';
                             
                             body = JSON.serialize(dataresponse);
