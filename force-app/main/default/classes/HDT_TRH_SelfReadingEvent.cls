@@ -22,6 +22,7 @@ public with sharing class HDT_TRH_SelfReadingEvent extends HDT_TRH_TriggerHandle
         }
 
         System.debug('# autoletture da aggiornare: ' + casesToUpdate.size());
+        System.debug('# Limits - Limit Queueable Jobs: ' + Limits.getLimitQueueableJobs());
 
         List<Case> casesToProcess = new List<Case>();
         List<Case> casesToDelegate = new List<Case>();

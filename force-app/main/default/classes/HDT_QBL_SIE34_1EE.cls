@@ -1,6 +1,6 @@
 public with sharing class HDT_QBL_SIE34_1EE implements Queueable  {
     private String runId                   ;   
-    private Date filterDate                ;
+    private Datetime filterDate            ;
     private String fileType                ;
     private List<String> contentVersionIds ;
     private final String NOTMAPPED=''      ;
@@ -13,11 +13,11 @@ public with sharing class HDT_QBL_SIE34_1EE implements Queueable  {
     * @param varFileType 
     * @param varContentVersionIds 
     **/
-    public HDT_QBL_SIE34_1EE(String varRunId,Date varDate,String varFileType,List<String> varContentVersionIds) {
-       this.runId             = varRunId                    ;
-       this.filterDate        = varDate                     ;
-       this.fileType          = varFileType                 ;
-       this.contentVersionIds = varContentVersionIds        ;
+    public HDT_QBL_SIE34_1EE(String varRunId,datetime varDate,String varFileType,List<String> varContentVersionIds) {
+       this.runId             = varRunId             ;
+       this.filterDate        = varDate              ;
+       this.fileType          = varFileType          ;
+       this.contentVersionIds = varContentVersionIds ;
     }
  
  
@@ -222,13 +222,13 @@ public with sharing class HDT_QBL_SIE34_1EE implements Queueable  {
         if (listOrderItem!=null && listOrderItem.size()>0 ) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_EE.txt','OUT_OP_EE'));
         }
-        Id jobIDCall = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+        System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
      
     } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
        }
       
     }

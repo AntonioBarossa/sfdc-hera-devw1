@@ -6,7 +6,7 @@ public without sharing class HDT_QBL_BpCaRequest implements Queueable,Database.A
         this.contact=con; 
     }
     public void execute(QueueableContext context) {
-        System.debug('HDT_QBL_BpCaRequest.execute');
+        //System.debug('HDT_QBL_BpCaRequest.execute');
         HDT_UTL_Account.makeRequest(account,contact);
         
     }

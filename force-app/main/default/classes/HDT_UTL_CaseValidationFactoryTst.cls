@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_CaseValidationFactoryTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(validationClass != null);
+        System.assert(validationClass != null, 'Attenzione, validationClass non può essere null!');
         
     }
 

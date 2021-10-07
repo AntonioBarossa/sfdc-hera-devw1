@@ -113,7 +113,7 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
                     title: "Link Salvato",
                     message: "L'operazione di salvataggio del link è andata a buon fine"
                 }));
-                this.closeModal();
+                this.confirm();
             }).catch(error => {
                 console.log(error);
                 this.showGenericErrorToast();
@@ -124,6 +124,10 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
 
     closeModal(){
         this.dispatchEvent(new CustomEvent('close'));
+    }
+
+    confirm(){
+        this.dispatchEvent(new CustomEvent('confirm'));
     }
 
     enableConfirmButton(){

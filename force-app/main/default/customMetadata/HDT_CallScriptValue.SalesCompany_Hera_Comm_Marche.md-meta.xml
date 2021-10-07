@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>SalesCompany</label>
+    <label>SalesCompany - Hera Comm Marche</label>
     <protected>false</protected>
     <values>
         <field>ConstantName__c</field>
@@ -20,10 +20,10 @@
     </values>
     <values>
         <field>ValueToOverride__c</field>
-        <value xsi:type="xsd:string">Hera Comm S.p.A.</value>
+        <value xsi:type="xsd:string">Hera Comm Marche</value>
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">{0} con sede a Via Molino Rosso, 8 40026 Imola (BO)</value>
+        <value xsi:type="xsd:string">{0}, società di vendita gas con sede a Urbino, via sasso 120</value>
     </values>
 </CustomMetadata>

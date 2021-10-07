@@ -118,6 +118,10 @@ public with sharing class HDT_UTL_SwtichInProcess {
                         system.debug('order.WizardCompletedDate__c < getMaxAfterthoughtDate(order)'); 
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                     }                    
+
+                    if(order.IsActivationDeferred__c && order.EffectiveDate__c != null){
+                        dateSentToSii = order.WizardCompletedDate__c;
+                    }
                 }
             
             }else{     

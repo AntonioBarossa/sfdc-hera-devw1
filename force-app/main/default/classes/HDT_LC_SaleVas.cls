@@ -57,9 +57,6 @@ public inherited sharing class HDT_LC_SaleVas {
         //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
         wrapReturn wrpRes = new wrapReturn();
 
-
-
-
         if(HDT_UTL_Sales.isTransitionNoUp(sal)){
             check = false;
             wrpRes.messRes = 'transitorio';
@@ -280,7 +277,6 @@ public inherited sharing class HDT_LC_SaleVas {
      * @return Boolean
      */
     private static Boolean isDuplicated(String saleId, String objectId, String type) {
-        Boolean result = false;
 
         List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
 
@@ -312,7 +308,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
-        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = order.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -364,7 +360,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
-        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = contract.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
