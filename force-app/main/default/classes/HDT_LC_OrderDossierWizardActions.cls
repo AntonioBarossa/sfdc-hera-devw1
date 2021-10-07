@@ -52,7 +52,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     )
                 );
             } else if(childOrd.RecordType.DeveloperName == 'HDT_RT_VAS' && mapChildOrders.get(childOrd?.OrderReference__c) != null ){
-                ordersToUpdate.add(
+                ordersToUpdate.add(//get CCheck Result from offer
                     new Order(
                         Id = childOrd.Id,
                         CreditCheckDescription__c=mapChildOrders.get(childOrd?.OrderReference__c)?.CreditCheckDescription__c,
