@@ -8,7 +8,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IMPIANTO_OU_NUM__c</field>
+                <field>OU_NUM__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -205,6 +205,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>IMPIANTO_OU_NUM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>IMPIANTO_ATTRIB_34__c</field>
             </layoutItems>
             <layoutItems>
@@ -380,10 +384,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MODIFIEDDATE_AZURE__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>OU_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
