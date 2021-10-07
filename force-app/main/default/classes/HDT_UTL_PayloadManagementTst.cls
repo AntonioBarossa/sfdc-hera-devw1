@@ -1,19 +1,111 @@
 @isTest
 public with sharing class HDT_UTL_PayloadManagementTst {
-    @TestSetup
-    static void setup(){
-
-    //     List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-    //     List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-    //     List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-    //     List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-    //     List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-    //     List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+    
+    //DEBUG
+    
+    //DATA
+    
+    
+    //TEST SETUP
+    private static void mySetup(){
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
     }
 
-
+    
+    //TESTS
+    
+    //execute
+    //TODO: IMPLEMENTAZIONE (A PESO LEGGERO)
+    
+    
+    //handleAmountVas
     @isTest
-    static void testIndemnityBox() {
+    private static void handleAmountVasTest(){
+        
+        //SETUP
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        List<SObject> itemVasList = new List<SObject>();
+        inputs.put('ItemVAS', itemVasList);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        
+        //TESTING
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result = myObjectToTest.handleAmountVas(inputs, formParams);
+        
+        //ASSERTS
+        
+        
+    }
+    
+    
+    //handleFlagDeliveryAddress
+    
+    
+    
+    //handleFlagPaperless
+    
+    
+    
+    //calculateCompanyCode
+    
+    
+    
+    //checkQuotationType
+    
+    
+    
+    //calculateQuotationAmount
+    
+    
+    
+    //checkGruppoIva
+    
+    
+    
+    //checkCommercialOffer
+    
+    
+    
+    //generateSection20
+    
+    
+    
+    //generateSection40
+    
+    
+    
+    //generateSection50
+    
+    
+    
+    //generateSection70
+    
+    
+    
+    //generateSectionReclami
+    
+    
+    
+    //calculateSignModeDriver
+    
+    
+    
+    //calculateDriverCatalogo
+    
+    
+    
+    //calculateIndemnityBox
+    @isTest
+    static void calculateIndemnityBoxTest() {
+        
+        //SETUP
         Test.startTest();
         
         String complaintClassification = 'Reclamo Scritto';
@@ -109,5 +201,5 @@ public with sharing class HDT_UTL_PayloadManagementTst {
 
         Test.stopTest();
     }
-
+    
 }

@@ -44,6 +44,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         return result;
     }
+    
+    
+    @TestVisible
     private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         try{
             List<SObject> itemVasList = inputs.get('ItemVAS');
@@ -59,11 +62,13 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 i++;
             }
             return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return '||';
         }
-       
+        
     }
+    
+    
     private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String context = (String) formParams.get('Contesto');
         if(!context.equalsIgnoreCase('Order')) return '';
@@ -240,6 +245,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             return '';
         }
     }
+    
+    
     private String calculateQuotationAmount(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         //imponibile = importo preventivo
         //aliquota iva
