@@ -63,7 +63,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 quantity += Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
                 i++;
             }
-            return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+            String result = amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
+            System.debug('Result: ' + result);
+            
+            return result;
         } catch (Exception ex) {
             return '||';
         }
