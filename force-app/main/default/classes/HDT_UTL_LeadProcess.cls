@@ -473,7 +473,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
-                    Id macroactivity= null;
+                    String macroactivity= null;
                     
                     if(campaign.size()>1){
                         for(Campaign c: campaign){
@@ -483,7 +483,7 @@ public with sharing class HDT_UTL_LeadProcess {
                                 macroactivity= c.MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                             }
                         }
-                    }else{
+                    }else if (campaign!=null && !campaign.isEmpty()) {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                         
