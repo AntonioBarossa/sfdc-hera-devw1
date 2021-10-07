@@ -1,6 +1,6 @@
 public with sharing class HDT_QBL_SIE34_2MM implements Queueable  {
     private String runId                   ;   
-    private Date filterDate                ;
+    private Datetime filterDate                ;
     private String fileType                ;
     private List<String> contentVersionIds ;
 
@@ -15,11 +15,11 @@ public with sharing class HDT_QBL_SIE34_2MM implements Queueable  {
     * @param varContentVersionIds 
     **/
     
-    public HDT_QBL_SIE34_2MM(String varRunId,Date varDate,String varFileType,List<String> varContentVersionIds) {
-       this.runId             = varRunId                    ;
-       this.filterDate        = varDate                     ;
-       this.fileType          = varFileType                 ;
-       this.contentVersionIds = varContentVersionIds        ;
+    public HDT_QBL_SIE34_2MM(String varRunId,Datetime varDate,String varFileType,List<String> varContentVersionIds) {
+       this.runId             = varRunId              ;
+       this.filterDate        = varDate               ;
+       this.fileType          = varFileType           ;
+       this.contentVersionIds = varContentVersionIds  ;
     }
  
  
@@ -66,12 +66,12 @@ public with sharing class HDT_QBL_SIE34_2MM implements Queueable  {
          if (String.isNotBlank(body)) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_MM.txt','PP_OUT_PREVENTIVI_MM'));
          }
-         Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
+         System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          Id jobId = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
        }
       
     }
