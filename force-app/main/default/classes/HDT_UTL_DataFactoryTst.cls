@@ -1596,7 +1596,48 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
 	}
 
-	public static String richPassReq(String spCode, String bpCode, String caCode, String contractCode, String subtypeSiebel, String processType, String cluster, String origin, String effectiveDate, String salesforceKey, String herokuCode){
+	public static String notifEsFullReq(String processCategory, String caseNumber, String codServizio, String codPrestazione, String codPresa, String codPratDistr, String numPrev, String tempEsPrev, String attivita, String tipoAttivita, String recordId, String phase, String method){
+		return '{"header": null,"requests": ['+
+				'{"header": {"requestId": "C00000000261","requestTimestamp": null,"requestType": "NOTIF_ES","fields": ['+
+				'{"fieldType": "TEXT","name": "PROCESS_CATEGORY","value": "'+processCategory+'"}]},"objects": [{"fields": ['+
+				'{"fieldType": "TEXT","name": "COD_PRAT_UTENTE","value": "Z00000000097"},'+
+				'{"fieldType": "TEXT","name": "SALESFORCE_KEY","value": "'+ caseNumber +'"},'+
+				'{"fieldType": "TEXT","name": "COD_FLUSSO","value": "0150"},'+
+				'{"fieldType": "TEXT","name": "COD_SERVIZIO","value": "'+ codServizio +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRESTAZIONE","value": "'+ codPrestazione +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRESA","value": "'+ codPresa +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRAT_DISTR","value": "'+ codPratDistr +'"},'+
+				'{"fieldType": "TEXT","name": "NUMPREV","value": "'+ numPrev +'"},'+
+				'{"fieldType": "TEXT","name": "TEMP_ES_PREV","value": "'+ tempEsPrev +'"},'+
+				'{"fieldType": "TEXT","name": "CMP","value": "Test"},'+
+				'{"fieldType": "TEXT","name": "TESTO_ERRR","value": "Testo Errore"},'+
+				'{"fieldType": "TEXT","name": "ATTIVITA","value": "'+ attivita +'"},'+
+				'{"fieldType": "TEXT","name": "TIPO_ATTIVITA","value": "'+ tipoAttivita +'"},'+
+        		'{"fieldType": "TEXT","name": "MESSAGGIO","value": "Messaggio Test"},'+
+				'{"fieldType": "TEXT","name": "STORNO","value": "N"},'+
+				'{"fieldType": "TEXT","name": "DT_MAX_PREV","value": "20211009 12:20:20"},'+
+				'{"fieldType": "TEXT","name": "NOTE","value": "Test"},'+
+        		'{"fieldType": "TEXT","name": "DATA","value": "'+ Date.today() +'"},'+
+				'{"fieldType": "TEXT","name": "IMP_PREV_DIST","value": "300,50"},'+
+				'{"fieldType": "TEXT","name": "NOTE_ANN","value": "Nota Annullamento Test"},'+
+				'{"fieldType": "TEXT","name": "ANNOTAZIONI_ANN","value": "Annotazione Annullamento Test"},'+
+				'{"fieldType": "TEXT","name": "ANNOTAZIONI","value": "Annotazione Test"},'+
+				'{"fieldType": "TEXT","name": "COD_CAUSALE","value": "234234"},'+
+				'{"fieldType": "TEXT","name": "FATTIB_TEC","value": "SI"},'+
+				'{"fieldType": "TEXT","name": "RECORD_ID","value": "'+recordId+'"},'+
+				'{"fieldType": "TEXT","name": "TESTO_ERRR","value": ""},'+
+				'{"fieldType": "TEXT","name": "FASE","value": "'+phase+'"},'+
+				'{"fieldType": "TEXT","name": "METHOD","value": "'+method+'"},'+
+				'{"fieldType": "TEXT","name": "VERTRAG","value": "3010147771"},'+
+				'{"fieldType": "TEXT","name": "VERTRAG_ST","value": "Cessato"},'+
+				'{"fieldType": "TEXT","name": "SERVICEID_DIS","value": "10D00000AU"},'+
+				'{"fieldType": "TEXT","name": "UTENZA","value": "BS_030_001"},'+
+				'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"}'+
+				'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
+	}
+
+
+	public static String richPassFullReq(String spCode, String bpCode, String caCode, String contractCode, String subtypeSiebel, String processType, String cluster, String origin, String effectiveDate, String salesforceKey, String herokuCode){
 		return '{"header":null,"requests":[{"header":{"requestId":null,"requestTimestamp":null,"requestType":"RICH_PASS","fields":['+
 				'{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":['+
 				'{"fieldType":"TEXT","name":"CODICE_PRESA", "value":"'+spCode+'"},'+
