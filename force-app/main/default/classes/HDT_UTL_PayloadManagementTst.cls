@@ -9,11 +9,28 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     //TEST SETUP
     private static void mySetup(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
+        
+        //PRODUCT
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+        productList[0].Name = 'POD';
+        productList[0].Family = 'VAS Fatturabili';
+        insert productList;
+        
+        //PRICE BOOK
+        Id pricebookId=Test.getStandardPricebookId();
+		List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pricebookId);
+        
+        //ORDER
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, true, accList[0].Id, saleList, pricebookId);
+        
+        //ORDER ITEMS
+        List<OrderItem> orderItems=HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
+        
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
     }
 
     
@@ -28,11 +45,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void handleAmountVasTest(){
         
         //SETUP
-        OrderItem myItem = new OrderItem();
-        myItem.UnitPrice = 35.5;
-        myItem.PriceNetDiscounted__c = 30.5;
-        myItem.Quantity = 1.0;
-        
+        OrderItem myItem = [SELECT Id, UnitPrice, PriceNetDiscounted__c, Quantity FROM OrderItem];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         
