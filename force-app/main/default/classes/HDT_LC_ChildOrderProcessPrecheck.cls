@@ -148,7 +148,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         return compatibility;
 
     }
-
+    
+    @TestVisible
     private static String getServicePointTypeFromOrder(String orderId) {
         orderSrv.checkReadAccess('ContractReference__r.ServicePoint__c');
         Order order = orderQr.getRecordById(orderId);
@@ -158,7 +159,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
         return servicePointList[0].RecordType.DeveloperName;
     }
-
+	
+    @TestVisible
     private static Order callDataEnrichment(String servicePointCode, String contractCode, Order newOrder)
     {
         try{
