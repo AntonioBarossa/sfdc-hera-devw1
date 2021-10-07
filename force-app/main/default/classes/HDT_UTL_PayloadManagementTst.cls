@@ -93,9 +93,10 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Order myItem = [SELECT Id, ContractId FROM Order];
+        Order myItem = [SELECT Id, ContractId, ResidentialStreetName__c, ShippingStreetName__c, SupplyStreetName__c FROM Order];
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
+        itemVasList.add(myItem);//INDICE 1 - TODO: AGGIORNARE TEST NEL CASO SI PRESENTINO PROBLEMATICHE O AGGIORNAMENTI AL PUNTAMENTO INDICE HARDCODED
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
         inputs.put('Order', itemVasList);
@@ -104,13 +105,22 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Order');
         
-        //TESTING context IS Order
+        //TESTING blank ContractId
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
         
         //ASSERTS
         System.debug('result1: ' + result1);
-        System.assert( , '');
+        System.assert( 'IF', result1);
+        
+        
+        //TESTING regular
+        //myItem.ContractId = '';
+        String result2 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        /*
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert(''.equalsIgnoreCase(result2), 'Risultato non è stringa vuota.');
         
         
         //TESTING context Not Order
@@ -119,6 +129,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //ASSERTS
         System.debug('result2: ' + result2);
         System.assert(''.equalsIgnoreCase(result2), 'Risultato non è stringa vuota.');
+        */
     }
     
     //handleFlagPaperless
