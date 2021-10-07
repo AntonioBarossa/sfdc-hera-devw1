@@ -142,6 +142,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
             this.isVisible = (this.rowObj.id <= readingObj.length);
             var indexSerialNumberEle = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
             this.registerObj[indexSerialNumberEle].disabled = !this.isProcessReading;
+            this.registerObj[indexSerialNumberEle].required = this.isProcessReading;
         } else if (this.commodity === 'Gas') {
             this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
         }
