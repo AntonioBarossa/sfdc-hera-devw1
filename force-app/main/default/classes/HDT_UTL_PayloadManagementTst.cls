@@ -28,14 +28,21 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void handleAmountVasTest(){
         
         //SETUP
+        OrderItem myItem = new OrderItem();
+        myItem.UnitPrice = 35.5;
+        myItem.PriceNetDiscounted__c = 30.5;
+        myItem.Quantity = 1.0;
+        
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
-        List<SObject> itemVasList = new List<SObject>();
         inputs.put('ItemVAS', itemVasList);
+
         
         Map<String,Object> formParams = new Map<String,Object>();
         
-        //TESTING
+        //TESTING 
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result = myObjectToTest.handleAmountVas(inputs, formParams);
         
