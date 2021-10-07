@@ -168,30 +168,30 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         //TESTING Context Case - Not Paperless
+        myItem.Type = 'Paperless';
         String result2 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        myItem.Type = 'Paperless';
         System.debug('result2: ' + result2);
         System.assert('Y'.equalsIgnoreCase(result2), 'Risultato non è Y');
         
         
         
         //TESTING Blank Type
+        myItem.Type = '';
         String result3 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        myItem.Type = '';
         System.debug('result3: ' + result3);
         System.assert('N'.equalsIgnoreCase(result3), 'Risultato non è N');
         
         
         
         //TESTING Context Not Case
+        formParams.put('Contesto', 'Fake');
         String result4 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        formParams.put('Contesto', 'Fake');
         System.debug('result4: ' + result4);
         System.assert('N'.equalsIgnoreCase(result4), 'Risultato non è N');
         
