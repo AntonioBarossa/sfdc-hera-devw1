@@ -86,6 +86,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     }
     
     
+    
     //handleFlagDeliveryAddress
     @isTest
     private static void handleFlagDeliveryAddressTest(){
@@ -136,7 +137,65 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
     }
     
+    
+    
     //handleFlagPaperless
+    @isTest
+    private static void handleFlagPaperlessTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Case myItem = [SELECT Id, Type, DepositPaymentMode__c FROM Case];
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        
+        //TESTING Context Case - Not Paperless
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert('N'.equalsIgnoreCase(result1), 'Risultato non è N');
+        
+        
+        
+        //TESTING Context Case - Not Paperless
+        String result2 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        
+        //ASSERTS
+        myItem.Type = 'Paperless';
+        System.debug('result2: ' + result2);
+        System.assert('Y'.equalsIgnoreCase(result2), 'Risultato non è Y');
+        
+        
+        
+        //TESTING Blank Type
+        String result3 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        
+        //ASSERTS
+        myItem.Type = '';
+        System.debug('result3: ' + result3);
+        System.assert('N'.equalsIgnoreCase(result3), 'Risultato non è N');
+        
+        
+        
+        //TESTING Context Not Case
+        String result4 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        
+        //ASSERTS
+        formParams.put('Contesto', 'Fake');
+        System.debug('result4: ' + result4);
+        System.assert('N'.equalsIgnoreCase(result4), 'Risultato non è N');
+        
+    }
     
     
     
