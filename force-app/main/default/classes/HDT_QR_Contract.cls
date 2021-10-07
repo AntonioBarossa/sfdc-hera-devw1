@@ -174,7 +174,7 @@ public inherited sharing class HDT_QR_Contract {
 	public List<Contract> getAccountContractsWithFilter(String accountid,String additionalFilter) {
         system.debug('getAccountContractsWithFilter START');
         contractSrv.checkReadAccess('ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c');
-        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c FROM Contract WHERE AccountId =: '+String.escapeSingleQuotes(code)+' '+ additionalFilter+' WITH SECURITY_ENFORCED';
+        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c FROM Contract WHERE AccountId =: '+String.escapeSingleQuotes(accountid)+' '+ additionalFilter+' WITH SECURITY_ENFORCED';
 		List<Contract> listCon = Database.query(query);
         system.debug('getAccountContractsWithFilter END' + listCon);
 		return listCon;
