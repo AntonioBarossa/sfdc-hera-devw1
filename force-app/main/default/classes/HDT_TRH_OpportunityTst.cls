@@ -29,7 +29,7 @@ public with sharing class HDT_TRH_OpportunityTst{
 			                              LIMIT 1];
 
 			System.assertEquals(true, createdOpp[0].Id!=null, 'Opportunity Not Created');
-			System.assertNotEquals(false, createdOpp[0].Id!=null);
+			System.assertNotEquals(false, createdOpp[0].Id!=null, 'Opportunity Not Created');
 		}
 	}
 }

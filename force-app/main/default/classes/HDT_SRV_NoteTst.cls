@@ -33,7 +33,7 @@ public class HDT_SRV_NoteTst{
 
 		System.assertEquals('test', tContentNote.title, 'Content Note not inserted');
 
-		System.assertNotEquals(null, tContentNote.Id);
+		System.assertNotEquals(null, tContentNote.Id, 'Content Note not inserted');
 
 		Test.stopTest();
 	}
@@ -68,7 +68,7 @@ public class HDT_SRV_NoteTst{
 
 		System.assertEquals(false, tContentDocLink.IsDeleted, 'Content Document Link not inserted');
 
-		System.assertNotEquals(null, tContentDocLink.Id);
+		System.assertNotEquals(null, tContentDocLink.Id, 'Content Document Link not inserted');
 
 		Test.stopTest();
 	}

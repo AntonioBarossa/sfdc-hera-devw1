@@ -84,7 +84,7 @@ public class HDT_SRV_LeadTst{
 			Test.stopTest();
 
 			System.assertEquals(false, createdLead.Id==null, 'Lead not created');
-			System.assertNotEquals(true, createdLead.Id==null);
+			System.assertNotEquals(true, createdLead.Id==null, 'Lead not created');
 		}
 	}
 
@@ -137,7 +137,7 @@ public class HDT_SRV_LeadTst{
 			Test.stopTest();
 
 			System.assertEquals(true, updatedLead.MobilePhone=='1234567906', 'Lead not updated');
-			System.assertNotEquals(true, updatedLead.MobilePhone==null);
+			System.assertNotEquals(true, updatedLead.MobilePhone==null, 'Lead not updated');
 		}
 	}
 }
