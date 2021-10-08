@@ -332,20 +332,52 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
         inputs.put('EstrattoConto', itemVasList);
         
-        
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'EC');
         
-        //TESTING Context Account
+        
+        //TESTING Context EC - 2060
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
-        //RETRIEVING DATA
-        HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm S.p.A.'];
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert('2060'.equalsIgnoreCase(result1), 'Risultato non è 2060');
+        
+        
+        
+        //TESTING Context EC - 7030
+        primolivello.put('societa', 'ESTENERGY SPA');
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result2 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert('7030'.equalsIgnoreCase(result2), 'Risultato non è 7030');
+        
+        
+        
+        //TESTING Context EC - 7015
+        primolivello.put('societa', 'HERA COMM NORDEST');
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result3 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result3: ' + result3);
+        System.assert('7015'.equalsIgnoreCase(result3), 'Risultato non è 7015');
+        
+        
+        
+        //TESTING Context EC - 1070
+        primolivello.put('societa', '6 USZE TAHAM');
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
         System.debug('result1: ' + result1);
-        System.assert(myData.CompanyCode__c.equalsIgnoreCase(result1), 'Risultato non è ' + myData.CompanyCode__c);
+        System.assert('1070'.equalsIgnoreCase(result1), 'Risultato non è 1070');
+        
+        //TODO: POSSIBILE ESTENSIONE CON COPERTURA DEL CATCH SE EstrattoConto PUNTA A NULL
         
     }
     
