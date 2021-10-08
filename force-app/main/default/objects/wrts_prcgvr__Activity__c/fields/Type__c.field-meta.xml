@@ -360,6 +360,11 @@
                 <default>false</default>
                 <label>Contattare il cliente</label>
             </value>
+            <value>
+                <fullName>Supporto su migrazione</fullName>
+                <default>false</default>
+                <label>Supporto su migrazione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
