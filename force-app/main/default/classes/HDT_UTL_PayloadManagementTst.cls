@@ -17,7 +17,9 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         
         //ACCOUNT - PARTNER
-        List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, true, 'DIRETTO EDISON-10R0000051');
+        List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'DIRETTO EDISON-10R0000051');
+        partnerList[0].CompanyOwner__c = 'HERA COMM';
+        insert partnerList;
         
         //SERVICE POINT
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
