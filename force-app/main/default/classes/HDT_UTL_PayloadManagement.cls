@@ -290,6 +290,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 //processType =  HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
             }
         }
+        
+        System.debug('Amount: ' + amount);
         if(String.isNotBlank(amount)){
             amountDouble = Double.valueOf(amount);
             if(String.isNotBlank(iva)){
