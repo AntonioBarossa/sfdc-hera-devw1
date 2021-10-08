@@ -489,6 +489,36 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //calculateQuotationAmount
+    @isTest
+    private static void calculateQuotationAmountTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Case myItem = [SELECT Id, Amount__c, FixedAmount__c, VariableAmount__c, VATPercentage__c, Type, SupplyType__c, Cluster__c FROM Case];
+        myItem.Cluster__c = 'Preventivi';
+        myItem.QuotationType__c = 'Predeterminabile';
+        
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Case', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        
+        
+        //TESTING Context Case - Empty Amount
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert('|||||'.equalsIgnoreCase(result1), 'Risultato non è |||||');
+        
+    }
     
     
     
