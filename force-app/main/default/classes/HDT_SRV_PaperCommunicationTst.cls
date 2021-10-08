@@ -29,7 +29,7 @@ public class HDT_SRV_PaperCommunicationTst{
 
 		System.assertEquals('test', paperCommInsert.Name, 'Paper Communication not inserted');
 
-		System.assertNotEquals(null, paperCommInsert.Id);
+		System.assertNotEquals(null, paperCommInsert.Id, 'Paper Communication not inserted');
 
 		Test.stopTest();
 	}
@@ -62,7 +62,7 @@ public class HDT_SRV_PaperCommunicationTst{
 
 		System.assertEquals('UpdateTest', paperCommInsert.Name, 'Paper Communication not updated');
 
-		System.assertNotEquals(null, paperCommInsert.Id);
+		System.assertNotEquals(null, paperCommInsert.Id, 'Paper Communication not updated');
 
 		Test.stopTest();
 	}
