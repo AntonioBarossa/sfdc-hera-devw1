@@ -44,7 +44,10 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ORDER
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
-        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, true, accList[0].Id, saleList, pricebookId);
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accList[0].Id, saleList, pricebookId);
+        orderList[0].ServicePoint__c = servPoint.Id;
+        insert orderList;
+        
         
         //ORDER ITEMS
         List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
@@ -222,6 +225,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         mySetup();
         
         Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        //SalesCompany__c 
         myItem.SupplyCity__c = 'COLBORDOLO';
         
         List<SObject> itemVasList = new List<SObject>();
