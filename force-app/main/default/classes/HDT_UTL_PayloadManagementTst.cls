@@ -25,6 +25,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         ServicePoint__c servPoint = servPointList[0];
         servPoint.Distributor__c = partnerList[0].Id;
+        servPoint.CommoditySector__c = 'Gas';
         insert servPoint;
         
         
@@ -221,6 +222,10 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         mySetup();
         
         Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        myItem.SupplyCity__c
+        myItem.
+        myItem.
+        
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
         
