@@ -665,7 +665,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Account myItem = [SELECT Id FROM Account];
+        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
         
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
