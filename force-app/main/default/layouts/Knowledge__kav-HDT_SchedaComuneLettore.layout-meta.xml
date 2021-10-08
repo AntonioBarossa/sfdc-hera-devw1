@@ -26,9 +26,6 @@
         <label>Corpo Articolo</label>
         <layoutColumns>
             <layoutItems>
-                <field>OfferedService__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>FrontOffice__c</field>
             </layoutItems>
         </layoutColumns>

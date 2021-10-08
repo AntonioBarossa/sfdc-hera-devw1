@@ -8,17 +8,13 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IMPIANTO_OU_NUM__c</field>
+                <field>SERV_ACCT_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SERV_ACCT_SALESFORCE__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SERV_ACCT_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -205,6 +201,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>IMPIANTO_OU_NUM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>IMPIANTO_ATTRIB_34__c</field>
             </layoutItems>
             <layoutItems>
@@ -380,10 +380,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MODIFIEDDATE_AZURE__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>OU_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

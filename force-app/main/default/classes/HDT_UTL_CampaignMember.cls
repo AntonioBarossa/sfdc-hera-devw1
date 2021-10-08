@@ -64,8 +64,6 @@ public with sharing class HDT_UTL_CampaignMember {
                                 IsDefault = cmdt.Default__c
                             );
                             campaignMemberStatuses.add(cmStatus);
-                        } else {
-                            
                         }
                     } else if (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') {
                         CampaignMemberStatus cmStatus = new CampaignMemberStatus(
@@ -75,8 +73,6 @@ public with sharing class HDT_UTL_CampaignMember {
                             IsDefault = cmdt.Default__c
                         );
                         campaignMemberStatuses.add(cmStatus);
-                    } else {
-    
                     }
                 } 
             }
@@ -172,12 +168,9 @@ public with sharing class HDT_UTL_CampaignMember {
         
         if (!system.isBatch()) { // Keltin - added this because it cases error 'Database.executeBatch cannot be called from a batch start, batch execute, or future method' when called from HDT_BA_QualityCall
             //execute batch for each campaign
-            for(String cmpId : allMembers.keySet()){
-                List<String> cmpMembers = allMembers.get(cmpId);
-
-                HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(cmpId, cmpMembers);
-                ID batchProcessId = Database.executeBatch(ccBatch, 500000);
-                System.debug('batchProcessId - ' + batchProcessId);
+            if (allMembers.size() > 0) {
+                HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(allMembers);
+                ID batchProcessId = Database.executeBatch(ccBatch, 200);
             }
         }
     }

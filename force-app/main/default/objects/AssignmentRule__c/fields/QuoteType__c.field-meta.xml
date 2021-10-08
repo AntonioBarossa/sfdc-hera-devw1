@@ -4,9 +4,28 @@
     <description>campo activity da matchare.</description>
     <externalId>false</externalId>
     <label>Tipo Preventivo</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Analitico</fullName>
+                <default>false</default>
+                <label>Analitico</label>
+            </value>
+            <value>
+                <fullName>Predeterminabile</fullName>
+                <default>false</default>
+                <label>Predeterminabile</label>
+            </value>
+            <value>
+                <fullName>Rapido</fullName>
+                <default>false</default>
+                <label>Rapido</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

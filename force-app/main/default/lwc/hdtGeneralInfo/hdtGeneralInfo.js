@@ -59,9 +59,12 @@ export default class HdtGeneralInfo extends LightningElement {
     userRole = '';
     @track channelDisabled = false;
     @track channelValue = '';
+    isProfileTeleselling = false;
 
-
-
+    channelOptionsComm = [
+        {label: 'Teleselling Inbound', value: 'Teleselling Inbound'},
+        {label: 'Teleselling Outbound', value: 'Teleselling Outbound'}
+    ];
 
     completeListcolumns = [];
     get isCampaignVisible() {
@@ -225,6 +228,7 @@ export default class HdtGeneralInfo extends LightningElement {
             console.log('HDT_LC_GeneralInfo - initCompAction: ' + JSON.stringify(data));
 
             this.userRole = data.userRole;
+            this.isProfileTeleselling = data.userProfile === 'Hera Teleseller Partner User';
 
         }).catch(error => {
             this.loading = false;
@@ -672,12 +676,12 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             });
         }
-        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound' || this.saleRecord.CreatedBy.LoginChannel__c == 'Teleselling ') {
-            this.channelValue = 'Teleselling Outbound';
-            this.ChannelSelection = 'Teleselling Outbound';
-            channelCheck = 'Teleselling Outbound';
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
+            this.channelValue = 'Telefono';
+            this.ChannelSelection = 'Telefono';
+            channelCheck = 'Telefono';
             this.channelDisabled = true;
-            handleAutomaticAgentAssign ({Channel:'Teleselling Outbound',saleId:this.saleRecord.Id }).then(data =>{
+            handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;
                 this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
@@ -696,12 +700,12 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             });
         }
-        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound' || this.saleRecord.CreatedBy.LoginChannel__c == 'Teleselling ') {
-            this.channelValue = 'Teleselling Inbound';
-            this.ChannelSelection = 'Teleselling Inbound';
-            channelCheck = 'Teleselling Inbound';
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound') {
+            this.channelValue = 'Telefono';
+            this.ChannelSelection = 'Telefono';
+            channelCheck = 'Telefono';
             this.channelDisabled = true;
-            handleAutomaticAgentAssign ({Channel:'Teleselling Inbound',saleId:this.saleRecord.Id }).then(data =>{
+            handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;
                 this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
@@ -820,6 +824,32 @@ export default class HdtGeneralInfo extends LightningElement {
             this.currentPage2--;
         }
         this.reLoadTable2();
+    }
+
+    handleChannelComm(event){
+        this.dataToSubmit['Channel'] = event.target.value;
+        this.disabledAgency = false;
+
+        this.hiddenAgency = true;
+        handleAutomaticAgentAssign ({Channel:event.target.value,saleId:this.saleRecord.Id }).then(data =>{
+            console.log("************* "+JSON.stringify(data))
+            this.loaded = true;
+            this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+            this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+            this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+            this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+
+        }).catch(error => {
+            this.loaded = true;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
 }
