@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
         }
 
         Map<Id,Order> orderPerItem = new Map<Id,Order>();
-        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c FROM OrderItem
+        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c, Order.ContractReference__c FROM OrderItem
                                 WHERE Id IN :orderItemsIds WITH SECURITY_ENFORCED]) {
             orderPerItem.put( ordItem.Id, ordItem.Order );
         }
@@ -40,6 +40,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
 
                 if (isVasOrder && isParentAsset) {
                     asset.DigitalAssetStatus = ASSET_ACTIVE_STATUS;//setting status to active
+                    asset.Contract__c = currentOrder.ContractReference__c;
                     asset.VasPracticeCode__c = String.isNotBlank(asset.VasPracticeCode__c)? asset.VasPracticeCode__c : currentOrder.VasPracticeCode__c;//copying Vas fields from order
                 }
             }
