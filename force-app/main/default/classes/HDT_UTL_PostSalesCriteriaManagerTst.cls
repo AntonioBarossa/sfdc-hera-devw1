@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phaseStory != null);
+        System.assert(phaseStory != null, 'Attenzione, phaseStory non può essere null!');
         
     }
 
@@ -62,7 +62,7 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phaseStory != null);
+        System.assert(phaseStory != null, 'Attenzione, phaseStory non può essere null!');
         
     }
 
@@ -90,7 +90,7 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phaseStory != null);
+        System.assert(phaseStory != null, 'Attenzione, phaseStory non può essere null!');
         
     }
 

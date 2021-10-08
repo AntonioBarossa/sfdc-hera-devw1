@@ -8,9 +8,24 @@
                     <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
                         <div class="slds-grid slds-wrap slds-m-top_small">
 
-                            <lightning-input-field required disabled={channelDisabled} onchange={handleDataCollection}
+                            <template if:true={isProfileTeleselling}>
+                                <lightning-combobox
+                                required
+                                data-id="Channel__c"
+                                data-name="Channel__c"
+                                name="progress"
+                                label="Canale"
+                                placeholder=""
+                                options={channelOptionsComm}
+                                onchange={handleChannelComm}
+                                class="slds-size_1-of-3"></lightning-combobox>
+                            </template>
+                            <template if:false={isProfileTeleselling}>
+                                <lightning-input-field required disabled={channelDisabled} onchange={handleDataCollection}
                                 class="slds-size_1-of-3" field-name="Channel__c" data-id="Channel__c" data-name="Channel__c"
                                 variant="label-stacked"  value={channelValue}></lightning-input-field>
+                            </template>
+                            
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"
                                 field-name="CreatedBy__c" value={currentUserName} variant="label-stacked">
                             </lightning-input-field>

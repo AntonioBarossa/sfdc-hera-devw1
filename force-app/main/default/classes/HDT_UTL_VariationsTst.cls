@@ -41,7 +41,7 @@ public with sharing class HDT_UTL_VariationsTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null, 'consistencyCheck OK');
+        System.assert(myCase != null, 'Attenzione, myCase non può essere null!');
         
     }
     
@@ -98,8 +98,8 @@ public with sharing class HDT_UTL_VariationsTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseId != null, 'Rate Modification Test OK');
-        System.assert(newCase != null, 'Rate Modification Test OK');
+        System.assert(caseId != null, 'Attenzione, caseId non può essere null!');
+        System.assert(newCase != null, 'Attenzione, newCase non può essere null!');
         
     }
 
