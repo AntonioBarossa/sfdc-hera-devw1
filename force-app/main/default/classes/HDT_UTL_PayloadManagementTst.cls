@@ -318,7 +318,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///EC GC
     @isTest
-    private static void calculateCompanyCodeTest_Account(){
+    private static void calculateCompanyCodeTest_EC(){
         
         //SETUP
         mySetup();
@@ -330,10 +330,10 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         itemVasList.add(primolivello);
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
-        inputs.put('EstrattoConto', itemVasList);
         
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'EC');
+        formParams.put('EstrattoConto', itemVasList);
         
         
         //TESTING Context EC - 2060
