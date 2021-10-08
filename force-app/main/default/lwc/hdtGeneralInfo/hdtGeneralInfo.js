@@ -676,7 +676,7 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             });
         }
-        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound' || this.saleRecord.CreatedBy.LoginChannel__c == 'Teleselling ') {
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
             this.channelValue = 'Telefono';
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
@@ -700,7 +700,7 @@ export default class HdtGeneralInfo extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             });
         }
-        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound' || this.saleRecord.CreatedBy.LoginChannel__c == 'Teleselling ') {
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound') {
             this.channelValue = 'Telefono';
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
@@ -829,6 +829,27 @@ export default class HdtGeneralInfo extends LightningElement {
     handleChannelComm(event){
         this.dataToSubmit['Channel'] = event.target.value;
         this.disabledAgency = false;
+
+        this.hiddenAgency = true;
+        handleAutomaticAgentAssign ({Channel:event.target.value,saleId:this.saleRecord.Id }).then(data =>{
+            console.log("************* "+JSON.stringify(data))
+            this.loaded = true;
+            this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+            this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+            this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+            this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+
+        }).catch(error => {
+            this.loaded = true;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
 }

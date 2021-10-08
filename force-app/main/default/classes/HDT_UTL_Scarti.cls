@@ -12,6 +12,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
+    
+    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
+                                                                                 'Esito ricevuto su richiesta chiusa',
+                                                                                 'Esito non elaborato',
+                                                                                 'Errore invio a SAP',
+                                                                                 'Eliminato esito in scarto',
+                                                                                 'Errore determinazione variante SAP'};
 
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
                                                                                         'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
@@ -166,6 +173,59 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         listOutputs.add(output);
         return listOutputs;  
+    }
+
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.handleMRRInboundRequest
+    * @param requests - List<HDT_WRP_MrrRequest.HDT_WRP_Request>
+    */
+    public static void handleMRRInboundRequest(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Set<String> orderNameSet = new Set<String>();
+        List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
+        List<wrts_prcgvr__Activity__c> dataForCheckEsitiIntermedi = new List<wrts_prcgvr__Activity__c>();
+        for (HDT_WRP_MrrRequest.HDT_WRP_Request request : inboundRequests) {
+            HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+            for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
+                for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                    if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
+                        Map<String,String> newData = new Map<String,String>();
+                        for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
+                        for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
+                        dataForAttivitaTracciaturaCreation.add(newData);
+                    }
+                    if('FASE'.equalsIgnoreCase(curField.name) && new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)){
+                        for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
+                            if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
+                                if(curField2.value.length() == 18 ){
+                                    if(Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
+                                        wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                                        tempAct.Case__c = curField2.value;
+                                        dataForCheckEsitiIntermedi.add(tempAct);
+                                    }
+                                }
+                                else if(curField2.value.startsWith('O-') ){
+                                    orderNameSet.add(curField2.value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.debug('MRREQUEST orderNameSet' + JSON.serializePretty(orderNameSet));
+        if(!orderNameSet.isEmpty()){
+            for(Order curOrder : [SELECT Id FROM Order WHERE OrderNumber IN :orderNameSet]){
+                wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                tempAct.Order__c = curOrder.Id;
+                dataForCheckEsitiIntermedi.add(tempAct);
+            }
+        }
+        System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
+        System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
+        if(!dataForAttivitaTracciaturaCreation.isEmpty()) createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+        if(!dataForCheckEsitiIntermedi.isEmpty()) checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
     }
 
 

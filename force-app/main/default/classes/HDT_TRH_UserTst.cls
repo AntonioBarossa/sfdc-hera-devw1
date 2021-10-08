@@ -31,7 +31,7 @@ public with sharing class HDT_TRH_UserTst{
 			                          WHERE Id=:accounts[0].Id];
 
 			System.assertEquals(true, updatedAcc[0].Published__c, 'Related Account not Updated');
-			System.assertNotEquals(false, updatedAcc[0].Published__c);
+			System.assertNotEquals(false, updatedAcc[0].Published__c, 'Related Account not Updated');
 		}
 	}
 }
