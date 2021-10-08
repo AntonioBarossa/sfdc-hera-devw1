@@ -588,6 +588,73 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //checkCommercialOffer
+    @isTest
+    private static void checkCommercialOfferTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Order myItem = [SELECT Id, ImplantType__c FROM Order];
+        myItem.ImplantType__c = 'Cottura cibi';
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Order');
+        
+        //TESTING - CO|
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert('||||CO||'.equalsIgnoreCase(result1), 'Risultato non è ||||CO||');
+        
+        
+        
+        //TESTING - AC|
+        myItem.ImplantType__c = 'acq calda';
+        String result2 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert('||||AC||'.equalsIgnoreCase(result2), 'Risultato non è ||||AC||');
+        
+        
+        
+        //TESTING - RA|
+        myItem.ImplantType__c = 'Riscaldamento';
+        String result3 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result3: ' + result3);
+        System.assert('||||RA||'.equalsIgnoreCase(result3), 'Risultato non è ||||RA||');
+        
+        
+        
+        //TESTING - RC|
+        myItem.ImplantType__c = 'Risc. centraliz';
+        String result4 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result4: ' + result4);
+        System.assert('||||RC||'.equalsIgnoreCase(result4), 'Risultato non è ||||RC||');
+        
+        
+        
+        //TESTING - |
+        myItem.ImplantType__c = 'Fake';
+        String result5 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result5: ' + result5);
+        System.assert('||||||'.equalsIgnoreCase(result5), 'Risultato non è ||||||');
+        
+    }
     
     
     
