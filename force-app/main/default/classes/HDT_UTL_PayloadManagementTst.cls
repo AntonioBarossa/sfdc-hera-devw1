@@ -675,13 +675,17 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         Map<String,Object> formParams = new Map<String,Object>();
         
-        //TESTING - CO|
+        //TESTING - CASO GENERICO
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('generateSection20', inputs, formParams);
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
+        //System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        
+        
+        //TESTING - CASO con SBQQ Subscriptions dove non c'è family offerta commerciale
         
     }
     
