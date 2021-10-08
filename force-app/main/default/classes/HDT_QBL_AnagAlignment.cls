@@ -31,7 +31,7 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
         if (!nextJobCases.isEmpty()) {
             // Chain this job to next job by submitting the next job
             System.debug('HDT_QBL_AnagAlignment: chaining next job...');
-            System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
+            if(!Test.isRunningTest()) System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
         }
 
         // ProcessClick non fa partire i job per le callout da contesto trigger o batch,

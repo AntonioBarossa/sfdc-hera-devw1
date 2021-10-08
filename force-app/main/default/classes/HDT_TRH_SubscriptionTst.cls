@@ -32,7 +32,7 @@ public with sharing class HDT_TRH_SubscriptionTst{
 			                          WHERE Id=:subscriptions[0].Id];
 
 			System.assertEquals(true, tSubs[0].CompanyOwner__c!=null, 'Subscription not Updated');
-			System.assertNotEquals(false, tSubs[0].CompanyOwner__c!=null);
+			System.assertNotEquals(false, tSubs[0].CompanyOwner__c!=null, 'Subscription not Updated');
 		}
 	}
 }
