@@ -227,17 +227,18 @@ public with sharing class HDT_UTL_VasManagement {
             OrderItem parentOrderItem;
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
-                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
-                items.add(reqItem);
-
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
                     parentOrderItem = ordItem;
+                    continue;
                 }
+                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
+                items.add(reqItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
-            nrRate = parentOrderItem?.Product2?.NumberRateMonthly__c;
+            Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
+            nrRate = tempRate!=null? tempRate : 0;
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
 
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;
