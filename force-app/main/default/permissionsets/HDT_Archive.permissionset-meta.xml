@@ -899,6 +899,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SiebelContract__x.X_DOM_STATUS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SiebelContract__x.X_DT_FINE_ESENZIONE__c</field>
         <readable>true</readable>
     </fieldPermissions>

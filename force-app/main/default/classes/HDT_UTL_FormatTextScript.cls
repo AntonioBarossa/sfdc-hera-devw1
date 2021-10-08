@@ -19,7 +19,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     //protected String rightIncapsulatingData= '}}';
 
     private Boolean isFirstSection=true;
-    private Map<String,HDT_CallScriptValue__mdt> overrideMap = new Map<String,HDT_CallScriptValue__mdt>();
+    private Map<String,List<HDT_CallScriptValue__mdt>> overrideMap = new Map<String,List<HDT_CallScriptValue__mdt>>();
     private Map<String,String> constantMap = new Map<String,String>();
 
     public HDT_UTL_FormatTextScript(){
@@ -153,7 +153,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             switch on scriptValue.Type__c {
                 when 'OVERRIDE'{
                     String key = scriptValue.ObjectName__c+'-'+scriptValue.FieldName__c;
-                    overrideMap.put( key.toLowerCase(), scriptValue );
+                    List<HDT_CallScriptValue__mdt> overrideValues = (overrideMap.containsKey(key.toLowerCase()))?
+                        overrideMap.get(key.toLowerCase()):
+                        new List<HDT_CallScriptValue__mdt>();
+                    overrideValues.add(scriptValue);
+                    overrideMap.put( key.toLowerCase(), overrideValues );
                 }
                 when 'CONSTANT'{
                     constantMap.put( scriptValue.ConstantName__c.toLowerCase(), scriptValue.Value__c );
@@ -168,11 +172,13 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
 
         String key = sobjectApiName+'-'+fieldApiName;
         if (overrideMap.containsKey(key.toLowerCase())) {
-            HDT_CallScriptValue__mdt overrideValue = overrideMap.get(key.toLowerCase());
+            List<HDT_CallScriptValue__mdt> overrideValues = overrideMap.get(key.toLowerCase());
             List<String> formatParams = new List<String>{fieldValue};
 
-            if (String.isBlank(overrideValue.ValueToOverride__c) || overrideValue.ValueToOverride__c==fieldValue) {
-                fieldValue = String.format(overrideValue.Value__c, formatParams);
+            for (HDT_CallScriptValue__mdt overrideValue:overrideValues) {
+                if (String.isBlank(overrideValue.ValueToOverride__c) || overrideValue.ValueToOverride__c==fieldValue) {
+                    fieldValue = String.format(overrideValue.Value__c, formatParams);
+                }
             }
         }
 
