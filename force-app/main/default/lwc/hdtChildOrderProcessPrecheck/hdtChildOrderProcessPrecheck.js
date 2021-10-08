@@ -46,7 +46,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
+                || (this.isNotBillable && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c)
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
         );
@@ -362,8 +362,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-            this.callCreditCheckSAP();
+        //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+                this.callCreditCheckSAP();
         }
         console.log('****13');
         
@@ -639,7 +640,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             data["district"] = this.order.ServicePoint__r.SupplyProvince__c;
             data["postCode"] = this.order.ServicePoint__r.SupplyPostalCode__c;
 
-            data["details"]["annualConsumption"] = this.order.ServicePoint__r.AnnualConsumption__c;
+            data["details"][0] = { ...data["details"][0], "annualConsumption":this.order.ServicePoint__r.AnnualConsumption__c};
         }
         console.log("this.3"); 
 

@@ -312,8 +312,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
         if(selectedRows.length > 0){
             this.disableButton('confirmSelected', false);
+            this.disableButton('confirmFilter', true);
         } else {
             this.disableButton('confirmSelected', true);
+            this.disableButton('confirmFilter', false);
         }
 
         //this.checkboxCounter = this.selectedIdList.length.toString();

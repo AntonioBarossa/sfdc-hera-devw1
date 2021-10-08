@@ -128,6 +128,11 @@
         <label>Back office Vendita</label>
     </customValue>
     <customValue>
+        <fullName>Heroku</fullName>
+        <default>false</default>
+        <label>Heroku</label>
+    </customValue>
+    <customValue>
         <fullName>APP</fullName>
         <default>false</default>
         <isActive>false</isActive>

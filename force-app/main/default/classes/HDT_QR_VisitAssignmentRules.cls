@@ -32,6 +32,7 @@ public with sharing class HDT_QR_VisitAssignmentRules {
         Name
         FROM VisitAssignmentRules__c
         WHERE cap__c = :zipCode AND Category__c = :category AND Consumption__c = :consumption
+        WITH SECURITY_ENFORCED
         ];
     }
 

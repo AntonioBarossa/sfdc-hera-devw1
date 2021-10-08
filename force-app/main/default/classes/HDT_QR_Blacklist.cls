@@ -7,15 +7,13 @@
 public with sharing class HDT_QR_Blacklist {
 
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
-    
-    public HDT_QR_Blacklist() {}
 
     public static List<BlackList__c> getAllBlacklist(){
-        return [Select id,Domain__c,ErrorMessage__c,Note__c from Blacklist__c];
+        return [Select id,Domain__c,ErrorMessage__c,Note__c from Blacklist__c WITH SECURITY_ENFORCED];
     }
 
     public static List<BlackList__c> getAllBlacklistEmail(){
-        return [Select id,Domain__c,ErrorMessage__c,Note__c from Blacklist__c where domain__c != null];
+        return [Select id,Domain__c,ErrorMessage__c,Note__c from Blacklist__c where domain__c != null WITH SECURITY_ENFORCED];
     }
 
     public Blacklist__c getBlacklist(String pod) {

@@ -22,7 +22,7 @@ public with sharing class HDT_LC_CopiaContratto {
         }
 
         return listRes;
-        
+         
         
     }
     @AuraEnabled
@@ -142,7 +142,7 @@ public with sharing class HDT_LC_CopiaContratto {
 
     @AuraEnabled
     public static List<DocumentSendTracking__c> getDocumentTracking(String orderId){
-        return [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId];
+        return [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId WITH SECURITY_ENFORCED];
     }
 
 }

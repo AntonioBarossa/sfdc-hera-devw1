@@ -50,8 +50,11 @@
     <recordUpdates>
         <name>UpdateUser</name>
         <label>UpdateUser</label>
-        <locationX>176</locationX>
-        <locationY>464</locationY>
+        <locationX>379</locationX>
+        <locationY>522</locationY>
+        <faultConnector>
+            <targetReference>Welcome</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -83,14 +86,19 @@
     <screens>
         <name>Welcome</name>
         <label>Welcome</label>
-        <locationX>176</locationX>
-        <locationY>327</locationY>
+        <locationX>177</locationX>
+        <locationY>328</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>UpdateUser</targetReference>
         </connector>
+        <fields>
+            <name>CatchError</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 15px; font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;Liberation Sans&amp;quot;, sans-serif; color: rgb(234, 0, 30);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>DPicklist1</name>
             <extensionName>flowruntime:dependentPicklists</extensionName>

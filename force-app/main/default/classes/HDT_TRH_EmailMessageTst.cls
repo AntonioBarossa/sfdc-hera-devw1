@@ -38,7 +38,7 @@ public with sharing class HDT_TRH_EmailMessageTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(emailList != null);
+        System.assert(emailList != null, 'Attenzione, emailList non può essere null!');
         
     }
 
@@ -83,7 +83,7 @@ public with sharing class HDT_TRH_EmailMessageTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(emailList != null);
+        System.assert(emailList != null, 'Attenzione, emailList non può essere null!');
         
     }
 
