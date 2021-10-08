@@ -9,13 +9,6 @@
 global with sharing class HDT_WS_MrrRequest {
 
     private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
-    
-    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
-                                                                                 'Esito ricevuto su richiesta chiusa',
-                                                                                 'Esito non elaborato',
-                                                                                 'Errore invio a SAP',
-                                                                                 'Eliminato esito in scarto',
-                                                                                 'Errore determinazione variante SAP'};
 
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
@@ -54,39 +47,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
             
-            //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-            List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
-            List<wrts_prcgvr__Activity__c> dataForCheckEsitiIntermedi = new List<wrts_prcgvr__Activity__c>();
-            for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
-                HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
-                    for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
-                        if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
-                            Map<String,String> newData = new Map<String,String>();
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
-                            for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
-                            dataForAttivitaTracciaturaCreation.add(newData);
-                        }
-                        if('FASE'.equalsIgnoreCase(curField.name) && 'Completata'.equalsIgnoreCase(curField.value)){
-                            wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
-                                if('RECORD_ID'.equalsIgnoreCase(curField2.name) && Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
-                                    tempAct.Case__c = curField2.value;
-                                }
-                                if('RECORD_ID'.equalsIgnoreCase(curField2.name) && Schema.Order.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
-                                    tempAct.Order__c = curField2.value;
-                                }
-                            }
-                            dataForCheckEsitiIntermedi.add(tempAct);
-                        }
-                    }
-                }
-            }
-            System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
-            System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
-            if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
-            if(dataForCheckEsitiIntermedi.size() > 0) HDT_UTL_Scarti.checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
-            //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
+            HDT_UTL_Scarti.handleMRRInboundRequest(requestBody.requests);//>> 08/10/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
 
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
