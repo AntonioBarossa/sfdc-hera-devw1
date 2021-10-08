@@ -46,7 +46,7 @@ public with sharing class HDT_TRH_PaperProcessingTst{
 			                                           LIMIT 1];
 			
 			System.assertEquals('In Corso', updatedPaperProc[0].Status__c, 'PaperProcessing Not Updated');
-			System.assertNotEquals('', updatedPaperProc[0].Status__c);
+			System.assertNotEquals('', updatedPaperProc[0].Status__c, 'PaperProcessing Not Updated');
 		}
 	}
 }
