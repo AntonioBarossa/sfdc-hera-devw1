@@ -12,6 +12,7 @@ const columns = [
     { label: 'Telefono fisso', fieldName: 'contactHomePhone' },
     { label: 'Email', fieldName: 'contactEmail' },
     { label: 'BP Interlocutore', fieldName: 'bpInterlocutor' },
+    { label: 'Data inizio validità', fieldName: 'startDate' },
     { label: 'Data fine validità', fieldName: 'endDate' },
     {
         type: 'action',

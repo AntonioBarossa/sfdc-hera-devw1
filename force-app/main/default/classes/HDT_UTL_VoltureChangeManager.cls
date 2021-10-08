@@ -11,7 +11,9 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     public SObject cloneSObject(SObject sobj, Map<String,Object> extraParams)
     {
         SObject newSobj;
-        String recordTypeId = (String)extraParams.get('recordTypeId');
+        /*@frpanico 07/10/2021*/
+        /*Since it has to be used for orderItems too this extra params is unnecessary*/
+        /*String recordTypeId = (String)extraParams.get('recordTypeId');*/
         Map<String,Object> populatedFieldMap = sobj.getPopulatedFieldsAsMap();
         Set<String> extraExcludedFields = (Set<String>)extraParams.get('excludedFields');
         Set<String> defaultExcludedFields = new Set<String>
@@ -48,10 +50,13 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             }
         }
         /* Other Defaults */
+        /*@frpanico 07/10/2021*/
+        /*Other defaults are cannot be used since it has to be used to clone OrderItem too*/
+        /*
         newSobj.put('Phase__c','Bozza');
         newSobj.put('Status','New');
         newSobj.put('RecordTypeId', recordTypeId);
-
+        */
         return newSobj;
     }
 
