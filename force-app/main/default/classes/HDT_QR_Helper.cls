@@ -4,10 +4,10 @@
  * @last modified on  : 09-09-2021
 **/
 public without sharing class HDT_QR_Helper {
-    private String typeObject;
-    private List<String> listNestedFields=new List<String>();
-    private List<String> blackListFields=new List<String>();
-    private String sFilter;
+    @TestVisible private String typeObject;
+    @TestVisible private List<String> listNestedFields=new List<String>();
+    @TestVisible private List<String> blackListFields=new List<String>();
+    @TestVisible private String sFilter;
 
     /**
     * @description: Inserisce l'oggetto Salesforce per il quale si vuole effettuare la query

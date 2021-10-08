@@ -21,7 +21,10 @@ public with sharing class HDT_QR_HelperTst {
     public static void testSetObj(){
         Test.startTest();
             helpQR.setObj('Case');
-        Test.stopTest();         
+        Test.stopTest();   
+        System.assertEquals(true,helpQR.typeObject!=null,'The field has not been valorized');
+        System.assertNotEquals(null,helpQR.typeObject,'The type of the object has not been valorized');
+
     }
     @isTest
     public static void testSetNestedFields(){
@@ -32,7 +35,10 @@ public with sharing class HDT_QR_HelperTst {
         	List<String> fields = new List<String>(objMap.keySet());
             helpQR.setNestedFields(fields);
         
-        Test.stopTest();         
+        Test.stopTest(); 
+        System.assertEquals(true,!helpQR.listNestedFields.isEmpty(),'The list has not been populated');
+        System.assertNotEquals(true,helpQR.listNestedFields.isEmpty(),'The list of nested fields has not been populated');
+        
     }
     @isTest
     public static void testSetBlackListFields(){
@@ -43,7 +49,10 @@ public with sharing class HDT_QR_HelperTst {
         	List<String> fields = new List<String>(objMap.keySet());
             helpQR.setBlackListFields(fields);
         
-        Test.stopTest();         
+        Test.stopTest();   
+        System.assertEquals(true,!helpQR.blackListFields.isEmpty(),'The list has not been populated');
+        System.assertNotEquals(true,helpQR.blackListFields.isEmpty(),'The list of blacklist fields has not been populated');
+
     }
     @isTest
     public static void testSetFilter(){
@@ -53,7 +62,10 @@ public with sharing class HDT_QR_HelperTst {
         	System.debug(filter);
             helpQR.setFilter(filter);
         
-        Test.stopTest();         
+        Test.stopTest();   
+        System.assertEquals(true,helpQR.sFilter!=null,'The filter has not been valorized');
+        System.assertNotEquals(null,helpQR.sFilter,'The filter has not been valorized');
+
     }
     @isTest
     public static void testGetAllObjectFields(){
