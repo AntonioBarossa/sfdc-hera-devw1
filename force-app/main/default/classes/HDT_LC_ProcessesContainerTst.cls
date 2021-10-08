@@ -33,7 +33,7 @@ public class HDT_LC_ProcessesContainerTst{
 
 		System.assertEquals(4, testcontrollerInit.values().size(), 'Result Map is Wrong');
 
-		System.assertNotEquals(1, testcontrollerInit.values().size());
+		System.assertNotEquals(1, testcontrollerInit.values().size(), 'controllerInit did not work correctly');
 
 		Test.stopTest();
 	}
@@ -56,7 +56,7 @@ public class HDT_LC_ProcessesContainerTst{
 
 		System.assertEquals(4, testcontrollerInitRedirect.values().size(), 'Result Map is Wrong');
 
-		System.assertNotEquals(1, testcontrollerInitRedirect.values().size());
+		System.assertNotEquals(1, testcontrollerInitRedirect.values().size(), 'controllerInitRedirect did not work correctly');
 
 		Test.stopTest();
 	}

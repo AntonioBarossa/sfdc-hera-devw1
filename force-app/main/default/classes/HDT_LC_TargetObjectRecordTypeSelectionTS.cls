@@ -20,9 +20,9 @@ public class HDT_LC_TargetObjectRecordTypeSelectionTS {
     Test.startTest();
     List<Map<String,String>> recordtypesList = HDT_LC_TargetObjectRecordTypeSelection.getRecordTypesForServicePoint();
     
-    System.assert(recordtypesList != null);
+    System.assert(recordtypesList != null, 'getRecordTypesForServicePoint did not work correctly');
 
-    System.assertNotEquals(new List<Map<String,String>>{new Map<String,String>()},recordtypesList);
+    System.assertNotEquals(new List<Map<String,String>>{new Map<String,String>()},recordtypesList, 'getRecordTypesForServicePoint did not work correctly');
     
     Test.stopTest(); 
     

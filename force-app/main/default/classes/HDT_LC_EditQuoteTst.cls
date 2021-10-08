@@ -67,8 +67,8 @@ public with sharing class HDT_LC_EditQuoteTst{
 
 		System.assertEquals(true, testReturn, 'method return is wrong');
 		System.assertEquals(true, testReturn2, 'method return is wrong');
-		System.assertNotEquals(false, testReturn);
-		System.assertNotEquals(false, testReturn2);
+		System.assertNotEquals(false, testReturn, 'method return is wrong');
+		System.assertNotEquals(false, testReturn2, 'method return is wrong');
 
 		Test.stopTest();
 	}

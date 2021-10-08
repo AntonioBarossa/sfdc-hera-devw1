@@ -38,7 +38,7 @@ public with sharing class HDT_LC_HighlightsPanelTst {
         String result = HDT_LC_HighlightsPanel.updateKpis(acc.Id);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, 'updateKpis did not work correctly');
         
         
     }
@@ -54,7 +54,7 @@ public with sharing class HDT_LC_HighlightsPanelTst {
         
         //TESTING - updateKpis
         String result = HDT_LC_HighlightsPanel.updateKpis('');
-        System.assert(String.isNotBlank(result));
+        System.assert(String.isNotBlank(result), 'updateKpis did not work correctly');
         
     }
     

@@ -42,7 +42,7 @@ public class HDT_LC_ManageBillingProfileTst{
 
 		System.assertEquals(testBilProf[0].Name, tBilProf[0].Name, 'Billing Profile Name is wrong');
 
-		System.assertNotEquals(null, tBilProf[0].Name);
+		System.assertNotEquals(null, tBilProf[0].Name, 'getBillingProfileList did not work correctly');
 
 		Test.stopTest();
 	}

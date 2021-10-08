@@ -26,8 +26,8 @@ public with sharing class HDT_LC_DocumentValidationTst {
             Boolean result;
             result = HDT_LC_DocumentValidation.isValidPhase(ord.Id);
 
-        System.assertEquals(false, result);
-        System.assertNotEquals(true, result);
+        System.assertEquals(false, result, 'IsValidPhase did not work correctly');
+        System.assertNotEquals(true, result, 'IsValidPhase did not work correctly');
 
         Test.stopTest();
     }
@@ -39,7 +39,7 @@ public with sharing class HDT_LC_DocumentValidationTst {
         Test.startTest();   
             HDT_LC_DocumentValidation.saveValidation(ord);
             System.assert(ord !=null, 'Order is not null');
-            System.assertNotEquals(null, ord);
+            System.assertNotEquals(null, ord, 'SaveValidationSucess did not work correctly');
         Test.stopTest();
     }
     // phase error

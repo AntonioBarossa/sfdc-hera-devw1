@@ -80,7 +80,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 		System.assertEquals('In attesa validazione', torderList2[0].Phase__c, 'Order was not updated');
 
-		System.assertNotEquals('', torderList2[0].Phase__c);
+		System.assertNotEquals('', torderList2[0].Phase__c, 'save did not work correctly');
 
 		Test.stopTest();
 	}
@@ -110,7 +110,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 		System.assertEquals('Annullato', torderList2[0].Phase__c, 'Order was not updated');
 
-		System.assertNotEquals('', torderList2[0].Phase__c);
+		System.assertNotEquals('', torderList2[0].Phase__c, 'cancel did not work correctly');
 
 		Test.stopTest();
 	}
@@ -134,7 +134,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 		System.assertEquals(false, check, 'Return is Wrong');
 
-		System.assertNotEquals(true, check);
+		System.assertNotEquals(true, check, 'checkRequiredDocs did not work correctly');
 
 		Test.stopTest();
 	}
@@ -156,7 +156,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 		System.assertEquals(true, result, 'Return is Wrong');
 
-		System.assertNotEquals(false, result);
+		System.assertNotEquals(false, result, 'isSaveDisabled did not work correctly');
 
 		Test.stopTest();
 	}
