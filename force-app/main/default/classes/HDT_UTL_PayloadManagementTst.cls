@@ -5,6 +5,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     public static final String TEST_NAME = 'HDT_UTL_PayloadManagementTst';
     
     //DATA
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     
     //TEST SETUP
