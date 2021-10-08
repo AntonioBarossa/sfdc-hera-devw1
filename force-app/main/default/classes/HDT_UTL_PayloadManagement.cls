@@ -150,6 +150,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 companyDesc = '';
             }
         }
+        System.debug('context: ' + context);
+        System.debug('city: ' + city);
+        System.debug('distributorName: ' + distributorName);
+        System.debug('commodity: ' + commodity);
+        System.debug('companyDesc: ' + companyDesc);
+        
         return getCompanyCode(companyDesc);
     }
 
