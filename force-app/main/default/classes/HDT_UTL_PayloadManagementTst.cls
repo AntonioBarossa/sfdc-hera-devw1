@@ -55,7 +55,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.debug(debugString + ' - orderItems: ' + orderItems);
         
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
+        contractList[0].ServicePoint__c = servPoint.Id;
+        contractList[0].StartDate = Date.today();
+        insert Contract;
+        
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
     }
 
@@ -681,7 +685,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
-        System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
+        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
         //System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
         
         
