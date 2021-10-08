@@ -163,7 +163,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             accList[0].Category__c = 'Aziende TOP';
             update accList[0];
             List<FormulaRecalcResult> results2 = Formula.recalculateFormulas(caseList);
-            System.assert(results2[0].isSuccess());
+            System.assert(results2[0].isSuccess(),'Success');
 
             String recordId11 = caseList[10].Id;
             caseList[10].Type = 'Piano Rateizzazione';
@@ -226,7 +226,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             accList[0].Category__c = 'Famiglie';
             update accList[0];
             List<FormulaRecalcResult> results3 = Formula.recalculateFormulas(caseList);
-            System.assert(results3[0].isSuccess());
+            System.assert(results3[0].isSuccess(),'Success');
 
             String recordId21 = caseList[20].Id;
             caseList[20].Type = 'Variazione Domiciliazione';
@@ -482,8 +482,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
-        System.assert(results1[0].isSuccess());        
+        System.assert(caseList != null,'');
+        System.assert(results1[0].isSuccess(),'Success');        
     }
 
 

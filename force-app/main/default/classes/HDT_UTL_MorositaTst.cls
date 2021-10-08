@@ -52,8 +52,8 @@ public with sharing class HDT_UTL_MorositaTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(process != null);
-        System.assert(result != null);
+        System.assert(process != null,'');
+        System.assert(result != null,'');
         
     }
 
@@ -88,8 +88,8 @@ public with sharing class HDT_UTL_MorositaTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(containerId != null);
-        System.assert(myCase.Id != null);
+        System.assert(containerId != null,'');
+        System.assert(myCase.Id != null,'');
         
     }
 

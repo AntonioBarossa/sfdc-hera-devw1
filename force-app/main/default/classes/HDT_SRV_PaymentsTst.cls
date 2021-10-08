@@ -51,7 +51,7 @@ public with sharing class HDT_SRV_PaymentsTst {
                 ++count;
             }
         }
-        System.assertEquals(methods.size(), count);
+        System.assertEquals(methods.size(), count,'OK');
 
     }
 

@@ -109,8 +109,8 @@ public with sharing class HDT_UTL_CaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
-        System.assert(inputs != null);
+        System.assert(caseList != null,'');
+        System.assert(inputs != null,'');
         
     }
     
@@ -151,8 +151,8 @@ public with sharing class HDT_UTL_CaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
-        System.assert(idCase != null);
+        System.assert(caseList != null,'');
+        System.assert(idCase != null,'');
         
     }
 
