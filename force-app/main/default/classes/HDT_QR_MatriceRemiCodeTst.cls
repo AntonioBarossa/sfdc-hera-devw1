@@ -39,7 +39,7 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 			test.stopTest();
 
 			System.assertEquals(true, tMatRemiCodes[0].Id!=null, 'Matrice Remi Code not found');
-			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null);
+			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null, 'value of parameter is not matching');
 		}
 	}
 
@@ -60,7 +60,7 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 			test.stopTest();
 
 			System.assertEquals(true, tMatRemiCodes[0].Id!=null, 'Matrice Remi Code not found');
-			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null);
+			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -92,7 +92,7 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 			test.stopTest();
 
 			System.assertEquals(true, tMatRemiCodes[0].Id!=null, 'Matrice Remi Code not found');
-			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null);
+			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 }

@@ -36,7 +36,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.queryExsistingCityAndType(tSale, tServicePoint, tMapString, tMapDecimal);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
         }
     @isTest
@@ -49,7 +49,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
 
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsBySaleId(tSale.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -62,7 +62,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsBySaleIdFilter(tSale.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -88,7 +88,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getSaleByServicePointFilter(tServicePoint.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -101,7 +101,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getSaleByServicePointFilterCode(tServicePoint.ServicePointCode__c);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -114,7 +114,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getActiveRecordsBySaleId(tSale.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -127,7 +127,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsByOpportunityId(tOpportunity.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'tOpportunity not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -140,7 +140,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsByQuote(tQuote.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -154,7 +154,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsByContract(tContract.Id, tSale.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -168,7 +168,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getRecordsWithContractsByServicePointAndAccount(tServicePoint.Id, tAccount.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
@@ -182,7 +182,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getActiveRecordsByQuoteAndOpportunity(tLstQuote, tLstOpportunity);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(),'Value of parameter is not matching');
         Test.stopTest();
     }
 }

@@ -21,7 +21,7 @@ public with sharing class HDT_QR_SaleTst {
         Sale__c qrSale = new HDT_QR_Sale().getRecordById(tSale.Id, 'Status__c');
     
         System.assertEquals('Attiva', qrSale.Status__c, 'Sale__c Status not populated correctly');
-        System.assertNotEquals('Bozza', qrSale.Status__c);
+        System.assertNotEquals('Bozza', qrSale.Status__c, 'Value of parameter is not matching');
     
         Test.stopTest(); 
 

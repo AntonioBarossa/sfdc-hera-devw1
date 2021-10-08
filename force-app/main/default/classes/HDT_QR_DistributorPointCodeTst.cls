@@ -42,7 +42,7 @@ public with sharing class HDT_QR_DistributorPointCodeTst{
 			test.stopTest();
 
 			System.assertEquals(true, getDistPointCode[0].Id!=null, 'Distributor Code not found');
-			System.assertNotEquals(false, getDistPointCode[0].Id!=null);
+			System.assertNotEquals(false, getDistPointCode[0].Id!=null, 'value of parameter is not matching');
 		}
 	}
 }

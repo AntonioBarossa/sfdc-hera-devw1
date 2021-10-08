@@ -74,9 +74,9 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                                                 CampaignId = [SELECT Id FROM Campaign Limit 1].Id
             )});
 
-            System.assertEquals('Test Label List', listCms[0].Label);
+            System.assertEquals('Test Label List', listCms[0].Label, 'Value of parameter is matching');
 
-            System.assertNotEquals(listCms.isEmpty(), true);
+            System.assertNotEquals(listCms.isEmpty(), true, 'Value of parameter is not matching');
 
         }
 

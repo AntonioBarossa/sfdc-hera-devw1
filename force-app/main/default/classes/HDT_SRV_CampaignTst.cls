@@ -43,7 +43,7 @@ public class HDT_SRV_CampaignTst{
 
 			System.assertEquals('test', testCampaignList[0].Name, 'Campaign was not created correctly');
 
-			System.assertNotEquals('', testCampaignList[0].Name);
+			System.assertNotEquals('', testCampaignList[0].Name, 'Value of parameter is not matching');
 
 		}
 
@@ -81,7 +81,7 @@ public class HDT_SRV_CampaignTst{
 
 			System.assertEquals('testUpd', testCampaignList[0].Name, 'Campaign was not updated correctly');
 
-			System.assertNotEquals('', testCampaignList[0].Name);
+			System.assertNotEquals('', testCampaignList[0].Name, 'Value of parameter is not matching');
 
 		}
 

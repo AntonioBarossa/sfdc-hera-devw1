@@ -129,7 +129,7 @@ public class HDT_SRV_ActivityCustomTst{
 			Test.stopTest();
 
 			System.assertEquals(true, createdActivCust.Id!=null, 'Activity Custom not created');
-			System.assertNotEquals(false, createdActivCust.Id!=null);
+			System.assertNotEquals(false, createdActivCust.Id!=null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -157,7 +157,7 @@ public class HDT_SRV_ActivityCustomTst{
 			Test.stopTest();
 
 			System.assertEquals(false, createdActivCustList.isEmpty(), 'Activity Custom not created');
-			System.assertNotEquals(true, createdActivCustList.isEmpty());
+			System.assertNotEquals(true, createdActivCustList.isEmpty(), 'Value of parameter is not matching');
 		}
 	}
 
@@ -191,7 +191,7 @@ public class HDT_SRV_ActivityCustomTst{
 			                                                 WHERE CausalError__c='testError'];
 
 			System.assertEquals('testError', updatedActivCust[0].CausalError__c, 'Activity Custom not updated');
-			System.assertNotEquals('', updatedActivCust[0].CausalError__c);
+			System.assertNotEquals('', updatedActivCust[0].CausalError__c, 'Value of parameter is not matching');
 		}
 	}
 }

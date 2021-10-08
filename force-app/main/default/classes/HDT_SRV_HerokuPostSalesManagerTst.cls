@@ -72,8 +72,8 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         update testCase;
         Test.stopTest();
         Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case LIMIT 1];
-        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c);
-        System.assertEquals('00002349', testCaseUpd.HerokuPracticeCode__c);
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'Value of parameter is matching');
+        System.assertEquals('00002349', testCaseUpd.HerokuPracticeCode__c, 'Value of parameter is not matching');
         
     }
     @isTest
@@ -85,7 +85,8 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         HDT_SRV_HerokuPostSalesManager.updateFuture(JSON.serialize(testCase));
         Test.stopTest();
         Case testCaseUpd = [SELECT Id, Phase__c FROM Case LIMIT 1];
-        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c, 'Value of parameter is matching');
+        System.assertNotEquals('OKTest', testCaseUpd.Phase__c, 'Value of parameter is not matching');
     }
     @isTest
     static void handleInboundRequestTst()
@@ -134,9 +135,13 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         //Assertions
         Case testCaseUpd = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type = :testCase.Type LIMIT 1];
         List<Case> richPassCase = [SELECT CaseNumber, Phase__c, Type FROM Case WHERE Type != :testCase.Type];
-        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c);
-        System.assertEquals(statusCode, 400);
-        System.assertEquals(richPassCase.size(), 3);
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.Phase__c, 'Value of parameter is matching');
+        System.assertEquals(statusCode, 400, 'Value of parameter is matching');
+        System.assertEquals(richPassCase.size(), 3, 'Value of parameter is matching');
+
+        System.assertNotEquals('OKTest', testCaseUpd.Phase__c, 'Value of parameter is not matching');
+        System.assertNotEquals(statusCode, 200, 'Value of parameter is not matching');
+        System.assertNotEquals(richPassCase.size(), 4, 'Value of parameter is not matching');
     }   
     @isTest
     static void handleRichPassResponseFieldTst()
@@ -151,6 +156,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.startTest();
         responseFieldList = herokuSrv.handleRichPassResponseField(testCase);
         Test.stopTest();
+        System.Assert(responseFieldList != null);
         System.Assert(responseFieldList != null);
     }
     @isTest

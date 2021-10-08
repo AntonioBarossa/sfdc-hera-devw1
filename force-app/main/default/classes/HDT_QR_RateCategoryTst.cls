@@ -34,7 +34,7 @@ public class HDT_QR_RateCategoryTst{
 			test.stopTest();
 
 			System.assertEquals(true, tRateCat[0].Id!=null, 'RateCategory not found');
-			System.assertNotEquals(false, tRateCat[0].Id!=null);
+			System.assertNotEquals(false, tRateCat[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 }

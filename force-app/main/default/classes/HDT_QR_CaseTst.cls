@@ -36,7 +36,7 @@ static void testgetRecordById() {
 
     System.assertEquals('In Lavorazione', testCase.Status, 'Case Status not populated correctly');
 
-    System.assertNotEquals('Draft', testCase.Status);
+    System.assertNotEquals('Draft', testCase.Status,'value of parameter is not matching');
 
     Test.stopTest();
     
@@ -61,7 +61,7 @@ static void testgetChageNonRegMeterByOrder() {
 
     System.assertEquals(true, testCase.isEmpty(), 'Case list not empty');
 
-    System.assertNotEquals(false, testCase.isEmpty());
+    System.assertNotEquals(false, testCase.isEmpty(), 'value of parameter is not matching');
 
     Test.stopTest();
     }
@@ -83,7 +83,7 @@ static void testgetChageNonRegMeterByOrder() {
     
         System.assertEquals('BP/CA - errata categoria', testCase.Type, 'Case type not correct');
     
-        System.assertNotEquals('', testCase.Type);
+        System.assertNotEquals('', testCase.Type, 'value of parameter is not matching');
     
         Test.stopTest();
     
@@ -108,7 +108,7 @@ static void testgetChageNonRegMeterByOrder() {
     
         System.assertEquals('In Lavorazione', testCase[0].Status, 'Case status not correct');
     
-        System.assertNotEquals('', testCase[0].Status);
+        System.assertNotEquals('', testCase[0].Status, 'value of parameter is not matching');
     
         Test.stopTest();
     
@@ -137,7 +137,7 @@ static void testgetChageNonRegMeterByOrder() {
     
         System.assertEquals(true, testCase.isEmpty(), 'Case list not empty');
 
-        System.assertNotEquals(false, testCase.isEmpty());
+        System.assertNotEquals(false, testCase.isEmpty(), 'value of parameter is not matching');
     
         Test.stopTest();
     
