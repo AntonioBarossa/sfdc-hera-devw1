@@ -265,12 +265,57 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             String recordId27 = caseList[26].Id;
             caseList[26].Type = 'Variazione Anagrafica Cliente';
             caseList[26].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[26].Category__c = 'Famiglie';
+            caseList[26].CustomerMarking__c = 'D1 - Persona fisica';
             caseList[26].PhoneNumber__c = '9879873425';
             caseList[26].Email__c = 'myEmail@email.com';
             caseList[26].Mobile__c = '9872345123';
             caseList[26].CertifiedEmail__c = 'myCertifiedEmail@certifiedEmail.com';
             caseList[26].Fax__c  = 'myFax';
             String fields27 = JSON.serialize(caseList[26]);
+
+            /*accList[0].FiscalCode__c = '';
+            update accList;
+            String recordId52 = caseList[51].Id;
+            caseList[51].Type = 'Variazione Anagrafica Cliente';
+            caseList[51].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[51].Category__c = 'Piccoli Condomini';
+            caseList[51].CustomerMarking__c = 'D5 - Condominio';
+            String fields52 = JSON.serialize(caseList[51]);*/
+            
+            String recordId55 = caseList[54].Id;
+            caseList[54].Type = 'Variazione Anagrafica Cliente';
+            caseList[54].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[54].Category__c = 'Aziende Soho';
+            caseList[54].CustomerMarking__c = 'D3 - Azienda';
+            String fields55 = JSON.serialize(caseList[54]);
+
+
+            accList[0].FiscalCode__c = '1234568030155487';
+            update accList;
+
+            String recordId53 = caseList[52].Id;
+            caseList[52].Type = 'Variazione Anagrafica Cliente';
+            caseList[52].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[52].Category__c = 'Aziende Soho';
+            caseList[52].CustomerMarking__c = 'D2 - Ditta individuale';
+            String fields53 = JSON.serialize(caseList[52]);
+
+            String recordId54 = caseList[53].Id;
+            caseList[53].Type = 'Variazione Anagrafica Cliente';
+            caseList[53].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[53].Category__c = 'Piccoli Condomini';
+            caseList[53].CustomerMarking__c = 'D4 - Parti Comuni';
+            String fields54 = JSON.serialize(caseList[53]);
+            
+            /*String recordId56 = caseList[55].Id;
+            caseList[55].Type = 'Variazione Anagrafica Cliente';
+            caseList[55].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[55].Category__c = 'Aziende Soho';
+            caseList[55].CustomerMarking__c = 'D6 - Associazione';
+            String fields56 = JSON.serialize(caseList[55]);*/
+
+            
 
             String recordId28 = caseList[27].Id;
             caseList[27].Type = 'Variazione Anagrafica Cliente';
@@ -465,6 +510,11 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             myClass.validate(fields25, recordId25);
             myClass.validate(fields26, recordId26);
             //myClass.validate(fields27, recordId27);
+            //myClass.validate(fields52, recordId52);
+            myClass.validate(fields55, recordId55);
+            myClass.validate(fields53, recordId53);
+            //myClass.validate(fields54, recordId54);
+            //myClass.validate(fields56, recordId56);
             myClass.validate(fields28, recordId28);
             myClass.validate(fields29, recordId29);
             myClass.validate(fields30, recordId30);
@@ -489,6 +539,11 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             myClass.validate(fields49, recordId48);
             //myClass.validate(fields50, recordId48);
             myClass.validate(fields51, recordId50);
+            
+
+
+
+
 
 
 
