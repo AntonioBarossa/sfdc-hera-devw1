@@ -659,7 +659,31 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //generateSection20
-    
+    @isTest
+    private static void generateSection20Test(){
+        
+        //SETUP
+        mySetup();
+        
+        Account myItem = [SELECT Id FROM Account];
+        
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Account', itemVasList);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        
+        //TESTING - CO|
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('generateSection20', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1 length ' + result1.length());
+        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        
+    }
     
     
     //generateSection40
