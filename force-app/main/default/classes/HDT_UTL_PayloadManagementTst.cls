@@ -348,7 +348,6 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 7030
         primolivello.put('societa', 'ESTENERGY SPA');
-        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result2 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
@@ -359,7 +358,6 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 7015
         primolivello.put('societa', 'HERA COMM NORDEST');
-        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result3 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
@@ -370,12 +368,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 1070
         primolivello.put('societa', '6 USZE TAHAM');
-        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String result4 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('1070'.equalsIgnoreCase(result1), 'Risultato non è 1070');
+        System.debug('result4: ' + result1);
+        System.assert('1070'.equalsIgnoreCase(result4), 'Risultato non è 1070');
         
         //TODO: POSSIBILE ESTENSIONE CON COPERTURA DEL CATCH SE EstrattoConto PUNTA A NULL
         
