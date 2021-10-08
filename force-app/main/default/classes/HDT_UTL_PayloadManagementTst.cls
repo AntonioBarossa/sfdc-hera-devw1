@@ -563,7 +563,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         Map<String,Object> formParams = new Map<String,Object>();
         
-        //TESTING
+        //TESTING - REGULAR
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
         
@@ -572,7 +572,16 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         String awaitedResult = acc.VATGroup__c + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(acc.VATGroupStartDate__c));
         System.assert(awaitedResult.equalsIgnoreCase(result1), 'Risultato non è ' + awaitedResult);
-        formParams.put('Contesto', 'Case');
+        
+        
+        
+        //TESTING - empty
+        acc.VATGroupStartDate__c = Date.today();
+        String result2 = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert(''.equalsIgnoreCase(result2), 'Risultato non è Stringa vuota');
         
     }
     
