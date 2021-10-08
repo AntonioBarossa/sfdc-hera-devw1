@@ -70,6 +70,7 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.contactIndividualId   = temp.Contact.IndividualId     ;
             n.bpInterlocutor        = temp.Contact.BPInterlocutor__c;
             n.endDate               = String.valueOf(temp.EndDate)  ;
+            n.startDate             = String.valueOf(temp.StartDate);
            lWrap.add(n);
         }
         //HRAWRM-500 End 04/10/2021
@@ -90,16 +91,17 @@ public with sharing class HDT_LC_ReletedListAccount {
 
     public class HDT_WRP_AccountContactRelation {
 
-       public String AccountId='';
-       public String contactId='';
-       public String contactName='';
-       public String roles='';
-       public String contactHomePhone='';
-       public String contactMobilePhone='';
-       public String contactEmail='';
-       public String contactIndividualId='';
-       public String bpInterlocutor='';
-       public String endDate='';
+       public String AccountId=''           ;
+       public String contactId=''           ;
+       public String contactName=''         ;
+       public String roles=''               ;
+       public String contactHomePhone=''    ;
+       public String contactMobilePhone=''  ;
+       public String contactEmail=''        ;
+       public String contactIndividualId='' ;
+       public String bpInterlocutor=''      ;
+       public String endDate=''             ;
+       public String startDate=''           ;
     }
     //HRAWRM-500 End 04/10/2021
 
