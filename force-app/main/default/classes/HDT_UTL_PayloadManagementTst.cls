@@ -258,7 +258,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         mySetup();
         
         /*
-        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Order];
+        Order myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorName__c, CommodityFormula__c FROM Order];
         myItem.SupplyCity__c = 'COLBORDOLO';
         */
         Case myItem = [SELECT Id, SalesCompany__c, SupplyCity__c, DistributorFormula__c, CommodityFormula__c FROM Case];
