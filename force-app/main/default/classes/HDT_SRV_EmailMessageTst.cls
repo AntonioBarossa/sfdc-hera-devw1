@@ -49,7 +49,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         List<EmailMessage> result = [SELECT Id FROM EmailMessage];
         
         //ASSERTS
-        System.assertEquals(1, result.size());
+        System.assertEquals(1, result.size(), 'value of parameter is matching');
         
     }
     
@@ -87,7 +87,7 @@ public with sharing class HDT_SRV_EmailMessageTst {
         }
         
         //ASSERTS
-        System.assert(caught);
+        System.assert(caught, 'value of parameter is matching');
         
     }
     
@@ -119,6 +119,10 @@ public with sharing class HDT_SRV_EmailMessageTst {
         //TESTING
 		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkEmailSender(emailList);
+        
+        List<Case> cases = [Select id From Case where Phase__c = 'In attesa risposta Mail'];
+        System.assertEquals(1, cases.size(), 'value of parameter is matching');
+        System.assertNotEquals(null, cases, 'value of parameter is not matching');
         
     }
     
@@ -152,6 +156,10 @@ public with sharing class HDT_SRV_EmailMessageTst {
         //TESTING
 		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkEmailSender(emailList);
+        
+        List<Case> cases = [Select id From Case where Phase__c = 'In attesa risposta parere'];
+        System.assertEquals(1, cases.size(), 'value of parameter is matching');
+        System.assertNotEquals(null, cases, 'value of parameter is not matching');        
         
     }
     
@@ -188,6 +196,9 @@ public with sharing class HDT_SRV_EmailMessageTst {
 		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkIncomingEmails(emailList);
         
+		List<Case> cases = [Select id From Case where Phase__c = 'Risposta Ricevuta'];
+        System.assertEquals(1, cases.size(), 'value of parameter is matching');
+        System.assertNotEquals(null, cases, 'value of parameter is not matching');
     }
     
     ///Richiesta Parere
@@ -221,6 +232,10 @@ public with sharing class HDT_SRV_EmailMessageTst {
 		System.debug(debugString + ' - Inizio testing');
         HDT_SRV_EmailMessage.checkIncomingEmails(emailList);
         
+        List<Case> cases = [Select id From Case where Phase__c = 'Completata'];        
+        System.assertEquals(1, cases.size(), 'value of parameter is matching');
+        System.assertNotEquals(null, cases, 'value of parameter is not matching');
+        
     }
     
     //EMPTY CONSTRUCTOR TEST
@@ -232,7 +247,10 @@ public with sharing class HDT_SRV_EmailMessageTst {
 		System.debug(debugString);
         
         //TESTING
-        HDT_SRV_EmailMessage test = new HDT_SRV_EmailMessage();
+        Object test = new HDT_SRV_EmailMessage();
+        
+        System.assertEquals(true, (test instanceof HDT_SRV_EmailMessage), 'value of parameter is matching');
+        System.assertNotEquals(null, test, 'value of parameter is not matching');     
         
     }
     

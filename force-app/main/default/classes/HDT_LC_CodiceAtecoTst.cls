@@ -43,7 +43,7 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 		System.debug('tAtecoMatrix2 = '+tAtecoMatrix2);
 
 		System.assertEquals('Roma', tAtecoMatrix2[0].City__c, 'Ateco Matrix return is wrong');
-		System.assertNotEquals('', tAtecoMatrix2[0].City__c);
+		System.assertNotEquals('', tAtecoMatrix2[0].City__c, 'value of parameter is not matching');
 		Test.stopTest();
 	}
 
@@ -54,8 +54,12 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 
 		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].id, 'Bozza');
+        
+        Map<String,String> params =  new Map<String,String>();
+        params.put('atecoCode','atecoCode');
+        params.put('istatCode','istatCode');
 
-		HDT_LC_CodiceAteco.saveAtecoCode(orders[0], 'test');
+		HDT_LC_CodiceAteco.saveAtecoCode(orders[0], params);
 
 		Order tOrder=[SELECT Id, AtecoCode__c
 		              FROM Order
@@ -63,8 +67,8 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 
 		System.debug('tOrder = '+tOrder);
 
-		System.assertEquals('test', tOrder.AtecoCode__c, 'Order not updated');
-		System.assertNotEquals('', tOrder.AtecoCode__c);
+		System.assertEquals('atecoCode', tOrder.AtecoCode__c, 'Order not updated');
+		System.assertNotEquals('', tOrder.AtecoCode__c, 'value of parameter is not matching');
 		Test.stopTest();
 	}
 }
