@@ -317,6 +317,37 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     ///EC GC
+    @isTest
+    private static void calculateCompanyCodeTest_Account(){
+        
+        //SETUP
+        mySetup();
+        
+        Map<String,Object> primolivello = new Map<String,Object>();
+        primolivello.put('societa', 'HERA COMM MARCHE');
+                
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(primolivello);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('EstrattoConto', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'EC');
+        
+        //TESTING Context Account
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        
+        //RETRIEVING DATA
+        HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm S.p.A.'];
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert(myData.CompanyCode__c.equalsIgnoreCase(result1), 'Risultato non è ' + myData.CompanyCode__c);
+        
+    }
     
     
     
