@@ -505,7 +505,6 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
         inputs.put('Case', itemVasList);
         
-        
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Case');
         
@@ -521,9 +520,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         
-        
         //TESTING Context Case - Preventivi
-        //TODO: ESPORTARE IN FACTORY
         Case myPreventivo = new Case();
         myPreventivo.Amount__c = 5.0;
         myPreventivo.FixedAmount__c = 2.0;
@@ -535,6 +532,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         itemVasList = new List<SObject>();
         itemVasList.add(myPreventivo);
+        inputs.put('Case', itemVasList);
         
         String result2 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
         
@@ -547,6 +545,38 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //checkGruppoIva
+    @isTest
+    private static void calculateQuotationAmountTest(){
+        
+        //SETUP
+        Account acc = new Account();
+        acc.VATGroup__c = 'Fake_PIVA';
+        acc.VATGroupStartDate__c = Date.today().addDays(-1);
+        acc.IsVATGroupJoined__c = true;
+        acc.VATGroupEndDate__c = Date.today().addDays(10);
+        
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(acc);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Case', itemVasList);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Account');
+        
+        
+        //TESTING Context Case - Empty Amount
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        
+        String awaitedResult = acc.VATGroup__c + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(acc.VATGroupStartDate__c));
+        System.assert(awaitedResult.equalsIgnoreCase(result1), 'Risultato non è ' + awaitedResult);
+        formParams.put('Contesto', 'Case');
+        
+    }
     
     
     
