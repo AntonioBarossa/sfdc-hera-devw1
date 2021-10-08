@@ -180,6 +180,8 @@ public inherited sharing class HDT_LC_SaleVas {
     @AuraEnabled
     public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records;
+        system.debug('searchString '+searchString);
+        system.debug('key '+key);
 
         switch on key {
             when 'ORDERS_IN_PROGRESS_VAS'{
@@ -222,8 +224,12 @@ public inherited sharing class HDT_LC_SaleVas {
             //Disattivazione VAS - END
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
+                Set<Id> contractIds = new Set<Id>();
+                for(Order o : [SELECT ContractReference__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' AND AccountId=:searchString AND ContractReference__c!=null WITH SECURITY_ENFORCED]){
+                    contractIds.add(o.ContractReference__c);
+                }
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
-                    WHERE AccountId=:searchString AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS' WITH SECURITY_ENFORCED];
+                    WHERE Id IN :contractIds WITH SECURITY_ENFORCED];
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
