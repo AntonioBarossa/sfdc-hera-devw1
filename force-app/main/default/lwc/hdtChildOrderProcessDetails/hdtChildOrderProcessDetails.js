@@ -94,6 +94,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track outputFieldObj = {};
     @track isVolture;
     @track isReading;
+    @track resumeFromDraftReading = false;
     @track readingDisabled = false;
     //FINE SVILUPPI EVERIS
     sysdate(){
@@ -105,20 +106,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleSectionDataToSubmitCollection(event){
         //EVERIS
         if(event.target.fieldName === 'EffectiveDate__c' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            if(this.readingDisabled || this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0){
                 console.log('EffectiveDateValue -> ' + event.target.value);
                 voltureEffectiveDateCheck({effectiveDate: event.target.value})
                     .then(result => {
                         console.log('Result -> '+result);
                         if(result === 1){
-                            this.readingDisabled = false;
-                        } else {
                             this.readingDisabled = true;
+                        } else {
+                            this.readingDisabled = false;
                         }
                     }).catch(error => {
                         console.log('Error -> ' +error);
                     });
-            }
+            
         }
         //EVERIS
         if(event.target.fieldName !== undefined){
@@ -726,6 +726,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             try{
                 this.template.querySelector('c-hdt-self-reading').handleSaveButton();
+                this.isSavedReading = false;
+                this.resumeFromDraftReading = true;
             } catch(e){
                 console.log('Inside Exception');
                 console.log('Here');
@@ -770,7 +772,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         //INIZIO SVILUPPI EVERIS
         //LA VARIABILE nextIndex RIPORTA L'INDICE CORRETTO
-        let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading'
+        let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
         //FINE SVILUPPI EVERIS 
@@ -881,7 +883,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','ServicePointCode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','ImplantType__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','SAPImplantCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','CustomerCategory__c',this.typeVisibility('both'),false,true,'','')
+                    new fieldData('','CustomerCategory__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','MeterSN__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Resident__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','SapContractCode__c',this.typeVisibility('both'),false,true,'','')
                 ]
             },
             {
