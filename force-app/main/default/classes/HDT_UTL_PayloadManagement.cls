@@ -453,6 +453,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             payloadSection += String.join(record, div);
         }
+        System.debug('payloadSection ' + payloadSection);
 
         return payloadSection;
     }
