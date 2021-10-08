@@ -546,7 +546,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     //checkGruppoIva
     @isTest
-    private static void calculateQuotationAmountTest(){
+    private static void checkGruppoIvaTest(){
         
         //SETUP
         Account acc = new Account();
@@ -567,7 +567,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Case - Empty Amount
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        String result1 = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
         
         //ASSERTS
         System.debug('result1: ' + result1);
