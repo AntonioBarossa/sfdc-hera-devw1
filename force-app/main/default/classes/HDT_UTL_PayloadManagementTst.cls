@@ -283,7 +283,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///Account
     @isTest
-    private static void calculateCompanyCodeTest_Case(){
+    private static void calculateCompanyCodeTest_Account(){
         
         //SETUP
         mySetup();
