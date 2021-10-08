@@ -1900,11 +1900,11 @@
             <field>Market__c</field>
             <table>Order</table>
         </columns>
-        <columns>
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>QuoteType__c</field>
             <table>Order</table>
-        </columns>
+        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>QuotationType__c</field>
@@ -2578,16 +2578,16 @@
             <field>Place__c</field>
             <table>Order.Activities_Custom__r</table>
         </columns>
-        <columns>
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Priority__c</field>
             <table>Order.Activities_Custom__r</table>
-        </columns>
-        <columns>
+        </columns> -->
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>wrts_prcgvr__Priority__c</field>
             <table>Order.Activities_Custom__r</table>
-        </columns>
+        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Process__c</field>
