@@ -56,6 +56,7 @@ global with sharing class HDT_WS_MrrRequest {
             
             //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
             List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
+            List<wrts_prcgvr__Activity__c> dataForCheckEsitiIntermedi = new List<wrts_prcgvr__Activity__c>();
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
                 for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
@@ -66,11 +67,25 @@ global with sharing class HDT_WS_MrrRequest {
                             for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
                             dataForAttivitaTracciaturaCreation.add(newData);
                         }
+                        if('FASE'.equalsIgnoreCase(curField.name) && 'Completata'.equalsIgnoreCase(curField.value)){
+                            wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
+                                if('RECORD_ID'.equalsIgnoreCase(curField2.name) && Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
+                                    tempAct.Case__c = curField2.value;
+                                }
+                                if('RECORD_ID'.equalsIgnoreCase(curField2.name) && Schema.Order.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
+                                    tempAct.Order__c = curField2.value;
+                                }
+                            }
+                            dataForCheckEsitiIntermedi.add(tempAct);
+                        }
                     }
                 }
             }
-            System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + dataForAttivitaTracciaturaCreation);
+            System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
+            System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
             if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+            if(dataForCheckEsitiIntermedi.size() > 0) HDT_UTL_Scarti.checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
             //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
 
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
