@@ -58,7 +58,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
         contractList[0].ServicePoint__c = servPoint.Id;
         contractList[0].StartDate = Date.today();
-        insert Contract;
+        insert contractList;
         
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
     }
