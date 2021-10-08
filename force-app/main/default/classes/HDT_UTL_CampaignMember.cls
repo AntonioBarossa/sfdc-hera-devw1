@@ -64,8 +64,6 @@ public with sharing class HDT_UTL_CampaignMember {
                                 IsDefault = cmdt.Default__c
                             );
                             campaignMemberStatuses.add(cmStatus);
-                        } else {
-                            
                         }
                     } else if (c.Category__c == 'Campagna Marketing Cloud' && cmdt.Category__c == 'Marketing Cloud') {
                         CampaignMemberStatus cmStatus = new CampaignMemberStatus(
@@ -75,8 +73,6 @@ public with sharing class HDT_UTL_CampaignMember {
                             IsDefault = cmdt.Default__c
                         );
                         campaignMemberStatuses.add(cmStatus);
-                    } else {
-    
                     }
                 } 
             }
