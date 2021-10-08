@@ -215,7 +215,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
         }
         System.debug('MRREQUEST orderNameSet' + JSON.serializePretty(orderNameSet));
-        if(orderNameSet.size() > 0){
+        if(!orderNameSet.isEmpty()){
             for(Order curOrder : [SELECT Id FROM Order WHERE OrderNumber IN :orderNameSet]){
                 wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
                 tempAct.Order__c = curOrder.Id;
@@ -224,8 +224,8 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
         System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
-        if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
-        if(dataForCheckEsitiIntermedi.size() > 0) HDT_UTL_Scarti.checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
+        if(!dataForAttivitaTracciaturaCreation.isEmpty()) createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+        if(!dataForCheckEsitiIntermedi.isEmpty()) checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
     }
 
 
