@@ -1,5 +1,6 @@
 public with sharing class HDT_LC_RequestVisitD2DCreateForm {
 
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
@@ -97,7 +98,9 @@ public with sharing class HDT_LC_RequestVisitD2DCreateForm {
                 listAccountId.add(pc.agency__c);
                 System.debug('hereFOR:');
             }
-            List<Account> listAccount = [Select id,name from account where id IN : listAccountId];
+
+            // List<Account> listAccount = [Select id,name from account where id IN : listAccountId];
+            List<Account> listAccount = accountQr.getRecordsById(listAccountId, 'Id, Name');
             
             System.debug('testDistribu' + listAccount);
             // List<Account> accounts = [SELECT Id, Name FROM Account];
