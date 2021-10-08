@@ -54,6 +54,17 @@ public inherited sharing class HDT_SRV_Contact {
     }
 
     /**
+     * @description createRecords
+     * @param contacts
+     * @return Contact
+     */
+    public List<Contact> createRecords(List<Contact> contacts){
+        checkCreateAccess(contacts[0]);
+        HDT_UTL_DatabaseService.insertSObject(contacts);
+        return contacts;
+    }
+
+    /**
      * @description checkUpdateAccess
      * @param contact
      */
@@ -79,6 +90,7 @@ public inherited sharing class HDT_SRV_Contact {
      * @return List<Contact>
      */
     public List<Contact> updateRecord(List<Contact> contacts){
+        checkUpdateAccess(contacts[0]);
         HDT_UTL_DatabaseService.updateSObject(contacts);
         return contacts;
     }

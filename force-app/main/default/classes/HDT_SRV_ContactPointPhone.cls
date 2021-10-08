@@ -9,6 +9,8 @@ public with sharing class HDT_SRV_ContactPointPhone {
     private static final String UPDATEPERMISSION = 'update';
     private static final String CREATEPERMISSION = 'create';
     private static final String UPSERTPERMISSION = 'upsert';
+    private static final String DELETEPERMISSION = 'delete';
+
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
 
     public static void checkAccessInit(String fields, String crud){
@@ -48,5 +50,13 @@ public with sharing class HDT_SRV_ContactPointPhone {
     public static void updateRecord(List<ContactPointPhone> contactPointPhoneList){
         HDT_UTL_DatabaseService.updateSObject(contactPointPhoneList);
     }
-
+    public static void checkDeleteAccess(ContactPointPhone contact){
+        List<String> fields = helperMethods.getObjAttrList(contact);
+        checkAccessInit(String.join(fields, ','), DELETEPERMISSION);
+    }
+    public static void deleteRecord(List<ContactPointPhone> contactPointPhoneList){
+        checkDeleteAccess(contactPointPhoneList[0]);
+        HDT_UTL_DatabaseService.deleteSObject(contactPointPhoneList);
+        
+    }
 }

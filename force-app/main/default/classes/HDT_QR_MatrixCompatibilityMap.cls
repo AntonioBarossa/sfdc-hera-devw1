@@ -12,6 +12,6 @@ public with sharing class HDT_QR_MatrixCompatibilityMap {
                 FROM HDT_MatrixCompatibilityMap__mdt 
                 WHERE ProcessType__c=:processType 
                 AND Type__c=:type 
-                ];
+                WITH SECURITY_ENFORCED];
     }
 }
