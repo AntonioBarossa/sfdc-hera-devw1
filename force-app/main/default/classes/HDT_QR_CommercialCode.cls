@@ -25,6 +25,6 @@ public with sharing class HDT_QR_CommercialCode {
         ];
     }
     public List<AggregateResult> getCommercialCodeNumber(Set<Id> listIdCampaign){
-        return [SELECT count(Id) conteggio,Campaign__c FROM CommercialCode__c WHERE Campaign__c IN: listIdCampaign GROUP BY Campaign__c ];
+        return [SELECT count(Id) conteggio,Campaign__c FROM CommercialCode__c WHERE Campaign__c IN: listIdCampaign WITH SECURITY_ENFORCED GROUP BY Campaign__c ];
     }
 }
