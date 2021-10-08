@@ -114,6 +114,20 @@
                 <elementReference>ShipToDifferentAddress</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Resident__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.Resident__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.WithdrawalClass__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.WithdrawalClass__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_0</targetReference>
         </connector>
@@ -164,7 +178,7 @@
                 <leftValueReference>IsCompatible</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
