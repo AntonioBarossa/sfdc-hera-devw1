@@ -533,6 +533,9 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         myPreventivo.SupplyType__c = 'Domestico';
         myPreventivo.Cluster__c = 'Preventivi';
         
+        itemVasList = new List<SObject>();
+        itemVasList.add(myPreventivo);
+        
         String result2 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
         
         //ASSERTS
