@@ -348,6 +348,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 7030
         primolivello.put('societa', 'ESTENERGY SPA');
+        formParams.put('EstrattoConto', JSON.serialize(itemVasList));
         String result2 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
@@ -358,6 +359,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 7015
         primolivello.put('societa', 'HERA COMM NORDEST');
+        formParams.put('EstrattoConto', JSON.serialize(itemVasList));
         String result3 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
@@ -368,6 +370,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 1070
         primolivello.put('societa', '6 USZE TAHAM');
+        formParams.put('EstrattoConto', JSON.serialize(itemVasList));
         String result4 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
