@@ -333,7 +333,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'EC');
-        formParams.put('EstrattoConto', itemVasList);
+        formParams.put('EstrattoConto', JSON.serialize(itemVasList));
         
         
         //TESTING Context EC - 2060
