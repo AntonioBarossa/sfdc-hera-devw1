@@ -278,7 +278,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
         system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
         system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
-        List<ComfortQualityCall__c> comfortQualityList = order.RecordType.DeveloperName == 'HDT_RT_VAS' ? HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order) : HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+
+        Boolean isVasProcess = order.RecordType.DeveloperName == 'HDT_RT_VAS';
+        system.debug('quality log 1 isVasProcess: ' + isVasProcess);
+
+        List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
+
+        if (order.RecordType.DeveloperName == 'HDT_RT_VAS') {
+            comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order);
+        } else {
+            comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+        }
 
         system.debug('quality log 2: ' + comfortQualityList);
 
@@ -297,7 +307,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             if (comfortQualityList.size() > 1) {
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
-                    if (cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c) {
+                    if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == order.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c){
+                        comforQualityRes = cqc;
+                        break;
+                    } else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
                         comforQualityRes = cqc;
                         break;
                     }
