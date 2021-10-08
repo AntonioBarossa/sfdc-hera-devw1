@@ -440,8 +440,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.debug('result1: ' + result1);
         System.assert('SIP'.equalsIgnoreCase(result1), 'Risultato non è SIP');
         
-        
-        
+        //COMMENTATO - FIELD DocumentalProcessType__c NON WRITEABLE.
+        /*
         //TESTING Context Case - NOP
         myItem.QuotationType__c = 'Rapido';
         myItem.DocumentalProcessType__c = 'Aumento Potenza';
@@ -484,7 +484,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //ASSERTS
         System.debug('result5: ' + result5);
         System.assert(''.equalsIgnoreCase(result5), 'Risultato non è Stringa vuota');
-        
+        */
     }
     
     
