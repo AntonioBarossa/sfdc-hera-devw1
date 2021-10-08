@@ -4,9 +4,23 @@
     <description>campo activity da matchare.</description>
     <externalId>false</externalId>
     <label>Società di Vendita</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hera Comm Marche</fullName>
+                <default>false</default>
+                <label>Hera Comm Marche</label>
+            </value>
+            <value>
+                <fullName>Hera Comm S.p.A.</fullName>
+                <default>false</default>
+                <label>Hera Comm S.p.A.</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

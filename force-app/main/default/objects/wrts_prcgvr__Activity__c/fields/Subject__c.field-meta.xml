@@ -58,6 +58,11 @@
                 <label>Analisi Reclamo Operatività CC</label>
             </value>
             <value>
+                <fullName>Analisi situazione su CRM per gestione</fullName>
+                <default>false</default>
+                <label>Analisi situazione su CRM per gestione</label>
+            </value>
+            <value>
                 <fullName>Assistenza procedurale e gestione pratiche</fullName>
                 <default>false</default>
                 <label>Assistenza procedurale e gestione pratiche</label>
@@ -66,6 +71,11 @@
                 <fullName>Attività concordate</fullName>
                 <default>false</default>
                 <label>Attività concordate</label>
+            </value>
+            <value>
+                <fullName>Autolettura inferiore lettura migrazione</fullName>
+                <default>false</default>
+                <label>Autolettura inferiore lettura migrazione</label>
             </value>
             <value>
                 <fullName>Bonus mancante</fullName>
@@ -176,6 +186,11 @@
                 <fullName>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</fullName>
                 <default>false</default>
                 <label>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</label>
+            </value>
+            <value>
+                <fullName>Copia contratto su CRM precedente</fullName>
+                <default>false</default>
+                <label>Copia contratto su CRM precedente</label>
             </value>
             <value>
                 <fullName>Copia documentazione</fullName>
@@ -298,6 +313,11 @@
                 <label>Gestione cliente a portafoglio</label>
             </value>
             <value>
+                <fullName>Gestione pratiche in volo</fullName>
+                <default>false</default>
+                <label>Gestione pratiche in volo</label>
+            </value>
+            <value>
                 <fullName>Incongruenze SAP</fullName>
                 <default>false</default>
                 <label>Incongruenze SAP</label>
@@ -326,6 +346,11 @@
                 <fullName>Invito a fatturare non ricevuto</fullName>
                 <default>false</default>
                 <label>Invito a fatturare non ricevuto</label>
+            </value>
+            <value>
+                <fullName>Knowledge - segnalazione articoli</fullName>
+                <default>false</default>
+                <label>Knowledge - segnalazione articoli</label>
             </value>
             <value>
                 <fullName>Mancata archiviazione documenti di fatturazione (PDF/XML)</fullName>
@@ -371,6 +396,11 @@
                 <fullName>MPI Profilazione Utente-Anomalie</fullName>
                 <default>false</default>
                 <label>MPI Profilazione Utente-Anomalie</label>
+            </value>
+            <value>
+                <fullName>Pagamenti su CRM precedente</fullName>
+                <default>false</default>
+                <label>Pagamenti su CRM precedente</label>
             </value>
             <value>
                 <fullName>Permessi File Server rptcomfs.hdc.local</fullName>
@@ -661,6 +691,11 @@
                 <fullName>Verifica fatturazione elettronica</fullName>
                 <default>false</default>
                 <label>Verifica fatturazione elettronica</label>
+            </value>
+            <value>
+                <fullName>Verifica fatturazione su CRM precedente</fullName>
+                <default>false</default>
+                <label>Verifica fatturazione su CRM precedente</label>
             </value>
             <value>
                 <fullName>Verifica fatturazione TARI e TCP</fullName>

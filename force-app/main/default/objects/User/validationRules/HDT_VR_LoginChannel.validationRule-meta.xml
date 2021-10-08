@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_LoginChannel</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR($Profile.Name = &apos;Hera Standard User&apos;,
+				   $Profile.Name = &apos;Hera Standard User OneShot&apos;,
+				   $Profile.Name = &apos;Hera Door2Door Partner User&apos;,
+				   $Profile.Name = &apos;Hera Teleseller Partner User&apos;
+    ), 
+				ISPICKVAL(LoginChannel__c , &apos;Heroku&apos;)
+)</errorConditionFormula>
+    <errorMessage>Il Canale di Login selezionato non è disponibile per l&apos;utenza</errorMessage>
+</ValidationRule>
