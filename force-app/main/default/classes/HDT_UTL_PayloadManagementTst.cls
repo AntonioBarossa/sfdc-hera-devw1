@@ -383,8 +383,26 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     
-    
     ///else
+    @isTest
+    private static void calculateCompanyCodeTest_Else(){
+        
+        //SETUP
+        mySetup();
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Fake');
+        
+        //TESTING Context Account
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert(''.equalsIgnoreCase(result1), 'Risultato non è Stringa vuota.');
+        
+    }
     
     
     
