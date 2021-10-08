@@ -559,13 +559,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         itemVasList.add(acc);
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
-        inputs.put('Case', itemVasList);
+        inputs.put('Account', itemVasList);
         
         Map<String,Object> formParams = new Map<String,Object>();
-        formParams.put('Contesto', 'Account');
         
-        
-        //TESTING Context Case - Empty Amount
+        //TESTING
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
         
