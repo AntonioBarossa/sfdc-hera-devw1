@@ -13,9 +13,6 @@
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
-                <field>ToPublishDate__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>CommercialDocumentationType__c</field>
             </layoutItems>
         </layoutColumns>
