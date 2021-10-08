@@ -13,9 +13,20 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //DEBUG
         String debugString = TEST_NAME + ' - mySetup';
         
-        //BODY
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        //ACCOUNT
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+        Account acc = accList[0];
+        acc.Name = 'DIRETTO EDISON-10R0000051';//CUSTOM NAME FOR METADATA
+        insert acc;
+        
+        //SERVICE POINT
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        ServicePoint__c servPoint = servPointList[0];
+        servPoint.Distributor__c = accList[0].Id;
+        insert servPoint;
+        
+        
+        //SALE
         List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
         
         //PRODUCT
