@@ -2789,6 +2789,62 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	/**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDynamicSection method
+     * @history
+     * @Created 05/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__DynamicSection__c> createDynamicSection(Integer amount, Boolean doInsert, Id fieldTemplateId) {
+        
+        List<wrts_prcgvr__DynamicSection__c> sections = new List<wrts_prcgvr__DynamicSection__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__DynamicSection__c section = new wrts_prcgvr__DynamicSection__c(
+                wrts_prcgvr__Layout__c = fieldTemplateId
+            );
+            
+            sections.add(section);
+        }
+        
+        if (doInsert){
+            
+            insert sections;
+        }
+        
+        return sections;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDynamicField method
+     * @history
+     * @Created 05/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__DynamicField__c> createDynamicField(Integer amount, Boolean doInsert, Id sectionId) {
+        
+        List<wrts_prcgvr__DynamicField__c> fields = new List<wrts_prcgvr__DynamicField__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__DynamicField__c field = new wrts_prcgvr__DynamicField__c(
+                wrts_prcgvr__Section__c = sectionId
+            );
+            
+            fields.add(field);
+        }
+        
+        if (doInsert){
+            
+            insert fields;
+        }
+        
+        return fields;
+    }
+	
+	/**
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 05/10/2021
 	 */
