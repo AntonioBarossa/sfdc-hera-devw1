@@ -411,7 +411,81 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //checkQuotationType
-    
+    @isTest
+    private static void checkQuotationTypeTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Case myItem = [SELECT Id, QuotationType__c, DocumentalProcessType__c, Cluster__c FROM Case];
+        myItem.Cluster__c = 'Preventivi';
+        myItem.QuotationType__c = 'Predeterminabile';
+        
+        List<SObject> itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Case', itemVasList);
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        
+        
+        //TESTING Context Case - SIP
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1: ' + result1);
+        System.assert('SIP'.equalsIgnoreCase(result1), 'Risultato non è SIP');
+        
+        
+        
+        //TESTING Context Case - NOP
+        myItem.QuotationType__c = 'Rapido';
+        myItem.DocumentalProcessType__c = 'Aumento Potenza';
+        String result2 = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert('NOP'.equalsIgnoreCase(result2), 'Risultato non è NOP');
+        
+        
+        
+        //TESTING Context Case - POT
+        myItem.QuotationType__c = 'Rapido';
+        myItem.DocumentalProcessType__c = 'Diminuzione Potenza';
+        String result3 = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result3: ' + result3);
+        System.assert('POT'.equalsIgnoreCase(result3), 'Risultato non è POT');
+        
+        
+        
+        //TESTING Context Case - stringa vuota
+        myItem.QuotationType__c = '';
+        myItem.DocumentalProcessType__c = '';
+        String result4 = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result4: ' + result4);
+        System.assert(''.equalsIgnoreCase(result4), 'Risultato non è Stringa vuota');
+        
+        
+        
+        //TESTING Context Case - stringa vuota
+        myItem.Cluster__c = '';
+        myItem.QuotationType__c = '';
+        myItem.DocumentalProcessType__c = '';
+        String result5 = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result5: ' + result5);
+        System.assert(''.equalsIgnoreCase(result5), 'Risultato non è Stringa vuota');
+        
+    }
     
     
     //calculateQuotationAmount
