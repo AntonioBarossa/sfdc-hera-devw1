@@ -517,6 +517,27 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //ASSERTS
         System.debug('result1: ' + result1);
         System.assert('|||||'.equalsIgnoreCase(result1), 'Risultato non è |||||');
+        formParams.put('Contesto', 'Case');
+        
+        
+        
+        
+        //TESTING Context Case - Preventivi
+        //TODO: ESPORTARE IN FACTORY
+        Case myPreventivo = new Case();
+        myPreventivo.Amount__c = 5.0;
+        myPreventivo.FixedAmount__c = 2.0;
+        myPreventivo.VariableAmount__c = 3.0;
+        myPreventivo.VATPercentage__c = 'GENERICI 10%-01';
+        myPreventivo.Type = 'Potenza';
+        myPreventivo.SupplyType__c = 'Domestico';
+        myPreventivo.Cluster__c = 'Preventivi';
+        
+        String result2 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2: ' + result2);
+        System.assert(!'|||||'.equalsIgnoreCase(result2), 'Risultato è |||||, previsto diverso.');
         
     }
     
