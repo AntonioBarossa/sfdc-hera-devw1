@@ -326,7 +326,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Map<String,Object> primolivello = new Map<String,Object>();
         primolivello.put('societa', 'HERA COMM MARCHE');
                 
-        List<SObject> itemVasList = new List<SObject>();
+        List<Object> itemVasList = new List<Object>();
         itemVasList.add(primolivello);
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
