@@ -7,6 +7,7 @@
 @isTest
 private class HDT_LC_OrdersForComfortQualityListTst {
 
+  
   @testSetup 
   static void setup() {
     //Id hDT_RT_OrderDossier_RecordTypeId= [select Id, DeveloperName from RecordType Where DeveloperName='HDT_RT_OrderDossier' LIMIT 1].Id;
@@ -18,11 +19,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
 
     //Instantiate the Pricebook2 record with StandardPricebookId
-    Pricebook2 standardPricebook = new Pricebook2(
-              Id = Test.getStandardPricebookId(),
-              IsActive = true
-    );
-    Update standardPricebook;
+    Pricebook2 standardPricebook = HDT_UTL_DataFactoryTst.activeStandardPricebook();
 
     List<Sale__c> salesList= HDT_UTL_DataFactoryTst.createSale(4, true, accountList[0].id, 'Bozza');
 

@@ -2991,4 +2991,18 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return activityCustomList;
 	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 09/10/2021
+	*/
+	public static Pricebook2 activeStandardPricebook(){
+		Pricebook2 standardPricebook = new Pricebook2(
+              Id = Test.getStandardPricebookId(),
+              IsActive = true
+		);
+		update standardPricebook;
+		return standardPricebook;
+	}
+
 }
