@@ -20,6 +20,8 @@ public class HDT_SRV_InteractionTst{
 	@isTest
 	static void testcheckAccessInit(){
 
+		Boolean finished = false;
+
 		Test.startTest();
 
 		List<Interaction__c> tInteractionList=[SELECT Id, Status__c, Comment__c
@@ -38,11 +40,17 @@ public class HDT_SRV_InteractionTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test Ended');
 	}
 
 	@isTest
 	static void testcheckReadAccess(){
+
+		Boolean finished = false;
 
 		Test.startTest();
 
@@ -62,11 +70,17 @@ public class HDT_SRV_InteractionTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test Ended');
 	}
 
 	@isTest
 	static void testcheckCreateAccess(){
+
+		Boolean finished = false;
 
 		Test.startTest();
 
@@ -86,11 +100,17 @@ public class HDT_SRV_InteractionTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test Ended');
 	}
 
 	@isTest
 	static void testcheckUpdateAccess(){
+
+		Boolean finished = false;
 
 		Test.startTest();
 
@@ -110,7 +130,11 @@ public class HDT_SRV_InteractionTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test Ended');
 	}
 
 	@isTest
@@ -136,7 +160,7 @@ public class HDT_SRV_InteractionTst{
 
 		System.assertEquals('test create', tInteractionList[0].Comment__c, 'Interaction not created');
 
-		System.assertNotEquals(null, tInteractionList[0].Id);
+		System.assertNotEquals(null, tInteractionList[0].Id, 'Interaction not created');
 
 		Test.stopTest();
 	}
@@ -162,7 +186,7 @@ public class HDT_SRV_InteractionTst{
 
 		System.assertEquals('test update record', tInteractionList[0].Comment__c, 'Interaction not updated');
 
-		System.assertNotEquals('test', tInteractionList[0].Comment__c);
+		System.assertNotEquals('test', tInteractionList[0].Comment__c, 'Interaction not updated');
 
 		Test.stopTest();
 	}

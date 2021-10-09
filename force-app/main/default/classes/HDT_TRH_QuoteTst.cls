@@ -56,7 +56,7 @@ public with sharing class HDT_TRH_QuoteTst{
 			                                   LIMIT 1];
 
 			System.assertEquals(true, createdQuote[0].Id!=null, 'Quote Not Created');
-			System.assertNotEquals(false, createdQuote[0].Id!=null);
+			System.assertNotEquals(false, createdQuote[0].Id!=null, 'Quote Not Created');
 		}
 	}
 
@@ -96,7 +96,7 @@ public with sharing class HDT_TRH_QuoteTst{
 			                                   LIMIT 1];
 
 			System.assertEquals('test', updatedQuote[0].UseCategory__c, 'Quote Not Updated');
-			System.assertNotEquals('', updatedQuote[0].UseCategory__c);
+			System.assertNotEquals('', updatedQuote[0].UseCategory__c, 'Quote Not Updated');
 		}
 	}
 
@@ -142,7 +142,7 @@ public with sharing class HDT_TRH_QuoteTst{
 			                                   WHERE Id=:createdQuote[0].Id ALL ROWS];
 
 			System.assertEquals(true, deletedQuote[0].IsDeleted, 'Quote Not Deleted');
-			System.assertNotEquals(false, deletedQuote[0].IsDeleted);
+			System.assertNotEquals(false, deletedQuote[0].IsDeleted, 'Quote Not Deleted');
 		}
 	}
 }

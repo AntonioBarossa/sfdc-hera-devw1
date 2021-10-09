@@ -39,6 +39,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         
         //HDT_UTL_OrderProcess.updateServicePointToComplete(trigger.old,trigger.new);
         HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+
+        HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
     }
     public override void afterUpdate() {
         HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.old,(List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638

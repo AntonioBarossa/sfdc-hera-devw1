@@ -29,7 +29,7 @@ public with sharing class HDT_TRH_DocumentSendTrackingTst{
 		                                          LIMIT 1];
 
 		System.assertEquals(accounts[0].Id, testDocSendTrack.Account__c, 'Document Send Tracking not Inserted');
-		System.assertNotEquals('', testDocSendTrack.Account__c);
+		System.assertNotEquals('', testDocSendTrack.Account__c, 'Document Send Tracking not Inserted');
 		Test.stopTest();
 	}
 }
