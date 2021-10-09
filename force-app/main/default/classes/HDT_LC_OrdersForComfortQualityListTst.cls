@@ -103,7 +103,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
   }
 
   @isTest
-  static void testConfirmContractWithHDT_RT_VAS() {
+  static void testConfirmContractWithHDTRTVAS() {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' LIMIT 1];
 
@@ -121,7 +121,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
   }
 
   @isTest
-  static void testConfirmContractWithHDT_RT_CambioOfferta() {
+  static void testConfirmContractWithHDTRTCambioOfferta() {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_CambioOfferta' LIMIT 1];
 
@@ -138,7 +138,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
   }
 
   @isTest
-  static void testConfirmContractWithHDT_RT_SwitchIn() {
+  static void testConfirmContractWithHDTRTSwitchIn() {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_SwitchIn' LIMIT 1];
 
