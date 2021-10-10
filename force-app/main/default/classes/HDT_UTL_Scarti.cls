@@ -12,6 +12,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
     static final string SCARTODOCUMENTALEPOSTSALESTEMPLATENAME='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
     static final string SCARTODOCUMENTALESALESTEMPLATENAME='CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
+    
+    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
+                                                                                 'Esito ricevuto su richiesta chiusa',
+                                                                                 'Esito non elaborato',
+                                                                                 'Errore invio a SAP',
+                                                                                 'Eliminato esito in scarto',
+                                                                                 'Errore determinazione variante SAP'};
 
     static final Map<String, String> TRACCIAMENTOHEROKUSALES = new Map<String, String>{ 'Esito ricevuto su richiesta chiusa' => 'CBS_HER007__ESITO_RICEVUTO_SU_RICHIESTA_CHIUSA_SALES',
                                                                                         'Esito non elaborato' => 'CBS_HER006__ESITO_NON_ELABORATO_DA_DLSII_SALES',
@@ -168,6 +175,59 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         return listOutputs;  
     }
 
+    /**
+    * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
+    * @date 22/07/2021
+    * @description HDT_UTL_Scarti.handleMRRInboundRequest
+    * @param requests - List<HDT_WRP_MrrRequest.HDT_WRP_Request>
+    */
+    public static void handleMRRInboundRequest(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
+        Set<String> orderNameSet = new Set<String>();
+        List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
+        List<wrts_prcgvr__Activity__c> dataForCheckEsitiIntermedi = new List<wrts_prcgvr__Activity__c>();
+        for (HDT_WRP_MrrRequest.HDT_WRP_Request request : inboundRequests) {
+            HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+            for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
+                for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
+                    if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
+                        Map<String,String> newData = new Map<String,String>();
+                        for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
+                        for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
+                        dataForAttivitaTracciaturaCreation.add(newData);
+                    }
+                    if('FASE'.equalsIgnoreCase(curField.name) && new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)){
+                        for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
+                            if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
+                                if(curField2.value.length() == 18 ){
+                                    if(Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
+                                        wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                                        tempAct.Case__c = curField2.value;
+                                        dataForCheckEsitiIntermedi.add(tempAct);
+                                    }
+                                }
+                                else if(curField2.value.startsWith('O-') ){
+                                    orderNameSet.add(curField2.value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.debug('MRREQUEST orderNameSet' + JSON.serializePretty(orderNameSet));
+        if(!orderNameSet.isEmpty()){
+            for(Order curOrder : [SELECT Id FROM Order WHERE OrderNumber IN :orderNameSet]){
+                wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
+                tempAct.Order__c = curOrder.Id;
+                dataForCheckEsitiIntermedi.add(tempAct);
+            }
+        }
+        System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
+        System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
+        if(!dataForAttivitaTracciaturaCreation.isEmpty()) createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+        if(!dataForCheckEsitiIntermedi.isEmpty()) checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
+    }
+
 
     /**
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
@@ -209,9 +269,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         System.debug('createAttivitaTracciaturaHeroku start' + sourceData);
         List<wrts_prcgvr__Activity__c> toInsert = new List<wrts_prcgvr__Activity__c>();
         
-        Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
-        tracciamentoTemplateNames.addAll(TRACCIAMENTOHEROKUPOSTSALES.values());
-        Map<String, wrts_prcgvr__ActivityTemplate__c> templatesMap = getTemplatesMapByName(tracciamentoTemplateNames);
+        //Set<String> tracciamentoTemplateNames = new Set<String>(TRACCIAMENTOHEROKUSALES.values());
+        //tracciamentoTemplateNames.addAll(TRACCIAMENTOHEROKUPOSTSALES.values());
+        //Map<String, wrts_prcgvr__ActivityTemplate__c> templatesMap = getTemplatesMapByName(tracciamentoTemplateNames);
+        //System.debug('createAttivitaTracciaturaHeroku templatesMap' + templatesMap);
 
         Map<String, Map<String,String>> dataForSalesHandlingByTemplateCode = new Map<String, Map<String,String>>();
 
@@ -232,16 +293,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 if('sales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
                     dataForSalesHandlingByTemplateCode.put(curData.get('RECORD_ID'), curData);
                 }else if('postsales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
-                    String templateCode = templatesMap.get(TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
-                    List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curData.get('RECORD_ID')});
+                    //String templateCode = templatesMap.get(TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
+                    //List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curData.get('RECORD_ID')});
+                    wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA')));
                     for(String curActField : ANONIMAMAPPING.keySet()){
                         if('StartDate__c'.equalsIgnoreCase(curActField)){
-                            activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                            //activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                            newAct.put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
                         }else{
-                            activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                            //activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                            newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
                         }
                     }
-                    toInsert.addAll(activities);
+                    //toInsert.addAll(activities);
+                    toInsert.add(newAct);
                 }
             }
         }
@@ -251,16 +316,20 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber FROM Order WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()]);
             for(Order curOrder : orders.values()){
                 Map<String,String> curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
-                String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
-                List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curOrder.Id});
+                //String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
+                //List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curOrder.Id});
+                wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curOrder.Id, TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA')));
                 for(String curActField : ANONIMAMAPPING.keySet()){
                     if('StartDate__c'.equalsIgnoreCase(curActField)){
-                        activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                        //activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
+                        newAct.put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
                     }else{
-                        activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                        //activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
+                        newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
                     }
                 }
-                toInsert.addAll(activities);
+                //toInsert.addAll(activities);
+                toInsert.add(newAct);
             }
         }
         
@@ -286,12 +355,16 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             if(template.values().size() > 0){
                 wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
                 List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(template.values().get(0).wrts_prcgvr__Code__c, new Map<String,Object>{'objectId'=>objectId});
-                system.debug('HDT_UTL_Scarti end ' + activities.get(0));
-                /*
-                if(Schema.Account.SObjectType == Id.valueOf(objectId).getSobjectType()){
+                if(activities.get(0).Account__c == null && Schema.Account.SObjectType == Id.valueOf(objectId).getSobjectType()){
                     activities.get(0).Account__c = objectId;
                 }
-                */
+                if(activities.get(0).Case__c == null && Schema.Case.SObjectType == Id.valueOf(objectId).getSobjectType()){
+                    activities.get(0).Case__c = objectId;
+                }
+                if(activities.get(0).Order__c == null && Schema.Order.SObjectType == Id.valueOf(objectId).getSobjectType()){
+                    activities.get(0).Order__c = objectId;
+                }
+                system.debug('HDT_UTL_Scarti end ' + activities.get(0));
                 return activities.get(0);
             }
             system.debug('HDT_UTL_Scarti end');
@@ -740,6 +813,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @param inputData - list<wrts_prcgvr__Activity__c>  of Herokus's scarti (activity(custom) 
     */
     public static void checkForEsitiIntermedi(List<wrts_prcgvr__Activity__c> inputData){
+        system.debug('checkForEsitiIntermedi start' + JSON.serializePretty(inputData));
         Set<String> categories = new Set<String>();
         Schema.DescribeFieldResult fieldResult = wrts_prcgvr__Activity__c.DiscardCategory__c.getDescribe();
 		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
@@ -764,24 +838,31 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
             }
         }
+        
+        system.debug('checkForEsitiIntermedi parentObjectCase' + JSON.serializePretty(parentObjectCase));
+        system.debug('checkForEsitiIntermedi parentObjectOrder' + JSON.serializePretty(parentObjectOrder));
+        system.debug('checkForEsitiIntermedi categories' + JSON.serializePretty(categories));
+        system.debug('checkForEsitiIntermedi inputDataIds' + JSON.serializePretty(inputDataIds));
 
         list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, Status__c 
                                                       FROM wrts_prcgvr__Activity__c 
                                                       WHERE (Case__c IN :parentObjectCase OR Order__c IN :parentObjectOrder) 
                                                       AND DiscardCategory__c IN :categories 
                                                       AND Id NOT IN :inputDataIds
-                                                      AND status__c NOT IN ('Chiusa','Sospesa')
+                                                      AND wrts_prcgvr__Status__c NOT IN ('Chiusa','Sospesa')
                                                       WITH SECURITY_ENFORCED];
+
+        system.debug('checkForEsitiIntermedi relatedActs' + JSON.serializePretty(relatedActs));
 
         for(wrts_prcgvr__Activity__c relatedAct: relatedActs){
             system.debug(relatedAct);
-            relatedAct.Status__c='Chiusa';
+            relatedAct.wrts_prcgvr__Status__c='Chiusa';
             toUpdate.add(relatedAct);
         }
 
         
         if(!toUpdate.IsEmpty()){
-            system.debug('lista NON vuota -> Aggiorno'+toUpdate);
+            system.debug('checkForEsitiIntermedi toUpdate' + JSON.serializePretty(inputData));
             HDT_UTL_DatabaseService.updateSObject(toUpdate);
         }
     }

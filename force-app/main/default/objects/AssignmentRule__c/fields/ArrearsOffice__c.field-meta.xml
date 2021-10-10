@@ -4,9 +4,48 @@
     <description>campo activity da matchare.</description>
     <externalId>false</externalId>
     <label>Ufficio Competente Morosità</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HCM</fullName>
+                <default>false</default>
+                <label>HCM</label>
+            </value>
+            <value>
+                <fullName>Marche Multiservizi Spa</fullName>
+                <default>false</default>
+                <label>Marche Multiservizi Spa</label>
+            </value>
+            <value>
+                <fullName>Mercato Aziende</fullName>
+                <default>false</default>
+                <label>Mercato Aziende</label>
+            </value>
+            <value>
+                <fullName>Mercato Aziende In</fullName>
+                <default>false</default>
+                <label>Mercato Aziende In</label>
+            </value>
+            <value>
+                <fullName>Mercato Aziende Out</fullName>
+                <default>false</default>
+                <label>Mercato Aziende Out</label>
+            </value>
+            <value>
+                <fullName>Mercato Famiglie</fullName>
+                <default>false</default>
+                <label>Mercato Famiglie</label>
+            </value>
+            <value>
+                <fullName>Procedure Concorsuali</fullName>
+                <default>false</default>
+                <label>Procedure Concorsuali</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>
