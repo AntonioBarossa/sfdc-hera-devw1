@@ -280,6 +280,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return orderList;
 	}
 
+
+	
 	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales){
 
 		List<Order> orderList=new List<Order>();
@@ -323,6 +325,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return orderList;
 	}
+	
+
 
 	public static List<Order> createChildOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales, Id parentOrderId, Id contactId){
 
@@ -414,6 +418,64 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return orderList;
+	}
+
+
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 08/10/2021
+	*/
+	public static List<Order> createOrderWithPricebookAndPhaseNw(Integer amount, Boolean doInsert, List<Sale__c> sales,String developerName, Map<String,Object> params){
+
+		List<Order> orderList=new List<Order>();
+
+		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
+		Id recordTypeId=[SELECT Id FROM RecordType  WHERE DeveloperName =:developerName AND sObjecttype ='Order'][0].Id;
+
+		for (Integer i=0; i<amount; i++){
+
+			Order ord=new Order();
+
+			ord.Name='testOrderName'+i;
+			ord.Status='Draft';
+			ord.EffectiveDate=Date.today();
+			ord.AccountId=(String)params.get('AccountId');
+			ord.EstimateAmount__c=1000;
+			ord.PowerQuote__c=1000;
+			ord.AdministrativeBurden__c=1;
+			ord.EstimatedVAT__c=1;
+			ord.ValidityDateEstimate__c=Date.today().addDays(30);
+			ord.Phase__c=(String)params.get('Phase__c');
+			ord.CIAccoutn__c='Richiesto';
+			ord.QuickQuote__c='Richiesto';
+			ord.ChamberCommerceRegistration__c='Richiesto';
+			ord.Instance326__c='Richiesto';
+			ord.DocumentLow80__c='Richiesto';
+			ord.AutorizationVolturaThirdTrader__c='Richiesto';
+			ord.ContractSigned__c=true;
+			ord.SignedDate__c=Date.today();
+			ord.SignatureMethod__c='Vocal Order';
+			ord.DocSendingMethod__c='E-mail';
+			ord.Sale__c=sales[i].Id;
+			ord.Pricebook2Id=(String)params.get('Pricebook2Id');
+			ord.BillingProfile__c=(String)params.get('BillingProfile__c');
+			ord.ServicePoint__c=(String)params.get('ServicePoint__c');
+			ord.RecordTypeId=recordTypeId;
+
+		for(String key :params.keySet()) {
+			ord.put(key, params.get(key));
+		}
+
+			orderList.add(ord);
+		}
+
+		if (doInsert){
+
+			insert orderList;
+		}
+
+			return orderList;
 	}
 
 	public static List<Sale__c> createSale(Integer amount, Boolean doInsert, Id accId, String status){
@@ -1105,6 +1167,19 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pricebookList;
 	}
 
+   /**
+   * @author Valere (valere@noeli-it.net)
+   * @date 09/10/2021
+  */
+	public static Pricebook2 activeStandardPricebook(){
+		Pricebook2 standardPricebook = new Pricebook2(
+				Id = Test.getStandardPricebookId(),
+				IsActive = true
+		);
+		update standardPricebook;
+		return standardPricebook;
+	}
+
 	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
@@ -1338,6 +1413,31 @@ public with sharing class HDT_UTL_DataFactoryTst{
                 ContactId = contact.Id,
                 TimeZoneSidKey = 'Europe/Rome',
                 UserName = 'commuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+            insert communityUser;
+        }
+        return communityUser;
+    }
+
+	/**
+   * @author Valere (valere@noeli-it.net)
+   * @date 09/10/2021
+	*/
+	public static User createCommunityUserWithRole(Contact contact, String profileId ,Boolean doInsert,Map<String,Object> params) {
+        User communityUser = new User(
+                Alias = 'commuser',
+                FirstName = 'FirstName',
+                LastName = 'LastName',
+                Email = 'commuser@test.com',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'it',
+                LocaleSidKey = 'it',
+                ProfileId = profileId,
+                ContactId = contact.Id,
+                TimeZoneSidKey = 'Europe/Rome',
+                UserName = 'commuser@test.com' + DateTime.now().getTime(),
+				UserRoleId =(String)params.get('UserRoleId') 
         );
         if(doInsert) {
             insert communityUser;
