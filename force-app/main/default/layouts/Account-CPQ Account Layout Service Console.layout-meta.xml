@@ -28,6 +28,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>IsWrongFiscalData__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CustomerMarking__c</field>
             </layoutItems>
             <layoutItems>

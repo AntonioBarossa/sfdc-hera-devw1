@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>VirtualSAPIban__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -38,8 +42,8 @@
                 <field>FiscalCode__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
+                <behavior>Readonly</behavior>
+                <field>IsWrongFiscalData__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
