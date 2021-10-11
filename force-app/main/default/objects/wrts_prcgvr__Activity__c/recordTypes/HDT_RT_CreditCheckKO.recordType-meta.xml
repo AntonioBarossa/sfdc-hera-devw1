@@ -16,17 +16,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>ContactResult__c</picklist>
-        <values>
-            <fullName>Cliente irreperibile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ok contattato</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ManualCheckResult__c</picklist>
         <values>
             <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
