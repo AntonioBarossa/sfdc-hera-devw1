@@ -724,6 +724,31 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //generateSection50
+    @isTest
+    private static void generateSection50Test(){
+        
+        //SETUP
+        mySetup();
+        
+        List<Case> myItemsCase = [SELECT Id, CreatedDate, Origin, Type, Cluster__c, CaseNumber, Phase__c FROM Case];
+        List<Order> myItemsOrder = [SELECT Id, CreatedDate, Channel__c, ProcessType__c, Cluster__c, OrderNumber, Phase__c FROM Order];
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('CaseList', myItemsCase);
+        inputs.put('OrderList', myItemsOrder);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        
+        //TESTING - CASO GENERICO
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('generateSection50', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1 length ' + result1.length());
+        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
+        //System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        
+    }
     
     
     
