@@ -235,6 +235,10 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
 
+    // Enable Credit Check Permission set
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_ENABLECREDITCHECK = 'HDT_EnableCreditCheck';
+
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';
