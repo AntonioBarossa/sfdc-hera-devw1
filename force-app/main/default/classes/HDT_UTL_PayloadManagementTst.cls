@@ -811,7 +811,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c FROM Case];
+        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c, Note__c FROM Case];
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
         inputs.put('Case', new List<Case>{myItem});
@@ -842,6 +842,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - 
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
+        myItem.IsContainer__c = 'True';
         myObjectToTest = new HDT_UTL_PayloadManagement();
         String result3 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
