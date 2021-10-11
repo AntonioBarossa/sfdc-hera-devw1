@@ -684,9 +684,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Escalation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Case.HDT_ChangePriority</value>
                         </valueListItems>
                         <valueListItems>

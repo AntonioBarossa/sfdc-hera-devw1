@@ -41,12 +41,6 @@
             <layoutItems>
                 <field>FormationDocumentationType__c</field>
             </layoutItems>
-            <layoutItems>
-                <field>CreatedById</field>
-            </layoutItems>
-            <layoutItems>
-                <field>LastModifiedById</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -91,25 +85,8 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Informazioni Assegnazione</label>
-        <layoutColumns>
-            <layoutItems>
-                <field>AssignedById</field>
-            </layoutItems>
-            <layoutItems>
-                <field>AssignedToId</field>
-            </layoutItems>
-            <layoutItems>
-                <field>AssignmentNote</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <field>AssignmentDate</field>
-            </layoutItems>
-            <layoutItems>
-                <field>AssignmentDueDate</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

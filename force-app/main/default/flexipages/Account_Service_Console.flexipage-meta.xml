@@ -31,9 +31,6 @@
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Escalation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Account.HDT_VasOrders</value>
                         </valueListItems>
                     </valueList>
@@ -82,9 +79,6 @@
                                     <rightValue>HDT_RT_Distributore</rightValue>
                                 </criteria>
                             </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Account.Escalation</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
