@@ -769,7 +769,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
+        //NB: ACCOUNT NOT BUSINESS TYPE PER ACR
+        Account myItem = [SELECT Id FROM Account WHERE RecordTypeId != :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
         
         List<SObject> itemVasList = new List<SObject>();
         itemVasList.add(myItem);
@@ -786,10 +787,18 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //ASSERTS
         System.debug('result1 length ' + result1.length());
         //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        //System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
         
         
-        //TESTING - CASO con SBQQ Subscriptions dove non c'è family offerta commerciale
+        //TESTING - CASO senza ACR
+        myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
+        itemVasList = new List<SObject>();
+        itemVasList.add(myItem);
+        inputs = new Map<String,List<SObject>>();
+        inputs.put('Account', itemVasList);
+        
+        String result2 = myObjectToTest.execute('generateSection70', inputs, formParams);
+        System.assert(String.isBlank(result2), 'Risultato non è stringa vuota.');
         
     }
     
