@@ -140,6 +140,16 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Account.Catalogo_Servizi</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.HDT_AccountStatement</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Account.HDT_AccountReadings</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
@@ -179,21 +189,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.Catalogo_Servizi</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.HDT_AccountStatement</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
@@ -226,8 +221,8 @@
     </quickActionList>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
-        <fields>OPPORTUNITY.CREATED_DATE</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.CREATED_DATE</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
         <sortField>OPPORTUNITY.CREATED_DATE</sortField>
@@ -235,10 +230,15 @@
     </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ParentOrder__c</fields>
+        <fields>ORDERS.CREATED_DATE</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
+        <fields>Sale__c</fields>
+        <fields>Channel__c</fields>
         <fields>ServicePointCodeFormula__c</fields>
         <fields>ProcessType__c</fields>
+        <fields>WizardCompletedDate__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
@@ -283,8 +283,11 @@
     <relatedLists>
         <fields>ExternalId</fields>
         <fields>ASSET_NUM__c</fields>
-        <fields>END_DT__c</fields>
+        <fields>IMPIANTO_COUNTRY__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
+        <fields>START_DT__c</fields>
+        <fields>END_DT__c</fields>
+        <fields>X_SHIP_ADDR__c</fields>
         <relatedList>SiebelContract__x.SERV_ACCT_SALESFORCE__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -332,7 +335,7 @@
         <fields>SendCertifiedEmailConsentDate__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
-    <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>SAPContractCode__c</fields>
@@ -342,7 +345,7 @@
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <relatedList>RelatedContractList</relatedList>
-    </relatedLists><!--End  HRAWRM-258   14-09-2021  -->
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>SBQQ__ContractedPrice__c.SBQQ__Account__c</relatedList>
@@ -481,20 +484,24 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>Type__c</fields>
         <fields>SendDate__c</fields>
-        <fields>Receiver__c</fields>
         <fields>SendMode__c</fields>
-        <fields>BounceReason__c</fields>
+        <fields>Receiver__c</fields>
         <fields>EnvelopeId__c</fields>
+        <fields>IsBounced__c</fields>
         <relatedList>DocumentSendTracking__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>
-        <fields>Rds_CREATED__c</fields>
+        <fields>SR_NUM__c</fields>
+        <fields>CREATED__c</fields>
         <fields>INS_PRODUCT__c</fields>
         <fields>SR_AREA__c</fields>
-        <fields>X_ATTRIB_54__c</fields>
+        <fields>SR_STAT_ID__c</fields>
         <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
@@ -506,7 +513,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X0000027QgN</masterLabel>
+        <masterLabel>00h3N000002MyGI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

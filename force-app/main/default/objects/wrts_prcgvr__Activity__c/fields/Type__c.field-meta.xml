@@ -345,6 +345,26 @@
                 <default>false</default>
                 <label>Iva e Accise da validare</label>
             </value>
+            <value>
+                <fullName>Giro contatore da gestire</fullName>
+                <default>false</default>
+                <label>Giro contatore da gestire</label>
+            </value>
+            <value>
+                <fullName>Preavviso Cessazione</fullName>
+                <default>false</default>
+                <label>Preavviso cessazione</label>
+            </value>
+            <value>
+                <fullName>Contattare il cliente</fullName>
+                <default>false</default>
+                <label>Contattare il cliente</label>
+            </value>
+            <value>
+                <fullName>Supporto su migrazione</fullName>
+                <default>false</default>
+                <label>Supporto su migrazione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -16,11 +16,11 @@
     </values>
     <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Attivo,Draft,Cessato</value>
+        <value xsi:type="xsd:string">Attivo,Bozza,Cessato</value>
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Attivo,Bozza,Inattivo</value>
+        <value xsi:type="xsd:string">Attivo,Bozza,Cessato</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>

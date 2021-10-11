@@ -20,6 +20,7 @@ public with sharing class HDT_QR_ContentDocumentLink {
         return [SELECT Id, LinkedEntityId, ContentDocumentId, IsDeleted, SystemModstamp, ShareType, Visibility 
                 FROM ContentDocumentLink
                 WHERE LinkedEntityId =: entityId
+                WITH SECURITY_ENFORCED
                 ORDER BY SystemModstamp DESC];
     }
 
@@ -36,6 +37,7 @@ public with sharing class HDT_QR_ContentDocumentLink {
                 FROM ContentDocumentLink
                 WHERE LinkedEntityId =: entityId
                 AND ContentDocument.Description = :description
+                WITH SECURITY_ENFORCED
                 ORDER BY SystemModstamp DESC];
     }
 }

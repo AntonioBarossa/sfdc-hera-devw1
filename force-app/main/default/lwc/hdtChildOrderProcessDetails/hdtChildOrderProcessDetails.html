@@ -22,7 +22,7 @@
                                 </template>
 
                                 <template if:true={section.hasAddrComp}>
-                                    <c-hdt-target-object-address-fields objectapiname="Order" accountid={order.Account.Id} wrapaddressobject={wrapAddressObjectAttivazione}></c-hdt-target-object-address-fields>
+                                    <c-hdt-target-object-address-fields data-sec={section.name} objectapiname="Order" accountid={order.Account.Id}></c-hdt-target-object-address-fields>
                                 </template>
 
                                 <template if:false={section.hasAddrComp}>
@@ -80,6 +80,7 @@
                                     is-saved={isSavedReading}
                                     service-point-id={order.ServicePoint__c}
                                     reading-customer-date={readingCustomerDate}
+                                    resumed-from-draft={resumeFromDraftReading}
                                     disabled-reading-date={disabledReadingDate}></c-hdt-self-reading>
 
                                 </template> 

@@ -34,7 +34,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      */
     private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, ServicePoint__c oldServicePoint) {
 
-        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldServicePoint.SupplyType__c !=null && newServicePoint.SupplyType__c != oldServicePoint.SupplyType__c;
+        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && newServicePoint.SupplyTypeTemp__c !=null && oldServicePoint.SupplyTypeTemp__c != newServicePoint.SupplyTypeTemp__c;
 
     }
 

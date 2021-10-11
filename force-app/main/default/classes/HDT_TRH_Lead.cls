@@ -232,12 +232,27 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
                     if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
                         wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
+                       
                        try { // Start RDTR-00_HRAWRM-491 08/09/2021
                             if ( wrp.isValid) {
                                 Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
                                 tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
                                 tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
                                 tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                                //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+                                Map<String,String> infoData=new  Map<String,String>();
+                                infoData.put('lastName',tempLead.LastName);
+                                infoData.put('firstName',tempLead.FirstName);
+                                infoData.put('birthDate', String.valueOf(tempLead.Birthdate__c));
+                                infoData.put('birthPlace',tempLead.Birthcity__c);
+                                infoData.put('gender',tempLead.Gender__c);
+       
+                                System.debug('return ' +HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c));
+                                if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c)) {
+                                    tempLead.addError('Inserire un codice fiscale valido');
+                                }
+                                //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato
+
                             }
                             else{
                                 tempLead.addError('Inserire un codice fiscale valido');

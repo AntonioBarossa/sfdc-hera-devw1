@@ -6,17 +6,21 @@ public with sharing class HDT_WS_PaymentsTst {
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         String rtName =  constantsUtl.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
         String rtId = constantsUtl.CASE_RECORDTYPEID_MOROSITA;
+        AccountContactRelation accountContactRel;
+        List<Contract> contractListTwo;
+        List<Case> caseList;
+        List<DocumentSelected__c> documents;
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-        AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
+        accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-        List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id,billingProfileList[0].ContractAccountCode__c);
+        contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
+        caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) caseList[0].Id,billingProfileList[0].ContractAccountCode__c);
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Bozza', rtId, rtName,'A','','','');
     }
@@ -43,8 +47,8 @@ public with sharing class HDT_WS_PaymentsTst {
         responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
         Test.stopTest();
         testCase = [SELECT TecnicalPhase__c FROM Case LIMIT 1];
-        System.assertEquals(true, responseReturn.success);
-        System.Assert(testCase.TecnicalPhase__c.equalsIgnoreCase('Esito OK da SAP'));
+        System.assertEquals(true, responseReturn.success, 'Failure in Response');
+        System.Assert(testCase.TecnicalPhase__c.equalsIgnoreCase('Esito OK da SAP'),'Fase non aggiornata');
 
     }
 

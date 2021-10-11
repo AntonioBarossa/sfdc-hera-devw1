@@ -1,16 +1,23 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
+ * @date 15/06/2021
+ * @description HDT_UTL_LeadProcess Classes
+ * @history Lorenzo Gulotta 15/06/2021 – Created Class
+ */
 public with sharing class HDT_UTL_LeadProcess {
     
     private static HDT_QR_Account acQr= new HDT_QR_Account();
     private static HDT_SRV_CampaignMember cmSrv= new HDT_SRV_CampaignMember();
     private static HDT_QR_Individual indvQr= new HDT_QR_Individual();
     private static HDT_QR_Lead leadQr= new HDT_QR_Lead();
+    private static HDT_SRV_ContentDocumentLink cdlSrv = new HDT_SRV_ContentDocumentLink();
     
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formCallback(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         Map<String,String> mapRequestFields = new Map<String,String>();
         Id leadRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
-        System.debug('PROVA WSFORM');
+       // System.debug('PROVA WSFORM');
         if (request.objects.get(0).fields.get(0) != null) {
             
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
@@ -19,7 +26,7 @@ public with sharing class HDT_UTL_LeadProcess {
                 }
                 
             }
-            System.debug('PROVA WSFORM2');
+           // System.debug('PROVA WSFORM2');
             Boolean isValidated= true;
             if((mapRequestFields.get('COMPANYOWNER') == null || mapRequestFields.get('COMPANYOWNER') == '') || 
             (mapRequestFields.get('CELLULARE') == null|| mapRequestFields.get('CELLULARE')== '') || 
@@ -33,13 +40,15 @@ public with sharing class HDT_UTL_LeadProcess {
             (mapRequestFields.get('AGENZIA') == null || mapRequestFields.get('AGENZIA') == '') ){
                 isValidated= false;
             }
-            System.debug('PROVA WSFORM3');
+            //System.debug('PROVA WSFORM3');
             if(isValidated){
-                System.debug('PROVA WSFORM4');
+               // System.debug('PROVA WSFORM4');
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
-                    System.debug('PROVA WSFORM5');
+                   // System.debug('PROVA WSFORM5');
                     Lead newLead= new Lead();
+                    //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021  
+                    newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
@@ -91,7 +100,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     //HRAWRM-388 03/09/2021
                     newLead.ContactReason__c='Info commerciali';
                     //HRAWRM-388 03/09/2021
-                    System.debug('PROVA WSFORM6');
+                    //System.debug('PROVA WSFORM6');
                     
                     
                     if(mapRequestFields.get('D_O_RICONTATTO') != null){
@@ -105,19 +114,21 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv = indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv = indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
+                    
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
-                    System.debug('PROVA WSFORM7');
+                   // System.debug('PROVA WSFORM7');
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
-                    Id macroactivity= null;
+                    String macroactivity= null;
                     if(campaign.size()>1){
                         for(Campaign c: campaign){
                             if(d==null || c.CreatedDate>d) {
@@ -216,11 +227,14 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD WINBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                   //! newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
+                    newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
                     newLead.WebFormField02__c = mapRequestFields.get('CAMPO_02');
@@ -275,19 +289,20 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c, PrivacyMarketingChoiceDate__c ');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
-                    Id macroactivity= null;
+                    String macroactivity= null;
                     
                     if(campaign.size()>1){
                         for(Campaign c: campaign){
@@ -385,10 +400,13 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
+                    newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
@@ -443,19 +461,20 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
-                    Id macroactivity= null;
+                    String macroactivity= null;
                     
                     if(campaign.size()>1){
                         for(Campaign c: campaign){
@@ -465,7 +484,7 @@ public with sharing class HDT_UTL_LeadProcess {
                                 macroactivity= c.MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                             }
                         }
-                    }else{
+                    }else if (campaign!=null && !campaign.isEmpty()) {
                         campaignId = campaign[0].Id;
                         macroactivity= campaign[0].MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c;
                         
@@ -479,9 +498,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
-                        cdl.LinkedEntityId = l.Id;
-                        cdl.ContentDocumentId = cvdl.contentDocumentId;
-                        Insert cdl;
+                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
                     }              
                     
                     responseField.fieldType = 'TEXT';
@@ -561,11 +578,14 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
+                    newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.LeadSource= mapRequestFields.get('FONTE');
                     newLead.SourceDetail__c= mapRequestFields.get('DETTAGLIOFONTE');
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.InterestProduct__c= mapRequestFields.get('PRODOTTO');
                     newLead.WebFormField01__c = mapRequestFields.get('CAMPO_01');
                     newLead.WebFormField02__c = mapRequestFields.get('CAMPO_02');
@@ -632,19 +652,20 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK');
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
-                    Id macroactivity= null;
+                    String macroactivity= null;
                     
                     if(campaign.size()>1){
                         for(Campaign c: campaign){
@@ -755,6 +776,8 @@ public with sharing class HDT_UTL_LeadProcess {
                 List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
+                    //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
+                    newLead.Company__c= mapRequestFields.get('COMPANY'); //HRAWRM-841 05/10/2021
                     newLead.recordTypeId=leadRecordTypeId;
                     newLead.CompanyOwner__c= mapRequestFields.get('COMPANYOWNER');
                     newLead.Phone= mapRequestFields.get('TELEFONO');
@@ -762,6 +785,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     if(contactId != null && contactId != ''){
                         newLead.Contact__c = contactId;
                     }
+                    newLead.CollectionAgency__c	= mapRequestFields.get('AGENZIA');//HRAWRM-840 Bolzon 05/10/2021
                     newLead.MobilePhone= mapRequestFields.get('CELLULARE');
                     newLead.Email= mapRequestFields.get('EMAIL');
                     newLead.State= mapRequestFields.get('COMUNE');
@@ -822,17 +846,19 @@ public with sharing class HDT_UTL_LeadProcess {
                     Lead l = HDT_SRV_Lead.createRecord(newLead);
                     Lead ctl= leadQr.getRecordById(l.Id);
                     
-                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c');
+                    Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
+                    indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021
                     HDT_SRV_Individual.checkUpdateAccess(indv);
                     HDT_SRV_Individual.updateRecord(indv);
                     
                     Account ac= acQr.getAccountByDistributorKey(mapRequestFields.get('AGENZIA'));
                     Id campaignId= null;
                     Datetime d= null;
-                    Id macroactivity= null;
+                    String macroactivity= null;
                     
                     if(campaign.size()>1){
                         for(Campaign c: campaign){
@@ -912,17 +938,17 @@ public with sharing class HDT_UTL_LeadProcess {
         Integer hour=Integer.valueOf(myTime.get(0).substringAfter('T'));
         Integer minutes=Integer.valueOf(myTime.get(1).replace('Z', ''));
          
-        System.debug('year : '+year);
+       /* System.debug('year : '+year);
         System.debug('month : '+month);
         System.debug('day : '+day);
         System.debug('hour : '+hour);
-        System.debug('minutes : '+minutes);
+        System.debug('minutes : '+minutes);*/
         DateTime myDateTime = DateTime.newInstance(year, month, day, hour, minutes, 0);
         Timezone tz = Timezone.getTimeZone('Europe/Rome');
         Integer diff= (tz.getOffset(myDateTime)/1000)/60;
         DateTime newDateTime = myDateTime.addMinutes(diff);
 
-        System.debug('targetDatetime '+newDateTime);
+       // System.debug('targetDatetime '+newDateTime);
         return newDateTime;
     }
 }

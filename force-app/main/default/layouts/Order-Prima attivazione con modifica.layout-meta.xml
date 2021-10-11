@@ -56,8 +56,8 @@
                 <field>InvoiceEmailAddress__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>HerokuPracticeCode__c</field>
+                <behavior>Readonly</behavior>
+                <field>Priority__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -74,6 +74,10 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HerokuPracticeCode__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ContractId</field>
             </layoutItems>
@@ -84,10 +88,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>EffectiveDate</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ImplantType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -108,6 +108,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DistributorPracticeCode__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -184,8 +188,29 @@
                 <behavior>Readonly</behavior>
                 <field>ServicePoint__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ImplantType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RequestOption__c</field>
+            </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VoltageLevel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PowerAvailable__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PowerCommitted__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -369,11 +394,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Order.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>99</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.Validazione_Documenti</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -407,6 +427,11 @@
             <actionName>NewLead</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>PrintableView</actionName>
@@ -464,20 +489,16 @@
             <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_SendSms</actionName>
+            <actionName>Order.HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionName>Order.HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
         </platformActionListItems>
+>
     </platformActionList>
     <relatedLists>
         <fields>Product2</fields>
@@ -490,10 +511,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>wrts_prcgvr__DueDate__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
         <fields>OWNER.LAST_NAME</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Order__c</relatedList>
@@ -508,9 +529,6 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists> -->
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
@@ -558,21 +576,13 @@
         <fields>Required__c</fields>
         <relatedList>DocumentalEnvelopeAttachment__c.Order__c</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
-        <fields>NAME</fields>
-        <fields>SBQQ__NetAmount__c</fields>
-        <fields>SBQQ__Status__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>SBQQ__Primary__c</fields>
-        <relatedList>SBQQ__Quote__c.OrderReference__c</relatedList>
-    </relatedLists> -->
     <relatedObjects>ContractId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62S</masterLabel>
+        <masterLabel>00h3N000002SmK9</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

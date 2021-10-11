@@ -714,7 +714,7 @@
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
@@ -724,6 +724,16 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Iva e Accise da validare</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Validazione Documentale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Validazione Documentale</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

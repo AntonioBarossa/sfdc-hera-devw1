@@ -836,9 +836,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         console.log('enter in FOREACH --- ELEMENT : ' + JSON.stringify(element.Account__r.Id));
                         this.recordDistributorPointCode = element.Account__r.Id;
                     });
-
                     this.isDistributor = true;
-
                     this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
                     this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
                     this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
@@ -864,6 +862,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
 
+        }
+        if (event.target.fieldName == 'Distributor__c') {
+            this.recordDistributorPointCode = event.target.value;
         }
         if (event.target.fieldName == 'Disconnectable__c' && event.target.value == 'NO') {
             console.log(' if event target = disconnectable NO');

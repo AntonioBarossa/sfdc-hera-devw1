@@ -3,6 +3,7 @@
 * @date 23/07/2021
 * @description Test Class for HDT_UTL_Dependencies – Classe di utilità per la gestione della sequenzializzazione dei processi
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 @isTest
 public with sharing class HDT_UTL_DependenciesTestWithoutData {
 
@@ -24,13 +25,13 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
         HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting();
         HDT_UTL_DataFactoryTst.installCSDependecyPhaseCheckSetting();
 
-        wrts_prcgvr__PhaseTransition__c ptBH = HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Bozza To Heroku',
+        HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Bozza To Heroku',
             PHASE_INC_NEXT,null,null,null,false, PHASE_INC, null,null,
             ORDER_RECORDTYPEID_CONFERMA, [Select DeveloperName from RecordType where Id =:ORDER_RECORDTYPEID_CONFERMA][0].DeveloperName, null, 'A', true);
-        wrts_prcgvr__PhaseTransition__c ptBS = HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Bozza To Sequenzializzazione',
+        HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Bozza To Sequenzializzazione',
             PHASE_INC_SEQ,null,null,null,false, PHASE_INC, null,null,
             ORDER_RECORDTYPEID_CONFERMA, [Select DeveloperName from RecordType where Id =:ORDER_RECORDTYPEID_CONFERMA][0].DeveloperName, null, 'A', true);
-        wrts_prcgvr__PhaseTransition__c ptSH = HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Sequenzializzazione To Heroku',
+        HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Sequenzializzazione To Heroku',
             PHASE_INC_NEXT,null,null,null,false, PHASE_INC_SEQ, null,null,
             ORDER_RECORDTYPEID_CONFERMA, [Select DeveloperName from RecordType where Id =:ORDER_RECORDTYPEID_CONFERMA][0].DeveloperName, null, 'A', true);
         List<DependenciesMatrix__c> dmtxs = HDT_UTL_DataFactoryTst.createDependenciesMatrix(1, true, PROCESS_TYPE, PROCESS_TYPE, PHASE_INC_NEXT, DEPENDENCY_MATCH);
@@ -42,23 +43,22 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
         insert contactList; 
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 
-        for(Order order : ordListBlk){
-            
-            order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
-            order.Phase__c = PHASE_BLK;
-            order.Status = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
-            insert order;
+        Order order = ordListBlk[0];
 
-            ServiceRequest__c sr = new ServiceRequest__c();
+        order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
+        order.Phase__c = PHASE_BLK;
+        order.Status = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
+        insert order;
 
-            sr.ServicePoint__c = servPointList[0].Id;
-            sr.ServicePointCode__c = servPointList[0].ServicePointCode__c;
-            sr.Order__c = order.Id;
-            sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-            sr.Status__c = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
-            sr.ProcessType__c = PROCESS_TYPE;
-            insert sr;
-        }
+        ServiceRequest__c sr = new ServiceRequest__c();
+
+        sr.ServicePoint__c = servPointList[0].Id;
+        sr.ServicePointCode__c = servPointList[0].ServicePointCode__c;
+        sr.Order__c = order.Id;
+        sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
+        sr.Status__c = HDT_UTL_Dependencies.STATUS_LAVORAZIONE;
+        sr.ProcessType__c = PROCESS_TYPE;
+        insert sr;
     }
 
     @isTest
@@ -78,33 +78,31 @@ public with sharing class HDT_UTL_DependenciesTestWithoutData {
 
         List<Order> ordListInc = HDT_UTL_DataFactoryTst.createOrder(1, false, acc.id, 'Bozza'); 
         
-        for(Order order : ordListInc){
+        Order order = ordListInc[0];
+        order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
+        insert order;
+
+        ServiceRequest__c sr = new ServiceRequest__c();
+
+        sr.ServicePoint__c = servPoint.Id;
+        sr.ServicePointCode__c = servPoint.ServicePointCode__c;
+        sr.Order__c = order.Id;
+        sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
+        sr.Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
+        sr.ProcessType__c = PROCESS_TYPE;
+        insert sr;
+
+        order.Phase__c = PHASE_INC_NEXT;
+        order.Contact__c = contact.Id;
             
-            order.RecordTypeId = ORDER_RECORDTYPEID_CONFERMA;
-            insert order;
+        update order;
 
-            ServiceRequest__c sr = new ServiceRequest__c();
-
-            sr.ServicePoint__c = servPoint.Id;
-            sr.ServicePointCode__c = servPoint.ServicePointCode__c;
-            sr.Order__c = order.Id;
-            sr.Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-            sr.Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
-            sr.ProcessType__c = PROCESS_TYPE;
-            insert sr;
-
-            order.Phase__c = PHASE_INC_NEXT;
-            order.Contact__c = contact.Id;
-            
-            update order;
-
-            Order orderAfterUpdate = [SELECT ID, Status, Phase__c FROM Order WHERE ID =: order.Id];
-            ServiceRequest__c srAfterUpdate = [SELECT ID, Status__c, DependOn__c, NextPhase__c FROM ServiceRequest__c WHERE Order__c =: order.Id];
-            System.debug(orderAfterUpdate);
-            System.debug(srAfterUpdate);
-            System.assertEquals('Sequenzializzato', orderAfterUpdate.Status);
-            System.assertEquals('Sequenzializzato', orderAfterUpdate.Phase__c);
-        }
+        Order orderAfterUpdate = [SELECT ID, Status, Phase__c FROM Order WHERE ID =: order.Id];
+        ServiceRequest__c srAfterUpdate = [SELECT ID, Status__c, DependOn__c, NextPhase__c FROM ServiceRequest__c WHERE Order__c =: order.Id];
+        System.debug(LoggingLevel.DEBUG,orderAfterUpdate);
+        System.debug(LoggingLevel.DEBUG,srAfterUpdate);
+        System.assertEquals('Sequenzializzato', orderAfterUpdate.Status, 'Test OK Status');
+        System.assertEquals('Sequenzializzato', orderAfterUpdate.Phase__c, 'Test OK Phase');
         Test.stopTest();
 
     }

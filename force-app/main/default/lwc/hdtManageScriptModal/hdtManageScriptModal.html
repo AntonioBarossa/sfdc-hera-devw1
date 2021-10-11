@@ -13,30 +13,73 @@ Changes:
 -->
 
 <template>
-    <template if:true={scriptProcessName}>
-        <lightning-button label={buttonLabel} onclick={showModal} variant="brand"> </lightning-button>
+    <template if:false={isInsideModal}>
+        <template if:true={scriptProcessName}>
+
+            <template if:false={isScriptConfirmed}>
+                <lightning-button label={buttonLabel} icon-name="utility:call" onclick={showModal} variant="brand"> </lightning-button>
+            </template>
+
+            <template if:true={isScriptConfirmed}>
+                <lightning-button label={buttonLabel} icon-name="utility:call" disabled variant="brand"> </lightning-button>
+            </template>
+
+        </template>
     </template>
+
     <template if:true={openModal}>
-        <div class="slds-modal slds-fade-in-open slds-backdrop">
-            <div class="slds-modal__container">
-                <!------HEADER Section-->
-                <div class="slds-modal__header slds-modal__header_empty">
-                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
-                        variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
-                    </lightning-button-icon>
 
-                    <!-- <h2>{htmlScriptTitle}</h2> -->
-                </div>
-                <!------Body Section-->
-                <div class="slds-modal__content slds-var-p-around_medium">
+        <template if:true={isInsideModal}>
 
-                    <!-- Inserire la card -->
-                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId}
-                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek}>
+            <template if:true={hasScriptType}>
+                <template if:false={isDecisional}>
+                    <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
                     </c-hdt-manage-script-card>
+                </template>
 
+                <template if:true={isDecisional}>
+                    <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                        child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
+                    </c-hdt-manage-script-decisional-card>
+                </template>
+            </template>
+
+        </template>
+
+        <template if:false={isInsideModal}>
+            <div class="slds-modal slds-fade-in-open slds-backdrop">
+                <div class="slds-modal__container">
+                    <!------HEADER Section-->
+                    <div class="slds-modal__header slds-modal__header_empty">
+                        <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+                            variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
+                        </lightning-button-icon>
+
+                        <!-- <h2>{htmlScriptTitle}</h2> -->
+                    </div>
+                    <!------Body Section-->
+                    <div class="slds-modal__content slds-var-p-around_medium">
+
+                        <!-- Inserire la card -->
+                        
+                        <template if:true={hasScriptType}>
+                            <template if:false={isDecisional}>
+                                <c-hdt-manage-script-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                                    child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
+                                </c-hdt-manage-script-card>
+                            </template>
+
+                            <template if:true={isDecisional}>
+                                <c-hdt-manage-script-decisional-card script-process-name={scriptProcessName} record-id={recordId} activity-id={activityId}
+                                    child-additional-info={childAdditionalInfo} link-reitek={linkReitek} onclose={closeModal} onconfirm={confirmModal}>
+                                </c-hdt-manage-script-decisional-card>
+                            </template>
+                        </template>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
     </template>
 </template>

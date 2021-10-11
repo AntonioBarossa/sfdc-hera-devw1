@@ -72,7 +72,6 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
     
     @AuraEnabled
     public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby) {
-       System.debug('getExternalCustomer');
         
         List <HDT_LC_Customer> wrapperToreturn = new List <HDT_LC_Customer>();
  
@@ -80,8 +79,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
 
             List<String> marcaturePermesse = getMarcatureFromRole();
             // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
-            if(marcaturePermesse == null)
-            return wrapperToreturn;
+            if(marcaturePermesse == null){
+                return wrapperToreturn;
+            }
             
             String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
             if(filterby=='Codice Fiscale'){
@@ -100,7 +100,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
             List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) ); 
-
+            
+            //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
+            /*
             String queryNonStoricizzati = 'select Id, FirstName__c,LastName__c  , FiscalCode__c ,VATNumber__c, CustomerCode__c FROM Account ';   
             if(filterby=='Codice Fiscale'){
                 queryNonStoricizzati +=' WHERE FiscalCode__c = :searchKey';
@@ -117,7 +119,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                 queryNonStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             } 
             List<Account> listAccount =  Database.query( String.escapeSingleQuotes(queryNonStoricizzati) );
-          
+            */
+            //END>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
 
             for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
@@ -132,7 +135,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                         )
                 );
             }
- 
+            //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
+            /*
             for(Account sfCustomer:listAccount){
                 wrapperToreturn.add(
                     new HDT_LC_Customer(
@@ -146,8 +150,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
                         )
                 );
             }
+            */
+            //END>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
         }
-        System.debug('wrapperToreturn: '+wrapperToreturn);
         return wrapperToreturn;
     }
 }

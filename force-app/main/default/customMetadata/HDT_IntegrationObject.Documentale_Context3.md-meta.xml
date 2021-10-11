@@ -7,7 +7,7 @@
         <value xsi:type="xsd:string">{
 &quot;objectName&quot;: &quot;Account&quot;,
 &quot;controllingField&quot;: &quot;Id&quot;,
-&quot;fields&quot;: &quot;Id,Segment__c, CustomerCode__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity, BillingPostalCode, ShippingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, CustomerType__c,VATGroup__c, VATGroupStartDate__c,IsVATGroupJoined__c,VATGroupEndDate__c,BillingStreetName__c,CompanyOwner__c&quot;,
+&quot;fields&quot;: &quot;Id,Segment__c, CustomerCode__c, FiscalCode__c, VATNumber__c, FirstName__c, LastName__c, BillingAddressFormula__c, BillingStreetNumber__c, BillingCity, BillingPostalCode, BillingState, OtherPhone__c, MobilePhone__c, FAX__c, CustomerMarking__c, VirtualSAPIban__c, PrimaryEmail__c, BillingStreetNumberExtension__c, BuildingStairCase__c, BuildingFloor__c, BillingPlace__c, BillingCountry, Category__c, CustomerType__c,VATGroup__c, VATGroupStartDate__c,IsVATGroupJoined__c,VATGroupEndDate__c,BillingStreetName__c,CompanyOwner__c&quot;,
 &quot;relatedObject&quot;: [
 {
 &quot;objectName&quot;: &quot;AccountContactRelation&quot;,
@@ -24,13 +24,13 @@
 &quot;objectName&quot;: &quot;Case&quot;,
 &quot;fields&quot;: &quot;Id, Cluster__c,Type,Origin,CaseNumber,Phase__c,CreatedDate,TensionOption__c,CommodityFormula__c,Amount__c,AddressFormula__c&quot;,
 &quot;relation&quot;: &quot;Cases&quot;,
-&quot;condition&quot;:&quot;CreatedDate &gt; LAST_WEEK&quot;
+&quot;condition&quot;:&quot;CreatedDate &gt; LAST_YEAR&quot;
 },
 {
 &quot;objectName&quot;: &quot;Order&quot;,
 &quot;fields&quot;: &quot;Id,Cluster__c,ProcessType__c,Phase__c,Channel__c,CreatedDate,OrderNumber,EstimateAmount__c,RequestOption__c,CommodityFormula__c,SupplyAddressFormula__c&quot;,
 &quot;relation&quot;: &quot;Orders&quot;,
-&quot;condition&quot;:&quot;RecordType.DeveloperName != &apos;HDT_RT_OrderDossier&apos; AND CreatedDate &gt; LAST_WEEK&quot;
+&quot;condition&quot;:&quot;RecordType.DeveloperName != &apos;HDT_RT_OrderDossier&apos; AND CreatedDate &gt; LAST_YEAR&quot;
 }
 ],
 &quot;lookupObject&quot;: [

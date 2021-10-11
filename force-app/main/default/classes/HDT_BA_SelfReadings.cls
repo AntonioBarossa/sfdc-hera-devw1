@@ -1,3 +1,4 @@
+// BATCH DEPRECATO - DA NON SCHEDULARE
 public inherited sharing class HDT_BA_SelfReadings implements Database.Batchable<SObject> {
 
     public Database.QueryLocator start(Database.BatchableContext context) {

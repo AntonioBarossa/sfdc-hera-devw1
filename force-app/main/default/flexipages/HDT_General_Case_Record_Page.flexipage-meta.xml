@@ -684,7 +684,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Escalation</value>
+                            <value>Case.HDT_ChangePriority</value>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Case.Riprendi_Processo_Sales</value>

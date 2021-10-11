@@ -101,6 +101,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+
+
                                 if( mapRequestFields.get('DES_ERR_AEEG') != null) {
                                     ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                     ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG');
@@ -108,25 +110,26 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
 
-                                if (mapRequestFields.get('IMP_PREV_DIST') != null && !String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
+                                if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                     Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                     Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
+                                    ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+                                    ord.QuotationType__c='Predeterminabile';
                                     switch on mapRequestFields.get('TIPO_INTERVENTO') {
-                                        when 'A Preventivo' {
-                                            ord.QuotationType__c='Analitico';
-                                            //ord.ValidityDateEstimate__c=Date.today().addDays(15);
-                                        }
                                         when 'Attivazione', 'Lavoro Semplice' {
-                                            ord.QuotationType__c='Predeterminabile';
                                             ord.ValidityDateEstimate__c=Date.today().addDays(validityDateDelay);
                                         }
                                     }
                                     
                                 }else{
-                                    if(mapRequestFields.get('TIPO_INTERVENTO')=='Lavoro Semplice'){
-                                        ord.QuotationType__c='Rapido';
-                                        //ord.ValidityDateEstimate__c=Date.today().addDays(5);//bug 466
+                                    switch on mapRequestFields.get('TIPO_INTERVENTO') {
+                                        when 'Lavoro Semplice' {
+                                            ord.QuotationType__c='Rapido';
+                                        }
+                                        when 'A Preventivo'{
+                                            ord.QuotationType__c='Analitico';
+                                        }
                                     }
                                 }
 
@@ -172,12 +175,39 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                ord.Description = mapRequestFields.get('ANNOTAZIONI');
                             }
                             when 'Esito OK da DL' {
+                                HDT_UTL_HandleTechnicalData utlTechData = new HDT_UTL_HandleTechnicalData();
+                                utlTechData.sp = new ServicePoint__c(Id=ordRetrieved.ServicePoint__c);
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.valueOf(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
+                                
+                                //Start HRAWRM-657 21/09/2021
+                                List<Id> listRecType = new List<Id>();
+                                Id rtTemporaryNewActivation        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId();
+                                Id rtConnectionwithActivation      = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
+                                listRecType.add(rtTemporaryNewActivation);
+                                listRecType.add(rtConnectionwithActivation);
+                                if (listRecType.contains(ord.recordtypeId )   ) {
+                                    ord.ServicePointCode__c = mapRequestFields.get('POD');
+                                    ord.ServicePoint__r.Name= mapRequestFields.get('POD');
+                                    ord.ServicePoint__r.ServicePointCode__c = mapRequestFields.get('POD');
+                                }
+                                //End HRAWRM-657 21/09/2021
+                                
+                                
+                                switch on mapRequestFields.get('COD_FLUSSO'){
+                                    when 'E150F'{
+                                        utlTechData.handleE150Flow(mapRequestFields, ord);
+                                    }
+                                    when '0300' {
+                                        utlTechData.handle300Flow(mapRequestFields, ord);
+                                    }
+                                }
                             }
                             when 'Amm. Precheck KO SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('DES_ERR_ES');
@@ -220,6 +250,13 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Annullamento - Ammissibilità OK', 'Annullamento - Ammissibilità KO' {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 ord.CancellationHerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                Datetime nowDate = Datetime.now();
+                                String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                if(mapRequestFields.get('ANNOTAZIONI_ANN') != null && mapRequestFields.get('ANNOTAZIONI_ANN') != '')
+                                {
+                                    ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                }
                                 if(previousPhase.indexOf('Ripensamento') >-1){
                                     nextPhase = nextPhase.replace('Annullamento', 'Ripensamento');
                                 }
@@ -231,6 +268,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
                                     finalCancellationPhase = 'Annullato';
+                                    Datetime nowDate = Datetime.now();
+                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
+                                    {
+                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                    }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                    	ord.Phase__c = 'Ripensamento - Esito OK da SII';
                                     finalCancellationPhase = 'Ripensato';
@@ -241,6 +285,13 @@ public with sharing class HDT_SRV_SalesHandler {
                                 //EVERIS: START ANNULLAMENTO/RIPENSAMENTO
                                 if(previousPhase.indexOf('Annullamento') > -1) {
                                     ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                    Datetime nowDate = Datetime.now();
+                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != '')
+                                    {
+                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                    }
                                 }else if(previousPhase.indexOf('Ripensamento') > -1) {
                                     ord.Phase__c = 'Ripensamento - Esito KO da SII';
                                 }
@@ -252,15 +303,30 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Dati discordanti'{
                                 ord.phase__c = mapRequestFields.get('FASE');
+                                ord.DiscardReason__c = mapRequestFields.get('TESTO_ERR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Completata' {
 
                                 Boolean redirectPreventivo = false;
                                 switch on ordRetrieved.ProcessType__c{
-                                    when 'Connessione con Attivazione', 'Temporanea Nuova Attivazione', 'Attivazione con Modifica'{
+                                    when 'Connessione con Attivazione', 'Temporanea - Nuova Attivazione', 'Attivazione con Modifica'{
                                         redirectPreventivo=true;
                                     }
                                 }
+                                //Start HRAWRM-657 21/09/2021
+                                List<Id> listRecordType = new List<Id>();
+                                Id rtSwitchIn           = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
+                                Id rtChangeOffer        = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId();
+                                Id rtVultureWithSwitch  = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
+                                listRecordType.add(rtSwitchIn);
+                                listRecordType.add(rtChangeOffer);
+                                listRecordType.add(rtVultureWithSwitch);
+
+                                if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
+                                    ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
+                                }
+                                //End HRAWRM-657 21/09/2021
 
                                 if(ordRetrieved.Phase__c.equalsIgnoreCase('Dati Tecnici Ricevuti') && redirectPreventivo){
                                     ord.Phase__c = 'Inviare preventivo';
@@ -384,24 +450,53 @@ public with sharing class HDT_SRV_SalesHandler {
 
             }
             when 'WSLead_Callback'{
-                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200; 
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
             }
             when 'WSLead_Winback'{
-                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
             }
             when 'WSLead_CariBoll'{
-                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+              
             }
             when 'WSLead_HVAC'{
-                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;  
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+
             }
             when 'WSLead_SOL'{
-                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+
             }
             when 'CMPDMP_PRV'{
                
@@ -416,25 +511,12 @@ public with sharing class HDT_SRV_SalesHandler {
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''  ){
 
 		                HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
-		                Id batchprocessid = Database.executeBatch(ba,1000);
+		                Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
                         
                     }
                     else {
-                     
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
@@ -450,24 +532,104 @@ public with sharing class HDT_SRV_SalesHandler {
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){   
                         HDT_BA_AttributesLead ba = new HDT_BA_AttributesLead(localMapRequestFields.get('runId')); 
-		                Id batchprocessid = Database.executeBatch(ba,1000);
+		                Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
                     }
                     else {
-                       
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-        
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'runId cannot be empty';
-        
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-        
-                        RestContext.response.statusCode = 400;
-        
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_7'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_6'{
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_3'{
+                //System.debug('SIE34');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_2'{
+                //System.debug('SIE34_2');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_2'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    }
+                }
+            }
+            when 'SIE34_1'{
+               // System.debug('SIE34_1');
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    Map<String,String> localMapRequestFields = new Map<String,String>();
+
+                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                        if(localMapRequestFields.get(field.name) == null){
+                            localMapRequestFields.put(field.name,field.value);
+                        }
+                    }
+                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                        System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_1'));
+                        RestContext.response.statusCode = 200;
+                    }
+                    else {
+                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
@@ -499,14 +661,27 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_UTL_DatabaseService.updateSObject(recordOrder);
     }
     //EVERIS: END ANNULLAMENTO/RIPENSAMENTO
+    private static void mapError(String msg, HDT_WRP_MrrResponse.HDT_WRP_Field responseField,HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject,HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem){
+        responseField.fieldType = 'TEXT';
+        responseField.name = 'ESITO';
+        responseField.value = 'KO';
 
+        responseFieldError.fieldType = 'TEXT';
+        responseFieldError.name = 'ERROR_MESSAGE';
+        responseFieldError.value = msg;
+        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+        mrrResponseItem.objects.add(responseObject);
+        RestContext.response.statusCode = 400;
+
+    }
     private static void updateServicePoint(ServicePoint__c sp){
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
         }catch(Exception e){
-            system.debug('Exception Update ServicePoint');
+           // system.debug('Exception Update ServicePoint');
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
+    
 
 }

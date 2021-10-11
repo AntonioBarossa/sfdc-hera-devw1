@@ -1,3 +1,9 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 21/04/21
+* @description HDT_LC_FormAccountBusiness
+* @history Sabina Levonja – 21/04/21 – created class
+*/
 public with sharing class HDT_LC_FormAccountBusiness {
 
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
@@ -12,6 +18,21 @@ public with sharing class HDT_LC_FormAccountBusiness {
         String name;
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
+        //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+        Map<String, String> infoData = new Map<String, String>();
+        infoData.put('lastName'     , dataAccount.get('lastName')   );
+        infoData.put('firstName'    , dataAccount.get('firstName')  );
+        infoData.put('birthDate'    , dataAccount.get('birthDate')  );
+        infoData.put('birthPlace'   , dataAccount.get('birthplace') );
+        infoData.put('gender'       , dataAccount.get('gender')     );
+
+        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,dataAccount.get('personFiscalCode') )) {
+            throw new AuraHandledException('Inserire un codice fiscale valido');
+        }  
+        //End HRAWRM-491 27/09/2021 Controllo codice fiscale stimato
+ 
+     
+        
         System.debug('PROVAACCOUNT:' + dataAccount);
         if(dataAccount.get('businessName')!= null){
             name =dataAccount.get('businessName');

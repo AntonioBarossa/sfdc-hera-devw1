@@ -14,7 +14,7 @@
                         <lightning-button onclick={handlePreview} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
                     </li>
                     <li>
-                        <lightning-button onclick={sendDocumentFile} class="slds-m-left_x-small" disabled={isPrintButtonDisabled} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
+                        <lightning-button onclick={sendDocumentFile} class="slds-m-left_x-small" disabled={disablePrintButtonFunction} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
                     </li>
                 </template>
                 <template if:false={enableDocumental}>

@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Disalimentabile__c</field>
-        <value xsi:type="xsd:string">NO</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>FornitureCliente__c</field>

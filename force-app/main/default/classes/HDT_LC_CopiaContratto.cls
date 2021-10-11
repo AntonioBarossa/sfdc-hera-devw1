@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 09/08/2021
+* @description HDT_LC_CopiaContratto
+* @history Lorenzo – 09/08/2021 – created class
+*/
 public with sharing class HDT_LC_CopiaContratto {
     public static HDT_SRV_Case caseSRV= new HDT_SRV_Case();
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
@@ -16,7 +22,7 @@ public with sharing class HDT_LC_CopiaContratto {
         }
 
         return listRes;
-        
+         
         
     }
     @AuraEnabled
@@ -45,7 +51,7 @@ public with sharing class HDT_LC_CopiaContratto {
             recTypeId= rc.Id;
         }
         if('Copia della registrazione'.equalsIgnoreCase(tipoFirma)){
-            List<ContentDocumentLink> listContentDocument = [Select id from ContentDocumentLink Where LinkedEntityid = :caseId];
+            List<ContentDocumentLink> listContentDocument = [Select id from ContentDocumentLink Where LinkedEntityid = :caseId WITH SECURITY_ENFORCED];
             if(listContentDocument != null && !listContentDocument.isEmpty()){
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio registrazione');
                 System.debug(activity);
@@ -108,8 +114,10 @@ public with sharing class HDT_LC_CopiaContratto {
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
             s.wrts_prcgvr__status__c = 'Completed';
             activitySrv.updateRecord(s);
-            Case c = caseQr.getRecordById(s.case__c);
-            c.phase__c	='In Lavorazione';
+           // Case c = caseQr.getRecordById(s.case__c);
+            Case c = new Case();
+            c.Id = s.Case__c;
+            c.Phase__c	='In Lavorazione';
             caseSrv.updateRecord(c);
             return true;
         }
@@ -134,7 +142,7 @@ public with sharing class HDT_LC_CopiaContratto {
 
     @AuraEnabled
     public static List<DocumentSendTracking__c> getDocumentTracking(String orderId){
-        return [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId];
+        return [SELECT Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Account__c, BounceReason__c, Case__c, EnvelopeId__c, IsBounced__c, Order__c, ReadDate__c, Receiver__c, SendDate__c, SendMode__c, Sender__c, CompanyOwner__c FROM DocumentSendTracking__c where Order__c =: orderId WITH SECURITY_ENFORCED];
     }
 
 }

@@ -1,6 +1,8 @@
 public without sharing class HDT_UTL_ActivityCustomProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
         HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
@@ -82,7 +84,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Id rtNewCustomer = activityRTInfos.get('HDT_RT_CreditCheckKO').getRecordTypeId();
         Set<Id> oldCustOrderIds = new Set<Id>();
 
-        for(Order o : orderMap.get('oldCustomer')){
+        for(Order o : orderMap.get('oldCustomer')){ 
             oldCustOrderIds.add(o.id);
         }
         Map<id, Order> ordersToGetOldCustomer = new Map<Id,Order>([SELECT AccountId, ServicePoint__r.Account__c FROM Order WHERE ID IN :oldCustOrderIds ]);
@@ -123,8 +125,9 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
         }
 
-        if(!listActivity.isEmpty()){            
-            insert listActivity;
+        if(!listActivity.isEmpty()){   
+            activitySrv.createRecordWithFieldCheck(listActivity);    
+            //insert listActivity;
         }
         
     
@@ -145,18 +148,44 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         Set<Id> orderIdToAnnullamento = new Set<Id>();        
         for(wrts_prcgvr__Activity__c act : newActList){
             if(act.Status__c == 'KO Definitivo'){
-                orderIdToAnnullamento.add(act.Order__c);                
+                orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
 
         System.debug('orderIdToAnnullamento ----> ' + orderIdToAnnullamento);        
-        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento];
+        List<Order> orderToAnnullamento = [SELECT id,Status FROM Order WHERE id IN :orderIdToAnnullamento WITH SECURITY_ENFORCED];
         for(Order order : orderToAnnullamento){        
             order.Status = 'Annullato';                
         }
-        update orderToAnnullamento;
+        orderSrv.updateRecords(orderToAnnullamento);
+        //update orderToAnnullamento;
     }
 
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 29-09-2021 
+    * @param newActMap 
+    * @param oldActMap 
+    **/
+    public static void closeSobjectOnActivityClosing(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
+        //Proroga connessione temporanea
+        Set<Id> sobjsId = new Set<Id>();
+        Map<Id, wrts_prcgvr__Activity__c> oldActMap = new Map<Id, wrts_prcgvr__Activity__c>(oldActList);
+        for(wrts_prcgvr__Activity__c act : newActList){
+            if(act.wrts_prcgvr__Status__c=='Completed' && oldActMap.get(act.id).wrts_prcgvr__Status__c=='Not Started'){
+                sobjsId.add((ID)act.wrts_prcgvr__ObjectId__c);
+            }
+        }
+
+        Map<Id, Case> casesToUpdate = new Map<Id, Case>([Select id, Phase__c from Case where RecordType.DeveloperName='HDT_RT_ProrogaTemporanea' AND Phase__c='In Lavorazione' AND Id IN :sobjsId WITH SECURITY_ENFORCED]);
+        if(!casesToUpdate.isEmpty()){
+            for(Case c : casesToUpdate.values()){
+                c.Phase__c='Completata';
+            }
+        }
+        new HDT_SRV_Case().updateRecords(casesToUpdate.values());
+    }
 
     // @Picchiri 15.06.21 Credit Check Gestione Esiti ed eventuali invocazione a chiamata Mulesoft
     public static wrts_prcgvr__Activity__c closeActivityCheck(wrts_prcgvr__Activity__c act){

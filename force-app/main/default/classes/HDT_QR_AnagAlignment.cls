@@ -41,6 +41,7 @@ public with sharing class HDT_QR_AnagAlignment {
             ResidentialState__c,
             ResidentialStreetName__c,
             ResidentialStreetNumber__c,
+            ResidentialStreetNumberExtension__c,
             // Campi sezione Dati Esazione
             BillingProfile__c,
             BillingCity__c,
@@ -53,6 +54,7 @@ public with sharing class HDT_QR_AnagAlignment {
             BillingProvince__c,
             BillingStreetName__c,
             BillingStreetNumber__c,
+            BillingStreetNumberExtension__c,
             // Campi sezione Dati Fornitura
             SupplyCity__c,
             SupplyCityCode__c,
@@ -65,6 +67,7 @@ public with sharing class HDT_QR_AnagAlignment {
             SupplyStreetName__c,
             SupplyStreetNumber__c,
             SupplyType__c,
+            SupplyStreetNumberExtension__c,
             // Campi sezione Tributi e Dati Commerciali
             VAT__c,
             ExciseEle__c,

@@ -151,6 +151,19 @@ public class HDT_LC_MeterReadingControllerTst {
         
     }
 
+    @isTest
+    public static void getAccountDataEnrichmentMeterReading(){
+
+        Test.startTest();
+
+        List<HDT_AccountDataEnrichment__mdt> contractMetadataList;
+        contractMetadataList = HDT_QR_MeterReading.getAccountDataEnrichment(contractMetadataList, 'contract');
+        System.assert(contractMetadataList.size() > 0, 'Si è verificato un errore in fase di scaricamento dei records');
+    
+        Test.stopTest();
+        
+    }
+
     public class HDT_LC_MeterReadingControllerTstMockFail implements HttpCalloutMock{
         HttpResponse response;
         HDT_LC_MeterReadingControllerTstMockFail(HttpResponse r){

@@ -16,6 +16,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ATTRIB_28__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_45__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_29__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>FAX_PH_NUM__c</field>
             </layoutItems>
             <layoutItems>
@@ -25,6 +37,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SOC_SECURITY_NUM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_COMP_ADDR__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -54,6 +70,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ATTRIB_44__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_46__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>HOME_PH_NUM__c</field>
             </layoutItems>
             <layoutItems>
@@ -63,6 +87,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ADDR_NUM_SUFF__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>COUNTRY__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -76,6 +104,10 @@
                 <behavior>Edit</behavior>
                 <field>AZ_ImportDatetime__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CREATED__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -85,10 +117,6 @@
         <editHeading>true</editHeading>
         <label>Indirizzo</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_COMP_ADDR__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ADDR__c</field>
@@ -111,10 +139,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>COUNTRY__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DFLT_ORDER_PROC_CD__c</field>
@@ -243,10 +267,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CREATED__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>INTEGRATION_ID__c</field>
             </layoutItems>
             <layoutItems>
@@ -318,7 +338,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h0E000001glLQ</masterLabel>
+        <masterLabel>00h3N000002YL2e</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

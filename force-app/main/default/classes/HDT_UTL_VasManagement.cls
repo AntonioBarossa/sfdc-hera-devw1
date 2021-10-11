@@ -150,7 +150,7 @@ public with sharing class HDT_UTL_VasManagement {
         **/
         public HDT_WRP_VASReq(Order currentOrder, Case currentCase) {
             this(currentOrder);
-            this.keyServizio = currentCase.CaseNumber;
+            //this.keyServizio = currentCase.CaseNumber;
         }
     }
 
@@ -162,6 +162,7 @@ public with sharing class HDT_UTL_VasManagement {
         String nrContrattoIp;
         String numDocRif;
         String statoPratica;
+        Date dataDecorrenza;//temp 01/20/21
 
         /**
         * @description Constructor with order and case
@@ -175,6 +176,11 @@ public with sharing class HDT_UTL_VasManagement {
 
             //numDocRif = null
             statoPratica = currentCase.VasStatus__c;
+
+            dataCessazione = Date.today();
+
+            dataDecorrenza = Date.today();//temp 01/20/21
+            
         }
     }
 
@@ -221,17 +227,18 @@ public with sharing class HDT_UTL_VasManagement {
             OrderItem parentOrderItem;
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
-                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
-                items.add(reqItem);
-
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
                     parentOrderItem = ordItem;
+                    continue;
                 }
+                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
+                items.add(reqItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
-            dataAttivazione = currentOrder.VasServiceActivationDate__c;
-            nrRate = parentOrderItem?.Product2?.NumberRateMonthly__c;
+            dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
+            Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
+            nrRate = tempRate!=null? tempRate : 0;
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
 
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;

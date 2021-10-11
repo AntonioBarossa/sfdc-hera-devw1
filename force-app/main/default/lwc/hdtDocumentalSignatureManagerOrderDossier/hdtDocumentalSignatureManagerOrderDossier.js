@@ -49,6 +49,8 @@ const FIELDS = [
     'Order.ShippingStreetNumber__c',
     'Order.ShippingStreetNumberExtension__c',
     'Order.ShippingIsAddressVerified__c',
+    'Order.Contact__r.MobilePhone',
+    'Order.Contact__r.Email',
     'Order.Account.PrimaryEmail__c',
     'Order.Account.Id',
     'Order.Account.MobilePhone__c',
@@ -63,6 +65,19 @@ const FIELDS = [
 	'Order.Account.BillingStreetNumberExtension__c',
 	'Order.Account.BillingStreetCode__c'
 ];
+
+const SCRIPT_SIGNATURE_METHODS = [
+    'Vocal Order',
+    'OTP Remoto',
+    'OTP Coopresenza'
+];
+
+const SCRIPT_ENABLED_CHANNELS = [
+    'Teleselling',
+    'Telefono Outbound',
+    'Telefono Inbound'
+];
+
 export default class hdtOrderDossierWizardSignature extends LightningElement {
     
     @api orderParentRecord;
@@ -86,6 +101,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     @track disabled = false;
     @api recordId;
     //FINE EVERIS DOCUMENTALE
+
+    openAfterScriptModal = false;
     
     @api scriptMap = {};
 
@@ -143,18 +160,20 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     get isScriptBtnVisible(){
         if (this.orderRecord) {
 
-            let hiddenEdit = true;
+            /*let hiddenEdit = true;
             if(this.orderParentRecord.Step__c <= this.currentStep || this.orderParentRecord.Status === 'Completed'){
                 hiddenEdit = true;
             } else if(this.orderParentRecord.Step__c > this.currentStep){
                 hiddenEdit = false;
-            }
+            }*/
 
-            return this.orderRecord.fields.Status.value=='In Lavorazione' && !hiddenEdit && (
-                this.orderRecord.fields.SignatureMethod__c.value=='Vocal Order' || 
-                this.orderRecord.fields.SignatureMethod__c.value=='OTP Remoto' || 
-                this.orderRecord.fields.SignatureMethod__c.value=='OTP Coopresenza'
-            )
+            let loginChannel = this.orderRecord.fields.CreatedBy.value.fields.LoginChannel__c.value;
+            let isChannelEnabled = (loginChannel==null || SCRIPT_ENABLED_CHANNELS.indexOf(loginChannel)>=0);
+
+            let signatureMethod = this.orderRecord.fields.SignatureMethod__c.value;
+            let isSignatureEnabled = (SCRIPT_SIGNATURE_METHODS.indexOf(signatureMethod)>=0);
+
+            return (this.orderRecord.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && isChannelEnabled && isSignatureEnabled);
         }
         else return false;
     }
@@ -205,10 +224,13 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 contractSigned = this.orderRecord.fields.ContractSigned__c.value;
                 var contactEmail = '';
 				var contactPhone = '';
-				if(this.orderRecord.fields.Account.value != null){
+                if(this.orderRecord.fields.Contact__r.value != null){
+					contactEmail = this.orderRecord.fields.Contact__r.value.fields.Email.value;
+					contactPhone = this.orderRecord.fields.Contact__r.value.fields.MobilePhone.value;
+				}/* else if(this.orderRecord.fields.Account.value != null){
 					contactEmail = this.orderRecord.fields.Account.value.fields.PrimaryEmail__c.value;
 					contactPhone = this.orderRecord.fields.Account.value.fields.MobilePhone__c.value;
-				}
+				} */
                 var orderEmail = this.orderRecord.fields.ShippingMail__c.value;
                 if(orderEmail != null && orderEmail != '')
                     email = orderEmail;
@@ -419,7 +441,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
-                    updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                    updateContactForScartoDocumentale({accountId: this.orderParentRecord.AccountId,
+                                                       oldPhone: this.oldPhoneValue,
                                                        oldEmail: this.oldEmailValue,
                                                        newPhone: resultWrapper.phone,
                                                        newMail: resultWrapper.email}).then(data=>{
@@ -590,6 +613,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         });
     }
 
-    
+    handleScriptModalClose(){
+        console.log('keltin close script modal');
+        this.openAfterScriptModal = true;
+    }
 
 }

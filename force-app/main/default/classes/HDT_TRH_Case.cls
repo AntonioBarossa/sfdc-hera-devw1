@@ -7,9 +7,9 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     }
 
- 	public override void beforeDelete(){}
- 	public override void afterDelete(){}
-  	public override void afterUndelete(){}
+ 	//public override void beforeDelete(){}
+ 	//public override void afterDelete(){}
+  //	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
@@ -67,6 +67,9 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //***INIZIO SVILUPPO CAMPAGNE */
         HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
         //**FINE SVILUPPO */
+
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+
     }
 
     public override void afterInsert(){

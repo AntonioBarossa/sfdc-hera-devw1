@@ -9,6 +9,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_VocalOrderPublicConfirm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_VocalOrderPublicConfirm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_AppoitmentManagmentActivity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1853,6 +1861,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_ElegibilityCriteriaCheck</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2153,10 +2165,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_WRP_HerokuPostSalesProva</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_WRP_IntegrationObject</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2289,10 +2297,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_WS_InstallmentPlans</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_WS_InvioNumerazioni</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2414,6 +2418,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_TransitionWinBack</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_InboundSol</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

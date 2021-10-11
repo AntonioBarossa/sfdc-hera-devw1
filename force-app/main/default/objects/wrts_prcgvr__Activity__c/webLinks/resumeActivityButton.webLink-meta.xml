@@ -9,5 +9,6 @@
     <masterLabel>Riprendi attività</masterLabel>
     <openType>sidebar</openType>
     <protected>false</protected>
-    <url>/flow/HDT_FL_ResumeActivity?activityId={!wrts_prcgvr__Activity__c.Id}</url>
+    <url>/flow/HDT_FL_ResumeActivity?activityId={!wrts_prcgvr__Activity__c.Id}
+&amp;retURL=/lightning/r/wrts_prcgvr__Activity__c/{!wrts_prcgvr__Activity__c.Id}/view</url>
 </WebLink>

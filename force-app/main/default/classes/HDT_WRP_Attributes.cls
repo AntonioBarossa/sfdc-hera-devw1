@@ -1,3 +1,9 @@
+/**
+ * @author Enrico Capozzo (enrico.capozzo@webresults.it)
+ * @date 12/07/2021
+ * @description HDT_WRP_Attributes Classes
+ * @history Enrico Capozzo 12/07/2021 – Created class
+ */
 public with sharing class HDT_WRP_Attributes {
 
 	Public String email;

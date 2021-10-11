@@ -41,6 +41,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
+    requiredVat=true;
+    requiredFiscalCode=false;
     customerType='Organizzazione';
     gender;
     birthDate;
@@ -236,7 +238,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
     }
-
     handleChange(event){
         this.markingValue= event.detail.value;
         let key = this.categoryData.controllerValues[event.target.value];
@@ -255,7 +256,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
             this.customerType='Persona fisica';
             this.makerequired= true;
-        }else{
+            this.requiredVat=true; //HRAWRM-776 07/10/2021
+        }
+        else if(this.markingValue.includes("Condominio")  ){
+            this.requiredVat= false;
+            this.makerequired=true;
+
+        }//HRAWRM-776 07/10/2021
+        else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
@@ -266,10 +274,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.requiredVat=true;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
+       
    }
 
     handleCalculation(){
@@ -614,19 +624,26 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     console.log("LOG11:" + this.personFiscalCode.value);
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
                     console.log("LOG12:" + prova);
+                    var keyCode= prova; //HRDTR-00_HRAWRM-761 28/09/2021
+
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
                         console.log("LOG12");
                         let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
-                            this.gender= fiscData.gender;
+                            //this.gender= fiscData.gender;
+                            this.gender=fiscData[keyCode].gender;//HRDTR-00_HRAWRM-761 28/09/2021
                         }
-                        if(this.birthDate === undefined || this.birthDate.trim()===''){
-                            this.birthDate= fiscData.birthDate;
+                        if(this.birthDate || this.birthDate.trim()==''){
+                            console.log('this.birthDate: '+this.birthDate);
+                            //this.birthDate= fiscData.birthDate;
+                            this.birthDate=fiscData[keyCode].birthDate;//HRDTR-00_HRAWRM-761 28/09/2021
                         }
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
-                            this.birthPlace= fiscData.birthPlace;
+                           // this.birthPlace= fiscData.birthPlace;
+                           this.birthPlace=fiscData[keyCode].birthPlace;//HRDTR-00_HRAWRM-761 28/09/2021
+
                         }
                         console.log("LOG13:");
                         console.log("LOG13:" + businessName.value);
@@ -838,4 +855,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         event.target.value = inputVal.toString().slice(0,-1);
     }
     }
+    
+
+    
 }

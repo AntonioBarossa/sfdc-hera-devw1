@@ -2,7 +2,9 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckBusinessFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;), false,
+      <!--HRAWRM-146 aggiunto il controllo sul Prospect-->
+
+    <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)) , false,
 		
 			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, OR( Not(BillingIsAddressVerified__c),AND(ISBLANK(VATNumber__c),NOT(IsWrongFiscalData__c)), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true , false)
 		)</errorConditionFormula>

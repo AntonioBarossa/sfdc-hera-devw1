@@ -1,42 +1,73 @@
-/**
- * @author Fabricio Petkevicius Nunes (fabricio.nunes@engdb.com.br)
- * @date 09/08/2021
- * @description HDT_TRH_DocumentalActivity Test Classes
- * @history Fabricio Petkevicius Nunes – 9/08/2021 – Created class
- */
 @isTest
 public with sharing class HDT_TRH_DocumentalActivityTst{
+
+	//DEBUG
+
+	public static final String TEST_NAME = 'HDT_TRH_DocumentalActivityTst';
+
+
+	//SETUP
+
+	
+	//TESTING
+
 	@isTest
-	public static void testTriggerDocActivityBeforeInsert(){
+	public static void beforeInsertTest(){
+		
+		
+		
+		//DEBUG
+
+		String debugString = TEST_NAME + ' - ' + 'beforeInsertTest';
+		System.debug(debugString);
+		
+
+		//SETUP
+
+		HDT_UTL_DataFactoryTst.pClickCasePhase();
+		
+		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+
+		List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, true, accList[0].id, 'Bozza');
+		ordList[0].ParentOrder__c = ordList[1].Id;
+		update ordList;
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(2, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+		caseList[0].ParentId = caseList[1].Id;
+		update CaseList;
+		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
+		DocumentalActivity__c dA1 = new DocumentalActivity__c();
+		DocumentalActivity__c dA2 = new DocumentalActivity__c();
+
+
+		
+		dA1.ProcessId__c = caseList[0].CaseNumber;
+		dA2.ProcessId__c = ordList[0].OrderNumber;
+		
+		dA1.ParentProcessId__c = caseList[1].CaseNumber;
+		dA2.ParentProcessId__c = ordList[1].OrderNumber;
+
+		docActList.add(dA1);
+		docActList.add(dA2);		
+
+		//TESTING
 
 		Test.startTest();
 
-		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
-		List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-		List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
-		List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, true, accounts[0].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
-		List<DocumentalActivity__c> docActivities=new List<DocumentalActivity__c>();
-		DocumentalActivity__c docActivity=new DocumentalActivity__c();
-		docActivity.OrderId__c=orders[0].id;
-		docActivity.CaseId__c=cases[0].Id;
-		docActivity.ParentProcessId__c=cases[0].Id;
-		docActivity.ProcessId__c=orders[0].Id;
+        Try{
 
-		docActivities.add(docActivity);
+			insert docActList;
+			
+		}catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }        
+        Test.stopTest();
 
-		insert docActivities;
-
-		System.debug('docActivities = '+docActivities);
-
-		DocumentalActivity__c testDocActivity=[SELECT Id, CaseId__c
-		                                       FROM DocumentalActivity__c
-		                                       WHERE CaseId__c=:cases[0].Id
-		                                       LIMIT 1];
-
-		System.assertEquals(cases[0].Id, testDocActivity.CaseId__c, 'Document Activity not Inserted');
-		System.assertNotEquals('', testDocActivity.CaseId__c);
-		Test.stopTest();
+		//ASSERTS
+        System.assert(docActList != null, 'Attenzione, docActList non può essere null!');
 	}
+
 }

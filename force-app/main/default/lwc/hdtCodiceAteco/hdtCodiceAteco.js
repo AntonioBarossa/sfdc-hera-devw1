@@ -27,6 +27,7 @@ export default class HdtCodiceAteco extends LightningElement {
     ];
     selectedCode = '';
     disabledSave = true;
+    selectedIstatCode = '';
 
     //handle modal open event
     handleOpenModal(){
@@ -43,6 +44,7 @@ export default class HdtCodiceAteco extends LightningElement {
         this.isTableVisible = false;
         this.showEmptyMessage = false;
         this.selectedCode = '';
+        this.selectedIstatCode = '';
         this.disabledSave = true;
     }
 
@@ -175,12 +177,13 @@ export default class HdtCodiceAteco extends LightningElement {
         console.log('getTableSelection: ' + JSON.stringify(event.detail.selectedRows));
         let selectedRows = event.detail.selectedRows;
         this.selectedCode = selectedRows[0].AtecoCode__c;
+        this.selectedIstatCode = selectedRows[0].IstatCode__c;
         this.disabledSave = false;
     }
 
     handleSaveAtecoCode(){
         this.loading = true;
-        saveAtecoCode({order: this.order, atecoCode: this.selectedCode}).then(data =>{
+        saveAtecoCode({order: this.order, params: {atecoCode: this.selectedCode, istatCode: this.selectedIstatCode}}).then(data =>{
             this.loading = false;
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Successo',

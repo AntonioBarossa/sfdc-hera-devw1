@@ -15,20 +15,13 @@ public class HDT_QR_StaticResourceTst{
 		                           FROM StaticResource 
 		                           LIMIT 1];
 
-
-		System.debug('tStaticRes = '+tStaticRes);
-
 		HDT_QR_StaticResource qrStaticRes=new HDT_QR_StaticResource();
 
 		List<StaticResource> tStaticResList=qrStaticRes.getRecordByName(tStaticRes.Name);
 
+		System.assertEquals(tStaticRes.Name, tStaticResList[0].Name, 'The Static Resource was not retrieve correctly');
 
-		System.debug('tStaticResList = '+tStaticResList);
-
-
-		System.assertEquals(tStaticRes.Name, tStaticResList[0].Name, 'Static Resource return is not correct');
-
-		System.assertNotEquals('', tStaticResList[0].Id);
+		System.assertNotEquals('', tStaticResList[0].Id, 'The static resource was not retrieved correctly');
 
 		Test.stopTest();
 	}

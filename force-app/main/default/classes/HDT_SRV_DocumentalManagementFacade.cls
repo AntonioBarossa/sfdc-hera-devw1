@@ -1,5 +1,7 @@
 public with sharing class HDT_SRV_DocumentalManagementFacade {
-    public static String getBase64(String recordId,String context,String formParams){
+    
+    public static String getBase64(String recordId, String context, String formParams){
+        
         String baseSixtyFour = '';
         String body='';
         String result='';
@@ -8,7 +10,8 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         String message;
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-        try{     
+        
+        try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             documentalResponse = HDT_SRV_DocumentalManagement.executeCalloutRequest(body,context);
             baseSixtyFour = documentalResponse.deliverPackageResponse.composedDocument;
@@ -25,30 +28,57 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         }
         return JSON.serialize(resultMap);
     }
+    
+    /*
+    Invia Documento
 
-    public static void sendDocument(String recordId,String context,String formParams){
+    recordId: id record di cui si vuole [GESTIRE] la documentazione.
+    context: utilizzato per determinare contesto documentale
+    formParams: (serializzato) mappa di parametri utilizzata in vari punti.
+    */
+    public static void sendDocument(String recordId, String context, String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocument';
+		System.debug(debugString);
+        
         String body='';
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+        
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
-            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body,context);
+            if (context == 'EC' || context == 'GC') {
+                HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
+            }
+            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
+
         }catch(Exception ex){
             System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }
     }
 
-    public static void sendDocumentAsync(String recordId,String context,String formParams){
+    public static void sendDocumentAsync(String recordId, String context, String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocumentAsync';
+		System.debug(debugString);
+        
         System.enqueueJob(new HDT_QBL_DocumentalManagement(recordId,context,formParams));
     }
 
-    public static void sendAdvanceDocumentation(String recordId,String context,String formParams){
+    public static void sendAdvanceDocumentation(String recordId, String context, String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendAdvanceDocumentation';
+		System.debug(debugString);
+        
         String baseSixtyFour = '';
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
         String tipoPlico = (String) formParamsMap.get('TipoPlico');
         String result = '';
         try{
-            baseSixtyFour = getBase64(recordId,context,formParams);
+            baseSixtyFour = getBase64(recordId, context, formParams);
             Map<String,Object> respMap = (Map<String,Object>) JSON.deserializeUntyped(baseSixtyFour);
             baseSixtyFour = (String) respMap.get('base64');
             result = (String) respMap.get('result');
@@ -180,11 +210,16 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
                 envelopeId = requestBody.envelopeId;
                 outcome = requestBody.outcome;
                 transactionId = HDT_SRV_DocumentalManagement.getTransactionId(envelopeId);
+                // I KO da mulesoft contengono direttamente il transactionId di Engage1 nel body.
+                if (String.isBlank(transactionId) && String.isNotBlank(envelopeId)){
+                    transactionId = envelopeId;
+                }
                 SObject recordToUpdate = HDT_SRV_DocumentalManagement.getSobjectFromTransactionId(transactionId);
-                if (outcome == 'KO'){
+                if ((outcome == 'KO') || (outcome == 'OK' && requestBody.status == 'voided')){
                     HDT_SRV_DocumentalManagement.logDocusignError(recordToUpdate, requestBody);
                 } else {
                     HDT_SRV_DocumentalManagement.updateSobjectFromDocusign(recordToUpdate,requestBody);
+                    HDT_SRV_DocumentalManagement.createIntesaDocumentalActivity(recordToUpdate,requestBody,transactionId);
                 }
             }
         } catch (Exception ex) {
