@@ -111,6 +111,11 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 cs.status = 'In Lavorazione';
                 cs.Phase__c = 'In Lavorazione';
                 caseSRV.updateRecord(cs);
+                Id recTypeId= null;
+                RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+                if(rc !=null){
+                    recTypeId= rc.Id;
+                }
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Approvazione Bonus Commerciale');
                 activitySrv.createRecord(activity);
                 return 'success2';
