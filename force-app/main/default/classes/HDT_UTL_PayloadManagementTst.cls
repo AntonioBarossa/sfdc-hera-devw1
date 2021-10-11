@@ -54,7 +54,10 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
         System.debug(debugString + ' - orderItems: ' + orderItems);
         
+        //CONTACT AND ACCOUNT RELATIONSHIP
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id);
+        
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
         contractList[0].ServicePoint__c = servPoint.Id;
         contractList[0].StartDate = Date.today();
