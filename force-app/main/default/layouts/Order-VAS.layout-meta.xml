@@ -504,11 +504,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Order.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
-        </platformActionListItems>
+>
     </platformActionList>
     <relatedLists>
         <fields>Product2</fields>

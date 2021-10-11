@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label></label>
+    <name>Service__c</name>
+    <picklistValues>
+        <masterLabel>HERACOMM_MARCHE</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>MERCATO_AZIENDE</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>MERCATO_FAMIGLIE</masterLabel>
+        <translation></translation>
+    </picklistValues>
+</CustomFieldTranslation>

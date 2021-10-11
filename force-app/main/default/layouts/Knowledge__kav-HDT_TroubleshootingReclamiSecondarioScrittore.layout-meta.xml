@@ -13,9 +13,6 @@
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
-                <field>ToPublishDate__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>Language</field>
             </layoutItems>
         </layoutColumns>
@@ -130,6 +127,11 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.QuestionPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>ArchiveKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>7</sortOrder>
@@ -148,11 +150,6 @@
             <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.QuestionPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
