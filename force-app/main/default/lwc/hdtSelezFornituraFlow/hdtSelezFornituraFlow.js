@@ -21,6 +21,23 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'CONTRACT_BONUS_COMM':{
+        label: 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono Contratti',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Codice Contratto Sap', fieldName: 'SapContractCode__c', type: 'text'},
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     'ORDERS_ELE':{
         label: 'Ordini Energia Elettrica',
         sObjectName: 'Order',
