@@ -3,9 +3,9 @@
     <groupingStringEnum>KnowledgeValidationStatus</groupingStringEnum>
     <sorted>false</sorted>    
     <standardValue>
-        <fullName>Not Validated</fullName>
+        <fullName>Non Validato</fullName>
         <default>true</default>
-        <label>Not Validated</label>
+        <label>Non Validato</label>
     </standardValue>
     <standardValue>
         <fullName>Validated</fullName>

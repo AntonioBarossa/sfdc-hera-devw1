@@ -37,8 +37,8 @@ public with sharing class HDT_UTL_ReimbursementTst
         Test.startTest();
         outputs = HDT_UTL_Reimbursement.reimbursementChecks(inputs);
         Test.stopTest();
-        System.assertEquals(true, outputs[0].documentCheck);
-        System.assertEquals(false, outputs[0].accountBalanceCheck);
+        System.assertEquals(true, outputs[0].documentCheck,'');
+        System.assertEquals(false, outputs[0].accountBalanceCheck,'');
 
     }
 }

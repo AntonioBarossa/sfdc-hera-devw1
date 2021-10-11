@@ -67,7 +67,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             Id, AccountId,Contact.name,Roles,Contact.HomePhone,
             ContactId,Contact.Phone,
             Contact.MobilePhone,
-            Contact.Email,Contact.IndividualId,Contact.BPInterlocutor__c,EndDate
+            Contact.Email,Contact.IndividualId,Contact.BPInterlocutor__c,EndDate,StartDate
             FROM AccountContactRelation 
             WHERE 
             AccountId = :accountId 
