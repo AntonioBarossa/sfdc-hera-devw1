@@ -5,6 +5,7 @@ public with sharing class HDT_LC_CtToolbar {
     public static boolean updateCampaignMember(String ecid,string campaignMember,string agent){
         HDT_SRV_CampaignMember cmSrv = new HDT_SRV_CampaignMember();
         CampaignMember cm = new CampaignMember();
+        System.debug('********TRY12');
         cm.ecid__c = ecid;
         if(agent != null){
             cm.reitekAgentUserId__c = agent.split('@')[0];
@@ -59,12 +60,15 @@ public with sharing class HDT_LC_CtToolbar {
     }
 
     @AuraEnabled
-    public static wrts_prcgvr__Activity__c createActivity(String startCall, String clientNumber, String registrationLink, String ecid, String campaignMemberId){
+    public static wrts_prcgvr__Activity__c createActivity(/*String startCall, */String clientNumber, String registrationLink, String ecid, String campaignMemberId, String agent){
         HDT_QR_CampaignMember cmQr = new HDT_QR_CampaignMember();
+        System.debug('*******:TRYMETHOD');
         CampaignMember cm = cmQr.getRecordById(campaignMemberId);
+        System.debug('*******:TRYMETHOD2');
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        Datetime sdt = Datetime.newInstance(Long.valueOf(startCall));
+        Datetime sdt = Datetime.now();
         activity.CallStartTime__c = sdt;
+        System.debug('*******:TRYMETHOD3');
         activity.StartDate__c = Date.newInstance(sdt.year(),sdt.month(),sdt.day()); 
         activity.Type__c = 'Chiamata outbound';
         activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
@@ -78,6 +82,9 @@ public with sharing class HDT_LC_CtToolbar {
         }
         try {
             System.debug('###### activity #### ' +activity);
+            System.debug('*******:TRYMETHOD4');
+            boolean cmRes = updateCampaignMember(ecid, campaignMemberId, agent);
+            System.debug('*******:TRYMETHOD5');
             return activitySrv.createRecord(activity);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

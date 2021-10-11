@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_DocumentalManagementFactoryTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(classString != null);
+        System.assert(classString != null, 'Attenzione, classString non può essere null!');
         
     }
 

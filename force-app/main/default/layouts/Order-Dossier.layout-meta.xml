@@ -45,10 +45,10 @@
                 <behavior>Readonly</behavior>
                 <field>Campaign__c</field>
             </layoutItems>
-            <layoutItems> <!--HRAWRM-249 27/09/2021-->
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>LoginChannel__c</field>
-            </layoutItems><!--HRAWRM-249 27/09/2021-->
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -298,14 +298,12 @@
             <actionType>StandardButton</actionType>
             <sortOrder>19</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Order.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
+>
     </platformActionList>
     <relatedLists>
+        <fields>ORDERS.CREATED_DATE</fields>
         <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ProcessType__c</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
@@ -322,6 +320,8 @@
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
+        <fields>TASK.CREATED_DATE</fields>
+        <fields>TASK.TYPE</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
         <fields>TASK.DUE_DATE</fields>
@@ -332,6 +332,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>wrts_prcgvr__DueDate__c</fields>

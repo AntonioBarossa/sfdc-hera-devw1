@@ -91,7 +91,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			test.stopTest();
 
 			System.assertEquals(true, riassegnaComCod, 'Return is wrong');
-			System.assertNotEquals(false, riassegnaComCod);
+			System.assertNotEquals(false, riassegnaComCod, 'Return is wrong');
 		}
 	}
 
@@ -116,7 +116,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			test.stopTest();
 
 			System.assertEquals(true, cambiaPhaseComm, 'Return is wrong');
-			System.assertNotEquals(false, cambiaPhaseComm);
+			System.assertNotEquals(false, cambiaPhaseComm, 'Return is wrong');
 		}
 	}
 
@@ -153,7 +153,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			                                                WHERE Type__c='Chiamata inbound'];
 
 			System.assertEquals(true, tActivityCustom[2].Id!=null, 'ActivityCustom not created');
-			System.assertNotEquals(false, tActivityCustom[2].Id!=null);
+			System.assertNotEquals(false, tActivityCustom[2].Id!=null, 'ActivityCustom not created');
 		}
 	}
 
@@ -178,7 +178,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			test.stopTest();
 
 			System.assertEquals(true, validaActivityVocal, 'Return is wrong');
-			System.assertNotEquals(false, validaActivityVocal);
+			System.assertNotEquals(false, validaActivityVocal, 'Return is wrong');
 		}
 	}
 
@@ -204,7 +204,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			test.stopTest();
 
 			System.assertEquals(true, validaActivityDocument!=null, 'Return is wrong');
-			System.assertNotEquals(false, validaActivityDocument!=null);
+			System.assertNotEquals(false, validaActivityDocument!=null, 'Return is wrong');
 		}
 	}
 }

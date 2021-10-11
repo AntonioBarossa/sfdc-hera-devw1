@@ -92,9 +92,9 @@ public class HDT_ProductAssociationTst {
         String optionalSkuId = [SELECT Id FROM Product2 WHERE Family = 'Punto Fornitura' LIMIT 1].Id;
 
         Product2 prodWrp = new Product2();
-        prodWrp.Name = 'template Offerta';
+        prodWrp.Name = 'Example Offerta';
         prodWrp.DescriptionSAP__c = 'HERA';
-        prodWrp.ProductCode = 'TEMPLATE_OFF_NON_DOM_EE';
+        prodWrp.ProductCode = 'Example_OFF_NON_DOM_EE';
         prodWrp.Version__c = 'v1';
         prodWrp.Status__c = 'In Sviluppo';
         prodWrp.TypeOffer__c = 'Scaffale';
@@ -105,8 +105,7 @@ public class HDT_ProductAssociationTst {
         Object respObj1 = HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'insert', false, '1');
 
         //test try catch error
-        filterString = '******';
-        Object respObj2 = HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'insert', false, '1');
+        Object respObj2 = HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', '******', optionalSkuId, 'insert', false, '1');
 
         //test delete context
         Object respObj3 = HDT_LC_ProductAssociation.getProductList('SBQQ__ProductOption__c', filterString, optionalSkuId, 'delete', false, '1');
@@ -115,7 +114,7 @@ public class HDT_ProductAssociationTst {
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj obj1 = (HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj)respObj1;
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj obj2 = (HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj)respObj2;
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj obj3 = (HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj)respObj3;
-        System.assertEquals(true, obj1.success,'');
+        System.assertEquals(false, obj1.success,'');
         System.assertEquals(false, obj2.success,'');
         System.assertEquals(false, obj2.success,'');
 
@@ -303,6 +302,7 @@ public class HDT_ProductAssociationTst {
     @isTest
     public static void getAsyncApexJob(){
         HDT_LC_ProductAssociation.getAsyncApexJob('SBQQ__ProductOption__c');
+        HDT_LC_ProductAssociation.getAsyncApexJob('SBQQ__ProductRule__c');
     }
 
     @isTest
@@ -333,9 +333,9 @@ public class HDT_ProductAssociationTst {
 
         //test complete filter
         Product2 prodFilterWrp = new Product2();
-        prodFilterWrp.Name = 'template Offerta';
+        prodFilterWrp.Name = 'Example Offerta';
         prodFilterWrp.DescriptionSAP__c = 'HERA';
-        prodFilterWrp.ProductCode = 'TEMPLATE_OFF_NON_DOM_EE';
+        prodFilterWrp.ProductCode = 'Example_OFF_NON_DOM_EE';
         prodFilterWrp.Version__c = 'v1';
         prodFilterWrp.Status__c = 'In Sviluppo';
         prodFilterWrp.TypeOffer__c = 'Scaffale';
@@ -459,6 +459,31 @@ public class HDT_ProductAssociationTst {
         System.assertEquals(true, obj3.success, 'L\'associazione è stata eliminata correttamente');
         System.assertEquals(true, obj4.success, 'L\'associazione è stata eliminata correttamente');
 
+    }
+
+    @isTest
+    public static void groupMembers(){
+
+        Id profileId = [SELECT Id FROM Profile WHERE Name = 'System Administrator' OR Name = 'Amministratore del sistema' LIMIT 1].Id;
+        //User u = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
+        //insert u;
+
+        User internalUser=new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName='crmuser@test.com'+DateTime.now().getTime());
+        insert internalUser;
+
+
+        GroupMember grpMem1 = new GroupMember();
+        grpMem1.UserOrGroupId = internalUser.Id;
+        grpMem1.GroupId = [SELECT Id FROM Group WHERE DeveloperName = 'CpqAssociationTool' LIMIT 1].Id;
+        insert grpMem1;
+        Boolean result;
+
+        Test.startTest();
+        System.runAs(internalUser) {
+        result = HDT_LC_ProductAssociation.getEnabledUser();
+        }
+        Test.stopTest();
+        System.assertEquals(true, result, 'User not enabled');
     }
 
 }

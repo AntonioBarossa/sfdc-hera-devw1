@@ -24,6 +24,8 @@ public class HDT_SRV_OpportunityTst{
 	@isTest
 	static void testCheckAccessInit(){
 
+		Boolean finished = false;
+
 		User tUser=[SELECT Id
 		            FROM User
 		            WHERE Alias='crmuser'
@@ -35,16 +37,22 @@ public class HDT_SRV_OpportunityTst{
 
 			oppsSrv.checkAccessInit('NextStep, Fiscal', 'create');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
+
+			System.assertEquals(true, finished, 'Test Ended');
 		}
 	}
 
 	@isTest
 	static void testCheckReadAccess(){
+
+		Boolean finished = false;
 
 		User tUser=[SELECT Id
 		            FROM User
@@ -57,16 +65,22 @@ public class HDT_SRV_OpportunityTst{
 
 			oppsSrv.checkReadAccess('NextStep, Fiscal');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
+
+			System.assertEquals(true, finished, 'Test Ended');
 		}
 	}
 
 	@isTest
 	static void testCheckUpdateAccess(){
+
+		Boolean finished = false;
 
 		User tUser=[SELECT Id
 		            FROM User
@@ -79,11 +93,15 @@ public class HDT_SRV_OpportunityTst{
 
 			oppsSrv.checkUpdateAccess('NextStep, Fiscal');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
+
+			System.assertEquals(true, finished, 'Test Ended');
 		}
 	}
 
@@ -114,7 +132,7 @@ public class HDT_SRV_OpportunityTst{
 			Test.stopTest();
 
 			System.assertEquals(false, String.isBlank(generatedName), 'String not returned');
-			System.assertNotEquals(true, String.isBlank(generatedName));
+			System.assertNotEquals(true, String.isBlank(generatedName), 'String not returned');
 		}
 	}
 
@@ -137,7 +155,7 @@ public class HDT_SRV_OpportunityTst{
 			Test.stopTest();
 
 			System.assertEquals(true, createdOpp.Id!=null, 'Opportunity not created');
-			System.assertNotEquals(false, createdOpp.Id!=null);
+			System.assertNotEquals(false, createdOpp.Id!=null, 'Opportunity not created');
 		}
 	}
 
@@ -166,7 +184,7 @@ public class HDT_SRV_OpportunityTst{
 			                        LIMIT 1];
 
 			System.assertEquals(true, updatedOpp.Amount!=null, 'Opportunity not updated');
-			System.assertNotEquals(false, updatedOpp.Amount!=null);
+			System.assertNotEquals(false, updatedOpp.Amount!=null, 'Opportunity not updated');
 		}
 	}
 
@@ -195,7 +213,7 @@ public class HDT_SRV_OpportunityTst{
 			                               LIMIT 1];
 
 			System.assertEquals(true, updatedOpps[0].Amount!=null, 'Opportunities not updated');
-			System.assertNotEquals(false, updatedOpps[0].Amount!=null);
+			System.assertNotEquals(false, updatedOpps[0].Amount!=null, 'Opportunities not updated');
 		}
 	}
 
@@ -239,7 +257,7 @@ public class HDT_SRV_OpportunityTst{
 			                              WHERE Id=:tOpps[0].Id ALL ROWS];
 
 			System.assertEquals(true, deletedOpp[0].IsDeleted, 'Opportunity Not Deleted');
-			System.assertNotEquals(false, deletedOpp[0].IsDeleted);
+			System.assertNotEquals(false, deletedOpp[0].IsDeleted, 'Opportunity Not Deleted');
 
 		}
 	}
@@ -270,7 +288,7 @@ public class HDT_SRV_OpportunityTst{
 			                               WHERE Id=:tOpps[0].Id ALL ROWS];
 
 			System.assertEquals(true, deletedOpps[0].IsDeleted, 'Opportunities Not Deleted');
-			System.assertNotEquals(false, deletedOpps[0].IsDeleted);
+			System.assertNotEquals(false, deletedOpps[0].IsDeleted, 'Opportunities Not Deleted');
 
 		}
 	}

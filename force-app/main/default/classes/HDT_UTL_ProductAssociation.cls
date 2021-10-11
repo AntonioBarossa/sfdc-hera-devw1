@@ -1,5 +1,11 @@
 public inherited sharing class HDT_UTL_ProductAssociation {
 
+    public static Boolean getEnabledUser(){
+        List<GroupMember> groupMembers;
+        groupMembers = HDT_QR_ProductAssociation.getGroupMembers(groupMembers, UserInfo.getUserId(), 'HDT_PG_CpqAssociationTool');
+        return (groupMembers.size()==0) ? false : true;
+    }
+
     public static String generateQueryString(String filterString, String operator, String optionalSkuId, String findMethod){
         
         String op = ' ' + operator + ' ';
@@ -56,7 +62,8 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         }
 
         queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
-        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
+        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\') ';
+        queryString += 'AND (NOT Name LIKE \'template%\')';
         
         //if(!String.isEmpty(filterProduct.Family)){
         //    queryString += ',\'' + filterProduct.Family + '\'';

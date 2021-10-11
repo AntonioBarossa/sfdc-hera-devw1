@@ -23,7 +23,7 @@ public with sharing class HDT_TRH_ContractTst{
 		                       LIMIT 1];
 
 		System.assertEquals('3011913470', testContract.SAPContractCode__c, 'Contract not Inserted');
-		System.assertNotEquals('', testContract.SAPContractCode__c);
+		System.assertNotEquals('', testContract.SAPContractCode__c, 'Contract not Inserted');
 		Test.stopTest();
 	}
 
@@ -47,7 +47,7 @@ public with sharing class HDT_TRH_ContractTst{
 		                       LIMIT 1];
 
 		System.assertEquals('IT', testContract.BillingCountry, 'Contract not Updated');
-		System.assertNotEquals('', testContract.BillingCountry);
+		System.assertNotEquals('', testContract.BillingCountry, 'Contract not Updated');
 		Test.stopTest();
 	}
 
@@ -94,7 +94,7 @@ public with sharing class HDT_TRH_ContractTst{
 			                        WHERE Id=:testcontract.Id ALL ROWS];
 
 			System.assertEquals(true, testContract2.IsDeleted, 'Contract not deleted');
-			System.assertNotEquals(false, testContract2.IsDeleted);
+			System.assertNotEquals(false, testContract2.IsDeleted, 'Contract not deleted');
 			Test.stopTest();
 		}
 	}

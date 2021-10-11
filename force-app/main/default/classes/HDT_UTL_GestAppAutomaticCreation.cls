@@ -28,7 +28,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
         SObject obj = (sObject) argsMap.get('sender');
         String idObject = (String)obj.get('Id');
         HDT_QR_Order orderQr= new HDT_QR_Order();
-        List<Order> ordList = [Select id,Sale__r.SalesContact__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject];
+        List<Order> ordList = [Select id,Sale__r.SalesContact__c,servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
         if(ordList != null && !ordList.isEmpty()){
             Order ord = ordList[0];
             if('Gas'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c) && mapDistributorProcess.get(method) != null ){
@@ -37,6 +37,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
                 wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
                 w.order__c = ord.id;
                 w.Distributor__c = ord.servicePoint__r.distributor__c;
+                w.servicePoint__c = ord.ServicePoint__c;
                 w.account__c = ord.AccountId;
                 w.contact__c = ord.Sale__r.SalesContact__c ;
                 w.isAtoa__c = isAtoa;

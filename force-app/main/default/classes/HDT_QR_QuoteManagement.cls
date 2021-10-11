@@ -22,7 +22,13 @@ public inherited sharing class HDT_QR_QuoteManagement {
 
     }
 	
-	public static QuoteManagement__c queryString(String fields, String conditions){
+    /*
+        *@frpanico 05/10/2021
+        *Refactoring due to PMD
+        *Metodo deprecato poiche' il DataBase.Query viene invocato nel metodo principale. 
+    */
+
+	/*public static QuoteManagement__c queryString(String fields, String conditions){
         QuoteManagement__c quoteConfig = new QuoteManagement__c();
 		String query = 'SELECT ' + fields + ' FROM QuoteManagement__c WHERE ' + conditions + ' WITH SECURITY_ENFORCED LIMIT 1';
         System.debug(LoggingLevel.DEBUG,'Query--> '+query);
@@ -34,5 +40,5 @@ public inherited sharing class HDT_QR_QuoteManagement {
         }
 		return quoteConfig;
 		 
-	}
+	}*/
 }

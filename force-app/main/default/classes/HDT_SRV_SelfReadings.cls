@@ -253,16 +253,19 @@ public with sharing class HDT_SRV_SelfReadings {
             List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
             if(!cases.isEmpty()) {
                 Case currentReadingCase = cases[0];
-                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    readingCaseToUpdate.Status = 'Closed';
-                }
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO');
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                    readingCaseToUpdate.Status = 'Closed';
+                    readingCaseToUpdate.Phase__c = 'KO Definitivo';
+                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                }
+                
             }
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
@@ -374,6 +377,8 @@ public with sharing class HDT_SRV_SelfReadings {
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
                 closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
+            }when 'Web', 'App', 'APP'{
+                closeCase = true;
             }
             when else {
                 // TODO

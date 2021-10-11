@@ -15,10 +15,6 @@
                 <behavior>Edit</behavior>
                 <field>ContextObject__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Product__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

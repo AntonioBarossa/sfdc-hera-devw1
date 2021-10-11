@@ -1596,6 +1596,46 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
 	}
 
+	public static String notifEsFullReq(String processCategory, String caseNumber, String codServizio, String codPrestazione, String codPresa, String codPratDistr, String numPrev, String tempEsPrev, String attivita, String tipoAttivita, String recordId, String phase, String method){
+		return '{"header": null,"requests": ['+
+				'{"header": {"requestId": "C00000000261","requestTimestamp": null,"requestType": "NOTIF_ES","fields": ['+
+				'{"fieldType": "TEXT","name": "PROCESS_CATEGORY","value": "'+processCategory+'"}]},"objects": [{"fields": ['+
+				'{"fieldType": "TEXT","name": "COD_PRAT_UTENTE","value": "Z00000000097"},'+
+				'{"fieldType": "TEXT","name": "SALESFORCE_KEY","value": "'+ caseNumber +'"},'+
+				'{"fieldType": "TEXT","name": "COD_FLUSSO","value": "0150"},'+
+				'{"fieldType": "TEXT","name": "COD_SERVIZIO","value": "'+ codServizio +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRESTAZIONE","value": "'+ codPrestazione +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRESA","value": "'+ codPresa +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRAT_DISTR","value": "'+ codPratDistr +'"},'+
+				'{"fieldType": "TEXT","name": "NUMPREV","value": "'+ numPrev +'"},'+
+				'{"fieldType": "TEXT","name": "TEMP_ES_PREV","value": "'+ tempEsPrev +'"},'+
+				'{"fieldType": "TEXT","name": "CMP","value": "Test"},'+
+				'{"fieldType": "TEXT","name": "TESTO_ERRR","value": "Testo Errore"},'+
+				'{"fieldType": "TEXT","name": "ATTIVITA","value": "'+ attivita +'"},'+
+				'{"fieldType": "TEXT","name": "TIPO_ATTIVITA","value": "'+ tipoAttivita +'"},'+
+        		'{"fieldType": "TEXT","name": "MESSAGGIO","value": "Messaggio Test"},'+
+				'{"fieldType": "TEXT","name": "STORNO","value": "N"},'+
+				'{"fieldType": "TEXT","name": "DT_MAX_PREV","value": "20211009 12:20:20"},'+
+				'{"fieldType": "TEXT","name": "NOTE","value": "Test"},'+
+        		'{"fieldType": "TEXT","name": "DATA","value": "'+ Date.today() +'"},'+
+				'{"fieldType": "TEXT","name": "IMP_PREV_DIST","value": "300,50"},'+
+				'{"fieldType": "TEXT","name": "NOTE_ANN","value": "Nota Annullamento Test"},'+
+				'{"fieldType": "TEXT","name": "ANNOTAZIONI_ANN","value": "Annotazione Annullamento Test"},'+
+				'{"fieldType": "TEXT","name": "ANNOTAZIONI","value": "Annotazione Test"},'+
+				'{"fieldType": "TEXT","name": "COD_CAUSALE","value": "234234"},'+
+				'{"fieldType": "TEXT","name": "FATTIB_TEC","value": "SI"},'+
+				'{"fieldType": "TEXT","name": "RECORD_ID","value": "'+recordId+'"},'+
+				'{"fieldType": "TEXT","name": "FASE","value": "'+phase+'"},'+
+				'{"fieldType": "TEXT","name": "METHOD","value": "'+method+'"},'+
+				'{"fieldType": "TEXT","name": "VERTRAG","value": "3010147771"},'+
+				'{"fieldType": "TEXT","name": "VERTRAG_ST","value": "Cessato"},'+
+				'{"fieldType": "TEXT","name": "SERVICEID_DIS","value": "10D00000AU"},'+
+				'{"fieldType": "TEXT","name": "UTENZA","value": "BS_030_001"},'+
+				'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"}'+
+				'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
+	}
+
+
 	public static String richPassReq(String spCode, String bpCode, String caCode, String contractCode, String subtypeSiebel, String processType, String cluster, String origin, String effectiveDate, String salesforceKey, String herokuCode){
 		return '{"header":null,"requests":[{"header":{"requestId":null,"requestTimestamp":null,"requestType":"RICH_PASS","fields":['+
 				'{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":['+
@@ -2746,5 +2786,133 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return assetList;
+	}
+
+	/**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDynamicSection method
+     * @history
+     * @Created 05/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__DynamicSection__c> createDynamicSection(Integer amount, Boolean doInsert, Id fieldTemplateId) {
+        
+        List<wrts_prcgvr__DynamicSection__c> sections = new List<wrts_prcgvr__DynamicSection__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__DynamicSection__c section = new wrts_prcgvr__DynamicSection__c(
+                wrts_prcgvr__Layout__c = fieldTemplateId
+            );
+            
+            sections.add(section);
+        }
+        
+        if (doInsert){
+            
+            insert sections;
+        }
+        
+        return sections;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDynamicField method
+     * @history
+     * @Created 05/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__DynamicField__c> createDynamicField(Integer amount, Boolean doInsert, Id sectionId) {
+        
+        List<wrts_prcgvr__DynamicField__c> fields = new List<wrts_prcgvr__DynamicField__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__DynamicField__c field = new wrts_prcgvr__DynamicField__c(
+                wrts_prcgvr__Section__c = sectionId
+            );
+            
+            fields.add(field);
+        }
+        
+        if (doInsert){
+            
+            insert fields;
+        }
+        
+        return fields;
+    }
+	
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+	  
+		  mRemiCode.RemiCode__c='test';
+
+		  for(String key :params.keySet()) {
+			  mRemiCode.put(key, params.get(key));
+		  }	  
+	  
+		  matriceRemiCode.add(mRemiCode);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert matriceRemiCode;
+		}
+	  
+		return matriceRemiCode;
+	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<Service26Config__c> createService26Config(Integer amount, Boolean doInsert){
+
+		List<Service26Config__c> serviceList=new List<Service26Config__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  Service26Config__c service=new Service26Config__c();
+	  
+		  //service.Name='test';
+		  service.ProductFamily__c='Bonus Eur/Giorno';
+	  
+	  
+		  serviceList.add(service);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert serviceList;
+		}
+	  
+		return serviceList;
+	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static HDT_Process_Sale_Partner_Community__c createSalePartnerCommunity(User user, Boolean doInsert){
+
+		HDT_Process_Sale_Partner_Community__c salePartnerCommunity=new HDT_Process_Sale_Partner_Community__c(Name='Community',SetupOwnerId = user.ProfileID);
+		if (doInsert){
+
+			insert salePartnerCommunity;
+		}
+		return salePartnerCommunity;
 	}
 }

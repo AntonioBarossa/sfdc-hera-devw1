@@ -2,34 +2,45 @@
     
     <aura:attribute name="sobjecttype" type="String" default="{!v.sObjectName}"/>    
     <!--<lightning:workspaceAPI aura:id="workspace" />-->
+    <aura:attribute name="enabled" type="Boolean" default="true" />
     <aura:attribute name="pageReference" type="Object"/>
     <lightning:navigation aura:id="navService"/>    
     <aura:attribute name="recordId" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
 
-    <aura:html tag="style">
-        .slds-button{
-        	display: none;
-        }
-        .slds-button_icon{
-        	display: none;
-        }
-        .slds-modal__close{
-        	display: none;
-        }
-        .closeIcon{
-        	display: none;
-        }
-        .slds-button_icon-bare{
-        	display: none;
-        }
-        .slds-button_icon-inverse{
-        	display: none;
-        }
-    </aura:html>
+    <aura:if isTrue="{!v.enabled}">
 
-    <div class="slds-align_absolute-center spinnerBox">
-        <lightning:spinner alternativeText="Loading" size="large" />
-    </div>
+        <aura:html tag="style">
+            .slds-button{
+                display: none;
+            }
+            .slds-button_icon{
+                display: none;
+            }
+            .slds-modal__close{
+                display: none;
+            }
+            .closeIcon{
+                display: none;
+            }
+            .slds-button_icon-bare{
+                display: none;
+            }
+            .slds-button_icon-inverse{
+                display: none;
+            }
+        </aura:html>
+
+        <div class="slds-align_absolute-center spinnerBox">
+            <lightning:spinner alternativeText="Loading" size="large" />
+        </div>
+
+        <aura:set attribute="else">
+            <div class="slds-text-heading_large">
+                {!$Label.c.Cpq_ProductAssociation_EnabledProfile}
+            </div>
+        </aura:set>
+
+    </aura:if>
 
  </aura:component>
