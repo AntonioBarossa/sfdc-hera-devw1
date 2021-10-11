@@ -238,7 +238,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
             if (sObjMap.containsKey('Order')) {
                 Order currentOrder = (Order)sObjMap.get('Order');
                 if (String.isNotBlank(statusMapping.OrderPhase__c)) {
-                    currentOrder.Phase__c = statusMapping.OrderPhase__c;
+                    //currentOrder.Phase__c = statusMapping.OrderPhase__c;
                 }
 
                 if (String.isNotBlank(statusMapping.OrderStatus__c)) {
