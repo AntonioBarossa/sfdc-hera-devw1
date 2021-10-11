@@ -861,29 +861,77 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //SETUP
         mySetup();
         
-        List<Order> Order = [SELECT Id FROM Order];
+        List<Order> orderList = [SELECT Id, SignatureMethod__c FROM Order];
+        for(Order o: orderList){
+            o.SignatureMethod__c = 'Vocal Order';
+        }
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
-        inputs.put('Order', Order);
+        inputs.put('Order', orderList);
         
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Order');
-        formParams.put('signMode', 'Vocal Order');
         
-        //TESTING - CASO GENERICO
+        //TESTING - CASO INPUTS
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('calculateSignModeDriver', inputs, formParams);
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
-        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.assert('Vocal Order'.equalsIgnoreCase(result1), 'Risultato non è Vocal order.');
+        
+        
+        
+        //TESTING - CASO FORMPARAMS
+        formParams.put('signMode', 'Vocal Order');
+        String result2 = myObjectToTest.execute('calculateSignModeDriver', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2 length ' + result2.length());
+        System.assert('Vocal Order'.equalsIgnoreCase(result2), 'Risultato non è Vocal order.');
         
     }
     
     
     
     //calculateDriverCatalogo
+    @isTest
+    private static void calculateDriverCatalogoTest(){
+        
+        //SETUP
+        mySetup();
+        
+        List<Order> orderList = [SELECT Id, SignatureMethod__c FROM Order];
+        for(Order o: orderList){
+            o.SignatureMethod__c = 'Vocal Order';
+        }
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Order', orderList);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Fake');
+        
+        //TESTING - CASO Contesto Not Order
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('calculateDriverCatalogo', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1 length ' + result1.length());
+        System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
+        
+        
+        
+        //TESTING - CASO Pricebook Blank
+        formParams.put('Contesto', 'Order');
+        String result2 = myObjectToTest.execute('calculateDriverCatalogo', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2 length ' + result2.length());
+        System.assert(String.isBlank(result2), 'Risultato non è stringa vuota.');
+        
+        
+    }
     
     
     
