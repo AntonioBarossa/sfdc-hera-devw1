@@ -10,7 +10,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
     public static HDT_QR_RecordType rctype= new HDT_QR_RecordType();
     public static HDT_QR_Case caseQr = new HDT_QR_Case();
-    public static HDT_QR_Recordtype rctype = new HDT_QR_Recordtype();
+  //  public static HDT_QR_Recordtype rctype = new HDT_QR_Recordtype();
     @AuraEnabled
     public static void cancelCase(String caseId){
         try {
