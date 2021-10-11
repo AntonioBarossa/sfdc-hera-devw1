@@ -61,7 +61,7 @@ public class HDT_LC_LastBillTst {
         Test.setContinuationResponse('', response);
         
         // Invoke callback method
-        Object result = Test.invokeContinuationMethod(controller, conti);
+        Object result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);
         
         // result is the return value of the callback
         System.assertEquals(null, result);
