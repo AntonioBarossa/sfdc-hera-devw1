@@ -53,6 +53,13 @@
                 <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__r.Commodity__c</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_Causale_Disattivazione</name>

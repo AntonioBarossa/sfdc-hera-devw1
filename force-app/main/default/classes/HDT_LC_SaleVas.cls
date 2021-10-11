@@ -190,7 +190,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
-                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Status<>'Bozza' AND Type='Disattivazione VAS'
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Status<>'Bozza' AND Status<>'Closed' AND Type='Disattivazione VAS'
                     AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
                 for (Case subCase:subsCases) {
                     recordMap.remove(subCase.Subscription__c);
