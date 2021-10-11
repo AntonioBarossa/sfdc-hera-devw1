@@ -7,6 +7,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import PHONE_NUMBER_FIELD from '@salesforce/schema/Order.PhoneNumber__c';
 import ID_ORDER_FIELD from '@salesforce/schema/Order.Id';
 import IS_PRE_DOC_TO_SEND from '@salesforce/schema/Order.isPreDocumentationToSend__c';
+import EMAIL_FIELD from '@salesforce/schema/Order.Email__c';
 
 export default class HdtModuloInformativoModal extends LightningElement {
 
@@ -20,10 +21,12 @@ export default class HdtModuloInformativoModal extends LightningElement {
     showEmail = false;
     showStampa = false;
     showSms = false;
+    isSendTypeSelectionVisible = false;
+    disabledConfirm = true;
     get moduloInformativoSendTypeOptions() {
         let options = [
-            { label: 'Invia', value: 'Invia' },
-            { label: 'Stampa', value: 'Stampa' }
+            { label: 'Email', value: 'Email' },
+            { label: 'SMS', value: 'SMS' }
         ];
 
         return options;
@@ -36,22 +39,16 @@ export default class HdtModuloInformativoModal extends LightningElement {
     handleModuloSendTypeSelection(event){
         console.log('handleModuloSendTypeSelection: ' + event.target.value);
         this.moduloSendTypeSelection = event.target.value;
+        this.disabledConfirm = false;
 
         switch (this.moduloSendTypeSelection) {
-            case 'Invia':
+            case 'Email':
                 this.showEmail = true;
-                this.showStampa = false;
-                this.showSms = false;
-                break;
-            case 'Stampa':
-                this.showStampa = true;
-                this.showEmail = false;
                 this.showSms = false;
                 break;
             case 'SMS':
                 this.showSms = true;
                 this.showEmail = false;
-                this.showStampa = false;
                 break;
             default:
                 break;
@@ -78,33 +75,24 @@ export default class HdtModuloInformativoModal extends LightningElement {
     
     handleConfirm(){
         this.loading = true;
+
+        const fields = {};
+        fields[ID_ORDER_FIELD.fieldApiName] = this.order.Id;
+        fields[IS_PRE_DOC_TO_SEND.fieldApiName] = true;
         
         switch (this.moduloSendTypeSelection) {
-            case 'Invia':
-                this.handleInvia();
-                break;
-            case 'Stampa':
-                this.handleStampa();
+            case 'Email':
+                fields[EMAIL_FIELD.fieldApiName] = this.email;
                 break;
             case 'SMS':
-                this.handleSms();
+                fields[PHONE_NUMBER_FIELD.fieldApiName] = this.sms;
                 break;
             default:
                 break;
         }
-    }
 
-    showMessage(title,message,variant){
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: title,
-                message: message,
-                variant: variant
-            }),
-        );
-    }
+        const recordInput = { fields };
 
-    handleInvia(){
         this.loading = true;
         var formParams = {     
             mode : 'Print',
@@ -125,10 +113,6 @@ export default class HdtModuloInformativoModal extends LightningElement {
                 variant: 'success',
             });
             this.dispatchEvent(event);
-            const fields = {};
-                fields[ID_ORDER_FIELD.fieldApiName] = this.order.Id;
-                fields[IS_PRE_DOC_TO_SEND.fieldApiName] = true;
-                const recordInput = { fields };
 
                 updateRecord(recordInput)
                     .then(() => {
@@ -147,6 +131,20 @@ export default class HdtModuloInformativoModal extends LightningElement {
             this.dispatchEvent(event);
             console.error(error);
         });
+    }
+
+    showMessage(title,message,variant){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant
+            }),
+        );
+    }
+
+    handleInvia(){
+        this.isSendTypeSelectionVisible = true;
     }
 
     handleStampa(){
@@ -294,6 +292,10 @@ export default class HdtModuloInformativoModal extends LightningElement {
                         this.dispatchEvent(event);
                         console.log('hdtModuloInformatioModal - updateRecord - error: ' + JSON.stringify(error));
                     });
+    }
+
+    handleClose(){
+        this.showModuloModal = false;
     }
 
     connectedCallback(){

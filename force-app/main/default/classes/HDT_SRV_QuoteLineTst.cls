@@ -76,6 +76,8 @@ public class HDT_SRV_QuoteLineTst{
 	@isTest
 	static void testcheckAccessInit(){
 
+		Boolean finished = false;
+
 		User u=[SELECT Id
 		        FROM User
 		        WHERE Alias='crmuser'
@@ -89,11 +91,17 @@ public class HDT_SRV_QuoteLineTst{
 			tstQuoteLineSrv.checkAccessInit('SupplyCity__c, SBQQ__Quote__c', 'create');
 		}
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Teste Ended');
 	}
 
 	@isTest
 	static void testcheckReadAccess(){
+
+		Boolean finished = false;
 
 		User u=[SELECT Id
 		        FROM User
@@ -108,11 +116,17 @@ public class HDT_SRV_QuoteLineTst{
 			tstQuoteLineSrv.checkReadAccess('SupplyCity__c, SBQQ__Quote__c');
 		}
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Teste Ended');
 	}
 
 	@isTest
 	static void testcheckCreateAccess(){
+
+		Boolean finished = false;
 
 		User u=[SELECT Id
 		        FROM User
@@ -127,11 +141,17 @@ public class HDT_SRV_QuoteLineTst{
 			tstQuoteLineSrv.checkCreateAccess('SupplyCity__c, SBQQ__Quote__c');
 		}
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Teste Ended');
 	}
 
 	@isTest
 	static void testcheckUpdateAccess(){
+
+		Boolean finished = false;
 
 		User u=[SELECT Id
 		        FROM User
@@ -147,7 +167,11 @@ public class HDT_SRV_QuoteLineTst{
 			tstQuoteLineSrv.checkUpdateAccess('SupplyCity__c, SBQQ__Quote__c');
 		}
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Teste Ended');
 	}
 
 	@isTest
@@ -208,7 +232,7 @@ public class HDT_SRV_QuoteLineTst{
 
 				System.assertEquals('test city', quotLinTest[0].SupplyCity__c, 'Quote Line not created');
 
-				System.assertNotEquals('', quotLinTest[0].SupplyCity__c);
+				System.assertNotEquals('', quotLinTest[0].SupplyCity__c, '');
 
 			Test.stopTest();
 

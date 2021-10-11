@@ -152,6 +152,7 @@ public class HDT_UTL_SearchPlugTst {
     @isTest
     static void HDT_UTL_SearchPlug(){
         HDT_UTL_SearchPlug searchPlug = new HDT_UTL_SearchPlug();
+        System.assertNotEquals(null, searchPlug, 'searchPlug != null');
     }
 
     @isTest

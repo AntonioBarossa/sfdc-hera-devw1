@@ -166,7 +166,7 @@
     <picklistValues>
         <picklist>ValidationStatus</picklist>
         <values>
-            <fullName>Not Validated</fullName>
+            <fullName>Non Validato</fullName>
             <default>false</default>
         </values>
         <values>
