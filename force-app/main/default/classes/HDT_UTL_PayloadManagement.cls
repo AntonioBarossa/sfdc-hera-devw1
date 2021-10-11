@@ -757,6 +757,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         HDT_QR_Case queryCase = new HDT_QR_Case();
         String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
         List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
+        System.debug('responseCases: ' + responseCases);
 
         List<String> contractIds = new List<String>();
         for (Case c : responseCases) {
