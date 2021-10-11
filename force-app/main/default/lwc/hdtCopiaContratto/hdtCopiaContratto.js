@@ -55,6 +55,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
     @track ordChild;
+    @track linkReitek = null;
     @track selectedOperationType;
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
