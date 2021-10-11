@@ -38,10 +38,21 @@ public class HDT_UTL_ScartiTst {
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
             Id contractId = contracts[0].id;
             
+            List<Individual> individuals = HDT_UTL_DataFactoryTst.createIndividual(2,true);
+            
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
-            for(Contact c : contacts)
-                c.Company__c='MMS';
+            contacts[0].Company__c='MMS';
+            contacts[0].IndividualId = individuals[0].id;
             insert contacts;
+            
+            List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
+            Id pointId = points[0].id;   
+            
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,true);
+            Id productId = products[0].id; 
+            
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,pricebookId);
+            Id entryId = entries[0].id;
                         
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1,false,accId,sales,pricebookId);
             orders[0].CausalCode__c = 'testCausalCode';
@@ -52,20 +63,23 @@ public class HDT_UTL_ScartiTst {
             insert orders;
             Id orderId = orders[0].id;
             
-          
+            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);
+            Id orderItemId = orderItems[0].id;
+                     
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, contacts[0].id, null, contracts[0].Id, orders[0].Id);
             cases[0].TraderPracticeCode__c = 'testcode';
             cases[0].TrackingDiscardPhase__c = 'testphase';
             insert cases;       
-            
-            
-            List<wrts_prcgvr__FieldsTemplate__c> fieldTemplates = HDT_UTL_DataFactoryTst.createFieldsTemplate(3,false);
+                        
+            List<wrts_prcgvr__FieldsTemplate__c> fieldTemplates = HDT_UTL_DataFactoryTst.createFieldsTemplate(4,false);
             fieldTemplates[0].wrts_prcgvr__Code__c = 'e88f26f9-a32f-439f-b258-db04fadd3994';
             fieldTemplates[0].wrts_prcgvr__ObjectType__c= 'Order';
             fieldTemplates[1].wrts_prcgvr__Code__c= '424cd628-7cc0-4b1f-b727-7e095aedc068';
             fieldTemplates[1].wrts_prcgvr__ObjectType__c= 'Order';
             fieldTemplates[2].wrts_prcgvr__Code__c= 'db7818bf-1c29-4de0-bd88-83d69447aabb';
             fieldTemplates[2].wrts_prcgvr__ObjectType__c= 'Order';
+            fieldTemplates[3].wrts_prcgvr__Code__c= 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
+            fieldTemplates[3].wrts_prcgvr__ObjectType__c= 'Order';
             insert fieldTemplates;
             
             List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(6,false);
@@ -79,13 +93,13 @@ public class HDT_UTL_ScartiTst {
             activityTemplates[2].wrts_prcgvr__ObjectType__c = 'Order';
             activityTemplates[3].Name = 'CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES';
             activityTemplates[4].Name = 'CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
+            activityTemplates[4].wrts_prcgvr__ObjectType__c = 'Order';
             activityTemplates[4].wrts_prcgvr__Code__c = 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
             activityTemplates[5].Name = 'CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
             activityTemplates[5].wrts_prcgvr__Code__c = 'db7818bf-1c29-4de0-bd88-83d69447aabb';
             activityTemplates[5].wrts_prcgvr__ObjectType__c = 'Order';
             insert activityTemplates;
 
-            
             List<wrts_prcgvr__ActivityAction__c> activityActions = HDT_UTL_DataFactoryTst.createActivityAction(1,false,activityTemplates[0].id);
             activityActions[0].wrts_prcgvr__Field__c = '{!Type__c}';
             activityActions[0].wrts_prcgvr__Value__c = 'ActivityTypeTest';
@@ -116,19 +130,16 @@ public class HDT_UTL_ScartiTst {
             activities[0].NewEmail__c = 'yes@no.it';
             activities[0].NewMobile__c = '3334441122';
             activities[0].DiscardCategory__c = 'Anonima';
-            activities[0].Case__c = cases[0].id;
-            
+            activities[0].Case__c = cases[0].id;            
             activities[1].Case__c = cases[0].id;
             activities[1].DiscardCategory__c = 'Anonima';
             activities[1].Status__c = 'Creata';
             insert activities;
-            
-            List<Individual> individuals = HDT_UTL_DataFactoryTst.createIndividual(2,true);
-            
+                        
             List<ContactPointPhone> phones = HDT_UTL_DataFactoryTst.createContactPointPhone(2,false,individuals[0].id);
             phones[0].TelephoneNumber = 'oldPhone';
             phones[0].Status__c = 'Verificato';
-            phones[1].ParentId = individuals[1].id;
+            phones[1].ParentId = individuals[0].id;
             phones[1].TelephoneNumber = 'oldPhone';
             phones[1].Status__c = 'Non Verificato';          
             insert phones;
@@ -136,7 +147,7 @@ public class HDT_UTL_ScartiTst {
             List<ContactPointEmail> mails = HDT_UTL_DataFactoryTst.createContactPointEmail(2,false,individuals[0].id);
             mails[0].EmailAddress = 'old@Email.it';
             mails[0].Status__c = 'Verificato';
-            mails[1].ParentId = individuals[1].id;
+            mails[1].ParentId = individuals[0].id;
             mails[1].EmailAddress = 'old@Email.it';
             mails[1].Status__c = 'Non Verificato';
             insert mails;
@@ -169,7 +180,7 @@ public class HDT_UTL_ScartiTst {
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
         boolean b = classInstance.evaluate(argsMap);
         
-        System.assertEquals(false, b, 'evaluate did not work correctly');
+        System.assertEquals(true, b, 'evaluate did not work correctly');
         System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
     
@@ -185,7 +196,7 @@ public class HDT_UTL_ScartiTst {
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
         boolean b = classInstance.evaluate(argsMap);
         
-        System.assertEquals(true, b, 'evaluate did not work correctly');
+        System.assertEquals(false, b, 'evaluate did not work correctly');
         System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
     
@@ -423,13 +434,61 @@ public class HDT_UTL_ScartiTst {
     
     @isTest static void updateContactForScartoDocumentale(){
         
-        HDT_UTL_Scarti.updateContactForScartoDocumentale('oldPhone', 'old@Email.it', 'newPhone',  'new@Mail.it');
+        Account acc = [Select id from Account LIMIT 1];
+        
+        Contact cont = [Select id, IndividualId from Contact Limit 1];
+        
+        Individual ind = [Select id from Individual  where id =: cont.IndividualId limit 1];
+        
+        List<ContactPointPhone> cpp = [Select id, ParentId from ContactPointPhone];
+        for(ContactPointPhone c : cpp){
+            c.parentId = ind.id;
+        }
+        update cpp;
+        
+        List<ContactPointEmail> cpe = [Select id, ParentId from ContactPointEmail];
+        for(ContactPointEmail c : cpe){
+            c.parentId = ind.id;
+        }
+        update cpe;
+        
+        HDT_UTL_Scarti.updateContactForScartoDocumentale(acc.id,'oldPhone', 'old@Email.it', 'newPhone',  'new@Mail.it');
+        
+        List<ContactPointEmail> mails = [Select EmailAddress From ContactPointEmail Where Status__c = 'Non verificato'];
+        List<ContactPointPhone> phones = [Select TelephoneNumber From ContactPointPhone Where Status__c = 'Non verificato'];
+            
+        System.assertEquals(2, mails.size(), 'updateContactForScartoDocumentale did not work correctly');
+        System.assertEquals(2, phones.size(), 'updateContactForScartoDocumentale did not work correctly');
+        
+    }
+    
+    @isTest static void updateContactForScartoDocumentale2(){
+        
+        Account acc = [Select id from Account LIMIT 1];
+        
+        Contact cont = [Select id, IndividualId from Contact Limit 1];
+        
+        Individual ind = [Select id from Individual  where id =: cont.IndividualId limit 1];
+        
+        List<ContactPointPhone> cpp = [Select id, ParentId from ContactPointPhone where Status__c = 'Non verificato'];
+        for(ContactPointPhone c : cpp){
+            c.parentId = ind.id;
+        }
+        update cpp;
+        
+        List<ContactPointEmail> cpe = [Select id, ParentId from ContactPointEmail where Status__c = 'Non verificato'];
+        for(ContactPointEmail c : cpe){
+            c.parentId = ind.id;
+        }
+        update cpe;
+        
+        HDT_UTL_Scarti.updateContactForScartoDocumentale(acc.id,'oldPhone', 'old@Email.it', 'newPhone',  'new@Mail.it');
         
         List<ContactPointEmail> mails = [Select EmailAddress From ContactPointEmail Where EmailAddress = 'new@Mail.it'];
         List<ContactPointPhone> phones = [Select TelephoneNumber From ContactPointPhone Where TelephoneNumber = 'newPhone'];
             
         System.assertEquals(1, mails.size(), 'updateContactForScartoDocumentale did not work correctly');
-        System.assertNotEquals(0, phones.size(), 'updateContactForScartoDocumentale did not work correctly');
+        System.assertEquals(1, phones.size(), 'updateContactForScartoDocumentale did not work correctly');
         
     }
     
@@ -484,11 +543,86 @@ public class HDT_UTL_ScartiTst {
             
         HDT_UTL_Scarti.checkForEsitiIntermedi(activities);
         
-        List<wrts_prcgvr__Activity__c> relatedAct = [Select id,status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
+        List<wrts_prcgvr__Activity__c> relatedAct = [Select id,status__c,wrts_prcgvr__Status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
         
-        System.assertEquals('Chiusa', relatedAct[0].status__c, 'checkForEsitiIntermedi did not work correctly');
+        System.assertEquals('Chiusa', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
         System.assertNotEquals(null, relatedAct, 'checkForEsitiIntermedi did not work correctly');
         
     }
     
+    @isTest static void handleMRRInboundRequest(){
+        
+        HDT_WRP_MrrRequest mrRequest = new HDT_WRP_MrrRequest();
+        
+        List<HDT_WRP_MrrRequest.HDT_WRP_Field> fields = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
+        HDT_WRP_MrrRequest.HDT_WRP_Field field1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        field1.fieldType = 'fieldType';
+        field1.name = 'ATTIVITA***';
+        field1.value = 'Richiesta non identificata***';
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field field2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        field2.fieldType = 'fieldType';
+        field2.name = 'FASE';
+        field2.value = 'Completata';
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field field3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        field3.fieldType = 'fieldType';
+        field3.name = 'RECORD_ID';
+        field3.value = 'O-00100327';
+        
+        
+        fields.add(field1);
+        fields.add(field2);
+        fields.add(field3);
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Header head = new HDT_WRP_MrrRequest.HDT_WRP_Header();
+        head.requestId = 'requestId';
+        head.requestTimeStamp = 'requestTimeStamp';
+        head.requestType = 'requestType';
+        head.fields = fields;       
+        
+        List<HDT_WRP_MrrRequest.HDT_WRP_Object> objs = new List<HDT_WRP_MrrRequest.HDT_WRP_Object>();
+        HDT_WRP_MrrRequest.HDT_WRP_Object ob = new HDT_WRP_MrrRequest.HDT_WRP_Object();
+        ob.fields = fields;
+        ob.id = 'obid';
+        ob.name = 'obname';       
+        ob.objectType = 'obtype';
+        objs.add(ob);
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Request req = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        req.code = 'code';
+        req.description = 'description';
+        req.header = head;
+        req.objects = objs;
+
+        List<HDT_WRP_MrrRequest.HDT_WRP_Request> reqs = new List<HDT_WRP_MrrRequest.HDT_WRP_Request>();
+        reqs.add(req);
+        mrRequest.requests = reqs;
+        
+        Test.startTest();
+
+        HDT_UTL_Scarti.handleMRRInboundRequest(mrRequest.requests);
+        
+        Test.stopTest();
+        
+        System.assertEquals('code', mrRequest.requests[0].code, 'handleMRRInboundRequest did not work correctly');
+        System.assertNotEquals(null, mrRequest.requests, 'handleMRRInboundRequest did not work correctly');
+        
+    }      
+
+    @isTest static void updatePraticaForScartoDocumentaleQueue(){
+                
+        HDT_UTL_Scarti sca = new HDT_UTL_Scarti();
+        ID jobID = System.enqueueJob(sca);
+               
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it' LIMIT 1];       
+        act.NewEmail__c = 'forse@bo.it';
+        update act;
+                
+        List<Order> ords = [Select Email__c From Order Where Email__c ='forse@bo.it'];
+        System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
+        List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
+    	System.assertEquals(2, jobs.size(), 'expecting one queued job');
+               
+    }        
 }
