@@ -819,14 +819,35 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Case');
         
-        //TESTING - CASO GENERICO
+        //TESTING - CASO cluster not Reclami
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
         String result1 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.assert(String.isBlank(result1), 'Risultato NON è stringa vuota.');
         
+        
+        
+        //TESTING - Caso HTML Response Blank
+        myItem.Cluster__c = 'Reclami';
+        myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result2 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result2 length ' + result2.length());
+        System.assert(String.isBlank(result2), 'Risultato NON è stringa vuota.');
+        
+        
+        
+        //TESTING - 
+        myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
+        myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result3 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result3 length ' + result3.length());
+        //System.assert(String.isNotBlank(result3), 'Risultato è stringa vuota.');
         
     }
     
