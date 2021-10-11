@@ -56,7 +56,7 @@ public inherited sharing class HDT_QR_Account {
         contractSrv.checkReadAccess('Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c');
         Account ac = new Account();
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
-        ac= [SELECT Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c FROM Account WHERE Id =: AccountId];
+        ac= [SELECT Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c FROM Account WHERE Id =: AccountId WITH SECURITY_ENFORCED];
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;
@@ -71,7 +71,7 @@ public inherited sharing class HDT_QR_Account {
         contractSrv.checkReadAccess('Id,Code__c');
         Account ac = new Account();
         List<Account> listAcc = new List<Account>();
-        listAcc = [SELECT Id FROM Account WHERE Code__c =: globalKeyId];
+        listAcc = [SELECT Id FROM Account WHERE Code__c =:globalKeyId WITH SECURITY_ENFORCED];
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
         if(!listAcc.isEmpty()){
             ac= listAcc[0];

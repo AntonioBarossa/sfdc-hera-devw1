@@ -56,9 +56,18 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                     )
                 );
             }
+            when 'contracted'{
+                asyncUpdateContracted(objectId);
+            }
         }
         
         return null;
+    }
+
+
+    @future(callout=true)
+    private static void asyncUpdateContracted(Id sobjectId){
+        orderSrv.updateRecord(new Order(Id=sobjectId, SBQQ__Contracted__c=true));
     }
 
     /**

@@ -193,6 +193,11 @@ public with sharing class HDT_UTL_Constants {
     public final String SERVICEPOINT_RECORDTYPEID_PELETRICCO =
     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PELETRICCO).getRecordTypeId();
 
+    //ServicePoint Recordtype Gas
+    public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS = 'HDT_RT_Gas';
+    @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPEID_GAS =
+    Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS).getRecordTypeId();
 
     //Hera internal Profiles
     @AuraEnabled

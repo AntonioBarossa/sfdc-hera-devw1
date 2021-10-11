@@ -31,9 +31,6 @@
                             <value>Account.Scheda_Cliente</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Account.Escalation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Account.HDT_VasOrders</value>
                         </valueListItems>
                     </valueList>
@@ -82,9 +79,6 @@
                                     <rightValue>HDT_RT_Distributore</rightValue>
                                 </criteria>
                             </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Account.Escalation</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -768,7 +762,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rowsToDisplay</name>
@@ -839,7 +833,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Activity</value>
+                    <value>Attività</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>

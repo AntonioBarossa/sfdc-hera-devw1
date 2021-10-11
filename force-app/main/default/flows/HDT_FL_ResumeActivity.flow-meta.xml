@@ -99,8 +99,27 @@
         <label>update</label>
         <locationX>622</locationX>
         <locationY>223</locationY>
+        <connector>
+            <targetReference>endScreenFlow</targetReference>
+        </connector>
         <inputReference>currentActivity</inputReference>
     </recordUpdates>
+    <screens>
+        <name>endScreenFlow</name>
+        <label>endScreenFlow</label>
+        <locationX>752</locationX>
+        <locationY>221</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(32, 221, 35);&quot;&gt;&lt;i&gt;{!getActivity.Name} ripresa correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>48</locationY>

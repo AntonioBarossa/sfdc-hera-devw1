@@ -1287,6 +1287,31 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
         return configurationJson;
     }
 
+	public static void logEmailForAccountStatement(String recordId, String formParams) {
+		if (String.isBlank(recordId) || String.isBlank(formParams)){
+			System.debug(LoggingLevel.WARN, 'Invalid inputs for logEmailForAccountStatement method');
+			return;
+		}
+
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String email = (String) formParamsMap.get('email');
+
+		if (String.isBlank(email)) {
+			System.debug(LoggingLevel.WARN, 'logEmailForAccountStatement: empty email');
+			return;
+		}
+
+		Account acc = new Account();
+		acc.Id = recordId;
+		acc.LastUsedPostelEmail__c = email;
+
+		try {
+			HDT_UTL_DatabaseService.updateSObject(acc);
+		} catch(Exception ex) {
+			System.debug('DLM error: ' + ex.getMessage());
+		}
+	}
+
 	public class HDT_WRP_SignModeConfiguration{
 		Map<String,String> signMode;
 		List<Map<String,String>> sendMode;

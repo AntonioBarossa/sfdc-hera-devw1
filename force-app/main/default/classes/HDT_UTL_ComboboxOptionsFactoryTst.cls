@@ -34,7 +34,7 @@ public with sharing class HDT_UTL_ComboboxOptionsFactoryTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(serviceClass != null);
+        System.assert(serviceClass != null, 'Attenzione, serviceClass non può essere null!');
         
     }
 

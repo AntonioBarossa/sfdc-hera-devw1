@@ -133,6 +133,10 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                     } else {
                         t.PecAddress__c = leadsPecMap.get(t.WhoId);
                     }
+
+                    if (String.isBlank(t.PecAddress__c)) {
+                        t.addError('Il destinatario selezionato non ha nessun indirizzo PEC in anagrafica.');
+                    }
                 }
             }
         }

@@ -47,11 +47,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
-            System.debug(debugString + ' - Superato generateRequest');
-            
+            if (context == 'EC' || context == 'GC') {
+                HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
+            }
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
-            System.debug(debugString + ' - Superato executeCalloutRequestFuture');
-            
+
         }catch(Exception ex){
             System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }

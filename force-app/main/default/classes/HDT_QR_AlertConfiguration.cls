@@ -39,7 +39,7 @@ public with sharing class HDT_QR_AlertConfiguration {
         for (Contract c : activeContracts) {
             accountSendingMethods.add(c.BillingProfile__r.BillSendingMethod__c);
         }
-        //System.debug('accountSendingMethods: ' + accountSendingMethods);
+        System.debug('accountSendingMethods: ' + accountSendingMethods);
 
         List<AlertConfiguration__c> alerts = [
             SELECT 
@@ -54,6 +54,7 @@ public with sharing class HDT_QR_AlertConfiguration {
             WHERE AccountCategory__c INCLUDES (:accountCategory)
             WITH SECURITY_ENFORCED
         ];
+        System.debug('alerts: ' + alerts);
 
         List<AlertConfiguration__c> availableAlerts = new List<AlertConfiguration__c>();
         for (AlertConfiguration__c alertRule : alerts) {

@@ -334,7 +334,8 @@ public inherited sharing class HDT_QR_ActivityCustom {
                 Order__r.QualityCall__c,
                 Order__r.QualityCallUnique__c,
                 Order__r.ConfirmCustomerContract__c,
-                Order__r.CancellationReason__c
+                Order__r.CancellationReason__c,
+                Order__r.CommercialProduct__c
                 FROM wrts_prcgvr__Activity__c
                 WHERE Id = :activityId
                 WITH SECURITY_ENFORCED
@@ -470,6 +471,15 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     Status__c
                     FROM wrts_prcgvr__Activity__c
                     where Id in :idlist
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
+        public static List<wrts_prcgvr__Activity__c> getRecordByEcid(String ecid){
+            return [SELECT 
+                    Id
+                    FROM wrts_prcgvr__Activity__c
+                    where ecid__c = :ecid
+                    AND wrts_prcgvr__Status__c = 'Aperta'
                     WITH SECURITY_ENFORCED 
             ];
         }

@@ -3,7 +3,7 @@
     <platformActionList>
         <actionListContext>Global</actionListContext>
         <platformActionListItems>
-            <actionName>Escalation</actionName>
+            <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
@@ -34,9 +34,6 @@
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
-        <quickActionListItems>
-            <quickActionName>Escalation</quickActionName>
-        </quickActionListItems>
         <quickActionListItems>
             <quickActionName>HDT_InformativeCallNotification</quickActionName>
         </quickActionListItems>

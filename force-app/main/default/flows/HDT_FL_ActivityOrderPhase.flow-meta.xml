@@ -86,8 +86,27 @@
         <label>updateOrder</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
+        <connector>
+            <targetReference>endTextFlow</targetReference>
+        </connector>
         <inputReference>getOrder</inputReference>
     </recordUpdates>
+    <screens>
+        <name>endTextFlow</name>
+        <label>endTextFlow</label>
+        <locationX>176</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getOrder.OrderNumber} rilavorato correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>

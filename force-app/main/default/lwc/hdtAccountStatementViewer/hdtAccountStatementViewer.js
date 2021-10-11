@@ -1467,6 +1467,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         var selectedId = this.getSingleSelectedId();
 
         if(selectedId==undefined){
+            this.closeMainSpinner();
             return;
         }
 
@@ -1477,7 +1478,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             billNumber: selected.numeroFattura.replace(/^0+/, ''),
             channel: 'CRM',
             date: date[2] + '-' + date[1] + '-' + date[0],
-            type: 'Bolletta',
+            documentType: 'Bollette',
             company: selected.societa
         }
 

@@ -2231,7 +2231,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>AccountBalanceCheckDisplay</name>
-                    <fieldText>&lt;p&gt;Il cliente ha delle bollette scadute.&lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Il cliente ha delle bollette scadute.&lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;&lt;p&gt;(Attenzione: Da usare solo nei casi previsti dalla procedura)&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
