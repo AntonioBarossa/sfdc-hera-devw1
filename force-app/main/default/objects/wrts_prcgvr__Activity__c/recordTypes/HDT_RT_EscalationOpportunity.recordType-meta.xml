@@ -1844,10 +1844,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto verifica rimborsi Clienti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifiche Credito Business</fullName>
             <default>false</default>
         </values>

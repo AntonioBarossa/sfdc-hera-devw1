@@ -22,7 +22,7 @@ public with sharing class HDT_TRH_SaleTst{
 		                  LIMIT 1];
 
 		System.assertEquals('testSaleName0', testSale.Name, 'Sale not Inserted');
-		System.assertNotEquals('', testSale.Name);
+		System.assertNotEquals('', testSale.Name, 'Sale not Inserted');
 		Test.stopTest();
         
 	}

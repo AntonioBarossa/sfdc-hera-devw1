@@ -323,7 +323,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 listRecordType.add(rtChangeOffer);
                                 listRecordType.add(rtVultureWithSwitch);
 
-                                if (!listRecordType.contains(ord.recordtypeId )   ) {
+                                if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
                                     ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
                                 }
                                 //End HRAWRM-657 21/09/2021

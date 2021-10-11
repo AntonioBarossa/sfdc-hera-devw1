@@ -36,7 +36,7 @@ public with sharing class HDT_TRH_CampaignMemberTst{
 			                                 WHERE Id=:campMembers[0].Id];
 
 			System.assertEquals(true, tCampMembs[0].Id!=null, 'Campaign Member not Inserted');
-			System.assertNotEquals(false, tCampMembs[0].Id!=null);
+			System.assertNotEquals(false, tCampMembs[0].Id!=null, 'Campaign Member not Inserted');
 		}
 	}
 }
