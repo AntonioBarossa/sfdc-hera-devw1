@@ -12,6 +12,7 @@ public with sharing class HDT_UTL_NotifVas {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
 
+    private static Boolean isPostSales;
     /**
     * @description Handling Vas notify requests
     * @author gabriele.rota@webresults.it | 2021-07-28 
@@ -32,9 +33,11 @@ public with sharing class HDT_UTL_NotifVas {
             system.debug(request.header.fields.get(0).value);
             switch on request.header.fields.get(0).value {
                 when 'sales' {
+                    isPostSales = false;
                     handleVasActivation(request, requestMap);
                 }
                 when 'postsales' {
+                    isPostSales = true;
                     handleVasDeactivation(request, requestMap);
                 }
                 when else{
@@ -90,7 +93,7 @@ public with sharing class HDT_UTL_NotifVas {
         
         if (sObjMap.containsKey('Order')) {
             Order currentOrder = (Order)sObjMap.get('Order');
-            populateFieldsFromRequest(requestMap, sObjMap.get('Order'));
+            populateFieldsFromRequest(requestMap, currentOrder);
         }
         
         mapPhaseAndStatus(statusMapping, sObjMap);
@@ -213,8 +216,11 @@ public with sharing class HDT_UTL_NotifVas {
     **/
     private static void mapPhaseAndStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         try {
-            if (sObjMap.containsKey('Order')) {
+
+            //order can be updated only during activation process
+            if (sObjMap.containsKey('Order') && !isPostSales) {
                 Order currentOrder = (Order)sObjMap.get('Order');
+
                 if (String.isNotBlank(statusMapping.OrderPhase__c)) {
                     currentOrder.Phase__c = statusMapping.OrderPhase__c;
                 }
@@ -305,6 +311,12 @@ public with sharing class HDT_UTL_NotifVas {
     private static void populateFieldsFromRequest(Map<String, String> requestMap, SObject targetRecord) {
         targetRecord.put('VasPracticeCode__c', requestMap.get('ID_PRATICA_VAS') );
         targetRecord.put('VasStatus__c', requestMap.get('STATO_PRATICA') );
+
+        //updating Order.VasSupplierStatus__c only in deactivation process
+        if (isPostSales && targetRecord.getSObjectType()==Schema.Order.getSObjectType()) {
+            targetRecord.put('VasSupplierStatus__c', requestMap.get('STATO_PRATICA') );
+        }
+
         targetRecord.put('VasStatusDescription__c', requestMap.get('ESITO') );
         targetRecord.put('VasPolicyNumber__c', requestMap.get('NUMERO_POLIZZA') );
         targetRecord.put('OrderODV__c', requestMap.get('ODV') );
