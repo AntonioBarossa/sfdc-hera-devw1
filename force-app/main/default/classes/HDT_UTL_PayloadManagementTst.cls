@@ -842,7 +842,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - 
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
-        myItem.IsContainer__c = true;
+        //myItem.IsContainer__c = true;
         myObjectToTest = new HDT_UTL_PayloadManagement();
         String result3 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
