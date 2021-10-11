@@ -81,6 +81,10 @@
                 <behavior>Readonly</behavior>
                 <field>DataLimitation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -179,7 +183,7 @@
         <fields>CAMPAIGN.STATUS</fields>
         <relatedList>RelatedAccountCampaignList</relatedList>
     </relatedLists>
-        <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
+    <relatedLists><!--Start  HRAWRM-258   14-09-2021 Dom -->
         <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>SAPContractCode__c</fields>
@@ -229,7 +233,6 @@
         <fields>InvoiceEmailAddress__c</fields>
         <fields>InvoiceCertifiedEmailAddress__c</fields>
         <fields>SendCertifiedEmailConsentDate__c</fields>
-     
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
