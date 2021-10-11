@@ -6,8 +6,8 @@ global inherited sharing class HDT_UTL_CheckPreviousPhase implements wrts_prcgvr
         //SObject transition = (SObject) argsMap.get('transition');
         //SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
-        SObject sender = (SObject) argsMap.get('sender');
-        String oldTransitions = (String) sender.get('PhaseStory__c');
+        SObject record = (SObject) argsMap.get('record');
+        String oldTransitions = (String) record.get('PhaseStory__c');
         String checkPhase = method.replaceAll('_', ' ');
         Boolean result = false;
         try{
