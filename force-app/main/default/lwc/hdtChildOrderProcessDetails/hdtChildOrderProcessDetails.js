@@ -931,7 +931,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             },
             {
                 step: 5,
-                label: 'Dettaglio commodity',
+                label: 'Variabili di Processo',
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
