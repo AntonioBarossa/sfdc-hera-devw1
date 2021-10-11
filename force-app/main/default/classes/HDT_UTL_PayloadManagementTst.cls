@@ -814,7 +814,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c FROM Case];
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
-        inputs.put('Case', myItem);
+        inputs.put('Case', new List<Case>{myItem});
         
         Map<String,Object> formParams = new Map<String,Object>();
         formParams.put('Contesto', 'Case');
