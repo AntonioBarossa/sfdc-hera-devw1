@@ -24,7 +24,39 @@
                         </div>
 
                     </div>
+
+                    <div class="slds-grid slds-wrap slds-m-top_small">
+                        <template if:true={isSendTypeSelectionVisible}>
+                            <div class="slds-size_1-of-2 slds-p-right_small">
+                                    <lightning-combobox
+                                    required
+                                    data-id="sentType"
+                                    data-name="sentType"
+                                    name="sentType"
+                                    label="Metodo Invio"
+                                    placeholder=""
+                                    options={moduloInformativoSendTypeOptions}
+                                    onchange={handleModuloSendTypeSelection}
+                                    ></lightning-combobox>
+                            </div>
+                        </template>
+
+                        <template if:true={showEmail}>
+                            <div class="slds-size_1-of-2 slds-p-left_small">
+                                <lightning-input disabled variant="label-stacked" type="text" name="email" label="Email" value={email}></lightning-input>
+                            </div>
+                        </template>
+                        <template if:true={showSms}>
+                            <div class="slds-size_1-of-2 slds-p-left_small">
+                                <lightning-input disabled variant="label-stacked" type="text" name="sms" label="SMS" value={sms}></lightning-input>
+                            </div>
+                        </template>
+                    </div>
                 </div>
+                <footer class="slds-modal__footer slds-modal__footer_directional">
+                    <button class="slds-button slds-button_neutral" data-id="close" onclick={handleClose}>Chiudi</button>
+                    <button disabled={disabledConfirm} class="slds-button slds-button_brand" data-id="conf" onclick={handleConfirm}>Conferma</button>
+                </footer>
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
