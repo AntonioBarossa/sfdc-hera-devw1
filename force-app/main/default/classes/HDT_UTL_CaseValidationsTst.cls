@@ -59,7 +59,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         contactList[0].Fax = 'myFax';
         update contactList;
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(60, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(70, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
         List<FormulaRecalcResult> results1 = Formula.recalculateFormulas(caseList);
 
@@ -481,11 +481,57 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             caseList[49].Type = 'Gestione Disalimentabilità';
             caseList[49].Disconnectable__c = 'No';
             caseList[49].DisconnectibilityType__c = '01- App. medico terapeutiche';
+            caseList[48].SelfCertificationAcquisitionAsl__c = 'No';
             String fields50 = JSON.serialize(caseList[49]);
 
             String recordId51 = caseList[50].Id;
             caseList[50].Type = 'Gestione Disalimentabilità';
             String fields51 = JSON.serialize(caseList[50]);
+
+            String recordId57 = caseList[56].Id;
+            caseList[56].Type = 'Marcatura/Uso PdR';
+            caseList[56].SupplyType__c = 'A-Domestico';
+            caseList[56].UseCategory__c = '002-Prod.acqua calda sanitaria';
+            caseList[56].ServicePointType__c = '1002-Cottura/Produz acq calda';
+            String fields57 = JSON.serialize(caseList[56]);
+
+            String recordId58 = caseList[57].Id;
+            caseList[57].Type = 'Marcatura/Uso PdR';
+            caseList[57].SupplyType__c = 'A-Domestico';
+            caseList[57].UseCategory__c = '002-Prod.acqua calda sanitaria';
+            caseList[57].ServicePointType__c = '1002-Cottura/Produz acq calda';
+            caseList[57].Taxes__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+            String fields58 = JSON.serialize(caseList[57]);
+
+            String recordId59 = caseList[58].Id;
+            caseList[58].Type = 'BP/CA - errata categoria';
+            caseList[58].BillingProblem__c = 'Si';
+            caseList[58].Note__c = '';
+            caseList[58].CustomerPaymentAgreements__c = '';
+            String fields59 = JSON.serialize(caseList[58]);
+
+            String recordId60 = caseList[59].Id;
+            caseList[59].Type = 'BP/CA - errata categoria';
+            caseList[59].BillingProblem__c = 'Si';
+            caseList[59].Note__c = 'Note Cliente';
+            caseList[59].CustomerPaymentAgreements__c = 'Pagato';
+            String fields60 = JSON.serialize(caseList[59]);
+
+            String recordId61 = caseList[60].Id;
+            caseList[60].Type = 'Modifica/Azzeramento Consumo Annuo';
+            Date myDate3 = Date.newInstance(2021, 12, 20);
+            Date myDate4 = Date.newInstance(2021, 12, 25);
+            caseList[60].EndValidityDate__c = myDate3;
+            caseList[60].EffectiveDate__c = myDate4;
+            String fields61 = JSON.serialize(caseList[60]);
+            
+            String recordId62 = caseList[61].Id;
+            caseList[61].Type = 'Modifica/Azzeramento Consumo Annuo';
+            Date myDate5 = Date.newInstance(2021, 12, 25);
+            Date myDate6 = Date.newInstance(2021, 12, 20);
+            caseList[61].EndValidityDate__c = myDate3;
+            caseList[61].EffectiveDate__c = myDate4;
+            String fields62 = JSON.serialize(caseList[61]);
 
 
 
@@ -537,8 +583,14 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             myClass.validate(fields47, recordId47);
             myClass.validate(fields48, recordId47);
             myClass.validate(fields49, recordId48);
-            //myClass.validate(fields50, recordId48);
+            myClass.validate(fields50, recordId48);
             myClass.validate(fields51, recordId50);
+            myClass.validate(fields57, recordId57);
+            myClass.validate(fields58, recordId58);
+            myClass.validate(fields59, recordId59);
+            myClass.validate(fields60, recordId60);
+            //myClass.validate(fields61, recordId61);
+            //myClass.validate(fields62, recordId62);
             
 
 
