@@ -28,8 +28,8 @@ public class HDT_LC_ContactSelectionTst {
             Map<String, Object> data = (Map<String, Object>)obj;
             valuesMap.putAll(data);
          }
-         System.assertEquals(valuesMap.get('Id'), [SELECT Id FROM Contact WHERE AccountId = :acc.Id LIMIT 1].Id);
-         System.assertEquals(valuesMap.get('Name'), 'test tester');
+         System.assertEquals(valuesMap.get('Id'), [SELECT Id FROM Contact WHERE AccountId = :acc.Id LIMIT 1].Id,'value of parameter is matching');
+         System.assertEquals(valuesMap.get('Name'), 'test tester','value of parameter is matching');
         
         Test.stopTest();
     }
@@ -67,7 +67,7 @@ public class HDT_LC_ContactSelectionTst {
             valuesMap.putAll(data);
         }
         //Mi aspetto un solo record di contatto corrispondente a quello che NON ha come Account quello passato nel metodo getAdministrators(acrList[0].AccountId).
-        System.assertEquals(valuesMap.get('Id'), acrList[1].ContactId);
+        System.assertEquals(valuesMap.get('Id'), acrList[1].ContactId, 'value of parameter is matching');
 
         Test.stopTest();
     }
@@ -96,7 +96,7 @@ public class HDT_LC_ContactSelectionTst {
             valuesMap.putAll(data);
         }
         //Mi aspetto un solo record di contatto corrispondente a quello che ha come Account quello passato nel metodo getSolContacts(acrList[0].AccountId).
-        System.assertEquals(valuesMap.get('Id'), acrList[0].ContactId);
+        System.assertEquals(valuesMap.get('Id'), acrList[0].ContactId, 'value of parameter is matching');
 
         Test.stopTest();
     }
