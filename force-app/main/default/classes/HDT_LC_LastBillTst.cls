@@ -57,8 +57,8 @@ public class HDT_LC_LastBillTst {
         HttpResponse response = new HttpResponse();
         response.setBody('Mock response body');
         
-        // Set the fake response for the continuation     
-        Test.setContinuationResponse('', response);
+        // Set the fake response for the continuation
+        Test.setContinuationResponse('Continuation-1', response);
         
         // Invoke callback method
         Object result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);

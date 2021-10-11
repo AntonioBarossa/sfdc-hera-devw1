@@ -149,6 +149,8 @@ public with sharing class HDT_LC_LastBill {
     // Callback method
     @AuraEnabled(cacheable=true)
     public static String processResponse(List<String> labels, Object state) {
+        System.debug('processResponse - labels: ' + labels);
+        System.debug('processResponse - state: ' + state);
         HttpResponse response = Continuation.getResponse(labels[0]);
         Integer statusCode = response.getStatusCode();
         Map<String,String> result = new Map<String,String>();
