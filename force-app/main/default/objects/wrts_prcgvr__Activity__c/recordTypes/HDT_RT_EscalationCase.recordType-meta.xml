@@ -1257,19 +1257,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Analisi situazione su CRM per gestione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Assistenza procedurale e gestione pratiche</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Attività concordate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Autolettura inferiore lettura migrazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1350,10 +1342,6 @@
         </values>
         <values>
             <fullName>Controllo dati contrattuali SAP vs SISTEMI 3%C2%B0 %28RCU%2C etc%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Copia contratto su CRM precedente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1449,10 +1437,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione pratiche in volo</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Incongruenze SAP</fullName>
             <default>false</default>
         </values>
@@ -1462,10 +1446,6 @@
         </values>
         <values>
             <fullName>Invio PEC al DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Knowledge - segnalazione articoli</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1490,10 +1470,6 @@
         </values>
         <values>
             <fullName>Modifica MRU BIDONE e%2Fo periodicità mercato Retail e Business</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagamenti su CRM precedente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1686,10 +1662,6 @@
         </values>
         <values>
             <fullName>Verifica fatturazione elettronica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica fatturazione su CRM precedente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1984,10 +1956,6 @@
         </values>
         <values>
             <fullName>Supporto su Canone Rai</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto su migrazione</fullName>
             <default>false</default>
         </values>
         <values>
