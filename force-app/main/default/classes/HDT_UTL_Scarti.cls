@@ -89,19 +89,19 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         //l'unica via, per ora, sembra quella di mettere il nome del template nel method. ES: 'checkActivityCreation___CBS_ATT006__AMMISSIBILITA_KO'
         //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
-		boolean check;
+		boolean activityCreationOutcome;
         try{
-            check = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
+            activityCreationOutcome = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
         } catch(Exception e){
             system.debug(e.getMessage());
             system.debug(e.getStackTraceString());
         }
 		
 		if(method.startsWith('checkActivityCreation')){
-            return !check;
+            return activityCreationOutcome;
         }
         if(method.startsWith('checkAnnullment')){
-            return check;
+            return !activityCreationOutcome;
         }
         return null;
 	}
@@ -429,7 +429,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                             WITH SECURITY_ENFORCED];
             if(!actions.isEmpty()){
             	String activityType  = actions.get(0).wrts_prcgvr__Value__c;
-            	return checkDiscardAnnullmentRule(recordId, activityType);
+            	return !checkDiscardAnnullmentRule(recordId, activityType);
             }
         }
         return false;
