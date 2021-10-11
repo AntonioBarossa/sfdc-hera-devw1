@@ -64,9 +64,9 @@ public class HDT_QR_OpportunityTst{
 		System.debug('methodRet = '+methodRet);
 
 
-		System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		System.assertNotEquals(0, methodRet, 'Value of parameter is not matching');
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -122,9 +122,9 @@ public class HDT_QR_OpportunityTst{
 
 		// Cannot insert IsVas= null, return is always empty
 
-		System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		System.assertNotEquals(0, methodRet, 'Value of parameter is not matching');
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -222,9 +222,9 @@ public class HDT_QR_OpportunityTst{
 		System.debug('methodRet = '+methodRet);
 
 
-		System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		System.assertNotEquals(0, methodRet, 'Value of parameter is not matching');
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}

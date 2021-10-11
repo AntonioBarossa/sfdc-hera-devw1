@@ -14,7 +14,7 @@ public with sharing class HDT_QR_GroupTst {
         Test.startTest();
             Group gp = new HDT_QR_Group().getQueueByDevelopername('HDT_QUE_ActivityProtocollo');
             System.assertEquals(gp != null, true, 'value of parameter is matching');
-            System.assertNotEquals(gp == null, true. 'value of parameter is not matching');
+            System.assertNotEquals(gp == null, true, 'value of parameter is not matching');
         Test.stopTest();
     }
 
