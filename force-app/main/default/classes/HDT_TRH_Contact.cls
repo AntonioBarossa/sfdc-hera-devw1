@@ -24,12 +24,20 @@
         // for(Contact contact : contList){
         //     HDT_UTL_GestionePrivacy.setPrivacyForContact(contact);
         // }
-
-        HDT_UTL_GestionePrivacy.setPrivacyForContact(trigger.new);
+        //HRDTR-00_HRAWRM-881 11/10/2021
+        List<Contact> contactToCreatePrivacy = new List<Contact>();
+        for (Contact tempContact : contList) {
+            if (String.isBlank(tempContact.IndividualId)) {
+                contactToCreatePrivacy.add(tempContact);
+            }
+            
+        }
+        //HRDTR-00_HRAWRM-881 11/10/2021
+        HDT_UTL_GestionePrivacy.setPrivacyForContact(contactToCreatePrivacy);
     }
 
     public override void beforeUpdate(){
-        System.debug('*******TriggerContact');
+        // System.debug('*******TriggerContact');
         HDT_UTL_GestionePrivacy.updateContactPointFromObjectContact(trigger.new,trigger.old);
     }
     private static void changeRecordType(List<Contact> listContract ){
