@@ -3,7 +3,7 @@
     <fullName>StatusDescription__c</fullName>
     <description>Used for error status</description>
     <externalId>false</externalId>
-    <label>Status Description</label>
+    <label>Descrizione dello stato</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
