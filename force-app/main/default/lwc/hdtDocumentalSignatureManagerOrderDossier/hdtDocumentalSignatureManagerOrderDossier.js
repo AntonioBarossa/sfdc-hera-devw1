@@ -65,6 +65,19 @@ const FIELDS = [
 	'Order.Account.BillingStreetNumberExtension__c',
 	'Order.Account.BillingStreetCode__c'
 ];
+
+const SCRIPT_SIGNATURE_METHODS = [
+    'Vocal Order',
+    'OTP Remoto',
+    'OTP Coopresenza'
+];
+
+const SCRIPT_ENABLED_CHANNELS = [
+    'Teleselling',
+    'Telefono Outbound',
+    'Telefono Inbound'
+];
+
 export default class hdtOrderDossierWizardSignature extends LightningElement {
     
     @api orderParentRecord;
@@ -154,11 +167,13 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 hiddenEdit = false;
             }*/
 
-            return this.orderRecord.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && (
-                this.orderRecord.fields.SignatureMethod__c.value=='Vocal Order' || 
-                this.orderRecord.fields.SignatureMethod__c.value=='OTP Remoto' || 
-                this.orderRecord.fields.SignatureMethod__c.value=='OTP Coopresenza'
-            )
+            let loginChannel = this.orderRecord.fields.CreatedBy.value.fields.LoginChannel__c.value;
+            let isChannelEnabled = (loginChannel==null || SCRIPT_ENABLED_CHANNELS.indexOf(loginChannel)>=0);
+
+            let signatureMethod = this.orderRecord.fields.SignatureMethod__c.value;
+            let isSignatureEnabled = (SCRIPT_SIGNATURE_METHODS.indexOf(signatureMethod)>=0);
+
+            return (this.orderRecord.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && isChannelEnabled && isSignatureEnabled);
         }
         else return false;
     }
