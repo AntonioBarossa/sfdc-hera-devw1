@@ -88,7 +88,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Creata', tActivity[0].Status__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Status__c);
+		System.assertNotEquals('', tActivity[0].Status__c, 'getRecordByTypeAndStatusAndAccountAndServicePoint did not work correctly');
 
 		Test.stopTest();
 	}
@@ -106,7 +106,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Creata', tActivity[0].Status__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Status__c);
+		System.assertNotEquals('', tActivity[0].Status__c, 'getRecordById did not work correctly');
 
 		Test.stopTest();
 	}
@@ -124,7 +124,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Creata', tActivity.Status__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity.Status__c);
+		System.assertNotEquals('', tActivity.Status__c, 'getRecordByIds- did not work correctly');
 
 		Test.stopTest();
 	}
@@ -142,7 +142,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Si', tActivity[0].Approved__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Approved__c);
+		System.assertNotEquals('', tActivity[0].Approved__c, 'getRecordByCaseId did not work correctly');
 
 		Test.stopTest();
 	}
@@ -163,7 +163,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Si', tActivity[0].Approved__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Approved__c);
+		System.assertNotEquals('', tActivity[0].Approved__c, 'getRecordByCaseIdList did not work correctly');
 
 		Test.stopTest();
 	}
@@ -184,7 +184,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Si', tActivity[0].Approved__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Approved__c);
+		System.assertNotEquals('', tActivity[0].Approved__c, 'getRecordByOrderLine did not work correctly');
 
 		Test.stopTest();
 	}
@@ -205,7 +205,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 		System.debug('tActivity = '+tActivity);
 
 		System.assertEquals('Si', tActivity[0].Approved__c, 'query return is wrong');
-		System.assertNotEquals('', tActivity[0].Approved__c);
+		System.assertNotEquals('', tActivity[0].Approved__c, 'getRecordByOwnerId did not work correctly');
 
 		Test.stopTest();
 	}
@@ -243,7 +243,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			System.debug('tActivity = '+tActivity);
 
 			System.assertEquals('Creata', tActivity[0].Status__c, 'query return is wrong');
-			System.assertNotEquals(null, tActivity[0].Status__c);
+			System.assertNotEquals(null, tActivity[0].Status__c, 'getActivityListCreditCheck did not work correctly');
 
 		}
 		Test.stopTest();
@@ -284,7 +284,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			System.debug('***!!tActivity = '+tActivity);
 
 			System.assertEquals('Scarto Comunicazione', tActivity[0].Type__c, 'query return is wrong');
-			System.assertNotEquals(null, tActivity[0].Type__c);
+			System.assertNotEquals(null, tActivity[0].Type__c, 'getRejectedActivities did not work correctly');
 
 		}
 		Test.stopTest();
@@ -311,7 +311,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			System.debug('tActivity = '+tActivity);
 
 			System.assertEquals('Approvazione Quote', tActivity[0].Type__c, 'query return is wrong');
-			System.assertNotEquals('', tActivity[0].Type__c);
+			System.assertNotEquals('', tActivity[0].Type__c, 'getActivityByRecordId did not work correctly');
 
 			Test.stopTest();
 		}
@@ -346,7 +346,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 			System.debug('tActivity = '+tActivity);
 
 			System.assertEquals(rt, tActivity[0].RecordTypeId, 'query return is wrong');
-			System.assertNotEquals(null, tActivity[0].RecordTypeId);
+			System.assertNotEquals(null, tActivity[0].RecordTypeId, 'getRecordByParentIds did not work correctly');
 
 		}
 		Test.stopTest();
