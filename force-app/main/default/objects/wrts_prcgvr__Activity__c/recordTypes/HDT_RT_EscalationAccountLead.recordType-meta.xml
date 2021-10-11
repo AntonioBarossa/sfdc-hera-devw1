@@ -1630,8 +1630,8 @@
         <values>
             <fullName>Supporto documentale</fullName>
             <default>false</default>
-        </values> 
-        <values>
+        </values>
+        <values>  
             <fullName>Supporto e segnalazioni back office</fullName>
             <default>false</default>
         </values>
