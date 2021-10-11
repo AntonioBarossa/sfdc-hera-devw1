@@ -23,7 +23,7 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> getCsvBody(String selectedProcessName) {
-        System.debug('HDT_LC_MassiveLoader.getCsvBody : '+selectedProcessName);
+        //System.debug('HDT_LC_MassiveLoader.getCsvBody : '+selectedProcessName);
         Map<String, Object> response = new Map<String, Object>();
         
         try {
@@ -156,11 +156,11 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> checkCsv(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
-        System.debug('HDT_LC_MassiveLoader.checkCsv');
+       /* System.debug('HDT_LC_MassiveLoader.checkCsv');
         System.debug('fileName: '+fileName);
         System.debug('contentVersionId: '+contentVersionId);
         System.debug('selectedProcessName: '+selectedProcessName );
-        System.debug('massiveLoaderRequestId: '+massiveLoaderRequestId );
+        System.debug('massiveLoaderRequestId: '+massiveLoaderRequestId );*/
         Map<String, Object> response = new Map<String, Object>();
         List<MassiveLoaderRequestItem__c> listRequestItem = new List<MassiveLoaderRequestItem__c>();
         try {
@@ -213,8 +213,9 @@ public with sharing class HDT_LC_MassiveLoader {
                         
                         MassiveLoaderRequest__c request = new MassiveLoaderRequest__c(Id = massiveLoaderRequestId, 
                                                                                       TotalRequest__c = fileLines-1,
-                                                                                      Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE, 
-                                                                                      Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO);
+                                                                                      Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE 
+                                                                                      //Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
+                                                                                      );
                                                                                       
                         if (listRequestItem!=null && listRequestItem.size()>0) {
                             insert listRequestItem;
@@ -223,11 +224,11 @@ public with sharing class HDT_LC_MassiveLoader {
                             if (numberRequestProcessing==0) {
                                 request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
                                 HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
-                                Id batchprocessid = Database.executeBatch(processReq,1);
+                                Database.executeBatch(processReq,1);
                             }
                         }
                         massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
-                        list <MassiveLoaderRequest__c> lrequest=[SELECT Id,Name  FROM MassiveLoaderRequest__c WHERE Id=:massiveLoaderRequestId LIMIT 1];
+                        list <MassiveLoaderRequest__c> lrequest=[SELECT Id,Name  FROM MassiveLoaderRequest__c WHERE Id=:massiveLoaderRequestId  WITH SECURITY_ENFORCED LIMIT 1];
                         response.put('reqName',lrequest.get(0).Name );
 
                         response.put('error', false);

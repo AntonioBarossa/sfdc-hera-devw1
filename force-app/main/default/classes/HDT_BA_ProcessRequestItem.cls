@@ -5,7 +5,7 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
 
     private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess();
     public HDT_BA_ProcessRequestItem(Id varIdLoaderRequest) {
-        System.debug('HDT_BA_ProcessRequestItem : '+varIdLoaderRequest);
+        //System.debug('HDT_BA_ProcessRequestItem : '+varIdLoaderRequest);
         this.idLoaderRequest=varIdLoaderRequest;
         
     }
@@ -15,16 +15,16 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
             qrObj.setNestedFields(new list<String>{'MassiveLoaderRequest__r.ProcessType__c'});
             qrObj.setFilter('MassiveLoaderRequest__c =\''+this.idLoaderRequest+'\' Order by CreatedDate DESC');
 			String query =  qrObj.getQeryString();
-            System.debug('query:  '+query);
+            //System.debug('query:  '+query);
 			return Database.getQueryLocator(query);
 	}
-    public void execute(Database.BatchableContext BC, List<MassiveLoaderRequestItem__c> scope) {
-        System.debug('HDT_BA_ProcessRequestItem execute ' );
+    public void execute(Database.BatchableContext bc, List<MassiveLoaderRequestItem__c> scope) {
+        // System.debug('HDT_BA_ProcessRequestItem execute ' );
         MassiveLoaderRequestItem__c massiveItem=scope.get(0);
-        System.debug('massiveItem:  '+massiveItem);
-        System.debug('ProcessType: '+massiveItem.MassiveLoaderRequest__r.ProcessType__c);
+        // System.debug('massiveItem:  '+massiveItem);
+        // System.debug('ProcessType: '+massiveItem.MassiveLoaderRequest__r.ProcessType__c);
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(massiveItem.MassiveLoaderRequest__r.ProcessType__c);
-        System.debug('Apex Class : '+selectedProcess.ApexClass__c);
+        // System.debug('Apex Class : '+selectedProcess.ApexClass__c);
         Type t = Type.forName(selectedProcess.ApexClass__c);
         HDT_UTL_ProcessExecution cls = (HDT_UTL_ProcessExecution)t.newInstance();
         cls.setMassiveLoaderRequestItem(massiveItem);
@@ -39,8 +39,8 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
         }
     }
     public void finish(Database.BatchableContext bc){
-        System.debug('HDT_BA_ProcessRequestItem finish ');
-        MassiveLoaderRequest__c oldReq=new MassiveLoaderRequest__c(id=idLoaderRequest,Status__c=constantsUtl.MASSIVLOADER_STATUS_CHIUSO,Phase__c=constantsUtl.MASSIVLOADER_PHASE_FILEPROCESSATO);
+        //System.debug('HDT_BA_ProcessRequestItem finish ');
+        MassiveLoaderRequest__c oldReq=new MassiveLoaderRequest__c(id=idLoaderRequest,Status__c=constantsUtl.MASSIVLOADER_STATUS_CHIUSO);
         update oldReq;
         // Creazione file RequestItem in Errore 
         List<MassiveLoaderRequestItem__c> listErrorReq =[SELECT Id,Name,Data__c, Status__c,StatusDescription__c  from MassiveLoaderRequestItem__c WHERE Status__c ='Errore' AND MassiveLoaderRequest__c =:idLoaderRequest ];
