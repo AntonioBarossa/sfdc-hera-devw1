@@ -805,6 +805,30 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     
     //generateSectionReclami
+    @isTest
+    private static void generateSectionReclamiTest(){
+        
+        //SETUP
+        mySetup();
+        
+        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c FROM Case];
+        
+        Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
+        inputs.put('Case', myItem);
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        formParams.put('Contesto', 'Case');
+        
+        //TESTING - CASO GENERICO
+        HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
+        String result1 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
+        
+        //ASSERTS
+        System.debug('result1 length ' + result1.length());
+        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        
+        
+    }
     
     
     
