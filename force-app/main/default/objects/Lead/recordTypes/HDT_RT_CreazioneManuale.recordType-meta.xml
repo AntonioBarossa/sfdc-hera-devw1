@@ -136,10 +136,10 @@
             <fullName>HC</fullName>
             <default>false</default>
         </values>
-        <!-- <values>
+        <values>
             <fullName>HC%2BHCM%2BEENE</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>HCM</fullName>
             <default>false</default>

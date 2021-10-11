@@ -186,6 +186,8 @@ public inherited sharing class HDT_QR_Order {
 			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
             OrderReference__c,
+            OrderReference__r.SBQQ__Quote__c,
+            SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
             ActivationStreetName__c,
@@ -507,7 +509,11 @@ public inherited sharing class HDT_QR_Order {
             ComfortCallDaysDue__c,
             QualityCall__c,
             QualityCallUnique__c,
-            Contact__r.Email
+            Contact__r.Email,
+            CreditCheckDescription__c,
+            IncomingCreditCheckResult__c,
+            OutgoingCreditCheckResult__c,
+            OrderReference__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -930,7 +936,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<order> getOrderCreatedYesterday(){
-        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday];
+        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -965,7 +971,8 @@ public inherited sharing class HDT_QR_Order {
             QualityCall__c,
             QualityCallUnique__c,
             ConfirmCustomerContract__c,
-            CancellationReason__c
+            CancellationReason__c,
+            CommercialProduct__c
         FROM Order
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true

@@ -28,6 +28,8 @@ public with sharing class HDT_SRV_SurveyResponseTst {
 	
 	@isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -38,8 +40,12 @@ public with sharing class HDT_SRV_SurveyResponseTst {
             SurveyResponse__c sr = [SELECT Id FROM SurveyResponse__c WHERE Name = 'testName'];
 
             HDT_SRV_SurveyResponse.checkCreateAccess(sr);
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Finished');
         }
     }
 

@@ -34,6 +34,7 @@ public inherited sharing class HDT_QR_Case {
             PODPDRFormula__c,
             Phase__c,
             Type,
+            ServicePoint__r.CommoditySector__c,
             RecordType.DeveloperName
             FROM Case
             where Id = :Id
@@ -104,7 +105,7 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public List<Case> getRecordsById(List<String> Ids, String fields) {
-        String query = 'SELECT '+ fields +
+        String query = 'SELECT '+ String.escapeSingleQuotes(fields) +
                 ' From Case where id IN :Ids';
         List<Case> cases = Database.query(query);
 

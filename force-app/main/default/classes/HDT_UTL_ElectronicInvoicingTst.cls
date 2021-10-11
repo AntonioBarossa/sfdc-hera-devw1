@@ -102,7 +102,7 @@ public with sharing class HDT_UTL_ElectronicInvoicingTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myElectronicInvoicing != null);
+        System.assert(myElectronicInvoicing != null, 'Attenzione, myElectronicInvoicing non può essere null!');
         
     }
 

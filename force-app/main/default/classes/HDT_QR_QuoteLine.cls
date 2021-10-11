@@ -140,7 +140,6 @@ public inherited sharing class HDT_QR_QuoteLine {
     **/
     public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredFamilyBonus(String saleId){
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
-        famils.add('Promozione');
         return [
             SELECT
             Id,
@@ -171,7 +170,6 @@ public inherited sharing class HDT_QR_QuoteLine {
     **/
     public List<SBQQ__QuoteLine__c> getRecordsByQuoteFilteredFamilyBonus(String quoteId){
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
-        famils.add('Promozione');
         return [
             SELECT
             Id,

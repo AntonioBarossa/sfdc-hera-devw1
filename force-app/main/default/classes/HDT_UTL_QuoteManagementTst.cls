@@ -73,7 +73,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(inputs != null);
+        System.assert(inputs != null, 'Attenzione, inputs non può essere null!');
         
     }
 
@@ -101,7 +101,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(localDispatcher != null);
+        System.assert(localDispatcher != null, 'Attenzione, localDispatcher non può essere null!');
         
     }
 
@@ -129,7 +129,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(power != null);
+        System.assert(power != null, 'Attenzione, power non può essere null!');
         
     }
 

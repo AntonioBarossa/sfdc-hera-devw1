@@ -323,7 +323,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 listRecordType.add(rtChangeOffer);
                                 listRecordType.add(rtVultureWithSwitch);
 
-                                if (!listRecordType.contains(ord.recordtypeId )   ) {
+                                if (!listRecordType.contains(ord.recordtypeId ) && String.isNotBlank(mapRequestFields.get('DT_CREA'))  ) {
                                     ord.EffectiveDate__c = date.valueOf( mapRequestFields.get('DT_CREA')); //? per tutti i processi tranne RecordType.Name in ('SwitchIn','Cambio Offerta','Voltura Con Switch')
                                 }
                                 //End HRAWRM-657 21/09/2021
@@ -450,24 +450,53 @@ public with sharing class HDT_SRV_SalesHandler {
 
             }
             when 'WSLead_Callback'{
-                HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200; 
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
             }
             when 'WSLead_Winback'{
-                HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
             }
             when 'WSLead_CariBoll'{
-                HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+              
             }
             when 'WSLead_HVAC'{
-                HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;  
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+
             }
             when 'WSLead_SOL'{
-                HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
-                RestContext.response.statusCode = 200;
+                try {
+                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                    RestContext.response.statusCode = 200;
+                } 
+                catch (Exception e) {
+                    mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                }
+
             }
             when 'CMPDMP_PRV'{
                
@@ -521,7 +550,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -539,7 +568,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -558,7 +587,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -577,7 +606,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_2'));
+                        System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_2'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -596,7 +625,7 @@ public with sharing class HDT_SRV_SalesHandler {
                         }
                     }
                     if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
-                        System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),Date.valueOf(localMapRequestFields.get('updatedFrom')), 'SIE34_1'));
+                        System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_1'));
                         RestContext.response.statusCode = 200;
                     }
                     else {
@@ -640,11 +669,10 @@ public with sharing class HDT_SRV_SalesHandler {
         responseFieldError.fieldType = 'TEXT';
         responseFieldError.name = 'ERROR_MESSAGE';
         responseFieldError.value = msg;
-
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
         mrrResponseItem.objects.add(responseObject);
-
         RestContext.response.statusCode = 400;
+
     }
     private static void updateServicePoint(ServicePoint__c sp){
         try{
@@ -654,5 +682,6 @@ public with sharing class HDT_SRV_SalesHandler {
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
+    
 
 }

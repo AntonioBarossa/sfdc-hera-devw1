@@ -54,8 +54,8 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myMap != null);
-        System.assert(testCase != null);
+        System.assert(myMap != null, 'Attenzione, myMap non può essere null!');
+        System.assert(testCase != null, 'Attenzione, testCase non può essere null!');
 
     }
 
@@ -99,8 +99,8 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myMap != null);
-        System.assert(testCase != null);
+        System.assert(myMap != null, 'Attenzione, myMap non può essere null!');
+        System.assert(testCase != null, 'Attenzione, testCase non può essere null!');
 
     }
 
@@ -139,8 +139,8 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myMap != null);
-        System.assert(testCase != null);
+        System.assert(myMap != null, 'Attenzione, myMap non può essere null!');
+        System.assert(testCase != null, 'Attenzione, testCase non può essere null!');
 
     }
 

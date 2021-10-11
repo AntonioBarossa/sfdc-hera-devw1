@@ -59,7 +59,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         contactList[0].Fax = 'myFax';
         update contactList;
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(50, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(60, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
         List<FormulaRecalcResult> results1 = Formula.recalculateFormulas(caseList);
 
@@ -97,42 +97,40 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         String recordId3 = caseList[2].Id;
         caseList[2].Type = 'Piano Rateizzazione';
         caseList[2].Deposit__c = true;
-        CaseList[2].DepositAmount__c = 43;
-        CaseList[2].DepositPaymentMode__c = '';
+        caseList[2].DepositAmount__c = 43;
+        caseList[2].DepositPaymentMode__c = '';
         String fields3 = JSON.serialize(caseList[2]);
 
         String recordId4 = caseList[3].Id;
         caseList[3].Type = 'Piano Rateizzazione';
         caseList[3].Deposit__c = true;
-        CaseList[3].DepositAmount__c = 43;
-        CaseList[3].DepositPaymentMode__c = 'Bollettino postale';
-        CaseList[3].ApplicationInterests__c = false;
-        CaseList[3].InstallmentNumberRequired__c = 8;
+        caseList[3].DepositAmount__c = 43;
+        caseList[3].DepositPaymentMode__c = 'Bollettino postale';
+        caseList[3].ApplicationInterests__c = false;
+        caseList[3].InstallmentNumberRequired__c = 8;
         String fields4 = JSON.serialize(caseList[3]);
 
         String recordId5 = caseList[4].Id;
         caseList[4].Type = 'Piano Rateizzazione';
         caseList[4].Deposit__c = true;
-        CaseList[4].DepositAmount__c = 43;
-        CaseList[4].DepositPaymentMode__c = 'Bollettino postale';
-        CaseList[4].ApplicationInterests__c = true;
-        CaseList[4].InstallmentNumberRequired__c = 4;
+        caseList[4].DepositAmount__c = 43;
+        caseList[4].DepositPaymentMode__c = 'Bollettino postale';
+        caseList[4].ApplicationInterests__c = true;
+        caseList[4].InstallmentNumberRequired__c = 4;
         String fields5 = JSON.serialize(caseList[4]);
 
         String recordId6 = caseList[5].Id;
         caseList[5].Type = 'Piano Rateizzazione';
         caseList[5].Deposit__c = true;
-        CaseList[5].DepositAmount__c = 43;
-        CaseList[5].DepositPaymentMode__c = 'Bollettino postale';
+        caseList[5].DepositAmount__c = 43;
+        caseList[5].DepositPaymentMode__c = 'Bollettino postale';
         String fields6 = JSON.serialize(caseList[5]);
 
-        List<BillingProfile__c> BPList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+        List<BillingProfile__c> bPList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
         BPList[0].PaymentMethod__c = 'Bonifico bancario';
         update BPList[0];
 
         update caseList;
-    
-
         
         //TESTING
         Test.startTest();
@@ -163,12 +161,12 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             accList[0].Category__c = 'Aziende TOP';
             update accList[0];
             List<FormulaRecalcResult> results2 = Formula.recalculateFormulas(caseList);
-            System.assert(results2[0].isSuccess());
+            System.assert(results2[0].isSuccess(), 'results2[0] deve essere success');
 
             String recordId11 = caseList[10].Id;
             caseList[10].Type = 'Piano Rateizzazione';
             caseList[10].Deposit__c = false;
-            CaseList[10].DepositPaymentMode__c = 'Paperless';
+            caseList[10].DepositPaymentMode__c = 'Paperless';
             caseList[10].SendPaperlessCodeMode__c = '';
             String fields11 = JSON.serialize(caseList[10]);
 
@@ -226,7 +224,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             accList[0].Category__c = 'Famiglie';
             update accList[0];
             List<FormulaRecalcResult> results3 = Formula.recalculateFormulas(caseList);
-            System.assert(results3[0].isSuccess());
+            System.assert(results3[0].isSuccess(), 'result3[0] deve essere success');
 
             String recordId21 = caseList[20].Id;
             caseList[20].Type = 'Variazione Domiciliazione';
@@ -267,12 +265,57 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             String recordId27 = caseList[26].Id;
             caseList[26].Type = 'Variazione Anagrafica Cliente';
             caseList[26].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[26].Category__c = 'Famiglie';
+            caseList[26].CustomerMarking__c = 'D1 - Persona fisica';
             caseList[26].PhoneNumber__c = '9879873425';
             caseList[26].Email__c = 'myEmail@email.com';
             caseList[26].Mobile__c = '9872345123';
             caseList[26].CertifiedEmail__c = 'myCertifiedEmail@certifiedEmail.com';
             caseList[26].Fax__c  = 'myFax';
             String fields27 = JSON.serialize(caseList[26]);
+
+            /*accList[0].FiscalCode__c = '';
+            update accList;
+            String recordId52 = caseList[51].Id;
+            caseList[51].Type = 'Variazione Anagrafica Cliente';
+            caseList[51].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[51].Category__c = 'Piccoli Condomini';
+            caseList[51].CustomerMarking__c = 'D5 - Condominio';
+            String fields52 = JSON.serialize(caseList[51]);*/
+            
+            String recordId55 = caseList[54].Id;
+            caseList[54].Type = 'Variazione Anagrafica Cliente';
+            caseList[54].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[54].Category__c = 'Aziende Soho';
+            caseList[54].CustomerMarking__c = 'D3 - Azienda';
+            String fields55 = JSON.serialize(caseList[54]);
+
+
+            accList[0].FiscalCode__c = '1234568030155487';
+            update accList;
+
+            String recordId53 = caseList[52].Id;
+            caseList[52].Type = 'Variazione Anagrafica Cliente';
+            caseList[52].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[52].Category__c = 'Aziende Soho';
+            caseList[52].CustomerMarking__c = 'D2 - Ditta individuale';
+            String fields53 = JSON.serialize(caseList[52]);
+
+            String recordId54 = caseList[53].Id;
+            caseList[53].Type = 'Variazione Anagrafica Cliente';
+            caseList[53].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[53].Category__c = 'Piccoli Condomini';
+            caseList[53].CustomerMarking__c = 'D4 - Parti Comuni';
+            String fields54 = JSON.serialize(caseList[53]);
+            
+            /*String recordId56 = caseList[55].Id;
+            caseList[55].Type = 'Variazione Anagrafica Cliente';
+            caseList[55].Subprocess__c = 'Modifica Dati di Contatto';
+            caseList[55].Category__c = 'Aziende Soho';
+            caseList[55].CustomerMarking__c = 'D6 - Associazione';
+            String fields56 = JSON.serialize(caseList[55]);*/
+
+            
 
             String recordId28 = caseList[27].Id;
             caseList[27].Type = 'Variazione Anagrafica Cliente';
@@ -418,15 +461,33 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
             String recordId47 = caseList[46].Id;
             caseList[46].Type = 'Gestione Disalimentabilità';
-            caseList[46].Disconnectable__c = 'No';
-            caseList[46].DisconnectibilityType__c = '';
-            caseList[46].MobilePhoneNoticePesse__c = '';
+            caseList[46].Disconnectable__c = 'Si';
             String fields47 = JSON.serialize(caseList[46]);
 
             String recordId48 = caseList[47].Id;
             caseList[47].Type = 'Gestione Disalimentabilità';
-            caseList[47].Disconnectable__c = '';
+            caseList[47].Disconnectable__c = 'No';
+            caseList[47].DisconnectibilityType__c = '';
+            caseList[47].MobilePhoneNoticePesse__c = '';
             String fields48 = JSON.serialize(caseList[47]);
+
+            String recordId49 = caseList[48].Id;
+            caseList[48].Type = 'Gestione Disalimentabilità';
+            caseList[48].Disconnectable__c = 'Si';
+            caseList[48].SelfCertificationAcquisitionAsl__c = 'Ni';
+            String fields49 = JSON.serialize(caseList[48]);
+
+            String recordId50 = caseList[49].Id;
+            caseList[49].Type = 'Gestione Disalimentabilità';
+            caseList[49].Disconnectable__c = 'No';
+            caseList[49].DisconnectibilityType__c = '01- App. medico terapeutiche';
+            String fields50 = JSON.serialize(caseList[49]);
+
+            String recordId51 = caseList[50].Id;
+            caseList[50].Type = 'Gestione Disalimentabilità';
+            String fields51 = JSON.serialize(caseList[50]);
+
+
 
 
 
@@ -449,6 +510,11 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             myClass.validate(fields25, recordId25);
             myClass.validate(fields26, recordId26);
             //myClass.validate(fields27, recordId27);
+            //myClass.validate(fields52, recordId52);
+            myClass.validate(fields55, recordId55);
+            myClass.validate(fields53, recordId53);
+            //myClass.validate(fields54, recordId54);
+            //myClass.validate(fields56, recordId56);
             myClass.validate(fields28, recordId28);
             myClass.validate(fields29, recordId29);
             myClass.validate(fields30, recordId30);
@@ -469,9 +535,15 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             myClass.validate(fields45, recordId45);
             myClass.validate(fields46, recordId46);
             myClass.validate(fields47, recordId47);
-            myClass.validate(fields48, recordId48);
-            //myClass.validate(fields49, recordId49);
-            //myClass.validate(fields50, recordId50);
+            myClass.validate(fields48, recordId47);
+            myClass.validate(fields49, recordId48);
+            //myClass.validate(fields50, recordId48);
+            myClass.validate(fields51, recordId50);
+            
+
+
+
+
 
 
 
@@ -482,8 +554,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
-        System.assert(results1[0].isSuccess());        
+        System.assert(caseList != null, 'caseList non può essere null');
+        System.assert(results1[0].isSuccess(), 'results1[0] deve essere success');        
     }
 
 
