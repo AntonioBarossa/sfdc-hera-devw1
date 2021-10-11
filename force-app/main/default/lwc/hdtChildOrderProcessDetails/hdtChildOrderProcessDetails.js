@@ -517,6 +517,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
             }
+            if(this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt" && this.template.querySelector("[data-id='RequestOption__c']") !== null 
+                && (this.template.querySelector("[data-id='RequestOption__c']").value === ''
+                    || this.template.querySelector("[data-id='RequestOption__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Opzione Distribuzione',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
             if(this.template.querySelector("[data-id='ConnectionMandate__c']") !== null 
                 && (this.template.querySelector("[data-id='ConnectionMandate__c']").value === ''
                     || this.template.querySelector("[data-id='ConnectionMandate__c']").value === null)) {
@@ -918,7 +931,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             },
             {
                 step: 5,
-                label: 'Dettaglio commodity',
+                label: 'Variabili di Processo',
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
