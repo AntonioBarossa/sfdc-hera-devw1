@@ -313,7 +313,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         
         System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByTemplateCode' + dataForSalesHandlingByTemplateCode);
         if(!dataForSalesHandlingByTemplateCode.keySet().isEmpty()){
-            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber FROM Order WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()]);
+            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber 
+                                                        FROM Order 
+                                                        WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()
+                                                        OR Id IN :dataForSalesHandlingByTemplateCode.keySet()]);
             for(Order curOrder : orders.values()){
                 Map<String,String> curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
                 //String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
