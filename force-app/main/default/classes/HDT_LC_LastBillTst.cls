@@ -53,14 +53,19 @@ public class HDT_LC_LastBillTst {
         
         // Perform mock callout 
         // (i.e. skip the callout and call the callback method)
+        
         HttpResponse response = new HttpResponse();
-        response.setBody('Mock response body');   
+        response.setBody('Mock response body');
+        
         // Set the fake response for the continuation     
         Test.setContinuationResponse('', response);
+        
         // Invoke callback method
         Object result = Test.invokeContinuationMethod(controller, conti);
+        
         // result is the return value of the callback
         System.assertEquals(null, result);
+        
         // Verify that the controller's result variable
         //   is set to the mock response.
         //System.assertEquals('Mock response body', controller.result);
