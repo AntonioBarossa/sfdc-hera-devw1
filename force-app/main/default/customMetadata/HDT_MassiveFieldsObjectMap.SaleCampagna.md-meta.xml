@@ -14,4 +14,8 @@
         <field>objectType__c</field>
         <value xsi:type="xsd:string">Sale</value>
     </values>
+    <values>
+        <field>processType__c</field>
+        <value xsi:type="xsd:string">Subentro</value>
+    </values>
 </CustomMetadata>

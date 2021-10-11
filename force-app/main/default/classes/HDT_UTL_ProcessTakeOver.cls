@@ -245,42 +245,42 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     }
    
    private void mapFieldsObject(){
-        List<HDT_MassiveFieldsObjectMap__mdt> listAccountFields = getMapFieldsObject('Account');
+        List<HDT_MassiveFieldsObjectMap__mdt> listAccountFields = getMapFieldsObject('Account', this.processName);
         
         mapAccountFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt accountFields : listAccountFields){
             mapAccountFields.put(accountFields.labelField__c, accountFields.nameField__c);
         }
 
-        List<HDT_MassiveFieldsObjectMap__mdt> listSaleFields = getMapFieldsObject('Sale');
+        List<HDT_MassiveFieldsObjectMap__mdt> listSaleFields = getMapFieldsObject('Sale', this.processName);
 
         mapSaleFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt saleFields : listSaleFields){
             mapSaleFields.put(saleFields.labelField__c, saleFields.nameField__c);
         }
 
-        List<HDT_MassiveFieldsObjectMap__mdt> listServicePointFields = getMapFieldsObject('ServicePoint');
+        List<HDT_MassiveFieldsObjectMap__mdt> listServicePointFields = getMapFieldsObject('ServicePoint', this.processName);
 
         mapServicePointFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt servicePointFields : listServicePointFields){
             mapServicePointFields.put(servicePointFields.labelField__c, servicePointFields.nameField__c);
         }
 
-        List<HDT_MassiveFieldsObjectMap__mdt> listBillingProfileFields = getMapFieldsObject('BillingProfile');
+        List<HDT_MassiveFieldsObjectMap__mdt> listBillingProfileFields = getMapFieldsObject('BillingProfile', this.processName);
 
         mapBillingProfileFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt billingProfileFields : listBillingProfileFields){
             mapBillingProfileFields.put(billingProfileFields.labelField__c, billingProfileFields.nameField__c);
         }
 
-        List<HDT_MassiveFieldsObjectMap__mdt> listOrderFields = getMapFieldsObject('Order');
+        List<HDT_MassiveFieldsObjectMap__mdt> listOrderFields = getMapFieldsObject('Order', this.processName);
 
         mapOrderFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt orderFields : listOrderFields){
             mapOrderFields.put(orderFields.labelField__c, orderFields.nameField__c);
         }
 
-        List<HDT_MassiveFieldsObjectMap__mdt> listOrderItemFields = getMapFieldsObject('OrderItem');
+        List<HDT_MassiveFieldsObjectMap__mdt> listOrderItemFields = getMapFieldsObject('OrderItem', this.processName);
 
         mapOrderItemFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt orderItemFields : listOrderItemFields){
