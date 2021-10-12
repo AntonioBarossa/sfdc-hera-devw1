@@ -127,8 +127,8 @@ public class HDT_LC_ComunicationsSearchListTst {
         responseObj.dataError = true;
         responseObj.bodyBase64 = 'base64';
 
-        System.assert(webServiceObj != null, 'webServiceObj = null');
-        System.assert(responseObj != null, 'responseObj = null');
+        System.assertNotEquals(null, webServiceObj, 'webServiceObj = null');
+        System.assertNotEquals(null, responseObj, 'responseObj = null');
 
     }
 

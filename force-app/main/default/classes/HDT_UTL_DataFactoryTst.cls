@@ -6,6 +6,7 @@
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 
+ @isTest
 public with sharing class HDT_UTL_DataFactoryTst{
 
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
@@ -33,8 +34,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 		//Method to create PClick Phase Transitions
-		public static void newPhaseTransition(String DestinationPhase, String OriginPhase, id recordTypeId, String recordTypeName){
-			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c=DestinationPhase, Wrts_prcgvr__OriginPhase__c=OriginPhase, Wrts_prcgvr__RecordTypeId__c=recordTypeId, Wrts_prcgvr__RecordTypeName__c=recordTypeName, Wrts_prcgvr__Type__c='A');
+		public static void newPhaseTransition(String destinationPhase, String originPhase, id recordTypeId, String recordTypeName){
+			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c=destinationPhase, Wrts_prcgvr__OriginPhase__c=originPhase, Wrts_prcgvr__RecordTypeId__c=recordTypeId, Wrts_prcgvr__RecordTypeName__c=recordTypeName, Wrts_prcgvr__Type__c='A');
 
 		}
 
@@ -927,7 +928,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return agentMatrixList;
 	}
 
-	public static List<BillingProfile__c> createBillingProfile(Integer amount, Boolean doInsert, Id Account){
+	public static List<BillingProfile__c> createBillingProfile(Integer amount, Boolean doInsert, Id account){
 
 		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
 
@@ -941,7 +942,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
 
 			BillingProfile__c testBillingProfile=new BillingProfile__c();
-			testBillingProfile.Account__c=Account;
+			testBillingProfile.Account__c=account;
 			//@frpanico 06/08 added CaCode
 			
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
@@ -1191,7 +1192,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			Attachment testAttachment=new Attachment();
 			testAttachment.Name='test';
-			testAttachment.ParentId=Account;
+			testAttachment.ParentId=account;
 			testAttachment.Body=tempBlob;
 
 			tstAttachmentList.add(testAttachment);
@@ -1300,7 +1301,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return campaignMemberAssigmentList;
 	}
 
-	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
+	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id campaingMemberAssigmentId, String processingType, Decimal percentageAllocation){
 
 		List<CampaignMemberAssigmentItem__c> campaignMemberAssigmentItemList=new List<CampaignMemberAssigmentItem__c>();
 
@@ -1309,9 +1310,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			CampaignMemberAssigmentItem__c cma=new CampaignMemberAssigmentItem__c();
 
 			cma.Agency__c=accountId;
-			cma.CampaingMemberAssigment__c=CampaingMemberAssigmentId;
-			cma.PercentageAllocation__c=PercentageAllocation;
-			cma.ProcessingType__c=ProcessingType;
+			cma.CampaingMemberAssigment__c=campaingMemberAssigmentId;
+			cma.PercentageAllocation__c=percentageAllocation;
+			cma.ProcessingType__c=processingType;
 
 			campaignMemberAssigmentItemList.add(cma);
 		}
@@ -1325,7 +1326,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
-	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
+	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id campaignId){
 
 		List<CampaignMemberStatus> campaignMemberStatusList=new List<CampaignMemberStatus>();
 
@@ -1334,7 +1335,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			CampaignMemberStatus cpms=new CampaignMemberStatus();
 
 			cpms.Label='Test Label';
-			cpms.CampaignId=CampaignId;
+			cpms.CampaignId=campaignId;
 			cpms.IsDefault=true;
 
 			campaignMemberStatusList.add(cpms);
@@ -1458,7 +1459,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return psa;
 	}
 
-	public static List<ContentDocumentLink> createContentDocumentLink(Integer Amount, Boolean doInsert, Id OpportunityId, Id ContentDocId){
+	public static List<ContentDocumentLink> createContentDocumentLink(Integer amount, Boolean doInsert, Id opportunityId, Id contentDocId){
 
 		List<ContentDocumentLink> contentDocLinkList=new List<ContentDocumentLink>();
 
@@ -1466,8 +1467,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			ContentDocumentLink contentDocLink=new ContentDocumentLink();
 
-			contentDocLink.LinkedEntityId=OpportunityId;
-			contentDocLink.ContentDocumentId=ContentDocId;
+			contentDocLink.LinkedEntityId=opportunityId;
+			contentDocLink.ContentDocumentId=contentDocId;
 			contentDocLink.ShareType='V';
 
 			contentDocLinkList.add(contentDocLink);
@@ -1481,7 +1482,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return contentDocLinkList;
 	}
 
-	public static List<FileTemplate__c> createFileTemplate(Integer Amount, Boolean doInsert){
+	public static List<FileTemplate__c> createFileTemplate(Integer amount, Boolean doInsert){
 
 		List<FileTemplate__c> ftList=new List<FileTemplate__C>();
 
@@ -1507,7 +1508,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return ftList;
 	}
 
-	public static List<FileTemplateColumn__c> createFileTemplateColumn(Integer Amount, Boolean doInsert, Id fileTemplateId){
+	public static List<FileTemplateColumn__c> createFileTemplateColumn(Integer amount, Boolean doInsert, Id fileTemplateId){
 
 		List<FileTemplateColumn__c> ftcList=new List<FileTemplateColumn__c>();
 
@@ -1600,7 +1601,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static void createJsonPayload(){
-		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload=HDT_LC_DocumentalConfigController.controllerHandler();
+
+		HDT_LC_DocumentalConfigController.controllerHandler();
+
 	}
 
 	public static void createDriverJson(){
@@ -1827,7 +1830,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 insert causalCodeConfig;
 	 }*/
 	 
-	public static List<AccountShare> createAccountShare(Integer Amount, Boolean doInsert, Id AccountId, Id UserOrGroupId){
+	public static List<AccountShare> createAccountShare(Integer amount, Boolean doInsert, Id accountId, Id userOrGroupId){
 
 
 		List<AccountShare> accShareList=new List<AccountShare>();
@@ -1839,9 +1842,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			AccountShare accShare=new AccountShare();
 
 
-			accShare.AccountId=AccountId;
+			accShare.AccountId=accountId;
 
-			accShare.UserOrGroupId=UserOrGroupId;
+			accShare.UserOrGroupId=userOrGroupId;
 
 			accShare.AccountAccessLevel='Edit';
 
@@ -1976,7 +1979,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return fubProcessingList;
 	}
 
-	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id FubProcessingId) {
+	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id fubProcessingId) {
 
 		List<FUBProcessingItem__c> fubProcessingItemList = new List<FUBProcessingItem__c>();
 
@@ -1984,7 +1987,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			FUBProcessingItem__c fubProcessingItem = new FUBProcessingItem__c(
 				Campaign__c = campaignId,
-            	FUBProcessing__c = FubProcessingId
+            	FUBProcessing__c = fubProcessingId
 			);
 
 			fubProcessingItemList.add(fubProcessingItem);
@@ -2537,6 +2540,28 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return comfQualityCallList;
 	}
 
+	public static List<ScriptConfig__c> createScriptConfig (Integer amount, Boolean doInsert) {
+
+		List<ScriptConfig__c> createScriptConfigList = new List<ScriptConfig__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ScriptConfig__c sc = new ScriptConfig__c();
+			sc.Name = 'Hera';
+			sc.ScriptType__c = 'Processo';	
+			
+			createScriptConfigList.add(sc);
+		}
+
+		if (doInsert){
+
+			insert createScriptConfigList;
+		}
+
+		return createScriptConfigList;
+}
+
+
 
 	public static List<BrandSalesCompany__c> createBrandSalesCompany (Integer amount, Boolean doInsert) {
 
@@ -2666,7 +2691,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			pfs.add(new PercentageRulesForAssigningVisits__c(name=name, VisitAssignmentRules__c = visitAssignmentRulesId));
 		}
 
-		if (doInsert) insert pfs;
+		if (doInsert) {
+			insert pfs;
+		}
 
 		return pfs;
 	}
@@ -2866,6 +2893,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
         return templates;
     }
 	
+
 	public static List<Asset> createAsset(Integer amount, Boolean doInsert, String companyOwner) {
 
 		List<Asset> assetList = new List<Asset>();
@@ -3015,4 +3043,65 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return salePartnerCommunity;
 	}
+	
+	/**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityAction method
+     * @history
+     * @Created 07/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityAction__c> createActivityAction(Integer amount, Boolean doInsert, Id templateId) {
+        
+        List<wrts_prcgvr__ActivityAction__c> actions = new List<wrts_prcgvr__ActivityAction__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityAction__c action = new wrts_prcgvr__ActivityAction__c(
+                wrts_prcgvr__ActivityTemplate__c = templateId
+            );
+            
+            actions.add(action);
+        }
+        
+        if (doInsert){
+            
+            insert actions;
+        }
+        
+        return actions;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDiscardAnnullmentRule method
+     * @history
+     * @Created 07/10/2021
+     * Modified By:
+     **/
+    public static List<DiscardAnnullmentRule__c> createDiscardAnnullmentRule(Integer amount, Boolean doInsert, String parentObject) {
+        
+        List<DiscardAnnullmentRule__c> rules = new List<DiscardAnnullmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            DiscardAnnullmentRule__c rule = new DiscardAnnullmentRule__c(
+                ActivityType__c = 'ActivityTypeTest',
+                ControllingField__c = 'ControllingFieldTest',
+                ControllingValue__c = 'ControllingValueTest',
+                ParentObject__c = parentObject,
+                ProcessField__c = 'ProcessFieldTest',
+                ProcessValue__c = 'ProcessValueTest'
+            );
+            
+            rules.add(rule);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
 }
