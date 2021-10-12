@@ -104,7 +104,7 @@ public class HDT_LC_LastBillTst {
         Map<String,String> resultDes = (Map<String,String>) JSON.deserialize(result, Map<String,String>.class);
         
         String outcome = (String) resultDes.get('outcome');
-        String importo = (String) resultDes.get('importo');
+        String importo = (String) resultDes.get('amount');
         
         // result is the return value of the callback
         System.assert('OK'.equalsIgnoreCase(outcome), 'Outcome Non OK');
