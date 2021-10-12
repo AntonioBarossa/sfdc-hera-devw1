@@ -1,9 +1,11 @@
 import { track, LightningElement, api, wire } from 'lwc';
 import getUrlNameDocumentLink from '@salesforce/apex/HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink';
+import getExtensionFile from '@salesforce/apex/HDT_LC_DownloadAttachmentAzure.getExtensionFile';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';  //Modifica>>> marco.arci@webresults.it 22/09/21
 export default class Fdt_Alessio_test extends LightningElement {
     @track searchKey= '';
     @track base_url = 'https://archiviazione.azurewebsites.net/sbldownload/';
+    @track extension = false;       //Modifica 12/10/21 marco.arci@webresults.it true= cliccabile, false= non cliccabile
 
     @api recordId;
 
@@ -77,7 +79,13 @@ export default class Fdt_Alessio_test extends LightningElement {
     }
     //END Modifica>>> marco.arci@webresults.it 22/09/21
 
+    //Strat>>> Modifica 12/10/21 marco.arci@webresults.it chiamata ad apex se l'estensione è url o meno (Url=flase, else=true)
+    async checkExtensionForButtonType(){
+        this.extension = await getExtensionFile({rId:this.recordId});
+    }
+    //End>>> Modifica 12/10/21 marco.arci@webresults.it chiamata ad apex se l'estensione è url o meno (Url=flase, else=true)
+
     connectedCallback(){
-        
+        this.checkExtensionForButtonType();  //>>> Modifica 12/10/21 marco.arci@webresults.it chiamata metodo per scelta tipo pulsante
     }
 }

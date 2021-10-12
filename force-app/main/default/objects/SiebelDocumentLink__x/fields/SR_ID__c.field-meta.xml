@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PAR_ROW_ID_ORDER__c</fullName>
-    <description>PAR_ROW_ID_ORDER</description>
-    <externalDeveloperName>PAR_ROW_ID_ORDER</externalDeveloperName>
+    <fullName>SR_ID__c</fullName>
+    <description>Riferimento alla RDS</description>
+    <externalDeveloperName>SR_ID</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>RDO</label>
+    <label>RDS</label>
     <length>15</length>
-    <referenceTo>SiebelRdo__x</referenceTo>
+    <referenceTo>SiebelRds__x</referenceTo>
     <relationshipLabel>Documenti</relationshipLabel>
-    <relationshipName>SiebelDocumentLink</relationshipName>
+    <relationshipName>Documenti</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

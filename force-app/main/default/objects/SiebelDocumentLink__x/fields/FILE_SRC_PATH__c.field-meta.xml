@@ -8,8 +8,6 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Percorso risorsa</label>
-    <length>255</length>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Url</type>
 </CustomField>
