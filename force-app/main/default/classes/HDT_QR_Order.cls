@@ -513,7 +513,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckDescription__c,
             IncomingCreditCheckResult__c,
             OutgoingCreditCheckResult__c,
-            OrderReference__c
+            OrderReference__c,
+            ProcessType__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -712,7 +713,8 @@ public inherited sharing class HDT_QR_Order {
             Channel__c,
             FriendCode__c,
             CampaignCode__c,
-            CreatedBy__c
+            CreatedBy__c,
+            CreatedDate
             FROM
             Order
             WHERE AccountId = :accountId
