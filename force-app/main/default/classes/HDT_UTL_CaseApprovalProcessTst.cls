@@ -24,12 +24,24 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        
+        //CASE PHASE MANAGEMENT ENABLE
+        
+        
+        //CASE - INSERT
+        Case myCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
+        
+        insert myCase;
+        
+        
+        //CASE UPDATING
+        'In Attesa Approvazione'
+        update myCase
         
         //TESTING
         Test.startTest();
         try{
-            HDT_UTL_CaseApprovalProcess.submitForApproval(caseList);
+            HDT_UTL_CaseApprovalProcess.submitForApproval(new List<Case>{myCase});
         } catch (DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
         }

@@ -149,6 +149,13 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_AUTOLETTURA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA).getRecordTypeId();
+    
+    //@anbuzzi 12/09 Case RecordType PAGAMENTI - PIANO RATEIZZAZIONE
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_PAG_PIANORATEIZZAZIONE = 'HDT_RT_PianoRateizzazione';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_PAG_PIANORATEIZZAZIONE =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_PAG_PIANORATEIZZAZIONE).getRecordTypeId();
 
     //Case RecordType Generiche Attivazioni
     @AuraEnabled
