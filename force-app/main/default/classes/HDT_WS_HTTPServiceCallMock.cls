@@ -90,37 +90,38 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                             res.setStatusCode(404);
                         }
         
+                    } when 'postSlotRequest' {
+
+                        HDT_WS_RecallMeResponse dataresponse = new HDT_WS_RecallMeResponse(); 
+                        List<HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap> reslt= new List<HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap>(); 
+                        HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap resWrap= new HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap();  
+                        resWrap.startTime = Long.valueOf(String.valueOf(System.now().getTime()));
+                        resWrap.endTime = Long.valueOf(String.valueOf(System.now().getTime()));
+                        resWrap.availability = 9;
+                        reslt.add(resWrap);
+                        dataresponse.result = reslt;
+                        dataresponse.status = 'success';
+                        if (successfullReturn) {
+                            body = JSON.serialize(dataresponse);
+                            res.setStatusCode(200);
+                            res.setBody(body);
+                        } else {
+                            res.setStatusCode(404);
+                        }
+
+                    } when 'postAppointment' {
+
+                        if (successfullReturn) {
+                            res.setStatusCode(200);
+                            res.setStatus('success'); 
+                        }else {
+                            res.setStatusCode(404);
+                        }
+
                     } when else {
         
                         res.setStatusCode(404);
                         
-                    }
-                }
-                if (wsc.Name == 'postSlotRequest') {
-                    HDT_WS_RecallMeResponse dataresponse = new HDT_WS_RecallMeResponse(); 
-                    List<HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap> reslt= new List<HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap>(); 
-                    HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap resWrap= new HDT_WS_RecallMeResponse.HDT_WS_RecallMeResponseWrap();  
-                    resWrap.startTime = Long.valueOf(String.valueOf(System.now().getTime()));
-                    resWrap.endTime = Long.valueOf(String.valueOf(System.now().getTime()));
-                    resWrap.availability = 9;
-                    reslt.add(resWrap);
-                    dataresponse.result = reslt;
-                    dataresponse.status = 'success';
-                    if (successfullReturn) {
-                        body = JSON.serialize(dataresponse);
-                        res.setStatusCode(200);
-                        res.setBody(body);    
-                    } else {
-                        res.setStatusCode(404);
-                    }
-                }
-                    
-                if(wsc.Name == 'postAppointment'){
-                    if (successfullReturn) {
-                        res.setStatusCode(200);
-                        res.setStatus('success'); 
-                    }else {
-                        res.setStatusCode(404);
                     }
                 }
             }
