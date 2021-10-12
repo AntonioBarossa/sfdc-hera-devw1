@@ -69,23 +69,44 @@ public class HDT_LC_LastBillTst {
         system.assert(requests.size() == 1, 'getRequests did not work correctly');
         //system.assert(requests.get(controller.requestLabel) != null);
         
+        
+        //PREPARAZIONE RESPONSE BODY
+        Map<String, Object> mySecondoLivelloMap = new Map<String, Object>();
+        mySecondoLivelloMap.put('settoreMerceologico', 'Gas');
+        
+        
+        List<Object> secondoLivelloList = new List<Object>();
+        secondoLivelloList.add(mySecondoLivelloMap);
+        
+        Map<String, Object> myPrimoLivelloMap = new Map<String, Object>();
+        myPrimoLivelloMap.put('secondoLivelloInformativo', secondoLivelloList);
+        myPrimoLivelloMap.put('residuo', 10.5);
+        myPrimoLivelloMap.put('importo', 21.0);
+        myPrimoLivelloMap.put('numeroFattura', 10203040);
+        myPrimoLivelloMap.put('dataScadenza', Date.today().addDays(10));
+        
+        List<Object> myData = new List<Object>{myPrimoLivelloMap};
+        
+        //BODY MAP
+        Map<String, Object> bodyResponse = new Map<String, Object>();
+        bodyResponse.put('data', myData);
+        
         // Perform mock callout 
         // (i.e. skip the callout and call the callback method)
-        
         HttpResponse response = new HttpResponse();
-        response.setBody('Mock response body');
+        response.setBody(JSON.serialize(bodyResponse));//RESPONSE DEVE ESSERE Map<String, Object>
         
         // Set the fake response for the continuation
         Test.setContinuationResponse('Continuation-1', response);
         
         // Invoke callback method
-        Object result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);
+        String result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);
+        resultDes resultDes = (Map<String,String>) JSON.deserializeUntyped(result);
+        String outcome = (String) resultDes.get('outcome');
         
         // result is the return value of the callback
-        System.assertEquals(null, result, 'invokeContinuationMethod did not work correctly');
-        // Verify that the controller's result variable
-        //   is set to the mock response.
-        //System.assertEquals('Mock response body', controller.result);
+        System.assert('OK'.equalsIgnoreCase(outcome), 'invokeContinuationMethod did not work correctly');
+        
     }
 
 }
