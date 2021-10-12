@@ -152,7 +152,7 @@ public class HDT_LC_LastBillTst {
             //SETTING UP RESPONSE BODY
             Map<String, Object> singleObjMap = new Map<String, Object>();
             singleObjMap.put('numeroFattura', 'FakeBillNumber');
-            singleObjMap.put('dataEmissione', JSON.serialize(Date.today().addDays(-1)));
+            singleObjMap.put('dataEmissione', JSON.serialize(Date.today()));
             singleObjMap.put('numeroFattura', 'Acantho S.p.A');
             
             
