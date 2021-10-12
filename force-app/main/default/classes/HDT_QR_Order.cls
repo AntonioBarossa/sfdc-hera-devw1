@@ -513,7 +513,8 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckDescription__c,
             IncomingCreditCheckResult__c,
             OutgoingCreditCheckResult__c,
-            OrderReference__c
+            OrderReference__c,
+            SBQQ__Quote__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
