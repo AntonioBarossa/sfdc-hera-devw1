@@ -452,4 +452,21 @@ static void testHandleSalesProcessCategoryAnnullamento1() {
 
 }
 
+@isTest
+static void updateServicePointTest() {
+    Test.startTest(); 
+    try {
+      HDT_SRV_SalesHandler.updateServicePoint(new ServicePoint__c());
+    } catch (Exception e) {
+      System.assertEquals(true,e.getMessage().contains('MISSING_ARGUMENT'),'The Id is missing');
+    }
+
+    ServicePoint__c servicePoint=[SELECT Id,ServicePointCode__c,IsMigrated__c FROM ServicePoint__c LIMIT 1];
+    servicePoint.IsMigrated__c=true;
+    HDT_SRV_SalesHandler.updateServicePoint(servicePoint);
+    Test.stopTest();
+
+    System.assertNotEquals(false, [SELECT IsMigrated__c FROM ServicePoint__c WHERE Id=:servicePoint.Id].IsMigrated__c,'The service point has been successfully updated!');
+}
+
 }
