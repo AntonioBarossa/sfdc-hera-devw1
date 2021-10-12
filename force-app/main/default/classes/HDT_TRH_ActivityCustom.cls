@@ -8,6 +8,14 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
 
     public override void beforeInsert(){
+        //Start>>> modifica marco.arci@webresults.it 11/10/21
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+        wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+        ActivityIntegration.handleStatusChange(new Map<String, Object>{
+            'newActivities' => Trigger.new,
+            'oldActivities' => Trigger.old
+        });
+        //End>>> modifica marco.arci@webresults.it 11/10/21
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_Scarti.setLookupFields(trigger.new);
     }
@@ -18,6 +26,14 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
     
     public override void beforeUpdate(){
         System.debug('beforeUpdate');
+        //Start>>> modifica marco.arci@webresults.it 11/10/21
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+        wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+        ActivityIntegration.handleStatusChange(new Map<String, Object>{
+            'newActivities' => Trigger.new,
+            'oldActivities' => Trigger.old
+        });
+        //End>>> modifica marco.arci@webresults.it 11/10/21
         // HRAWRM-672 22/09/2021 EC
         //wrts_prcgvr__Status__c='Chiusa';
         String varStatus='Chiusa';

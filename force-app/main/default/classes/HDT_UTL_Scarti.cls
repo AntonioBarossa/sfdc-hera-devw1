@@ -89,19 +89,19 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         //l'unica via, per ora, sembra quella di mettere il nome del template nel method. ES: 'checkActivityCreation___CBS_ATT006__AMMISSIBILITA_KO'
         //di conseguenza lo switch è poco funzionale, perchè bisognerebbe scrivere n righe per quanti template vengono rigchiesti... è anche poco manutenibile
         //dinamicamente, con substring, si vede il prefisso (checkActivityCreation) e poi si estrae il nome del template dalle parentesi tonde
-		boolean check;
+		boolean activityCreationOutcome;
         try{
-            check = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
+            activityCreationOutcome = checkActivityCreation((Id)record.get('Id'), method.substringAfter('___'));
         } catch(Exception e){
             system.debug(e.getMessage());
             system.debug(e.getStackTraceString());
         }
 		
 		if(method.startsWith('checkActivityCreation')){
-            return !check;
+            return activityCreationOutcome;
         }
         if(method.startsWith('checkAnnullment')){
-            return check;
+            return !activityCreationOutcome;
         }
         return null;
 	}
@@ -290,30 +290,29 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
                 toInsert.add(newAct);
             }else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.get('ATTIVITA')) && !String.isBlank(curData.get('RECORD_ID'))){//va bene controllare solo su una mappa, tanto i keyset sono uguali
+                wrts_prcgvr__Activity__c newAct;
                 if('sales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
-                    dataForSalesHandlingByTemplateCode.put(curData.get('RECORD_ID'), curData);
+                    newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA')));
                 }else if('postsales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
-                    //String templateCode = templatesMap.get(TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
-                    //List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curData.get('RECORD_ID')});
-                    wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA')));
-                    for(String curActField : ANONIMAMAPPING.keySet()){
-                        if('StartDate__c'.equalsIgnoreCase(curActField)){
-                            //activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
-                            newAct.put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
-                        }else{
-                            //activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
-                            newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
-                        }
-                    }
-                    //toInsert.addAll(activities);
-                    toInsert.add(newAct);
+                    newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA')));
                 }
+                for(String curActField : TRACCIAMENTOMAPPING.keySet()){
+                    switch on curActField{
+                        when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
+                        when 'DiscardCount__c'{ newAct.put(curActField, Decimal.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
+                        when else{ newAct.put(curActField, curData.get(TRACCIAMENTOMAPPING.get(curActField))); }
+                    }
+                }
+                toInsert.add(newAct);
             }
         }
-        
+        /*
         System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByTemplateCode' + dataForSalesHandlingByTemplateCode);
         if(!dataForSalesHandlingByTemplateCode.keySet().isEmpty()){
-            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber FROM Order WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()]);
+            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber 
+                                                        FROM Order 
+                                                        WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()
+                                                        OR Id IN :dataForSalesHandlingByTemplateCode.keySet()]);
             for(Order curOrder : orders.values()){
                 Map<String,String> curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
                 //String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
@@ -332,7 +331,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 toInsert.add(newAct);
             }
         }
-        
+        */
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
@@ -419,19 +418,18 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return Boolean
     */
     public static Boolean checkActivityCreation(Id recordId, String templateName){
-        System.debug('checkActivityCreation_start_' + recordId + '_' + templateName);
+        System.debug('checkActivityCreation start recordId: ' + recordId + '; templateName: ' + templateName);
         Map<String, wrts_prcgvr__ActivityTemplate__c> templateMap = getTemplatesMapByName(new Set<String>{templateName});
         if(!templateMap.isEmpty()){
             List<wrts_prcgvr__ActivityAction__c> actions = [SELECT Id, wrts_prcgvr__Field__c, wrts_prcgvr__Value__c 
                                                             FROM wrts_prcgvr__ActivityAction__c 
                                                             WHERE wrts_prcgvr__ActivityTemplate__c = :templateMap.get(templateName).Id
+                                                            AND wrts_prcgvr__Field__c = '{!Type__c}'
                                                             WITH SECURITY_ENFORCED];
-            String activityType;
-            for(wrts_prcgvr__ActivityAction__c curAction : actions)
-                if('{!Type__c}'.equalsIgnoreCase(curAction.wrts_prcgvr__Field__c)){
-                    activityType = curAction.wrts_prcgvr__Value__c;
-                }
-            return checkDiscardAnnullmentRule(recordId, activityType);
+            if(!actions.isEmpty()){
+            	String activityType  = actions.get(0).wrts_prcgvr__Value__c;
+            	return !checkDiscardAnnullmentRule(recordId, activityType);
+            }
         }
         return false;
     }
@@ -445,6 +443,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @return boolean : true if it has to do annullment; false instead
     */
     public static boolean checkDiscardAnnullmentRule(Id recordId, String activityType){
+        System.debug('checkDiscardAnnullmentRule start recordId: ' + recordId + '; activityType: ' + activityType);
         Boolean outcome = false;
         String parentObj;
         if(Schema.Case.SObjectType == recordId.getSobjectType()){ 
@@ -460,6 +459,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                 AND ActivityType__c = :activityType
                                                 WITH SECURITY_ENFORCED];
 		
+        System.debug('checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));
         if(!rules.isEmpty()){
             String logicFields = '';
             //START>>>modifica marco.arci@webresults.it
@@ -479,8 +479,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 List<Case> parentCase = Database.query(queryString);
                 if(!parentCase.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
-                        if(curRule.ProcessValue__c.equalsIgnoreCase(String.valueOf(parentCase.get(0).get(curRule.ProcessField__c)))
-                            && String.valueOf(parentCase.get(0).get(curRule.ControllingField__c)).containsIgnoreCase(curRule.ControllingValue__c)){
+                        String parentCaseProcField = String.valueOf(parentCase.get(0).get(curRule.ProcessField__c));
+                        String parentCaseContrField = String.valueOf(parentCase.get(0).get(curRule.ControllingField__c));
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(parentCaseProcField) && parentCaseContrField.containsIgnoreCase(curRule.ControllingValue__c)){
+        					System.debug('checkDiscardAnnullmentRule found rule parentCaseProcField: ' + parentCaseProcField);
+        					System.debug('checkDiscardAnnullmentRule found rule parentCaseContrField: ' + parentCaseContrField);
+        					System.debug('checkDiscardAnnullmentRule found rule curRule.ProcessValue__c: ' + curRule.ProcessValue__c);
+        					System.debug('checkDiscardAnnullmentRule found rule curRule.ControllingField__c: ' + curRule.ControllingField__c);
                             outcome = true;
                             break;
                         }
@@ -493,21 +498,21 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 List<Order> parentOrder = Database.query(queryString);
                 if(!parentOrder.isEmpty()){
                     for(DiscardAnnullmentRule__c curRule : rules){
-
-                        String procField = String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c));
-                        String contrField = String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c));
-
-                        if(String.isNotBlank(procField) && String.isNotBlank(contrField) 
-                            && curRule.ProcessValue__c?.equalsIgnoreCase(contrField)
-                            && contrField?.containsIgnoreCase(curRule.ControllingValue__c)
-                            ){
+                        String parentOrderProcField = String.valueOf(parentOrder.get(0).get(curRule.ProcessField__c));
+                        String parentOrderContrField = String.valueOf(parentOrder.get(0).get(curRule.ControllingField__c));
+                        if(curRule.ProcessValue__c.equalsIgnoreCase(parentOrderProcField) && parentOrderContrField.containsIgnoreCase(curRule.ControllingValue__c)){
+                            System.debug('checkDiscardAnnullmentRule found rule parentOrderProcField: ' + parentOrderProcField);
+        					System.debug('checkDiscardAnnullmentRule found rule parentOrderContrField: ' + parentOrderContrField);
+        					System.debug('checkDiscardAnnullmentRule found rule curRule.ProcessValue__c: ' + curRule.ProcessValue__c);
+        					System.debug('checkDiscardAnnullmentRule found rule curRule.ControllingField__c: ' + curRule.ControllingField__c);
                             outcome = true;
-                            break;  
+                            break;
                         }
                     }
                 }
             }
         }
+        System.debug('checkDiscardAnnullmentRule outcome: ' + outcome);
         return outcome;
     }
 

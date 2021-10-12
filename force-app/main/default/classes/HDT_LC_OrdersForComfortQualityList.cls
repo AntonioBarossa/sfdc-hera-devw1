@@ -68,8 +68,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,
-            Status__c = 'Esitata'
-            // ContactResult__c	 = causalQuality
+            Status__c = 'Esitata',
+            ContactResult__c	 = causalQuality
         ));
     }
 
@@ -87,8 +87,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,
-            Status__c = 'Esitata'
-            // ContactResult__c	 = 'Annullato'
+            Status__c = 'Esitata',
+            ContactResult__c	 = 'Annullato'
         ));
     }
 }

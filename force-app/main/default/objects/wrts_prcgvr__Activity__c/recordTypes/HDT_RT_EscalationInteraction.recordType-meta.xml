@@ -172,17 +172,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>ContactResult__c</picklist>
-        <values>
-            <fullName>Cliente irreperibile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ok contattato</fullName>
-<default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
             <fullName>Anonima</fullName>
@@ -1353,19 +1342,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Analisi situazione su CRM per gestione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Assistenza procedurale e gestione pratiche</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Attività concordate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Autolettura inferiore lettura migrazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1393,22 +1374,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Copia contratto su CRM precedente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione pratiche in volo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Knowledge - segnalazione articoli</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagamenti su CRM precedente</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Pratica gestita ma problema non risolto</fullName>
             <default>false</default>
         </values>
@@ -1418,10 +1383,6 @@
         </values>
         <values>
             <fullName>TCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica fatturazione su CRM precedente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
