@@ -11,7 +11,7 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
     
     //TESTS
     
-
+    //submitForApproval
     @isTest
     private static void submitForApprovalTest(){
         
@@ -26,15 +26,14 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-
+        
         //TESTING
         Test.startTest();
-        Try{
+        try{
             HDT_UTL_CaseApprovalProcess.submitForApproval(caseList);
-            
-        }catch(DmlException e) {
+        } catch (DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
-        }        
+        }
         Test.stopTest();
         
         //ASSERTS
