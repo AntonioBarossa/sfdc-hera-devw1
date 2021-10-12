@@ -16,7 +16,7 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
         Test.startTest();
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
         List<SObject> lstSobj = HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory(tCase.Id, 'Case');
-        System.assert(lstSobj.size() > -1);
+        System.assert(lstSobj.size() > -1, 'getDocumentalPhaseHistoryCase did not work correctly');
         Test.stopTest();
     }
 
@@ -25,7 +25,7 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
         Test.startTest();
         Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
         List<SObject> lstSobj = HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory(tOrder.Id, 'Order');
-        System.assert(lstSobj.size() > -1);
+        System.assert(lstSobj.size() > -1, 'getDocumentalPhaseHistoryOrder did not work correctly');
         Test.stopTest();
     }
     
@@ -35,11 +35,11 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
         //TEST WITH ID
         Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
         String result = HDT_LC_DocumentalPhaseHistory.getParentOrderId(tOrder.Id);
-        System.assert(String.isNotBlank(result));
+        System.assert(String.isNotBlank(result), 'getParentOrderId did not work correctly');
         
         //TEST EMPTY
         result = HDT_LC_DocumentalPhaseHistory.getParentOrderId('');
-        System.assert(String.isBlank(result));
+        System.assert(String.isBlank(result), 'getParentOrderId did not work correctly');
         
     }
 
