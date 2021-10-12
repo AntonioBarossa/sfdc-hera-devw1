@@ -11,7 +11,11 @@ public class HDT_LC_ContactSelectionTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         contactList.addAll(HDT_UTL_DataFactoryTst.createContact(1, true, accList[1].Id));
-
+        List<Individual> inds = HDT_UTL_DataFactoryTst.createIndividual(1,true);
+            Id individualId = inds[0].id;
+        List<ContactPointEmail> cpeList = HDT_UTL_DataFactoryTst.createContactPointEmail(1, true, individualId);
+        contactList[0].IndividualId = individualId;
+        update contactList;
     }
 
     public static testMethod void testGetListRecords() {
@@ -99,5 +103,37 @@ public class HDT_LC_ContactSelectionTst {
         System.assertEquals(valuesMap.get('Id'), acrList[0].ContactId, 'value of parameter is matching');
 
         Test.stopTest();
+    }
+
+    @IsTest
+    public static void getSolLogin(){
+
+        //query entity
+        Contact solContact = [SELECT Id FROM Contact WITH SECURITY_ENFORCED LIMIT 1];
+        ContactPointEmail cpe = [SELECT Type__c FROM ContactPointEmail LIMIT 1];
+        //update
+        cpe.Type__c = 'E-mail SOL';
+        update cpe;
+        //test
+        Test.startTest();
+
+        //normal case
+        HDT_QR_SolManager sm = new HDT_QR_SolManager();
+        String result = sm.getSolLogin(solContact.Id);
+        //assert
+        System.assertEquals('sales@force.com', result, 'result != sales@force.com');
+
+        //case contactId == null
+        String result2 = sm.getSolLogin(null);
+        //assert
+        System.assertEquals('', result2, 'result != \'\'');
+
+        //case emails.isEmpty()
+        String result3 = sm.getSolLogin('testId');
+        //assert
+        System.assertEquals('', result3, 'result != \'\'');
+
+        Test.stopTest();
+        
     }
 }
