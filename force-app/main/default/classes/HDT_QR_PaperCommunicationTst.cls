@@ -1,3 +1,8 @@
+/**
+* @author Andrea Arosio (andrea.arosio@webresults.it)
+* @date 12/10/2021
+* @description Test Class for HDT_QR_PaperCommunication
+*/
 @isTest
 public with sharing class HDT_QR_PaperCommunicationTst {
     @testSetup
