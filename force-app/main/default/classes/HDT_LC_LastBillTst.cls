@@ -80,10 +80,10 @@ public class HDT_LC_LastBillTst {
         
         Map<String, Object> myPrimoLivelloMap = new Map<String, Object>();
         myPrimoLivelloMap.put('secondoLivelloInformativo', secondoLivelloList);
-        myPrimoLivelloMap.put('residuo', 10.5);
-        myPrimoLivelloMap.put('importo', 21.0);
-        myPrimoLivelloMap.put('numeroFattura', 10203040);
-        myPrimoLivelloMap.put('dataScadenza', Date.today().addDays(10));
+        myPrimoLivelloMap.put('residuo', '10.5');
+        myPrimoLivelloMap.put('importo', '21.0');
+        myPrimoLivelloMap.put('numeroFattura', '10203040');
+        myPrimoLivelloMap.put('dataScadenza', JSON.serialize(Date.today().addDays(10)));
         
         List<Object> myData = new List<Object>{myPrimoLivelloMap};
         
@@ -102,10 +102,13 @@ public class HDT_LC_LastBillTst {
         // Invoke callback method
         String result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);
         Map<String,String> resultDes = (Map<String,String>) JSON.deserializeUntyped(result);
+        
         String outcome = (String) resultDes.get('outcome');
+        String importo = (String) resultDes.get('importo');
         
         // result is the return value of the callback
-        System.assert('OK'.equalsIgnoreCase(outcome), 'invokeContinuationMethod did not work correctly');
+        System.assert('OK'.equalsIgnoreCase(outcome), 'Outcome Non OK');
+        System.assert('21.0'.equalsIgnoreCase(importo), 'Importo non 21.0');
         
     }
 
