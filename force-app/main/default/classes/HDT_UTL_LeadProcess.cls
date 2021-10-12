@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_LeadProcess {
     private static HDT_SRV_CampaignMember cmSrv= new HDT_SRV_CampaignMember();
     private static HDT_QR_Individual indvQr= new HDT_QR_Individual();
     private static HDT_QR_Lead leadQr= new HDT_QR_Lead();
+    private static HDT_SRV_ContentDocumentLink cdlSrv = new HDT_SRV_ContentDocumentLink();
     
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formCallback(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
@@ -497,9 +498,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
-                        cdl.LinkedEntityId = l.Id;
-                        cdl.ContentDocumentId = cvdl.contentDocumentId;
-                        Insert cdl;
+                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
                     }              
                     
                     responseField.fieldType = 'TEXT';
@@ -849,6 +848,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
                     indv.PrivacyMarketingChoiceDate__c = ('SI'.equalsIgnoreCase( indv.MarketingPrivacy__c) ||'NO'.equalsIgnoreCase( indv.MarketingPrivacy__c)  )?  Date.today():indv.PrivacyMarketingChoiceDate__c; //HRDTR-00_HRAWRM-803 01/10/2021

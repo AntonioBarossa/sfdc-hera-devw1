@@ -43,9 +43,9 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         List<Map<String,String>> resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assert(resultProcessed.size() > 0);
-        System.assertNotEquals(null, resultProcessed[0].get('label'));
-        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        System.assert(resultProcessed.size() > 0,'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('label'),'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('value'),'OK');
         
         
         //TEST BillingProfile__c
@@ -62,9 +62,9 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assert(resultProcessed.size() > 0);
-        System.assertNotEquals(null, resultProcessed[0].get('label'));
-        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        System.assert(resultProcessed.size() > 0,'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('label'),'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('value'),'OK');
         
         
         
@@ -83,9 +83,9 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assert(resultProcessed.size() > 0);
-        System.assertNotEquals(null, resultProcessed[0].get('label'));
-        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        System.assert(resultProcessed.size() > 0,'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('label'),'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('value'),'OK');
         
         
         //TESTING
@@ -101,9 +101,9 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assert(resultProcessed.size() > 0);
-        System.assertNotEquals(null, resultProcessed[0].get('label'));
-        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        System.assert(resultProcessed.size() > 0,'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('label'),'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('value'),'OK');
         
         
         
@@ -119,7 +119,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         //resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assertNotEquals(null, result);
+        System.assertNotEquals(null, result,'OK');
         
         
         
@@ -139,9 +139,9 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assert(resultProcessed.size() > 0);
-        System.assertNotEquals(null, resultProcessed[0].get('label'));
-        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        System.assert(resultProcessed.size() > 0,'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('label'),'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('value'),'OK');
         
         
         //TESTING
@@ -158,9 +158,9 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         resultProcessed = (List<Map<String,String>>) JSON.deserialize(result, List<Map<String,String>>.class);
         
         //ASSERTS
-        System.assert(resultProcessed.size() > 0);
-        System.assertNotEquals(null, resultProcessed[0].get('label'));
-        System.assertNotEquals(null, resultProcessed[0].get('value'));
+        System.assert(resultProcessed.size() > 0,'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('label'),'OK');
+        System.assertNotEquals(null, resultProcessed[0].get('value'),'OK');
         
         
         //else
@@ -176,7 +176,7 @@ public with sharing class HDT_SRV_InformativeManagerTst {
         result = myTstObj.getOptions(JSON.serialize(paramsMap));
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result,'KO');
         
     }
     

@@ -234,7 +234,11 @@ public with sharing class HDT_UTL_Constants {
     //Voltura Retroattiva Permission set
     @AuraEnabled
     public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
-
+    
+    //ProtocolManualActivities
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_PROTOCOLMANUALACTIVITIES = 'HDT_ProtocolManualActivities';
+    
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';

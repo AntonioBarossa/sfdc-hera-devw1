@@ -137,11 +137,35 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.ProductCode,
             Product2.Name,
             Product2.DescriptionSAP__c,
-            VASBillingMode__c
+            VASBillingMode__c,
+            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
             AND SBQQ__RequiredBy__c = null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 11-10-2021 
+    * @param quoteId 
+    * @param quoteLineId 
+    * @return List<Order> 
+    **/
+    public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id quoteLineId){
+        return [
+            SELECT
+            OrderId
+            FROM
+            OrderItem
+            WHERE
+            Order.SBQQ__Quote__c =:quoteId
+            AND SBQQ__QuoteLine__c =:quoteLineId
+            AND Order.ServicePoint__c!=null
             WITH SECURITY_ENFORCED
         ];
     }

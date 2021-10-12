@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>ChangeRecordType</excludeButtons>
+    <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>Edit</excludeButtons>
+    <excludeButtons>PrintableView</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
@@ -865,6 +869,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ASSET_NUM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ATTRIB_34__c</field>
             </layoutItems>
             <layoutItems>
@@ -1439,10 +1447,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ASSET_NUM__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_NUM_DOM_TCP__c</field>
             </layoutItems>
             <layoutItems>
@@ -1516,30 +1520,9 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <quickActionList>
-        <quickActionListItems>
-            <quickActionName>FeedItem.TextPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.ContentPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.MobileSmartActions</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.RypplePost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.LinkPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.PollPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems>
-    </quickActionList>
+    <quickActionList/>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>CREATED__c</fields>
         <fields>TODO_CD__c</fields>
@@ -1549,6 +1532,7 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>COD_ALLEGATO__c</fields>
         <fields>DisplayUrl</fields>
@@ -1558,6 +1542,7 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>DISPLAY_NAME__c</fields>
         <fields>CFG_STATE_CD__c</fields>
@@ -1566,6 +1551,14 @@
         <fields>NUM_VAL__c</fields>
         <fields>REQUIRED_FLG__c</fields>
         <relatedList>SiebelRdoAttribute__x.ORDER_ITEM_ID__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>ExternalId</fields>
+        <fields>FILE_NAME__c</fields>
+        <fields>FILE_EXT__c</fields>
+        <fields>CREATED__c</fields>
+        <relatedList>SiebelDocumentLink__x.PAR_ROW_ID_ORDER__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

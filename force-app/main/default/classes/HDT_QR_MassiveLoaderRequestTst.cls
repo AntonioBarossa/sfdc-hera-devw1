@@ -30,7 +30,7 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
 
         
         System.assertEquals(true, returnedValue.isEmpty(), 'Get Record for Import is found');
-        System.assertNotEquals(false, returnedValue.isEmpty());
+        System.assertNotEquals(false, returnedValue.isEmpty(), 'value of parameter is not matching');
 
         Test.stopTest();
     }

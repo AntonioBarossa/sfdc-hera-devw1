@@ -72,6 +72,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
           
         public override void afterUpdate(){
             System.debug('afterUpdate');
+            Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
             for (Lead tempLead :   (List<Lead> ) Trigger.New) {
 
                 if (tempLead.IndividualId==null&& mapOld.get(tempLead.id)!=null &&
@@ -206,6 +207,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         }
         public override void   beforeUpdate(){
             System.debug('HDT_TRH_Lead.beforeUpdate');
+            Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
             Set<String> setFiscalCodes = new Set<String>();
             Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
             List<Lead> listNew = trigger.new;
