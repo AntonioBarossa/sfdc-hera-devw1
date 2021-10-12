@@ -1,10 +1,13 @@
 /**@frpanico 12/10/2021
- * Test Class for HDT_SRV_VoltureChangeDispatcher
+ * Test Class for the class HDT_SRV_VoltureChangeManager
  */
-
 @IsTest
-public with sharing class HDT_SRV_VoltureChangeDispatcherTst 
-{
+public with sharing class HDT_SRV_VoltureChangeManagerTst {
+    
+    /**@frpanico 12/10/2021
+     * Covers only one test case to achieve target coverage
+     */
+
     @TestSetup
     static void setup()
     {
@@ -37,18 +40,12 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
 
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', recordTypeIdVolturaConSwitch, recordTypeNameVolturaConSwitch,'A','','','');
-    
     }
 
-    /**@frpanico 12/10/2021
-     * The on-top class covers only one test case.
-     * A full coverage of test cases can be found on "child" classes
-     */
-
     @IsTest
-    static void executeTst()
+    static void cloneOrderAndUpdateTst()
     {
-        HDT_SRV_VoltureChangeDispatcher voltureDispatcher = new HDT_SRV_VoltureChangeDispatcher();
+        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
         HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
 
         List<Order> orderList = [SELECT Id, 
@@ -81,10 +78,8 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         System.assertEquals(1, orderList.size(),'Order non trovato');
         System.assertEquals(2, orderItemList.size(),'OrderItmes non trovati');
 
-        Map<String,Object> argsMap = new Map<String,Object>{'method' => 'cloneOrder', 'sender' => orderList[0]};
-
         Test.startTest();
-        voltureDispatcher.execute(argsMap);
+        voltureManager.cloneOrderAndUpdate(orderList[0]);
         Test.stopTest();
 
         List<Order> newOrderList = [SELECT Id, ParentOrder__c, Phase__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
@@ -97,6 +92,5 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         System.assert(newOrderList[1].Phase__c == 'Annullato' || newOrderList[1].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
 
     }
-
 
 }

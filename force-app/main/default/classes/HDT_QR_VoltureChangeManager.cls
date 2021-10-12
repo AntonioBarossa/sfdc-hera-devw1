@@ -195,7 +195,8 @@ public with sharing class HDT_QR_VoltureChangeManager {
     }
 
     /* Get the activity template for the activity creation */
-    public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplate(String templateName)
+    /* Method seems to not be useful */
+    /*public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplate(String templateName)
     {
         SObjectAccessDecision securityDecision =
             Security.stripInaccessible(AccessType.READABLE, 
@@ -208,5 +209,5 @@ public with sharing class HDT_QR_VoltureChangeManager {
     
         return securityDecision.getRecords();
     }
-
+    */
 }
