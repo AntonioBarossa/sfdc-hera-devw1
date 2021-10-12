@@ -34,7 +34,7 @@ public class HDT_QR_ProductTst{
 
 		System.assertEquals('123', testProd.ProductCode, 'ProductCode not populated correctly');
 
-		System.assertNotEquals(null, testProd.ProductCode);
+		System.assertNotEquals(null, testProd.ProductCode, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}

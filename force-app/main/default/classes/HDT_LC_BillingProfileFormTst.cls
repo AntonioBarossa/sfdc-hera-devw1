@@ -19,11 +19,23 @@ static void makeData(){
 public static void testGetFormFields() {
     List<Account> accList = [SELECT Id FROM Account LIMIT 1];
 
+    Map<String,List<String>> result1 = new Map<String,List<String>>();
+    Map<String,List<String>> result2 = new Map<String,List<String>>();
+    Map<String,List<String>> result3 = new Map<String,List<String>>();
+
     Test.startTest();
-    HDT_LC_BillingProfileForm.getFormFields('Bollettino postale', accList[0].Id);
-    HDT_LC_BillingProfileForm.getFormFields('Bollettino', accList[0].Id);
-    HDT_LC_BillingProfileForm.getFormFields('RID', accList[0].Id);
+    result1 = HDT_LC_BillingProfileForm.getFormFields('Bollettino postale', accList[0].Id);
+    result2 = HDT_LC_BillingProfileForm.getFormFields('Bollettino', accList[0].Id);
+    result3 = HDT_LC_BillingProfileForm.getFormFields('RID', accList[0].Id);
     Test.stopTest();
+
+    System.assertEquals(result1 != null, true, 'Value of parameter is matching');
+    System.assertEquals(result2 != null, true, 'Value of parameter is matching');
+    System.assertEquals(result3 != null, true, 'Value of parameter is matching');
+    System.assertNotEquals(result1 != null, false, 'Value of parameter is not matching');
+    System.assertNotEquals(result2 != null, false, 'Value of parameter is not matching');
+    System.assertNotEquals(result3 != null, false, 'Value of parameter is not matching');
+
 }
 
 @isTest
