@@ -28,11 +28,26 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
+                <targetReference>Screen_Selez_Contr</targetReference>
             </connector>
             <label>Cluster Generiche Attivazioni</label>
         </rules>
     </decisions>
+    <dynamicChoiceSets>
+        <name>contracts</name>
+        <dataType>String</dataType>
+        <displayField>SAPContractCode__c</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <object>Contract</object>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
     <interviewLabel>HDT_FL_ContrattiBonusCommerciale {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ContrattiBonusCommerciale</label>
     <processMetadataValues>
@@ -58,9 +73,9 @@
         <name>Crea_Case</name>
         <label>Crea Case</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <connector>
-            <targetReference>createActitivy</targetReference>
+            <targetReference>Edit_Form</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -89,7 +104,7 @@
         <inputAssignments>
             <field>Contract__c</field>
             <value>
-                <elementReference>Contract</elementReference>
+                <elementReference>get_Contract.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -105,47 +120,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ServicePointCode__c</field>
+            <value>
+                <elementReference>get_Contract.ServicePoint__r.ServicePointCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type</field>
             <value>
                 <elementReference>ProcessType</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>createActitivy</name>
-        <label>createActitivy</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
-        <connector>
-            <targetReference>Edit_Form</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Account__c</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Case__c</field>
-            <value>
-                <elementReference>Crea_Case</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>getActivityRecordtype.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <stringValue>Approvazione Bonus Commerciale</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
@@ -184,10 +170,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>get_Contract</name>
+        <label>get Contract</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>contractid</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Generiche_Attivazioni</name>
         <label>Get RT Generiche Attivazioni</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getActivityRecordtype</targetReference>
@@ -208,7 +215,7 @@
         <name>getActivityRecordtype</name>
         <label>getActivityRecordtype</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case</targetReference>
@@ -236,7 +243,7 @@
         <name>Edit_Form</name>
         <label>Edit Form</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -315,6 +322,43 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Screen_Selez_Contr</name>
+        <label>Screen Selez Contr</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>get_Contract</targetReference>
+        </connector>
+        <fields>
+            <name>Selezione_Contratto</name>
+            <extensionName>c:hdtSelezFornituraFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>groupOptions</name>
+                <value>
+                    <stringValue>CONTRACT_BONUS_COMM</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>contractid</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
@@ -343,6 +387,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>contractid</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>ProcessType</name>

@@ -195,6 +195,9 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Order
                     WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
+            when 'CONTRACT_BONUS_COMM'{
+                records = [Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where AccountId =:searchString WITH SECURITY_ENFORCED];
+            }
             //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
                 Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name

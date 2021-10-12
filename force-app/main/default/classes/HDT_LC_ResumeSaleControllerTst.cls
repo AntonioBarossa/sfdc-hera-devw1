@@ -31,7 +31,7 @@ public with sharing class HDT_LC_ResumeSaleControllerTst{
 
 		System.assertEquals(sale, tSaleMap.get('sale'), 'Method return is not correct!');
 
-		System.assertNotEquals(null, tSaleMap.get('sale'));
+		System.assertNotEquals(null, tSaleMap.get('sale'), 'loadVendite did not work correctly');
 
 		Test.stopTest();
 	}
