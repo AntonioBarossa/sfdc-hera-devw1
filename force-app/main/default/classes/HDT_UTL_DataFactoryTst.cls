@@ -3004,4 +3004,32 @@ public with sharing class HDT_UTL_DataFactoryTst{
         
         return rules;
     }
+
+	/**
+     * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
+     * @date 12/10/2021
+     * @description createVocalOrderPublicConfirm Method
+     * @history Sabina Levonja - 12/10/2021– Created method
+     */
+	public static List<VocalOrderPublicConfirm__c> createVocalOrderPublicConfirm(Integer amount, Boolean doInsert,String status, Id order) {
+
+		List<VocalOrderPublicConfirm__c> vocalOrders = new List<VocalOrderPublicConfirm__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VocalOrderPublicConfirm__c voc = new VocalOrderPublicConfirm__c(
+				Order__c = order,
+				Status__c= status
+			);
+
+			vocalOrders.add(voc);
+		}
+
+		if (doInsert){
+
+			insert vocalOrders;
+		}
+
+		return vocalOrders;
+	}
 }
