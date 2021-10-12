@@ -1,6 +1,8 @@
 @isTest
 public class HDT_LC_LastBillTst {
-
+    
+    
+    //TEST SETUP
     @testSetup
     static void setup() {
         KpiTracking__c kpi = new KpiTracking__c();
@@ -12,9 +14,11 @@ public class HDT_LC_LastBillTst {
         kpi.LastBillLastUpdate__c = Date.today();
         insert kpi;
     }
-
+    
+    
+    //getData
     @isTest
-    static void getData(){
+    static void getDataTest(){
         
         Map<String,String> mapp = new Map<String,String>();
         mapp.put('outcome', 'OK');
@@ -33,9 +37,11 @@ public class HDT_LC_LastBillTst {
 		System.assertNotEquals(null, result,'getData did not work correctly');
 
     }
-
+    
+    
+    //updateKpiTracking
     @isTest
-    static void updateKpiTracking(){
+    static void updateKpiTrackingTest(){
 
         Map<String,String> mapping = new Map<String,String>();
         mapping.put('commodity', '{"Energia elettrica":"true"}');
@@ -52,9 +58,8 @@ public class HDT_LC_LastBillTst {
         System.assertEquals('OK', result, 'updateKpiTracking did not work correctly');
 		System.assertNotEquals(null, result,'updateKpiTracking did not work correctly');
         
-        
-
     }
+    
     
     @isTest
     public static void testWebService() {
@@ -111,5 +116,60 @@ public class HDT_LC_LastBillTst {
         System.assert('21.0'.equalsIgnoreCase(importo), 'Importo non 21.0');
         
     }
-
+    
+    
+    
+    //getLastBillDataFromSap
+    @isTest
+    private static void getLastBillDataFromSapTest(){
+        
+        //SETUP
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        
+        //WEBSERVICE MOCKS
+        Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
+        
+        //TESTING
+        Test.startTest();
+        String result = (String) HDT_LC_LastBill.getLastBillDataFromSap(accList[0].CustomerCode__c);
+        Test.stopTest();
+        
+        //ASSERTS
+        System.debug('Result: ' + result);
+        System.assert(String.isNotBlank(result), 'Result è stringa vuota.');
+        
+    }
+    
+    
+    
+    //WEBSERVICE MOCKS
+    public class myWebServiceMock implements HTTPCalloutMock{
+        
+        public HTTPResponse respond(HTTPRequest request){
+            
+            HttpResponse response = new HttpResponse();
+            
+            //SETTING UP RESPONSE BODY
+            Map<String, Object> singleObjMap = new Map<String, Object>();
+            singleObjMap.put('numeroFattura', 'FakeBillNumber');
+            singleObjMap.put('dataEmissione', JSON.serialize(Date.today().addDays(-1)));
+            singleObjMap.put('numeroFattura', 'Acantho S.p.A');
+            
+            
+            List<Object> dataObj = new List<Object>();
+            dataObj.add(singleObjMap);
+            
+            Map<String, Object> bodyResp = new Map<String, Object>();
+            bodyResp.put('data', dataObj);
+            
+            
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(JSON.serialize(bodyResp));
+            response.setStatusCode(200);
+            response.setStatus('OK');
+            
+            return response;
+        }
+    }
+    
 }
