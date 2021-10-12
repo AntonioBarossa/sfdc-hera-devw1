@@ -133,37 +133,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>wrts_prcgvr__Activity__c.Close_Activity</value>
-                            <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3 OR 4) AND 5</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>KO Fornitore</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Gestionale</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Manuale</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Chiusa</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.RisottomettiPratica</value>
                             <visibilityRule>
                                 <booleanFilter>(1 OR 2) AND 3</booleanFilter>
