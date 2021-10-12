@@ -1,3 +1,8 @@
+/**
+* @author Andrea Arosio (andrea.arosio@webresults.it)
+* @date 12/10/2021
+* @description Test Class for HDT_SCH_PublicValidation
+*/
 @isTest
 public with sharing class HDT_SCH_PublicValidationTst {
     @isTest
