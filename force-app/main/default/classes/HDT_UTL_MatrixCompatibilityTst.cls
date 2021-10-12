@@ -12,32 +12,20 @@ public class HDT_UTL_MatrixCompatibilityTst {
     @TestSetup
     static void allData(){
     
-         HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickInstance();
          
-         List<Account> acctList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-         Id accId = acctList[0].Id;   
-         List<Contract> contraList = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
-         Id contraId =  contraList[0].Id;
-         List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, acctList[0].Id, 'Attiva');
-         List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
-         sp[0].CommoditySector__c = 'Gas';  
-         insert sp;     
-         List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, acctList[0].Id,sales);
-         orders[0].ServicePoint__c= sp[0].Id;
-         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
-         Id orderId = orderList[0].Id;
-         List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accId);
-         Id conId =  conList[0].Id;
-    
-         Id spId =  sp[0].Id;
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-            wrts_prcgvr__Status__c = 'Not Started',
-            Type__c = 'Sportello',
-            wrts_prcgvr__Priority__c = '1',
-            Order__c = orderId,
-            RecordTypeDevName__c = 'HDT_RT_Scarto'
-        );
-        insert activity;
+        List<Account> acctList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        Id accId = acctList[0].Id;   
+        List<Contract> contraList = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
+        Id contraId =  contraList[0].Id;
+        List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
+        sp[0].CommoditySector__c = 'Gas';  
+        insert sp;     
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
+        Id orderId = orderList[0].Id;
+        List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accId);
+        Id conId =  conList[0].Id;
+        Id spId =  sp[0].Id;
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1,false,accId,conId,spId,contraId, orderList[0].Id);
         caseList[0].Type = 'Rimborso';
         insert caseList;
@@ -139,7 +127,7 @@ public class HDT_UTL_MatrixCompatibilityTst {
         		HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(null);
             Test.stopTest();
         }catch(Exception e){
-            System.assertEquals('Attempt to de-reference a null object',e.getMessage());
+            System.assertEquals('Attempt to de-reference a null object',e.getMessage(),'The Exception has not been catched');
         }      
     }
 
