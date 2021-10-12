@@ -10,12 +10,13 @@ public with sharing class HDT_UTL_VoltureChangeManager {
 
     public SObject cloneSObject(SObject sobj, Map<String,Object> extraParams)
     {
-        SObject newSobj;
+
         /*@frpanico 07/10/2021*/
         /*Since it has to be used for orderItems too this extra params is unnecessary*/
         /*String recordTypeId = (String)extraParams.get('recordTypeId');*/
+        String sobjName = (String)extraParams.get('sobjName');
         Map<String,Object> populatedFieldMap = sobj.getPopulatedFieldsAsMap();
-        Set<String> extraExcludedFields = (Set<String>)extraParams.get('excludedFields');
+        Set<String> extraExcludedFields = (Set<String>)extraParams?.get('excludedFields');
         Set<String> defaultExcludedFields = new Set<String>
         {
             'LastModifiedDate', 
@@ -31,6 +32,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             'OwnerId',
             'LastModifiedById'
         };
+        SObject newSobj = Schema.getGlobalDescribe().get(sobjName).newSObject();
         /*Assign the correct set<string> to be used for field exclusion*/
         Set<String> excludedFields = defaultExcludedFields;
         if(extraExcludedFields != null && defaultExcludedFields.addAll(extraExcludedFields))
@@ -42,7 +44,9 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             if(!excludedFields.contains(field))
             try
             {
+                System.debug(populatedFieldMap.get(field));
                 newSobj.put(field,populatedFieldMap.get(field));
+                System.debug(newSobj);
             }
             catch(Exception e)
             {
