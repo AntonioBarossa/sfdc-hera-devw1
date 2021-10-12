@@ -1,6 +1,5 @@
 @isTest
 public with sharing class HDT_UTL_CaseApprovalProcessTst {
-
     
     //DEBUG
     public static final String TEST_NAME = 'HDT_UTL_CaseApprovalProcessTst';
