@@ -1035,6 +1035,10 @@
             <fullName>Raccomandata</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>SOL-APP</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ComplaintType__c</picklist>

@@ -107,7 +107,9 @@ public inherited sharing class HDT_UTL_SecurityAccess {
         } 
 
         if (!fieldsWithoutAccess.isEmpty()) {
-            throw new AuraHandledException('Non hai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ','));
+            String excMessage = 'Non hai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ',');
+            system.debug(excMessage);
+            throw new AuraHandledException(excMessage);
         }
 
     }

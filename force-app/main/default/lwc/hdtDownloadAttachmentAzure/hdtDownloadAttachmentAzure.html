@@ -4,7 +4,14 @@
             <div class="slds-form__item" role="listitem">
                 <div class="slds-form-element slds-form-element_horizontal">
                 <div class="slds-form-element__control">
-                    <lightning-button label="Scarica Allegato" data-id="ascensButton" variant="brand" onclick={handleDownload} class="slds-m-left_small"></lightning-button>
+                    <!--START>>>modifica marco.arci@webresults.it doppio pulsante, cliccabile o disabilitato-->
+                    <template if:true={extension}>
+                        <lightning-button label="Scarica Allegato" data-id="ascensButton" variant="brand" onclick={handleDownload} class="slds-m-left_small"></lightning-button>
+                    </template>
+                    <template if:false={extension}>
+                        <lightning-button label="Scarica Allegato" data-id="ascensButton" variant="brand" disabled class="slds-m-left_small"></lightning-button>
+                    </template>
+                    <!--END>>>modifica marco.arci@webresults.it doppio pulsante, cliccabile o disabilitato-->
                 </div>
                 </div>
             </div>
