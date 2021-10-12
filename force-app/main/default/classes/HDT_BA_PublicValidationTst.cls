@@ -14,11 +14,9 @@ public with sharing class HDT_BA_PublicValidationTst {
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
-        List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 		List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
-		List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
 		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
-		List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, sales, orders[0].Id, conList[0].Id);
+		HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, sales, orders[0].Id, conList[0].Id);
         HDT_UTL_DataFactoryTst.createVocalOrderPublicConfirm(1,true,'Nuova',orders[0].Id);
 	}
     @isTest
@@ -26,7 +24,7 @@ public with sharing class HDT_BA_PublicValidationTst {
         Test.startTest();
 
         HDT_BA_PublicValidation publicVal = new HDT_BA_PublicValidation();
-        Id batchId = Database.executeBatch(publicVal);
+        Database.executeBatch(publicVal);
                 
         Test.stopTest();
         
