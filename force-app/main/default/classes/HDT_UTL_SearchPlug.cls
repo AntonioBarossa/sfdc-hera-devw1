@@ -9,20 +9,22 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     //Per ogni field permette di nascondere il filtro a video
     global Boolean isFilterHidden(SObject quote, String fieldName){
         //inserire in IF quali filtri nascondere a video.
-        System.debug('isFilterHidden ' + fieldName);
-        if(fieldName.equalsIgnoreCase('ProductCode') && quote.get('SBQQ__Status__c') == 'Approved')
-            return true;
-        /*else if(fieldName.equalsIgnoreCase('Comune__c')) 
-            return true;*/
-        else
-            return false;
+        System.debug('isFilterHidden: ' + fieldName);
+        return null;
+        //return false;
+        //if(fieldName.equalsIgnoreCase('ProductCode') && quote.get('SBQQ__Status__c') == 'Approved'){
+        //    return true;
+        //} else {
+        //    return false;
+        //}
+        
     }
     
     //QUESTO METODO PERMETTE DI INSERIRE PREDEFAULT SUI FILTRI
     global String getFilterDefaultValue(SObject quote, String fieldName){
         System.debug('getFilterDefaultValue ' + fieldName);
         //return fieldName == 'Family'? 'Hardware' : NULL;
-        return NULL;
+        return null;
     }
     
     //SE TRUE, richiama il metodo Search
