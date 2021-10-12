@@ -12,7 +12,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
         Security.stripInaccessible(AccessType.READABLE,
         [SELECT Id, 
         Product2Id, 
-        //IsDeleted, 
+        IsDeleted, 
         PricebookEntryId, 
         OriginalOrderItemId, 
         QuoteLineItemId, 
@@ -109,12 +109,12 @@ public with sharing class HDT_QR_VoltureChangeManager {
         PaymentMode__c, 
         PhoneRecipient__c, 
         PreviousDateSwitch__c, 
-        //PriceF0__c, 
-        //PriceF1__c, 
-        //PriceF2__c, 
-        //PriceF3__c, 
-        //PriceFP__c, 
-        //PriceFV__c, 
+        PriceF0__c, 
+        PriceF1__c, 
+        PriceF2__c, 
+        PriceF3__c, 
+        PriceFP__c, 
+        PriceFV__c, 
         PriceFedFixed__c, 
         PriceFromThirds__c, 
         PriceGreenOption__c, 
@@ -182,6 +182,31 @@ public with sharing class HDT_QR_VoltureChangeManager {
 
         return securityDecision.getRecords();
     }
+    
+    /* Get Order's Account Info */
+    public List<Account> getAccountInfoById(String accountId)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT RecordType.DeveloperName FROM Account WHERE Id = :accountId]
+            );
 
+        return securityDecision.getRecords();
+    }
+
+    /* Get the activity template for the activity creation */
+    public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplate(String templateName)
+    {
+        SObjectAccessDecision securityDecision =
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT wrts_prcgvr__Assignees__c, 
+            wrts_prcgvr__Subject__c, 
+            wrts_prcgvr__DueDateField__c,
+            Name 
+            FROM wrts_prcgvr__ActivityTemplate__c  
+            WHERE Name = :templateName]);
+    
+        return securityDecision.getRecords();
+    }
 
 }
