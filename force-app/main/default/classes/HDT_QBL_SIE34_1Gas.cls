@@ -1,16 +1,18 @@
 public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
     private String runId                   ;   
-    private Date filterDate                ;
+    private Datetime filterDate            ;
     private String fileType                ;
     private List<String> contentVersionIds ;
-    private final String NOTMAPPED=''       ;
+    private final String NOTMAPPED=''      ;
 
  
-    public HDT_QBL_SIE34_1Gas(String varRunId,Date varDate,String varFileType) {
-       this.runId             = varRunId                    ;
-       this.filterDate        = varDate                     ;
-       this.fileType          = varFileType                 ;
-       this.contentVersionIds = new List<String>()          ;
+    public HDT_QBL_SIE34_1Gas(String varRunId,String varDate,String varFileType) {
+       this.runId             = varRunId                                           ;
+       System.debug('filterDate: '+HDT_UTL_LeadProcess.getDateTimeFromString(varDate));
+       this.filterDate        = HDT_UTL_LeadProcess.getDateTimeFromString(varDate) ;
+
+       this.fileType          = varFileType                                        ;
+       this.contentVersionIds = new List<String>()                                 ;
     }
  
  
@@ -222,19 +224,16 @@ public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
                 body=body+'\n'+row; 
              }
           }
-        System.debug('contentVersionIds'+contentVersionIds);
         if (listOrderItem!=null && listOrderItem.size()>0 ) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_GAS.txt','OUT_OP_GAS'));
          }
-        Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_1EE(runId,filterDate, fileType,contentVersionIds));
+         System.enqueueJob(new HDT_QBL_SIE34_1EE(runId,filterDate, fileType,contentVersionIds));
          
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          System.debug('contentVersionIds'+contentVersionIds);
-          Id jobID2 = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
-          System.debug('jobId: '+jobID2);
+          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
        }
       
     }

@@ -57,9 +57,6 @@ public inherited sharing class HDT_LC_SaleVas {
         //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
         wrapReturn wrpRes = new wrapReturn();
 
-
-
-
         if(HDT_UTL_Sales.isTransitionNoUp(sal)){
             check = false;
             wrpRes.messRes = 'transitorio';
@@ -183,6 +180,8 @@ public inherited sharing class HDT_LC_SaleVas {
     @AuraEnabled
     public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records;
+        system.debug('searchString '+searchString);
+        system.debug('key '+key);
 
         switch on key {
             when 'ORDERS_IN_PROGRESS_VAS'{
@@ -195,6 +194,9 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
                     WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
+            }
+            when 'CONTRACT_BONUS_COMM'{
+                records = [Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where AccountId =:searchString WITH SECURITY_ENFORCED];
             }
             //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
@@ -225,8 +227,12 @@ public inherited sharing class HDT_LC_SaleVas {
             //Disattivazione VAS - END
             //Segnalazioni VAS - START
             when 'CONTRACTS_VAS'{ 
+                Set<Id> contractIds = new Set<Id>();
+                for(Order o : [SELECT ContractReference__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' AND AccountId=:searchString AND ContractReference__c!=null WITH SECURITY_ENFORCED]){
+                    contractIds.add(o.ContractReference__c);
+                }
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
-                    WHERE AccountId=:searchString AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS' WITH SECURITY_ENFORCED];
+                    WHERE Id IN :contractIds WITH SECURITY_ENFORCED];
             }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
@@ -280,7 +286,6 @@ public inherited sharing class HDT_LC_SaleVas {
      * @return Boolean
      */
     private static Boolean isDuplicated(String saleId, String objectId, String type) {
-        Boolean result = false;
 
         List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
 
@@ -312,7 +317,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
-        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = order.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -364,7 +369,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
-        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = contract.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(

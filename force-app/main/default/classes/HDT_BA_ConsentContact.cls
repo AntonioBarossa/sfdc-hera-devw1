@@ -35,8 +35,8 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 		return Database.getQueryLocator(query);
 	}
 	
-	public void execute(Database.BatchableContext BC, List<Contact> scope) {
-		System.debug('HDT_BA_ConsentContact execute ');
+	public void execute(Database.BatchableContext bc, List<Contact> scope) {
+		//System.debug('HDT_BA_ConsentContact execute ');
 		try {
 			
 			Map<String, Contact> mapContactByEmail = new Map<String, Contact>(); // la chiave della mappa è l'email del Contact
@@ -111,14 +111,14 @@ public without sharing class HDT_BA_ConsentContact  implements Database.Batchabl
 			}
 		} 
 		catch (Exception e) {
-			System.debug('Exception : '+e.getMessage());
+			//System.debug('Exception : '+e.getMessage());
 			status='failed';
 			errorMessage=e.getMessage();
 		}
 	}
 	
 	public void finish(Database.BatchableContext bc){
-		System.debug('Finish HDT_BA_ConsentContact ');
+		//System.debug('Finish HDT_BA_ConsentContact ');
 		
 		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_PRV',errorMessage,listIdContentVersion);
 	}

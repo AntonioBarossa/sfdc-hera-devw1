@@ -175,7 +175,7 @@ public class HDT_SRV_CampaignMemberTst{
 			Test.stopTest();
 
 			System.assertEquals('tstUpdatedFenField', updtCampMember.GenericField1__c, 'Campaign Member not Updated');
-			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c);
+			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c, 'Value of parameter is not matching');
 		}
 	}
 
@@ -230,7 +230,7 @@ public class HDT_SRV_CampaignMemberTst{
 			Test.stopTest();
 
 			System.assertEquals(true, newCampMember.Id!=null, 'Campaign Member not Created');
-			System.assertNotEquals(false, newCampMember.Id!=null);
+			System.assertNotEquals(false, newCampMember.Id!=null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -288,7 +288,7 @@ public class HDT_SRV_CampaignMemberTst{
 			Test.stopTest();
 
 			System.assertEquals('tstUpdatedFenField', updtCampMember.GenericField1__c, 'Campaign Members not Updated');
-			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c);
+			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c, 'Value of parameter is not matching');
 		}
 	}
 }

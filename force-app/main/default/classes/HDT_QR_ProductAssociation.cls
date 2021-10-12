@@ -138,4 +138,24 @@ public inherited sharing class HDT_QR_ProductAssociation {
 
     }
 
+    public static List<GroupMember> getGroupMembers(List<GroupMember> groupMembers, Id currentUserId, String groupDeveloperName){
+        groupMembers = new List<GroupMember>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('GroupMember');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+        if(objRes.isAccessible()){
+
+            groupMembers = [
+                SELECT Id
+                FROM GroupMember
+                WHERE Group.DeveloperName = :groupDeveloperName
+                AND UserOrGroupId = :currentUserId
+            ];
+        }
+
+        return groupMembers;
+
+    }
+
 }

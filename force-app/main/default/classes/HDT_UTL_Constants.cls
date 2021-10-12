@@ -193,6 +193,11 @@ public with sharing class HDT_UTL_Constants {
     public final String SERVICEPOINT_RECORDTYPEID_PELETRICCO =
     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PELETRICCO).getRecordTypeId();
 
+    //ServicePoint Recordtype Gas
+    public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS = 'HDT_RT_Gas';
+    @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPEID_GAS =
+    Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS).getRecordTypeId();
 
     //Hera internal Profiles
     @AuraEnabled
@@ -229,7 +234,11 @@ public with sharing class HDT_UTL_Constants {
     //Voltura Retroattiva Permission set
     @AuraEnabled
     public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
-
+    
+    //ProtocolManualActivities
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_PROTOCOLMANUALACTIVITIES = 'HDT_ProtocolManualActivities';
+    
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';

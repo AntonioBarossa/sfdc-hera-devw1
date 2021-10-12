@@ -1,29 +1,75 @@
 /**
- * @author Marco Arci (marco.arci@webresults.it)
- * @date 23/07/2021
- * @description HDT_LC_ActivityDetailTst - Classe di Test
- * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
- */
+ * Header of the class "HDT_LC_ActivityDetailTst"
+ * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+ * @version 1.0
+ * @description: Apex Test Class of the relative Apex Class "HDT_LC_ActivityDetail"
+ * @history
+ * @Created 05/10/2021
+ * Modified By:
+ **/
+
 @isTest
-public with sharing class HDT_LC_ActivityDetailTst {
+public class HDT_LC_ActivityDetailTst {
+    
+    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+    
+	@TestSetup
+    static void makedata(){
+        
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
 
-    @isTest public static void getActivityById(){
+		insert internalUser;
 
+        System.runAs(internalUser){
+            
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+			Id accId = accs[0].id;
+            
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
+            
+            List<wrts_prcgvr__FieldsTemplate__c> fieldTemplates = HDT_UTL_DataFactoryTst.createFieldsTemplate(2,false);
+            fieldTemplates[0].wrts_prcgvr__ObjectType__c = 'Order';
+            insert fieldTemplates;
+            
+            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(1,false);
+            activityTemplates[0].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[0].wrts_prcgvr__FieldsTemplate__c = fieldTemplates[0].id;
+            insert activityTemplates;
+            
+            List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
+            activities[0].wrts_prcgvr__IsClosed__c  = true;
+            activities[0].wrts_prcgvr__ActivityTemplate__c = activityTemplates[0].id;
+            insert activities;
+            
+            List<wrts_prcgvr__DynamicSection__c> dynamicSections = HDT_UTL_DataFactoryTst.createDynamicSection(1,false,fieldTemplates[0].id);
+            dynamicSections[0].wrts_prcgvr__Order__c = 2.2;
+            insert dynamicSections;
+            
+            List<wrts_prcgvr__DynamicField__c> dynamicFields = HDT_UTL_DataFactoryTst.createDynamicField(1,false,dynamicSections[0].id);
+            dynamicFields[0].wrts_prcgvr__ObjectName__c = 'wrts_prcgvr__Activity__c';
+            insert dynamicFields;
+            
+        }
     }
-
-    @isTest public static void getActivityTemplateById(){
-
-    }
-
-    @isTest public static void getFieldsTemplateById(){
-
-    }
-
-    @isTest public static void getDynamicSectionByFieldsTemplateId(){
-
-    }
-
-    @isTest public static void getDynamicFieldsByDynamicSectionId(){
-
+    
+    @isTest
+    static void test1(){
+        
+        Id actId = [Select id From wrts_prcgvr__Activity__c].id;
+        
+        Test.startTest();
+        
+        Map <String, Object> mapp = HDT_LC_ActivityDetail.getObjectFields(actId);
+        
+        system.debug(mapp);
+        
+        Test.stopTest();
+        
+        System.assertEquals(1, mapp.size(), 'getObjectFields did not work correctly');
+        
+        System.assertNotEquals(null, mapp, 'getObjectFields did not work correctly');
+        
     }
 }

@@ -94,6 +94,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track outputFieldObj = {};
     @track isVolture;
     @track isReading;
+    @track resumeFromDraftReading = false;
     @track readingDisabled = false;
     //FINE SVILUPPI EVERIS
     sysdate(){
@@ -105,20 +106,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleSectionDataToSubmitCollection(event){
         //EVERIS
         if(event.target.fieldName === 'EffectiveDate__c' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            if(this.readingDisabled || this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0){
                 console.log('EffectiveDateValue -> ' + event.target.value);
                 voltureEffectiveDateCheck({effectiveDate: event.target.value})
                     .then(result => {
                         console.log('Result -> '+result);
                         if(result === 1){
-                            this.readingDisabled = false;
-                        } else {
                             this.readingDisabled = true;
+                        } else {
+                            this.readingDisabled = false;
                         }
                     }).catch(error => {
                         console.log('Error -> ' +error);
                     });
-            }
+            
         }
         //EVERIS
         if(event.target.fieldName !== undefined){
@@ -517,6 +517,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
             }
+            if(this.order.RecordType.DeveloperName=="HDT_RT_TemporaneaNuovaAtt" && this.template.querySelector("[data-id='RequestOption__c']") !== null 
+                && (this.template.querySelector("[data-id='RequestOption__c']").value === ''
+                    || this.template.querySelector("[data-id='RequestOption__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Opzione Distribuzione',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
             if(this.template.querySelector("[data-id='ConnectionMandate__c']") !== null 
                 && (this.template.querySelector("[data-id='ConnectionMandate__c']").value === ''
                     || this.template.querySelector("[data-id='ConnectionMandate__c']").value === null)) {
@@ -726,6 +739,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             try{
                 this.template.querySelector('c-hdt-self-reading').handleSaveButton();
+                this.isSavedReading = false;
+                this.resumeFromDraftReading = true;
             } catch(e){
                 console.log('Inside Exception');
                 console.log('Here');
@@ -770,7 +785,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         //INIZIO SVILUPPI EVERIS
         //LA VARIABILE nextIndex RIPORTA L'INDICE CORRETTO
-        let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading'
+        let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading' && this.resumeFromDraftReading === false
         ? currentSectionIndex - 2
         : currentSectionIndex - 1
         //FINE SVILUPPI EVERIS 
@@ -881,7 +896,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('','ServicePointCode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','ImplantType__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','SAPImplantCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','CustomerCategory__c',this.typeVisibility('both'),false,true,'','')
+                    new fieldData('','CustomerCategory__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','MeterSN__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Resident__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','SapContractCode__c',this.typeVisibility('both'),false,true,'','')
                 ]
             },
             {
@@ -907,13 +925,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('C.F. Precdente intestatario','PreviousHolderFiscalCode__c', true, false, false, '',''),   
                     new fieldData('Ragione sociale precedente intestatario','PreviousHoldeCompanyName__c', true, false, false, '',''),   
                     new fieldData('P.Iva precedente intestatario','PreviousHolderVatNumber__c', true, false, false, '',''),   
-                    new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),   
-                    new fieldData('Voltura Tecnica','IsTechnicalTransfer__c', true, false, false, '','')
+                    new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','')//,   
+                    // LG 0610 HRAWRM-442 new fieldData('Voltura Tecnica','IsTechnicalTransfer__c', true, false, false, '','')
                 ]
             },
             {
                 step: 5,
-                label: 'Dettaglio commodity',
+                label: 'Variabili di Processo',
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
@@ -1481,7 +1499,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
-                    new fieldData('Barrato','BillingStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),            
                     {
                         'label': 'Civico',
                         'apiname': 'BillingStreetNumber__c',
@@ -1491,6 +1508,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'value': '',
                         'processVisibility': ''
                     },
+                    new fieldData('Barrato','BillingStreetNumberExtension__c', this.typeVisibility('both'), true, true, '',''),            
                     {
                         'label': 'Localita',
                         'apiname': 'BillingPlace__c',
@@ -2087,7 +2105,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Data decorrenza',
                         'apiname': 'EffectiveDate__c',
-                        'typeVisibility': this.order.IsActivationDeferred__c,
+                        'typeVisibility': this.order.IsActivationDeferred__c && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                         'required': false,
                         'disabled': false,
                         'value': '',

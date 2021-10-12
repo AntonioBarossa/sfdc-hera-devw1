@@ -37,7 +37,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         for (Order o : childOrders) {
             listChildOrderId.add(o.Id);
             quoteList.add(o.SBQQ__Quote__c);
-            quoteToOrderMap.put(o.SBQQ__Quote__c, o.Id);
+            if(!quoteToOrderMap.containsKey(o.SBQQ__Quote__c)){//bug evita di scrivere l'offerta sull'order del bonus e toglierlo da quello dell'offerta
+                quoteToOrderMap.put(o.SBQQ__Quote__c, o.Id);
+            }
         }
         
         orderItemSrv.checkReadAccess('ServicePoint__c,Service_Point__r.Name,OrderId,Product2.Name');

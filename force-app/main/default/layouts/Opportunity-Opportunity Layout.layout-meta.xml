@@ -27,6 +27,7 @@
                 <behavior>Edit</behavior>
                 <field>CampaignId</field>
             </layoutItems>
+            <!-- HRAWRM-249
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Budget_Confirmed__c</field>
@@ -35,14 +36,14 @@
                 <behavior>Edit</behavior>
                 <field>Discovery_Completed__c</field>
             </layoutItems>
-            <layoutItems>
+             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ROI_Analysis_Completed__c</field>
-            </layoutItems>
+            </layoutItems> 
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Loss_Reason__c</field>
-            </layoutItems>
+            </layoutItems>-->
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

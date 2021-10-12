@@ -5,6 +5,11 @@
  * @history Keltin Mesonjesi – 17/09/2021 – Created Class
  */
 public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
+
+    //public override void beforeInsert(){}
+ 	//public override void beforeDelete(){}
+ 	//public override void afterDelete(){}
+  //	public override void afterUndelete(){}
     	
     public override void beforeUpdate(){
         //Checks Phase Transition
@@ -19,8 +24,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         }
         
         //Checks Mandatory Activity
-        //((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
-        //        .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
+        ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
+                .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
         
         
 
@@ -32,11 +37,13 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
-        HDT_UTL_OrderProcess.updateServicePointToComplete(trigger.old,trigger.new);
-       // HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+        //HDT_UTL_OrderProcess.updateServicePointToComplete(trigger.old,trigger.new);
+        HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+
+        HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
     }
     public override void afterUpdate() {
-        HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
+        HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.old,(List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
         //Execute creation Activities 
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkSaveActivityContext(null);

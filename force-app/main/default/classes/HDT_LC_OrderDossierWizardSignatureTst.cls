@@ -25,8 +25,8 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         Test.startTest();
         Map<String,Object> result = HDT_LC_OrderDossierWizardSignature.controllerInit('test', 'test');
         System.debug('@@result' + result);
-        System.assert(result != null);
-		System.assertNotEquals(new Map<String,Object>{},result);
+        System.assert(result != null, 'controllerInit did not work correctly');
+		System.assertNotEquals(new Map<String,Object>{},result, 'controllerInit did not work correctly');
         Test.stopTest();
     }
 
@@ -36,8 +36,8 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         Order ordChild = [SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE Name='testChildOrderName' LIMIT 1];
         Test.startTest();
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
-		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c);
-		System.assertNotEquals(null,ordChild.ParentOrder__c);
+		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c, 'next did not work correctly');
+		System.assertNotEquals(null,ordChild.ParentOrder__c, 'next did not work correctly');
         Test.stopTest();
     }
 
@@ -47,8 +47,8 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         Order ordChild = [SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE Name='testChildOrderName' LIMIT 1];
         Test.startTest();
         HDT_LC_OrderDossierWizardSignature.edit(ordParent.Id);
-		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c);
-		System.assertNotEquals(null,ordChild.ParentOrder__c);
+		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c, 'edit did not work correctly');
+		System.assertNotEquals(null,ordChild.ParentOrder__c, 'edit did not work correctly');
         Test.stopTest();
     }
 

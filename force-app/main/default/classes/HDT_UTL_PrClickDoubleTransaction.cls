@@ -18,8 +18,8 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
     global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         system.debug(json.serialize(args));
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
+        //SObject transition = (SObject) argsMap.get('transition');
+        //SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('sender');
 

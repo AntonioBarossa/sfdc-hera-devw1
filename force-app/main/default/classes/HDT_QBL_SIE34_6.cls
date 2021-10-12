@@ -4,10 +4,10 @@
 **/
 public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
     private String runId                   ;   
-    private Date filterDate                ;
+    private Datetime filterDate            ;
     private String fileType                ;
     private List<String> contentVersionIds ;
-    private final String NOTMAPPED='';
+    private final String NOTMAPPED=''      ;
  
  
  
@@ -17,11 +17,11 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
     * @param varDate 
     * @param varFileType 
     **/
-    public HDT_QBL_SIE34_6(String varRunId,Date varDate,String varFileType) {
-       this.runId             = varRunId            ;
-       this.filterDate        = varDate             ;
-       this.fileType          = varFileType         ;
-       this.contentVersionIds = new List<String>()  ;
+    public HDT_QBL_SIE34_6(String varRunId,String varDate,String varFileType) {
+       this.runId             = varRunId                                           ;
+       this.filterDate        = HDT_UTL_LeadProcess.getDateTimeFromString(varDate) ;
+       this.fileType          = varFileType                                        ;
+       this.contentVersionIds = new List<String>()                                 ;
     }
  
  
@@ -147,131 +147,131 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
             /*	97	*/ NOTMAPPED                                                                                            +separator+	                                                                   
             /*	98	*/ tempCase.Account.BillingStreetNumberExtension__c                                                     +separator+	                                                                                                          
             /*	99	*/ tempCase.Account.BillingPlace__c                                                                     +separator+	                                                                                          
-            /*	100	*/ tempCase.ServicePoint__r.SupplyStreetNumberExtension__c                                              +separator+	                                                                                                                 
-            /*	101	*/ tempCase.ServicePoint__r.SupplyPlace__c                                                              +separator+	                                                                                                 
-            /*	102	*/ tempCase.BillingProfile__r.InvoicingStreetNumberExtension__c                                         +separator+	                                                                                                                      
-            /*	103	*/ tempCase.BillingProfile__r.InvoicingPlace__c                                                         +separator+	                                                                                                      
-            /*	104	*/ tempCase.BillingProfile__r.InvoicingAddressFormula__c                                                +separator+	                                                                                                               
-            /*	105	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	106	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	107	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	108	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	109	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	110	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	111	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	112	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	113	*/ tempCase.CreatedBy.Name                                                                              +separator+	                                                                                 
-            /*	114	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	115	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	116	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	117	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	118	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	119	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	120	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	121	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	122	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	123	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	124	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	125	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	126	*/ tempCase.DistributorNote__c                                                                          +separator+	                                                                                     
-            /*	127	*/ tempCase.PhoneNumber__c                                                                              +separator+	                                                                                 
-            /*	128	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	129	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	130	*/ tempCase.Disconnectable__c                                                                           +separator+	                                                                                    
-            /*	131	*/ tempCase.DisconnectibilityType__c                                                                    +separator+	                                                                                           
-            /*	132	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	133	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	134	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	135	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	136	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	137	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	138	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	139	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	140	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	141	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	142	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	143	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	144	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	145	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	146	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	147	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	148	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	149	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	150	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	151	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	152	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	153	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	154	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	155	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	156	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	157	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	158	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	159	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	160	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	161	*/ tempCase.Account.Category__c                                                                         +separator+	                                                                                      
-            /*	162	*/ tempCase.Mobile__c                                                                                   +separator+	                                                                            
-            /*	163	*/ tempCase.RemoteManagementSystem__c                                                                   +separator+	                                                                                            
-            /*	164	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	165	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	166	*/ tempCase.CustomerRequestDate__c                                                                      +separator+	                                                                                         
-            /*	167	*/ tempCase.Amount__c                                                                                   +separator+	                                                                            
-            /*	168	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	169	*/ tempCase.QuotationNumber__c                                                                          +separator+	                                                                                     
-            /*	170	*/ tempCase.ConnectionType__c                                                                           +separator+	                                                                                    
-            /*	171	*/ tempCase.UseTypeEnergy__c                                                                            +separator+	                                                                                   
-            /*	172	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	173	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	174	*/ tempCase.Account.CustomerType__c                                                                     +separator+	                                                                                          
-            /*	175	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	176	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	177	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	178	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	179	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	180	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	181	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	182	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	183	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	184	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	185	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	186	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	187	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	188	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	189	*/ tempCase.DisplacementDistance__c                                                                     +separator+	                                                                                          
-            /*	190	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	191	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	192	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	193	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	194	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	195	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	196	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	197	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	198	*/ tempCase.BillingProfile__r.BillSendingMethod__c                                                      +separator+	                                                                                                         
-            /*	199	*/ tempCase.BillingProfile__r.InvoiceEmailAddress__c                                                    +separator+	                                                                                                           
-            /*	200	*/ tempCase.Account.FirstName__c                                                                        +separator+	                                                                                       
-            /*	201	*/ tempCase.BillingProfile__r.ContractAccountCode__c                                                    +separator+	                                                                                                           
-            /*	202	*/ tempCase.BillingProfile__r.BankAccountSignatoryLastName__c                                           +separator+	                                                                                             
-            /*	203	*/ tempCase.BillingProfile__r.BankAccountSignatoryFirstName__c                                          +separator+	                                                                                                                      
-            /*	204	*/ tempCase.BillingProfile__r.BankAccountSignatoryFiscalCode__c                                         +separator+	                                                                                                                      
-            /*	205	*/ tempCase.BillingProfile__r.InvoicingStreetName__c                                                    +separator+	                                                                                                          
-            /*	206	*/ tempCase.BillingProfile__r.InvoicingStreetNumber__c                                                  +separator+	                                                                                                           
-            /*	207	*/ NOTMAPPED                                                                                            +separator+	                                                                                           
-            /*	208	*/ tempCase.BillingProfile__r.InvoicingPostalCode__c                                                    +separator+	                                                                                                      
-            /*	209	*/ tempCase.BillingProfile__r.InvoicingCity__c                                                          +separator+	                                                                                                 
-            /*	210	*/ tempCase.BillingProfile__r.InvoicingProvince__c                                                      +separator+	                                                                                                  
-            /*	211	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	212	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	213	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	214	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	215	*/ tempCase.BillingProfile__r.InvoiceCertifiedEmailAddress__c                                           +separator+	                                                                                                                    
-            /*	216	*/ tempCase.BillingProfile__r.SendCertifiedEmailConsentDate__c                                          +separator+	                                                                                                                     
-            /*	217	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	218	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	219	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	220	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	221	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	222	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	223	*/ NOTMAPPED                                                                                            +separator+	                                                                   
-            /*	224	*/ NOTMAPPED                                                                                             ;	  
+            /*	100*/ tempCase.ServicePoint__r.SupplyStreetNumberExtension__c                                              +separator+	                                                                                                                 
+            /*	101*/ tempCase.ServicePoint__r.SupplyPlace__c                                                              +separator+	                                                                                                 
+            /*	102*/ tempCase.BillingProfile__r.InvoicingStreetNumberExtension__c                                         +separator+	                                                                                                                      
+            /*	103*/ tempCase.BillingProfile__r.InvoicingPlace__c                                                         +separator+	                                                                                                      
+            /*	104*/ tempCase.BillingProfile__r.InvoicingAddressFormula__c                                                +separator+	                                                                                                               
+            /*	105*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	106*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	107*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	108*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	109*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	110*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	111*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	112*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	113*/ tempCase.CreatedBy.Name                                                                              +separator+	                                                                                 
+            /*	114*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	115*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	116*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	117*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	118*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	119*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	120*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	121*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	122*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	123*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	124*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	125*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	126*/ tempCase.DistributorNote__c                                                                          +separator+	                                                                                     
+            /*	127*/ tempCase.PhoneNumber__c                                                                              +separator+	                                                                                 
+            /*	128*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	129*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	130*/ tempCase.Disconnectable__c                                                                           +separator+	                                                                                    
+            /*	131*/ tempCase.DisconnectibilityType__c                                                                    +separator+	                                                                                           
+            /*	132*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	133*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	134*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	135*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	136*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	137*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	138*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	139*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	140*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	141*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	142*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	143*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	144*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	145*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	146*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	147*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	148*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	149*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	150*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	151*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	152*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	153*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	154*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	155*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	156*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	157*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	158*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	159*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	160*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	161*/ tempCase.Account.Category__c                                                                         +separator+	                                                                                      
+            /*	162*/ tempCase.Mobile__c                                                                                   +separator+	                                                                            
+            /*	163*/ tempCase.RemoteManagementSystem__c                                                                   +separator+	                                                                                            
+            /*	164*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	165*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	166*/ tempCase.CustomerRequestDate__c                                                                      +separator+	                                                                                         
+            /*	167*/ tempCase.Amount__c                                                                                   +separator+	                                                                            
+            /*	168*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	169*/ tempCase.QuotationNumber__c                                                                          +separator+	                                                                                     
+            /*	170*/ tempCase.ConnectionType__c                                                                           +separator+	                                                                                    
+            /*	171*/ tempCase.UseTypeEnergy__c                                                                            +separator+	                                                                                   
+            /*	172*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	173*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	174*/ tempCase.Account.CustomerType__c                                                                     +separator+	                                                                                          
+            /*	175*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	176*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	177*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	178*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	179*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	180*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	181*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	182*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	183*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	184*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	185*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	186*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	187*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	188*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	189*/ tempCase.DisplacementDistance__c                                                                     +separator+	                                                                                          
+            /*	190*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	191*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	192*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	193*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	194*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	195*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	196*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	197*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	198*/ tempCase.BillingProfile__r.BillSendingMethod__c                                                      +separator+	                                                                                                         
+            /*	199*/ tempCase.BillingProfile__r.InvoiceEmailAddress__c                                                    +separator+	                                                                                                           
+            /*	200*/ tempCase.Account.FirstName__c                                                                        +separator+	                                                                                       
+            /*	201*/ tempCase.BillingProfile__r.ContractAccountCode__c                                                    +separator+	                                                                                                           
+            /*	202*/ tempCase.BillingProfile__r.BankAccountSignatoryLastName__c                                           +separator+	                                                                                             
+            /*	203*/ tempCase.BillingProfile__r.BankAccountSignatoryFirstName__c                                          +separator+	                                                                                                                      
+            /*	204*/ tempCase.BillingProfile__r.BankAccountSignatoryFiscalCode__c                                         +separator+	                                                                                                                      
+            /*	205*/ tempCase.BillingProfile__r.InvoicingStreetName__c                                                    +separator+	                                                                                                          
+            /*	206*/ tempCase.BillingProfile__r.InvoicingStreetNumber__c                                                  +separator+	                                                                                                           
+            /*	207*/ NOTMAPPED                                                                                            +separator+	                                                                                           
+            /*	208*/ tempCase.BillingProfile__r.InvoicingPostalCode__c                                                    +separator+	                                                                                                      
+            /*	209*/ tempCase.BillingProfile__r.InvoicingCity__c                                                          +separator+	                                                                                                 
+            /*	210*/ tempCase.BillingProfile__r.InvoicingProvince__c                                                      +separator+	                                                                                                  
+            /*	211*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	212*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	213*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	214*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	215*/ tempCase.BillingProfile__r.InvoiceCertifiedEmailAddress__c                                           +separator+	                                                                                                                    
+            /*	216*/ tempCase.BillingProfile__r.SendCertifiedEmailConsentDate__c                                          +separator+	                                                                                                                     
+            /*	217*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	218*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	219*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	220*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	221*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	222*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	223*/ NOTMAPPED                                                                                            +separator+	                                                                   
+            /*	224*/ NOTMAPPED                                                                                             ;	  
             
             row = row.replaceAll('null', '');  
              if (String.isBlank(body)) {
@@ -284,12 +284,12 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
           if (listCase!=null && listCase.size()>0 ) {
              contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_RDS_PIATTE.txt','OUT_RDS_PIATTE'));
           }
-         Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
+         System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+         System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
        }
       
     }

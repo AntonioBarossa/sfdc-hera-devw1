@@ -1,8 +1,8 @@
-global inherited sharing class HDT_WS_PaymentCommunication implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
+global inherited sharing class HDT_WS_PaymentCommunication{
 
     //OLD
 
-    HDT_SRV_PaymentCommunication paymentSrv = new HDT_SRV_PaymentCommunication();
+    /* HDT_SRV_PaymentCommunication paymentSrv = new HDT_SRV_PaymentCommunication();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
     global Object execute(Object args){
@@ -46,7 +46,7 @@ global inherited sharing class HDT_WS_PaymentCommunication implements wrts_prcgv
         paymentsUtl.handleResponse(recordId, process, response);
 
         return responseReturn;
-    }
+    } */
 
 
 
