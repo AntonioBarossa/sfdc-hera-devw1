@@ -38,7 +38,7 @@ public with sharing class HDT_UTL_ValidateIbanTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(inputs != null);
+        System.assert(inputs != null, 'Attenzione, inputs non può essere vuoto!');
         
     }
 

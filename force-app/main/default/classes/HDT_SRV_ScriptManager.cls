@@ -21,30 +21,34 @@ public inherited sharing class HDT_SRV_ScriptManager {
     public static HDT_WRP_ScriptConfig getOrderScriptConfig(Id orderParentId){
 
         HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
+        config.scriptTarget = orderParentId;
 
         Order parentOrder = orderQr.getRecordById(orderParentId);
         
+        Id commOfferOrderId;
         for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
             if (childOrder.RecordType.DeveloperName!=ORDER_RT_VAS) {
-                config.scriptTarget = childOrder.Id;
+                commOfferOrderId = childOrder.Id;
                 break;
             }
         }
 
-        if (String.isNotBlank(config.scriptTarget)) {
-            Order targetOrder = orderQr.getRecordById(config.scriptTarget);
+        if (String.isNotBlank(commOfferOrderId)) {
+            Order targetOrder = orderQr.getRecordById(commOfferOrderId);
 
             List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(targetOrder.SBQQ__Quote__c);
-            Id productId = quoteLineList[0].SBQQ__Product__c;
+            String productName = quoteLineList[0].SBQQ__Product__r.ProductCode;
 
             switch on parentOrder.SignatureMethod__c {
                 when 'OTP Remoto','OTP Coopresenza' {
                     config.scriptName = 'Mini Vocal Order';
                 }
                 when 'Vocal Order' {
-                    List<ScriptConfig__c> scripts = [SELECT Name FROM ScriptConfig__c WHERE ScriptType__c='Processo' AND Product__c=:productId WITH SECURITY_ENFORCED LIMIT 1];
-                    if (!scripts.isEmpty()) {
-                        config.scriptName = scripts[0].Name;
+                    for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
+                        if (scriptPerOffer.OfferCode__c==productName) {
+                            config.scriptName = scriptPerOffer.ScriptName__c;
+                            break;
+                        }
                     }
                 }
             }

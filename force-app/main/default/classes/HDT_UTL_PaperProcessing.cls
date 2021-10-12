@@ -10,12 +10,14 @@ public with sharing class HDT_UTL_PaperProcessing {
         for(PaperProcessing__c p : oldPaper){
             mapOld.put(p.id,p);
         }
+        List<String> ppToBatch = new List<String>();
         for (PaperProcessing__c pp : newPaper) {
             if (mapOld.get(pp.id) != null && mapOld.get(pp.id).Status__c != 'Completata' && pp.status__c == 'Completata') {
-                HDT_BA_PaperCampaignClosing ppBatch = new HDT_BA_PaperCampaignClosing(pp.Id);
-                ID batchProcessId = Database.executeBatch(ppBatch);
+                ppToBatch.add(pp.id);
             }
         }
+        HDT_BA_PaperCampaignClosing ppBatch = new HDT_BA_PaperCampaignClosing(ppToBatch);
+        ID batchProcessId = Database.executeBatch(ppBatch);
     }
 
 
@@ -44,19 +46,20 @@ public with sharing class HDT_UTL_PaperProcessing {
         for(PaperProcessing__c p : oldPaper){
             mapOld.put(p.id,p);
         }
+        List<String> ppToBatch = new List<String>();
         for (PaperProcessing__c pp : newPaper) {
             if (mapOld.get(pp.id) != null && mapOld.get(pp.id).TriggerCustomerReport__c == false && pp.TriggerCustomerReport__c == true) {
-                //execute batch
-                HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
-                ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+                ppToBatch.add(pp.id);
                 PaperProcessing__c newpp = new PaperProcessing__c();
                 newpp.Id = pp.Id;
                 newpp.TriggerCustomerReport__c = false;
                 newpp.status__c = 'In Corso';
                 paperToUpdate.add(newpp);
-                System.debug(batchProcessId);
             }
         }
+        //execute batch
+        HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
+        ID batchProcessId = Database.executeBatch(ppBatch, 10000);
 
         if (paperToUpdate.size() > 0) {
             HDT_SRV_PaperProcessing.updateRecords(paperToUpdate);
@@ -70,40 +73,41 @@ public with sharing class HDT_UTL_PaperProcessing {
         for(PaperProcessing__c p : oldPaper){
             mapOld.put(p.id,p);
         }
+        List<String> ppToBatch = new List<String>();
         for (PaperProcessing__c pp : newPaper) {
             if (mapOld.get(pp.id) != null && mapOld.get(pp.id).TriggerCustomerReport__c == false && pp.TriggerCustomerReport__c == true) {
-                //execute batch
-                HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
-                ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+                ppToBatch.add(pp.id);
                 PaperProcessing__c newpp = new PaperProcessing__c();
                 newpp.Id = pp.Id;
                 newpp.TriggerCustomerReport__c = false;
                 newpp.status__c = 'In Corso';
                 paperToUpdate.add(newpp);
-                System.debug(batchProcessId);
             }
         }
-
+        //execute batch
+        HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
+        ID batchProcessId = Database.executeBatch(ppBatch, 10000);
+        
         return paperToUpdate;
     }
 
     public static void exportFileNotTrigger(List<PaperProcessing__c> newPaper) {
+        List<String> ppToBatch = new List<String>();
         for (PaperProcessing__c pp : newPaper) {
             if (pp.TriggerCustomerReport__c == true) {
-                //execute batch
-                HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(pp.Id);
-                ID batchProcessId = Database.executeBatch(ppBatch, 500);
+                ppToBatch.add(pp.Id);
                 pp.TriggerCustomerReport__c = false;
                 pp.status__c = 'In Corso';
-                System.debug(batchProcessId);
             }
         }
+        //execute batch
+        HDT_BA_PaperProcessing ppBatch = new HDT_BA_PaperProcessing(ppToBatch);
+        ID batchProcessId = Database.executeBatch(ppBatch, 500);
         HDT_SRV_PaperProcessing.updateRecords(newPaper);
     }
 
     //Generate xls file
     public static String generateFile(List<HDT_WRP_PaperProcessing> ppList, String paperProcessingId, String fileName){
-        System.debug('generateFile method');
         String csvFile = '';
 
         List<String> tableHeader = new List<String>{'codCliente','ragSociale','nome','cognome','codFiscale','pIva','resIndirizo','resCivico','resCap','resComune','resProv','codContratto','protocollo','dataLettera','servizio','codCa','codPodPdr','offerta','societa','dataAttivazione','impianto','frnIndirizzo','frnCivico','frnCap','frnComune','frnProv','tipoLettera','modalitaSpedizione','aggregazione','lotto','dataLotto','recIntestatario','recIndirizzo','recCivico','recCap','recComune','recProv','recNazione','raccoMittente','raccoIndirizzo','raccoCivico','raccoCap','raccoComune','raccoProv','campo2','campo3','campo4','campo5','campo6','campo7','campo8','campo9','campo10','campo11','campo12','campo13','campo14','campo15','campo16','campo17','campo18','campo19','campo20','campo21','campo22','campo23','campo24','campo25','campo26','campo27','campo28','campo29','campo30','campo31','campo32','campo33','campo34','campo35','campo36','campo37','campo38','campo39','campo40','CRM_communication_Id'};
@@ -143,14 +147,11 @@ public with sharing class HDT_UTL_PaperProcessing {
 
         ContentVersion cv = contentVersionSrv.createRecord(fileName, fileName+'.xls', csvFile);
 
-        System.debug('ContentVersionId: ' + cv.Id);
-
         //Get Content Document
         ContentVersion conDoc = contentVersionQr.getRecordById(cv.Id);
         
         //Create ContentDocumentLink
         ContentDocumentLink cdl = contentDocumentLinkSrv.createRecord(paperProcessingId, conDoc.ContentDocumentId, 'I');
-        System.debug('ContentDocumentLinkId: ' + cdl.Id);
         return cv.Id;
     }
 
@@ -162,7 +163,6 @@ public with sharing class HDT_UTL_PaperProcessing {
             //System.debug('- - - - - ' + wsCall.body);
             return wsCall.status;
         } else {
-            System.debug('Error: ' + wsCall.errorDetails);
             return ((String) wsCall.errorDetails);
         }
     }
@@ -173,7 +173,6 @@ public with sharing class HDT_UTL_PaperProcessing {
             //System.debug('- - - - - ' + wsCall.body);
             return wsCall.status;
         } else {
-            System.debug('Error: ' + wsCall.errorDetails);
             return ((String) wsCall.errorDetails);
         }
     }

@@ -17,7 +17,7 @@ public with sharing class HDT_TRH_CampaignMemberAssigmentItemTst{
 		List<CampaignMemberAssigmentItem__c> campMemAssigItens=HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, accounts[0].Id, campMemAssig[0].Id, 'Preview', 1);
 
 		System.assertEquals(true, String.isNotEmpty(campMemAssigItens[0].Id), 'Campaign Member Assigment Item not Inserted');
-		System.assertNotEquals(false, String.isNotEmpty(campMemAssigItens[0].Id));
+		System.assertNotEquals(false, String.isNotEmpty(campMemAssigItens[0].Id), 'Campaign Member Assigment Item not Inserted');
 
 		campMemAssigItens[0].PercentageAllocation__c=2;
 		update campMemAssigItens;
@@ -27,7 +27,7 @@ public with sharing class HDT_TRH_CampaignMemberAssigmentItemTst{
 		                                                        WHERE Id=:campMemAssigItens[0].Id];
 
 		System.assertEquals(2, campMemAssigItemUpdated.PercentageAllocation__c, 'Campaign Member Assigment Item not updated');
-		System.assertNotEquals(1, campMemAssigItemUpdated.PercentageAllocation__c);
+		System.assertNotEquals(1, campMemAssigItemUpdated.PercentageAllocation__c, 'Campaign Member Assigment Item not updated');
 
 		Test.stopTest();
 	}

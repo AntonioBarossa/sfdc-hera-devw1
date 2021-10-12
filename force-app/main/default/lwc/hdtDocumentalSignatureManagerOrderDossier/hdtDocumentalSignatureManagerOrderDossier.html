@@ -22,12 +22,12 @@
             <div class="slds-clearfix slds-p-around_small">
                 <div class="slds-float_right">
                     <template if:true={isScriptBtnVisible}>
-                        <div class="slds-m-right_small">
-                            <template if:true={scriptMap.script}>
-                                <c-hdt-manage-script-modal script-process-name={scriptMap.script}
-                                    record-id={scriptMap.scriptTarget} button-label="Avvia Script" onclose={handleScriptModalClose}></c-hdt-manage-script-modal>
+                        <span class="slds-m-right_small">
+                            <template if:true={scriptMap.scriptName}>
+                                <c-hdt-manage-script-modal script-process-name={scriptMap.scriptName}
+                                    record-id={scriptMap.scriptTarget} button-label="Avvia Script"></c-hdt-manage-script-modal>
                             </template>
-                        </div>
+                        </span>
                     </template>
                     <c-hdt-after-script-modal order={orderParentRecord} show-modal={openAfterScriptModal}></c-hdt-after-script-modal>
                     <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>

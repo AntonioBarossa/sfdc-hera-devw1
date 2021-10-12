@@ -45,6 +45,13 @@
                 <stringValue>Chiusa</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.DiscardResubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>activityToUpdate</targetReference>
         </connector>

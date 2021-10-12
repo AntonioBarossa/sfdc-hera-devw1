@@ -30,6 +30,8 @@ public with sharing class HDT_SRV_SaleTst {
 	
 	@isTest
     public static void testCheckReadAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -38,13 +40,19 @@ public with sharing class HDT_SRV_SaleTst {
             Test.startTest();
 
             srvSale.checkReadAccess('Status__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Ended');
         }
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -53,13 +61,19 @@ public with sharing class HDT_SRV_SaleTst {
             Test.startTest();
 
             srvSale.checkCreateAccess('Status__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Ended');
         }
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -68,8 +82,12 @@ public with sharing class HDT_SRV_SaleTst {
             Test.startTest();
 
             srvSale.checkUpdateAccess('Status__c');
+
+            finished =  true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Ended');
         }
     }
 

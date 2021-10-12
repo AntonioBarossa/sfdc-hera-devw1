@@ -30,6 +30,7 @@ export default class HdtManageScriptModal extends LightningElement {
     @api hasLink;
     @api isInsideModal = false;
     @api openModal = false;
+    isScriptConfirmed = false;
     isDecisional;
 
     get hasScriptType() {
@@ -47,13 +48,16 @@ export default class HdtManageScriptModal extends LightningElement {
     }
 
     closeModal(){
+        console.log("closeModal");
         this.openModal = false;
-        this.handleCloseEvt();
+        this.dispatchEvent(new CustomEvent('close'));
     }
 
-    handleCloseEvt(){
-        console.log("handleCloseEvt");
-        this.dispatchEvent(new CustomEvent('close'));
+    confirmModal(){
+        console.log("confirmModal");
+        this.isScriptConfirmed = true;
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('confirm'));
     }
 
     checkScriptType() {
