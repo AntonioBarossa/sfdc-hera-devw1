@@ -40,7 +40,7 @@ public with sharing class HDT_UTL_CaseCancellationTst {
             myInput.causalCode = 'SE1';
             myInput.processCancellationReason = 'Ripensamento da cliente oltre i termini';
             
-            List<HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason> result1 = HDT_UTL_CaseCancellation.dispatchMethod(inputs);
+            HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result1 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
             
             //ASSERTS
             System.assertEquals('SW01', result1.causalCode, 'Result 1 causalCode errato.');
@@ -55,7 +55,7 @@ public with sharing class HDT_UTL_CaseCancellationTst {
             myInput.processTypeToCancell = '';
             inputs = new List<HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason>{myInput};
             
-            List<HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason> result2 = HDT_UTL_CaseCancellation.dispatchMethod(inputs);
+            HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result2 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
             
             //ASSERTS
             System.assertEquals(null, result2.causalCode, 'Result 2 causalCode errato.');
@@ -67,7 +67,7 @@ public with sharing class HDT_UTL_CaseCancellationTst {
             myInput.method = 'myMethod';
             inputs = new List<HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason>{myInput};
             
-            List<HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason> result3 = HDT_UTL_CaseCancellation.dispatchMethod(inputs);
+            HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result3 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
             
             //ASSERTS
             System.assertEquals('KO', result3.outcome, 'Result 3 Outcome errato.');
