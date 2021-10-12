@@ -12,7 +12,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
 		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, false, accList[0].Id);  
+        List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);  
         spList[0].CommoditySector__c = 'Energia Elettrica';
         update spList;
 		
@@ -34,9 +34,32 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
     static void cloneOrderAndUpdateTst()
     {
         HDT_SRV_VoltureChangeDispatcher voltureDispatcher = new HDT_SRV_VoltureChangeDispatcher();
+        HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
 
-        List<Order> orderList = [SELECT Id, ParentOrder__c FROM Order WHERE ParentOrder__c != null];
-        List<OrderItem> orderItemList = [SELECT id FROM OrderItem WHERE OrderId = :orderList[0].Id];
+        List<Order> orderList = [SELECT Id, 
+        ParentOrder__c,
+        Name,
+        EffectiveDate,
+        AccountId,
+        EstimateAmount__c,
+        PowerQuote__c,
+        AdministrativeBurden__c,
+        EstimatedVAT__c,
+        ValidityDateEstimate__c,
+        CIAccoutn__c,
+        QuickQuote__c,
+        ChamberCommerceRegistration__c,
+        Instance326__c,
+        DocumentLow80__c,
+        ContractSigned__c,
+        SignedDate__c,
+        SignatureMethod__c,
+        DocSendingMethod__c,
+        Sale__c,
+        Pricebook2Id,
+        Contact__c 
+        FROM Order WHERE ParentOrder__c != null];
+        List<OrderItem> orderItemList = voltureChangeQr.getOrderItemByOrderId(orderList[0].Id);
 
         System.assertEquals(1, orderList.size(),'Order non trovato');
         System.assertEquals(2, orderItemList.size(),'OrderItmes non trovati');
