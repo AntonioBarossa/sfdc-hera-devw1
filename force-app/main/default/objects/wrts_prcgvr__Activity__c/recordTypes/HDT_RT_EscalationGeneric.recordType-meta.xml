@@ -172,17 +172,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>ContactResult__c</picklist>
-        <values>
-            <fullName>Cliente irreperibile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ok contattato</fullName>
-<default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
             <fullName>Anonima</fullName>

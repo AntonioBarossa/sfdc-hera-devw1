@@ -161,15 +161,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-            <fullName>Cliente irreperibile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ok contattato</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>IwsDemand__c</picklist>
         <values>
             <fullName>HCMARCHE_AUTOLETTURA</fullName>

@@ -62,9 +62,9 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         Case updatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
         
         //ASSERTS
-        System.assert(result.success);
-        System.assertEquals('OK', result.message);
-        System.assertEquals('Blocco Effettuato', updatedCase.TecnicalPhase__c);
+        System.assert(result.success,'OK');
+        System.assertEquals('OK', result.message,'OK');
+        System.assertEquals('Blocco Effettuato', updatedCase.TecnicalPhase__c,'Blocco Effettuato');
         
     }
     
@@ -108,9 +108,9 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         Case updatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
         
         //ASSERTS
-        System.assert(result.success);
-        System.assertEquals('OK', result.message);
-        System.assertEquals('Blocco Non Effettuato', updatedCase.TecnicalPhase__c);
+        System.assert(result.success,'OK');
+        System.assertEquals('OK', result.message,'OK');
+        System.assertEquals('Blocco Non Effettuato', updatedCase.TecnicalPhase__c,'Blocco Non Effettuato');
         
     }
     
@@ -154,9 +154,9 @@ public with sharing class HDT_SRV_PrescrizioneFatturaTst {
         Case updatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
         
         //ASSERTS
-        System.assert(result.success);
-        System.assertEquals('OK', result.message);
-        System.assertEquals('Errore Lavorazione SAP', updatedCase.TecnicalPhase__c);
+        System.assert(result.success,'OK');
+        System.assertEquals('OK', result.message,'OK');
+        System.assertEquals('Errore Lavorazione SAP', updatedCase.TecnicalPhase__c,'Errore Lavorazione SAP');
         
     }
     

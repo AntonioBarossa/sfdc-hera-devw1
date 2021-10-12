@@ -584,7 +584,7 @@ export default class HdtSelfReading extends LightningElement {
 
         } else {
 
-            if(this.isVolture){            
+            if(this.isVolture && this.resumedFromDraft === false){            
                 
                 let errorVolture = 'Autolettura già inserita';
 

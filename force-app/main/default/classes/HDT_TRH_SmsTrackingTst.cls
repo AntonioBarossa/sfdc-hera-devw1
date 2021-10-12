@@ -62,7 +62,7 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 			                                LIMIT 1];
 
 			System.assertEquals(true, testSmsTracking.Id!=null, 'SmsTracking not Inserted');
-			System.assertNotEquals(false, testSmsTracking.Id!=null);
+			System.assertNotEquals(false, testSmsTracking.Id!=null, 'SmsTracking not Inserted');
 
 		}
 	}
@@ -111,7 +111,7 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 			                                LIMIT 1];
 
 			System.assertEquals('test', testSmsTracking.Name__c, 'SmsTracking not Updated');
-			System.assertNotEquals('', testSmsTracking.Name__c);
+			System.assertNotEquals('', testSmsTracking.Name__c, 'SmsTracking not Updated');
 
 		}
 	}

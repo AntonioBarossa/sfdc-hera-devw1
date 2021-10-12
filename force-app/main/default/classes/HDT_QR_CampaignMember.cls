@@ -476,7 +476,8 @@ public inherited sharing class HDT_QR_CampaignMember {
     * @return List<CampaignMember>
     */
     public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
-        return [
+        SObjectAccessDecision securityDecision = 
+         Security.stripInaccessible(AccessType.READABLE, [
             SELECT Id,
             Contact.AccountId,
             CampaignId,
@@ -485,8 +486,9 @@ public inherited sharing class HDT_QR_CampaignMember {
             FROM CampaignMember 
             WHERE ContactId = :contact
             AND CampaignId = :campaign
-            WITH SECURITY_ENFORCED
-        ];
+        ]);
+        return securityDecision.getRecords();
+        //System.debug(securityDecision.getRemovedFields());
     }
 
     /**

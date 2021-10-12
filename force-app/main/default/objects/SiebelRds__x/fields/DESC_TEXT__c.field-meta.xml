@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>DESC_TEXT</label>
+    <label>Note</label>
     <length>2000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>
