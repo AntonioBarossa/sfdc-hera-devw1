@@ -46,8 +46,7 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
             Test.startTest();
             HDT_QR_MassiveLoaderRequest testRequest = new HDT_QR_MassiveLoaderRequest ();
             List<MassiveLoaderRequest__c> returnedValue = testRequest.getRecordForImport();
-
-            
+          
             System.assertEquals(false, returnedValue.isEmpty(), 'Get Record for Import is found');
             System.assertNotEquals(true, returnedValue.isEmpty(), 'No records of MassiveLoaderRequest__c were retrieved');
 

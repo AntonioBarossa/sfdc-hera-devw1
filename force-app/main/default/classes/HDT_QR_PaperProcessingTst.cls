@@ -23,8 +23,8 @@ public with sharing class HDT_QR_PaperProcessingTst {
         Test.startTest();
 
         PaperProcessing__c testPaper = HDT_QR_PaperProcessing.getParameterForName(lstString);
-        system.assertEquals(testPaper != null, true);
-        system.assertNotEquals(testPaper == null, true);
+        system.assertEquals(testPaper != null, true, 'Value of parameter is matching');
+        system.assertNotEquals(testPaper == null, true, 'Value of parameter is not matching');
         Test.stopTest();
     }
 

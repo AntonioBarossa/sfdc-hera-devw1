@@ -283,7 +283,8 @@ public with sharing class HDT_UTL_Sales {
             }
         }
         if(childToUpdate != null && !childToUpdate.isEmpty()){
-            orderSrv.updateRecords(childToUpdate);
+            SObjectAccessDecision securityDecision =  Security.stripInaccessible(AccessType.UPDATABLE, childToUpdate);
+            orderSrv.updateRecords(securityDecision.getRecords());
             //update childToUpdate;
         }
         if(listActivityToCreate != null && !listActivityToCreate.isEmpty()){

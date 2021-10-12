@@ -33,8 +33,8 @@ public with sharing class HDT_QR_FiltriProcessiTst {
 
             new HDT_QR_FiltriProcessi();
             HDT_FiltriProcessiSelFornitura__mdt filtriProcess = HDT_QR_FiltriProcessi.getCustomMetadata('Gestione Bonus Sociale');
-            System.assertEquals(true, filtriProcess.Id != null); 
-            System.assertNotEquals(false, filtriProcess.Id != null);
+            System.assertEquals(true, filtriProcess.Id != null, 'value of parameter is matching'); 
+            System.assertNotEquals(false, filtriProcess.Id != null , 'value of parameter is not matching');
             Test.stopTest();
         }
     }
