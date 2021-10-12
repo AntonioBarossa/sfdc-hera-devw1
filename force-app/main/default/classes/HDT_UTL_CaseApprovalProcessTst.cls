@@ -4,6 +4,8 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
     //DEBUG
     public static final String TEST_NAME = 'HDT_UTL_CaseApprovalProcessTst';
     
+    //DATA
+    private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
     
     //TEST SETUP
     
@@ -26,17 +28,22 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         
         //CASE PHASE MANAGEMENT ENABLE
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
         
+        String rtId = constants.CASE_RECORDTYPEID_PAG_PIANORATEIZZAZIONE;
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_PAG_PIANORATEIZZAZIONE;
+        HDT_UTL_DataFactoryTst.newPhaseTransition('In Attesa Approvazione', 'Bozza', rtId, rtName);
+            
         
-        //CASE - INSERT
+        //CASE - INSERT - PAGAMENTI - PIANO RATEIZZAZIONE
         Case myCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
-        
+        myCase.RecordTypeId = constants.CASE_RECORDTYPEID_PAG_PIANORATEIZZAZIONE;
         insert myCase;
         
-        
         //CASE UPDATING
-        'In Attesa Approvazione'
-        update myCase
+        myCase.Phase__c = 'In Attesa Approvazione';
+        update myCase;
         
         //TESTING
         Test.startTest();
@@ -48,7 +55,7 @@ public with sharing class HDT_UTL_CaseApprovalProcessTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
+        System.assert(myCase != null, 'Attenzione, myCase non può essere null!');
         
     }
 
