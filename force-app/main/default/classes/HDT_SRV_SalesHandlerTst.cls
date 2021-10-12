@@ -87,6 +87,9 @@ private class HDT_SRV_SalesHandlerTst {
         HDT_WRP_MrrRequest.HDT_WRP_Field field13=new HDT_WRP_MrrRequest.HDT_WRP_Field();
         field13.name='updatedFrom';
         field13.value='badvalue';//To throw List index out of bounds 
+        HDT_WRP_MrrRequest.HDT_WRP_Field field14=new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        field14.name='NOTE_ANN';
+        field14.value='note';//To throw List index out of bounds 
           
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList=new List<HDT_WRP_MrrRequest.HDT_WRP_Field> ();
         fieldList.add(field);
@@ -108,6 +111,7 @@ private class HDT_SRV_SalesHandlerTst {
         fieldList.add(field11);
         fieldList.add(field12);
         fieldList.add(field13);
+        fieldList.add(field14);
           obj.fields=fieldList;
         List<HDT_WRP_MrrRequest.HDT_WRP_Object> objList=new List<HDT_WRP_MrrRequest.HDT_WRP_Object> ();
         objList.add(obj);
@@ -238,6 +242,20 @@ private class HDT_SRV_SalesHandlerTst {
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id,
       'Pricebook2Id'=>pricebook.Id
+    } );
+    List<Order> orderAnnullamentoEsitoOkDa= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Contact__c'=>contactList[0].id,
+      'Phase__c'=>'Annullamento - Esito OK da DL/SII',
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ServicePoint__c'=>servicePointList[0].Id
+    } ); 
+    List<Order> orderAnnullamentoEsitoKoDa= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Contact__c'=>contactList[0].id,
+      'Phase__c'=>'Annullamento - Esito KO da DL/SII',
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ServicePoint__c'=>servicePointList[0].Id
     } ); 
     HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
    
@@ -385,11 +403,28 @@ static void testHandleSalesProcessCategory7() {
 @isTest
 static void testHandleSalesProcessCategoryAnnullamento() {
 
-  Order orderAnnullamentoRicezione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento SII - Ricezione' LIMIT 1];
-  Order orderAnnullamentoInviato=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Inviato al DL/SII' LIMIT 1];
+  Order orderAnnullamentoEsitoOkDa=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Esito OK da DL/SII' LIMIT 1];
+  Order orderAnnullamentoEsitoKoDa=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Esito KO da DL/SII' LIMIT 1];
   Test.startTest();
+    new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoEsitoOkDa,'Esito OK da DL/SII','NOTIF_ES',null);
+    new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoEsitoKoDa,'Esito KO da DL/SII','NOTIF_ES',null);
+    System.assertNotEquals(400, RestContext.response.statusCode,'No errors triggered during the processes execution');
+    System.assertEquals(200, RestContext.response.statusCode,'the processes are well completed');
+  Test.stopTest();
+
+}
+
+@isTest
+static void testHandleSalesProcessCategoryAnnullamento2() {
+
+  Order orderAnnullamentoInviato=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Inviato al DL/SII' LIMIT 1];
+  Order orderAnnullamentoEsitoKoDa=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Esito KO da DL/SII' LIMIT 1];
+  Order orderAnnullamentoRicezione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento SII - Ricezione' LIMIT 1];
+  Test.startTest();
+    
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoInviato,'Annullamento - Inviato al DL/SII','NOTIF_ES',null);
+    new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoEsitoKoDa,'Errore tecnico invio a SAP','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','RICH_PASS',null);
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','WSLead_Callback',null);
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','WSLead_Winback',null);
