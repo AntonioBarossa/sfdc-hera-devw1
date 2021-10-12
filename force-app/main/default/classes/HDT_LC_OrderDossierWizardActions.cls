@@ -55,7 +55,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 if(quoteIds.contains(childOrd.SBQQ__Quote__c)){
                     o.SBQQ__Quote__c=null;
                 }else{
-                    quoteIds.add(o.SBQQ__Quote__c);
+                    quoteIds.add(childOrd.SBQQ__Quote__c);
                 }
                 ordersToUpdate.add( o );
             } else if(childOrd.RecordType.DeveloperName == 'HDT_RT_VAS' && mapChildOrders.get(childOrd?.OrderReference__c) != null ){
@@ -70,7 +70,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 if(quoteIds.contains(childOrd.SBQQ__Quote__c)){
                     ordersToUpdate.add(new Order( Id = childOrd.Id, SBQQ__Quote__c=null));
                 }else{
-                    quoteIds.add(o.SBQQ__Quote__c);
+                    quoteIds.add(childOrd.SBQQ__Quote__c);
                 }
             }
         }
