@@ -15,9 +15,22 @@ public class HDT_LC_LastBillTst {
 
     @isTest
     static void getData(){
+        
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('outcome', 'OK');
+        mapp.put('amount', '10.00');
+        mapp.put('billNumber', '101');
+        mapp.put('expiredDate', String.valueOf(System.now().format('dd/MM/yyyy')));
+        mapp.put('billStatus', 'PAGATA');
+        mapp.put('commodity', '{"Energia elettrica":"true"}');
+        mapp.put('callws', 'false');
+        String expectedResult = JSON.serialize(mapp);
 
         KpiTracking__c kpi = [SELECT Id FROM KpiTracking__c LIMIT 1];
-        HDT_LC_LastBill.getData('accountCode', 'mode', kpi.Id);
+        String result = HDT_LC_LastBill.getData('accountCode', 'mode', kpi.Id);
+        
+        System.assertEquals(expectedResult, result, 'getData did not work correctly');
+		System.assertNotEquals(null, result,'getData did not work correctly');
 
     }
 
@@ -27,14 +40,19 @@ public class HDT_LC_LastBillTst {
         Map<String,String> mapping = new Map<String,String>();
         mapping.put('commodity', '{"Energia elettrica":"true"}');
         mapping.put('billStatus', 'PAGATA');
-        mapping.put('expiredDate', String.valueOf(Date.today()));
+        mapping.put('expiredDate', String.valueOf(System.now().format('dd/MM/yyyy')));
         mapping.put('billNumber', '101');
         mapping.put('amount', '10');
 
-        String result = JSON.serialize(mapping);
+        String serializedInput = JSON.serialize(mapping);
 
         KpiTracking__c kpi = [SELECT Id FROM KpiTracking__c LIMIT 1];
-        HDT_LC_LastBill.updateKpiTracking(result, kpi.Id);
+        String result = HDT_LC_LastBill.updateKpiTracking(serializedInput, kpi.Id);
+        
+        System.assertEquals('OK', result, 'updateKpiTracking did not work correctly');
+		System.assertNotEquals(null, result,'updateKpiTracking did not work correctly');
+        
+        
 
     }
     
@@ -48,7 +66,7 @@ public class HDT_LC_LastBillTst {
         Continuation conti = (Continuation)HDT_LC_LastBill.startRequest('accountCode', 'mode', kpi.Id);
         // Verify that the continuation has the proper requests
         Map<String, HttpRequest> requests = conti.getRequests();
-        system.assert(requests.size() == 1);
+        system.assert(requests.size() == 1, 'getRequests did not work correctly');
         //system.assert(requests.get(controller.requestLabel) != null);
         
         // Perform mock callout 
@@ -64,8 +82,7 @@ public class HDT_LC_LastBillTst {
         Object result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);
         
         // result is the return value of the callback
-        System.assertEquals(null, result);
-        
+        System.assertEquals(null, result, 'invokeContinuationMethod did not work correctly');
         // Verify that the controller's result variable
         //   is set to the mock response.
         //System.assertEquals('Mock response body', controller.result);

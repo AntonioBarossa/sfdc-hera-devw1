@@ -155,7 +155,8 @@ public with sharing class HDT_LC_LastBill {
         Integer statusCode = response.getStatusCode();
         Map<String,String> result = new Map<String,String>();
         Map<String,String> commodity = new Map<String,String>();
-
+        
+        //CAUSA DI ERRORE - TODO: FIX TEST
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
         System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
         if (responseBodyMap.containsKey('data')) {
