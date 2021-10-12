@@ -71,10 +71,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NOME_CONTATTO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>INTEGRATION_ID__c</field>
             </layoutItems>
             <layoutItems>
@@ -91,10 +87,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>COGNOME_CONTATTO__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_72__c</field>
@@ -143,6 +135,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_118__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ASSET_NUM__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -794,10 +790,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_VAS_CONTRACT_IMPIANTO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ASSET_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
