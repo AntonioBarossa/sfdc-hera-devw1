@@ -101,7 +101,7 @@ public class HDT_LC_LastBillTst {
         
         // Invoke callback method
         String result = HDT_LC_LastBill.processResponse(new List<String>{'Continuation-1'}, null);
-        resultDes resultDes = (Map<String,String>) JSON.deserializeUntyped(result);
+        Map<String,String> resultDes = (Map<String,String>) JSON.deserializeUntyped(result);
         String outcome = (String) resultDes.get('outcome');
         
         // result is the return value of the callback
