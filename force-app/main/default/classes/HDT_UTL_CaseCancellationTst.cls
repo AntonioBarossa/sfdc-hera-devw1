@@ -38,12 +38,12 @@ public with sharing class HDT_UTL_CaseCancellationTst {
             //TESTING - getCancellationReason
             myInput.method = 'getCancellationReason';
             myInput.causalCode = 'SE1';
-            myInput.processCancellationReason = 'Ripensamento da cliente oltre i termini';
+            myInput.processCancellationReason = '';
             
             HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result1 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
             
             //ASSERTS
-            System.assertEquals('SW01', result1.causalCode, 'Result 1 causalCode errato.');
+            System.assertEquals('AN1', result1.causalCode, 'Result 1 causalCode errato.');
             
             
             //TESTING - getListCancellationReason
