@@ -95,28 +95,59 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         mySetup();
 
-        Case myCase1 = [Select Id, Type, DelegateName__c, ComplaintEntryChannel__c, CompliantOriginEmail__c, OpinionRequest__c from Case where Type = 'Richiesta Parere'];
+        Case myCase1 = [Select Id, Type, DelegateName__c, ComplaintEntryChannel__c, CompliantOriginEmail__c,
+         SoldBy__c, OpinionRequest__c,
+         ComplaintType__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c,
+         ThirdLevelComplaintClassification__c, FithLevelComplaintClassification__c from Case where Type = 'Richiesta Parere'];
 
         String recordId1 = myCase1.Id;
-        myCase1.DelegateName__c = '';
         myCase1.ComplaintEntryChannel__c = 'PEC';
         myCase1.CompliantOriginEmail__c = '';
         String fields1 = JSON.serialize(myCase1);
 
         String recordId7 = myCase1.Id;
+        myCase1.CompliantOriginEmail__c = 'Tizio';
         myCase1.DelegateName__c = 'Mario Rossi';
+        myCase1.FithLevelComplaintClassification__c = '';
         String fields7 = JSON.serialize(myCase1);
+
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        // This code runs as the system user
+        Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+        LocaleSidKey='en_US', ProfileId = p.Id,
+        TimeZoneSidKey='America/Los_Angeles',
+         UserName=uniqueUserName);
+        insert u;
+
+        String recordId7b = myCase1.Id;
+        myCase1.DelegateName__c = '';
+        myCase1.FithLevelComplaintClassification__c = '';
+        myCase1.SoldBy__c = u.Id;
+        String fields7b = JSON.serialize(myCase1);
 
         String recordId8 = myCase1.Id;
         myCase1.SendDate__c = Date.newInstance(2025, 10, 10);
         String fields8 = JSON.serialize(myCase1);
 
         String recordId9 = myCase1.Id;
-        myCase1.OpinionRequest__c = 'Prova parere';
+        myCase1.ComplaintType__c = 'Reclamo Scritto';
+        myCase1.FirstLevelComplaintClassification__c = 'Reclamo Scritto';
+        myCase1.SecondLevelComplaintClassification__c = 'Mercato';
+        myCase1.ThirdLevelComplaintClassification__c = 'Presunti Contratti non Richiesti';
+        myCase1.FithLevelComplaintClassification__c = 'Firma falsa';
         String fields9 = JSON.serialize(myCase1);
 
-        String recordId10 = myCase1.Id;
+        /*String recordId10 = myCase1.Id;
+        myCase1.SendDate__c = Date.newInstance(2015, 10, 10);
+        myCase1.OpinionRequest__c = 'Prova parere';
         String fields10 = JSON.serialize(myCase1);
+
+        String recordId10b = myCase1.Id;
+        myCase1.SendDate__c = Date.newInstance(2015, 10, 10);
+        myCase1.OpinionRequest__c = '';
+        String fields10b = JSON.serialize(myCase1);*/
 
         //TESTING
         Test.startTest();
@@ -126,14 +157,11 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             HDT_UTL_CaseValidations myClass1 = new HDT_UTL_CaseValidations();
 
             myClass1.validate(fields1, recordId1);
-
             myClass1.validate(fields7, recordId7);
-
             myClass1.validate(fields8, recordId8);
-
             myClass1.validate(fields9, recordId9);
-
-            myClass1.validate(fields10, recordId10);
+            //myClass1.validate(fields10, recordId10);
+            //myClass1.validate(fields10b, recordId10b);
 
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
@@ -161,32 +189,35 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         myCase2.AttachmentManagement__c = true;
         String fields2 = JSON.serialize(myCase2);
 
+        String recordId2b = myCase2.Id;
+        myCase2.AttachmentManagement__c = false;
+        String fields2b = JSON.serialize(myCase2);
+
         String recordId3 = myCase2.Id;
+        myCase2.AttachmentManagement__c = null;
         myCase2.Deposit__c = true;
-        myCase2.DepositAmount__c = 43;
         myCase2.DepositPaymentMode__c = '';
         String fields3 = JSON.serialize(myCase2);
 
+        Account myAccount = [select Id, Category__c from Account];
+        List<Case> newList = new List<Case>();
+        newList.add(myCase2);
+        List<FormulaRecalcResult> results = Formula.recalculateFormulas(newList);
+        System.assert(results[0].isSuccess(), 'results[0] deve essere success');
         String recordId4 = myCase2.Id;
-        myCase2.Deposit__c = true;
-        myCase2.DepositAmount__c = 43;
-        myCase2.DepositPaymentMode__c = 'Bollettino postale';
+        myCase2.Deposit__c = false;
         myCase2.ApplicationInterests__c = false;
         myCase2.InstallmentNumberRequired__c = 8;
         String fields4 = JSON.serialize(myCase2);
 
         String recordId5 = myCase2.Id;
-        myCase2.Deposit__c = true;
-        myCase2.DepositAmount__c = 43;
-        myCase2.DepositPaymentMode__c = 'Bollettino postale';
         myCase2.ApplicationInterests__c = true;
         myCase2.InstallmentNumberRequired__c = 4;
         String fields5 = JSON.serialize(myCase2);
 
         String recordId6 = myCase2.Id;
-        myCase2.Deposit__c = true;
-        myCase2.DepositAmount__c = 43;
-        myCase2.DepositPaymentMode__c = 'Bollettino postale';
+        myCase2.ApplicationInterests__c = true;
+        myCase2.InstallmentNumberRequired__c = 1;
         String fields6 = JSON.serialize(myCase2);
 
 
@@ -196,6 +227,8 @@ public with sharing class HDT_UTL_CaseValidationsTst {
             HDT_UTL_CaseValidations myClass2A = new HDT_UTL_CaseValidations();
 
             myClass2A.validate(fields2, recordId2);
+
+            myClass2A.validate(fields2b, recordId2b);
 
             myClass2A.validate(fields3, recordId3);
 
@@ -225,33 +258,37 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         //SETUP
 
         mySetup();
-        Case myCase3 = [Select Id, Type, AttachmentManagement__c, Deposit__c, DepositPaymentMode__c, SendPaperlessCodeMode__c from Case where Type = 'Piano Rateizzazione'][1];
 
+        Case myCase3 = [Select Id, Type, TypeInstallmentPlan__c, Deposit__c, DepositPaymentMode__c, SendPaperlessCodeMode__c from Case where Type = 'Piano Rateizzazione'][1];
 
-        Account myAccount = [Select Id, Category__c from Account];
+        Account myAccount = [select Id, Category__c from Account];
         myAccount.Category__c = 'Aziende TOP';
         update myAccount;
-        //List<FormulaRecalcResult> results2 = Formula.recalculateFormulas(caseList);
-        //System.assert(results2[0].isSuccess(), 'results2[0] deve essere success');
+        List<Case> newList = new List<Case>();
+        newList.add(myCase3);
+        List<FormulaRecalcResult> results = Formula.recalculateFormulas(newList);
+        System.assert(results[0].isSuccess(), 'results[0] deve essere success');
+
+        String recordId6b = myCase3.Id;
+        myCase3.Deposit__c = false;
+        myCase3.TypeInstallmentPlan__c = 'Straordinario';
+        String fields6b = JSON.serialize(myCase3);
 
         String recordId11 = myCase3.Id;
-        myCase3.Deposit__c = false;
         myCase3.DepositPaymentMode__c = 'Paperless';
         myCase3.SendPaperlessCodeMode__c = '';
         String fields11 = JSON.serialize(myCase3);
 
         String recordId12 = myCase3.Id;
-        myCase3.Deposit__c = false;
         myCase3.SendPaperlessCodeMode__c = 'SMS';
         String fields12 = JSON.serialize(myCase3);
         
         String recordId13 = myCase3.Id;
-        myCase3.Deposit__c = false;
         myCase3.SendPaperlessCodeMode__c = 'Email';
         String fields13 = JSON.serialize(myCase3);
 
         String recordId14 = myCase3.Id;
-        myCase3.Deposit__c = false;
+        myCase3.SendPaperlessCodeMode__c = '';
         String fields14 = JSON.serialize(myCase3);
 
         Test.startTest();
