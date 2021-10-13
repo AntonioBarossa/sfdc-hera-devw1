@@ -91,17 +91,16 @@ public class HDT_LC_ReletedListAccountTst {
     String response = HDT_LC_ReletedListAccount.getContList(acc.Id);
     Test.stopTest();
     System.debug(response);
-    //List<AccountContactRelation> actualResponse = [SELECT Id FROM AccountContactRelation WHERE ContactId = :con.Id];
-   // System.assertEquals(response[0].Id, actualResponse[0].Id, 'There\'s no contact related to this account');
-    //System.assertNotEquals(null, actualResponse, 'There\'s no contact related to this account');
+    List<AccountContactRelation> actualResponse = [SELECT Id FROM AccountContactRelation WHERE ContactId = :con.Id];
+    System.assertEquals(response!=null, actualResponse!=null, 'There\'s no contact related to this account');
+    System.assertNotEquals(null, actualResponse, 'There\'s no contact related to this account');
     }
     @IsTest
     public static void getContListBlankStringTst(){
     Test.startTest();
     String response = HDT_LC_ReletedListAccount.getContList('');
     Test.stopTest();
-        System.debug(response);
-    //System.assertEquals(response, null, 'There should be no result to this method since the accountId parameter is blank');
+    System.assertEquals(response, null, 'There should be no result to this method since the accountId parameter is blank');
     }
     @IsTest
     public static void getRecordTypeAccountListTst(){
