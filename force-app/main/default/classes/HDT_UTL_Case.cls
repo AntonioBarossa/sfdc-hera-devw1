@@ -219,10 +219,11 @@ public inherited sharing class HDT_UTL_Case {
      * Crea una Activity PClick sotto un Case.
      * recordId = id del Case
      * description = testo libero da mostrare nell'activity
-     * type = nome del template PClick dell'activity da creare
+     * templateName = nome del template PClick dell'activity da creare
+     * type = tipo attività
      */ 
-    public static void createActivity(String recordId, String description, String type){
-        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+    public static void createActivity(String recordId, String description, String templateName, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ templateName +'\'';
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
@@ -233,7 +234,8 @@ public inherited sharing class HDT_UTL_Case {
             activity.Case__c = recordId;
             activity.CausalError__c = description;
             activity.wrts_prcgvr__Description__c = description;
-            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
+            activity.Type__c = type;
+            HDT_UTL_DatabaseService.insertSObject(activity);
         }
     }
 
