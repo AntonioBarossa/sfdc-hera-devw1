@@ -26,14 +26,11 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
         Database.QueryLocatorIterator existingMembers =  query.iterator();
 
         //get existing campaginMember number
-        Database.QueryLocator queryMembers = Database.getQueryLocator('Select Count(Id) members, CampaignId FROM CampaignMember WHERE CampaignId IN :campaignIds AND Campaign.CodeGenerationRule__c != \'Manuale\' AND PromoCommercialCode__c  != \'\' AND Campaign.CodeManagementModel__c IN (\'Per singolo Campaign Member\',\'Porta un amico\')');
-        Database.QueryLocatorIterator membersNumber =  queryMembers.iterator();
+        List<AggregateResult> membersNumber = [Select Count(Id) members, CampaignId FROM CampaignMember WHERE CampaignId IN :campaignIds AND Campaign.CodeGenerationRule__c != 'Manuale' AND PromoCommercialCode__c  != '' AND Campaign.CodeManagementModel__c IN ('Per singolo Campaign Member','Porta un amico') GROUP BY CampaignId];
         Map<Id, Integer> campaignIdMemberTotal = new Map<Id, Integer>();
-        while (membersNumber.hasNext()) {
-            AggregateResult cm = (AggregateResult) membersNumber.next();
+        for (AggregateResult cm : membersNumber) {
             campaignIdMemberTotal.put((Id)cm.get('CampaignId'), (Integer)cm.get('members'));
         }
-       // System.debug('campaignIdMemberTotal - ' + campaignIdMemberTotal);
 
         set<Integer> codeList = new set<Integer>();
         while (existingMembers.hasNext()){
@@ -56,7 +53,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
         Map<String,String> codeId = new Map<String,String>();
         for(CampaignMember cm : scope) {
             String newCode = '';
-            Integer startNumber = campaignIdMemberTotal.get(cm.CampaignId);
+            Integer startNumber = campaignIdMemberTotal.get(cm.CampaignId) != null ? campaignIdMemberTotal.get(cm.CampaignId) : 0;
             if (cm.Campaign.CodeGenerationRule__c == 'PrefissoProgressivo') {
                 newCode = cm.Campaign.PrefixCode__c + ('0'.repeat(this.numberLength - String.valueOf(startNumber).length())) + startNumber;
             } else if (cm.Campaign.CodeGenerationRule__c == 'Prefisso + Nome + Cognome + Progressivo') {
@@ -65,7 +62,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             }
             this.startNumber = this.startNumber + 1;
             campaignIdMemberTotal.put(cm.CampaignId, startNumber + 1);
-           // System.debug('final code --------  ' + newCode);
 
             //new commercial code
             CommercialCode__c cc = new CommercialCode__c(
@@ -83,7 +79,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             memberCode.put(cm.Id, newCode);
         }
         insert ccList; 
-       // System.debug('cclist --------  ' + ccList);
         for (CommercialCode__c cc : ccList) {
             codeId.put(cc.FullCode__c, cc.Id);
         }
@@ -100,7 +95,6 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             update membersToUpdate;
         }
 
-      //  System.debug('membersToUpdate --------  ' + membersToUpdate);
     }
 
     public void finish(Database.BatchableContext bc){
