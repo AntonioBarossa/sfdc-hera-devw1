@@ -513,7 +513,9 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckDescription__c,
             IncomingCreditCheckResult__c,
             OutgoingCreditCheckResult__c,
-            OrderReference__c
+            OrderReference__c,
+            ProcessType__c,
+            SBQQ__Quote__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -713,7 +715,8 @@ public inherited sharing class HDT_QR_Order {
             Channel__c,
             FriendCode__c,
             CampaignCode__c,
-            CreatedBy__c
+            CreatedBy__c,
+            CreatedDate
             FROM
             Order
             WHERE AccountId = :accountId
@@ -937,7 +940,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<order> getOrderCreatedYesterday(){
-        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     /**

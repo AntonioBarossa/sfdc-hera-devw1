@@ -28,6 +28,7 @@ public with sharing class HDT_SRV_BillingProfileTst {
         List<BillingProfile__c> billingProfileList = [SELECT Id FROM BillingProfile__c];
         
         System.assertEquals(billingProfileList.size(), 2, 'There are 2 BillingProfile in the ORG in this moment, becasue we insert another record (the other is old from setup)');
+        System.assertEquals(billingProfileList.size(), 1, 'Value of parameter is not matching');
         Test.stopTest();
     }
 
@@ -41,6 +42,7 @@ public with sharing class HDT_SRV_BillingProfileTst {
         billingProfileClass.updateRecord(bProfile); 
         List<BillingProfile__c> billingProfileList = [SELECT Id FROM BillingProfile__c];
         System.assertEquals(billingProfileList.size(), 1, 'There are 1 BillingProfile in the ORG in this moment, because we just update the record');
+        System.assertEquals(billingProfileList.size(), 0, 'Value of parameter is not matching');
         Test.stopTest();
     }
 

@@ -6,7 +6,7 @@ public inherited sharing class HDT_UTL_CaseApprovalProcess {
     @InvocableMethod(label = 'Submit for Approval')
     public static void submitForApproval(List<Case> cases){
 
-        Case c = (Case)Trigger.new[0];
+        Case c = cases[0];
         Approval.ProcessResult result;
 
         List<Id> approversIds = new List<Id>();

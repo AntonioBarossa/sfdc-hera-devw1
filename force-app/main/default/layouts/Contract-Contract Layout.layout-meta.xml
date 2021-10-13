@@ -23,7 +23,7 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Pricebook2Id</field>
             </layoutItems>
             <layoutItems>
@@ -85,10 +85,10 @@
                 <behavior>Readonly</behavior>
                 <field>ExciseGas__c</field>
             </layoutItems>
-            <layoutItems><!--Start  HRAWRM-251 08/09/2021 -->
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CommercialProduct__c</field>
-            </layoutItems><!--End  HRAWRM-251 08/09/2021 -->
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -246,6 +246,20 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>VasPracticeCode__c</fields>
+        <fields>PRODUCT2.NAME</fields>
+        <relatedList>Asset.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>VasPracticeCode__c</fields>
+        <fields>VasEffectiveDate__c</fields>
+        <fields>SBQQ__ProductName__c</fields>
+        <relatedList>SBQQ__Subscription__c.SBQQ__Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>

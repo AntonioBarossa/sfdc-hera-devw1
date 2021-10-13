@@ -40,7 +40,7 @@
                 </template>
                 <div class="slds-grid slds-grid_vertical">
                     <div class="slds-col slds-grid">
-                        <template if:true={showChildList2}>
+                        <!-- <template if:true={showChildList2}>
                             <div
                                 class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-combobox data-id="tipoCopia" name="TipoAttivita" label="Tipologia Canale"
@@ -48,8 +48,8 @@
                                     onchange={changeValueTipoAttivita} value={selectedActivity} required>
                                 </lightning-combobox>
                             </div>
-                        </template>
-                        <template if:true={isinboundchannel}>
+                        </template> -->
+                        <template if:true={showChildList2}>
                             <template if:false={isRec}>
                                 <div
                                 class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
@@ -80,26 +80,31 @@
                                 <lightning-input-field field-name="CustomerVATNumber__c" disabled
                                     class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
                             </template>
-                            <template if:false={isRec}>
-                                <lightning-input-field field-name="BillingAddress" disabled
-                                    class="slds-size_5-of-12 fieldsData"> </lightning-input-field>
-                            </template>
                         </div>
+                            <template if:false={isRec}>
+                                <!-- <lightning-input-field field-name="BillingAddress" disabled
+                                    class="slds-size_5-of-12 fieldsData"> </lightning-input-field> -->
+                                <div class="slds-text-title slds-text-heading_large slds-m-bottom_large"><b>Indirizzi Spedizione</b><br/></div>
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={shippingFields} for:item="field" >
+                                        <lightning-input-field field-name={field.apiname} key={field.apiname} disabled class={field.cssClass}></lightning-input-field>
+                                    </template>
+                                </div>
+                            </template>
 
-                        <template if:true={isinboundchannel}>
                             <template if:true={isSendEmail}>
                                 <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={ordChild.Contact__r.Email} required data-id="Email__c">
                                 </lightning-input-field>
+                                <br></br>
                             </template>
                             <template if:true={isCartacea}>
                                 <c-hdt-target-object-address-fields accountid={accountId}>
                                 </c-hdt-target-object-address-fields>
                             </template>
-                        </template>
 
-                        <!--<template for:each={mapFields} for:item="field" >
-                        <lightning-input-field field-name="field.apiname" key={field.apiname}></lightning-input-field>
-                    </template>-->
+<!--                     <template for:each={mapFields} for:item="field" >
+                        <lightning-input-field field-name={field.apiname} key={field.apiname} ></lightning-input-field>
+                    </template> -->
                     </lightning-record-edit-form>
                     <!--<template if:true={isModInvioShown}>-->
                     

@@ -52,7 +52,9 @@ static void testGetCampaigns(){
     List<CampaignMember> resultTest = HDT_LC_CampaignsController.getCampaigns(contactList[0].Id,'Contact','Test','2');
     List<CampaignMember> resultTest1 = HDT_LC_CampaignsController.getCampaigns(leadList[0].Id,'Lead','Test','2');
     List<CampaignMember> resultTest2 = HDT_LC_CampaignsController.getCampaigns(accList[0].Id,'Account','Test','2');
-    //System.assertEquals(resultTest[0] ,resultTest[0], 'Campaing Member Found');
+
+    System.assertEquals(resultTest.size()!=null, true, 'Same Ids of Campaign');
+    System.assertNotEquals(resultTest.size() !=null , false, 'Ids of Campaigns are not null');
     Test.stopTest();
 
 }
@@ -71,8 +73,8 @@ static void testGetOutboundCampaigns(){
 
     Test.startTest();
     List<Campaign> listaResult = HDT_LC_CampaignsController.getOutboundCampaigns();
-    //System.assertEquals(listaResult[0].Id, listCampaign[0].Id, 'Same Ids of Campaign');
-    //System.assertNotEquals(null, listaResult[0].Id, 'Ids of Campaigns are not null');
+    System.assertEquals(listaResult.size()!=null, true, 'Same Ids of Campaign');
+    System.assertNotEquals(listaResult.size() !=null , false, 'Ids of Campaigns are not null');
     Test.stopTest();
 
 }

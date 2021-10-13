@@ -22,8 +22,8 @@ public with sharing class HDT_QR_PriceBookTst {
 
         List<Pricebook2> pricebooks = HDT_QR_PriceBook.getRecordByName('Test Price Book0');
 
-        System.assertEquals(pricebookSetup[0].Id, pricebooks[0].Id);
+        System.assertEquals(pricebookSetup[0].Id, pricebooks[0].Id, 'Value of parameter is matching');
 
-        System.assertNotEquals(pricebookSetup[0].Id, '');
+        System.assertNotEquals(pricebookSetup[0].Id, '', 'Value of parameter is not matching');
     }
 }   

@@ -44,7 +44,7 @@ public class HDT_QR_VisitAssignmentRulesTst{
 			test.stopTest();
 
 			System.assertEquals(true, tVisitAssigRules.Id!=null, 'VisitAssignmentRules not found');
-			System.assertNotEquals(false, tVisitAssigRules.Id!=null);
+			System.assertNotEquals(false, tVisitAssigRules.Id!=null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -65,7 +65,7 @@ public class HDT_QR_VisitAssignmentRulesTst{
 			test.stopTest();
 
 			System.assertEquals(true, tVisitAssigRules[0].Id!=null, 'VisitAssignmentRules not found');
-			System.assertNotEquals(false, tVisitAssigRules[0].Id!=null);
+			System.assertNotEquals(false, tVisitAssigRules[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 }
