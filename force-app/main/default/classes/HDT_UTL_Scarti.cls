@@ -274,7 +274,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         //Map<String, wrts_prcgvr__ActivityTemplate__c> templatesMap = getTemplatesMapByName(tracciamentoTemplateNames);
         //System.debug('createAttivitaTracciaturaHeroku templatesMap' + templatesMap);
 
-        Map<String, Map<String,String>> dataForSalesHandlingByTemplateCode = new Map<String, Map<String,String>>();
+        Map<String, Map<String,String>> dataForSalesHandlingByRecordIdField = new Map<String, Map<String,String>>();
 
         wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
         
@@ -290,12 +290,44 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
                 toInsert.add(newAct);
             }else if(TRACCIAMENTOHEROKUSALES.keySet().contains(curData.get('ATTIVITA')) && !String.isBlank(curData.get('RECORD_ID'))){//va bene controllare solo su una mappa, tanto i keyset sono uguali
-                wrts_prcgvr__Activity__c newAct;
                 if('sales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
-                    newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA')));
+                    dataForSalesHandlingByRecordIdField.put(curData.get('RECORD_ID'), curData);
                 }else if('postsales'.equalsIgnoreCase(curData.get('PROCESS_CATEGORY'))){
+                    wrts_prcgvr__Activity__c newAct;
                     newAct = createActivityByObjectIdAndTemplateName(curData.get('RECORD_ID'), TRACCIAMENTOHEROKUPOSTSALES.get(curData.get('ATTIVITA')));
+                    for(String curActField : TRACCIAMENTOMAPPING.keySet()){
+                        switch on curActField{
+                            when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
+                            when 'DiscardCount__c'{ newAct.put(curActField, Decimal.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
+                            when else{ newAct.put(curActField, curData.get(TRACCIAMENTOMAPPING.get(curActField))); }
+                        }
+                    }
+                    toInsert.add(newAct);
                 }
+            }
+        }
+        
+        System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByRecordIdField' + dataForSalesHandlingByRecordIdField);
+        if(!dataForSalesHandlingByRecordIdField.keySet().isEmpty()){
+            Map<String, Map<String,String>> filanCollection = new Map<String, Map<String,String>>();
+
+            Set<String> orderNumbers = new Set<String>();
+            for(String curValue : dataForSalesHandlingByRecordIdField.keySet()){
+                if(curValue.startsWithIgnoreCase('O-')){
+                    orderNumbers.add(curValue);
+                } else{
+                    filanCollection.put(curValue, dataForSalesHandlingByRecordIdField.get(curValue));
+                }
+            }
+            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber
+                                                        FROM Order 
+                                                        WHERE OrderNumber IN :orderNumbers]);
+            for(Order curOrder : orders.values()){
+                filanCollection.put(curOrder.Id, dataForSalesHandlingByRecordIdField.get(curOrder.OrderNumber));
+            }
+            for(String curId : filanCollection.keySet()){
+                Map<String,String> curData = filanCollection.get(curId);
+                wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curId, TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA')));
                 for(String curActField : TRACCIAMENTOMAPPING.keySet()){
                     switch on curActField{
                         when 'StartDate__c'{ newAct.put(curActField, Date.valueOf(curData.get(TRACCIAMENTOMAPPING.get(curActField)))); }
@@ -306,32 +338,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 toInsert.add(newAct);
             }
         }
-        /*
-        System.debug('createAttivitaTracciaturaHeroku dataForSalesHandlingByTemplateCode' + dataForSalesHandlingByTemplateCode);
-        if(!dataForSalesHandlingByTemplateCode.keySet().isEmpty()){
-            Map<Id, Order> orders = new Map<Id, Order>([SELECT Id, OrderNumber 
-                                                        FROM Order 
-                                                        WHERE OrderNumber IN :dataForSalesHandlingByTemplateCode.keySet()
-                                                        OR Id IN :dataForSalesHandlingByTemplateCode.keySet()]);
-            for(Order curOrder : orders.values()){
-                Map<String,String> curData = dataForSalesHandlingByTemplateCode.get(curOrder.OrderNumber);
-                //String templateCode = templatesMap.get(TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA'))).wrts_prcgvr__Code__c;
-                //List<wrts_prcgvr__Activity__c> activities = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templateCode, new Map<String,Object>{'objectId'=>curOrder.Id});
-                wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curOrder.Id, TRACCIAMENTOHEROKUSALES.get(curData.get('ATTIVITA')));
-                for(String curActField : ANONIMAMAPPING.keySet()){
-                    if('StartDate__c'.equalsIgnoreCase(curActField)){
-                        //activities[0].put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
-                        newAct.put(curActField, Date.valueOf(curData.get(ANONIMAMAPPING.get(curActField))));
-                    }else{
-                        //activities[0].put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
-                        newAct.put(curActField, curData.get(ANONIMAMAPPING.get(curActField)));
-                    }
-                }
-                //toInsert.addAll(activities);
-                toInsert.add(newAct);
-            }
-        }
-        */
+        
         System.debug('createAttivitaTracciaturaHeroku end' + toInsert);
         HDT_UTL_DatabaseService.insertSObject(toInsert);
     }
