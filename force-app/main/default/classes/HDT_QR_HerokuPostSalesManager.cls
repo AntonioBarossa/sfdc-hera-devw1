@@ -20,7 +20,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
         } catch(Exception e){
 
-            System.debug(e.getMessage());
+            calloutTemplate = null;
 
         }
 
