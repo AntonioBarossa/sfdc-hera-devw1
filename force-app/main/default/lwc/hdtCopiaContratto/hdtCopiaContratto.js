@@ -89,16 +89,16 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     ];
 
     shippingFields=[
-        new fieldData(null, "ShippingCountry__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingProvince__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingCity__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingPostalCode__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingPlace__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingCityCode__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingStreetName__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingStreetNumber__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingStreetNumberExtension__c", "slds-size_1-of-5 fieldsData"),
-        new fieldData(null, "ShippingStreetCode__c", "slds-size_1-of-5 fieldsData")
+        new fieldData(null, "ShippingCity__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingStreetName__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingStreetNumber__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingProvince__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingCountry__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingPostalCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingCityCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingStreetCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "ShippingPlace__c", "slds-size_1-of-3 fieldsData")
     ];
 
 
@@ -192,7 +192,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     changeValueTipo(event){
         this.tipoCopia = event.detail.value;
-        this.getMapFields();
+        //this.getMapFields();
         console.log('*****:' + event.detail.value);
         this.selectedOrder = null;
         this.showParentList = false;
@@ -404,7 +404,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
         console.log('*****:' + this.tipoCopia);
         let Case = this.catchFieldsToSave({Id: this.recordid});
-        if(this.tipoCopia != 'Copia della registrazione' && (this.selectedActivity === undefined ||  this.selectedActivity == null || this.selectedActivity == '' || (this.selectedActivity == 'Inbound' && (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ))){
+        if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
                 variant: 'error',
@@ -452,7 +452,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                             variant: 'warning',
                             mode: 'dismissable'
                             });
-                            this.dispatchEvent(event);
+                            this.dispatchEvent(event);*/
                             this[NavigationMixin.Navigate]({
                                 type: 'standard__recordPage',
                                 attributes: {
@@ -462,7 +462,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                                 }
                             });
                         const closeclickedevt = new CustomEvent('closeaction');
-                        this.dispatchEvent(closeclickedevt); */
+                        this.dispatchEvent(closeclickedevt);
                     }
                 });
             }

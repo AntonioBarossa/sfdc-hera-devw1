@@ -80,18 +80,22 @@
                                 <lightning-input-field field-name="CustomerVATNumber__c" disabled
                                     class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
                             </template>
+                        </div>
                             <template if:false={isRec}>
                                 <!-- <lightning-input-field field-name="BillingAddress" disabled
                                     class="slds-size_5-of-12 fieldsData"> </lightning-input-field> -->
-                                <template for:each={shippingFields} for:item="field" >
-                                    <lightning-input-field field-name={field.apiname} key={field.apiname} disabled class={field.cssClass}></lightning-input-field>
-                                </template>
+                                <div class="slds-text-title slds-text-heading_large slds-m-bottom_large"><b>Indirizzi Spedizione</b><br/></div>
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={shippingFields} for:item="field" >
+                                        <lightning-input-field field-name={field.apiname} key={field.apiname} disabled class={field.cssClass}></lightning-input-field>
+                                    </template>
+                                </div>
                             </template>
-                        </div>
 
                             <template if:true={isSendEmail}>
                                 <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={ordChild.Contact__r.Email} required data-id="Email__c">
                                 </lightning-input-field>
+                                <br></br>
                             </template>
                             <template if:true={isCartacea}>
                                 <c-hdt-target-object-address-fields accountid={accountId}>
