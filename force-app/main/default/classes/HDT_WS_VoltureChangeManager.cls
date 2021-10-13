@@ -14,16 +14,16 @@ public with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
         Map<String,Object> calloutMap = new Map<String,Object>();
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         wrts_prcgvr.MRR_1_0.MultiResponse responseMrr  = new wrts_prcgvr.MRR_1_0.MultiResponse();
+        String method;
 
         /* Extract informations from the input map:
          * "method" - custom string passed from the phase manager's callout configuration
          * "sender" - Trigger.new (in this use-case an Order)
-         * "parameters" - parameters for the callout
+         * 
         */
 
-        String method = (String) argsMap.get('method');
+        method = (String) argsMap.get('method');
         SObject sobj = (SObject) argsMap.get('sender');
-        Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
         Order currentOrder = (Order)sobj;
 
@@ -35,8 +35,8 @@ public with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
             ((wrts_prcgvr.Interfaces_1_0.IPhaseManagerUtils) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerUtils'));
             Map<Id, List<wrts_prcgvr__PhaseTransition__c>> result = 
             (Map<Id, List<wrts_prcgvr__PhaseTransition__c>>)pMUtils.getTransitionCalloutsForObjects(new Map<String, Object> {'triggerNew' => new List<Order>{currentOrder}});
-            List<wrts_prcgvr__PhaseTransition__c> ptList = result.get(sobj.get('Id'));
-            wrts_prcgvr__CalloutTemplate__c template = herokuPostSalesQr.getCalloutTemplateByCode(ptList[0].ptList[0].wrts_prcgvr__CalloutTemplate__c);
+            List<wrts_prcgvr__PhaseTransition__c> ptList = result.get(currentOrder.Id);
+            wrts_prcgvr__CalloutTemplate__c template = herokuPostSalesQr.getCalloutTemplateByCode(ptList[0].wrts_prcgvr__CalloutTemplate__c);
             argsMap.put('template', template);
 
             /*Apply Callout Template*/
@@ -54,16 +54,16 @@ public with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
             wrts_prcgvr.MRR_1_0.MultiRequest mrrList = (wrts_prcgvr.MRR_1_0.MultiRequest) argsMap.get('multirequest');
 
             /*Build Request*/
-            arg.put('endpoint', endpoint);
-            arg.put('timeout', 12000);
-            arg.put('payload',mrrList);
-            arg.put('clientType','REST');
-            arg.put('contentType','application/json');
+            calloutMap.put('endpoint', endpoint);
+            calloutMap.put('timeout', 12000);
+            calloutMap.put('payload',mrrList);
+            calloutMap.put('clientType','REST');
+            calloutMap.put('contentType','application/json');
 
             /*Make Callout*/            
             wrts_prcgvr.Interfaces_1_0.ICalloutClient client = 
             (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance('CalloutClient');
-            responseMrr  =  (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
+            responseMrr  =  (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(calloutMap);
         }
         catch(exception e)
         {
