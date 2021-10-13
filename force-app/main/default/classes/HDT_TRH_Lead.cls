@@ -6,6 +6,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
+
     private static Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
     private static Map<Id, Lead> mapNew =(Map<Id, Lead>)Trigger.newMap;
 
@@ -149,10 +152,11 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }     
                 }
                 if (accToUpdate.size()>0) {
-                    update accToUpdate;
+                    accountSRV.updateRecordsWithCheck(accToUpdate);
                 }
                 if (conList.size()>0) {
-                    insert conList;
+                    contactSrv.createRecords(conList);
+
                     for(Contact c : conList){
                         contId.add(c.id);
                     }
@@ -178,13 +182,19 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         //Start #HRAWRM-387 01/09/2021
                         List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
                         List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
-                        List<sObject> listToDelete = new List<sObject>();
-                        listToDelete.addAll(listToDeleteEm);
-                        listToDelete.addAll(listToDeletePh);
-                        if (listToDelete.size()>0) {
-                          delete listToDelete;
+                        if(!listToDeleteEm.isEmpty() && listToDeleteEm.size()>0){
+                            HDT_SRV_ContactPointEmail.deleteRecord(listToDeleteEm);
                         }
-                        update listContactToClean;
+                        if(!listToDeletePh.isEmpty() && listToDeletePh.size()>0){
+                            HDT_SRV_ContactPointPhone.deleteRecord(listToDeletePh);
+                        }
+                        // List<sObject> listToDelete = new List<sObject>();
+                        // listToDelete.addAll(listToDeleteEm);
+                        // listToDelete.addAll(listToDeletePh);
+                        // if (listToDelete.size()>0) {
+                        //   delete listToDelete;
+                        // }
+                        contactSrv.updateRecord(listContactToClean);
                         //End #HRAWRM-387 01/09/2021
 
                         accoContRelSrv.upsertRecord(listAccCon);
