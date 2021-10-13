@@ -257,7 +257,7 @@ public with sharing class HDT_SRV_SelfReadings {
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO');
+                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
