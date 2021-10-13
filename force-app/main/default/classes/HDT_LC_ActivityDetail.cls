@@ -21,10 +21,11 @@ public with sharing class HDT_LC_ActivityDetail {
         list<wrts_prcgvr__FieldsTemplate__c> fieldsTemplate = new list<wrts_prcgvr__FieldsTemplate__c>();
         list<wrts_prcgvr__DynamicSection__c> dynamicSection = new list<wrts_prcgvr__DynamicSection__c>();
 
-        list<wrts_prcgvr__Activity__c> activity = [SELECT Id, Name, wrts_prcgvr__ActivityTemplate__c, Order__c, Order__r.OrderNumber, Case__c, Case__r.CaseNumber, Account__c, Account__r.Name //>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile //>>>marco.arci@webresults.it Aggiunta Account
+        list<wrts_prcgvr__Activity__c> activity = [SELECT Id, Name, wrts_prcgvr__ActivityTemplate__c, Order__c, Order__r.OrderNumber, Case__c, Case__r.CaseNumber, Account__c, Account__r.Name, CreatedDate, StartDate__c //>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile //>>>marco.arci@webresults.it Aggiunta Account
                                                     FROM wrts_prcgvr__Activity__c 
                                                     WHERE Id=:idActivity
-                                                    WITH SECURITY_ENFORCED]; 
+                                                    WITH SECURITY_ENFORCED];
+        boolean notShowStartDate = !(activity[0].CreatedDate != activity[0].StartDate__c && String.ISNOTBLANK(String.ValueOf(activity[0].StartDate__c))); 
         if(activity!=null && !activity.isEmpty() && activity[0].wrts_prcgvr__ActivityTemplate__c!=null){
             activityTemplate = [SELECT Id, wrts_prcgvr__FieldsTemplate__c 
                                 FROM wrts_prcgvr__ActivityTemplate__c 
@@ -59,7 +60,9 @@ public with sharing class HDT_LC_ActivityDetail {
             for(wrts_prcgvr__DynamicField__c item: dynamicField){
                 for(Id mapItem: mapSectionField.keySet()){
                     if(mapItem==item.wrts_prcgvr__Section__c){
-                        mapSectionField.get(mapItem).add(item);
+                        if(!('StartDate__c'.equalsIgnoreCase(item.wrts_prcgvr__Field__c) && notShowStartDate)){
+                            mapSectionField.get(mapItem).add(item);
+                        }
                     }
                 }
             }
