@@ -1,10 +1,10 @@
 public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SObject> {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
-    public List<String> campaignIds;
+    public List<String> campaignIds= new List<String>() ;
     public Integer startNumber;
     public Integer numberLength;
-    public List<String> campaignMembers;
+    public List<String> campaignMembers= new List<String>();
     public HDT_BA_CommercialCode(Map<String,List<String>> allMembers) {
         this.campaignIds.addAll(allMembers.keySet());
         for (List<String> members : allMembers.values()) {
@@ -33,7 +33,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             AggregateResult cm = (AggregateResult) membersNumber.next();
             campaignIdMemberTotal.put((Id)cm.get('CampaignId'), (Integer)cm.get('members'));
         }
-        System.debug('campaignIdMemberTotal - ' + campaignIdMemberTotal);
+       // System.debug('campaignIdMemberTotal - ' + campaignIdMemberTotal);
 
         set<Integer> codeList = new set<Integer>();
         while (existingMembers.hasNext()){
@@ -65,7 +65,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             }
             this.startNumber = this.startNumber + 1;
             campaignIdMemberTotal.put(cm.CampaignId, startNumber + 1);
-            System.debug('final code --------  ' + newCode);
+           // System.debug('final code --------  ' + newCode);
 
             //new commercial code
             CommercialCode__c cc = new CommercialCode__c(
@@ -83,7 +83,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             memberCode.put(cm.Id, newCode);
         }
         insert ccList; 
-        System.debug('cclist --------  ' + ccList);
+       // System.debug('cclist --------  ' + ccList);
         for (CommercialCode__c cc : ccList) {
             codeId.put(cc.FullCode__c, cc.Id);
         }
@@ -100,7 +100,7 @@ public with sharing class HDT_BA_CommercialCode implements Database.Batchable<SO
             update membersToUpdate;
         }
 
-        System.debug('membersToUpdate --------  ' + membersToUpdate);
+      //  System.debug('membersToUpdate --------  ' + membersToUpdate);
     }
 
     public void finish(Database.BatchableContext bc){
