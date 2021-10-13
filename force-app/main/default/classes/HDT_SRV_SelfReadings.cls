@@ -262,7 +262,7 @@ public with sharing class HDT_SRV_SelfReadings {
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
                     readingCaseToUpdate.Status = 'Closed';
-                    readingCaseToUpdate.Phase__c = 'KO Definitivo';
+                    readingCaseToUpdate.Phase__c = 'Annullato';
                     HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 }
                 
