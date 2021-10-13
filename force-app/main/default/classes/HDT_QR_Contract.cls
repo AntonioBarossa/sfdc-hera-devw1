@@ -38,14 +38,14 @@ public inherited sharing class HDT_QR_Contract {
        
         Contract c = new Contract();
         if(isSuperUser==true){
-            filter =' ServicePoint__r.ServicePointCode__c = \''+String.escapeSingleQuotes(code)+'\' LIMIT 1  WITH SECURITY_ENFORCED';
+            filter =' Where ServicePoint__r.ServicePointCode__c = \''+String.escapeSingleQuotes(code)+'\' LIMIT 1  WITH SECURITY_ENFORCED';
            //con = Database.query(query);
         }
         else{
             filter=' WHERE ServicePoint__r.ServicePointCode__c = \''+String.escapeSingleQuotes(code)+'\' AND Status=\'Activated\' WITH SECURITY_ENFORCED';
            // con = Database.query(query);
         }
-        List<Contract> con= Database.query(String.escapeSingleQuotes(query));
+        List<Contract> con= Database.query(String.escapeSingleQuotes(query)+filter);
         if(con != null && con.size()> 0){
             c= con[0];
         }
