@@ -33,11 +33,10 @@ public class HDT_LC_AfterScriptModalTst {
 
             
     Map<String,Object> res = HDT_LC_AfterScriptModal.initPostSaleAction();
-             System.debug('res$$$$$$' +res);
                          Test.stopTest();
 
-        System.assertEquals(1, res.size(),'returns 3 because the account only has 3 fields different from id and attributes');
-        System.assertNotEquals(null, res.get('isCommunity'),' because the account has more than one field different from id and attributes');
+        System.assertEquals(1, res.size(),'returns 1 because  has 1 field different');
+        System.assertNotEquals(null, res.get('isCommunity'),' return null because has more than one field different ');
         }
     }
     
