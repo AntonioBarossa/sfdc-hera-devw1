@@ -78,5 +78,31 @@ public with sharing class HDT_TRH_TaskTst {
         
     }
 
+    //aggiunto per testare puntualmente metodo della classe HDT_QR_Task
+
+    @IsTest
+    static void testGetRecordsByIds(){
+        
+        //setup
+        Task t1 = new Task();
+        insert t1;
+
+        //test
+        Test.startTest();
+
+        Task retrievedTask = [SELECT Id FROM Task WITH SECURITY_ENFORCED LIMIT 1];
+
+        Set<Id> ids = new Set<Id>();
+        ids.add(retrievedTask.Id);
+        HDT_QR_Task qrt = new HDT_QR_Task();
+        List<Task> results = qrt.getRecordsByIds(ids);
+
+        //assert
+        System.assert(results.size() > 0, 'results.size() == 0 or results == null');
+
+        Test.stopTest();
+        
+    }
+
 
 }
