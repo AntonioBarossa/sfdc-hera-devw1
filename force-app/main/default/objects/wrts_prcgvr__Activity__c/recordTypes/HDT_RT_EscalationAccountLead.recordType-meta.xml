@@ -1329,6 +1329,34 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subject__c</picklist>
+                <values>
+            <fullName>Analisi situazione su CRM per gestione</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Autolettura inferiore lettura migrazione</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Copia contratto su CRM precedente</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Gestione pratiche in volo</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Knowledge - segnalazione articoli</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Pagamenti su CRM precedente</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Verifica fatturazione su CRM precedente</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Acceso Piattaforme documentali</fullName>
             <default>false</default>
@@ -1604,6 +1632,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Supporto su migrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
             <default>false</default>
         </values>
@@ -1631,7 +1663,7 @@
             <fullName>Supporto documentale</fullName>
             <default>false</default>
         </values>
-        <values>
+        <values>  
             <fullName>Supporto e segnalazioni back office</fullName>
             <default>false</default>
         </values>
