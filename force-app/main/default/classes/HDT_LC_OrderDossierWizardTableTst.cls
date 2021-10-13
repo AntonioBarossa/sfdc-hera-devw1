@@ -68,7 +68,7 @@ public class HDT_LC_OrderDossierWizardTableTst{
 
 		System.assertEquals(2, testgetTableData.values().size(), 'Result Map is Wrong');
 
-		System.assertNotEquals(0, testgetTableData.values().size());
+		System.assertNotEquals(0, testgetTableData.values().size(), 'getTableData did not work correctly');
 
 		Test.stopTest();
 	}
@@ -93,7 +93,7 @@ public class HDT_LC_OrderDossierWizardTableTst{
 
 		System.assertEquals(3, torderList2[0].Step__c, 'Order was not updated');
 
-		System.assertNotEquals(0, torderList2[0].Step__c);
+		System.assertNotEquals(0, torderList2[0].Step__c, 'next did not work correctly');
 
 		Test.stopTest();
 	}
@@ -118,7 +118,7 @@ public class HDT_LC_OrderDossierWizardTableTst{
 
 		System.assertEquals(2, torderList2[0].Step__c, 'Order was not updated');
 
-		System.assertNotEquals(0, torderList2[0].Step__c);
+		System.assertNotEquals(0, torderList2[0].Step__c, 'edit did not work correctly');
 
 		Test.stopTest();
 	}

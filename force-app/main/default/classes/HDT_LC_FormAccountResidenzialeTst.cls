@@ -47,7 +47,7 @@ public class HDT_LC_FormAccountResidenzialeTst{
 
 		System.assertEquals(tacc[0].FiscalCode__c, accTest.FiscalCode__c, 'Account Fiscal Code is wrong');
 
-		System.assertNotEquals(null, accTest.FiscalCode__c);
+		System.assertNotEquals(null, accTest.FiscalCode__c, 'insertAccount did not work correctly');
 
 		Test.stopTest();
 	}

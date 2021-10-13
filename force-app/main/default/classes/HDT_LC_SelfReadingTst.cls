@@ -53,7 +53,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         Reading__c result = [SELECT Id FROM Reading__c];
         
         //ASSERTS
-        System.assertNotEquals(null, result);
+        System.assertNotEquals(null, result, 'insertSelfReading did not work correctly');
         
     }
     
@@ -77,7 +77,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         Reading__c result = [SELECT Id FROM Reading__c];
         
         //ASSERTS
-        System.assertNotEquals(null, result);
+        System.assertNotEquals(null, result, 'updateSelfReading did not work correctly');
         
     }
     
@@ -104,8 +104,8 @@ public with sharing class HDT_LC_SelfReadingTst {
         Id result = HDT_LC_SelfReading.getReadingId('Case', myCase.Id, 'Gas');
         
         //ASSERTS
-        System.assertNotEquals(null, result);
-        System.assertEquals(myReading.Id, result);
+        System.assertNotEquals(null, result, 'getReadingId did not work correctly');
+        System.assertEquals(myReading.Id, result, 'getReadingId did not work correctly');
         
     }
     
@@ -146,7 +146,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, 'updateOrder did not work correctly');
         
     }
     
@@ -186,7 +186,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         String result = HDT_LC_SelfReading.updateOrder(serialOrder, recordId, isRetroactive, isReading, rcd, completed);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, 'updateOrder did not work correctly');
     }
     
     @isTest
@@ -233,7 +233,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         }
         
         //ASSERTS EXCEPTION 1
-        System.assert(caught_1);
+        System.assert(caught_1, 'updateOrder did not work correctly');
         
         
        
@@ -252,7 +252,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         }
         
         //ASSERTS EXCEPTION 2
-        System.assert(caught_2);
+        System.assert(caught_2, 'updateOrder did not work correctly');
         
     }
     
@@ -272,7 +272,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         RecordType recType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_LetturaGas' WITH SECURITY_ENFORCED];
         
         //ASSERTS
-        System.assertEquals(recType.Id, result);
+        System.assertEquals(recType.Id, result, 'getRecordTypeId did not work correctly');
         
     }
     
@@ -296,7 +296,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         String result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
         
         //ASSERTS
-        System.assertEquals('ERROR_NO_ASSET_NUMBER', result);
+        System.assertEquals('ERROR_NO_ASSET_NUMBER', result, 'checkLastReadings did not work correctly');
         
         
         
@@ -351,7 +351,7 @@ public with sharing class HDT_LC_SelfReadingTst {
         Test.startTest();
             
             result = HDT_LC_SelfReading.checkLastReadings(servPoint.Id);
-            System.assertEquals('Response_Body_Test_Success', result);
+            System.assertEquals('Response_Body_Test_Success', result, 'checkLastReadings did not work correctly');
             
         Test.stopTest();
         

@@ -2943,4 +2943,65 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return salePartnerCommunity;
 	}
+	
+	/**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityAction method
+     * @history
+     * @Created 07/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityAction__c> createActivityAction(Integer amount, Boolean doInsert, Id templateId) {
+        
+        List<wrts_prcgvr__ActivityAction__c> actions = new List<wrts_prcgvr__ActivityAction__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityAction__c action = new wrts_prcgvr__ActivityAction__c(
+                wrts_prcgvr__ActivityTemplate__c = templateId
+            );
+            
+            actions.add(action);
+        }
+        
+        if (doInsert){
+            
+            insert actions;
+        }
+        
+        return actions;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDiscardAnnullmentRule method
+     * @history
+     * @Created 07/10/2021
+     * Modified By:
+     **/
+    public static List<DiscardAnnullmentRule__c> createDiscardAnnullmentRule(Integer amount, Boolean doInsert, String parentObject) {
+        
+        List<DiscardAnnullmentRule__c> rules = new List<DiscardAnnullmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            DiscardAnnullmentRule__c rule = new DiscardAnnullmentRule__c(
+                ActivityType__c = 'ActivityTypeTest',
+                ControllingField__c = 'ControllingFieldTest',
+                ControllingValue__c = 'ControllingValueTest',
+                ParentObject__c = parentObject,
+                ProcessField__c = 'ProcessFieldTest',
+                ProcessValue__c = 'ProcessValueTest'
+            );
+            
+            rules.add(rule);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
 }

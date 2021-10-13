@@ -9,6 +9,10 @@
         <formula>&quot;Chiusa&quot;</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>wrts_prcgvr__IsClosed__c</field>
+        <formula>true</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>wrts_prcgvr__Status__c</field>
         <literalValue>Completed</literalValue>
     </fieldOverrides>

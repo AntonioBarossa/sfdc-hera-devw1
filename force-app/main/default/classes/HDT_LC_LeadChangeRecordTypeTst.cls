@@ -28,18 +28,16 @@ public class HDT_LC_LeadChangeRecordTypeTst{
 
         Lead updateLead = [SELECT id, LastName 
                           FROM Lead
-                          WHERE LastName = 'LastNameTest'
+                          WHERE LastName = 'LastNameTest0'
                           LIMIT 1];
         
         updateLead.RecordTypeId = rt.Id;
 
-        String str = HDT_LC_LeadChangeRecordType.changeRecordTypeOfLead(updateLead.Id);
+        Map<String,String> mapp = HDT_LC_LeadChangeRecordType.changeRecordTypeOfLead(updateLead.Id);
 
-        update updateLead;
+        System.assertEquals('false', mapp.get('isCommunity'), 'URL not populated correctly');
 
-        System.assertEquals('', str, 'URL not populated correctly');
-
-        System.assertNotEquals('https://', str);
+        System.assertNotEquals(null, mapp, 'value of parameter is not matching');
 
         Test.stopTest();
     }

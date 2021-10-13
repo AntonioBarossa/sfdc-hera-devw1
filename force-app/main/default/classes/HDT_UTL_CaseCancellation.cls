@@ -8,7 +8,7 @@ Libreria Errori
 public inherited sharing class HDT_UTL_CaseCancellation {
 
     @InvocableMethod
-    public static List<HDT_UTL_ResponseCancellationReason>  dispatchMethod(List<HDT_UTL_RequestCancellationReason> inputs) {
+    public static List<HDT_UTL_ResponseCancellationReason> dispatchMethod(List<HDT_UTL_RequestCancellationReason> inputs) {
         List<HDT_UTL_ResponseCancellationReason> toReturn = new List<HDT_UTL_ResponseCancellationReason>();
         if(inputs != null && inputs.size() > 0){
             switch on inputs[0].method {
@@ -97,7 +97,7 @@ public inherited sharing class HDT_UTL_CaseCancellation {
             this.outcomeDescription = outcomeDescription;
         }
 
-        public HDT_UTL_ResponseCancellationReason( String outcome, String outcomeDescription){
+        public HDT_UTL_ResponseCancellationReason(String outcome, String outcomeDescription){
             this.outcome = outcome;
             this.outcomeDescription = outcomeDescription;
         }

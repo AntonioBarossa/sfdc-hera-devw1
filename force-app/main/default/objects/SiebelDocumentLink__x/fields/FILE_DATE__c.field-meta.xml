@@ -9,5 +9,5 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Data</label>
     <required>false</required>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

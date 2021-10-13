@@ -38,8 +38,8 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         List<Document> docList = HDT_LC_DocumentalConfigController.getDocument();
         
         //ASSERTS
-        System.assertEquals(1, docList.size());
-        System.assertEquals('TestDoc', docList[0].name);
+        System.assertEquals(1, docList.size(), 'getDocument did not work correctly');
+        System.assertEquals('TestDoc', docList[0].name, 'getDocument did not work correctly');
         
     }
     
@@ -107,8 +107,8 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult result = HDT_LC_DocumentalConfigController.controllerHandler();
         
         //ASSERTS
-        System.assert(!result.success);
-        System.assertEquals('No records found', result.message);
+        System.assertNotEquals(true, result.success, 'controllerHandler did not work correctly');
+        System.assertEquals('No records found', result.message, 'controllerHandler did not work correctly');
         
         //TESTING WITH RECORDS
         insert new List<SObject>{docPA1, docPA2, docPA3, docPA4, docPA5, docPA6, docPA7, docPA8, docPATDRV};
@@ -119,8 +119,8 @@ public with sharing class HDT_LC_DocumentalConfigControllerTst {
         List<Document> docs = [SELECT Id FROM Document];
         
         //ASSERTS
-        System.assertEquals(0, docOld.size());
-        System.assertEquals(4, result.docIdList.size());
+        System.assertEquals(0, docOld.size(), 'controllerHandler did not work correctly');
+        System.assertEquals(4, result.docIdList.size(), 'controllerHandler did not work correctly');
         
     }
     
