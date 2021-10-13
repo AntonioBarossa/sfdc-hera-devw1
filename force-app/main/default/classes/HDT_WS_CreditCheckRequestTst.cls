@@ -41,8 +41,8 @@ static void methodTst(){
      system.debug('HDT_WS_CreditCheckRequest - HDT_WS_CreditCheckRequest: wrpVals ----> ' + JSON.serialize(wrpVals));   
      HDT_WS_CreditCheckRequest CreditCheckRequest = new HDT_WS_CreditCheckRequest(wrpVals);
      system.debug('HDT_WS_CreditCheckRequest - HDT_WS_CreditCheckRequest: wrpVals ----> ' + JSON.serialize(wrpVals));   
-     system.assertEquals(CreditCheckRequest.sistema,wrpVals.sistema, 'The good value');
-     system.assertNotEquals(CreditCheckRequest.caso,wrpVals.sistema, 'The bad value');
+     system.assertEquals(CreditCheckRequest.sistema,wrpVals.sistema, 'The values ​​of the corresponding fields are identical');
+     system.assertNotEquals(CreditCheckRequest.caso,wrpVals.sistema, 'A test of values ​​of different fields');
 
     }
 }
