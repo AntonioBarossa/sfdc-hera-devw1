@@ -2,10 +2,11 @@
 public with sharing class HDT_LC_ActivityReassignmentToolTst {
     @TestSetup
     private static void makeData() {
-        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-            wrts_prcgvr__Status__c = 'Not Started',
-            Type__c = 'Sportello'
-        );
+        List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+
+        List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
+        activity[0].wrts_prcgvr__Status__c = 'Not Started';
+        activity[0].Type__c = 'Sportello';
         insert activity;
 
         Queue__c queue = new Queue__c(
@@ -30,7 +31,9 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
             PermissionSetId = permissionSet.Id
         );
         insert permissionSetAssignment;
-        HDT_LC_ActivityReassignmentTool.getAssignees('1');
+        List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getAssignees('1');
+        System.assertEquals(true, returnedValue.size() != 0, 'Value of parameter is matching');
+        System.assertNotEquals(false, returnedValue.size() == 0, 'Value of parameter is not matching');
         Test.stopTest();
     }
     
@@ -44,13 +47,18 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void assignToMe() {
         Test.startTest();
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
-        HDT_LC_ActivityReassignmentTool.assignToMe(activity.Id);
+        String returnedValue = HDT_LC_ActivityReassignmentTool.assignToMe(activity.Id);
+
+        System.assertEquals(true, returnedValue!=null, 'Value of parameter is matching');
+        System.assertNotEquals(false, returnedValue == null, 'Value of parameter is not matching');
         Test.stopTest();
     }
     @isTest
     private static void isDynamicWorkGroup() {
         Test.startTest();
-        HDT_LC_ActivityReassignmentTool.isDynamicWorkGroup('loginChannel');
+        Boolean returnedValue = HDT_LC_ActivityReassignmentTool.isDynamicWorkGroup('loginChannel');
+        System.assertEquals(true, returnedValue, 'Value of parameter is matching');
+        System.assertNotEquals(false, returnedValue, 'Value of parameter is not matching');
         Test.stopTest();
     }
     // @isTest

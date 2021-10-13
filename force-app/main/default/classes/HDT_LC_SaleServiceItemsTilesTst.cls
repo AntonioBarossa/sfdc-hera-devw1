@@ -102,7 +102,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			System.assertEquals(2, tgetTiles.size(), 'Return is wrong');
 
-			System.assertNotEquals(1, tgetTiles.size());
+			System.assertNotEquals(1, tgetTiles.size(), 'getTiles did not work correctly');
 
 			Test.stopTest();
 
@@ -139,7 +139,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			System.assertEquals('Closed Lost', tOppUpdt.StageName, 'Opportunity not updated');
 
-			System.assertNotEquals('Negotiation', tOppUpdt.StageName);
+			System.assertNotEquals('Negotiation', tOppUpdt.StageName, 'deleteTile did not work correctly');
 
 			Test.stopTest();
 

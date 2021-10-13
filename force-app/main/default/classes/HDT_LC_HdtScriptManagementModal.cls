@@ -212,8 +212,6 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         if (conditions == null || conditions.trim().equals('')){
             return true;
         }
-
-        conditions = conditions.deleteWhitespace();
         
         Boolean isOrOperator = conditions.contains('OR');
         Boolean isAndOperator = !isOrOperator;
@@ -228,9 +226,9 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 String compareOperator = checkCompare? '==' : '!=';
 				
                 List<String> arraySingleCondition = condition.split(compareOperator);
-                fieldName=arraySingleCondition[0];
-                valueToCheck=arraySingleCondition[1];
-                actualFieldValue=getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
+                fieldName = arraySingleCondition[0].trim();
+                valueToCheck = arraySingleCondition[1].trim();
+                actualFieldValue = getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
                 Boolean conditionVisibility = assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
 
                 if (isOrOperator) {

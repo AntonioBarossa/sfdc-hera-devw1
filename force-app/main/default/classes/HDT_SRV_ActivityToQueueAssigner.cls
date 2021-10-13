@@ -1,5 +1,6 @@
-public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
-    
+public with sharing class HDT_SRV_ActivityToQueueAssigner {
+    //Classe deprecata
+    /*
     private String activityId;
 
     HDT_SRV_ActivityToQueueAssigner(String activityId) {
@@ -115,5 +116,5 @@ public with sharing class HDT_SRV_ActivityToQueueAssigner implements Queueable {
             update a;
         }
     }
-    
+    */
 }

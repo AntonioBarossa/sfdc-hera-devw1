@@ -12,8 +12,8 @@ public with sharing class HDT_QR_LoginGroupItemTst {
     public static void testGetRecordByLogin(){
         Test.startTest();
         List<LoginGroupItem__c> testLoginGpItem = HDT_QR_LoginGroupItem.getRecordByLogin('Teste');
-        system.assertEquals(testLoginGpItem.size() != null, true);
-        system.assertNotEquals(testLoginGpItem.size() == null, true);
+        System.assertEquals(testLoginGpItem.size() != null, true, 'value of parameter is matching');
+        System.assertNotEquals(testLoginGpItem.size() == null, true, 'value of parameter is not matching');
         Test.stopTest();
     }
 }

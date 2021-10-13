@@ -44,8 +44,7 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
 
             if (campaignIdsToBatch.size() > 0) {
                 HDT_BA_DeactivateCampaign cbBatch = new HDT_BA_DeactivateCampaign(campaignIdsToBatch);
-                ID batchId = Database.executeBatch(cbBatch, 500);
-                System.debug(batchId);
+                ID batchId = Database.executeBatch(cbBatch, 50);
                 System.debug('batchId - '+batchId);
             }
         }

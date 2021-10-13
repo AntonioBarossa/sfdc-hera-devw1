@@ -10,7 +10,7 @@
     <label>Id RDS</label>
     <length>15</length>
     <referenceTo>SiebelRds__x</referenceTo>
-    <relationshipLabel>SiebelDocumentActivity</relationshipLabel>
+    <relationshipLabel>Attività Documentali</relationshipLabel>
     <relationshipName>SiebelDocumentActivity</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

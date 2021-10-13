@@ -56,7 +56,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 			test.stopTest();
 
 			System.assertEquals(true, getRecByOrderParams[0].Id!=null, 'ComfortQualityCall not found');
-			System.assertNotEquals(false, getRecByOrderParams[0].Id!=null);
+			System.assertNotEquals(false, getRecByOrderParams[0].Id!=null, 'value of parameter is not matching');
 		}
 	}
 
@@ -81,7 +81,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 			test.stopTest();
 
 			System.assertEquals(true, getRecByOrderParamVas[0].Id!=null, 'ComfortQualityCall not found');
-			System.assertNotEquals(false, getRecByOrderParamVas[0].Id!=null);
+			System.assertNotEquals(false, getRecByOrderParamVas[0].Id!=null, 'value of parameter is not matching');
 		}
 	}
 
@@ -102,7 +102,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 			test.stopTest();
 
 			System.assertEquals(true, getRecWithDocValidation[0].Id!=null, 'ComfortQualityCall not found');
-			System.assertNotEquals(false, getRecWithDocValidation[0].Id!=null);
+			System.assertNotEquals(false, getRecWithDocValidation[0].Id!=null, 'value of parameter is not matching');
 		}
 	}
 }
