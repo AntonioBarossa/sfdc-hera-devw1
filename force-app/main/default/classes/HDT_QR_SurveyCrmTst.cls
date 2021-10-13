@@ -46,7 +46,7 @@ public class HDT_QR_SurveyCrmTst{
 			test.stopTest();
 
 			System.assertEquals(true, tSurveyCrm[0].Id!=null, 'SurveyCrm not found');
-			System.assertNotEquals(false, tSurveyCrm[0].Id!=null);
+			System.assertNotEquals(false, tSurveyCrm[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -71,7 +71,7 @@ public class HDT_QR_SurveyCrmTst{
 			test.stopTest();
 
 			System.assertEquals(true, tSurveyCrm[0].Id!=null, 'SurveyCrm not found');
-			System.assertNotEquals(false, tSurveyCrm[0].Id!=null);
+			System.assertNotEquals(false, tSurveyCrm[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 }
