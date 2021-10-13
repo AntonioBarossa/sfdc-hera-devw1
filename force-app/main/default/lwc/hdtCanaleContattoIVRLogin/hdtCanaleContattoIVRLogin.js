@@ -19,7 +19,8 @@ import checkListenVO from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkL
 import checkFinalConfirmationOfTheContract from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.checkContractualEnvelope';
 import getOrderSiblings from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblings';
 import getOrderSiblingsDocumentalActivity from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.getOrderSiblingsDocumentalActivity';
-import downloadFile from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.downloadDocument'
+import downloadFile from '@salesforce/apex/HDT_LC_CanaleContattoIVRLogin.downloadDocument';
+import heralogoimg from '@salesforce/resourceUrl/heralogo';
 
 export default class HdtCanaleContattoIVRLogin extends LightningElement {
 
@@ -35,6 +36,7 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
     @track orderSiblings = [];
     @track orderColumns;
     @track orderList = [];
+    heralogo = heralogoimg;
 
     columnsList = [{
         label: 'Nome',
@@ -46,6 +48,11 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         initialWidth: 135,
         typeAttributes: { iconName: 'utility:download', name: 'onClickDownloadPdf', title: 'Click to download' }
     }]; 
+
+    toggleShowPassword(event) {
+        let password = this.template.querySelector('[data-id = "passwordField"]');
+        password.type = password.type == 'password' ? 'text' : 'password';
+    }
 
     handleLogin(event) {
 
