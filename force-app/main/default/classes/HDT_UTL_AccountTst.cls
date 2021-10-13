@@ -88,7 +88,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -117,7 +117,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -148,7 +148,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			Test.setMock(HttpCalloutMock.class, mock);
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -181,7 +181,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.startTest();
 
-			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
+			List<Account> tAcc=[SELECT Id, Name, RecordTypeId, Category__c, customerMarking__c, vatnumber__c, fax, fiscalCode__c, BillingCity, BillingCountry, BillingStreetToponym__c, BillingStreetNumber__c, BillingPostalCode, BillingState, BillingStreetName__c, Code__c,CustomerCode__c, MobilePhone__c, BuildingFloor__c, PrimaryEmail__c, VATGroup__c, VATGroupStartDate__c, VATGroupEndDate__c, FirstName__c, LastName__c
 			                    FROM Account
 			                    WHERE Name='test account0'];
 
@@ -193,7 +193,7 @@ public with sharing class HDT_UTL_AccountTst{
 
 			test.stopTest();
 
-			List<Account> tResult = [SELECT Id, Code__c FROM Account WHERE Code__c = 'test' LIMIT 1];
+			List<Account> tResult = [SELECT Id, Code__c,CustomerCode__c FROM Account WHERE CustomerCode__c = 'test' LIMIT 1];
 
 			System.assertEquals(true, tResult!=null, 'Account not updated');
 			System.assertNotEquals(false, tResult!=null);
