@@ -46,7 +46,7 @@ public class HDT_QR_ServiceRequestTst{
 			test.stopTest();
 
 			System.assertEquals(true, servReqByOrderCaseId[0].Id!=null, 'Service Request not found');
-			System.assertNotEquals(false, servReqByOrderCaseId[0].Id!=null);
+			System.assertNotEquals(false, servReqByOrderCaseId[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 }

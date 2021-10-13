@@ -6,26 +6,168 @@
  */
 @isTest
 public with sharing class HDT_TRH_ContractTst{
+	
+	//DATA
 	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+	
+	
+	//TEST SETUP
+	
+	
+	//TESTS
+	
+	//ALSO TESTING SERVICES ON HDT_UTL_ActiveServicesKpi.updateServicesCount;
 	@isTest
-	public static void testTriggerContractBeforeAfterInsert(){
-
+	public static void beforeAfterInsertTest_EnergiaElettrica(){
+		
+		//SETUP
+		List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
+		servPoint.CommoditySector__c = 'Energia Elettrica';
+		insert servPoint;
+		
+		//TESTING
 		Test.startTest();
-
-		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-
-		System.debug('contracts = '+contracts);
-
-		Contract testContract=[SELECT Id, SAPContractCode__c
-		                       FROM Contract
-		                       WHERE SAPContractCode__c='3011913470'
-		                       LIMIT 1];
-
+		Contract con = HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id)[0];
+		con.ServicePoint__c = servPoint.Id;
+		insert con;
+		
+		Test.stopTest();
+		
+		//RETRIEVING DATA
+		Contract testContract = [SELECT Id, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = '3011913470' LIMIT 1];
+		Account testAccount = [SELECT Id, ActiveServicesEle__c FROM Account];
+		System.debug('testContract = ' + testContract);
+		System.debug('testAccount = ' + testAccount);
+		
+		//ASSERTS
 		System.assertEquals('3011913470', testContract.SAPContractCode__c, 'Contract not Inserted');
 		System.assertNotEquals('', testContract.SAPContractCode__c, 'Contract not Inserted');
-		Test.stopTest();
+		System.assertEquals(1, testAccount.ActiveServicesEle__c, 'Active Services Ele errato.');
 	}
+	
+	
+	@isTest
+	public static void beforeAfterInsertTest_Gas(){
+		
+		//SETUP
+		List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
+		servPoint.CommoditySector__c = 'Gas';
+		insert servPoint;
+		
+		//TESTING
+		Test.startTest();
+		Contract con = HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id)[0];
+		con.ServicePoint__c = servPoint.Id;
+		insert con;
+		
+		Test.stopTest();
+		
+		//RETRIEVING DATA
+		Contract testContract = [SELECT Id, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = '3011913470' LIMIT 1];
+		Account testAccount = [SELECT Id, ActiveServicesGas__c FROM Account];
+		System.debug('testContract = ' + testContract);
+		System.debug('testAccount = ' + testAccount);
+		
+		//ASSERTS
+		System.assertEquals('3011913470', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertNotEquals('', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertEquals(1, testAccount.ActiveServicesGas__c, 'Active Services Gas errato.');
+	}
+	
+	
+	
+	@isTest
+	public static void beforeAfterInsertTest_TLR(){
+		
+		//SETUP
+		List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
+		servPoint.CommoditySector__c = 'Teleriscaldamento';
+		insert servPoint;
+		
+		//TESTING
+		Test.startTest();
+		Contract con = HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id)[0];
+		con.ServicePoint__c = servPoint.Id;
+		insert con;
+		
+		Test.stopTest();
+		
+		//RETRIEVING DATA
+		Contract testContract = [SELECT Id, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = '3011913470' LIMIT 1];
+		Account testAccount = [SELECT Id, ActiveServicesTLR__c FROM Account];
+		System.debug('testContract = ' + testContract);
+		System.debug('testAccount = ' + testAccount);
+		
+		//ASSERTS
+		System.assertEquals('3011913470', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertNotEquals('', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertEquals(1, testAccount.ActiveServicesTLR__c, 'Active Services TLR errato.');
+	}
+	
+	
+	@isTest
+	public static void beforeAfterInsertTest_Water(){
+		
+		//SETUP
+		List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
+		servPoint.CommoditySector__c = 'Acqua';
+		insert servPoint;
+		
+		//TESTING
+		Test.startTest();
+		Contract con = HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id)[0];
+		con.ServicePoint__c = servPoint.Id;
+		insert con;
+		
+		Test.stopTest();
+		
+		//RETRIEVING DATA
+		Contract testContract = [SELECT Id, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = '3011913470' LIMIT 1];
+		Account testAccount = [SELECT Id, ActiveServicesWater__c FROM Account];
+		System.debug('testContract = ' + testContract);
+		System.debug('testAccount = ' + testAccount);
+		
+		//ASSERTS
+		System.assertEquals('3011913470', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertNotEquals('', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertEquals(1, testAccount.ActiveServicesWater__c, 'Active Services Water errato.');
+	}
+	
+	
+	@isTest
+	public static void beforeAfterInsertTest_Waste(){
+		
+		//SETUP
+		List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		ServicePoint__c servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, false)[0];
+		servPoint.CommoditySector__c = 'Ambiente';
+		insert servPoint;
+		
+		//TESTING
+		Test.startTest();
+		Contract con = HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id)[0];
+		con.ServicePoint__c = servPoint.Id;
+		insert con;
+		
+		Test.stopTest();
+		
+		//RETRIEVING DATA
+		Contract testContract = [SELECT Id, SAPContractCode__c FROM Contract WHERE SAPContractCode__c = '3011913470' LIMIT 1];
+		Account testAccount = [SELECT Id, ActiveServicesWaste__c FROM Account];
+		System.debug('testContract = ' + testContract);
+		System.debug('testAccount = ' + testAccount);
+		
+		//ASSERTS
+		System.assertEquals('3011913470', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertNotEquals('', testContract.SAPContractCode__c, 'Contract not Inserted');
+		System.assertEquals(1, testAccount.ActiveServicesWaste__c, 'Active Services Waste errato.');
+	}
+	
+	
 
 	@isTest
 	public static void testTriggerContractBeforeAfterUpdate(){
