@@ -9,7 +9,7 @@ public  inherited sharing class HDT_QR_Lead {
     public Lead getRecordById(String id) {
         
         String query = 'SELECT  Firstname,LastName,IndividualId,birthdate__c,gender__c,birthcity__c,country,state,city,PostalCode,street,streetName__c,StreetNumber__c,CityCode__c,StreetNumberExtension__c,StreetCode__c,PlaceCode__c,Place__c,IsAddressVerified__c,CreatedBy.LoginChannel__c FROM Lead WHERE Id = :id WITH SECURITY_ENFORCED';
-        List<Lead> leads = Database.query(query);
+        List<Lead> leads = Database.query(String.escapeSingleQuotes(query));
 
         return leads[0];
 
@@ -18,7 +18,7 @@ public  inherited sharing class HDT_QR_Lead {
     public List<Lead> getRecordsById(List<String> ids) {
         
         String query = 'SELECT  Firstname,LastName,IndividualId, CompanyOwner__c FROM Lead WHERE Id IN :ids WITH SECURITY_ENFORCED';
-        List<Lead> leads = Database.query(query);
+        List<Lead> leads = Database.query(String.escapeSingleQuotes(query));
 
         return leads;
 
@@ -35,7 +35,7 @@ public  inherited sharing class HDT_QR_Lead {
         String query = 'SELECT '+ fields +
                 ' FROM Lead WHERE IndividualId = :individualId WITH SECURITY_ENFORCED';
 
-        return Database.query(query);
+        return Database.query(String.escapeSingleQuotes(query));
 
     }
     

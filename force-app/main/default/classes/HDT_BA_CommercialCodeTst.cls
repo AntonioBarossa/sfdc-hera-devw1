@@ -72,9 +72,11 @@ public class HDT_BA_CommercialCodeTst {
         	campaignMembers.add(m.id);
                 
         CampaignMember  cm1 = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
+        Map<String,List<String>> allMembers = new Map<String,List<String>>();
+        allMembers.put(campaignId, campaignMembers);            
         
         Test.startTest();
-		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode(campaignId,campaignMembers);     
+		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode(allMembers);     
         Id batchId = Database.executeBatch(cc,200);
         Test.stopTest();
         

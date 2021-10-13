@@ -48,6 +48,10 @@ public inherited sharing class HDT_UTL_ProductAssociation {
             whereConditionList.add('CategoryFamily__c=\'' + String.escapeSingleQuotes(filterProduct.CategoryFamily__c) + '\'');
         }
 
+        if(!String.isEmpty(filterProduct.Service__c)){
+            whereConditionList.add('Service__c=\'' + String.escapeSingleQuotes(filterProduct.Service__c) + '\'');
+        }
+
         queryString += 'FROM Product2 ';
         queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';
         queryString += 'AND Id ';

@@ -232,6 +232,16 @@
                 <default>false</default>
                 <label>Pricing Guidance</label>
             </value>
+            <value>
+                <fullName>Aggiungi VAS</fullName>
+                <default>false</default>
+                <label>Aggiungi VAS</label>
+            </value>
+            <value>
+                <fullName>Salva e Continua</fullName>
+                <default>false</default>
+                <label>Salva e Continua</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
