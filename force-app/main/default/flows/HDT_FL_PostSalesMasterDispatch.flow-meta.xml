@@ -4070,6 +4070,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -4162,6 +4168,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4260,6 +4272,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -4331,6 +4349,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -4396,6 +4420,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
@@ -4458,6 +4488,12 @@
             <field>Lead__c</field>
             <value>
                 <elementReference>LeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -8843,6 +8879,14 @@
     </variables>
     <variables>
         <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Id Ordine</description>
+        <name>OrderId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
