@@ -7,20 +7,20 @@ public with sharing class HDT_TRH_TaskTst {
     
     
     //TEST SETUP
+    //TODO: MY SETUP CUSTOM
     
     
     //TESTS
     
-
+    //Test case normale senza interruzioni di funzionamento dovute alle validazioni
     @isTest
-    private static void doValidationTest(){
+    private static void doValidationTest_Normal(){
         
         //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'doValidationTest';
+        String debugString = TEST_NAME + ' - ' + 'doValidationTest_Normal';
         System.debug(debugString);
         
         //SETUP
-
         
         String uniqueUserName = 'systemAdmin' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
@@ -64,10 +64,10 @@ public with sharing class HDT_TRH_TaskTst {
             System.runAs(u) {
                 insert myTask;
                 insert myTask2;
-                insert myTask3;
+                
             }
             
-        }catch(DmlException e) {
+        } catch (DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
         }        
         Test.stopTest();
@@ -77,9 +77,61 @@ public with sharing class HDT_TRH_TaskTst {
         System.assert(myTask2 != null, 'Attenzione, myTask2 non può essere null!');
         
     }
+    
+    
+    //Test case normale senza interruzioni di funzionamento dovute alle validazioni
+    @isTest
+    private static void doValidationTest_DescTooLong(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'doValidationTest_DescTooLong';
+        System.debug(debugString);
+        
+        //SETUP
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].Id);
+        
+        Contact myContact = contactList[1];
+        
+        Task myTask3 = new Task();
+        myTask3.WhoId = myContact.Id;
+        myTask3.IsSms__c = true;
+        
+        //NB: Description deve essere sopra lunghezza di 320 caratteri.
+        myTask3.Description = 'My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.';
+        
+        //TESTING
+        
+        Boolean caught = false;
+        String myExcMessage = '';
+        try{
+            insert myTask3;
+            
+            
+        } catch (Exception e) {
+            System.debug(debugString + ' - Eccezione Type: ' + e.getTypeName());
+            System.debug(debugString + ' - Eccezione Message: ' + e.getMessage());
+            System.debug(debugString + ' - Eccezione StackTrace: ' + e.getStackTraceString());
+            caught = true;
+            myExcMessage = e.getMessage();
+            
+        }
+        
+        System.assert(caught, 'Eccezione non catchata. ');
+        System.assert(myExcMessage.contains('È necessario inserire un testo inferiore a 320 caratteri.'), 'Eccezione non è del tipo corretto.');
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     //aggiunto per testare puntualmente metodo della classe HDT_QR_Task
-
     @IsTest
     static void testGetRecordsByIds(){
         
