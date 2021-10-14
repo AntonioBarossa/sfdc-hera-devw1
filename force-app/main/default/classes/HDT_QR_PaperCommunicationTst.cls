@@ -15,9 +15,9 @@ public with sharing class HDT_QR_PaperCommunicationTst {
 
         Test.startTest();
 
-        PaperCommunication__c tPaperCommTest = [SELECT Id, Name FROM PaperCommunication__c WHERE Name = 'test' LIMIT 1];
+        PaperCommunication__c tPaperCommTest = [SELECT Id, Name FROM PaperCommunication__c WHERE Name = 'test0' LIMIT 1];
         PaperCommunication__c tPaperComm = HDT_QR_PaperCommunication.getRecordById(tPaperCommTest.ID);
-        System.assertEquals('test', tPaperComm.Name, 'The query extracted the PaperCommunitcation__c with yhe correct Name');
+        System.assertEquals('test0', tPaperComm.Name, 'The query extracted the PaperCommunitcation__c with the incorrect Name');
 
         Test.stopTest();
     }

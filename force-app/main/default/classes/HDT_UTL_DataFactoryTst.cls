@@ -3012,7 +3012,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 
 			PaperCommunication__c tPaperCommTest = new PaperCommunication__c();
-        	tPaperCommTest.Name='test';
+        	tPaperCommTest.Name='test'+i;
 
 			paperCommunicationList.add(tPaperCommTest);
 		}
