@@ -89,19 +89,19 @@ public with sharing class HDT_TRH_TaskTst {
         myContact.MobilePhone = '3245341020';
         Update myContact;
         
-        Task myTask3 = new Task();
-        myTask3.WhoId = myContact.Id;
-        myTask3.IsSms__c = true;
+        Task myTask = new Task();
+        myTask.WhoId = myContact.Id;
+        myTask.IsSms__c = true;
         
         //NB: Description deve essere sopra lunghezza di 320 caratteri.
-        myTask3.Description = 'My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.';
+        myTask.Description = 'My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.';
         
         //TESTING
         
         Boolean caught = false;
         String myExcMessage = '';
         try{
-            insert myTask3;
+            insert myTask;
             
             
         } catch (Exception e) {
@@ -149,7 +149,6 @@ public with sharing class HDT_TRH_TaskTst {
         try{
             insert myTask;
             
-            
         } catch (Exception e) {
             System.debug(debugString + ' - Eccezione Type: ' + e.getTypeName());
             System.debug(debugString + ' - Eccezione Message: ' + e.getMessage());
@@ -183,7 +182,7 @@ public with sharing class HDT_TRH_TaskTst {
         
         Task myTask = new Task();
         myTask.PhoneNumber__c = '234987560';
-        myTask.IsPec__c = false;
+        myTask.IsPec__c = true;
         
         //NB: Description deve essere sopra lunghezza di 320 caratteri.
         myTask.Description = 'My Description';
@@ -194,7 +193,6 @@ public with sharing class HDT_TRH_TaskTst {
         String myExcMessage = '';
         try{
             insert myTask;
-            
             
         } catch (Exception e) {
             System.debug(debugString + ' - Eccezione Type: ' + e.getTypeName());
