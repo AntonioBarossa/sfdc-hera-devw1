@@ -14,7 +14,7 @@
 
 			)
 		)</errorConditionFormula>
-    <errorMessage>Campi obbligatori: Marcatura , Categoria ,Indirizzo ,Silos
-		La PIVA è obbligatoria solo se Marcatura è DIVERSA da Condominio o Associazione
-		Il CF è obbligatorio solo se Marcatura è UGUALE a Condominio o Associazione</errorMessage>
+    <errorMessage>Campi obbligatori: Marcatura , Categoria ,Indirizzo ,Silos.
+		La PIVA è obbligatoria solo se Marcatura è DIVERSA da Condominio o Associazione.
+		Il CF è obbligatorio solo se Marcatura è UGUALE a Condominio o Associazione.</errorMessage>
 </ValidationRule>
