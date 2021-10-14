@@ -165,6 +165,54 @@ public with sharing class HDT_TRH_TaskTst {
     }
     
     
+    //Contatto o PEC alternativo
+    @isTest
+    private static void doValidationTest_PEC(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'doValidationTest_PEC';
+        System.debug(debugString);
+        
+        //SETUP
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].Id);
+        
+        Contact myContact = contactList[1];
+        myContact.MobilePhone = '3245341020';
+        Update myContact;
+        
+        Task myTask = new Task();
+        myTask.WhoId = contactList[0].Id;
+        myTask.PhoneNumber__c = '234987560';
+        myTask.IsPec__c = false;
+        myTask.IsSms__c = true;
+        
+        //NB: Description deve essere sopra lunghezza di 320 caratteri.
+        myTask.Description = 'My Description';
+        
+        //TESTING
+        
+        Boolean caught = false;
+        String myExcMessage = '';
+        try{
+            insert myTask;
+            
+            
+        } catch (Exception e) {
+            System.debug(debugString + ' - Eccezione Type: ' + e.getTypeName());
+            System.debug(debugString + ' - Eccezione Message: ' + e.getMessage());
+            System.debug(debugString + ' - Eccezione StackTrace: ' + e.getStackTraceString());
+            caught = true;
+            myExcMessage = e.getMessage();
+            
+        }
+        
+        System.assert(caught, 'Eccezione non catchata. ');
+        System.assert(myExcMessage.contains('È necessario inserire un Contatto oppure un indirizzo PEC alternativo.'), 'Eccezione non è del tipo corretto.');
+        
+    }
+    
+    
     
     
     
