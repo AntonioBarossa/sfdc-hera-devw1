@@ -20,11 +20,10 @@ public inherited sharing class HDT_LC_GeneralInfo {
      */
     @AuraEnabled
     public static void updateSale(Sale__c sale){
-
-        if(sale.CommissioningCampaign__c != null){
+        if(String.isnotBlank(sale.CommissioningCampaign__c)){
             List<CampaignMember> campMembList = campMembQr.getCampaignMemberByCampaingAndContact(sale.CommissioningCampaign__c, sale.SalesContact__c);
             
-            if (!campMembList.isEmpty()) {
+            if (campMembList!=null && !campMembList.isEmpty()) {
                 sale.Ecid__c = campMembList[0].Ecid__c;
             }
         }
