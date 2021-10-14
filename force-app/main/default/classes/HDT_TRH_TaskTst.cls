@@ -184,7 +184,6 @@ public with sharing class HDT_TRH_TaskTst {
         Task myTask = new Task();
         myTask.PhoneNumber__c = '234987560';
         myTask.IsPec__c = false;
-        myTask.IsSms__c = true;
         
         //NB: Description deve essere sopra lunghezza di 320 caratteri.
         myTask.Description = 'My Description';
