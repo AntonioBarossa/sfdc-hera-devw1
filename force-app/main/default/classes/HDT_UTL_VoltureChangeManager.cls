@@ -2,6 +2,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
     //private static String lawEightyActivityTemplate = '';
+    @TestVisible
     private static String lawEightyPhase = 'In Attesa Legge 80';
 
     /*

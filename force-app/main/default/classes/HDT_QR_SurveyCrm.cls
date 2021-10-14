@@ -20,12 +20,15 @@ public with sharing class HDT_QR_SurveyCrm {
         List<String> surveyIds = new List<String>();
         for (Campaign campaign : campaigns) {
             if (campaign.SurveyCRM__c != null) {
-                surveyIds.add('\'' + campaign.SurveyCRM__c + '\'');
+                surveyIds.add(campaign.SurveyCRM__c );
             }
         }
-        system.debug(surveyIds);
-        String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE Id IN ' + surveyIds;
-        List<SurveyCRM__c> surveys = Database.query( String.escapeSingleQuotes(query));
+        //system.debug(surveyIds);
+        //String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE Id IN ' + surveyIds;
+
+
+        SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.READABLE,Database.query( 'SELECT '+ String.escapeSingleQuotes( fields) +' FROM SurveyCRM__c WHERE Id IN :  surveyIds'));
+        List<SurveyCRM__c> surveys =( List<SurveyCRM__c> ) securityDecision.getRecords();
 
         return surveys;
 

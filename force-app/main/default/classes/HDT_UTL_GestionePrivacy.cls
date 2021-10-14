@@ -1070,10 +1070,11 @@
         if(contemail !=null){
             ContactPointEmail emailContact = new ContactPointEmail(Id = contemail.Id,Type__c = 'E-mail SOL');
             HDT_SRV_ContactPointEmail.updateRecord(emailContact);
-        }else
+        }else{
             ContactPointEmail emailContact = new ContactPointEmail(ParentId = ind.id,EmailAddress = email,Type__c = 'E-mail SOL');
-         	HDT_SRV_ContactPointEmail.checkUpdateAccess(contemail);
-
+         	HDT_SRV_ContactPointEmail.checkCreateAccess(emailContact);
+            HDT_SRV_ContactPointEmail.createRecord(emailContact);
+        }
             HDT_SRV_Individual.checkCreateAccess(ind);
             /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
         }
