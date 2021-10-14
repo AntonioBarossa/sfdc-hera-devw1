@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_KpiTracking {
         List<KpiTracking__c> kpiList = new List<KpiTracking__c>();
         KpiTracking__c singleKpi;
         for (Account singleAccount : accountList) {
-            if(singleAccount.KpiTracking__c != null && singleAccount.KpiTracking__c != ''){
+            if(singleAccount.KpiTracking__c != null){
                 singleKpi = new KpiTracking__c();
                 singleKpi.Id = singleAccount.KpiTracking__c;
                 kpiList.add(singleKpi);

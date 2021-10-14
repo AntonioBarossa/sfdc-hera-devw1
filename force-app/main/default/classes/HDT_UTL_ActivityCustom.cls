@@ -6,6 +6,9 @@
 */
 public inherited sharing class HDT_UTL_ActivityCustom {
     
+    private FINAL static string APPOINTMENTDEVELOPERNAME = 'HDT_RT_DistributorAppointment';
+    private FINAL static string MODCONFERMATO = 'Modifica confermata';
+    private FINAL static string APPCONFERMATO = 'Appuntamento confermato';
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_Recordtype rtQr = new HDT_QR_Recordtype();
@@ -139,6 +142,28 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         return res;
         //update act;
     }
+
+    @AuraEnabled
+    public static void updateTimeRefAppointment(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
+        Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
+        try {
+            ID recTypeId = rtQr.getRecordTypeIdByName(APPOINTMENTDEVELOPERNAME);
+            for(wrts_prcgvr__Activity__c act : oldList){
+                mapOld.put(act.id,act);
+            }
+            for(wrts_prcgvr__Activity__c act : newList){
+                if(recTypeId == act.recordtypeid){
+                    if((mapOld.get(act.id).Status__c != MODCONFERMATO && act.Status__c == MODCONFERMATO) || (mapOld.get(act.id).Status__c != APPCONFERMATO && act.Status__c == APPCONFERMATO)){
+                        act.DateTimeRef__c = Datetime.now();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
         wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
