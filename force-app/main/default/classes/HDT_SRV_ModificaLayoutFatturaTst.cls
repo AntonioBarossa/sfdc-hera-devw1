@@ -50,7 +50,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
-        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        Test.setMock(HttpCalloutMock.class, new myMockForTest());
         
         //TESTING
         Test.startTest();
@@ -97,7 +97,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
-        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        Test.setMock(HttpCalloutMock.class, new myMockForTest());
         
         //TESTING
         Test.startTest();
