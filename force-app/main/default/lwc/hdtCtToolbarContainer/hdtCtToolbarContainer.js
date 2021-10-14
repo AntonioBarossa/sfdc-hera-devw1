@@ -123,7 +123,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                         this.trackActivity('updatectivity');
                     }
                     updateActivity({
-                        activityId: this.activityId,
+                        ecid: ecid2,
                         endCall: this.endCallDateTime,
                         callDuration: this.callDuration,
                         waitingTime: this.waitingTime

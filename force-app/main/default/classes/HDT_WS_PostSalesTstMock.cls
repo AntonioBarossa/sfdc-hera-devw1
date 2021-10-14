@@ -90,21 +90,21 @@ public class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
             'Callout:ModificaLayoutFattura' => 
             new Map<String,String>
             {
-                'body' => '"status": "success","correlationId": "cd6247d0-2077-11ec-a285-02a2f3354824","timestamp": "2021-09-28T18:19:12","data": {"rds": "C-00060011","attivita": "Esito OK da SAP"}}',
+                'body' => '{"status": "success","correlationId": "cd6247d0-2077-11ec-a285-02a2f3354824","timestamp": "2021-09-28T18:19:12","data": {"rds": "C-00060011","attivita": "Esito OK da SAP"}}',
                 'statuscode' => '200'
             },
 
             'Callout:ModificaLayoutFattura_null' => 
             new Map<String,String>
             {
-                'body' => '"status": "success","correlationId": "cd6247d0-2077-11ec-a285-02a2f3354824","timestamp": "2021-09-28T18:19:12","data":""',
+                'body' => '{"status": "success","correlationId": "cd6247d0-2077-11ec-a285-02a2f3354824","timestamp": "2021-09-28T18:19:12","data":""',
                 'statuscode' => '200'
             },
 
             'Callout:ModificaLayoutFattura_notOK' => 
             new Map<String,String>
             {
-                'body' => '"status": "success","correlationId": "cd6247d0-2077-11ec-a285-02a2f3354824","timestamp": "2021-09-28T18:19:12","data": {"rds": "C-00060011","attivita": "KO"}}',
+                'body' => '{"status": "success","correlationId": "cd6247d0-2077-11ec-a285-02a2f3354824","timestamp": "2021-09-28T18:19:12","data": {"rds": "C-00060011","attivita": "KO"}}',
                 'statuscode' => '200'
             }
 
@@ -123,7 +123,7 @@ public class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
         {
             if(key.equalsIgnoreCase(endpoint))
             {
-                if(key.equalsIgnoreCase('Callout:Prova'))
+                if(endpoint.equalsIgnoreCase('Callout:Prova'))
                 {
                     System.debug(responseMap.get(key).get('body'));
                     String recordId = '';
@@ -140,7 +140,7 @@ public class HDT_WS_PostSalesTstMock implements HTTPCalloutMock{
                 }
                 else 
                 {
-                    bodyResponse = responseMap.get(endpoint).get('body');
+                    bodyResponse = responseMap.get(key).get('body');
                     statusCode = Integer.valueOf(responseMap.get(key).get('statuscode'));
                 }
             }
