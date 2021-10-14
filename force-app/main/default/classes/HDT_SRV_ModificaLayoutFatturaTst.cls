@@ -176,8 +176,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
             
             if('Callout:ModificaLayoutFattura'.equals(request.getEndpoint())){
                 
-                HttpResponse response = new HttpResponse();
-                
                 HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
                 wrpDATA.rds = 'rds';
                 wrpDATA.attivita = 'Esito OK da SAP';
