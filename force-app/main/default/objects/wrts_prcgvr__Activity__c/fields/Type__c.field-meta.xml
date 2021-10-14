@@ -365,6 +365,26 @@
                 <default>false</default>
                 <label>Supporto su migrazione</label>
             </value>
+            <value>
+                <fullName>Check preliminari KO</fullName>
+                <default>false</default>
+                <label>Check preliminari KO</label>
+            </value>
+            <value>
+                <fullName>Gestione Manuale SAP</fullName>
+                <default>false</default>
+                <label>Gestione manuale SAP</label>
+            </value>
+            <value>
+                <fullName>Gestione M01/M02</fullName>
+                <default>false</default>
+                <label>Gestione M01/M02</label>
+            </value>
+            <value>
+                <fullName>Esito KO da SAP</fullName>
+                <default>false</default>
+                <label>Esito KO da SAP</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

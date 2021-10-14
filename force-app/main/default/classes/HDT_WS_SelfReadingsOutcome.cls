@@ -77,6 +77,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         System.debug('handleRequest - errorCodesDescriptionSet size: ' + errorCodesDescriptionSet.size());
 
         Map<String, Boolean> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodesDescriptionSet);
+        Map<Id, Boolean> isAutomaticDiscardCasesMap = new Map<Id,Boolean>();
 
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
@@ -123,7 +124,6 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     errorDescription += ' - ' + outcomeData.errorDescription;
                 }
                 caseToUpdate.Subject = errorDescription;  // tracciamo l'errore su Subject poichè Description potrebbe già contenere qualcosa e non possiamo permetterci di querare il case per andare in append.
-                caseToUpdate.Phase__c = 'KO Definitivo';  // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
             } else {
                 System.debug('Entering NOT isAutomaticDiscard');
                 
@@ -155,11 +155,12 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }
 
+            isAutomaticDiscardCasesMap.put(caseToUpdate.Id, isAutomaticDiscard);
             casesToUpdate.add(caseToUpdate);
         }
 
         // Deleghiamo le DML ad un queueable per non fare andare in timeout Mulesoft.
-        System.enqueueJob(new HDT_QBL_SelfReadingsOutcome(casesToUpdate, activitiesToCreate));
+        System.enqueueJob(new HDT_QBL_SelfReadingsOutcome(casesToUpdate, activitiesToCreate, isAutomaticDiscardCasesMap));
 
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse res = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         if (casesToUpdate.isEmpty() && activitiesToCreate.isEmpty()) {
