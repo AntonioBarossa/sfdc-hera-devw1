@@ -225,7 +225,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i = 0; i < amount; i++) {
 			
 			partnerAccounts.add(
-				new Account(Name = name, RecordTypeId = utlConstants.ACCOUNT_RECORDTYPEID_PARTNER)
+				new Account(Name = name, RecordTypeId = utlConstants.ACCOUNT_RECORDTYPEID_PARTNER,CompanyOwner__c='HERA COMM')
 			);
 		}
 
