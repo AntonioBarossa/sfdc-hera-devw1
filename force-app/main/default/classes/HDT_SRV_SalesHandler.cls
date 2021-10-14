@@ -127,7 +127,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         when 'Lavoro Semplice' {
                                             ord.QuotationType__c='Rapido';
                                         }
-                                        when 'A Preventivo'{
+                                        when 'A Preventivo', 'Lavoro Complesso'{
                                             ord.QuotationType__c='Analitico';
                                         }
                                     }
