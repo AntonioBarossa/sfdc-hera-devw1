@@ -109,12 +109,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 } else {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
+                                ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
 
                                 if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                     Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                     Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
-                                    ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
                                     ord.QuotationType__c='Predeterminabile';
                                     switch on mapRequestFields.get('TIPO_INTERVENTO') {
                                         when 'Attivazione', 'Lavoro Semplice' {

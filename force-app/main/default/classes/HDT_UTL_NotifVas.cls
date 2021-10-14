@@ -78,7 +78,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         logCase.Causal__c = 'CALLIN-Vas.'+request.header.fields.get(0).value;
         logCase.Note__c = JSON.serializePretty(request);
         logCase.Description = RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem);
-        insert logCase;
+        //insert logCase;
     }
 
     /**
