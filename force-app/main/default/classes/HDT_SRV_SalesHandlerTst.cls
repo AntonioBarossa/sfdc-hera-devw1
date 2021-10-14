@@ -136,7 +136,7 @@ private class HDT_SRV_SalesHandlerTst {
 
 
 @testSetup 
-  static void setup() {
+static void setup() {
 
     HDT_UTL_DataFactoryTst.pClickInstance();
     HDT_UTL_DataFactoryTst.pClickOrderPhase();  
@@ -234,13 +234,13 @@ private class HDT_SRV_SalesHandlerTst {
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
     } )); 
-    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Amm. Precheck KO SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
     } ));
-    List<Order> orderCompletata= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
+    List<Order> orderCompletata= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Completata',
       'BillingProfile__c'=>billingProfileList[0].Id,

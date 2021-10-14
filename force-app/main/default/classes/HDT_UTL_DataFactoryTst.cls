@@ -431,7 +431,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		List<Order> orderList=new List<Order>();
 
-		Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
+		Id recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
 
 		for (Integer i=0; i<amount; i++){
 
@@ -460,9 +460,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			ord.Sale__c=sales[i].Id;
 			ord.RecordTypeId=recordTypeId;
 
-		for(String key :params.keySet()) {
-			ord.put(key, params.get(key));
-		}
+			for(String key :params.keySet()) {
+				ord.put(key, params.get(key));
+			}
 
 			orderList.add(ord);
 		}
