@@ -144,7 +144,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
-        Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
+        Test.setMock(HttpCalloutMock.class, new myMockForTest());
         
         //TESTING
         Test.startTest();
@@ -162,5 +162,87 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
         
     }
+    
+    
+    
+    
+    //WEBSERVICE MOCK
+    public class myMockForTest implements HTTPCalloutMock{
+        
+        public HTTPResponse respond(HTTPRequest request){
+            
+            HttpResponse response = new HttpResponse();
+            System.debug('request.getEndpoint: ' + request.getEndpoint());
+            
+            if('Callout:ModificaLayoutFattura'.equals(request.getEndpoint())){
+                
+                HttpResponse response = new HttpResponse();
+                
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+                wrpDATA.rds = 'rds';
+                wrpDATA.attivita = 'Esito OK da SAP';
+                
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+                bodyResp.status = 'TST_Status';
+                bodyResp.correlationId = 'TST_CorrelId';
+                bodyResp.timestamp = 'TST_TimeStamp';
+                bodyResp.data = wrpDATA;
+                
+                
+                String bodyResponse = JSON.serialize(bodyResp);
+                
+                response.setHeader('Content-Type', 'application/json');
+                response.setBody(bodyResponse);
+                response.setStatusCode(200);
+                response.setStatus('OK');
+                
+            } else if('Callout:ModificaLayoutFattura_null'.equals(request.getEndpoint())){
+                
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+                
+                bodyResp.status = 'TST_Status';
+                bodyResp.correlationId = 'TST_CorrelId';
+                bodyResp.timestamp = 'TST_TimeStamp';
+                bodyResp.data = null;//TARGET
+                
+                
+                String bodyResponse = JSON.serialize(bodyResp);
+                
+                response.setHeader('Content-Type', 'application/json');
+                response.setBody(bodyResponse);
+                response.setStatusCode(200);
+                response.setStatus('OK');
+                
+            } else if('Callout:ModificaLayoutFattura_notOK'.equals(request.getEndpoint())){
+                
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+                wrpDATA.rds = 'rds';
+                wrpDATA.attivita = 'Test';//TARGET
+                
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
+                bodyResp.status = 'TST_Status';
+                bodyResp.correlationId = 'TST_CorrelId';
+                bodyResp.timestamp = 'TST_TimeStamp';
+                bodyResp.data = wrpDATA;
+                
+                String bodyResponse = JSON.serialize(bodyResp);
+                
+                response.setHeader('Content-Type', 'application/json');
+                response.setBody(bodyResponse);
+                response.setStatusCode(200);
+                response.setStatus('OK');
+                
+                return response;
+                
+            } else {
+                System.debug('Invalid Callout Endpoint - Empty HTTP Response.');
+                
+            }
+            
+            return response;
+        }
+        
+    }
+    
     
 }
