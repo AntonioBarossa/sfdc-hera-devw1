@@ -59,12 +59,33 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_KOPRECEDETECLIENTE =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_KOPRECEDETECLIENTE).getRecordTypeId();
 
+    //Activity Custom RecordType Credit Check KO
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT = 'HDT_RT_DistributorAppointment';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
+
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
     @AuraEnabled
     public final String ORDER_RECORDTYPEID_DEFAULT =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT).getRecordTypeId();
+
+    //Order RecordType VAS
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_VAS = 'HDT_RT_VAS';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_VAS =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_VAS).getRecordTypeId();
+
+    //Order RecordType Cambio Offerta
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_CAMBIO_OFFERTA = 'HDT_RT_CambioOfferta';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_CAMBIO_OFFERTA =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_CAMBIO_OFFERTA).getRecordTypeId();
 
     //Order RecordType Voltura
     @AuraEnabled
@@ -114,6 +135,56 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_MOROSITA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA).getRecordTypeId();
+
+    //@anbuzzi 31/08 Case RecordType Documentale/Copia Contratto
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO = 'HDT_RT_DocCopiaContratto';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_DOCUMENTALECOPIACONTRATTO).getRecordTypeId();
+    
+    //@anbuzzi 31/08 Case RecordType AUTOLETTURA
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA = 'HDT_RT_Autolettura';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_AUTOLETTURA =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA).getRecordTypeId();
+
+    //Case RecordType Generiche Attivazioni
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI = 'HDT_RT_GenericheAttivazioni';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI).getRecordTypeId();
+
+    //Case RecordType PostSalesVAS
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS = 'HDT_RT_PostSalesVAS';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_POST_SALES_VAS =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS).getRecordTypeId();
+
+    // Order RecordType Riattivazione Non Morose
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE = 'HDT_RT_RiattivazioniNonMorose';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_RIATTIVAZIONENONMOROSE =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE).getRecordTypeId();
+
+
+    // Order RecordType Connessione Con Attivazione
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE = 'HDT_RT_ConnessioneConAttivazione';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE).getRecordTypeId();
+
+     // Order RecordType Temporanea Nuova Att
+     @AuraEnabled
+     public final String ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT = 'HDT_RT_TemporaneaNuovaAtt';
+     @AuraEnabled
+     public final String ORDER_RECORDTYPEID_TEMPORANEANUOVAATT =
+     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT).getRecordTypeId();
     
     //ServicePoint RecordType Punto Elettrico
     @AuraEnabled
@@ -122,6 +193,11 @@ public with sharing class HDT_UTL_Constants {
     public final String SERVICEPOINT_RECORDTYPEID_PELETRICCO =
     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PELETRICCO).getRecordTypeId();
 
+    //ServicePoint Recordtype Gas
+    public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS = 'HDT_RT_Gas';
+    @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPEID_GAS =
+    Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS).getRecordTypeId();
 
     //Hera internal Profiles
     @AuraEnabled
@@ -155,6 +231,14 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String PERMISSIONSET_HDT_APEXCLASSES = 'HDT_ApexClasses';
 
+    //Voltura Retroattiva Permission set
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
+    
+    //ProtocolManualActivities
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_PROTOCOLMANUALACTIVITIES = 'HDT_ProtocolManualActivities';
+    
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';
@@ -165,7 +249,16 @@ public with sharing class HDT_UTL_Constants {
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_CUSTOMER = 'Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_EX_CUSTOMER = 'Ex-Customer';
     public final string ACCOUNT_CUSTOMER_ACCOUNT_STATUS_PROSPECT = 'Prospect';
+    
+    //Knowledge Article Record Types
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ = 'HDT_RT_FAQ';
+    @AuraEnabled
+    public final String KNOWLEDGEARTICLE_RECORDTYPEID_FAQ =
+    Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByDeveloperName().get(KNOWLEDGEARTICLE_RECORDTYPE_DEVELOPERNAME_FAQ).getRecordTypeId();
+    
 
+     
     //Custom Permissions
     @AuraEnabled
     public final string CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN = 'HDT_CP_SalesforceCPQAdmin';
@@ -173,6 +266,18 @@ public with sharing class HDT_UTL_Constants {
     //User Roles
     @AuraEnabled
     public final string USERROLE_DEVELOPERNAME_BACKOFFICE = 'HDT_BackOffice';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_FRONTOFFICE_AAAEBT = 'HDT_FrontOffice_AAAEBT';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_FRONTOFFICE_MMS = 'HDT_FrontOffice_MMS';
+
+    //User Roles
+    @AuraEnabled
+    public final string USERROLE_DEVELOPERNAME_FRONTOFFICE_RESELLER = 'HDT_FrontOffice_Reseller';
 
     //Other
     @AuraEnabled

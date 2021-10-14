@@ -74,7 +74,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 } else {
                     parentCase.Phase__c = 'Completata';
                 }
-            }else if(parentCase.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente')){
+            }else if(parentCase.Type.equalsIgnoreCase('Modifica Tariffa Residente/Non Residente') || parentCase.Type.equalsIgnoreCase('Marcatura/Uso PdR')){
                 parentCase.Phase__c = 'Elaborazione Manuale';
             }
              else if(parentCase.Type.equalsIgnoreCase('Allineamento Canone Rai')){
@@ -382,5 +382,23 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         formParams.put('mode', 'Print');
         formParams.put('Archiviato', 'Y');
         HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
+    }
+
+    public void closeRiattivazione(SObject inputCase)
+    {
+        Case currentCase = (Case)inputCase;
+        if(currentCase.Type.equalsIgnoreCase('Riattivazione Fornitura') && (currentCase.HerokuPracticeCode__c == null || currentCase.HerokuPracticeCode__c == ''))
+        {
+            currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+        }
+        updateFuture(JSON.serialize(currentCase));
+    }
+
+    @Future
+    private static void updateFuture(String serializedCase)
+    {
+        Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
+        HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
 }

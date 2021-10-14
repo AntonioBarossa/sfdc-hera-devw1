@@ -255,7 +255,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         }
 
         serviceCatalog.IsInstallment__c = (!String.isEmpty(record.rateizzato) && record.rateizzato.equalsIgnoreCase('SI')) ? true : false;
-        serviceCatalog.SameCA__c = false;
+        serviceCatalog.SameCA__c = true;
 
         return serviceCatalog;
 
@@ -289,22 +289,36 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             tot += Decimal.valueOf(obj.residuo);
         }
 
-        switch on isInstallmentSet.size() {
-            when 0 {
-                serviceCatalog.IsInstallment__c = false;
-            }
+        System.debug('>>>>>>>>>>>> isInstallmentSet ' + String.valueOf(isInstallmentSet));
 
-            when 1 {
-                String f = (new List<String>(isInstallmentSet) )[0];
-                if(f.equalsIgnoreCase('SI')){
-                    serviceCatalog.IsInstallment__c = true;
-                }
-            }
-            
-            when 2 {
+        if(isInstallmentSet.size() > 0){
+            if(isInstallmentSet.contains('SI')){
+                serviceCatalog.IsInstallment__c = true;
+            } else {
                 serviceCatalog.IsInstallment__c = false;
-            }                       
+            }
+        } else {
+            serviceCatalog.IsInstallment__c = false;
         }
+
+        //switch on isInstallmentSet.size() {
+        //    when 0 {
+        //        serviceCatalog.IsInstallment__c = false;
+        //    }
+
+        //    when 1 {
+        //        String f = (new List<String>(isInstallmentSet) )[0];
+        //        if(f.equalsIgnoreCase('SI')){
+        //            serviceCatalog.IsInstallment__c = true;
+        //        }
+        //    }
+        //    
+        //    when 2 {
+        //        serviceCatalog.IsInstallment__c = false;
+        //    }                       
+        //}
+
+        System.debug('>>>>>>>>>>>> IsInstallment__c ' + String.valueOf(serviceCatalog.IsInstallment__c));
 
         serviceCatalog.OnCredit__c = (tot<0) ? true : false;
         serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;

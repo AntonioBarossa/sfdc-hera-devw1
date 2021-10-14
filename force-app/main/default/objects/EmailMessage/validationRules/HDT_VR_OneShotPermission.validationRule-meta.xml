@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_OneShotPermission</fullName>
+    <active>false</active>
+    <errorConditionFormula>IF( 
+					AND(ParentId != NULL, $Permission.HDT_CP_OneShotUser), 
+					false, 
+					true
+	)</errorConditionFormula>
+    <errorMessage>Non si possiedono i permessi necessari per completare questa azione.</errorMessage>
+</ValidationRule>

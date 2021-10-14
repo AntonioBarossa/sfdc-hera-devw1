@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Correttore MM</label>
+    <label>Correzione Volumi</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

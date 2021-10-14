@@ -4,6 +4,17 @@
     <active>true</active>
     <label>Visita D2D</label>
     <picklistValues>
+        <picklist>ActivityOutcome__c</picklist>
+        <values>
+            <fullName>Negativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positivo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
             <fullName>Distributore</fullName>
@@ -33,6 +44,21 @@
         </values>
         <values>
             <fullName>Info Commerciali</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -171,6 +197,14 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -224,5 +258,9 @@
             <fullName>Not Started</fullName>
             <default>true</default>
         </values>
+        <values><!--HRAWRM-672-->
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values><!--HRAWRM-672-->
     </picklistValues>
 </RecordType>

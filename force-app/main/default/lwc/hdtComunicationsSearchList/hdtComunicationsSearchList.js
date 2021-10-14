@@ -249,9 +249,12 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
             return;
         }
 
-        this.docInvoiceObj.billNumber = selected[0].envelopeId;
+        this.docInvoiceObj.billNumber = selected[0].envelopeId.replace(/^0+/, '');
         this.docInvoiceObj.channel = 'CRM';
-        this.docInvoiceObj.date = selected[0].issueDate;
+
+        const date = selected[0].issueDate.split(" ");
+
+        this.docInvoiceObj.date = date[0];
         this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
 
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
@@ -259,6 +262,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
     sendToApex(bodyString){
         console.log('# closeModal #');
+        console.log('>>> BODY > ' + bodyString);
         const sendToApex = new CustomEvent("printpdf", {
             detail: {obj: bodyString}
         });

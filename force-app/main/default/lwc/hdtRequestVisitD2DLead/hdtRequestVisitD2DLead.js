@@ -2,6 +2,7 @@ import { LightningElement, wire, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import {getFieldValue, getRecord } from 'lightning/uiRecordApi';
+import { CloseActionScreenEvent } from 'lightning/actions';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import OWNER_ID from '@salesforce/schema/Lead.OwnerId';
 import VISIT_ASSIGNMENT_RULES_OBJECT from '@salesforce/schema/VisitAssignmentRules__c';
@@ -9,9 +10,11 @@ import CATEGORY from '@salesforce/schema/VisitAssignmentRules__c.Category__c';
 import CONSUMPTION from '@salesforce/schema/lead.Consumption__c';
 import createActivityFromLead from '@salesforce/apex/HDT_LC_RequestVisitD2DCreateForm.createActivityFromLead';
 import createVisitAssignmentRules from '@salesforce/apex/HDT_LC_RequestVisitD2DCreateForm.createVisitAssignmentRules';
+import { NavigationMixin } from 'lightning/navigation';
+
 const fields = [OWNER_ID];
 
-export default class HdtRequestVisitD2DLead extends LightningElement {
+export default class HdtRequestVisitD2DLead  extends NavigationMixin(LightningElement)  {
 
     @api recordId;
     @track leadId;
@@ -82,7 +85,7 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
         console.log('test' + category);
        console.log('mobile'+consumption);
         if(zipCode != undefined && category != undefined && consumption != undefined){
-
+            this.showSpinner=true;
 
             createActivityFromLead({
                 leadId : this.recordId,
@@ -98,6 +101,12 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
                 }));
                 dispatchEvent(new CustomEvent('afterSubmit')); 
                 console.log(JSON.stringify(result));
+                //this.dispatchEvent(new CloseActionScreenEvent());
+                this.showSpinner = false;
+                this.closeQuickAction();
+
+               
+                
             }).catch(err => {
                 console.log(JSON.stringify(err));
             });
@@ -109,7 +118,12 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
                 variant: 'error'
             }));
             dispatchEvent(new CustomEvent('afterSubmit')); 
+            this.showSpinner = false;
         }
+      
+      
+        
+        
       /* createActivityFromLead({
 
         leadId: this.recordId,
@@ -124,7 +138,11 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
             console.log(JSON.stringify(err));
         });
  */
-        this.showSpinner = false;
+        
     }
-
+    closeQuickAction() {
+        const closeQA = new CustomEvent('close');
+        // Dispatches the event.
+        this.dispatchEvent(closeQA);
+    }
 }

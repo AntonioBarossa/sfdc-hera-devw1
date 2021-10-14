@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customLabels>
+        <label>Data Modifica</label>
+        <name>wrts_prcgvr__Date</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo Operazione</label>
+        <name>wrts_prcgvr__Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Valore Dopo La Modifica</label>
+        <name>wrts_prcgvr__TransitionActivityPage_DestinationColumn</name>
+    </customLabels>
+    <customLabels>
+        <label>Valore Prima Della Modifica</label>
+        <name>wrts_prcgvr__TransitionActivityPage_OriginColumn</name>
+    </customLabels>
+    <customLabels>
+        <label>Consentito</label>
+        <name>wrts_prcgvr__PhaseManager_OnlyTypeAllowedOnCondition</name>
+    </customLabels>
+    <customLabels>
+        <label>Automatico</label>
+        <name>wrts_prcgvr__Automatic</name>
+    </customLabels>
+    <customLabels>
+        <label>Manuale</label>
+        <name>wrts_prcgvr__Manual</name>
+    </customLabels>
+    <customLabels>
+        <label>Cronologia Fasi</label>
+        <name>wrts_prcgvr__PhaseHistory</name>
+    </customLabels>
+    <customLabels>
         <label>Non è possibile richiedere la certificazione per Account non di tipo “Customer”</label>
         <name>AccountCantBeCertified</name>
     </customLabels>
@@ -99,5 +131,9 @@
     <customLabels>
         <label>La richiesta di certificazione è stata creata con successo</label>
         <name>SuccessfulCertificationRequest</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo Oggetto non supportato per questa azione</label>
+        <name>UnsupportedObjectType</name>
     </customLabels>
 </Translations>

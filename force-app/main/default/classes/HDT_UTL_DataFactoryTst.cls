@@ -5,9 +5,11 @@
  * @history Luca Belometti -WR – 05/08/2021 – Created Merhods for creation CampaingMemberAssignment and its relative Item
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
+
+ @isTest
 public with sharing class HDT_UTL_DataFactoryTst{
 
-	private staTIC HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
 
 	//Method to avoid 'ObjectCompatibility' errors from ProcessClick
 	public static void pClickInstance(){
@@ -32,8 +34,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 		//Method to create PClick Phase Transitions
-		public static void newPhaseTransition(String DestinationPhase, String OriginPhase, id recordTypeId, String recordTypeName){
-			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c=DestinationPhase, Wrts_prcgvr__OriginPhase__c=OriginPhase, Wrts_prcgvr__RecordTypeId__c=recordTypeId, Wrts_prcgvr__RecordTypeName__c=recordTypeName, Wrts_prcgvr__Type__c='A');
+		public static void newPhaseTransition(String destinationPhase, String originPhase, id recordTypeId, String recordTypeName){
+			insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'', Wrts_prcgvr__DestinationPhase__c=destinationPhase, Wrts_prcgvr__OriginPhase__c=originPhase, Wrts_prcgvr__RecordTypeId__c=recordTypeId, Wrts_prcgvr__RecordTypeName__c=recordTypeName, Wrts_prcgvr__Type__c='A');
 
 		}
 
@@ -134,19 +136,18 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678901';
+			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H501K';
+			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
 			acc.BillingIsAddressVerified__c=true;
 			//@frpanico 06/08 added Customer Code
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 			// OLD VALUE → acc.CustomerCode__c='1003616210';
         	acc.IsWrongFiscalData__c = false;
-        	acc.BillingIsAddressVerified__c = true;
 			acc.CustomerCode__c = stringResult;
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -186,13 +187,14 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678901';
+			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
+			acc.LastName__c='test account'+i;
+			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(100 + i);
 			acc.FirstName__c= 'test';
 			acc.LastName__c='account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H501K';
 			//@frpanico 06/08 added Customer Code
 
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
@@ -448,7 +450,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			servPoint.Name='testServicePoint'+i;
 			servPoint.ServicePointCode__c='testServicePointCode';
-
+			servPoint.RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
 			servPointList.add(servPoint);
 		}
@@ -520,9 +522,17 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return contractList;
 	}
-
+	
+	
+	//CASE
+	
+	//CASE MOROSITà
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
-
+		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
+	}
+	
+	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
 		List<Case> caseList=new List<Case>();
 		
 		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
@@ -555,6 +565,222 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return caseList;
 	}
+	
+	//CASE DOCUMENTALE/COPIA CONTRATTO
+	public static List<Case> createCaseDocumentale(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_DOCUMENTALECOPIACONTRATTO;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	//AUTOLETTURA
+	public static List<Case> createCaseAutolettura(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
+		
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_AUTOLETTURA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.AccountId=accId;
+			testCase.Status='In Lavorazione';
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='Allineamento Anagrafica';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.ContactId=contactId;
+			testCase.ServicePoint__c=servPointId;
+			testCase.Contract__c=contractId;
+			//testCase.VulturePracticeReference__c=orderId;
+			testCase.Cluster__c='Pagamenti';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+
+			caseList.add(testCase);
+		}
+
+		if (doInsert){
+
+			insert caseList;
+		}
+
+		return caseList;
+	}
+	
+	
+	public static List<Reading__c> createReadingMeterCorrector(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			reading.CaseGas__c = caseId;
+			
+			//METER
+			reading.ReadingRegisterMeter__c = 'TST';
+			reading.ReadingValueMeter__c = 1;
+			reading.ReadingBandMeter__c = 'TE';
+			reading.ReadingDateMeter__c = Date.today();
+			reading.ReadingDigitNumberMeter__c = 'TE';
+			reading.ReadingSerialNumberMeter__c = 'SERIAL_CORR';
+			reading.ReadingTypeMeter__c = 'READING_TYPE_METER';
+			reading.ReadingUnitMeter__c = 'TST';
+			
+			//CORRECTOR
+			reading.ReadingValueCorrector__c = 1;
+			reading.ReadingRegisterCorrector__c = 'TST';
+			reading.ReadingBandCorrector__c = 'TE';
+			reading.ReadingDateCorrector__c = Date.today();
+			reading.ReadingDigitNumberCorrector__c = 'TE';
+			reading.ReadingSerialNumberCorrector__c = 'SERIAL_CORR';
+			reading.ReadingTypeCorrector__c = 'READING_TYPE_CORRECTOR';
+			reading.ReadingUnitCorrector__c ='TST' ;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
+	}
+	
+	//reading meter/corrector
+	public static List<Reading__c> createReading(Integer amount, Boolean doInsert, String caseId){
+		
+		List<Reading__c> readings = new List<Reading__c>();
+		
+		for (Integer i=0; i<amount; i++){
+			
+			Reading__c reading = new Reading__c();
+			
+			reading.ReadingValue1__c = 1;
+			reading.ReadingRegister1__c = 'TST';
+			reading.ReadingType1__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber1__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand1__c = 'BD';
+			reading.ReadingUnit1__c = 'UNI';
+			reading.ReadingDigitNumber1__c = 'DN';
+			reading.ReadingDate1__c = Date.today();
+			
+			reading.ReadingValue2__c = 1;
+			reading.ReadingRegister2__c = 'TST';
+			reading.ReadingType2__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber2__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand2__c = 'BD';
+			reading.ReadingUnit2__c = 'UNI';
+			reading.ReadingDigitNumber2__c = 'DN';
+			reading.ReadingDate2__c = Date.today();
+			
+			reading.ReadingValue3__c = 1;
+			reading.ReadingRegister3__c = 'TST';
+			reading.ReadingType3__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber3__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand3__c = 'BD';
+			reading.ReadingUnit3__c = 'UNI';
+			reading.ReadingDigitNumber3__c = 'DN';
+			reading.ReadingDate3__c = Date.today();
+			
+			reading.ReadingValue4__c = 1;
+			reading.ReadingRegister4__c = 'TST';
+			reading.ReadingType4__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber4__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand4__c = 'BD';
+			reading.ReadingUnit4__c = 'UNI';
+			reading.ReadingDigitNumber4__c = 'DN';
+			reading.ReadingDate4__c = Date.today();
+			
+			reading.ReadingValue5__c = 1;
+			reading.ReadingRegister5__c = 'TST';
+			reading.ReadingType5__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber5__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand5__c = 'BD';
+			reading.ReadingUnit5__c = 'UNI';
+			reading.ReadingDigitNumber5__c = 'DN';
+			reading.ReadingDate5__c = Date.today();
+			
+			reading.ReadingValue6__c = 1;
+			reading.ReadingRegister6__c = 'TST';
+			reading.ReadingType6__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber6__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand6__c = 'BD';
+			reading.ReadingUnit6__c = 'UNI';
+			reading.ReadingDigitNumber6__c = 'DN';
+			reading.ReadingDate6__c = Date.today();
+			
+			reading.ReadingValue7__c = 1;
+			reading.ReadingRegister7__c = 'TST';
+			reading.ReadingType7__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber7__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand7__c = 'BD';
+			reading.ReadingUnit7__c = 'UNI';
+			reading.ReadingDigitNumber7__c = 'DN';
+			reading.ReadingDate7__c = Date.today();
+			
+			reading.ReadingValue8__c = 1;
+			reading.ReadingRegister8__c = 'TST';
+			reading.ReadingType8__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber8__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand8__c = 'BD';
+			reading.ReadingUnit8__c = 'UNI';
+			reading.ReadingDigitNumber8__c = 'DN';
+			reading.ReadingDate8__c = Date.today();
+			
+			reading.ReadingValue9__c = 1;
+			reading.ReadingRegister9__c = 'TST';
+			reading.ReadingType9__c = 'TST_READING_TYPE';
+			reading.ReadingSerialNumber9__c = 'TST_SERIAL_NUM';
+			reading.ReadingBand9__c = 'BD';
+			reading.ReadingUnit9__c = 'UNI';
+			reading.ReadingDigitNumber9__c = 'DN';
+			reading.ReadingDate9__c = Date.today();
+			
+			reading.CaseEle__c = caseId;
+			
+			readings.add(reading);
+		}
+		
+		if(doInsert){
+			insert readings;
+		}
+		
+		return readings;
+	}
+	
 
 	public static List<OrderItem> createOrderItem(Integer amount, Boolean doInsert, Id orderId, Id servicePointId, Id product2Id, Id pricebookEntryId){
 
@@ -640,7 +866,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return agentMatrixList;
 	}
 
-	public static List<BillingProfile__c> createBillingProfile(Integer amount, Boolean doInsert, Id Account){
+	public static List<BillingProfile__c> createBillingProfile(Integer amount, Boolean doInsert, Id account){
 
 		List<BillingProfile__c> tstBillingProfileList=new List<BillingProfile__c>();
 
@@ -654,7 +880,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** It is a unique field, it will crash the insert of BillingProfile__c if the ammount param is more than 1 record
 
 			BillingProfile__c testBillingProfile=new BillingProfile__c();
-			testBillingProfile.Account__c=Account;
+			testBillingProfile.Account__c=account;
 			//@frpanico 06/08 added CaCode
 			
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the ContractAccountCode__c field
@@ -880,7 +1106,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pricebookList;
 	}
 
-	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
+	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
 
@@ -891,7 +1117,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			Attachment testAttachment=new Attachment();
 			testAttachment.Name='test';
-			testAttachment.ParentId=Account;
+			testAttachment.ParentId=account;
 			testAttachment.Body=tempBlob;
 
 			tstAttachmentList.add(testAttachment);
@@ -1000,7 +1226,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return campaignMemberAssigmentList;
 	}
 
-	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id CampaingMemberAssigmentId, String ProcessingType, Decimal PercentageAllocation){
+	public static List<CampaignMemberAssigmentItem__c> createCampaignMemberAssigmentItem(Integer amount, Boolean doInsert, Id accountId, Id campaingMemberAssigmentId, String processingType, Decimal percentageAllocation){
 
 		List<CampaignMemberAssigmentItem__c> campaignMemberAssigmentItemList=new List<CampaignMemberAssigmentItem__c>();
 
@@ -1009,9 +1235,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			CampaignMemberAssigmentItem__c cma=new CampaignMemberAssigmentItem__c();
 
 			cma.Agency__c=accountId;
-			cma.CampaingMemberAssigment__c=CampaingMemberAssigmentId;
-			cma.PercentageAllocation__c=PercentageAllocation;
-			cma.ProcessingType__c=ProcessingType;
+			cma.CampaingMemberAssigment__c=campaingMemberAssigmentId;
+			cma.PercentageAllocation__c=percentageAllocation;
+			cma.ProcessingType__c=processingType;
 
 			campaignMemberAssigmentItemList.add(cma);
 		}
@@ -1025,7 +1251,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	//** [END MOD 2021-08-05] @Author:Luca Belometti - WR (luca.belometti@webresults.it) @Description: Added Method to Create a record of CampaignMemberAssigmentItem
-	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id CampaignId){
+	public static List<CampaignMemberStatus> createCampaignMemberStatus(Integer amount, Boolean doInsert, Id campaignId){
 
 		List<CampaignMemberStatus> campaignMemberStatusList=new List<CampaignMemberStatus>();
 
@@ -1034,7 +1260,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			CampaignMemberStatus cpms=new CampaignMemberStatus();
 
 			cpms.Label='Test Label';
-			cpms.CampaignId=CampaignId;
+			cpms.CampaignId=campaignId;
 			cpms.IsDefault=true;
 
 			campaignMemberStatusList.add(cpms);
@@ -1100,6 +1326,26 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return internalUser;
 	}
 
+	public static User createCommunityUser(Contact contact, String profileId ,Boolean doInsert) {
+        User communityUser = new User(
+                Alias = 'commuser',
+                FirstName = 'FirstName',
+                LastName = 'LastName',
+                Email = 'commuser@test.com',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'it',
+                LocaleSidKey = 'it',
+                ProfileId = profileId,
+                ContactId = contact.Id,
+                TimeZoneSidKey = 'Europe/Rome',
+                UserName = 'commuser@test.com' + DateTime.now().getTime()
+        );
+        if(doInsert) {
+            insert communityUser;
+        }
+        return communityUser;
+    }
+
 	public static PermissionSetAssignment assignPermissionSet(User u, String permissionSet, Boolean doInsert){
 
 		PermissionSetAssignment psa=new PermissionSetAssignment(PermissionSetId=getPermissionSetId(permissionSet), AssigneeId=u.Id);
@@ -1113,7 +1359,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return psa;
 	}
 
-	public static List<ContentDocumentLink> createContentDocumentLink(Integer Amount, Boolean doInsert, Id OpportunityId, Id ContentDocId){
+	public static List<ContentDocumentLink> createContentDocumentLink(Integer amount, Boolean doInsert, Id opportunityId, Id contentDocId){
 
 		List<ContentDocumentLink> contentDocLinkList=new List<ContentDocumentLink>();
 
@@ -1121,8 +1367,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			ContentDocumentLink contentDocLink=new ContentDocumentLink();
 
-			contentDocLink.LinkedEntityId=OpportunityId;
-			contentDocLink.ContentDocumentId=ContentDocId;
+			contentDocLink.LinkedEntityId=opportunityId;
+			contentDocLink.ContentDocumentId=contentDocId;
 			contentDocLink.ShareType='V';
 
 			contentDocLinkList.add(contentDocLink);
@@ -1136,7 +1382,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return contentDocLinkList;
 	}
 
-	public static List<FileTemplate__c> createFileTemplate(Integer Amount, Boolean doInsert){
+	public static List<FileTemplate__c> createFileTemplate(Integer amount, Boolean doInsert){
 
 		List<FileTemplate__c> ftList=new List<FileTemplate__C>();
 
@@ -1162,7 +1408,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return ftList;
 	}
 
-	public static List<FileTemplateColumn__c> createFileTemplateColumn(Integer Amount, Boolean doInsert, Id fileTemplateId){
+	public static List<FileTemplateColumn__c> createFileTemplateColumn(Integer amount, Boolean doInsert, Id fileTemplateId){
 
 		List<FileTemplateColumn__c> ftcList=new List<FileTemplateColumn__c>();
 
@@ -1255,14 +1501,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	public static void createJsonPayload(){
-		HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult wrpPayload=HDT_LC_DocumentalConfigController.controllerHandler();
+
+		HDT_LC_DocumentalConfigController.controllerHandler();
+
 	}
 
 	public static void createDriverJson(){
-		Id folderId=[SELECT Id
-		             FROM Folder
-		             WHERE DeveloperName=:'DocumentalPayloadAdministration'
-		             LIMIT 1].Id;
+		Id folderId=[SELECT Id FROM Folder WHERE DeveloperName= :'DocumentalPayloadAdministration' LIMIT 1].Id;
 		List<DocumentalPayloadAdministration__c> docPayloadAdminList;
 		docPayloadAdminList=HDT_QR_DocumentalConfiguration.getDocumentalPayloadAdministration(docPayloadAdminList);
 		Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap=new Map<String, List<DocumentalPayloadAdministration__c>>();
@@ -1353,6 +1598,46 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"}'+
 				'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
 	}
+
+	public static String notifEsFullReq(String processCategory, String caseNumber, String codServizio, String codPrestazione, String codPresa, String codPratDistr, String numPrev, String tempEsPrev, String attivita, String tipoAttivita, String recordId, String phase, String method){
+		return '{"header": null,"requests": ['+
+				'{"header": {"requestId": "C00000000261","requestTimestamp": null,"requestType": "NOTIF_ES","fields": ['+
+				'{"fieldType": "TEXT","name": "PROCESS_CATEGORY","value": "'+processCategory+'"}]},"objects": [{"fields": ['+
+				'{"fieldType": "TEXT","name": "COD_PRAT_UTENTE","value": "Z00000000097"},'+
+				'{"fieldType": "TEXT","name": "SALESFORCE_KEY","value": "'+ caseNumber +'"},'+
+				'{"fieldType": "TEXT","name": "COD_FLUSSO","value": "0150"},'+
+				'{"fieldType": "TEXT","name": "COD_SERVIZIO","value": "'+ codServizio +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRESTAZIONE","value": "'+ codPrestazione +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRESA","value": "'+ codPresa +'"},'+
+				'{"fieldType": "TEXT","name": "COD_PRAT_DISTR","value": "'+ codPratDistr +'"},'+
+				'{"fieldType": "TEXT","name": "NUMPREV","value": "'+ numPrev +'"},'+
+				'{"fieldType": "TEXT","name": "TEMP_ES_PREV","value": "'+ tempEsPrev +'"},'+
+				'{"fieldType": "TEXT","name": "CMP","value": "Test"},'+
+				'{"fieldType": "TEXT","name": "TESTO_ERRR","value": "Testo Errore"},'+
+				'{"fieldType": "TEXT","name": "ATTIVITA","value": "'+ attivita +'"},'+
+				'{"fieldType": "TEXT","name": "TIPO_ATTIVITA","value": "'+ tipoAttivita +'"},'+
+        		'{"fieldType": "TEXT","name": "MESSAGGIO","value": "Messaggio Test"},'+
+				'{"fieldType": "TEXT","name": "STORNO","value": "N"},'+
+				'{"fieldType": "TEXT","name": "DT_MAX_PREV","value": "20211009 12:20:20"},'+
+				'{"fieldType": "TEXT","name": "NOTE","value": "Test"},'+
+        		'{"fieldType": "TEXT","name": "DATA","value": "'+ Date.today() +'"},'+
+				'{"fieldType": "TEXT","name": "IMP_PREV_DIST","value": "300,50"},'+
+				'{"fieldType": "TEXT","name": "NOTE_ANN","value": "Nota Annullamento Test"},'+
+				'{"fieldType": "TEXT","name": "ANNOTAZIONI_ANN","value": "Annotazione Annullamento Test"},'+
+				'{"fieldType": "TEXT","name": "ANNOTAZIONI","value": "Annotazione Test"},'+
+				'{"fieldType": "TEXT","name": "COD_CAUSALE","value": "234234"},'+
+				'{"fieldType": "TEXT","name": "FATTIB_TEC","value": "SI"},'+
+				'{"fieldType": "TEXT","name": "RECORD_ID","value": "'+recordId+'"},'+
+				'{"fieldType": "TEXT","name": "FASE","value": "'+phase+'"},'+
+				'{"fieldType": "TEXT","name": "METHOD","value": "'+method+'"},'+
+				'{"fieldType": "TEXT","name": "VERTRAG","value": "3010147771"},'+
+				'{"fieldType": "TEXT","name": "VERTRAG_ST","value": "Cessato"},'+
+				'{"fieldType": "TEXT","name": "SERVICEID_DIS","value": "10D00000AU"},'+
+				'{"fieldType": "TEXT","name": "UTENZA","value": "BS_030_001"},'+
+				'{"fieldType": "TEXT","name": "DATA_EVENTO","value": "2021-07-28 10:11:45"}'+
+				'],"id": null,"name": null,"objectType": null,"objects": null}]}]}';
+	}
+
 
 	public static String richPassReq(String spCode, String bpCode, String caCode, String contractCode, String subtypeSiebel, String processType, String cluster, String origin, String effectiveDate, String salesforceKey, String herokuCode){
 		return '{"header":null,"requests":[{"header":{"requestId":null,"requestTimestamp":null,"requestType":"RICH_PASS","fields":['+
@@ -1445,7 +1730,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 insert causalCodeConfig;
 	 }*/
 	 
-	public static List<AccountShare> createAccountShare(Integer Amount, Boolean doInsert, Id AccountId, Id UserOrGroupId){
+	public static List<AccountShare> createAccountShare(Integer amount, Boolean doInsert, Id accountId, Id userOrGroupId){
 
 
 		List<AccountShare> accShareList=new List<AccountShare>();
@@ -1457,9 +1742,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			AccountShare accShare=new AccountShare();
 
 
-			accShare.AccountId=AccountId;
+			accShare.AccountId=accountId;
 
-			accShare.UserOrGroupId=UserOrGroupId;
+			accShare.UserOrGroupId=userOrGroupId;
 
 			accShare.AccountAccessLevel='Edit';
 
@@ -1514,9 +1799,15 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 		return documents;
 	}
-	public static List<DocumentalActivity__c> createDocumentalActivity(Integer numberRecords, Id orderId, Id caseId){
+	
+	
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Id orderId, Id caseId){
+		return createDocumentalActivity(amount, true, orderId, caseId);
+	}
+	
+	public static List<DocumentalActivity__c> createDocumentalActivity(Integer amount, Boolean doInsert, Id orderId, Id caseId){
 		List<DocumentalActivity__c> docActList = new List<DocumentalActivity__c>();
-		for(Integer i=0; i<numberRecords;i++){
+		for(Integer i=0; i<amount;i++){
 			DocumentalActivity__c docAct = new DocumentalActivity__c();
 			docAct.OrderId__c = String.isNotBlank(orderId)?orderId:null;
 			docAct.CaseId__c = String.isNotBlank(caseId)?caseId:null;
@@ -1525,9 +1816,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			docAct.PostelTimestamp__c = '2000000000';
 			docActList.add(docAct);
 		}
-		insert docActList;
+
+		if(doInsert){
+			insert docActList;
+		}
+		
 		return docActList;
 	}
+	
+	public static list<DocumentSendTracking__c> createDocumentSendTracking(Integer numberRecords, Id orderId, Id caseId){
+		List<DocumentSendTracking__c> docTrackList = new List<DocumentSendTracking__c>();
+		for(Integer i=0; i<numberRecords;i++){
+			DocumentSendTracking__c docTrack = new DocumentSendTracking__c();
+			docTrack.Order__c = String.isNotBlank(orderId)?orderId:null;
+			docTrack.Case__c = String.isNotBlank(caseId)?caseId:null;
+			docTrack.EnvelopeId__c = 'idPlico_' + i;
+			docTrackList.add(docTrack);
+		}
+		insert docTrackList;
+		return docTrackList;
+	}
+	
 
 	public static List<AtecoMatrix__c> createAtecoMatrix(Integer amount, Boolean doInsert, String name){
 
@@ -1570,7 +1879,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return fubProcessingList;
 	}
 
-	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id FubProcessingId) {
+	public static List<FUBProcessingItem__c> createFubProcessingItem (Integer amount, Boolean doInsert, Id campaignId, Id fubProcessingId) {
 
 		List<FUBProcessingItem__c> fubProcessingItemList = new List<FUBProcessingItem__c>();
 
@@ -1578,7 +1887,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			FUBProcessingItem__c fubProcessingItem = new FUBProcessingItem__c(
 				Campaign__c = campaignId,
-            	FUBProcessing__c = FubProcessingId
+            	FUBProcessing__c = fubProcessingId
 			);
 
 			fubProcessingItemList.add(fubProcessingItem);
@@ -1744,4 +2053,955 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return userRoleId;
 	}
 
+	public static List<DistributorPointCode__c> createDistributorPointCode (Integer amount, Boolean doInsert, Id accountId){
+
+		List<DistributorPointCode__c> dpcList = new List<DistributorPointCode__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			DistributorPointCode__c dpc = new DistributorPointCode__c(
+				Account__c = accountId
+			);
+
+			dpcList.add(dpc);
+		}
+
+		if (doInsert) {
+
+			insert dpcList;
+
+		}
+
+		return dpcList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLink__c> createServiceLink (Integer amount, Boolean doInsert) {
+
+		List<wrts_prcgvr__ServiceLink__c> serviceLinkList = new List<wrts_prcgvr__ServiceLink__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLink__c sl = new wrts_prcgvr__ServiceLink__c(
+				wrts_prcgvr__IsActive__c = true
+			);
+
+			serviceLinkList.add(sl);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkList;
+		}
+
+		return serviceLinkList;
+	}
+
+	public static List<wrts_prcgvr__ServiceLinkItem__c> createServiceLinkItem (Integer amount, Boolean doInsert, Id serviceLinkId) {
+
+		List<wrts_prcgvr__ServiceLinkItem__c> serviceLinkItemList = new List<wrts_prcgvr__ServiceLinkItem__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+
+			wrts_prcgvr__ServiceLinkItem__c sli = new wrts_prcgvr__ServiceLinkItem__c(
+				wrts_prcgvr__ServiceLink__c = serviceLinkId
+			);
+
+			serviceLinkItemList.add(sli);
+		}
+
+		if (doInsert) {
+
+			insert serviceLinkItemList;
+		}
+
+		return serviceLinkItemList;
+	}
+
+	
+	public static void createWebServiceConfiguration (String name, String endpoint, String method, String user) {
+
+		HDT_WebServiceConfiguration__c wsConfig = new HDT_WebServiceConfiguration__c(
+			Name = name,
+			Endpoint__c = endpoint,
+			Method__c = method,
+			User__c = user         
+		);
+		
+		insert wsConfig;
+	}
+
+	public static void createWebServiceCredential (String name , String password, String username) {
+
+		HDT_WebServiceCredential__c wsCredential = new HDT_WebServiceCredential__c(
+			Name = name,
+			Password__c = password,
+			Username__c = username
+		);
+
+		insert wsCredential;
+	}
+
+	public static List<CommunicationLog__c> createCommunicationLog (Integer amount, Boolean doInsert, Id accId, Id contactId){
+
+		List<CommunicationLog__c> commLogList=new List<CommunicationLog__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommunicationLog__c testCommLog=new CommunicationLog__c();
+			testCommLog.AccountID__c = accid;
+			testCommLog.ContactID__c = contactId;
+			testCommLog.Causale__c='testCausale';
+			testCommLog.Company__c='testCompany';
+			testCommLog.Cluster__c='testCluster';
+			testCommLog.CompanyOwner__c='TestCompOwner';
+			testCommLog.Fase__c='testFase';
+			testCommLog.Processo__c='testProcesso';
+			testCommLog.Stato__c='testStato';
+
+			commLogList.add(testCommLog);
+		}
+
+		if (doInsert){
+
+			insert commLogList;
+		}
+
+		return commLogList;
+	}
+
+	public static List<SBQQ__Subscription__c> createSubscription (Integer amount, Boolean doInsert, Id accountId, Id contractId, Id servicePointId) {
+
+		List<SBQQ__Subscription__c> subcriptionList = new List<SBQQ__Subscription__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SBQQ__Subscription__c subscription = new SBQQ__Subscription__c(
+				SBQQ__Account__c = accountId,
+				SBQQ__Contract__c = contractId,
+				ServicePoint__c = servicePointId,
+				SBQQ__Quantity__c = 1.0
+			);
+
+			subcriptionList.add(subscription);
+		}
+
+		if (doInsert){
+
+			insert subcriptionList;
+		}
+
+		return subcriptionList;
+
+	}
+
+	public static List<CS_SelezioneFornitura__c> createSelezioneFornitura(Integer amount, Boolean doInsert) {
+
+		List<CS_SelezioneFornitura__c> selezioneList = new List<CS_SelezioneFornitura__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_SelezioneFornitura__c selezione = new CS_SelezioneFornitura__c(
+				Name = 'selezioneTestName'
+			);
+
+			selezioneList.add(selezione);
+		}
+
+		if (doInsert){
+
+			insert selezioneList;
+		}
+
+		return selezioneList;
+	}
+
+	public static List<CommercialCode__c> createCommCode(Integer amount, Boolean doInsert) {
+
+		List<CommercialCode__c> commCodeList = new List<CommercialCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CommercialCode__c commCode = new CommercialCode__c(
+				Name = 'testCommCode'
+			);
+
+			commCodeList.add(commCode);
+		}
+
+		if (doInsert){
+
+			insert commCodeList;
+		}
+
+		return commCodeList;
+	}
+
+	public static List<MatriceRemiCode__c> createMatriceRemiCode(Integer amount, Boolean doInsert){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+
+			mRemiCode.RemiCode__c='test';
+
+			matriceRemiCode.add(mRemiCode);
+
+		}
+
+		if (doInsert){
+
+			insert matriceRemiCode;
+		}
+
+		return matriceRemiCode;
+	}
+
+	public static List<ServiceRequest__c> createServiceRequest(Integer amount, Boolean doInsert) {
+
+		List<ServiceRequest__c> srList = new List<ServiceRequest__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ServiceRequest__c sr = new ServiceRequest__c(
+				ProcessType__c = 'Alert'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
+	
+	public static List<SurveyResponse__c> createSurveyResponse(Integer amount, Boolean doInsert) {
+
+		List<SurveyResponse__c> srList = new List<SurveyResponse__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyResponse__c sr = new SurveyResponse__c(
+				Name = 'testName'
+			);
+
+			srList.add(sr);
+		}
+
+		if (doInsert){
+
+			insert srList;
+		}
+
+		return srList;
+	}
+
+	public static List<RateCategory__c> createRateCategoty(Integer amount, Boolean doInsert) {
+
+		List<RateCategory__c> rateCatList = new List<RateCategory__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			RateCategory__c rateCat = new RateCategory__c(
+				Commodity__c='testCommodity',
+				Name='testName',
+				CalculatedValue__c='123',
+				ProductName__c='testProduct',
+				Fornitura__c='testFornitura',
+				DistributorCode__c='testDistCode'
+			);
+
+		rateCatList.add(rateCat);
+		}
+
+		if (doInsert){
+
+			insert rateCatList;
+		}
+	return rateCatList;
+	}
+
+	public static List<SurveyCRM__c> createSurveyCrm (Integer amount, Boolean doInsert) {
+
+		List<SurveyCRM__c> surveyCrmList = new List<SurveyCRM__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SurveyCRM__c surveyCrm = new SurveyCRM__c(
+				Name = 'testName'
+			);
+
+			surveyCrmList.add(surveyCrm);
+		}
+
+		if (doInsert){
+
+			insert surveyCrmList;
+		}
+
+		return surveyCrmList;
+	}
+
+	public static List<VisitAssignmentRules__c> createVisitAssignmentRules (Integer amount, Boolean doInsert) {
+
+		List<VisitAssignmentRules__c> visitAssigRulesList = new List<VisitAssignmentRules__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VisitAssignmentRules__c visitAssigRule = new VisitAssignmentRules__c(
+				Name = 'testName'
+			);
+
+			visitAssigRulesList.add(visitAssigRule);
+		}
+
+		if (doInsert){
+
+			insert visitAssigRulesList;
+		}
+
+		return visitAssigRulesList;
+	}
+
+	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
+
+		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+
+		for(Integer i=0; i<amount; i++){
+
+			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
+
+			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
+			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.TotalRequest__c = 2;
+			massiveLoaderRequest.RequestOK__c = 2;
+			massiveLoaderRequest.RequestKO__c = 0;
+			massiveLoaderRequest.Phase__c = 'File in elaborazione';
+			massiveLoaderRequest.Priority__c = 1;
+
+
+			massiveLoaderRequestList.add(massiveLoaderRequest);
+		}
+
+		if (doInsert){
+
+			insert massiveLoaderRequestList;
+		}
+
+		return massiveLoaderRequestList;
+
+	}
+
+	public static List<BlackList__c> createBlacklist (Integer amount, Boolean doInsert) {
+
+		List<BlackList__c> blacklistList = new List<BlackList__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BlackList__c blacklist = new BlackList__c(
+				Name='testBlacklist',
+				Domain__c='testDomain',
+				Pod__c='testPOD'
+			);
+
+			blacklistList.add(blacklist);
+		}
+
+		if (doInsert){
+
+			insert blacklistList;
+		}
+
+		return blacklistList;
+	}
+
+	public static List<ComfortQualityCall__c> createComfortQualityCall (Integer amount, Boolean doInsert) {
+
+		List<ComfortQualityCall__c> comfQualityCallList = new List<ComfortQualityCall__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ComfortQualityCall__c comQualityCall = new ComfortQualityCall__c(
+				ComfortDocSendingChannel__c='Posta Cartacea'
+			);
+
+			comfQualityCallList.add(comQualityCall);
+		}
+
+		if (doInsert){
+
+			insert comfQualityCallList;
+		}
+
+		return comfQualityCallList;
+	}
+
+	public static List<ScriptConfig__c> createScriptConfig (Integer amount, Boolean doInsert) {
+
+		List<ScriptConfig__c> createScriptConfigList = new List<ScriptConfig__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			ScriptConfig__c sc = new ScriptConfig__c();
+			sc.Name = 'Hera';
+			sc.ScriptType__c = 'Processo';	
+			
+			createScriptConfigList.add(sc);
+		}
+
+		if (doInsert){
+
+			insert createScriptConfigList;
+		}
+
+		return createScriptConfigList;
+}
+
+
+
+	public static List<BrandSalesCompany__c> createBrandSalesCompany (Integer amount, Boolean doInsert) {
+
+		List<BrandSalesCompany__c> brandSalesCoList = new List<BrandSalesCompany__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			BrandSalesCompany__c brandSaleCo = new BrandSalesCompany__c(
+				Name = 'testName'
+			);
+
+			brandSalesCoList.add(brandSaleCo);
+		}
+
+		if (doInsert){
+
+			insert brandSalesCoList;
+		}
+
+		return brandSalesCoList;
+	}
+
+	public static List<SMSTracking__c> createSmsTracking (Integer amount, Boolean doInsert, Id contactId) {
+
+		List<SMSTracking__c> smsTrackList = new List<SMSTracking__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			SMSTracking__c smsTrack=new SMSTracking__c(
+				FromName__c='testSms',
+				CompanyOwner__c='HERA COMM',
+				ContactID__c=contactId,
+				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
+				MessageID__c=12321421,
+				Mobile__c='234234234',
+				MobileMessageTrackingID__c=12343143,
+				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
+			);
+			
+			smsTrackList.add(smsTrack);
+		}
+
+		if (doInsert){
+
+			insert smsTrackList;
+		}
+
+		return smsTrackList;
+	}
+
+	public static List<et4ae5__IndividualEmailResult__c> createIndividualEmailResult (Integer amount, Boolean doInsert, Id triggeredSendId) {
+
+		List<et4ae5__IndividualEmailResult__c> indEmailRes = new List<et4ae5__IndividualEmailResult__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__IndividualEmailResult__c ier = new et4ae5__IndividualEmailResult__c(
+				Name = 'tester',
+				EmailAddress__c = 'my@email.com',
+				et4ae5__TriggeredSendDefinition__c = triggeredSendId
+			);
+
+			indEmailRes.add(ier);
+		}
+
+		if (doInsert){
+
+			insert indEmailRes;
+		}
+
+		return indEmailRes;
+	}
+
+	public static List<et4ae5__Automated_Send__c> createTriggeredSend (Integer amount, Boolean doInsert) {
+
+		List<et4ae5__Automated_Send__c> trigSendList = new List<et4ae5__Automated_Send__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__Automated_Send__c autoSend = new et4ae5__Automated_Send__c(
+				Name = 'automaticSent'
+			);
+
+			trigSendList.add(autoSend);
+		}
+
+		if (doInsert){
+
+			insert trigSendList;
+		}
+
+		return trigSendList;
+	}
+
+	public static List<HDT_FulfillmentDateMatrix__c> createFullfillmentDateMatrix (Integer amount, Boolean doInsert) {
+
+		List<HDT_FulfillmentDateMatrix__c> fullfDateMatrixList = new List<HDT_FulfillmentDateMatrix__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			HDT_FulfillmentDateMatrix__c fullfDateMatrix = new HDT_FulfillmentDateMatrix__c(
+				Name = 'testFulDatMx'+i
+			);
+
+			fullfDateMatrixList.add(fullfDateMatrix);
+		}
+
+		if (doInsert){
+
+			insert fullfDateMatrixList;
+		}
+
+		return fullfDateMatrixList;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 15/09/2021
+     * @description createPercentageRulesForAssigningVisits Method
+     * @history valere - 15/09/2021– Created method
+     */
+	public static List<PercentageRulesForAssigningVisits__c> createPercentageRulesForAssigningVisits(Integer amount, Boolean doInsert,String name,Id visitAssignmentRulesId){
+
+		List<PercentageRulesForAssigningVisits__c> pfs=new List<PercentageRulesForAssigningVisits__c>();
+
+		for (Integer i=0; i<amount; i++){
+			pfs.add(new PercentageRulesForAssigningVisits__c(name=name, VisitAssignmentRules__c = visitAssignmentRulesId));
+		}
+
+		if (doInsert) {
+			insert pfs;
+		}
+
+		return pfs;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 15/09/2021
+     * @description createVisitAssignmentRules Method
+     * @history valere - 15/09/2021– Created method
+     */
+	public static List<VisitAssignmentRules__c> createVisitAssignmentRules (Integer amount, Boolean doInsert,String name) {
+
+		List<VisitAssignmentRules__c> visitAssigRulesList = new List<VisitAssignmentRules__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VisitAssignmentRules__c visitAssigRule = new VisitAssignmentRules__c(
+				Name = name
+			);
+
+			visitAssigRulesList.add(visitAssigRule);
+		}
+
+		if (doInsert){
+
+			insert visitAssigRulesList;
+		}
+
+		return visitAssigRulesList;
+	}
+	/**
+     * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
+     * @date 28/09/2021
+     * @description createDaysToExpiration Method
+     * @history Sabina Levonja - 28/09/2021– Created method
+     */
+	public static List<CS_DaysToExpiration__c> createDaysToExpiration(Integer amount, Boolean doInsert,String numberOfDays, String type) {
+
+		List<CS_DaysToExpiration__c> expDays = new List<CS_DaysToExpiration__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			CS_DaysToExpiration__c exp = new CS_DaysToExpiration__c(
+				Name = 'Vendita',
+				NumberOfDays__c = numberOfDays,
+				Type__c = type
+			);
+
+			expDays.add(exp);
+		}
+
+		if (doInsert){
+
+			insert expDays;
+		}
+
+		return expDays;
+	}
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAssignmentRule method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<AssignmentRule__c> createAssignmentRule(Integer amount, Boolean doInsert,Double rulePriority, String type) {
+        
+        List<AssignmentRule__c> rules = new List<AssignmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            AssignmentRule__c r = new AssignmentRule__c(
+                Name = 'testAssignmentRule'+i,
+                RulePriority__c = rulePriority,
+        		Type__c = type
+            );
+            
+            rules.add(r);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createVasSupplierTable method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<VasSupplierTable__c> createVasSupplierTable(Integer amount, Boolean doInsert) {
+        
+        List<VasSupplierTable__c> tables = new List<VasSupplierTable__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            VasSupplierTable__c v = new VasSupplierTable__c();
+            
+            tables.add(v);
+        }
+        
+        if (doInsert){
+            
+            insert tables;
+        }
+        
+        return tables;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createAsset method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<Asset> createAsset(Integer amount, Boolean doInsert) {
+        
+        List<Asset> assets = new List<Asset>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            Asset a = new Asset(
+                Name = 'testAsset' + i
+            );
+            
+            assets.add(a);
+        }
+        
+        if (doInsert){
+            
+            insert assets;
+        }
+        
+        return assets;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createFieldsTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__FieldsTemplate__c> createFieldsTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__FieldsTemplate__c> templates = new List<wrts_prcgvr__FieldsTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__FieldsTemplate__c template = new wrts_prcgvr__FieldsTemplate__c(
+                Name = 'testFieldTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityTemplate method
+     * @history
+     * @Created 01/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityTemplate__c> createActivityTemplate(Integer amount, Boolean doInsert) {
+        
+        List<wrts_prcgvr__ActivityTemplate__c> templates = new List<wrts_prcgvr__ActivityTemplate__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c(
+                Name = 'testActivityTemplate' + i
+            );
+            
+            templates.add(template);
+        }
+        
+        if (doInsert){
+            
+            insert templates;
+        }
+        
+        return templates;
+    }
+	
+
+	public static List<Asset> createAsset(Integer amount, Boolean doInsert, String companyOwner) {
+
+		List<Asset> assetList = new List<Asset>();
+
+		for (Integer i=0; i<amount; i++){
+
+			Asset asset = new Asset(
+				Name = 'testAsset',
+				CompanyOwner__c = companyOwner
+        	);
+
+			assetList.add(asset);
+		}
+
+		if (doInsert){
+
+			insert assetList;
+		}
+
+		return assetList;
+	}
+
+	/**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDynamicSection method
+     * @history
+     * @Created 05/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__DynamicSection__c> createDynamicSection(Integer amount, Boolean doInsert, Id fieldTemplateId) {
+        
+        List<wrts_prcgvr__DynamicSection__c> sections = new List<wrts_prcgvr__DynamicSection__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__DynamicSection__c section = new wrts_prcgvr__DynamicSection__c(
+                wrts_prcgvr__Layout__c = fieldTemplateId
+            );
+            
+            sections.add(section);
+        }
+        
+        if (doInsert){
+            
+            insert sections;
+        }
+        
+        return sections;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDynamicField method
+     * @history
+     * @Created 05/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__DynamicField__c> createDynamicField(Integer amount, Boolean doInsert, Id sectionId) {
+        
+        List<wrts_prcgvr__DynamicField__c> fields = new List<wrts_prcgvr__DynamicField__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__DynamicField__c field = new wrts_prcgvr__DynamicField__c(
+                wrts_prcgvr__Section__c = sectionId
+            );
+            
+            fields.add(field);
+        }
+        
+        if (doInsert){
+            
+            insert fields;
+        }
+        
+        return fields;
+    }
+	
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+
+		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  MatriceRemiCode__c mRemiCode=new MatriceRemiCode__c();
+	  
+		  mRemiCode.RemiCode__c='test';
+
+		  for(String key :params.keySet()) {
+			  mRemiCode.put(key, params.get(key));
+		  }	  
+	  
+		  matriceRemiCode.add(mRemiCode);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert matriceRemiCode;
+		}
+	  
+		return matriceRemiCode;
+	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static List<Service26Config__c> createService26Config(Integer amount, Boolean doInsert){
+
+		List<Service26Config__c> serviceList=new List<Service26Config__c>();
+	  
+		for (Integer i=0; i<amount; i++){
+	  
+		  Service26Config__c service=new Service26Config__c();
+	  
+		  //service.Name='test';
+		  service.ProductFamily__c='Bonus Eur/Giorno';
+	  
+	  
+		  serviceList.add(service);
+	  
+		}
+	  
+		if (doInsert){
+	  
+		  insert serviceList;
+		}
+	  
+		return serviceList;
+	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 05/10/2021
+	 */
+	public static HDT_Process_Sale_Partner_Community__c createSalePartnerCommunity(User user, Boolean doInsert){
+
+		HDT_Process_Sale_Partner_Community__c salePartnerCommunity=new HDT_Process_Sale_Partner_Community__c(Name='Community',SetupOwnerId = user.ProfileID);
+		if (doInsert){
+
+			insert salePartnerCommunity;
+		}
+		return salePartnerCommunity;
+	}
+	
+	/**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createActivityAction method
+     * @history
+     * @Created 07/10/2021
+     * Modified By:
+     **/
+    public static List<wrts_prcgvr__ActivityAction__c> createActivityAction(Integer amount, Boolean doInsert, Id templateId) {
+        
+        List<wrts_prcgvr__ActivityAction__c> actions = new List<wrts_prcgvr__ActivityAction__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            wrts_prcgvr__ActivityAction__c action = new wrts_prcgvr__ActivityAction__c(
+                wrts_prcgvr__ActivityTemplate__c = templateId
+            );
+            
+            actions.add(action);
+        }
+        
+        if (doInsert){
+            
+            insert actions;
+        }
+        
+        return actions;
+    }
+    
+    /**
+     * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+     * @description: createDiscardAnnullmentRule method
+     * @history
+     * @Created 07/10/2021
+     * Modified By:
+     **/
+    public static List<DiscardAnnullmentRule__c> createDiscardAnnullmentRule(Integer amount, Boolean doInsert, String parentObject) {
+        
+        List<DiscardAnnullmentRule__c> rules = new List<DiscardAnnullmentRule__c>();
+        
+        for (Integer i=0; i<amount; i++){
+            
+            DiscardAnnullmentRule__c rule = new DiscardAnnullmentRule__c(
+                ActivityType__c = 'ActivityTypeTest',
+                ControllingField__c = 'ControllingFieldTest',
+                ControllingValue__c = 'ControllingValueTest',
+                ParentObject__c = parentObject,
+                ProcessField__c = 'ProcessFieldTest',
+                ProcessValue__c = 'ProcessValueTest'
+            );
+            
+            rules.add(rule);
+        }
+        
+        if (doInsert){
+            
+            insert rules;
+        }
+        
+        return rules;
+    }
 }

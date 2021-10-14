@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>StartRecording__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>checkbox, indica alle logiche della CB che quella sezione specifica sarà registrata</description>
+    <description>Deprecato</description>
     <externalId>false</externalId>
     <label>Inizio Registrazione</label>
     <trackTrending>false</trackTrending>

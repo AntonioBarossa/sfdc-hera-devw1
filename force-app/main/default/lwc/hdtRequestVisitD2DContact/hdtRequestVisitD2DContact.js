@@ -1,6 +1,7 @@
 import { LightningElement, wire, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { CloseActionScreenEvent } from 'lightning/actions';
 import {getFieldValue, getRecord } from 'lightning/uiRecordApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import OWNER_ID from '@salesforce/schema/contact.OwnerId';
@@ -98,6 +99,7 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
                 }));
                 dispatchEvent(new CustomEvent('afterSubmit')); 
                 console.log(JSON.stringify(result));
+                this.dispatchEvent(new CloseActionScreenEvent());
             }).catch(err => {
                 console.log(JSON.stringify(err));
             });

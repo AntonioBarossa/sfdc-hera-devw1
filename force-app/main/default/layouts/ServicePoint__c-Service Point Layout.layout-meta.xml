@@ -40,14 +40,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SupplySAPCityCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SupplySAPStreetCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>SupplyStreet__c</field>
             </layoutItems>
             <layoutItems>
@@ -115,7 +107,11 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SAPImplantCode__c</field>
-            </layoutItems>
+            </layoutItems><!--HRAWRM-251 17/09/2021 -->
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Resident__c</field>
+            </layoutItems><!--HRAWRM-251 17/09/2021 -->
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -163,8 +159,8 @@
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>CommercialProduct__c</fields><!--HRAWRM-251 17/09/2021 -->
+        <fields>SAPContractCode__c</fields><!--HRAWRM-251 17/09/2021 -->
         <fields>CONTRACT.STATUS</fields>
         <relatedList>Contract.ServicePoint__c</relatedList>
     </relatedLists>

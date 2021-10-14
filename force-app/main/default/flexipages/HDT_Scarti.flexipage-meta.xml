@@ -9,70 +9,300 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Completed</rightValue>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Completed</rightValue>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reassign</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Completed</rightValue>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.ForwardToAgency</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Completed</rightValue>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Edit</value>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.RilavoraScarto</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Ammissibilità KO</rightValue>
+                                    <rightValue>Scarto transitorio</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Order__r.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Esportazione VS Siebel</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Edit</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto transitorio</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Amm. Precheck KO SII</rightValue>
+                                    <rightValue>Esito KO da DL</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>KO Motore VAS da gestire</rightValue>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.Close_Activity</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4) AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Precheck KO precedente intestatario</rightValue>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.RisottomettiPratica</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.annullaPratica</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR (3 AND 4)) AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Chiusa</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.SospendiAttivita</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR (7 AND 8)) AND 6</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Sospesa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.wrts_prcgvr__Activity__c.resumeActivityButton</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR (7 AND 8 AND 9)) AND 6</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO da DL</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>KO Fornitore</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestionale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Manuale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sospesa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Scarto complesso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
                                     <rightValue>Scarto transitorio</rightValue>
                                 </criteria>
                             </visibilityRule>
@@ -97,7 +327,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>5</value>
+                    <value>10</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>

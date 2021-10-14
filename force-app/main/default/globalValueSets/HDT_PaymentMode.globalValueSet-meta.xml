@@ -20,6 +20,11 @@
         <default>false</default>
         <label>Standard</label>
     </customValue>
+    <customValue>
+        <fullName>Bonifico</fullName>
+        <default>false</default>
+        <label>Bonifico</label>
+    </customValue>
     <masterLabel>Modalità di Pagamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

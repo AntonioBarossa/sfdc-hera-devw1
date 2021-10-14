@@ -26,16 +26,12 @@ public with sharing class HDT_BA_CalloutBatch implements Database.Batchable<Stri
                 //HDT_WS_PraxidiaIntegration.callService(wrapIterable[0],'Reclami');
                 System.debug('calloutReclami');
             }
-            when else {
-
-            }
         }
 
 
     }
 
     public void finish(Database.BatchableContext context) {
-        
-        
+        System.debug('FinishMethodNotNecessaryBuRequired');
     }
 }

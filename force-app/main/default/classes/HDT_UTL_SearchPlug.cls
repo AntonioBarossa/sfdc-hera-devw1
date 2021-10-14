@@ -9,20 +9,22 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     //Per ogni field permette di nascondere il filtro a video
     global Boolean isFilterHidden(SObject quote, String fieldName){
         //inserire in IF quali filtri nascondere a video.
-        System.debug('isFilterHidden ' + fieldName);
-        if(fieldName.equalsIgnoreCase('ProductCode') && quote.get('SBQQ__Status__c') == 'Approved')
-            return true;
-        /*else if(fieldName.equalsIgnoreCase('Comune__c')) 
-            return true;*/
-        else
-            return false;
+        System.debug('isFilterHidden: ' + fieldName);
+        return null;
+        //return false;
+        //if(fieldName.equalsIgnoreCase('ProductCode') && quote.get('SBQQ__Status__c') == 'Approved'){
+        //    return true;
+        //} else {
+        //    return false;
+        //}
+        
     }
     
     //QUESTO METODO PERMETTE DI INSERIRE PREDEFAULT SUI FILTRI
     global String getFilterDefaultValue(SObject quote, String fieldName){
         System.debug('getFilterDefaultValue ' + fieldName);
         //return fieldName == 'Family'? 'Hardware' : NULL;
-        return NULL;
+        return null;
     }
     
     //SE TRUE, richiama il metodo Search
@@ -244,7 +246,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         Boolean age, consumptionRangeEe, consumptionRangeGas, powerRange, residentDeliveryAddress, newClient, login;
 
         for(EligibilityCriteria__c criteria : filteredEligibleCriteria){
-
+            
             age = checkDecimalCriteria(criteria.ClientAgeMin__c , criteria.ClientAgeMax__c, quote.ClientAge__c);
             consumptionRangeEe = checkDecimalCriteria(criteria.ConsumptionRangeEEmin__c , criteria.ConsumptionRangeEEmax__c, quote.ConsumptionRangeEE__c);
             consumptionRangeGas = checkDecimalCriteria(criteria.ConsumptionRangeGASmin__c , criteria.ConsumptionRangeGASmax__c, quote.ConsumptionRangeGAS__c);
@@ -253,6 +255,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
             login = checkLoginGroup(criteria.LoginGroup__c);
 
+            System.debug('>>> criteria productcode: ' + criteria.product__r.productcode);
             System.debug('>>> age: ' + age);
             System.debug('>>> consumptionRangeEe: ' + consumptionRangeEe);
             System.debug('>>> consumptionRangeGas: ' + consumptionRangeGas);
@@ -294,7 +297,13 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         List<Product2> prodWithoutCriteria;
         prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, statusList, familyList);
 
-        if(!String.isEmpty(quote.SupplyCity__c)){
+        for(Product2 p : prodWithoutCriteria){
+            if(p.EligibilitiesCriteria__r.size() == 0){
+                idList.add(p.Id);
+            }
+        } 
+
+        /*if(!String.isEmpty(quote.SupplyCity__c)){
             for(Product2 p : prodWithoutCriteria){
                 if(p.EligibilitiesCriteria__r.size() == 0){
                     idList.add(p.Id);
@@ -302,10 +311,12 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }
         } else {
             for(Product2 p : prodWithoutCriteria){
-                idList.add(p.Id);
+                if(p.EligibilitiesCriteria__r.size() == 0){
+                    idList.add(p.Id);
+                }
             }            
-        }
-
+        }*/
+        
         System.debug('>>>> UFFICIAL LIST: ' + idList);
 
         return idList;

@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 04/08/2021
+* @description HDT_SRV_ContentVersion
+* @history Lorenzo – 04/08/2021 – created class
+*/
 public with sharing class HDT_SRV_ContentVersion {
     public ContentVersion createRecord(String title, String pathOnClient, String versionData) {
         ContentVersion cv = new ContentVersion();

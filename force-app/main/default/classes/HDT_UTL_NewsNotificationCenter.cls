@@ -65,7 +65,7 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
                     retainAllResult = tmpCluster.retainAll(returnedCluster);
                     if((retainAllResult && tmpCluster.size() > 0) || (!retainAllResult)){
                         retainAllResult = tmpChannel.retainAll(returnedChannel);
-                        if((retainAllResult && tmpChannel.size() > 0) || (!retainAllResult)){
+                        if((retainAllResult && tmpChannel.size() > 0) || (!retainAllResult) || news.EntryChannel__c.containsIgnoreCase('Tutti')){
                             rolesString += news.Role__c;
                         }else{
                             System.debug('Rule Not Found');

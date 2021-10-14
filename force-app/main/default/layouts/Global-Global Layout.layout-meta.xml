@@ -3,7 +3,7 @@
     <platformActionList>
         <actionListContext>Global</actionListContext>
         <platformActionListItems>
-            <actionName>Escalation</actionName>
+            <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
@@ -18,40 +18,22 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
+            <actionName>HDT_HCPointActivity</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendSms</actionName>
+            <actionName>HDT_CreateBeneficiaryAccount</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionName>CreaAttivitaManuale</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_HCPointActivity</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_CreateBeneficiaryAccount</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>CreaAttivitaManuale</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <quickActionList>
-        <quickActionListItems>
-            <quickActionName>Escalation</quickActionName>
-        </quickActionListItems>
         <quickActionListItems>
             <quickActionName>HDT_InformativeCallNotification</quickActionName>
         </quickActionListItems>

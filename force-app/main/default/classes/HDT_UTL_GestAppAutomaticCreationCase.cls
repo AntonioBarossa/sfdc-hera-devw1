@@ -1,23 +1,23 @@
-global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements wrts_prcgvr.Interfaces_1_2.IApexAction{
+global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
     Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
-    { 'Subentro su GdM chiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
+    { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
     'Attivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
-    'Prima Attivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
-    'Nuovo impianto' => new Map<String,Boolean>{'InRete' => true},
-    'Aggiunta attacco' => new Map<String,Boolean>{'InRete' => true},
-    'Rimozione impianto' => new Map<String,Boolean>{'InRete' => true},
-    'Modifica impianto' => new Map<String,Boolean>{'InRete' => true},
-    'Ripristino fornitura interrotta' => new Map<String,Boolean>{'InRete' => true},
-    'Spostamento contatore' => new Map<String,Boolean>{'InRete' => true},
-    'Variazione portata' => new Map<String,Boolean>{'InRete' => true},
-    'Riattivazione Fornitura' => new Map<String,Boolean>{'InRete' => true},
-    'Chiusura contatore' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
-    'Verifica GdM' => new Map<String,Boolean>{'InRete' => true},
-    'Verifica Pressione' => new Map<String,Boolean>{'InRete' => true},
-    'Consegna Copia Chiave GdM' => new Map<String,Boolean>{'InRete' => true},
-    'Sost. Contatore c/cliente' => new Map<String,Boolean>{'InRete' => true},
-    'Verifica dati al DL' => new Map<String,Boolean>{'InRete' => true}
+    'PrimaAttivazione' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
+    'Nuovoimpianto' => new Map<String,Boolean>{'InRete' => true},
+    'Aggiuntaattacco' => new Map<String,Boolean>{'InRete' => true},
+    'Rimozioneimpianto' => new Map<String,Boolean>{'InRete' => true},
+    'Modificaimpianto' => new Map<String,Boolean>{'InRete' => true},
+    'Ripristinoforniturainterrotta' => new Map<String,Boolean>{'InRete' => true},
+    'Spostamentocontatore' => new Map<String,Boolean>{'InRete' => true},
+    'Variazioneportata' => new Map<String,Boolean>{'InRete' => true},
+    'RiattivazioneFornitura' => new Map<String,Boolean>{'InRete' => true},
+    'Chiusuracontatore' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
+    'VerificaGdM' => new Map<String,Boolean>{'InRete' => true},
+    'VerificaPressione' => new Map<String,Boolean>{'InRete' => true},
+    'ConsegnaCopia Chiave GdM' => new Map<String,Boolean>{'InRete' => true},
+    'Sost.Contatorec/cliente' => new Map<String,Boolean>{'InRete' => true},
+    'VerificadatialDL' => new Map<String,Boolean>{'InRete' => true}
 
     };
    // HDT_QT_RecordType rcQr =  new  HDT_QT_RecordType();
@@ -37,7 +37,8 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements w
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
             w.case__c = ca.id;
             w.Distributor__c = ca.servicePoint__r.distributor__c;
-            w.account__c = ca.ServicePoint__r.Account__c;
+            w.account__c = ca.AccountId;
+            w.Contact__c = ca.ContactId;
             w.isAtoa__c = isAtoa;
             w.recordtypeid = rec;
             w.status__c = 'Creata';

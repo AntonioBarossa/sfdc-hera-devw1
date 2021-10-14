@@ -10,6 +10,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_OrderItem orderItemSrv = new HDT_SRV_OrderItem();
+    private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
 
     @AuraEnabled
     public static Map<String,Object> getTableData(String orderParentId) {
@@ -29,15 +30,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         // for(Order o : ordList){
         //     listaOrderId.add(o.id);
         // }
+
+        List<String> quoteList = new List<String>();
+        Map<String,String> quoteToOrderMap = new Map<String,String>();
+
         for (Order o : childOrders) {
             listChildOrderId.add(o.Id);
+            quoteList.add(o.SBQQ__Quote__c);
+            if(!quoteToOrderMap.containsKey(o.SBQQ__Quote__c)){//bug evita di scrivere l'offerta sull'order del bonus e toglierlo da quello dell'offerta
+                quoteToOrderMap.put(o.SBQQ__Quote__c, o.Id);
+            }
         }
         
         orderItemSrv.checkReadAccess('ServicePoint__c,Service_Point__r.Name,OrderId,Product2.Name');
         List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listChildOrderId); // List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId IN :listaOrderId];
 
+        List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecords(quoteList);
+        Map<String,String> orderToQuoteLinePrime = new Map<String,String>();
+        for (SBQQ__QuoteLine__c ql : quoteLineList) {
+            orderToQuoteLinePrime.put(quoteToOrderMap.get(ql.SBQQ__Quote__c), ql.SBQQ__Product__r.Name);
+        }
+
         mapResponse.put('childOrdersList',childOrders); // mapResponse.put('orderList',ordList);
         mapResponse.put('orderItemList',orderItemList); // mapResponse.put('orderItemList',orderItemList);
+        mapResponse.put('primeQuoteLineMap', orderToQuoteLinePrime);
         
         return mapResponse;
     }

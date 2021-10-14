@@ -8,23 +8,64 @@
                     <valueList>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Invio Contratto</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Recupero contratto da Postel</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Invio registrazione</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reminder</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Reassign</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Chiamata</rightValue>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -33,14 +74,14 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Chiamata</rightValue>
-                                </criteria>
-                                <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Sportello</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_Call</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -61,9 +102,40 @@
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaApprovata</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Approvazione Offerte</rightValue><!-- UAT Cocetta  20/09/2021 -->
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND (2 OR 3)</booleanFilter> <!-- UAT Cocetta  20/09/2021 -->
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Approvazione Offerte</rightValue> <!-- UAT Cocetta  20/09/2021 -->
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Approvazione Bonus Commerciale</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -97,18 +169,238 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtActivityIvaAccise</componentName>
+                <componentName>hdtDocumentActivityValidation</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-68773je6c26</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-68773je6c26</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Validazione Documenti</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-yfr30voptd</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtVOActivityValidation</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-7832eebe-e342-4c9b-9093-9412e66b1e43</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-7832eebe-e342-4c9b-9093-9412e66b1e43</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Validazione VO</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-834e85ed-900f-436e-9f7f-cb4f0cb5b10b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtCommercialRiassignButton</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Approvazione Bonus Commerciale</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f4064101-e9bf-4d96-b0b2-8267c88b08d1</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f4064101-e9bf-4d96-b0b2-8267c88b08d1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Bonus Commerciale</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-73fb4124-f919-4f29-ab41-9819f01ae6f5</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtCopiaContrattoInvioRegConfirm</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Gestione Iva e Accise</rightValue>
+                        <rightValue>Invio registrazione</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Completed</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-4c66df7c-04fd-4bf0-832c-c6844764462d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4c66df7c-04fd-4bf0-832c-c6844764462d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Invio Registrazione</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-502cc4d7-0832-4885-ae6a-ff97e12beb8b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtCopiaContrattoInvioRecPostel</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Recupero contratto da Postel</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-4a6772fc-20b1-4d07-a677-afe6f50439eb</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-4a6772fc-20b1-4d07-a677-afe6f50439eb</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Recupero Contratto Postel</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-62c8292f-63e2-42b5-9307-12ee94de3b01</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtCopiaContrattoInvioContratto</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Invio Contratto</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-a9nar1ukg9e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a9nar1ukg9e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Invio Copia Contratto</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-hx1tik6gvrk</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>hdtActivityIvaAccise</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Iva e Accise da validare</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -212,19 +504,77 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCommercialRiassignButton</componentName>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-yfr30voptd</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Contratti/Bonus Commerciale</rightValue>
+                        <rightValue>Validazione Documentale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCopiaContrattoInvioRegConfirm</componentName>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-834e85ed-900f-436e-9f7f-cb4f0cb5b10b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Validazione Vocal Order</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-73fb4124-f919-4f29-ab41-9819f01ae6f5</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Approvazione Bonus Commerciale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-502cc4d7-0832-4885-ae6a-ff97e12beb8b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -242,25 +592,33 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCopiaContrattoInvioRecPostel</componentName>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-62c8292f-63e2-42b5-9307-12ee94de3b01</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Recupero contratto da Postel</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                         <operator>NE</operator>
                         <rightValue>Completed</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Recupero contratto da Postel</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCopiaContrattoInvioContratto</componentName>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-hx1tik6gvrk</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -284,16 +642,10 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Completed</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Gestione Iva e Accise</rightValue>
+                        <rightValue>Iva e Accise da validare</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -354,6 +706,34 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Chiamata Callback</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Completed</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Iva e Accise da validare</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Validazione Documentale</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Validazione Documentale</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

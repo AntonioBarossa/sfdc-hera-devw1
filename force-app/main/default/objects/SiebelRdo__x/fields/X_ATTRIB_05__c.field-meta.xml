@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Tensione MM</label>
+    <label>Tensione richiesta</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

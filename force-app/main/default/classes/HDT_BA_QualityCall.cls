@@ -6,7 +6,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -49,6 +49,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>> ordersAlreadyAssigned: ' + ordersAlreadyAssigned);
         system.debug('>> ordersAlreadyAssigned size: ' + ordersAlreadyAssigned.size());
 
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
+        String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
+
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
@@ -57,7 +61,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if (ord.ActivityQualityToBeCanceled__c) {
+                if (ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c)) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 } else {
@@ -83,7 +87,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                                 Account__c = ord.AccountId,
                                 Type__c = 'Quality Call',
                                 Status__c = 'Creata',
-                                OwnerId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id
+                                OwnerId = comfortQualityQueId,
+                                ActivatedDate__c = ord.ActivatedDate,
+                                LoginChannel__c = ord.LoginChannel__c
                         );
         
                         if (ord.QualityCallUnique__c) {
@@ -121,31 +127,36 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<String> commissioningCampaignList = new List<String>();
         List<String> contactList = new List<String>();
         for (Order orderCm : orderMap.values()) {
-            if ( orderCm.Contact__c != null && orderCm.CommissioningCampaign__c != null) {
-                commissioningCampaignList.add(orderCm.CommissioningCampaign__c);
+            if ( orderCm.Contact__c != null) {
+                // commissioningCampaignList.add(orderCm.CommissioningCampaign__c);
                 contactList.add(orderCm.Contact__c);
             }
         }
         system.debug('>> commissioningCampaignList: ' + commissioningCampaignList);
         system.debug('>> contactList: ' + contactList);
 
+        List<Campaign> qualityCampaign = HDT_QR_Campaign.getCampaignIds('Quality Campaign');
+
         List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
-        if (!commissioningCampaignList.isEmpty() && !contactList.isEmpty()) {
-            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(commissioningCampaignList, contactList);
+        if (!qualityCampaign.isEmpty() && !contactList.isEmpty()) {
+            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(new List<String>{qualityCampaign[0].Id}, contactList);
             system.debug('>> campaignMembersBulk: ' + campaignMembersBulk);
         }
 
-        system.debug('keltin: ' + orderActivityMap.keySet());
+        system.debug('>> orderActivityMap.keySet: ' + orderActivityMap.keySet());
+
+
+        Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
 
         for (String ordId : orderActivityMap.keySet()) {
-            if ( orderMap.get(ordId).Contact__c != null && orderMap.get(ordId).CommissioningCampaign__c != null) {
+            if ( orderMap.get(ordId).Contact__c != null && !qualityCampaign.isEmpty()) {
 
                 Boolean isCmAlready = false;
                 String cmAlreadyId = null;
 
                 if (!campaignMembersBulk.isEmpty()) {
                     for (CampaignMember cmAlready : campaignMembersBulk) {
-                        if (cmAlready.CampaignId == orderMap.get(ordId).CommissioningCampaign__c 
+                        if (cmAlready.CampaignId == qualityCampaign[0].Id 
                             && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
                             isCmAlready = true;
                             cmAlreadyId = cmAlready.Id;
@@ -163,20 +174,32 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     }
 
                 } else {
-                    campaignMembersInsert.add(new CampaignMember(
-                        ContactId = orderMap.get(ordId).Contact__c,
-                        CampaignId = orderMap.get(ordId).CommissioningCampaign__c,
-                        PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                        RelatedActivity__c = orderActivityMap.get(ordId).Id
-                    ));
+                    if (orderActivityMap.get(ordId).Id != null) {
+                        // campaignMembersInsert.add(new CampaignMember(
+                        //     ContactId = orderMap.get(ordId).Contact__c,
+                        //     CampaignId = qualityCampaign[0].Id,
+                        //     PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                        //     RelatedActivity__c = orderActivityMap.get(ordId).Id
+                        // ));
+
+                        notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
+                            ContactId = orderMap.get(ordId).Contact__c,
+                            CampaignId = qualityCampaign[0].Id,
+                            PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                            RelatedActivity__c = orderActivityMap.get(ordId).Id
+                        ));
+                    }
                 }
             }
         }
 
-        system.debug('>>campaignMembersInsert: ' + campaignMembersInsert);
 
-        if(!campaignMembersInsert.isEmpty()) {
-            insert campaignMembersInsert;
+        List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
+        system.debug('>>campNotDuplicateList: ' + campNotDuplicateList);
+
+
+        if(!campNotDuplicateList.isEmpty()) {
+            insert notDuplicatedCampToIns.values();
         }
 
         // campaignMembersUpdateAdd.addAll(campaignMembersUpdate);

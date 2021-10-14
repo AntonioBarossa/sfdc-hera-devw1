@@ -134,7 +134,7 @@
         </template>
 
         <template if:true={showAmend}>
-            <c-hdt-quote-amend-contract is-community={isCommunity} sale-id={saleRecord.Id} contract-id={selectedContractId} onclose_amend_contract={handleCloseAmendContract} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-quote-amend-contract>
+            <c-hdt-quote-amend-contract is-community={isCommunity} sale-id={saleRecord.Id} contract-id={selectedContractId} quote-id={selectedQuoteId} onclose_amend_contract={handleCloseAmendContract} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-quote-amend-contract>
         </template>
 
         <c-hdt-confirmation-dialog-dropdown

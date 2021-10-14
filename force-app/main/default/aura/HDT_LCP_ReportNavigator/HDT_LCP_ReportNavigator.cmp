@@ -1,0 +1,15 @@
+<!--
+  @description       : Redirect to report tab from given report name specified in the url
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-09-07
+  @last modified by  : gabriele.rota@webresults.it
+
+  Url example:
+  /lightning/cmp/c__HDT_LCP_ReportNavigator?c__reportName=[Report API name]
+-->
+<aura:component implements="lightning:isUrlAddressable" controller="HDT_LC_ReportNavigatorController">
+    <aura:handler name="init" value="{!this}" action="{!c.onPageReferenceChange}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.onPageReferenceChange}"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+</aura:component>

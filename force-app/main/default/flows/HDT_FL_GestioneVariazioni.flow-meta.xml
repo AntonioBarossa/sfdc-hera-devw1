@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Check_Criterio_Eleggibilita</name>
+        <label>Check Criterio Eleggibilita</label>
+        <locationX>2259</locationX>
+        <locationY>1684</locationY>
+        <actionName>HDT_UTL_ElegibilityCriteriaCheck</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Criteri_Eleggibilita</targetReference>
+        </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>CheckCriteriEleggibilita</assignToReference>
+            <name>abortProcess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>CheckEleggibilitaWarning</assignToReference>
+            <name>abortProcessWarning</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Crea_Allineamento_Anagrafica</name>
         <label>Crea Allineamento Anagrafica</label>
         <locationX>1691</locationX>
@@ -32,8 +58,8 @@
     <actionCalls>
         <name>Crea_Allineamento_Anagrafica_0</name>
         <label>Crea Allineamento Anagrafica</label>
-        <locationX>2391</locationX>
-        <locationY>1783</locationY>
+        <locationX>2462</locationX>
+        <locationY>2082</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -89,22 +115,6 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>Accorpamento_Campi</name>
-        <label>Accorpamento Campi</label>
-        <locationX>4009</locationX>
-        <locationY>1476</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato.DistributorNote__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DistributorNoteFormula</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>InRete_o_ExtraRete</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
         <locationX>1690</locationX>
@@ -130,8 +140,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>2390</locationX>
-        <locationY>1942</locationY>
+        <locationX>2461</locationX>
+        <locationY>2241</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -176,8 +186,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Data_Decorrenza</name>
         <label>Aggiorna Fase in Attesa Data Decorrenza</label>
-        <locationX>2119</locationX>
-        <locationY>1784</locationY>
+        <locationX>2190</locationX>
+        <locationY>2083</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -924,6 +934,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Annullamento_0</name>
+        <label>Annullamento?</label>
+        <locationX>5571</locationX>
+        <locationY>564</locationY>
+        <defaultConnector>
+            <targetReference>Annullamento_Prestazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annullare</defaultConnectorLabel>
+        <rules>
+            <name>Non_Annulare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BillingProfileSelezionato</targetReference>
+            </connector>
+            <label>Non Annulare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Avanzamaneto</name>
         <label>Avanzamento</label>
         <locationX>4924</locationX>
@@ -1070,6 +1105,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>BillingProfileSelezionato</name>
+        <label>BillingProfileSelezionato?</label>
+        <locationX>5614</locationX>
+        <locationY>683</locationY>
+        <defaultConnector>
+            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Selezionato</defaultConnectorLabel>
+        <rules>
+            <name>Selezionato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetBillingProfile_0</targetReference>
+            </connector>
+            <label>Selezionato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
         <locationX>5110</locationX>
@@ -1095,10 +1162,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Criteri_Eleggibilita</name>
+        <label>Check Criteri Eleggibilita</label>
+        <locationX>2198</locationX>
+        <locationY>1806</locationY>
+        <defaultConnector>
+            <targetReference>Data_Validit_Nel_futuro</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Superato</defaultConnectorLabel>
+        <rules>
+            <name>Non_Superato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CheckCriteriEleggibilita</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Criteri_Eleggibilita</targetReference>
+            </connector>
+            <label>Non Superato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Data_Validit_Nel_futuro</name>
         <label>Data Validità Nel futuro?</label>
-        <locationX>2251</locationX>
-        <locationY>1664</locationY>
+        <locationX>2322</locationX>
+        <locationY>1963</locationY>
         <defaultConnector>
             <targetReference>Crea_Allineamento_Anagrafica_0</targetReference>
         </defaultConnector>
@@ -1975,7 +2067,7 @@
     <formulas>
         <name>DistributorNoteFormula</name>
         <dataType>String</dataType>
-        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; {!GetCaseAggiornato.Reading__c} &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
+        <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
     </formulas>
     <formulas>
         <name>NextLabel</name>
@@ -2302,11 +2394,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>4009</locationX>
-        <locationY>1356</locationY>
+        <locationX>4021</locationX>
+        <locationY>1375</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Accorpamento_Campi</targetReference>
+            <targetReference>InRete_o_ExtraRete</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2579,7 +2671,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1544</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Data_Validit_Nel_futuro</targetReference>
+            <targetReference>Check_Criterio_Eleggibilita</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2721,8 +2813,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>2251</locationX>
-        <locationY>2120</locationY>
+        <locationX>2322</locationX>
+        <locationY>2419</locationY>
         <inputReference>GetInputCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2893,17 +2985,17 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>hdtBillingProfileScreen</name>
         <label>hdtBillingProfileScreen</label>
-        <locationX>5566</locationX>
-        <locationY>684</locationY>
+        <locationX>5476</locationX>
+        <locationY>644</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetBillingProfile_0</targetReference>
+            <targetReference>Annullamento_0</targetReference>
         </connector>
         <fields>
             <name>displaytestbilling</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Seleziona la bolletta di riferimento&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Selezionare il CA (non obbligatorio)&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2919,7 +3011,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>selectionType</name>
                 <value>
-                    <stringValue>BillingProfile</stringValue>
+                    <stringValue>BillingProfile_VarDom</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2938,6 +3030,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>searchVariant</name>
                 <value>
                     <stringValue>Label-Hidden</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nonReqSelection</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3184,6 +3282,75 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </inputParameters>
             <inputParameters>
                 <name>allowSmallerReading</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Criteri_Eleggibilita</name>
+        <label>Screen Criteri Eleggibilita</label>
+        <locationX>2032</locationX>
+        <locationY>1865</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Annulla_Prestazione_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayWarning</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;{!CheckEleggibilitaWarning}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto &quot;Conferma Pratica&quot; si procederà con l&apos;Annullamento della prestazione&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>flowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
@@ -3909,7 +4076,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo_0</name>
-            <fieldText>&lt;p&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/p&gt;&lt;p&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Indirizzo di fornitura selezionata e indirizzo di residenza differiscono tra loro.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard è necessario innescare un Case di &quot;Modifica Residenza&quot;&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3924,7 +4091,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         </fields>
         <fields>
             <name>DisplayInfo1</name>
-            <fieldText>&lt;p&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&quot;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Alla chiusura del Wizard innescare un Case di &quot;Autolettura&quot; e/o &quot;Modifica consumo Annuo&lt;/span&gt;&quot;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4037,8 +4204,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>5291</locationX>
-        <locationY>1663</locationY>
+        <locationX>5437</locationX>
+        <locationY>1529</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4678,7 +4845,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <elementReference>previousButton</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4909,9 +5076,51 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Annullamento_Prestazione</name>
+        <label>Annullamento Prestazione</label>
+        <locationX>5707</locationX>
+        <locationY>562</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>addressCheck</name>
         <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CheckCriteriEleggibilita</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>CheckEleggibilitaWarning</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

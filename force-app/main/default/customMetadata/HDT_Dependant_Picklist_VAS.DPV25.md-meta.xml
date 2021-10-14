@@ -3,8 +3,20 @@
     <label>DPV25</label>
     <protected>false</protected>
     <values>
+        <field>AdditionalConfiguration__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Description__c</field>
         <value xsi:type="xsd:string">Nelle fatture SD o nelle bollette potrebbero essere riportate delle descrizioni errate</value>
+    </values>
+    <values>
+        <field>HasAssetSelection__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>HasSubSelection__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Has_Attachment__c</field>
@@ -24,7 +36,7 @@
     </values>
     <values>
         <field>UserInputFlow__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">VAS_Segnalazioni_VAS_Note</value>
     </values>
     <values>
         <field>Value__c</field>

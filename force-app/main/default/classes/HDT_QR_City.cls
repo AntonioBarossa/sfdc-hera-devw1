@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Gulotta (lorenzo.gulotta@webresults.it)
+ * @date 12/05/2021
+ * @description HDT_QR_ServiceCatalog Class
+ * @history Lorenzo Gulotta – 12/05/2021 – Created Class
+ */
+
 public with sharing class HDT_QR_City {
     public static String getCityCode(String city){
 
@@ -42,5 +49,12 @@ public with sharing class HDT_QR_City {
             cities.put(c.BelfioreCode__c, c.Name);
         }
         return cities;
+    }
+    public static List<City__c> getRecordByComune(String comune){
+       
+        String query = 'SELECT Name, BelfioreCode__c, Province__c FROM City__c WHERE Name = :comune WITH SECURITY_ENFORCED';
+        List<City__c>  municipalities= Database.query(query);
+       
+        return municipalities;
     }
 }

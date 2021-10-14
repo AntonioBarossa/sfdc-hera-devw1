@@ -58,7 +58,7 @@ public inherited sharing class HDT_UTL_Order {
         Order o = orQr.getRecordById(ord.id);
         boolean res = false;
         String code = '';
-        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c);
+        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.ServicePoint__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
         for(RateCategory__c r : listRate){
             if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                 code = r.CalculatedValue__c;
@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_Order {
             }
         }
         if(!res){
-            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__r.CommoditySector__c,o.ServicePoint__r.distributor__r.code__c,'N/A',o.SupplyType__c);
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,'N/A',o.ServicePoint__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
             for(RateCategory__c r : listRate){
                 if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                     code = r.CalculatedValue__c;
@@ -157,9 +157,10 @@ public inherited sharing class HDT_UTL_Order {
             HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
             List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordScartoDiscordante(newOrder.ServicePoint__c,newOrder.AccountId);
             if(listActivity != null && !listActivity.isEmpty()){
+                system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
                 wr.wrts_prcgvr__Status__c = 'Completed';
-                actSrv.updateRecord(wr);
+                //actSrv.updateRecord(wr);
                 Order oldOrder = orderQr.getRecordById(wr.order__c);
                 travasaOrder(oldOrder,newOrder);
                 //return true;
@@ -171,7 +172,7 @@ public inherited sharing class HDT_UTL_Order {
     }
     @AuraEnabled
     public static void travasaOrder(Order oldOrder, order orderToUpdate){
-
+        system.debug('DENTRO TRAVASO DATO DISCORDANTE');
         orderToUpdate.exciseEle__c =  oldOrder.exciseEle__c;
         orderToUpdate.ExciseGas__c =  oldOrder.ExciseGas__c;
         orderToUpdate.vat__c = oldOrder.vat__c;
@@ -192,8 +193,12 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.Resident__c = oldOrder.Resident__c;
         orderToUpdate.RemiCode__c = oldOrder.RemiCode__c;
         orderToUpdate.SupplyCity__c = oldOrder.SupplyCity__c;
+       /// orderToUpdate.CommercialProductVersion__c = oldOrder.CommercialProductVersion__c ;
+      ///  orderToUpdate.CommercialProductCode__c = oldOrder.CommercialProductCode__c ;
+      ///  orderToUpdate.CommercialProduct__c = oldOrder.CommercialProduct__c;
         orderToUpdate.SupplyStreetName__c = oldOrder.SupplyStreetName__c;
         orderToUpdate.SupplyStreetNumber__c = oldOrder.SupplyStreetNumber__c;
+        orderToUpdate.SupplyStreetNumberExtension__c = oldOrder.SupplyStreetNumberExtension__c;
         orderToUpdate.SupplyPlace__c = oldOrder.SupplyPlace__c;
         orderToUpdate.SupplyPostalCode__c = oldOrder.SupplyPostalCode__c;
         orderToUpdate.SupplyCountry__c = oldOrder.SupplyCountry__c;
@@ -211,12 +216,15 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.SelfCertificationConnection__c = oldOrder.SelfCertificationConnection__c;
         orderToUpdate.RequestOption__c = oldOrder.RequestOption__c;
         orderToUpdate.MeterClass__c =oldOrder.MeterClass__c;
+        orderToUpdate.PrecheckResultSII__c = oldOrder.PrecheckResultSII__c;
+        orderToUpdate.Step__c = oldOrder.Step__c - 1;
+        orderToUpdate.RateCategory__c = oldOrder.RateCategory__c;
         orderToUpdate.WithdrawalClass__c = oldOrder.WithdrawalClass__c;
         orderToUpdate.SupplyType__c = oldOrder.SupplyType__c;
         orderToUpdate.DistributorCode__c = oldOrder.DistributorCode__c;
         orderToUpdate.PressureLevel__c = oldOrder.PressureLevel__c;
         orderToUpdate.RequestPhase__c = oldOrder.RequestPhase__c;
-        orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+       // orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
         orderToUpdate.PowerRequested__c = oldOrder.PowerRequested__c;
         orderToUpdate.EnergyService__c = oldOrder.EnergyService__c;
         orderToUpdate.LiftingPeople__c = oldOrder.LiftingPeople__c;
@@ -224,6 +232,7 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.IsRemoteManaged__c = oldOrder.IsRemoteManaged__c;
         orderToUpdate.CustomerRequestDate__c = oldOrder.CustomerRequestDate__c;
         orderToUpdate.Commodity__c = oldOrder.Commodity__c;
+        orderToUpdate.isDatoDiscordante__c = true;
         update orderToUpdate;
     }
 

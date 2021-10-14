@@ -234,11 +234,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
-                    <value>Comunicazioni_Documentali__r</value>
+                    <value>Attivit_Documentali__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rowsToDisplay</name>
@@ -246,7 +246,57 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
-                    <value>true</value>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Order.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Comunicazioni_Documentali__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Order.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Allegati_Plico_Documentale__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
@@ -329,11 +379,18 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Order.Validazione_Documenti</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.IsVAS__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ProcessType__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -369,12 +426,22 @@
                                     <operator>NE</operator>
                                     <rightValue>Amm. Precheck KO SII</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Activated</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Order.HDT_AnnullamentoPrestazione</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>NE</operator>
@@ -399,6 +466,16 @@
                                     <leftValue>{!Record.NotCancellable__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Activated</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Annullato</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -442,7 +519,64 @@
                             <value>Order.Riprendi_Processo</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Order.Escalation</value>
+                            <value>Order.HDT_CreateDistributorApointment</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Order.HDT_CloneCanceledOrder</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND (3 OR 4 OR 5)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_SwitchIn</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CancellationReason__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Annullamento dal SII</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CancellationReason__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Delibera ARERA 155/2020</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CancellationReason__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Pratica errata</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Order.Ripensamento_VAS</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.VASType__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>VAS Servizio</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.SentToVasEngine__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In attesa tempi di ripensamento</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentazione da validare</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -507,6 +641,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.HDT_CP_OneShotUser}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-73e700ce-c44c-42e6-b9d0-45c0ed191450</name>

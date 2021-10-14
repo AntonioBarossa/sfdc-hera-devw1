@@ -1,62 +1,146 @@
 <template>
-    
-        <lightning-card title="Gestione Ordini">
-            
-            <lightning-datatable
-                key-field="id"
-                data={ordersList}
-                columns={columns}
-                max-row-selection="1"
-                
-                onrowselection= {selectedRowHandler}
-            ></lightning-datatable>
-         
-        </lightning-card>
-        <template if:true={showChildList}>
-            <div class="slds-grid slds-grid_vertical">
-                <div class="slds-col slds-grid">
-                    <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                            <lightning-combobox data-id="tipoCopia" name="TipoCopia" label="Tipo Copia"
-                                placeholder="Seleziona Tipologia..." options={tipoCopiaOptions}
-                                onchange={changeValueTipo}
-                                required>
-                            </lightning-combobox>
-                    </div>
-                    <template if:true={showChildList2}>
-                        <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                            <lightning-combobox data-id="tipoCopia" name="TipoAttivita" label="Tipo Attività"
-                                placeholder="Seleziona Tipo Attività..." options={tipoAttivitaOptions}
-                                onchange={changeValueTipoAttivita}
-                                required>
-                            </lightning-combobox>
-                        </div>
+    <lightning-card>
+        <div class="slds-grid slds-grid_vertical">
+            <div class="slds-col slds-grid">
+                <div
+                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-combobox data-id="tipoCopia" name="TipoCopia" label="Tipo Copia"
+                        placeholder="Seleziona Tipologia..." options={tipoCopiaOptions} onchange={changeValueTipo}
+                        value={typeDefaltValue} required>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <template if:true={showParentList}>
+            <br></br>
+            <lightning-card title="Gestione Ordini Padri">
+                <template if:false={selectedOrder}>
+                    <lightning-datatable key-field="Id" data={ordersList} columns={columns}
+                        selected-rows={selectedOrderValue} onrowselection={selectedRowHandler}></lightning-datatable>
+                </template>
+                <template if:true={selectedOrder}>
+                    <template if:true={showSingleRow}>
+
+                        <lightning-datatable key-field="Id" data={selectedParentAsList} columns={columns}
+                            selected-rows={selectedParentAsListRow} onrowselection={selectedRowHandler}>
+                        </lightning-datatable>
                     </template>
-                </div>
+                </template>
 
-            </div>
-            <br/>
-            <template if:true={showChildList2}>
-                <lightning-card title="Ordini Figli">
-                    <lightning-datatable
-                        key-field="id"
-                        data={orderChildList}
-                        hidecheckboxcolumn={hideCheck}
-                        selectedrow={selectedrowchild}
-                        columns={columnsChild}
-                    ></lightning-datatable>
-                </lightning-card>
-            </template>
-            <template if:true={typeActivity}>
-                <c-hdt-upload-documents title="Allega Fatture" record-id={recordid} accepted-formats={acceptedFormats}></c-hdt-upload-documents>
-            </template>
-            <template if:true={showButtonPreview}>
-                <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                    <lightning-button onclick={handlePreview} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview" title="Preview action"></lightning-button>
+
+            </lightning-card>
+            <template if:true={showChildList}>
+                <template if:true={showChildList2}>
+                    <lightning-card title="Ordini Figli">
+                        <lightning-datatable key-field="id" data={orderChildList} hidecheckboxcolumn={hideCheck}
+                            selectedrow={selectedrowchild} columns={columnsChild} onrowselection={selectChild}>
+                        </lightning-datatable>
+                    </lightning-card>
+                </template>
+                <div class="slds-grid slds-grid_vertical">
+                    <div class="slds-col slds-grid">
+                        <template if:true={showChildList2}>
+                            <div
+                                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-combobox data-id="tipoCopia" name="TipoAttivita" label="Tipologia Canale"
+                                    placeholder="Seleziona Tipologia Canale..." options={tipoAttivitaOptions}
+                                    onchange={changeValueTipoAttivita} value={selectedActivity} required>
+                                </lightning-combobox>
+                            </div>
+                        </template>
+                        <template if:true={isinboundchannel}>
+                            <template if:false={isRec}>
+                                <div
+                                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-combobox data-id="tipoCopiaSend" name="TipoAttivita2" label="Invio Doc"
+                                    placeholder="Seleziona Modalita Invio..." options={tipoAttivitaOptions2}
+                                    onchange={changeValueTipoAttivita2} value={selectedSend} required>
+                                </lightning-combobox>
+                            </div>
+                            </template>
+                        </template>
+                    </div>
+
+                </div>
+                <br />
+
+
+                <template if:true={ordChild}>
+                    <lightning-record-edit-form record-id={ordChild.Id} object-api-name="Order">
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <template if:true={isFirmato}>
+                                <lightning-input-field field-name="CustomerName__c" disabled
+                                    class="slds-size_1-of-5 fieldsData">
+                                </lightning-input-field>
+                                <lightning-input-field field-name="CustomerLastName__c" disabled
+                                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                                <lightning-input-field field-name="CustomerFiscalCode__c" disabled
+                                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                                <lightning-input-field field-name="CustomerVATNumber__c" disabled
+                                    class="slds-size_1-of-5 fieldsData"> </lightning-input-field>
+                            </template>
+                            <template if:false={isRec}>
+                                <lightning-input-field field-name="BillingAddress" disabled
+                                    class="slds-size_5-of-12 fieldsData"> </lightning-input-field>
+                            </template>
+                        </div>
+
+                        <template if:true={isinboundchannel}>
+                            <template if:true={isSendEmail}>
+                                <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={ordChild.Contact__r.Email} required data-id="Email__c">
+                                </lightning-input-field>
+                            </template>
+                            <template if:true={isCartacea}>
+                                <c-hdt-target-object-address-fields accountid={accountId}>
+                                </c-hdt-target-object-address-fields>
+                            </template>
+                        </template>
+
+                        <!--<template for:each={mapFields} for:item="field" >
+                        <lightning-input-field field-name="field.apiname" key={field.apiname}></lightning-input-field>
+                    </template>-->
+                    </lightning-record-edit-form>
+                    <!--<template if:true={isModInvioShown}>-->
+                    
+                </template>
+
+
+
+
+                <template if:true={ismessagevisible}>
+                    <template if:true={firstRowChild}>
+                        <lightning-record-edit-form record-id={firstRowChild.Id} object-api-name="Order">
+                            <lightning-input-field field-name="ShippingMail__c" class="slds-size_1-of-5 fieldsData" value={firstRowChild.Contact__r.Email} required data-id="Email__c">
+                            </lightning-input-field>
+                        </lightning-record-edit-form>
+                    </template>
+                    I figli sono Stati Tutti Preselezionati <br></br>
+                    Allega la Richiesta Scritta pervenuta dal cliente
+                    <br></br>
+                </template>
+                <template if:true={typeActivity}>
+                    <c-hdt-upload-documents title="Allega Fatture" is-done={isdonedocument} record-id={recordid}
+                        accepted-formats={acceptedFormats}></c-hdt-upload-documents>
+                </template>
+                <template if:true={showButtonPreview}>
+                    <div
+                        class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                        <lightning-button onclick={handlePreview} class="slds-m-left_x-small"
+                            disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Preview"
+                            title="Preview action"></lightning-button>
+                    </div>
+                </template>
+                <div
+                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-button onclick={handleAnnull} class="slds-m-left_x-small" icon-name="utility:save"
+                        variant="brand" label="Annulla" title="Annulla"></lightning-button>
+                    <lightning-button onclick={handleConfirmDraft} class="slds-m-left_x-small" icon-name="utility:save"
+                        variant="brand" label="Salva in Bozza" title="Salva in Bozza"></lightning-button>
+                    <lightning-button onclick={handleConfirm} class="slds-m-left_x-small" icon-name="utility:save"
+                        variant="brand" label="Conferma" title="Conferma"></lightning-button>
                 </div>
             </template>
-            <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                <lightning-button onclick={handleConfirm} class="slds-m-left_x-small" icon-name="utility:save" variant="brand" label="Conferma" title="Conferma"></lightning-button>
-            </div>
         </template>
-
+    </lightning-card>
 </template>

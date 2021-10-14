@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>X_STAMPA_SIN_ANA</label>
+    <label>Tipo XML (Sintetico/Dettaglio)</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

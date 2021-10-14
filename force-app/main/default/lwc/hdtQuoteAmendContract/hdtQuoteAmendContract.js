@@ -7,6 +7,7 @@ export default class HdtQuoteAmendContract extends LightningElement {
     @api saleId;
     @api contractId;
     @api isCommunity;
+    @api quoteId;
     iframeSrcAmend = '';;
     
     getIframeSrc(contractId){
@@ -32,14 +33,18 @@ export default class HdtQuoteAmendContract extends LightningElement {
 
     handleCloseModal(){
 
-        execModalExitActions({contractId: this.contractId, saleId: this.saleId}).then(data =>{
+        execModalExitActions({contractId: this.contractId, saleId: this.saleId, quoteId: this.quoteId}).then(data =>{
             this.dispatchEvent(new CustomEvent('close_amend_contract'));
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Successo',
-                message: 'Amend configurato con successo',
-                variant: 'success'
-            });
-            this.dispatchEvent(toastSuccessMessage);
+
+            if(data){
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Aggiunta sconti e bonus configurata con successo',
+                    variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
+
         }).catch(error => {
             this.dispatchEvent(new CustomEvent('close_amend_contract'));
             const toastErrorMessage = new ShowToastEvent({

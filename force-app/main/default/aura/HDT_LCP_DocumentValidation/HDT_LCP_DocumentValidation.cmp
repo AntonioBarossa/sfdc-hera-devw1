@@ -9,6 +9,7 @@
     <aura:attribute name="Instance326" type="Boolean" default="true" />
     <aura:attribute name="DocumentLow80" type="Boolean" default="true" />
     <aura:attribute name="AutorizationVolturaThirdTrader" type="Boolean" default="true" />
+    <aura:attribute name="DocumentPackage" type="Boolean" default="true" />
     <aura:attribute name="formValid" type="Boolean" default="true"/>
     <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
     <aura:attribute name="notValid" type="Boolean" default="false"/>
@@ -43,6 +44,7 @@
                     <lightning:inputField fieldName="Instance326__c" aura:id="Instance326" class="{!v.Instance326 == false ? 'slds-hide' : ''}" />
                     <lightning:inputField fieldName="DocumentLow80__c" aura:id="DocumentLow80" class="{!v.DocumentLow80 == false ? 'slds-hide' : ''}" />
                     <lightning:inputField fieldName="AutorizationVolturaThirdTrader__c" aura:id="AutorizationVolturaThirdTrader" class="{!v.AutorizationVolturaThirdTrader == false ? 'slds-hide' : ''}" />
+                    <lightning:inputField fieldName="DocumentPackage__c" aura:id="DocumentPackage" class="{!v.DocumentPackage == false ? 'slds-hide' : ''}" />
                 </lightning:recordEditForm>
             </div>
         </lightning:card>

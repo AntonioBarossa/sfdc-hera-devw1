@@ -33,11 +33,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>SalesCompany__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CancellationReason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>InvoiceEmailAddress__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Priority__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -156,6 +164,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Resident__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>HerokuPracticeCode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -440,11 +452,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Order.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>99</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.Validazione_Documenti</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -495,14 +502,14 @@
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>11</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>ActivateOrder</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Delete</actionName>
@@ -540,15 +547,16 @@
             <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendSms</actionName>
+            <actionName>Order.HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>19</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionName>Order.HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
         </platformActionListItems>
+>
     </platformActionList>
     <relatedLists>
         <fields>Product2</fields>
@@ -561,10 +569,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>wrts_prcgvr__DueDate__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
         <fields>OWNER.LAST_NAME</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Order__c</relatedList>
@@ -603,22 +611,35 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SendDate__c</fields>
+        <fields>SendMode__c</fields>
+        <fields>Receiver__c</fields>
+        <fields>IsBounced__c</fields>
+        <relatedList>DocumentSendTracking__c.Order__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ActivityType__c</fields>
+        <fields>EnvelopeId__c</fields>
+        <fields>AttachmentCode__c</fields>
+        <fields>AttachmentDescription__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>ErrorDescription__c</fields>
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
-        <fields>SBQQ__NetAmount__c</fields>
-        <fields>SBQQ__Status__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>SBQQ__Primary__c</fields>
-        <relatedList>SBQQ__Quote__c.OrderReference__c</relatedList>
-    </relatedLists> -->
+        <fields>AttachmentCode__c</fields>
+        <fields>Version__c</fields>
+        <fields>Required__c</fields>
+        <relatedList>DocumentalEnvelopeAttachment__c.Order__c</relatedList>
+    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62R</masterLabel>
+        <masterLabel>00h3N000002SmK8</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -648,6 +648,11 @@
                 <default>false</default>
                 <label>VOTIVE Modena/Subentro</label>
             </value>
+            <value>
+                <fullName>Annullamento Prestazione</fullName>
+                <default>false</default>
+                <label>Annullamento Prestazione</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
@@ -660,6 +665,34 @@
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
             <valueName>Riattivazione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Sospensione Fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Notifiche</controllingFieldValue>
+            <controllingFieldValue>Pagamenti</controllingFieldValue>
+            <controllingFieldValue>Post Sales VAS</controllingFieldValue>
+            <controllingFieldValue>Preventivi</controllingFieldValue>
+            <controllingFieldValue>Reclami</controllingFieldValue>
+            <controllingFieldValue>Variazioni</controllingFieldValue>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <controllingFieldValue>Voltura</controllingFieldValue>
+            <controllingFieldValue>Annullamento</controllingFieldValue>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <controllingFieldValue>Canone Rai</controllingFieldValue>
+            <controllingFieldValue>Disattivazioni</controllingFieldValue>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <controllingFieldValue>Indennizzi</controllingFieldValue>
+            <controllingFieldValue>Informative</controllingFieldValue>
+            <controllingFieldValue>VOTIVE Modena</controllingFieldValue>
+            <controllingFieldValue>Modifiche Anagrafiche</controllingFieldValue>
+            <valueName>Annullamento Prestazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Notifiche</controllingFieldValue>

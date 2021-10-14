@@ -42,10 +42,10 @@ public with sharing class HDT_QR_GenericRecordSelection {
             }
 
             query = 'FIND \'' + String.escapeSingleQuotes(soslSearchTerm) + '\' IN ALL FIELDS RETURNING ' + objectName + '(' + query + ')';
-            system.debug('query => '+query);
+            system.debug(LoggingLevel.DEBUG, 'query => '+query);
             sObjectsList = Search.query(query);
 
-            system.debug('sObjectsList => '+sObjectsList);
+            //system.debug('sObjectsList => '+sObjectsList);
 
         }
 
@@ -72,10 +72,10 @@ public with sharing class HDT_QR_GenericRecordSelection {
                 query += ' LIMIT ' + limitStr;
             }
 
-            system.debug('query => '+ query);
+            system.debug(LoggingLevel.DEBUG, 'query => '+ query);
             sObjectList = Database.query(query);
 
-            system.debug('sObjectList => '+sObjectList);
+            //system.debug('sObjectList => '+sObjectList);
 
         }
 

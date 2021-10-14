@@ -441,7 +441,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rowsToDisplay</name>
@@ -449,7 +449,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
@@ -466,7 +466,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rowsToDisplay</name>
@@ -474,7 +474,32 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showActionBar</name>
-                    <value>true</value>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Allegati_Plico_Documentale__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
@@ -645,15 +670,55 @@
                         <valueListItems>
                             <value>Case.HDT_ResumeCommercialBonus</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Contratti/Bonus Commerciale</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Documentale/Copia Contratto</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Escalation</value>
+                            <value>Case.HDT_ChangePriority</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Case.Riprendi_Processo_Sales</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Bozza</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Sospesa</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In Lavorazione</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Contratti/Bonus Commerciale</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Documentale/Copia Contratto</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.HDT_CreateDistributorApointment</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

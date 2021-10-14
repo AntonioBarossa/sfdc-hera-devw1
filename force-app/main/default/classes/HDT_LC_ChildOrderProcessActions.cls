@@ -11,16 +11,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 15/02/2021
-     * @param Order order
      * @description Execute child order process save actions
+     * @param order
+     * @param lastStepData
      */
     @AuraEnabled
     public static void save(Order order, Map<String,Object> lastStepData){
-        system.debug('START SAVE ORDER');        
+        system.debug('START SAVE ORDER');
+
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
@@ -43,8 +46,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
-                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
-
+                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order)); 
+                List<Order> listOrd = new List<Order>{order};            
+                Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(listOrd);
                 //17/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Decorrenza
                 orderToUpdate.IsActivationDeferred__c = order.IsActivationDeferred__c;
 
@@ -67,7 +71,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             
                             // START 1 Calcolo Data Max Ripensamento       
                             try { 
-                                if(order.SignedDate__c != null){
+                                if(order.SignedDate__c != null && mapAccountRes.get(order.AccountId)){
                                     orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
                                     system.debug('Calcolo data max di ripensamento xxx 1');             
                                 }                                                            
@@ -151,6 +155,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     }
                 }
+
+                //18/09/2021 gabriele.rota@webresults.it - Package B Attivazioni
+                if (order.IsCloned__c) {
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                }
             }
             when 'HDT_RT_Attivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -178,20 +187,40 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // Istanza 326
                     orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
-                    orderToUpdate.QuickQuote__c = 'Richiesto';
+                    if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
+                        orderToUpdate.QuickQuote__c = 'Richiesto';
+                    }
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
                     orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
                     // Carta identità
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Accettazione preventivo rapido
-                    orderToUpdate.QuickQuote__c = 'Richiesto';
+                    if('Rapido'.equalsIgnoreCase(order.QuotationType__c)){
+                        orderToUpdate.QuickQuote__c = 'Richiesto';
+                    }
                     // Istanza 326
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
             }
             //EVERIS: Aggiunto caso Voltura
             when 'HDT_RT_Voltura'{
+                System.debug('Order ' + order);
+                HDT_QR_Order orderQr = new HDT_QR_Order();
+                HDT_QR_Contract contractQr = new HDT_QR_Contract();
+                Order currentOrder = orderQr.getRecordById(order.Id);
+                Contract contractReference = new Contract();
+                if(currentOrder.ContractReference__c != null)
+                {
+                    try
+                    {
+                        contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                    }
+                    catch(Exception e)
+                    {
+                        System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    }
+                }
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -219,6 +248,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
+                //@frpanico logica if reseller --> Esportazione VS Siebel
+                if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                {
+                    orderToUpdate.Phase__c = 'Esportazione VS Siebel';
+                }
+
+                
+            }
+            when 'HDT_RT_ConnessioneConAttivazione' {
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    orderToUpdate.Instance326__c = 'Richiesto';
+                } else {
+                    orderToUpdate.Instance326__c = 'Richiesto';
+                }
+            }
+            when 'HDT_RT_TemporaneaNuovaAtt' {
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                }
             }
         }
         
@@ -229,7 +278,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
         system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
         system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
-        List<ComfortQualityCall__c> comfortQualityList = order.RecordType.DeveloperName == 'HDT_RT_VAS' ? HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order) : HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+
+        Boolean isVasProcess = order.RecordType.DeveloperName == 'HDT_RT_VAS';
+        system.debug('quality log 1 isVasProcess: ' + isVasProcess);
+
+        List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
+
+        if (order.RecordType.DeveloperName == 'HDT_RT_VAS') {
+            comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order);
+        } else {
+            comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+        }
 
         system.debug('quality log 2: ' + comfortQualityList);
 
@@ -248,7 +307,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             if (comfortQualityList.size() > 1) {
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
-                    if (cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c) {
+                    if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == order.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c){
+                        comforQualityRes = cqc;
+                        break;
+                    } else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
                         comforQualityRes = cqc;
                         break;
                     }
@@ -268,14 +330,98 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
 
         if (lastStepData != null) {
+
             for (String lastStepField : lastStepData.keySet()) {
-                orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                system.debug('keltin - lastStepField: ' + lastStepField);
+                system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
+
+                if (lastStepField == 'EffectiveDate__c') {
+                    String dateString = String.valueOf(lastStepData.get(lastStepField));
+                    orderToUpdate.put(lastStepField, date.valueOf(dateString));
+                } else {
+                    orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                }
+            }
+
+            if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
+                List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+                if (docsIvaAccise.isEmpty()) {
+                    throw new AuraHandledException('Caricare documento per iva e accise');
+                }
+            }
+        }
+
+        //@frpanico 16/09/21 logic for IVA, Accise and Addiz. Regionale for Voltura and Voltura con Switch
+        if(order.RecordType.DeveloperName == 'HDT_RT_Voltura' || order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch')
+        {
+            //@frpanico query for currentRecord
+            Order currentOrder = orderQr.getRecordById(order.Id);
+            //@frpanico only for Energia Elettrica
+            //@frpanico VAT check
+            //@frpanico if VAT is null or blank ExciseRate and RegionalAdditional must be zero
+            if(currentOrder.CommodityFormula__c == 'Energia Elettrica')
+            {
+                if(orderToUpdate.VAT__c != null)
+                {
+                    if(orderToUpdate.VAT__c == '')
+                    {
+                        orderToUpdate.ExciseRate__c = 0.0;
+                        orderToUpdate.RegionalAdditional__c = 0.0;
+                    }
+                }
+                else if(currentOrder.VAT__c == null)
+                {
+                    orderToUpdate.ExciseRate__c = 0.0;
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                }
+                //@frpanico ExciseEle check
+                //@frpanico if ExciseEle is null or blank VAT__c and RegionalAdditional must be blank and zero
+                //@frpanico if ExciseEle is not null nor blank, ExciseRate value's got from HDT_ExciseTranscode__mdt
+                if(orderToUpdate.ExciseEle__c != null)
+                {
+                    if(orderToUpdate.ExciseEle__c == '')
+                    {
+                        orderToUpdate.VAT__C = '';
+                        orderToUpdate.RegionalAdditional__c = 0.0;
+                        orderToUpdate.ExciseRate__c = 0.0;
+                    }
+                    else 
+                    {
+                        HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                        exciseTranscode = orderQr.getExciseTranscode(orderToUpdate.ExciseEle__c);
+                        orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+                    }
+                }
+                else if(currentOrder.ExciseEle__c == null)
+                {
+                    orderToUpdate.VAT__C = '';
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                    orderToUpdate.ExciseRate__c = 0.0;
+                }
+                else if(currentOrder.ExciseEle__c != null && currentOrder.ExciseEle__c != '')
+                {
+                    HDT_ExciseTranscode__mdt exciseTranscode = new HDT_ExciseTranscode__mdt();
+                    exciseTranscode = orderQr.getExciseTranscode(currentOrder.ExciseEle__c);
+                    orderToUpdate.ExciseRate__c = exciseTranscode.Excise__c;
+                }
+                //@frpanico RegionalAdditional Check
+                //@frpanico if RegionalAdditional is null VAT and ExciseRate must be blank and zero
+                if(currentOrder.RegionalAdditional__c == null)
+                {
+                    orderToUpdate.VAT__C = '';
+                    orderToUpdate.RegionalAdditional__c = 0.0;
+                    orderToUpdate.ExciseRate__c = 0.0;
+                }
             }
         }
         
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 
         orderSrv.updateRecord(orderToUpdate);
+        if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
+            HDT_LC_ChildOrderProcessDetails.createActivityAccise(orderToUpdate.FacilitationExcise__c,orderToUpdate.VATfacilitationFlag__c,orderToUpdate.id,orderToUpdate.accountid);
+        }
 
         if (order.ParentOrder__r.Status == 'Draft') {
             // order parent status = in lavorazione, phase = in lavorazione
@@ -300,8 +446,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param String objectApiName
-     * @param SObject objectToUpdate
+     * @param objectApiName
+     * @param objectToUpdate
      * @description Save child order as draft
      */
     @AuraEnabled
@@ -328,10 +474,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param String objectApiName
-     * @param SObject objectToUpdate
-     * @param String diffObjectApiName
-     * @param SObject diffObjectToUpdate
+     * @param objectApiName
+     * @param objectToUpdate
+     * @param diffObjectApiName
+     * @param diffObjectToUpdate
      * @description Save child order as draft with diff fields
      */
     @AuraEnabled
@@ -377,8 +523,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param Order order
-     * @param String cancellationReason
+     * @param order
+     * @param cancellationReason
      * @description Execute child order process cancel actions
      */
     @AuraEnabled
@@ -391,13 +537,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         ));
     }
 
+
     /**
      * @author Federico de Felice (federico.defelice@webresults.it)
      * @date 14/07/2021
-     * @param Order order
-     * @param String cancellationReason
+     * @param orderId
+     * @param searchKey
+     * @return Decimal
      * @description Execute child order process cancel actions
      */
+    @TestVisible
     private static Decimal getFixedFee(Id orderId, String searchKey){
         decimal fixedFeeExclVat;
         Order ord = new HDT_QR_Order().getRecordByOrderId(orderId)[0];  

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CheckVisibilityMixedOperator</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( CONTAINS(CheckVisibility__c, &apos;AND&apos;),CONTAINS(CheckVisibility__c, &apos;OR&apos;) )</errorConditionFormula>
+    <errorDisplayField>CheckVisibility__c</errorDisplayField>
+    <errorMessage>Non è possibile combinare AND e OR. Utilizzare solo AND o solo OR</errorMessage>
+</ValidationRule>

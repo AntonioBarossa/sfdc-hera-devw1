@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 04/08/2021
+* @description HDT_SRV_ContentDocumentLink
+* @history Lorenzo – 04/08/2021 – created class
+*/
 public with sharing class HDT_SRV_ContentDocumentLink {
     public ContentDocumentLink createRecord(String linkedEntityId, String contentDocumentId, String shareType) {
         ContentDocumentLink cdl = New ContentDocumentLink();

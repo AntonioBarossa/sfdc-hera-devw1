@@ -18,6 +18,54 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaModInvio</name>
+        <label>AssegnaModInvio</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>e-Mail</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseModInvio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaModInvio_0</name>
+        <label>AssegnaModInvio</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Posta</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseModInvio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaModInvio_0_0</name>
+        <label>AssegnaModInvio</label>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PEC</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseModInvio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaParentCaseToCollection</name>
         <label>AssegnaParentCaseToCollection</label>
         <locationX>50</locationX>
@@ -52,8 +100,8 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>710</locationX>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -98,6 +146,27 @@
                 <stringValue>Elaborazione Risposta</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.MotivatedResponseSendMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.MotivatedResponseSendMode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionRight__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.CorrectionDocumentEmissionDay__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Contenitore.CorrectionDocumentEmissionDay__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assegna_Case_Contenuti</targetReference>
         </connector>
@@ -105,7 +174,7 @@
     <decisions>
         <name>Case_Contenitore_0</name>
         <label>Case Contenitore?</label>
-        <locationX>248</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Composizione_Risposta_Reclamo_0_0</targetReference>
@@ -130,8 +199,8 @@
     <decisions>
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
-        <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
         </defaultConnector>
@@ -172,6 +241,67 @@
                 <targetReference>Popola_risposta_template</targetReference>
             </connector>
             <label>Selezionato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ValoreCanaleDiIngresso</name>
+        <label>ValoreCanaleDiIngresso?</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaModInvio_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>PEC</defaultConnectorLabel>
+        <rules>
+            <name>Email</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.ComplaintEntryChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Email</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaModInvio</targetReference>
+            </connector>
+            <label>Email</label>
+        </rules>
+        <rules>
+            <name>Altro</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.ComplaintEntryChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Fax</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.ComplaintEntryChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Posta Ordinaria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.ComplaintEntryChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modulo Sportello</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.ComplaintEntryChannel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Raccomandata</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaModInvio_0</targetReference>
+            </connector>
+            <label>Altro</label>
         </rules>
     </decisions>
     <description>Flow per la composizione del corpo della risposta del reclamo</description>
@@ -291,7 +421,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>248</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -312,8 +442,8 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>710</locationX>
+        <locationY>1334</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -330,6 +460,27 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetCaseInvioRisposta</name>
+        <label>GetCaseInvioRisposta</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ValoreCanaleDiIngresso</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case_Contenuti_0</name>
         <label>Aggiorna Case Contenuti</label>
@@ -340,9 +491,19 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>710</locationX>
+        <locationY>1574</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCaseModInvio</name>
+        <label>AggiornaCaseModInvio</label>
+        <locationX>578</locationX>
+        <locationY>974</locationY>
+        <connector>
+            <targetReference>ScreenInput</targetReference>
+        </connector>
+        <inputReference>GetCaseInvioRisposta</inputReference>
     </recordUpdates>
     <screens>
         <name>Composizione_Risposta_Reclamo_0</name>
@@ -386,13 +547,13 @@
     <screens>
         <name>Composizione_Risposta_Reclamo_0_0</name>
         <label>Composizione Risposta Reclamo</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>ScreenInput</targetReference>
+            <targetReference>GetCaseInvioRisposta</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0</name>
@@ -425,8 +586,8 @@
     <screens>
         <name>ScreenInput</name>
         <label>ScreenInput</label>
-        <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -512,6 +673,12 @@
                 <name>processType</name>
                 <value>
                     <elementReference>RequestAccomplished</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -613,6 +780,12 @@
                     <elementReference>RequestAccomplished</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -648,7 +821,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>122</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>

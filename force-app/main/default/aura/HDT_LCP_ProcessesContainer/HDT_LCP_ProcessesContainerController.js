@@ -23,43 +23,76 @@
                 var saleId = res.saleId;
                 console.log('********'+res);
                 if(check){
-                    workspaceAPI.getFocusedTabInfo().then(function(response2) {
-                        var focusedTabId;
-                        if(response2.parentTabId){
-                            focusedTabId = response2.parentTabId;
-                        }
-                        else{
-                            focusedTabId = response2.tabId;
-                        }
-                        // /lightning/cmp/HDT_LCP_WizardProcessi' Component Wizard Action From Order;
-                        workspaceAPI.openSubtab({
-                            parentTabId: focusedTabId,
-                            pageReference: {
-                                type: 'standard__component',
+
+                    /** HRAWRM-451 - Added check if in Community for redirect 
+                     *  Andrei Necsulescu - andrei.necsulescu@webresults.it
+                    */
+                    var action2 = component.get("c.isCommunity");
+
+                    action2.setCallback(this,function(response2){
+
+                        var res = response2.getReturnValue();
+
+                        if (res.isCommunity) {
+                            
+                            var pageReference = {
+                                type: 'comm__namedPage',
                                 attributes: {
-                                    componentName: 'c:HDT_LCP_OrderDossierWizard',
+                                    name: 'WizardOrder__c',
                                 },
                                 state: {
                                     "c__venditaId": saleId,
                                     "c__accountId" : accountid,
                                     "c__ordineVendita": orderParentId
                                 }
-                            },
-                            focus: true
-                        }).then(function(response2) {
-                            workspaceAPI.setTabLabel({
-                                tabId: response2,
-                                label: "Wizard Ordine"
+                            };
+        
+                            navService.navigate(pageReference);
+
+                        } else {
+
+                            workspaceAPI.getFocusedTabInfo().then(function(response2) {
+                                var focusedTabId;
+                                if(response2.parentTabId){
+                                    focusedTabId = response2.parentTabId;
+                                }
+                                else{
+                                    focusedTabId = response2.tabId;
+                                }
+                                // /lightning/cmp/HDT_LCP_WizardProcessi' Component Wizard Action From Order;
+                                workspaceAPI.openSubtab({
+                                    parentTabId: focusedTabId,
+                                    pageReference: {
+                                        type: 'standard__component',
+                                        attributes: {
+                                            componentName: 'c:HDT_LCP_OrderDossierWizard',
+                                        },
+                                        state: {
+                                            "c__venditaId": saleId,
+                                            "c__accountId" : accountid,
+                                            "c__ordineVendita": orderParentId
+                                        }
+                                    },
+                                    focus: true
+                                }).then(function(response2) {
+                                    workspaceAPI.setTabLabel({
+                                        tabId: response2,
+                                        label: "Wizard Ordine"
+                                    });
+                                    
+                                })
+                                .catch(function(error) {
+                                    console.log('******' + error);
+                                });
+                            })
+                            .catch(function(error) {
+                                console.log('******' + error);
                             });
-                            
-                        })
-                        .catch(function(error) {
-                            console.log('******' + error);
-                        });
-                    })
-                    .catch(function(error) {
-                        console.log('******' + error);
+
+                        }
+
                     });
+                    $A.enqueueAction(action2); 
                 }
                 else{
                     var toastEvent = $A.get("e.force:showToast");

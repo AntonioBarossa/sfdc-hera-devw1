@@ -67,10 +67,25 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             Id, AccountId,Contact.name,Roles,Contact.HomePhone,
             ContactId,Contact.Phone,
             Contact.MobilePhone,
-            Contact.Email
+            Contact.Email,Contact.IndividualId,Contact.BPInterlocutor__c,EndDate,StartDate
             FROM AccountContactRelation 
             WHERE 
             AccountId = :accountId 
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+    public List<AccountContactRelation> getContactsByAccountWithRoles(List<Id> accountIds) {
+    
+        return [
+            SELECT 
+            Id, AccountId,Contact.name,Roles,Contact.HomePhone,
+            ContactId,Contact.Phone,
+            Contact.MobilePhone,
+            Contact.Email,Contact.IndividualId
+            FROM AccountContactRelation 
+            WHERE 
+            AccountId IN:accountIds 
             WITH SECURITY_ENFORCED
         ];
 

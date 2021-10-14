@@ -4,6 +4,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
     public static void insertSelfReading(String fields){
+        System.debug('HDT_LC_SelfReading: ' +fields);
  
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
  

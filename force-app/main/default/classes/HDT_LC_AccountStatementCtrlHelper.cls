@@ -239,9 +239,18 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         if(restMessage.status != 'success'){
             wrapObj.success = false;
-            wrapObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-            wrapObj.message += ']; Detail: ' + restMessage.errorDetails.message;
-            wrapObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+
+            wrapObj.message += '[CODE: ' + restMessage.errorDetails[0].code + ']; DETAILS: ';
+            for(Integer n=0; n < restMessage.errorDetails.size(); n++){
+                wrapObj.message += restMessage.errorDetails[n].message;
+                if(n < (restMessage.errorDetails.size()-1)){
+                    wrapObj.message += ', ';
+                }
+            }
+
+            //wrapObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+            //wrapObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+            //wrapObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
             return wrapObj;
         }
 

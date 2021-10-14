@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ChannelOfPayment__c</fullName>
-    <description>Canale di pagamento</description>
+    <description>Canale di pagamento </description>
     <externalId>false</externalId>
     <label>Canale di pagamento</label>
     <required>false</required>
@@ -11,6 +11,68 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_PaymentMode</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ATM</fullName>
+                <default>false</default>
+                <label>ATM</label>
+            </value>
+            <value>
+                <fullName>Banca BONIFICO</fullName>
+                <default>false</default>
+                <label>Banca BONIFICO</label>
+            </value>
+            <value>
+                <fullName>Banca SPORTELLO</fullName>
+                <default>false</default>
+                <label>Banca SPORTELLO</label>
+            </value>
+            <value>
+                <fullName>Bollettino postale</fullName>
+                <default>false</default>
+                <label>Bollettino postale</label>
+            </value>
+            <value>
+                <fullName>Carta di credito online</fullName>
+                <default>false</default>
+                <label>Carta di credito online</label>
+            </value>
+            <value>
+                <fullName>Cassa COOP</fullName>
+                <default>false</default>
+                <label>Cassa COOP</label>
+            </value>
+            <value>
+                <fullName>POS Sportello</fullName>
+                <default>false</default>
+                <label>POS Sportello</label>
+            </value>
+            <value>
+                <fullName>Posta</fullName>
+                <default>false</default>
+                <label>Posta</label>
+            </value>
+            <value>
+                <fullName>Ricevitoria</fullName>
+                <default>false</default>
+                <label>Ricevitoria</label>
+            </value>
+            <value>
+                <fullName>RID</fullName>
+                <default>false</default>
+                <label>RID</label>
+            </value>
+            <value>
+                <fullName>Standard</fullName>
+                <default>false</default>
+                <label>Standard</label>
+            </value>
+            <value>
+                <fullName>Rate</fullName>
+                <default>false</default>
+                <label>Rate</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>

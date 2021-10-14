@@ -23,19 +23,19 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         String expectedAmount = '186,38';
         
         String managedAmount = HDT_UTL_DocumentalManagement.manageAmountDot(originalAmount);
-        System.assertEquals(expectedAmount, managedAmount);
+        System.assertEquals(expectedAmount, managedAmount,'Manage Amount OK');
 
         originalAmount = '38';
         expectedAmount = '38,00';
         
         managedAmount = HDT_UTL_DocumentalManagement.manageAmountDot(originalAmount);
-        System.assertEquals(expectedAmount, managedAmount);
+        System.assertEquals(expectedAmount, managedAmount,'Manage Amount OK');
 
         originalAmount = '';
         expectedAmount = '0,00';
         
         managedAmount = HDT_UTL_DocumentalManagement.manageAmountDot(originalAmount);
-        System.assertEquals(expectedAmount, managedAmount);
+        System.assertEquals(expectedAmount, managedAmount,'Manage Amount OK');
 
         Test.stopTest();
     }

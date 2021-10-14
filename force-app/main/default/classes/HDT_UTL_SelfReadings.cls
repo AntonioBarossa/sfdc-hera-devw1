@@ -82,6 +82,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         List<Order> activeOrders = queryHandler.accountOrders(accountId, servicePointId, recordTypeIds, badPhases, badStates);
+        System.debug('activeOrders size: ' + activeOrders.size());
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {
@@ -142,7 +143,9 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.ContactId = acr.ContactId;
         c.Contract__c = inputContract.Id;
         c.ServicePoint__c = inputContract.ServicePoint__c;
-        c.Origin = request.origin;
+        if(String.isNotBlank(request.origin)){
+            c.Origin = request.origin;
+        }
         c.RecordTypeId = rtQueryHandler.getRecordTypeIdByName('HDT_RT_Autolettura');
         c.Cluster__c = String.isNotBlank(request.cluster) ? request.cluster : 'Autolettura';
         c.Type = String.isNotBlank(request.type) ? request.type : 'Autolettura da cliente';
@@ -162,10 +165,15 @@ public inherited sharing class HDT_UTL_SelfReadings {
             }
             when 'KO' {
                 c.Phase__c = 'Check preliminari KO';
+                HDT_UTL_DatabaseService.upsertSObject(c); // necessario per doppia transizione di fase.
+                String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
+                c.Description = nowDateFormat + ': '  + request.outcomeDescription;
+                c.Phase__c = 'KO Definitivo';
+                c.Status = 'Closed';
             }
             when else {
-                c.Phase__c = 'Attesa check preliminari';
-                c.Type = 'In Lavorazione';
+                c.Phase__c = 'Bozza';
+                c.Status = 'In Lavorazione';
             }
         }
 
@@ -278,6 +286,50 @@ public inherited sharing class HDT_UTL_SelfReadings {
         
         HDT_UTL_DatabaseService.upsertSObject(r);
         response.readingId = r.Id;
+        if('Bozza'.equalsIgnoreCase(c.Phase__c)){
+            c.Phase__c = 'Attesa check preliminari';
+            HDT_UTL_DatabaseService.upsertSObject(c);
+        } 
+    }
+
+    /*public static Boolean isAutomaticDiscard(String errorType, String errorCode) {
+        if (String.isBlank(errorType) || String.isBlank(errorCode)) {
+            return false;
+        }
+
+        HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
+        List<HDT_SelfReadingError__mdt> configs = queryHandler.getDiscardConfiguration(errorType, errorCode);
+
+        if (configs.isEmpty()) {
+            return false;
+        }
+
+        return configs[0].IsAutomaticDiscard__c;
+    }*/
+
+    public static Map<String,Boolean> isAutomaticDiscard(Set<String> errorCodes) {
+        if (errorCodes == null) {
+            return null;
+        }
+
+        Map<String, Boolean> isAutomaticDiscardMap = new Map<String, Boolean>();
+
+        HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
+        List<HDT_SelfReadingError__mdt> configs = queryHandler.getDiscardConfigurations(errorCodes);
+
+        if (configs.isEmpty()) {
+            return null;
+        }
+
+        for (HDT_SelfReadingError__mdt conf : configs) {
+            if(String.isNotBlank(conf.ErrorCode__c)){
+                isAutomaticDiscardMap.put(conf.ErrorCode__c, conf.IsAutomaticDiscard__c);
+            }else {
+                isAutomaticDiscardMap.put(conf.Description__c, conf.IsAutomaticDiscard__c);
+            }
+        }
+
+        return isAutomaticDiscardMap;
     }
 
 }

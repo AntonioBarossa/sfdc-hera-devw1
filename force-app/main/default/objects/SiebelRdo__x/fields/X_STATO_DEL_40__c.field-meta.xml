@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Stato DL40</label>
+    <label>Assoggettamento Delibera 40</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

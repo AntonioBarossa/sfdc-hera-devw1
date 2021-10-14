@@ -25,20 +25,58 @@ public inherited sharing class HDT_QR_Case {
             /*** Sviluppo Gest Appuntamento */
             ServicePoint__r.distributor__r.name,
             ServicePoint__r.distributor__c,
+            ServicePoint__r.CommoditySector__c, //@Elfrida Kora,06/10/2021
+            ServicePoint__r.Account__c, //@Elfrida Kora,06/10/2021
             /*** FINE */
             ContactId,
             ServicePoint__c,
             Contract__c,
             ContractCode__c,
             CommodityFormula__c,
-            PODPDRFormula__c
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
     }
-    
+    /*******
+     *  Cambio uso TEcnico
+     */
+    public Case getRecordByIdCambioUso(String Id) {
+        return [
+            SELECT 
+            Id,
+            Status,
+            Subject,
+            Subprocess__c,
+            AccountId,
+            CaseNumber,
+            ServicePoint__r.Distributor__r.Code__c,
+            HerokuPracticeCode__c,
+            /*** Sviluppo Gest Appuntamento */
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
+            /*** FINE */
+            ContactId,
+            ServicePoint__c,
+            Contract__c,
+            ContractCode__c,
+            CommodityFormula__c,
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
+            FROM Case
+            where Id = :Id
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
+
     public List<Case> getChageNonRegMeterByOrder(String orderId){
 
         return [SELECT Id
@@ -68,7 +106,7 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public List<Case> getRecordsById(List<String> Ids, String fields) {
-        String query = 'SELECT '+ fields +
+        String query = 'SELECT '+ String.escapeSingleQuotes(fields) +
                 ' From Case where id IN :Ids';
         List<Case> cases = Database.query(query);
 
@@ -85,6 +123,9 @@ public inherited sharing class HDT_QR_Case {
         return [Select Case.MotivatedResponseSendMode__c,Case.ParentId,Case.CorrectionRight__c,ServicePoint__r.SupplyCity__c,Case.ServicePoint__c,Case.IndemnityConfirmed__c,Case.CustomerRequestNumberDay__c,Case.Subprocess__c,Case.IsReiteration__c,Case.Status,Account.CustomerCode__c,Case.SupplyType__c,Case.ClosedDate,Case.CustomerRequestDate__c,Case.CompanyOwner__c,id,origin,createddate,Createdby.Name,CreatorGroup__c,station__c,phase__c,type,Cluster__c,CommodityFormula__c,Casenumber,Account.Segment__c,Account.CategoryCode__c,Account.Category__c,Account.Name,account.RowIdSiebel__c,account.SAPIntegrationID__c from Case where cluster__c = : cluster AND CreatedDate = LAST_N_DAYS:7 WITH SECURITY_ENFORCED]; // aggiunti campi alla query
     }
 
+    public List<Case> getCaseModificaContratti(String podPdr){
+        return [Select Phase__c, CaseNumber from Case where ServicePointCode__c=:podPdr AND RecordType.DeveloperName='HDT_RT_GenericheAttivazioni' AND ServicePoint__c='' AND Type LIKE 'Modifica Contr Preattivazione%'  WITH SECURITY_ENFORCED ORDER BY Phase__c DESC ]; // aggiunti campi alla query
+    }
 
     /*** FIne Sviluppo per Campagne */
 
@@ -97,6 +138,7 @@ public inherited sharing class HDT_QR_Case {
             Phase__c
             FROM Case
             WHERE ParentId = :parentId
+            AND RecordType.DeveloperName = 'HDT_RT_RichiestaParere'
             WITH SECURITY_ENFORCED];
         }catch(Exception e){
             System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
@@ -198,6 +240,10 @@ public inherited sharing class HDT_QR_Case {
             System.Debug('Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
         }
         return childCases;
+    }
+    public List<Case> getCaseByAccountid(String accountid, string type)
+    {
+        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type = :type AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
 }

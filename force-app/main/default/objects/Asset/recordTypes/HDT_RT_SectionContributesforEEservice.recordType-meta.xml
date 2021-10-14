@@ -734,6 +734,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bonifico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RID</fullName>
             <default>false</default>
         </values>

@@ -1,13 +1,13 @@
 public without sharing class HDT_LC_CanaleIVRNoShare {
     public List<Order>  getOrderByUsernamePassword(String username, String password) {
         List<Order> listOrder = [
-            SELECT Username__c, Password__c  FROM Order WHERE Username__c = :username AND Password__c = :password 
+            SELECT Username__c, Password__c  FROM Order WHERE Username__c = :username AND Password__c = :password WITH SECURITY_ENFORCED
         ];
 
         return listOrder;
     }
 	public DocumentalActivity__c  getActivityByOrder(String orderId) {
-        List<DocumentalActivity__c> dl = [SELECT Id, OrderId__c FROM DocumentalActivity__c where orderId__c = :orderId];
+        List<DocumentalActivity__c> dl = [SELECT Id, OrderId__c FROM DocumentalActivity__c where orderId__c = :orderId WITH SECURITY_ENFORCED];
 
         return  dl[0];
     }
@@ -17,6 +17,7 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         Map<String,String> mapReturn = (Map<String,String>)JSON.deserialize(s, Map<String,String>.class);
         return mapReturn;
     }
+    
     public static String showOriginalDocument(String recordId){
         String context;
         String baseSixtyFour = '';
@@ -28,9 +29,9 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             SObject documentalObject = getDocumentalObjectById(recordId);
-            System.debug('*******' + documentalObject);
+            System.debug('showOriginalDocument - documentalObject: ' + documentalObject);
             String documentType = HDT_SRV_DocumentalManagement.getDocumentType(documentalObject);
-            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject);
+            body = HDT_SRV_DocumentalManagement.generateGetEnvelopeRequest(documentalObject, documentType);
             postelResponse = HDT_SRV_DocumentalManagement.executeGetEnvelopeCalloutRequest(body, documentType);
             baseSixtyFour = postelResponse.content;
             resultMap.put('outcome','OK');
@@ -42,7 +43,11 @@ public without sharing class HDT_LC_CanaleIVRNoShare {
         }
         return JSON.serialize(resultMap);
     }
+    
     public static SObject getDocumentalObjectById(Id recordId){
+        
+        System.debug('getDocumentalObjectById - recordId: ' + recordId);
+        
         if (String.isBlank(recordId)) {
             return null;
         }

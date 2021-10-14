@@ -167,7 +167,8 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Transitorio: Processo non Innescabile da Salesforce Per i Seguenti Punti Di Fornitura:' + data,
-                    variant: 'error'
+                    variant: 'error',
+                    mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
             

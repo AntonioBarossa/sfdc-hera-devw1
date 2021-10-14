@@ -52,8 +52,8 @@
     </aura:if>
 
     <!-- Actions buttons -->
-    <aura:if isTrue="{!v.orderParentRecord}">
+    <aura:renderIf isTrue="{!v.orderParentRecord}">
         <c:hdtOrderDossierWizardActions recordId="{!v.orderParentId}" orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}"></c:hdtOrderDossierWizardActions>
-    </aura:if>
+    </aura:renderIf>
 
 </aura:component>

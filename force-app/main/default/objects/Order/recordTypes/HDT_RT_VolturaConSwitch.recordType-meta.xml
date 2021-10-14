@@ -2264,6 +2264,14 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>

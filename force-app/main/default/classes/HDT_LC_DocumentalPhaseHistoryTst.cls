@@ -1,7 +1,7 @@
 @isTest
 public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
     @TestSetup
-    static void setup(){
+    private static void setup(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -12,20 +12,35 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
     }
 
     @isTest
-    static void getDocumentalPhaseHistoryCase() {
+    private static void getDocumentalPhaseHistoryCase() {
         Test.startTest();
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
         List<SObject> lstSobj = HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory(tCase.Id, 'Case');
-        System.assert(lstSobj.size() > -1);
+        System.assert(lstSobj.size() > -1, 'getDocumentalPhaseHistoryCase did not work correctly');
         Test.stopTest();
     }
 
     @isTest
-    static void getDocumentalPhaseHistoryOrder() {
+    private static void getDocumentalPhaseHistoryOrder() {
         Test.startTest();
         Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
         List<SObject> lstSobj = HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory(tOrder.Id, 'Order');
-        System.assert(lstSobj.size() > -1);
+        System.assert(lstSobj.size() > -1, 'getDocumentalPhaseHistoryOrder did not work correctly');
         Test.stopTest();
     }
+    
+    @isTest
+    private static void getParentOrderIdTest() {
+        
+        //TEST WITH ID
+        Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
+        String result = HDT_LC_DocumentalPhaseHistory.getParentOrderId(tOrder.Id);
+        System.assert(String.isNotBlank(result), 'getParentOrderId did not work correctly');
+        
+        //TEST EMPTY
+        result = HDT_LC_DocumentalPhaseHistory.getParentOrderId('');
+        System.assert(String.isBlank(result), 'getParentOrderId did not work correctly');
+        
+    }
+
 }

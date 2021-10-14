@@ -4,7 +4,7 @@
         <name>Submit_Request</name>
         <label>Submit Request</label>
         <locationX>182</locationX>
-        <locationY>2606</locationY>
+        <locationY>2726</locationY>
         <actionName>HDT_SRV_BpCaVariationFacade</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,7 +23,7 @@
         <name>Submit_Request_0</name>
         <label>Submit Request</label>
         <locationX>1392</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <actionName>HDT_SRV_BpCaVariationFacade</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -175,7 +175,7 @@
         <name>Assegna_Dati_Recapito_0_0_0</name>
         <label>Assegna Dati Recapito</label>
         <locationX>1502</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
             <operator>Assign</operator>
@@ -211,6 +211,13 @@
                 <elementReference>BillDeliveryChooser_0_0_0.indirizzo</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecordTypeVotiveModena.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Cluster_per_Votive</targetReference>
         </connector>
@@ -219,7 +226,7 @@
         <name>Assegna_FT_0</name>
         <label>Assegna FT</label>
         <locationX>204</locationX>
-        <locationY>2270</locationY>
+        <locationY>2390</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
             <operator>Assign</operator>
@@ -235,7 +242,7 @@
         <name>Assegna_Output</name>
         <label>Assegna Output</label>
         <locationX>336</locationX>
-        <locationY>2030</locationY>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
             <operator>Assign</operator>
@@ -258,7 +265,7 @@
         <name>Assegna_Output_0</name>
         <label>Assegna Output</label>
         <locationX>1546</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -274,7 +281,7 @@
         <name>Assegna_Phase_KO_SAP</name>
         <label>Assegna Phase KO SAP</label>
         <locationX>50</locationX>
-        <locationY>2846</locationY>
+        <locationY>2966</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -297,7 +304,7 @@
         <name>Assegna_Phase_KO_SAP_0</name>
         <label>Assegna Phase KO SAP</label>
         <locationX>1260</locationX>
-        <locationY>2270</locationY>
+        <locationY>2390</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -391,7 +398,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>204</locationX>
-        <locationY>3518</locationY>
+        <locationY>3638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -414,7 +421,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>468</locationX>
-        <locationY>3518</locationY>
+        <locationY>3638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -467,7 +474,7 @@
         <name>sendMA3</name>
         <label>sendMA3</label>
         <locationX>974</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>sendMA3Flag</assignToReference>
             <operator>Assign</operator>
@@ -483,7 +490,7 @@
         <name>Esito_Callout</name>
         <label>Esito Callout</label>
         <locationX>182</locationX>
-        <locationY>2726</locationY>
+        <locationY>2846</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -508,7 +515,7 @@
         <name>Esito_Callout_0</name>
         <label>Esito Callout</label>
         <locationX>1392</locationX>
-        <locationY>2150</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Update_Status_0_0_0_0</targetReference>
         </defaultConnector>
@@ -533,7 +540,7 @@
         <name>FT_0_0_0</name>
         <label>FT?</label>
         <locationX>336</locationX>
-        <locationY>2150</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>inviaMA3</targetReference>
         </defaultConnector>
@@ -558,7 +565,7 @@
         <name>Il_Case_in_Bozza_0</name>
         <label>Il Case è in Bozza?</label>
         <locationX>1106</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <defaultConnector>
             <targetReference>Case_Layout_0</targetReference>
         </defaultConnector>
@@ -583,7 +590,7 @@
         <name>inviaMA3</name>
         <label>inviaMA3?</label>
         <locationX>336</locationX>
-        <locationY>2486</locationY>
+        <locationY>2606</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -608,7 +615,7 @@
         <name>inviaMA3_0</name>
         <label>inviaMA3?</label>
         <locationX>1546</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>Update_Status_0_0_0_0</targetReference>
         </defaultConnector>
@@ -633,7 +640,7 @@
         <name>Modifica_Dati_di_recapito</name>
         <label>Modifica Dati di recapito?</label>
         <locationX>1106</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Il_Case_in_Bozza_0</targetReference>
         </defaultConnector>
@@ -762,7 +769,7 @@
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma</label>
         <locationX>666</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -827,7 +834,7 @@
         <name>Votive</name>
         <label>Votive?</label>
         <locationX>336</locationX>
-        <locationY>3398</locationY>
+        <locationY>3518</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0</targetReference>
         </defaultConnector>
@@ -886,7 +893,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>Calcolo Codice Causale</label>
         <locationX>336</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Output</targetReference>
@@ -945,18 +952,39 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetRecordTypeVotiveModena</name>
+        <label>GetRecordTypeVotiveModena</label>
+        <locationX>1502</locationX>
+        <locationY>878</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Dati_Recapito_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_VotiveModena</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>204</locationX>
-        <locationY>3638</locationY>
+        <locationY>3758</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Cluster_per_Votive</name>
         <label>Aggiorna Cluster per Votive</label>
         <locationX>1502</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Modifica_Dati_di_recapito</targetReference>
         </connector>
@@ -976,7 +1004,7 @@
         <name>Update_Status_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>468</locationX>
-        <locationY>3638</locationY>
+        <locationY>3758</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen</targetReference>
         </connector>
@@ -986,7 +1014,7 @@
         <name>Update_Status_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>1546</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen_0</targetReference>
         </connector>
@@ -996,21 +1024,21 @@
         <name>Update_Status_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2966</locationY>
+        <locationY>3086</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Status_0_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>1260</locationX>
-        <locationY>2390</locationY>
+        <locationY>2510</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
         <label>Case Layout</label>
         <locationX>666</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1121,7 +1149,7 @@
         <name>Case_Layout_0</name>
         <label>Case Layout</label>
         <locationX>1546</locationX>
-        <locationY>1670</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1354,7 +1382,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Dati_Recapito_0_0_0</targetReference>
+            <targetReference>GetRecordTypeVotiveModena</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0_0_0_0</name>
@@ -1394,7 +1422,7 @@
         <name>Loading_Spinner_screen</name>
         <label>Loading Spinner screen</label>
         <locationX>468</locationX>
-        <locationY>3758</locationY>
+        <locationY>3878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1425,7 +1453,7 @@
         <name>Loading_Spinner_screen_0</name>
         <label>Loading Spinner screen</label>
         <locationX>1546</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1464,7 +1492,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>732</locationX>
-        <locationY>1910</locationY>
+        <locationY>2030</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

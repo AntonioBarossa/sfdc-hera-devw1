@@ -15,6 +15,7 @@
                         value={selectedOperationType}
                         placeholder="Inserisci il Tipo operatività" 
                         options={operationTypeOptions}
+                        disabled={disabledInp}
                         onchange={handleOperationTypeChange}
                         required>
                     </lightning-combobox>
@@ -23,20 +24,31 @@
                     <div class="slds-form-element slds-m-top_small">
                         <lightning-combobox
                             data-id="operationSubType"
+                            value={selectedOperationSubType}
+                            disabled={disabledInp}
                             label='Sottotipo operazione'
                             placeholder="Inserisci il Sottotipo operazione" 
                             options={operationSubTypeOptions}>
                         </lightning-combobox>
                     </div>
                 </template>
-                <lightning-input-field field-name="Phase__c" class="slds-hide"></lightning-input-field>
-                <lightning-record-view-form record-id={recordid} object-api-name='Case'>
+                <lightning-input-field disabled={disabledInp} field-name="Phase__c" class="slds-hide"></lightning-input-field>
+               <!-- <lightning-record-view-form record-id={recordid} object-api-name='Case'>
                     <div class="slds-form-element slds-m-top_small">
                         <lightning-output-field field-name="PODPDRFormula__c"></lightning-output-field>
                     </div>
-                </lightning-record-view-form>
+                </lightning-record-view-form>-->
                 <div class="slds-form-element slds-m-top_small">
-                    <lightning-input-field field-name="Contract__c" required></lightning-input-field>
+                    <lightning-input-field disabled field-name="Contract__c" required></lightning-input-field>
+                </div>
+                <div class="slds-form-element slds-m-top_small">
+                    <lightning-input-field disabled field-name="ServicePointCode__c" ></lightning-input-field>
+                </div>
+                <div class="slds-form-element slds-m-top_small">
+                    <lightning-input-field disabled field-name="ContractCode__c" ></lightning-input-field>
+                </div>
+                <div class="slds-form-element slds-m-top_small">
+                    <lightning-input-field disabled={disabledInp} field-name="Note__c"></lightning-input-field>
                 </div>
                <!-- <div class="slds-form-element slds-m-top_small">
                     <lightning-input-field field-name="ReassignmentReason__c" onchange={handleReassignmentReasonChange} >

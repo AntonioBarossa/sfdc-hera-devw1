@@ -23,12 +23,15 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
                 recordId: this.recordId
             }).then(result => {
                 var resultParsed = JSON.parse(result);
-                if(resultParsed.outcome === 'OK'){
+                if(resultParsed.outcome === 'OK' && resultParsed.base64 != null){
                     if (resultParsed.type === 'pdf') {
-                        this.showPdfFromBase64(resultParsed.base64);
+                        console.log('show pdf from base64, # chars = ' + resultParsed.base64.length);
+                        this.showDocumentFromBase64(resultParsed.base64, 'application/pdf');
                         this.closeAction();
                     } else if (resultParsed.type === 'zip') {
-                        // TODO: convertire base64 in zip e farlo scaricare nel browser
+                        console.log('show zip from base64, # chars = ' + resultParsed.base64.length);
+                        this.showDocumentFromBase64(resultParsed.base64, 'application/zip');
+                        this.closeAction();
                     }
                 }else{
                     if(resultParsed.errorMessage != null && resultParsed.errorMessage != undefined){
@@ -65,7 +68,7 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
         );
     }
 
-    showPdfFromBase64(base64){
+    showDocumentFromBase64(base64, mimeType){
         var sliceSize = 512;
         base64 = base64.replace(/^[^,]+,/, '');
         base64 = base64.replace(/\s/g, '');
@@ -82,7 +85,7 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
             byteArrays.push(byteArray);
         }
 
-        const blob = new Blob(byteArrays, { type: 'application/pdf' });
+        const blob = new Blob(byteArrays, { type: mimeType });
         const blobURL = URL.createObjectURL(blob);
         this[NavigationMixin.Navigate](
             {

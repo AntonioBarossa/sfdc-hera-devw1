@@ -33,7 +33,7 @@ global class HDT_LC_MeterReadingControllerTstMock implements HttpCalloutMock {
         estrattoLettureData.categoriaNumeratore = '';
         estrattoLettureData.tipoNumeratore = '';
         estrattoLettureData.motivazione = '';
-        //estrattoLettureData.letturaStornata = '';
+        estrattoLettureData.letturaStornata = 'test';
 
         
         HDT_LC_MeterReadingControllerHelper.HDT_WRP_EstrattoLettureResponse estrattoLettureResponse = new HDT_LC_MeterReadingControllerHelper.HDT_WRP_EstrattoLettureResponse();

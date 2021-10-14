@@ -13,7 +13,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
 
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id,Name,PhoneNumber__c,ExcludeFub__c,Contact.IndividualId FROM CampaignMember WHERE ExcludeFub__c != \'Si\' AND CampaignId  IN ( SELECT Campaign__c  FROM FUBProcessingItem__c WHERE FUBProcessing__c = :FUBProcessingId)';
+        String query = 'SELECT Id,Name,PhoneNumber__c,ExcludeFub__c,Contact.IndividualId FROM CampaignMember WHERE ExcludeFub__c != \'Si\' AND CampaignId  IN ( SELECT Campaign__c  FROM FUBProcessingItem__c WHERE FUBProcessing__c = :FUBProcessingId) AND Contact.IndividualId != null';
         return Database.getQueryLocator(query);
     }
 
@@ -31,7 +31,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
         System.debug('*****:+' + maStr);
         for(CampaignMember cm : scope) {
             System.debug('*****:+' + cm.PhoneNumber__c);
-            if(cm.ExcludeFub__c == 'No' && maStr.get(cm.PhoneNumber__c) != null){
+            if(maStr.get(cm.PhoneNumber__c) != null){
                 System.debug('*****:+' + cm.PhoneNumber__c);
                 cm.OutcomeFub__c = 'OK';
                 cm.OutcomeDateFub__c = todayDate;
@@ -39,13 +39,11 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
                 contactList.add(cm.Contact.IndividualId);
                 okList.add(cm.PhoneNumber__c);
             }
-            else if(cm.ExcludeFub__c == '' || cm.ExcludeFub__c == null)
-            {
+            else {
                 cm.OutcomeFub__c = 'KO';
                 cm.OutcomeDateFub__c = todayDate;
                 campaignMembers.add(cm);
-                contactList.add(cm.Contact.IndividualId);
-                koList.add(cm.PhoneNumber__c);
+                koList.add(cm.Contact.IndividualId);
             }
         }
         System.debug('*****:+' + campaignMembers);
@@ -63,12 +61,12 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
             contactPointPhoneNumbers.add(cpp);
         }
 
-        Database.QueryLocator query2 = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE parentId IN :contactList AND TelephoneNumber IN :koList');
-        Database.QueryLocatorIterator it2 =  query2.iterator();
+        Database.QueryLocator queryKo = Database.getQueryLocator('SELECT Id, Name FROM ContactPointPhone WHERE parentId IN :koList');
+        Database.QueryLocatorIterator itKo =  queryKo.iterator();
 
-        while (it2.hasNext())
+        while (itKo.hasNext())
         {
-            ContactPointPhone cpp = (ContactPointPhone)it.next();
+            ContactPointPhone cpp = (ContactPointPhone)itKo.next();
             cpp.LastOutcomeFUB__c = 'KO';
             cpp.LastResultDateFUB__c = todayDate;
             contactPointPhoneNumbersKO.add(cpp);

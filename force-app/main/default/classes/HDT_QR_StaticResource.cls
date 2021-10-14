@@ -19,7 +19,8 @@ public with sharing class HDT_QR_StaticResource {
 
         return [SELECT Id, Name, ContentType, Body, Description, CreatedDate, SystemModStamp 
                 FROM StaticResource 
-                WHERE Name =: name];
+                WHERE Name =: name
+                WITH SECURITY_ENFORCED];
 
     }
 }

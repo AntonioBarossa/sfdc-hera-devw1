@@ -24,41 +24,44 @@ public with sharing class HDT_QR_QuoteTst {
 		internalUser.UserPermissionsMarketingUser=true;
 
 		insert internalUser;
-        
-        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Opportunity> opp = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-        List<Campaign> cmpList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
-        List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, acc[0].Id, 'Bozza');
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].Id);
-        
-        List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, sales[0].Id);
-        orders[0].Phase__c = 'Bozza';
-        insert orders;
 
-        List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opp[0].Id, sales[0].Id, 'Amendment');
-        quotes[0].SBQQ__Status__c = 'Accepted';
-        quotes[0].SBQQ__Ordered__c = true;
-        quotes[0].SBQQ__LineItemsGrouped__c = true;
-        quotes[0].SBQQ__OrderByQuoteLineGroup__c = true;
-        quotes[0].AmendmentAllowed__c = true;
-        quotes[0].ContractReference__c = contractList[0].Id;
-        quotes[0].IsVAS__c = true;
-        quotes[0].SalesCompany__c = 'Hera Comm Marche';
-        quotes[0].SalesCompanyCode__c = 'HCM';
-        quotes[0].SBQQ__Account__c = acc[0].Id;
-        quotes[0].Campaign__c = cmpList[0].Id;
-        quotes[0].Channel__c = 'SBT';
-        quotes[0].Agency__c = 'CIA';
-        quotes[0].FriendCode__c = 'Buzzlightyear';
-        quotes[0].SaleBy__c = internalUser.Id;
-        quotes[0].Market__c = 'Libero';
-        quotes[0].SupplyCity__c = 'Roma';
-        quotes[0].OrderReference__c = orders[0].Id;
+        System.runAs(internalUser) {
 
-        insert quotes;
-        
-        orders[0].SBQQ__Quote__c = quotes[0].Id;
-        update orders;
+            List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            List<Opportunity> opp = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
+            List<Campaign> cmpList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, acc[0].Id, 'Bozza');
+            List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].Id);
+            
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, sales[0].Id);
+            orders[0].Phase__c = 'Bozza';
+            insert orders;
+
+            List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opp[0].Id, sales[0].Id, 'Amendment');
+            quotes[0].SBQQ__Status__c = 'Accepted';
+            quotes[0].SBQQ__Ordered__c = true;
+            quotes[0].SBQQ__LineItemsGrouped__c = true;
+            quotes[0].SBQQ__OrderByQuoteLineGroup__c = true;
+            quotes[0].AmendmentAllowed__c = true;
+            quotes[0].ContractReference__c = contractList[0].Id;
+            quotes[0].IsVAS__c = true;
+            quotes[0].SalesCompany__c = 'Hera Comm Marche';
+            quotes[0].SalesCompanyCode__c = 'HCM';
+            quotes[0].SBQQ__Account__c = acc[0].Id;
+            quotes[0].Campaign__c = cmpList[0].Id;
+            quotes[0].Channel__c = 'SBT';
+            quotes[0].Agency__c = 'CIA';
+            quotes[0].FriendCode__c = 'Buzzlightyear';
+            quotes[0].SaleBy__c = internalUser.Id;
+            quotes[0].Market__c = 'Libero';
+            quotes[0].SupplyCity__c = 'Roma';
+            quotes[0].OrderReference__c = orders[0].Id;
+
+            insert quotes;
+            
+            orders[0].SBQQ__Quote__c = quotes[0].Id;
+            update orders;
+        }
     }
 
     @isTest

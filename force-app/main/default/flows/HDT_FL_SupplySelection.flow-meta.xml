@@ -40,6 +40,13 @@
                 <elementReference>Get_Service_Point_0</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ServicePointCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Service_Point_0.ServicePointCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Service_Point</targetReference>
         </connector>
@@ -185,6 +192,7 @@
         <object>ServicePoint__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>CommoditySector__c</queriedFields>
+        <queriedFields>ServicePointCode__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -276,6 +284,14 @@
                 <assignToReference>cancelCase</assignToReference>
                 <name>cancelCase</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>IsCompatibile</assignToReference>
+                <name>isCompatible</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>ServiceRequestId</assignToReference>
+                <name>serviceRequestId</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -331,6 +347,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>IsCompatibile</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>ProcessType</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -358,6 +381,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>ServicePoint__c</objectType>
+    </variables>
+    <variables>
+        <name>ServiceRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>TargetObject</name>

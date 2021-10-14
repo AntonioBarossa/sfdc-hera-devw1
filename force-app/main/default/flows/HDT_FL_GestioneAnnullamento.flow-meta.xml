@@ -77,13 +77,13 @@
         <inputParameters>
             <name>causalCode</name>
             <value>
-                <elementReference>GetOrder.ProcessCode__c</elementReference>
+                <elementReference>GetOrderAggiornato.ProcessCode__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>commodity</name>
             <value>
-                <elementReference>GetOrder.CommodityFormula__c</elementReference>
+                <elementReference>GetOrderAggiornato.CommodityFormula__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -95,7 +95,7 @@
         <inputParameters>
             <name>processCancellationReason</name>
             <value>
-                <elementReference>GetOrder.CancellationReason__c</elementReference>
+                <elementReference>GetOrderAggiornato.CancellationReason__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -107,19 +107,69 @@
         <inputParameters>
             <name>processTypeToCancell</name>
             <value>
-                <elementReference>GetOrder.ProcessType__c</elementReference>
+                <elementReference>GetOrderAggiornato.ProcessType__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>GetOrder.Id</elementReference>
+                <elementReference>GetOrderAggiornato.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recordType</name>
             <value>
-                <elementReference>GetOrder.RecordType.DeveloperName</elementReference>
+                <elementReference>GetOrderAggiornato.RecordType.DeveloperName</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>NoteAnnullamento</name>
+        <label>NoteAnnullamento</label>
+        <locationX>799</locationX>
+        <locationY>2024</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssegnaFormattazioneNote</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cancellationNote</name>
+            <value>
+                <elementReference>GetCaseAggiornato.CancellationNote__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>Annullamento</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>NoteAnnullamentoOrder</name>
+        <label>NoteAnnullamentoOrder</label>
+        <locationX>3414</locationX>
+        <locationY>2138</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssegnaNoteAnnullamento</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cancellationNote</name>
+            <value>
+                <elementReference>GetOrderAggiornato_0.CancellationNote__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>Annullamento</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -168,14 +218,14 @@
         <locationX>965</locationX>
         <locationY>2320</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullamento - Da inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -191,28 +241,28 @@
         <locationX>1493</locationX>
         <locationY>2896</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -225,28 +275,28 @@
         <locationX>4510</locationX>
         <locationY>3383</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.Status</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Activated</stringValue>
+                <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.NotCancellable__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -282,14 +332,14 @@
         <locationX>3767</locationX>
         <locationY>1836</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Codice_Ripensamento.causalCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.CancellationReasonDescription__c</assignToReference>
+            <assignToReference>GetOrderAggiornato.CancellationReasonDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Codice_Ripensamento.cancellationReason</elementReference>
@@ -305,7 +355,7 @@
         <locationX>965</locationX>
         <locationY>2200</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.PreviousPhase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCase.Phase__c</elementReference>
@@ -321,7 +371,7 @@
         <locationX>3161</locationX>
         <locationY>2420</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.PreviousPhase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>GetOrder.Phase__c</elementReference>
@@ -385,7 +435,7 @@
         <locationX>3741</locationX>
         <locationY>1344</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.CancellationReason__c</assignToReference>
+            <assignToReference>GetOrderAggiornato.CancellationReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DefaultReason</elementReference>
@@ -540,6 +590,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaFormattazioneNote</name>
+        <label>AssegnaFormattazioneNote</label>
+        <locationX>966</locationX>
+        <locationY>2052</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.CancellationNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteAnnullamento.cancellationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InviataHeroku</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaNoteAnnullamento</name>
+        <label>AssegnaNoteAnnullamento</label>
+        <locationX>3494</locationX>
+        <locationY>2261</locationY>
+        <assignmentItems>
+            <assignToReference>GetOrderAggiornato_0.CancellationNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteAnnullamentoOrder.cancellationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InviataHeroku_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>1467</locationX>
@@ -577,28 +659,28 @@
         <locationX>1229</locationX>
         <locationY>2896</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.Phase__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.Status</assignToReference>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.NotCancellable__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornato.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -611,28 +693,28 @@
         <locationX>3996</locationX>
         <locationY>3237</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.Status</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Activated</stringValue>
+                <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.NotCancellable__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -661,14 +743,14 @@
         <locationX>3403</locationX>
         <locationY>2813</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>OrderCancellationPhase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.NotCancellable__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -681,24 +763,24 @@
     <assignments>
         <name>Ripensato</name>
         <label>Ripensato</label>
-        <locationX>4214</locationX>
+        <locationX>4213</locationX>
         <locationY>3312</locationY>
         <assignmentItems>
-            <assignToReference>GetOrder.Phase__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Ripensato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.Status</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetOrder.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetOrderAggiornato_0.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
@@ -793,7 +875,7 @@
             <name>Bozza_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetOrder.Phase__c</leftValueReference>
+                <leftValueReference>GetOrderAggiornato.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Bozza</stringValue>
@@ -839,6 +921,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Cluster__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Autolettura</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -858,14 +947,14 @@
             <name>Inviata_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetOrder.HerokuPracticeCode__c</leftValueReference>
+                <leftValueReference>GetOrderAggiornato_0.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>GetOrder.Phase__c</leftValueReference>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Amm. Precheck OK SII</stringValue>
@@ -1109,6 +1198,11 @@
         <expression>DATE( Year(ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),MONTH( ADDMONTHS({!GetRecord.Contract__r.EndDate},2)),1 ) -1</expression>
     </formulas>
     <formulas>
+        <name>NoteAnnullamentoFormula</name>
+        <dataType>String</dataType>
+        <expression>TEXT(NOW()) &amp; &quot;: &quot; &amp; {!GetCaseAggiornato.CancellationNote__c}</expression>
+    </formulas>
+    <formulas>
         <name>OrderCancellationPhase</name>
         <dataType>String</dataType>
         <expression>IF({!ProcessType}=&quot;Ripensamento&quot;,&quot;Ripensamento - Da Inviare&quot;,&quot;Annullamento - Da Inviare&quot;)</expression>
@@ -1253,7 +1347,7 @@
             <field>Order__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>GetOrder.Id</elementReference>
+                <elementReference>GetOrderAggiornato.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -1296,6 +1390,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCaseAggiornato</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>733</locationX>
+        <locationY>1918</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>NoteAnnullamento</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
         <locationX>3803</locationX>
@@ -1303,6 +1418,48 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quale_Processo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOrderAggiornato</name>
+        <label>GetOrderAggiornato</label>
+        <locationX>4081</locationX>
+        <locationY>1357</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Motivo_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetOrderAggiornato_0</name>
+        <label>GetOrderAggiornato</label>
+        <locationX>3781</locationX>
+        <locationY>2170</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>NoteAnnullamentoOrder</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1408,7 +1565,7 @@
         <label>Aggiorna Case</label>
         <locationX>1162</locationX>
         <locationY>3208</locationY>
-        <inputReference>GetCase</inputReference>
+        <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale</name>
@@ -1416,7 +1573,7 @@
         <locationX>1162</locationX>
         <locationY>1841</locationY>
         <connector>
-            <targetReference>InviataHeroku</targetReference>
+            <targetReference>GetCaseAggiornato</targetReference>
         </connector>
         <inputReference>GetCase</inputReference>
     </recordUpdates>
@@ -1426,9 +1583,9 @@
         <locationX>3773</locationX>
         <locationY>2038</locationY>
         <connector>
-            <targetReference>InviataHeroku_0</targetReference>
+            <targetReference>GetOrderAggiornato_0</targetReference>
         </connector>
-        <inputReference>GetOrder</inputReference>
+        <inputReference>GetOrderAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale_e_Descrizione_Annullamento</name>
@@ -1443,8 +1600,8 @@
     <recordUpdates>
         <name>Aggiorna_Fase</name>
         <label>Aggiorna Fase</label>
-        <locationX>1634</locationX>
-        <locationY>1995</locationY>
+        <locationX>1915</locationX>
+        <locationY>2053</locationY>
         <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1495,14 +1652,14 @@
         <connector>
             <targetReference>Codice_Ripensamento</targetReference>
         </connector>
-        <inputReference>GetOrder</inputReference>
+        <inputReference>GetOrderAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Order</name>
         <label>Aggiorna Order</label>
-        <locationX>3588</locationX>
-        <locationY>3514</locationY>
-        <inputReference>GetOrder</inputReference>
+        <locationX>3587</locationX>
+        <locationY>3513</locationY>
+        <inputReference>GetOrderAggiornato_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Ripristino_Fase</name>
@@ -2036,7 +2193,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Motivo_0_0_0</targetReference>
+            <targetReference>GetOrderAggiornato</targetReference>
         </connector>
         <fields>
             <name>OrderDisplayHeader</name>

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Istat SME</label>
+    <label>Cod ISTAT Ateco</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

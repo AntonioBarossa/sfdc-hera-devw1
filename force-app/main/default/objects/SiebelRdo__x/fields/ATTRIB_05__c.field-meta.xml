@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Contract Account</label>
+    <label>Conto contrattuale</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 28/May/2021
+* @description HDT_QR_UserQueriesWithoutSharing
+* @history Lorenzo – 28/May/2021 – created class 
+*/
+
 public class HDT_QR_UserQueriesWithoutSharing {
     public static List<User> getRoleAndProfile(String userId) {
         return [

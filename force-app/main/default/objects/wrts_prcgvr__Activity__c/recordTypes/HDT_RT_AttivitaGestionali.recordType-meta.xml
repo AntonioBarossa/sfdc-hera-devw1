@@ -5,6 +5,17 @@
     <description>Record type per gli le activiti Gestionali</description>
     <label>AttivitàGestionali</label>
     <picklistValues>
+        <picklist>ActivityOutcome__c</picklist>
+        <values>
+            <fullName>Negativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positivo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
             <fullName>Distributore</fullName>
@@ -175,6 +186,21 @@
         </values>
         <values>
             <fullName>MEFAM_TUTELASIMILE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -366,6 +392,14 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -393,6 +427,22 @@
             <fullName>Modifica Contratti PreAttivazione</fullName>
             <default>false</default>
         </values>
+        <values>
+                <fullName>Approvazione Bonus Commerciale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Validazione Documentale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Validazione Vocal Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Documenti non validati</fullName>
+                <default>false</default>
+            </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Priority__c</picklist>

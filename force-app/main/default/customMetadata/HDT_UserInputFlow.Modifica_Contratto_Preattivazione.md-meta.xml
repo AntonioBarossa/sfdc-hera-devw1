@@ -34,13 +34,13 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Modifica Contr Preattivazione Anagr</value>
+        <value xsi:type="xsd:string">Modifica Contr Preattivazione Anagr Non Res</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
     {
-        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;FieldName&quot; : &quot;ServicePointCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     }

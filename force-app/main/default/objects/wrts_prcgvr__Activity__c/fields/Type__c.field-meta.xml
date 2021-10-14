@@ -310,6 +310,61 @@
                 <default>false</default>
                 <label>Scarto transitorio</label>
             </value>
+            <value>
+                <fullName>Esito KO da DL</fullName>
+                <default>false</default>
+                <label>Esito KO da DL</label>
+            </value>
+            <value>
+                <fullName>KO Fornitore</fullName>
+                <default>false</default>
+                <label>KO Fornitore</label>
+            </value>
+            <value>
+                <fullName>Approvazione Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Approvazione Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Validazione Documentale</fullName>
+                <default>false</default>
+                <label>Validazione Documentale</label>
+            </value>
+            <value>
+                <fullName>Validazione Vocal Order</fullName>
+                <default>false</default>
+                <label>Validazione Vocal Order</label>
+            </value>
+            <value>
+                <fullName>Documenti non validati</fullName>
+                <default>false</default>
+                <label>Documenti non validati</label>
+            </value>
+            <value>
+                <fullName>Iva e Accise da validare</fullName>
+                <default>false</default>
+                <label>Iva e Accise da validare</label>
+            </value>
+            <value>
+                <fullName>Giro contatore da gestire</fullName>
+                <default>false</default>
+                <label>Giro contatore da gestire</label>
+            </value>
+            <value>
+                <fullName>Preavviso Cessazione</fullName>
+                <default>false</default>
+                <label>Preavviso cessazione</label>
+            </value>
+            <value>
+                <fullName>Contattare il cliente</fullName>
+                <default>false</default>
+                <label>Contattare il cliente</label>
+            </value>
+            <value>
+                <fullName>Supporto su migrazione</fullName>
+                <default>false</default>
+                <label>Supporto su migrazione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

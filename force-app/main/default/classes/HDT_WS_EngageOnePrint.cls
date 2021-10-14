@@ -56,13 +56,14 @@ public inherited sharing class HDT_WS_EngageOnePrint {
         public String bodyBase64;
         public String message;
     }
+    
 
     public class HDT_WRP_ReponseObj {
-        String status;
-        String correlationId;
-        String timestamp;
-        String message;
-        String bodyBase64;
+        @TestVisible String status;
+        @TestVisible String correlationId;
+        @TestVisible String timestamp;
+        @TestVisible String message;
+        @TestVisible String bodyBase64;
     }
 
 }

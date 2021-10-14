@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 13/02/2021
+* @description HDT_TRH_TriggerHandler
+* @history Lorenzo – 13/02/2021 – created class
+*/
 public virtual class HDT_TRH_TriggerHandler {
 
   // static map of handlername, times run() was invoked

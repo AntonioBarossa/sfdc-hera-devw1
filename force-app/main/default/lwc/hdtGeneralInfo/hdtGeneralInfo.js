@@ -57,9 +57,14 @@ export default class HdtGeneralInfo extends LightningElement {
     @track additionalData=[];
     @track agentListForFilter = [];
     userRole = '';
+    @track channelDisabled = false;
+    @track channelValue = '';
+    isProfileTeleselling = false;
 
-
-
+    channelOptionsComm = [
+        {label: 'Teleselling Inbound', value: 'Teleselling Inbound'},
+        {label: 'Teleselling Outbound', value: 'Teleselling Outbound'}
+    ];
 
     completeListcolumns = [];
     get isCampaignVisible() {
@@ -96,7 +101,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.saleContactRoles = '';
             getSaleContactRole({ accountId: this.saleRecord.Account__c, contactId: event.target.value }).then(data => {
 
-                if (data[0].Roles !== undefined) {
+                if (data.length>0 && data[0].Roles !== undefined) {
                     this.saleContactRoles = data[0].Roles;
                     this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
                     this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
@@ -153,6 +158,7 @@ export default class HdtGeneralInfo extends LightningElement {
                     this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
                     this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
                     this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+
                 }).catch(error => {
                     this.loaded = true;
                     console.log(error.body.message);
@@ -222,6 +228,7 @@ export default class HdtGeneralInfo extends LightningElement {
             console.log('HDT_LC_GeneralInfo - initCompAction: ' + JSON.stringify(data));
 
             this.userRole = data.userRole;
+            this.isProfileTeleselling = data.userProfile === 'Hera Teleseller Partner User';
 
         }).catch(error => {
             this.loading = false;
@@ -322,7 +329,8 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
+        console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
         this.disabledAgency = true;
@@ -339,6 +347,7 @@ export default class HdtGeneralInfo extends LightningElement {
     connectedCallback() {
 
         console.log('Channel:::::::' + this.saleRecord.Channel__c);
+        this.channelValue = this.saleRecord.Channel__c;
        if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound'){
             this.isServiceCommissioning = true;
             console.log('Channel:::::::true');
@@ -554,11 +563,20 @@ export default class HdtGeneralInfo extends LightningElement {
 
         if (Object.keys(this.selectedFromCompleteList).length != 0) {
 
+            let saleUpdateAgent = { 
+                Id: this.saleRecord.Id,
+                Agency__c: this.selectedFromCompleteList.AgencyName__c,
+                AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c,
+                VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c,
+                VendorFirstName__c:this.selectedFromCompleteListAgent.AgentFirstName__c,
+                CommercialId__c:this.selectedFromCompleteListAgent.AgentCode__c,
+                UpperChannelAgency__c:this.selectedFromCompleteListAgent.UpperChannelAgency__c,
+                LowerChannelAgency__c:this.selectedFromCompleteListAgent.LowerChannelAgency__c,
+                IsMonitoring__c:this.selectedFromCompleteListAgent.IsMonitoring__c,
+                AreaManager__c: this.selectedFromCompleteListAgent.AreaManager__c
+            };
 
-            this.updateSaleRecord({ Id: this.saleRecord.Id, Agency__c: this.selectedFromCompleteList.AgencyName__c, AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c,
-            VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c, VendorFirstName__c:this.selectedFromCompleteListAgent.AgentFirstName__c,CommercialId__c:this.selectedFromCompleteListAgent.AgentCode__c,
-            UpperChannelAgency__c:this.selectedFromCompleteListAgent.UpperChannelAgency__c, LowerChannelAgency__c:this.selectedFromCompleteListAgent.LowerChannelAgency__c,
-            IsMonitoring__c:this.selectedFromCompleteListAgent.IsMonitoring__c});
+            this.updateSaleRecord(saleUpdateAgent);
             this.currentPage = 0;
             this.currentPage2 = 0; // reset page
             //this.toggle();
@@ -582,6 +600,7 @@ export default class HdtGeneralInfo extends LightningElement {
             { label: 'Nome Agente', fieldName: 'AgentFirstName__c', type: 'text' },
             { label: 'Cognome Agente', fieldName: 'AgentLastName__c', type: 'text' },
             { label: 'Codice Agente', fieldName: 'AgentCode__c', type: 'text' },
+            { label: 'Area Manager', fieldName: 'AreaManager__c', type: 'text' },
 
         ];
 
@@ -632,11 +651,87 @@ export default class HdtGeneralInfo extends LightningElement {
 
     renderedCallback() {
         let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
+        let channelCheck = '';
+        if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
+            this.channelValue = 'Sportello';
+            channelCheck = 'Sportello';
+            this.ChannelSelection = 'Sportello';
+            this.channelDisabled = true;
+            handleAutomaticAgentAssign ({Channel:'Sportello',saleId:this.saleRecord.Id }).then(data =>{
+                console.log("************* "+JSON.stringify(data))
+                this.loaded = true;
+                this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+                this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+                this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+                this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+            }).catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
+            this.channelValue = 'Telefono';
+            this.ChannelSelection = 'Telefono';
+            channelCheck = 'Telefono';
+            this.channelDisabled = true;
+            handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
+                console.log("************* "+JSON.stringify(data))
+                this.loaded = true;
+                this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+                this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+                this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+                this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+            }).catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Inbound') {
+            this.channelValue = 'Telefono';
+            this.ChannelSelection = 'Telefono';
+            channelCheck = 'Telefono';
+            this.channelDisabled = true;
+            handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
+                console.log("************* "+JSON.stringify(data))
+                this.loaded = true;
+                this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+                this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+                this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+                this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+
+            }).catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
 
         if (this.saleRecord.Agency__c != null && Channel != 'Telefono' && Channel != 'Teleselling Inbound' && Channel != 'Teleselling Outbound') {
             //this.hiddenFilterAgent = false;
             this.hiddenAgency = false;
         }
+
+        this.dataToSubmit['Channel__c']  = channelCheck;
     }
 
     handleBackPage(event) {
@@ -729,6 +824,32 @@ export default class HdtGeneralInfo extends LightningElement {
             this.currentPage2--;
         }
         this.reLoadTable2();
+    }
+
+    handleChannelComm(event){
+        this.dataToSubmit['Channel'] = event.target.value;
+        this.disabledAgency = false;
+
+        this.hiddenAgency = true;
+        handleAutomaticAgentAssign ({Channel:event.target.value,saleId:this.saleRecord.Id }).then(data =>{
+            console.log("************* "+JSON.stringify(data))
+            this.loaded = true;
+            this.template.querySelector("[data-id='Agency__c']").value = data[0].AgencyName__c;
+            this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
+            this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
+            this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+
+        }).catch(error => {
+            this.loaded = true;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
 }

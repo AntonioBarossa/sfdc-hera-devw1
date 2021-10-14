@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 28/05/2021
+* @description HDT_SRV_ActivityCustom
+* @history Lorenzo – 28/05/2021 – created class
+*/
 public inherited sharing class HDT_SRV_ActivityCustom {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
@@ -57,6 +63,15 @@ public inherited sharing class HDT_SRV_ActivityCustom {
 
     public List<wrts_prcgvr__Activity__c> createRecord(List<wrts_prcgvr__Activity__c> activity){
         
+        HDT_UTL_DatabaseService.insertSObject(activity);
+
+        return activity;
+    }
+
+    public List<wrts_prcgvr__Activity__c> createRecordWithFieldCheck(List<wrts_prcgvr__Activity__c> activity){
+        List<String> fields = helperMethods.getObjAttrList(activity[0]);
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('wrts_prcgvr__Activity__c', String.join(fields, ','), 'create');
+        securityAccess.checkSecurityAccess();
         HDT_UTL_DatabaseService.insertSObject(activity);
 
         return activity;

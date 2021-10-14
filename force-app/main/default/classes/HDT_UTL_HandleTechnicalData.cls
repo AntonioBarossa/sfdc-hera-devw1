@@ -7,6 +7,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         system.debug('flusso E154');
         if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
             ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
+            ord.QuotationType__c = 'Analitico';
         }
         if(!String.isBlank(mapRequestFields.get('DT_MAX_PREV'))){
             if(mapRequestFields.get('DT_MAX_PREV').getChars().size()==8){
@@ -15,6 +16,11 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         }
         if(!String.isBlank(mapRequestFields.get('NUMPREV'))){
             ord.QuotationNumber__c=mapRequestFields.get('NUMPREV');
+        }
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
         }
     }
 //NON TOCCARE
@@ -85,6 +91,12 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_DT'))) {
             sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_DT');
         }  
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+        }
+        
         updateServicePoint();      
     }
 
@@ -123,6 +135,12 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_INT'))) {
             sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_INT');
         }
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+        }
+
         updateServicePoint();
     }
 
@@ -134,9 +152,9 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
             ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
         }
-        if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
-            //ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
-        }
+        /*if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
+            ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
+        }*/
         if (!String.isBlank(mapRequestFields.get('N_CIFRE_MIS'))) {
             sp.MeterDigitNumber__c = mapRequestFields.get('N_CIFRE_MIS');
         }
@@ -164,10 +182,10 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('ACC_MIS'))) {
             sp.MeterAccessible__c = mapRequestFields.get('ACC_MIS');
         }
-        if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
+        /*if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
             //Gestire caso CLASSE_PRELIEVO
             //sp.WithdrawalClass__c = mapRequestFields.get('COD_PROF_PREL');
-        }
+        }*/
         if (!String.isBlank(mapRequestFields.get('COD_REMI'))) {
             ord.RemiCode__c = mapRequestFields.get('COD_REMI');
         }
@@ -201,6 +219,12 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (bonusData.size()>0) {
             ord.BonusData__c = String.join(bonusData, ';');
         }
+
+        //HRAWRM-471
+        if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
+            ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+        }
+
         updateServicePoint();
     }
 
@@ -211,8 +235,18 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         if (!String.isBlank(mapRequestFields.get('VERTRAG'))) {
             sp.SAPContractCode__c = mapRequestFields.get('VERTRAG');
         }
-        if (!String.isBlank(mapRequestFields.get('VERTRAG_ST'))) {
-            sp.MeterStatus__c = mapRequestFields.get('VERTRAG_ST');
+        if (!String.isBlank(mapRequestFields.get('ANLAGE_ST'))) {
+            switch on mapRequestFields.get('ANLAGE_ST'){
+                when 'Open', 'Riatt. avviata per morosita'{
+                    sp.MeterStatus__c = 'Attivo';
+                }
+                when 'Impianto chiuso per morosita' {
+                    sp.MeterStatus__c = 'Inattivo'; 
+                }
+                when 'Interr. avviata per morosita' {
+                    sp.MeterStatus__c = 'Sospeso';
+                }
+            }
         }
         sp.Status__c='Impianto compl. in funzione';
         updateServicePoint();

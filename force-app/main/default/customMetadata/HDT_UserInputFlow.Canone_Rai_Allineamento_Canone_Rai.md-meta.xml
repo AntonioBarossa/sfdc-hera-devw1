@@ -20,7 +20,7 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+&quot;FieldName&quot; : &quot;ServicePoint__c&quot;,
 &quot;Column&quot; : 1
 },
 {
@@ -29,6 +29,10 @@
 },
 {
 &quot;FieldName&quot; : &quot;Contract__c&quot;,
+&quot;Column&quot; : 1
+},
+{
+&quot;FieldName&quot; : &quot;ContractCode__c&quot;,
 &quot;Column&quot; : 1
 },
 {
@@ -59,6 +63,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

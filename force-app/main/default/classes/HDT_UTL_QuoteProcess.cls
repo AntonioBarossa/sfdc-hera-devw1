@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 12/03/2021
+* @description Class HDT_UTL_QuoteProcess
+* @history Keltin Mesonjesi – 12/03/2021 – Created class
+*/
 public inherited sharing class HDT_UTL_QuoteProcess {
 
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
@@ -46,7 +52,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
 
         system.debug('quoteNotAmend: ' + quoteNotAmend);
 
-        for (SBQQ__Quote__c quote : quoteNotAmend) {
+                for (SBQQ__Quote__c quote : quoteNotAmend) {
             if (quote.ContractReference__c != null && contractQuote.get(quote.ContractReference__c) == null) {
                 contractQuote.put(quote.ContractReference__c, quote);
             }
@@ -72,7 +78,8 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         return quoteAmendWrpList;
 
     }
-
+    
+    @TestVisible
     private static void assignValueToNewQuote(SBQQ__Quote__c newQuote, SBQQ__Quote__c oldQuote){
         
         newQuote.Sale__c = oldQuote.Sale__c;
@@ -150,6 +157,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         return mapOldToNew;
     }
 
+    @TestVisible
     private static void updateItems(Map<String, SBQQ__Quote__c> mapOldToNew, List<SaleServiceItem__c> items){
 
         List<SaleServiceItem__c> itemsToUpdate = new List<SaleServiceItem__c>();

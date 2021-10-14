@@ -6,7 +6,7 @@
 	IF(ISPICKVAL(ProcessType__c,&apos;Prima Attivazione con modifica&apos;),&apos;Prima attivazione con modifica&apos;,
 		IF(CONTAINS(TEXT(ProcessType__c),&apos;Prima Attivazione&apos;),&apos;Prima Attivazione&apos;,
 			IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Offerta&apos;),&apos;Cambio offerta&apos;,
-				IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio uso&apos;),&apos;Cambio uso&apos;,
+				IF(CONTAINS(TEXT(ProcessType__c),&apos;Cambio Uso&apos;),&apos;Cambio uso&apos;,
 					IF(ISPICKVAL(ProcessType__c,&apos;Connessione con Attivazione&apos;),&apos;Connessione con attivazione&apos;,
 						IF(ISPICKVAL(ProcessType__c,&apos;Switch in Reseller&apos;),&apos;Switch In Reseller&apos;,
 							IF(CONTAINS(TEXT(ProcessType__c),&apos;Switch in&apos;),&apos;Switch In&apos;,

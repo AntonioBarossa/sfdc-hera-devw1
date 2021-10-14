@@ -31,7 +31,7 @@
                             Quota Potenza: Euro {powerQuote}
                         </li>
                         <li>
-                            Onere Amministrativo: Euro {administrativeBurden}
+                            Onere Amministrativo: Euro {administrativeBurdenDisplay}
                         </li>
                         <li>
                             IVA: {estimatedVAT}%
@@ -46,8 +46,11 @@
                 </template>
                 </template>
                 <template if:false={isRapido}>
-                    <p>
+                    <p if:true={quoteType}>
                         Non è possibile calcolare il preventivo in questa fase dell'order con quoteType {quoteType}
+                    </p>
+                    <p if:false={quoteType}>
+                        Non è possibile calcolare il preventivo in questa fase, sarà calcolata nelle fasi successive
                     </p>
                 </template>
                 </div>

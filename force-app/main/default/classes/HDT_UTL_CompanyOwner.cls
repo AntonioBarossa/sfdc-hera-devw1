@@ -1,3 +1,9 @@
+/**
+ * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+ * @date 04/06/2021
+ * @description HDT_UTL_CompanyOwner Classes
+ * @history Sabina Levonja 04/06/2021 – Created class
+ */
 public inherited sharing class HDT_UTL_CompanyOwner {
 
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -176,7 +182,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                         if(leadsMap.containsKey(String.valueOf(s.get('et4ae5__Lead__c')))){
                             Lead lead= leadsMap.get(String.valueOf(s.get('et4ae5__Lead__c')));
                             s.put('CompanyOwner__c', lead.CompanyOwner__c);
-                        }else{
+                        }else if(contactsMap.containsKey(String.valueOf(s.get('et4ae5__Contact__c')))) { // Added check making sure the contactsMap contains the id from the IndividualEmailResult
                             Contact cont= contactsMap.get(String.valueOf(s.get('et4ae5__Contact__c')));
                             s.put('CompanyOwner__c', cont.CompanyOwner__c);
                         }
@@ -186,7 +192,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                             if (caseObj != null){
                                 s.put('Account__c', caseObj.AccountId);
                             }
-                        }else{
+                        }else if(ordersMap.containsKey(String.valueOf(s.get('OrderID__c')))) { // Added check making sure the ordersMap contains the id from the IndividualEmailResult
                             Order orderObj = ordersMap.get(String.valueOf(s.get('OrderID__c')));
                             if (orderObj != null){
                                 s.put('Account__c', orderObj.AccountId);

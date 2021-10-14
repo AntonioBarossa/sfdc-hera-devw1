@@ -7,7 +7,7 @@
         <value xsi:type="xsd:string">[
 {
 &quot;FieldName&quot; : &quot;Note__c&quot;,
-&quot;Required&quot; : false,
+&quot;Required&quot; : true,
 &quot;Column&quot; : 1
 }
 ]</value>

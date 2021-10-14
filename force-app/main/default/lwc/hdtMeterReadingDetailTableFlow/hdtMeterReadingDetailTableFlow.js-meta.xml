@@ -34,9 +34,14 @@
 
             <property name="maxRows" type="String" label="Max Row Selection" description="Number of row that can be selected" role="inputOnly"/>
 
-            <!--Data Lettura-->
+            <!--@frpanico Data Lettura Contestata-->
             <property name="selectedReadingDate" type="Date" label="Data Lettura Selezionata" description="Data Lettura Selezionata" role="outputOnly"/>
             <property name="selectedReadingDateString" type="String" label="Data Lettura Selezionata (Stringa)" description="Data Lettura Selezionata" role="outputOnly"/>
+            <!--@frpanico Letture Contestate-->
+            <property name="disputedReading" type="Integer" label="Lettura Contestata" description="Valore lettura contestata" role="outputOnly"/>
+            <property name="disputedReadingOne" type="Integer" label="Lettura Contestata F1" description="Valore lettura contestata" role="outputOnly"/>
+            <property name="disputedReadingTwo" type="Integer" label="Lettura Contestata F2" description="Valore lettura contestata" role="outputOnly"/>
+            <property name="disputedReadingThree" type="Integer" label="Lettura Contestata F3" description="Valore lettura contestata" role="outputOnly"/>
 
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             

@@ -66,6 +66,27 @@
             <br/>
         </div>
         </lightning-record-edit-form>
+
+        <lightning-layout if:true={isCreditCheckVisible}>
+            <lightning-layout-item padding="horizontal-large" size="12">
+                <h1 class="slds-text-title slds-truncate slds-text-title_bold" title="Credit Check">Credit Check</h1>
+                    
+                    <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <template for:each={creditCheckFields} for:item="field">
+                                <template if:true={field.value}>
+                                    <lightning-input-field if:true={field.typeVisibility} value={field.value} disabled={field.disabled} required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                </template>
+                                <template if:false={field.value}>
+                                    <lightning-input-field if:true={field.typeVisibility} disabled={field.disabled} required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-record-edit-form>
+
+            </lightning-layout-item>
+        </lightning-layout>
+
         <div class="slds-clearfix slds-p-around_small">
             <div class="slds-float_right">
                 <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>

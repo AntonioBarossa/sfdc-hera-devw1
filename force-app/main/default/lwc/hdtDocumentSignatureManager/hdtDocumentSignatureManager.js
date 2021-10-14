@@ -43,6 +43,9 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track documents;
     @track tipoPlico='';
 
+    //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
+    @track entryChannel;
+
     get disableSignModeInternal(){
         return this.disableSignMode === true || this.disableinput === true;
     }
@@ -65,6 +68,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
+                this.entryChannel = inputWrapper.entryChannel;
                 if(this.disableSignMode === true){
                     this.signMode = 'Cartacea'; // Pre-default se la modalità di firma viene disabilitata.
                     inputWrapper.signMode = 'Cartacea'; // Modifichiamo anche inputWrapper.signMode poichè è usato dopo in this.signSendMap.find() 
@@ -92,8 +96,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     processType: this.processType,
                     source: this.source,
                 }).then(result => {
+                    console.log('getSignSendMode result ' + result);
                     var resultJSON = JSON.parse(result);
-                    console.log(resultJSON);
                     var signMode = [];
                     var sendMode = [];
                     var signSendMode;
@@ -113,7 +117,23 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     this.signSendMap = signSendModeList; 
                     this.modalitaFirma = signMode;
                     console.log('this.signSendMap ' + JSON.stringify( this.signSendMap));
-                    console.log(this.sendMode);
+                    console.log('SEND_MODE >>> ' + this.sendMode);
+                    console.log('ENTRY_CHANNEL >>> ' +this.entryChannel);
+                    if(this.entryChannel !== null && this.entryChannel !== '' && this.entryChannel !== undefined)
+                    {
+                        if(this.entryChannel === 'Email')
+                        {
+                            console.log('>>> EMAIL_CONDITION <<<');
+                            this.sendMode = 'E-Mail';
+                            inputWrapper.sendMode = 'E-Mail';
+                        }
+                        else if(this.entryChannel !== 'PEC' && this.entryChannel !== 'Email')
+                        {
+                            console.log('>>> POSTA_CONDITION <<<');
+                            this.sendMode = 'Posta Cartacea';
+                            inputWrapper.sendMode = 'Posta Cartacea';
+                        }
+                    }
                     try{
                         if(this.signMode != null && this.signMode != ''){
                             console.log('IN: looking for ' + inputWrapper.signMode)
@@ -123,6 +143,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                             });
                             console.log('out ' + JSON.stringify(temp));
                             this.modalitaInvio = temp.sendMode;
+                            this.sendMode = inputWrapper.sendMode;
                         }
                     }catch(error){
                         console.error(error);
@@ -191,7 +212,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         try{
             var modFirma = this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value;
             var modSpedizione = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value;
-            console.log('mod sped' + modSpedizione);
+            console.log('modalità firma: ' + modFirma);
+            console.log('modalità spedizione: ' + modSpedizione);
+            if (modFirma == null){
+                modFirma = '';
+            }
+            if (modSpedizione == null){
+                modSpedizione = '';
+            }
             if(modFirma.localeCompare('OTP Coopresenza')===0 || modFirma.localeCompare('OTP Remoto')===0){
                 this.emailRequired = true;
                 this.phoneRequired = true;

@@ -75,6 +75,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
     @api nextVariant;
     @api documents;
     @api disableSignMode;
+    //@frpanico 07/09 added EntryChannel
+    @api entryChannel;
     caseRecord;
     @track inputParams;
     @track enableNext = false;
@@ -210,6 +212,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     accountId : this.accountId,
                     quoteType : this.quoteType,
                     tipoPlico : tempTipoPlico,
+                    entryChannel : this.entryChannel,
                     addressWrapper : {
                         completeAddress : completeAddress,
                         Stato : stato,
@@ -334,10 +337,15 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             updateRecord(recordInput)
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-                    updateContactForScartoDocumentale({oldPhone: oldPhoneValue,
-                                                       oldEmail: oldEmailValue,
-                                                       newPhone: resultWrapper.phone,
-                                                       newMail: resultWrapper.email});
+                    try {
+                        updateContactForScartoDocumentale({accountId:this.accountId, 
+                                                            oldPhone: this.oldPhoneValue,
+                                                            oldEmail: this.oldEmailValue,
+                                                            newPhone: resultWrapper.phone,
+                                                            newMail: resultWrapper.email});
+                    } catch (error) {
+                      console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
+                    }
                     //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                     console.log('Record aggiornato');
@@ -438,7 +446,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 }).then(result => {
                     this.handleGoNext();
                 }).catch(error => {
-                    this.showToast('Errore nell\'invio del documento al cliente.');
+                    this.showMessage('Errore nell\'invio del documento al cliente.','error');
                     console.error(error);
                 });
             }

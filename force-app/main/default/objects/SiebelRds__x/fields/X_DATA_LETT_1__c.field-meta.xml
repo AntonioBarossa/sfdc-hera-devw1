@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data lettura 1</label>
+    <label>Data lettura</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

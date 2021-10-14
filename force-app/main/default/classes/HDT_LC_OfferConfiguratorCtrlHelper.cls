@@ -529,13 +529,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         responseCtrl = HDT_WS_MulesoftCallerCpq.retrieveDataCtrl(body, httpObj);
         //responseCtrl = new HDT_WS_MulesoftCallerCpq.HDT_WRP_Response();
         //responseCtrl.success = true;
+        //responseCtrl.body = '{"timestamp":"timestamp","status":"failed","message":"error message","keysap":"001","esito":null,"errorDetails":null,"correlationId":"id"}';
 
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
         mulesoftResponse.bodyResponse = body;
 
         if(!responseCtrl.success){
-            updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
+            updateProductAfterSap(technicalOfferId, responseCtrl.message, '', 'ko');
             mulesoftResponse.success = false;
             mulesoftResponse.message = responseCtrl.message;
             return mulesoftResponse;
@@ -557,12 +558,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 }
             }
             mulesoftResponse.message = mulesoftWsResponse.errorDetails[0].code;
-            updateProductAfterSap(technicalOfferId, errorMessage, 'ko');
+            updateProductAfterSap(technicalOfferId, errorMessage, '', 'ko');
 
             return mulesoftResponse;      
         }
 
-        updateProductAfterSap(technicalOfferId, mulesoftWsResponse.keysap, 'ok');
+        updateProductAfterSap(technicalOfferId, mulesoftWsResponse.message, mulesoftWsResponse.keysap, 'ok');
 
         mulesoftResponse.success = true;
         mulesoftResponse.message = Label.HDT_OfferConfig_WS_Success + mulesoftWsResponse.keysap;
@@ -596,7 +597,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.profilo = techOff.Version__c;
             obj.header.categoriaTariffa = techOff.RateCategory__r.Name;
             obj.header.descrizioneOfferta = techOff.Product__r.DescriptionSAP__c;
-            obj.header.descrizioneProfilo = techOff.Product__r.DescriptionSAP__c;
+            obj.header.descrizioneProfilo = techOff.Product__r.Version__c;
             obj.header.mercato = techOff.Market__c;
             obj.header.tipoProcesso = techOff.ProcessType__c;
             obj.header.isOffertaPLACET = convertYesNoFromString(techOff.PlacetOffer__c);
@@ -647,7 +648,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return obj;
     }
 
-    public static Boolean updateProductAfterSap(String technicalOfferId, String bodyResponse, String status){
+    public static Boolean updateProductAfterSap(String technicalOfferId, String responseMessage, String responseSapCode, String status){
         List<TechnicalOffer__c> tecOffList;
         tecOffList = HDT_QR_TechnicalOffer.getOfferById(tecOffList, technicalOfferId);
 
@@ -657,12 +658,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             }
             when 'ok' {
                 tecOffList[0].Status__c = 'Status OK';
-                tecOffList[0].SapCode__c = bodyResponse;
-                tecOffList[0].Message__c = '';
+                tecOffList[0].SapCode__c = responseSapCode;
+                tecOffList[0].Message__c = responseMessage;
             }
             when 'ko' {
                 tecOffList[0].Status__c = 'Status KO';
-                tecOffList[0].Message__c = bodyResponse;
+                tecOffList[0].Message__c = responseMessage;
             }
         }
 

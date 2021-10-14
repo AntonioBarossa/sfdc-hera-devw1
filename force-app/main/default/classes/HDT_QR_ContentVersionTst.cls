@@ -13,16 +13,13 @@ public class HDT_QR_ContentVersionTst{
 
 		List<ContentVersion> contVerTstList=HDT_UTL_DataFactoryTst.createContentVers(1, true);
 
-		HDT_QR_ContentVersion conTVersQr=new HDT_QR_ContentVersion();
+		HDT_QR_ContentVersion conTVersQr = new HDT_QR_ContentVersion();
 
-		ContentVersion tContVers=conTVersQr.getRecordById(contVerTstList[0].Id);
-
-		System.debug('tContVers = '+tContVers);
-
+		ContentVersion tContVers = conTVersQr.getRecordById(contVerTstList[0].Id);
 
 		System.assertEquals('test', tContVers.Title, 'Content version not returned');
 
-		System.assertNotEquals(null, tContVers.Title);
+		System.assertNotEquals(null, tContVers.Title, ' The Content Version was not retrieved properly');
 
 		Test.stopTest();
 	}
@@ -45,12 +42,9 @@ public class HDT_QR_ContentVersionTst{
 
 		String tContVers=conTVersQr.recordByDocumentIdQueryString(contentDoc.Id);
 
-		System.debug('tContVers = '+tContVers);
-
-
 		System.assertEquals(true, String.IsNotBlank(tContVers), 'Content version query not right');
 
-		System.assertNotEquals('test', tContVers);
+		System.assertNotEquals('test', tContVers, 'The query string was not generated properly');
 
 		Test.stopTest();
 	}

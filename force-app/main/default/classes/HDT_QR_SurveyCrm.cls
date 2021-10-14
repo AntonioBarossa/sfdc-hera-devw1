@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 31/05/2021
+* @description HDT_QR_SurveyCrm
+* @history Lorenzo – 31/05/2021 – created class
+*/
 public with sharing class HDT_QR_SurveyCrm {
 
     // public static List<SurveyCRM__c> getSurveys(List<String> campaignIds, String fields) {
@@ -19,7 +25,7 @@ public with sharing class HDT_QR_SurveyCrm {
         }
         system.debug(surveyIds);
         String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE Id IN ' + surveyIds;
-        List<SurveyCRM__c> surveys = Database.query(query);
+        List<SurveyCRM__c> surveys = Database.query( String.escapeSingleQuotes(query));
 
         return surveys;
 
@@ -28,7 +34,7 @@ public with sharing class HDT_QR_SurveyCrm {
     public static List<SurveyCRM__c> getSurvey(String id, String fields) {
 
         String query = 'SELECT '+ fields +' FROM SurveyCRM__c WHERE id = :id';
-        List<SurveyCRM__c> surveys = Database.query(query);
+        List<SurveyCRM__c> surveys = Database.query( String.escapeSingleQuotes(query));
         return surveys;
     }
 }

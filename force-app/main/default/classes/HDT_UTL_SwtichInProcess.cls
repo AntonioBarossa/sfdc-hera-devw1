@@ -6,7 +6,22 @@
 public with sharing class HDT_UTL_SwtichInProcess {
     
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
 
+    public static Map<String,Boolean> checkAccountOrderIsResidential(List<Order> listOrder){
+        List<String> accountIdList = new List<String>();
+        Map<String,Boolean> mapRes = new Map<String,boolean>();
+        for(Order ord : listOrder){
+            accountIdList.add(ord.AccountId);
+        }
+        List<Account> listAccount = accountQr.getRecordsById(accountIdList,'Id,Recordtype.Developername');
+        for(Account a : ListAccount){
+            if(mapRes.get(a.id) == null){
+                mapRes.put(a.id,a.recordtype.developername == 'HDT_RT_Residenziale');
+            }
+        }
+        return mapRes;
+    }
     // Calcolo Data Max Ripensamento(MaxAfterthoughtDate__c)  // Solo per clienti residenziali
     public static Date getMaxAfterthoughtDate(Order order) {
 
@@ -51,7 +66,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
         }else{
             if(order.ProcessType__c == 'Cambio offerta'){
                 // manca la logica dell'esecuzione anticipata 
-                maxAfterthoughtDate = signedDate;            
+                maxAfterthoughtDate = signedDate;     
             }else{
                 maxAfterthoughtDate = signedDate.addDays((Integer)afterthoughtDays3[0].AfterthoughtDays__c);                      
             }            
@@ -81,8 +96,41 @@ public with sharing class HDT_UTL_SwtichInProcess {
             effDate = order.EffectiveDate__c;
         }
 
+        //18/09/2021 - gabriele.rota@webresults.it - Fix Data Completamento Wizard vuota
+        if (order.WizardCompletedDate__c==null) {
+            order.WizardCompletedDate__c = Date.today();
+        }
+
         Date dateSentToSii= null;
         if(signedDate != null  && order.ProcessType__c != 'Cambio Offerta'){
+
+
+            if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+
+                // DIRITTO DI RINUNCIA DI RIPENSAMENTO
+                if (order.WaiverRightAfterthought__c == 'Si') { 
+                    dateSentToSii = date.today();
+                }else{                    
+                    if(order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)){
+                        system.debug('order.WizardCompletedDate__c > getMaxAfterthoughtDate(order)');
+                        dateSentToSii= order.WizardCompletedDate__c;
+                    }else{
+                        system.debug('order.WizardCompletedDate__c < getMaxAfterthoughtDate(order)'); 
+                        dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
+                    }                    
+
+                    if(order.IsActivationDeferred__c && order.EffectiveDate__c != null){
+                        dateSentToSii = order.WizardCompletedDate__c;
+                    }
+                }
+            
+            }else{     
+               // if (order.RecessNotice__c!=null) {
+                    dateSentToSii = order.WizardCompletedDate__c;//dateSentToSii.addDays(-10).toStartOfMonth().addMonths(order.RecessNotice__c.intValue()*-1).addMonths(1);
+
+            }
+
+            /*
             if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
 
                 // DIRITTO DI RINUNCIA DI RIPENSAMENTO
@@ -97,44 +145,14 @@ public with sharing class HDT_UTL_SwtichInProcess {
                         dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                     }                    
                 }
-            
-            }else{
-                dateSentToSii = Date.valueOf(date.today());      
-                
-                /*
+            }
+
                 La data invio richiesta al SII deve essere ricalcolata nel caso in cui il sistema riceva degli esiti di rilavorazione.  
                 Alla rilavorazione, la data di invio richiesta deve assumere la data di rilavorazione della richiesta (la data di ultimo aggiornamento fase).  
                 Tale ricalcolo potrà essere possibile fino all’esito di ammissibilità ok.  
                 Da quel momento in poi il sistema non dovrà più ricalcolare la data invio richiesta al SII. 
-                */          
-
-                //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII - START
-                if (effDate!=null) {
-                    String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
-
-                    List<HDT_FulfillmentDateMatrix__c> fulfillmentRows = [SELECT FulfillmentDateFrom__c 
-                        FROM HDT_FulfillmentDateMatrix__c 
-                        WHERE OriginMarket__c =: order.MarketOrigin__c   
-                        AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
-                        AND VoltageLevel__c =: order.VoltageLevel__c 
-                        AND ProcessType__c = :processType
-                        AND SupplyType__c =: order.SupplyType__c 
-                        AND ActivationDate__c =: effDate
-                        WITH SECURITY_ENFORCED
-                    ];
-
-                    if (fulfillmentRows.isEmpty()) {
-                        throw new HDT_UTL_HeraException('No rows found in HDT_FulfillmentDateMatrix__c');
-                    }
-
-                    dateSentToSii = fulfillmentRows.get(0).FulfillmentDateFrom__c;
-
-                    if (order.RecessNotice__c!=null) {
-                        dateSentToSii = dateSentToSii.addDays(-10).toStartOfMonth().addMonths(order.RecessNotice__c.intValue()*-1).addMonths(1);
-                    }
-                }
-                //13/08/2021 - gabriele.rota@webresults.it - Aggiornamento calcolo Data Invio al SII - END
             }
+            */
         }
         
         system.debug('HDT_UTL_SwtichInProcess - getDateSentToSii: ' + dateSentToSII);
@@ -158,59 +176,59 @@ public with sharing class HDT_UTL_SwtichInProcess {
         //String devName = orderQr.getRecordTypesDeveloperNameById(order.RecordTypeId);
         String processType = PROCESSTYPEBYRRECORDTYPEMAP.get(order.RecordType.DeveloperName);
         
+
+        //// AGGIUNGERE CONTROLLO SU DOMESTICO SOLO NON DOMESTICO
         if(order.ProcessType__c == 'Cambio offerta'){
-            dateToFrom = order.SignedDate__c; // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
+            dateToFrom = order.SignedDate__c;
+            effectiveDateTmp = dateToFrom.addMonths(1).toStartofMonth(); // Per cambio offerta entrare in tabella con la data firma o la data massima di ripensamento se no esecuzione anticipata
         }else{
             if(order.IsSequanzialized__c == true){
                 dateToFrom = getDateSentToSii(order);
             }else{
                 dateToFrom = getMaxAfterthoughtDate(order); // data max di ripensamento
             }
-            
-        }
-        
-        
-        if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
-            system.debug('SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE OriginMarket__c = ' + order.MarketOrigin__c + ' AND Commodity__c = ' + order.ServicePoint__r.CommoditySector__c + ' AND VoltageLevel__c = ' + order.VoltageLevel__c + '  AND ProcessType__c = ' + processType + ' AND SupplyType__c = ' + order.SupplyType__c + ' AND (FulfillmentDateFrom__c <= ' + dateToFrom + ' AND FulfillmentDateTo__c >= ' + dateToFrom + ' )');
-            List<HDT_FulfillmentDateMatrix__c> afterthoughtDays = [
-                                                                    SELECT ActivationDate__c 
-                                                                    FROM HDT_FulfillmentDateMatrix__c 
-                                                                    WHERE OriginMarket__c =: order.MarketOrigin__c   
-                                                                            AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
-                                                                            AND VoltageLevel__c =: order.VoltageLevel__c 
-                                                                            AND ProcessType__c = :processType
-                                                                            AND SupplyType__c =: order.SupplyType__c 
-                                                                            AND (FulfillmentDateFrom__c <=: dateToFrom AND FulfillmentDateTo__c >=: dateToFrom)
-                                                                            WITH SECURITY_ENFORCED
-                ];
-            if(!afterthoughtDays.isEmpty()){
-                effectiveDateTmp = afterthoughtDays[0].ActivationDate__c;
-            }else{
-                system.debug('Non sono state trovate occorrenze nella tabella di calcolo della data di adempimento');
+            // CALCOLATO DATA SU SEQUEN O NO
+            if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
+                system.debug('SELECT ActivationDate__c FROM HDT_FulfillmentDateMatrix__c WHERE OriginMarket__c = ' + order.MarketOrigin__c + ' AND Commodity__c = ' + order.ServicePoint__r.CommoditySector__c + ' AND VoltageLevel__c = ' + order.VoltageLevel__c + '  AND ProcessType__c = ' + processType + ' AND SupplyType__c = ' + order.SupplyType__c + ' AND (FulfillmentDateFrom__c <= ' + dateToFrom + ' AND FulfillmentDateTo__c >= ' + dateToFrom + ' )');
+                List<HDT_FulfillmentDateMatrix__c> afterthoughtDays = [
+                                                                        SELECT ActivationDate__c 
+                                                                        FROM HDT_FulfillmentDateMatrix__c 
+                                                                        WHERE OriginMarket__c =: order.MarketOrigin__c   
+                                                                                AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
+                                                                                AND VoltageLevel__c =: order.VoltageLevel__c 
+                                                                                AND ProcessType__c = :processType
+                                                                                AND SupplyType__c =: order.SupplyType__c 
+                                                                                AND (FulfillmentDateFrom__c <=: dateToFrom AND FulfillmentDateTo__c >=: dateToFrom)
+                                                                                WITH SECURITY_ENFORCED
+                    ];
+                if(!afterthoughtDays.isEmpty()){
+                    effectiveDateTmp = afterthoughtDays[0].ActivationDate__c;
+                }else{
+                    system.debug('Non sono state trovate occorrenze nella tabella di calcolo della data di adempimento');
+                }
             }
+            else{
+                if(order.RecessNotice__c == null){
+                    
+                    List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [
+                    SELECT ActivationDate__c 
+                    FROM HDT_FulfillmentDateMatrix__c 
+                    WHERE OriginMarket__c =: order.MarketOrigin__c 
+                            AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
+                            AND VoltageLevel__c =: order.VoltageLevel__c 
+                            AND ProcessType__c = :processType 
+                            AND SupplyType__c =: order.SupplyType__c 
+                            AND (FulfillmentDateFrom__c <= :dateToFrom AND FulfillmentDateTo__c >= :dateToFrom)
+                            WITH SECURITY_ENFORCED
+                    ];
+
+                    effectiveDateTmp = afterthoughtDays2[0].ActivationDate__c;
+                }else{
+                    dateDecorrenzaTmp = dateToFrom.addMonths((Integer)order.RecessNotice__c);
+                    effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
+                }
+            } 
         }
-        else{
-            if(order.RecessNotice__c == null){
-                
-                List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [
-                SELECT ActivationDate__c 
-                FROM HDT_FulfillmentDateMatrix__c 
-                WHERE OriginMarket__c =: order.MarketOrigin__c 
-                        AND Commodity__c =: order.ServicePoint__r.CommoditySector__c   
-                        AND VoltageLevel__c =: order.VoltageLevel__c 
-                        AND ProcessType__c = :processType 
-                        AND SupplyType__c =: order.SupplyType__c 
-                        AND (FulfillmentDateFrom__c <= :dateToFrom AND FulfillmentDateTo__c >= :dateToFrom)
-                        WITH SECURITY_ENFORCED
-                ];
-
-                effectiveDateTmp = afterthoughtDays2[0].ActivationDate__c;
-            }else{
-                dateDecorrenzaTmp = dateToFrom.addMonths((Integer)order.RecessNotice__c);
-                effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
-            }
-        } 
-
         system.debug('Data di decorrenza: ' + effectiveDateTmp);
         return effectiveDateTmp;
     }

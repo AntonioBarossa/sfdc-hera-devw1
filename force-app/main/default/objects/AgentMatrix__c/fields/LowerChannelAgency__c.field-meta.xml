@@ -3,9 +3,103 @@
     <fullName>LowerChannelAgency__c</fullName>
     <externalId>false</externalId>
     <label>Canale Inferiore Agenzia</label>
-    <length>30</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AGENZIE</fullName>
+                <default>false</default>
+                <label>AGENZIE</label>
+            </value>
+            <value>
+                <fullName>BA</fullName>
+                <default>false</default>
+                <label>BA</label>
+            </value>
+            <value>
+                <fullName>BACK OFFICE</fullName>
+                <default>false</default>
+                <label>BACK OFFICE</label>
+            </value>
+            <value>
+                <fullName>CCI</fullName>
+                <default>false</default>
+                <label>CCI</label>
+            </value>
+            <value>
+                <fullName>GDA_ASS</fullName>
+                <default>false</default>
+                <label>GDA_ASS</label>
+            </value>
+            <value>
+                <fullName>HCP</fullName>
+                <default>false</default>
+                <label>HCP</label>
+            </value>
+            <value>
+                <fullName>id di sistema</fullName>
+                <default>false</default>
+                <label>id di sistema</label>
+            </value>
+            <value>
+                <fullName>ND</fullName>
+                <default>false</default>
+                <label>ND</label>
+            </value>
+            <value>
+                <fullName>PA&amp;CO</fullName>
+                <default>false</default>
+                <label>PA&amp;CO</label>
+            </value>
+            <value>
+                <fullName>SME</fullName>
+                <default>false</default>
+                <label>SME</label>
+            </value>
+            <value>
+                <fullName>SPORTELLI</fullName>
+                <default>false</default>
+                <label>SPORTELLI</label>
+            </value>
+            <value>
+                <fullName>SPORTELLI_HCM</fullName>
+                <default>false</default>
+                <label>SPORTELLI_HCM</label>
+            </value>
+            <value>
+                <fullName>SPORTELLI_OUT</fullName>
+                <default>false</default>
+                <label>SPORTELLI_OUT</label>
+            </value>
+            <value>
+                <fullName>SPORTELLI_PH</fullName>
+                <default>false</default>
+                <label>SPORTELLI_PH</label>
+            </value>
+            <value>
+                <fullName>SPORTELLI_TOP</fullName>
+                <default>false</default>
+                <label>SPORTELLI_TOP</label>
+            </value>
+            <value>
+                <fullName>TLS</fullName>
+                <default>false</default>
+                <label>TLS</label>
+            </value>
+            <value>
+                <fullName>TOP</fullName>
+                <default>false</default>
+                <label>TOP</label>
+            </value>
+            <value>
+                <fullName>WEB_SELF</fullName>
+                <default>false</default>
+                <label>WEB_SELF</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

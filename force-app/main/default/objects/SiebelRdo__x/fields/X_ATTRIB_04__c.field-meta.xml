@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Societa Uscente SME</label>
+    <label>Societa Uscente</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

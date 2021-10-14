@@ -97,7 +97,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CaseCategory__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>PrefixCode__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CompanyOwner__c</field>
             <table>Campaign</table>
         </columns>
         <columns>
@@ -168,6 +178,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>HierarchyExpectedRevenue</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CampaignEligibilityGroup__c</field>
             <table>Campaign</table>
         </columns>
         <columns>
@@ -262,6 +277,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>PaperCampaignParameter__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Parent</field>
             <table>Campaign</table>
         </columns>
@@ -297,7 +317,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ScriptConfig__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Segment__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CaseSubCategory__c</field>
             <table>Campaign</table>
         </columns>
         <columns>
@@ -308,6 +338,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Status</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SurveyCRM__c</field>
             <table>Campaign</table>
         </columns>
         <columns>
@@ -333,6 +368,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>BillTypeMessage__c</field>
+            <table>Campaign</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ProcessType__c</field>
             <table>Campaign</table>
         </columns>
         <columns>
@@ -720,6 +760,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ExcludeFub__c</field>
+            <table>Campaign.CampaignMembers</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>OutcomeFub__c</field>
             <table>Campaign.CampaignMembers</table>
         </columns>
@@ -1030,11 +1075,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ExcludeFub__c</field>
-            <table>Campaign.CampaignMembers</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ProcessingType__c</field>
             <table>Campaign.CampaignMembers</table>
         </columns>
@@ -1068,6 +1108,9 @@
             <field>IBMUnicaSeller__c</field>
             <table>Campaign.CampaignMembers</table>
         </columns>
+        <masterLabel>Campaign Members</masterLabel>
+    </sections>
+    <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Lead.Address</field>
@@ -1463,6 +1506,11 @@
             <field>Lead.PostalCode</field>
             <table>Campaign.CampaignMembers</table>
         </columns>
-        <masterLabel>Campaign Members</masterLabel>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Agency__c.Name</field>
+            <table>Campaign.CampaignMembers</table>
+        </columns>
+        <masterLabel>Lead</masterLabel>
     </sections>
 </ReportType>

@@ -1608,6 +1608,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DocumentPackage__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ElectronicInvoicingMethod__c</picklist>
         <values>
             <fullName>Estero</fullName>
@@ -1930,7 +1949,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico  Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
             <default>false</default>
         </values>
         <values>

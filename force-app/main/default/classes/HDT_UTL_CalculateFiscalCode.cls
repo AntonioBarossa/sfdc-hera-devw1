@@ -13,8 +13,9 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             fiscalCode = null ;
         }else{
             
-            fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase());
-            fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase());
+            fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+            fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+
             fiscalCode += getYear(infoData.get('birthDate'));
             fiscalCode += getMonthLetter(infoData.get('birthDate'));
             fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));

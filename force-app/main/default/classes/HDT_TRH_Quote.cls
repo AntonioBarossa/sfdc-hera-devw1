@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 18/03/2021
+* @description Class HDT_TRH_Quote
+* @history Keltin Mesonjesi 18/03/2021 – Created class
+*/
 public inherited sharing class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
     
     public override void beforeInsert(){
@@ -12,8 +18,4 @@ public inherited sharing class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
         HDT_UTL_QuoteProcess.amendProcessManagementAfter(Trigger.New);
         system.debug('Quote afterInsert END');
     }
- 	public override void beforeDelete(){}
- 	public override void afterDelete(){}
-    public override void beforeUpdate(){}
-    public override void afterUpdate(){}
 }

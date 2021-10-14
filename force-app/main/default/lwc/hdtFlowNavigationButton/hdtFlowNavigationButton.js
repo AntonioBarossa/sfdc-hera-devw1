@@ -41,10 +41,16 @@ export default class HdtFlowNavigationButton extends LightningElement {
                         clearInterval(interval);
                         this.loadingSpinner = false;
                         this.handleGoNext();
-                    } else if(result === 'Error' || this.getTime() >= timeoutTime){
+                    } else if(result === 'Error'){
                         clearInterval(interval);
                         this.loadingSpinner = false;
-                        this.showCustomToast();
+                        this.showCustomToast('Errore','Comunicazione Fallita','error');
+                        this.handleGoNext();
+                    } else if(this.getTime() >= timeoutTime)
+                    {
+                        clearInterval(interval);
+                        this.loadingSpinner = false;
+                        this.showCustomToast('Richiesta Presa in Carico','La richiesta è stata presa in carico','info');
                         this.handleGoNext();
                     }
 
@@ -81,13 +87,13 @@ export default class HdtFlowNavigationButton extends LightningElement {
 
     }
 
-    showCustomToast(){
+    showCustomToast(titleStr, messageStr, variantStr){
 
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Errore',
-                message: 'Comunicazione fallita',
-                variant: 'error',
+                title: titleStr,
+                message: messageStr,
+                variant: variantStr,
             }),
         );
 
@@ -98,6 +104,8 @@ export default class HdtFlowNavigationButton extends LightningElement {
         console.log('#StandAlone --> '+this.standAlone);
 
         console.log('#ButtonName --> '+event.target.name);
+
+        console.log('AVAILABLE_ACTIONS --> ' +this.availableActions);
 
         if(this.standAlone){
 

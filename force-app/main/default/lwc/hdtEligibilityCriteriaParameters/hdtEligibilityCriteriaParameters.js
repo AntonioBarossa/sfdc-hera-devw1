@@ -18,7 +18,8 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
       'EquipmenType__c',            'PromoCode__c',
       'ResidentDeliveryAddress__c', 'NewClient__c',
       'LoginGroup__c',              'Agency__c',
-      'UseCategory__c',             'CampaignName__c'
+      'Campaign__c',                'CampaignName__c',
+      'UseCategory__c'
     ];
 
     complexFieldsList = [

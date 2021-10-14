@@ -43,12 +43,16 @@ public with sharing class HDT_LC_ActivityIvaAccise {
         }
     }
     @AuraEnabled
-    public static boolean saveAttempt(String actid, Integer attempt){
+    public static boolean saveAttempt(String actid, String attempt){
         try{
+            system.debug('********PRE:' + attempt);
+            system.debug('********PRE:' + actid);
             wrts_prcgvr__Activity__c w = new wrts_prcgvr__Activity__c();
             w.id = actid;
-            w.NumberOfAttempt__c = attempt;
-            activitySRV.updateRecord(w);
+            if(attempt != null){
+                w.NumberOfAttempt__c = Integer.valueOf(attempt);
+                activitySRV.updateRecord(w);
+            }
             return true;
         }catch(Exception e){
             return false;

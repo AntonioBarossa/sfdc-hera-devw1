@@ -32,6 +32,11 @@
                 <label>Standard</label>
             </value>
             <value>
+                <fullName>Bonifico</fullName>
+                <default>false</default>
+                <label>Bonifico</label>
+            </value>
+            <value>
                 <fullName>Bollettino</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

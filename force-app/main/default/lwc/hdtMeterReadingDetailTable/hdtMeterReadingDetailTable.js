@@ -149,12 +149,18 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     }
 
     handleRowSelection = event => {
-        const selectRow = event.detail.selectedRows[0];
+        let selectRow = event.detail.selectedRows[0];
         console.log('NonStandAlone -> ' +this.nonStandAlone);
         console.log('Select Row -> ' + JSON.stringify(selectRow));
         if(this.nonStandAlone){
             console.log('InsideNonStandAloneEvent');
             console.log('ChildEvent -> ' + selectRow);
+            console.log('SettoreMerceologico >>> ' + selectRow.settoreMerceologico);
+            if(selectRow.settoreMerceologico === 'Energia Elettrica')
+            {
+                selectRow = this.meterReadingData.filter(element => element.dataLetturaPianificata === selectRow.dataLetturaPianificata);
+                console.log('3 FASCE LETTURA >>> ' + JSON.stringify(selectRow))
+            }
             this.dispatchEvent(new CustomEvent('rowselection',{detail: selectRow}));
         }
         return;

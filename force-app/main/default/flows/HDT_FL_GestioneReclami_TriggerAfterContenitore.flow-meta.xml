@@ -5,7 +5,7 @@
         <name>Aumenta_Counter</name>
         <label>Aumenta Counter</label>
         <locationX>798</locationX>
-        <locationY>671</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>CounterLavorazione</assignToReference>
             <operator>Add</operator>
@@ -28,7 +28,7 @@
         <name>Aumenta_Counter_0</name>
         <label>Aumenta Counter</label>
         <locationX>1062</locationX>
-        <locationY>671</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>CounterSospeso</assignToReference>
             <operator>Add</operator>
@@ -51,7 +51,7 @@
         <name>Aumenta_Counter_0_0</name>
         <label>Aumenta Counter</label>
         <locationX>1326</locationX>
-        <locationY>671</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>CounterRispostaInviata</assignToReference>
             <operator>Add</operator>
@@ -74,7 +74,7 @@
         <name>Aumenta_Counter_0_0_0</name>
         <label>Aumenta Counter</label>
         <locationX>1590</locationX>
-        <locationY>671</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>CounterAnnullato</assignToReference>
             <operator>Add</operator>
@@ -97,7 +97,7 @@
         <name>Aumenta_Counter_0_0_0_0_0</name>
         <label>Aumenta Counter</label>
         <locationX>1854</locationX>
-        <locationY>671</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>CounterChiuso</assignToReference>
             <operator>Add</operator>
@@ -120,7 +120,7 @@
         <name>Aumenta_Counter_1</name>
         <label>Aumenta Counter</label>
         <locationX>2118</locationX>
-        <locationY>671</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>CounterElements</assignToReference>
             <operator>Add</operator>
@@ -136,7 +136,7 @@
         <name>Quale_Fase</name>
         <label>Quale Fase?</label>
         <locationX>1458</locationX>
-        <locationY>551</locationY>
+        <locationY>575</locationY>
         <defaultConnector>
             <targetReference>Aumenta_Counter_1</targetReference>
         </defaultConnector>
@@ -229,7 +229,7 @@
                 <leftValueReference>Loop_sui_case_nel_Contenitore.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Chiuso</stringValue>
+                    <stringValue>Completata</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -242,7 +242,7 @@
         <name>Quale_Fase_deve_andare_il_Contenitore</name>
         <label>Quale Fase deve andare il Contenitore?</label>
         <locationX>710</locationX>
-        <locationY>983</locationY>
+        <locationY>1007</locationY>
         <defaultConnectorLabel>Nessun cambio</defaultConnectorLabel>
         <rules>
             <name>Contenitore_In_Lavorazione</name>
@@ -369,7 +369,7 @@
         <name>Loop_sui_case_nel_Contenitore</name>
         <label>Loop sui case nel Contenitore</label>
         <locationX>710</locationX>
-        <locationY>431</locationY>
+        <locationY>455</locationY>
         <collectionReference>Get_Case_nel_Contenitore</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -402,7 +402,7 @@
         <name>Get_Case_nel_Contenitore</name>
         <label>Get Case nel Contenitore</label>
         <locationX>710</locationX>
-        <locationY>311</locationY>
+        <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_sui_case_nel_Contenitore</targetReference>
@@ -423,7 +423,7 @@
         <name>Passa_In_Annullato</name>
         <label>Passa In Annullato</label>
         <locationX>842</locationX>
-        <locationY>1103</locationY>
+        <locationY>1127</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -457,7 +457,7 @@
         <name>Passa_In_Chiuso</name>
         <label>Passa In Chiuso</label>
         <locationX>1106</locationX>
-        <locationY>1103</locationY>
+        <locationY>1127</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -482,7 +482,13 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Chiuso</stringValue>
+                <stringValue>Completata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -491,7 +497,7 @@
         <name>Passa_In_Lavorazione</name>
         <label>Passa In Lavorazione</label>
         <locationX>50</locationX>
-        <locationY>1103</locationY>
+        <locationY>1127</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -519,13 +525,19 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_In_Risposta_Inviata</name>
         <label>Passa In Risposta Inviata</label>
         <locationX>578</locationX>
-        <locationY>1103</locationY>
+        <locationY>1127</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -559,7 +571,7 @@
         <name>Passa_In_Sospesa</name>
         <label>Passa In Sospesa</label>
         <locationX>314</locationX>
-        <locationY>1103</locationY>
+        <locationY>1127</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>

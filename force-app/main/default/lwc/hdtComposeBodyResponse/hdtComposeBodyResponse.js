@@ -160,6 +160,7 @@ export default class HdtProva extends LightningElement {
         const actionName = event.detail.eventName;
         const templateId = event.detail.recordId;
         console.log('Evento :' +event.detail.recordId);
+        console.log('Evento :' +JSON.stringify(event.detail));
         console.log(actionName);
         switch (actionName) {
             case 'delete':
@@ -175,7 +176,11 @@ export default class HdtProva extends LightningElement {
 
     handleRemove(templateId){
 
-        let index = this.data.findIndex(obj => obj.Id === templateId );
+        console.log('Data >>> ' + JSON.stringify(this.data));
+
+        let index = this.data.findIndex(obj => obj.id === templateId );
+
+        console.log('INDEX >>> ' + index);
 
         this.data.splice(index,1);
 

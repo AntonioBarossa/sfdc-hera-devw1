@@ -1,12 +1,10 @@
 <template>
     <c-hdt-ct-toolbar-container is-hide={isHide} show-panel={showPanel} ontoolbarevent={toolbarEvent}
-        campaign-member-id={recordId} object-api-name={objectApiName} onshowpopup={showModalPopup} onshowpopupslot={showModalSlot}></c-hdt-ct-toolbar-container>
+        campaign-member-id={recordId} object-api-name={objectApiName} onshowpopup={showModalPopup} onshowpopupslot={showModalSlot} ongetreiteklink={handleGetReitekLink}></c-hdt-ct-toolbar-container>
     <div class="slds-grid">
         <c-hdt-campaign-member-button-list record-id={recordId}></c-hdt-campaign-member-button-list>
-        <template if:true={isHide}>
-            <c-hdt-campaign-member-negative-outcome campaign-member-id={recordId} onaftersubmit={submitHandlerNegativeOutcome}></c-hdt-campaign-member-negative-outcome>
-        </template>
-        <c-hdt-campaign-member-button-list2 record-id={recordId} object-api-name="campaignmember">
+        <c-hdt-campaign-member-negative-outcome campaign-member-id={recordId} onaftersubmit={submitHandlerNegativeOutcome}></c-hdt-campaign-member-negative-outcome>
+        <c-hdt-campaign-member-button-list2 record-id={recordId} object-api-name="campaignmember" reiteklink={reiteklink}>
         </c-hdt-campaign-member-button-list2>
         <lightning-button variant="neutral" label="Richiamami" title="Richiamami" onclick={handleRecallMe}>
         </lightning-button>
@@ -20,18 +18,16 @@
                         <h2 class="slds-modal__title slds-hyphenate">Time Slots</h2>
                     </header>
                     <div class="slds-modal__content scrollable slds-p-around--medium">
-                        <div class="slds-grid">
+                        <div class="slds-grid slds-grid_vertical-align-end slds-p-bottom--small">
                             <lightning-input type="date" data-id="dateR" onchange={handleDateChange} variant="standard" name="startRange" label="Data" value={startRangeValue}></lightning-input>
-                            <br/>
-                            <lightning-button variant="neutral" label="Richiedi Slot"  onclick={getSlotValues}></lightning-button>
-                            <br/>
+                            <lightning-button class="slds-p-left--small" variant="neutral" label="Richiedi Slot"  onclick={getSlotValues}></lightning-button>
                         </div>
                         <lightning-datatable class='timeSlotDT' key-field="startDate" data={dataList} columns={columnsList}
                             max-row-selection="1" onrowselection={handleRowSelection2}>
                         </lightning-datatable>
                     </div>
                     <footer class="slds-modal__footer">
-                        <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
+                        <lightning-button class="slds-p-right--small" variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
                         </lightning-button>
                         <lightning-button variant="brand" name="" type="submit" label="Chiudi" onclick={closeModal}>
                         </lightning-button>

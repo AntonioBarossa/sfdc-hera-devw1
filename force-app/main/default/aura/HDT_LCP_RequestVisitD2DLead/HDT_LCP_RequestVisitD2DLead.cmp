@@ -1,4 +1,4 @@
 <aura:component implements="flexipage:availableForRecordHome,force:lightningQuickAction,force:hasRecordId,lightning:actionOverride" access="global">
     <aura:attribute name="recordId" type="String" />
-    <c:hdtRequestVisitD2DLead recordId="{!v.recordId}"></c:hdtRequestVisitD2DLead>
+    <c:hdtRequestVisitD2DLead recordId="{!v.recordId}"  onclose="{!c.closeQA}" ></c:hdtRequestVisitD2DLead>
 </aura:component>

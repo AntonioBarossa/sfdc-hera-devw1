@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Phase__c</fullName>
     <externalId>false</externalId>
-    <label>Phase</label>
+    <label>Fase</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
@@ -526,10 +526,72 @@
                 <label>Annullamento per Switch-out</label>
             </value>
             <value>
+                <fullName>Sospeso</fullName>
+                <default>false</default>
+                <label>Sospeso</label>
+            </value>
+            <value>
+                <fullName>Plico da inviare</fullName>
+                <default>false</default>
+                <label>Plico da inviare</label>
+            </value>
+            <value>
+                <fullName>In registrazione</fullName>
+                <default>false</default>
+                <label>In registrazione</label>
+            </value>
+            <value>
+                <fullName>Plico Firmato da validare</fullName>
+                <default>false</default>
+                <label>Plico Firmato da validare</label>
+            </value>
+            <value>
+                <fullName>Plico inviato da firmare</fullName>
+                <default>false</default>
+                <label>Plico inviato da firmare</label>
+            </value>
+            <value>
+                <fullName>Plico inviato da validare</fullName>
+                <default>false</default>
+                <label>Plico inviato da validare</label>
+            </value>
+            <value>
+                <fullName>Plico validato Firmato</fullName>
+                <default>false</default>
+                <label>Plico validato Firmato</label>
+            </value>
+            <value>
+                <fullName>Registrazione validata  Firmato/Inviato</fullName>
+                <default>false</default>
+                <label>Registrazione validata  Firmato/Inviato</label>
+            </value>
+            <value>
+                <fullName>Plico  Firmato/Inviato</fullName>
+                <default>false</default>
+                <label>Plico  Firmato/Inviato</label>
+            </value>
+            <value>
+                <fullName>Plico Firmato da inviare</fullName>
+                <default>false</default>
+                <label>Plico Firmato da inviare</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>BL010</label>
+            </value>
+            <value>
+                <fullName>Caricamento Siebel KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Caricamento Siebel KO</label>
+            </value>
+            <value>
+                <fullName>Caricamento Siebel OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Caricamento Siebel OK</label>
             </value>
             <value>
                 <fullName>Esito DL KO</fullName>
@@ -556,40 +618,10 @@
                 <label>IR020</label>
             </value>
             <value>
-                <fullName>In registrazione</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>In registrazione</label>
-            </value>
-            <value>
                 <fullName>Inviato a DL</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Inviato a DL</label>
-            </value>
-            <value>
-                <fullName>Plico Firmato da validare</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Plico Firmato da validare</label>
-            </value>
-            <value>
-                <fullName>Plico da inviare</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Plico da inviare</label>
-            </value>
-            <value>
-                <fullName>Plico inviato da firmare</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Plico inviato da firmare</label>
-            </value>
-            <value>
-                <fullName>Plico validato Firmato</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Plico validato Firmato</label>
             </value>
             <value>
                 <fullName>RC010</fullName>
@@ -598,10 +630,10 @@
                 <label>RC010</label>
             </value>
             <value>
-                <fullName>Registrazione validata  Firmato/Inviato</fullName>
+                <fullName>Registrazione da validare</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Registrazione validata  Firmato/Inviato</label>
+                <label>Registrazione da validare</label>
             </value>
             <value>
                 <fullName>Ripensamento -  Comunicazione verso Heroku KO</fullName>
@@ -614,12 +646,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Ripensamento -  Comunicazione verso Heroku OK</label>
-            </value>
-            <value>
-                <fullName>Sospeso</fullName>
-                <default>false</default>
-                <isActive>true</isActive>
-                <label>Sospeso</label>
             </value>
         </valueSetDefinition>
     </valueSet>

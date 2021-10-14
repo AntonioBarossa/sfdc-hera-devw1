@@ -21,6 +21,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
   @track contactId;
   @track results;
   connectedCallback() {
+    this.imgShow();//HRAWRM-544 10-09-2021
     if (this.objectApiName == "campaignmember") {
       this.isCampaignMember = true;
     }
@@ -87,6 +88,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
             this.surveys.push({ "surveyQuestions": surveyQuestions, "id": 0 });
           //}
           console.log("ECCOLO:" + JSON.stringify(this.surveys));
+          this.imgShow();//HRAWRM-544 10-09-2021
          // this.showModal = !this.isCampaignMember;
         }
       } else if (error) {
@@ -101,8 +103,16 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
         this.dispatchEvent(event);
       }
     });
-  }
 
+  }
+  imgShow(){
+     //Start  HRAWRM-544 10-09-2021
+     console.log('surveySize: '+this.surveys.length);
+     const selectedEvent = new CustomEvent("surveysize", {
+     detail: this.surveys.length});
+     this.dispatchEvent(selectedEvent);
+     //End  HRAWRM-544 10-09-2021
+  }
   @wire(getCampaignIdAndContactIdByMember, { campaignMemberId: '$recordId' }) campaign({ error, data }) {
     if (data) {
       this.campaignId = data.CampaignId;
@@ -195,16 +205,22 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
         updateCampaignMemberSurveyResponse({ campaignMemberId: this.recordId, surveyResponseId: response.Id }).then(data => {
           console.log("ok" + JSON.stringify(data));
           //close the modal
-          this.showModal = false;
-          //navigate to new created SurveyResponse
-          this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-              recordId: response.Id,
-              objectApiName: 'SurveyResponse__c',
-              actionName: 'view'
-            },
+          this.showModal = false; //HRAWRM-544 extra Bolzon
+          const event = new ShowToastEvent({
+            message: 'Survey salvata con successo!',
+            variant: 'success',
+            mode: 'dismissable'
           });
+          this.dispatchEvent(event);
+          //navigate to new created SurveyResponse
+          // this[NavigationMixin.Navigate]({
+          //   type: 'standard__recordPage',
+          //   attributes: {
+          //     recordId: response.Id,
+          //     objectApiName: 'SurveyResponse__c',
+          //     actionName: 'view'
+          //   },
+          // });//HRAWRM-544 extra
         }).catch(err => {
           console.log(err.body.message);
         });
@@ -233,7 +249,7 @@ export default class HdtCampaignSurvey extends NavigationMixin(LightningElement)
       );
     }
   }
-
+  
   closeModal() {
     this.showModal = false;
   }

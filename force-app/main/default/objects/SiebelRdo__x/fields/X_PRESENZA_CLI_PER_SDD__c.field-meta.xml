@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Presenza Cli Nuovi Proc SDD</label>
+    <label>Presenza Cliente</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

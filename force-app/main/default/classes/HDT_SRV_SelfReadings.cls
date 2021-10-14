@@ -22,8 +22,10 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
+            System.debug('inputParams null.');
             return null;
         }
 
@@ -34,11 +36,13 @@ public with sharing class HDT_SRV_SelfReadings {
 
         List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,ContractCode__c,CommodityFormula__c');
         if (cases.isEmpty()) {
+            System.debug('No Cases found.');
             return null;
         }
 
         Case readingCase = cases[0];
-
+        System.debug('readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
+        
         String readingFields = 'Id';
         if (readingCase.CommodityFormula__c == 'Gas') {
             readingFields += ',ReadingRegisterMeter__c,ReadingRegisterCorrector__c,ReadingValueMeter__c,ReadingValueCorrector__c';
@@ -51,8 +55,10 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         }
         Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
-
+        System.debug('reading: ' + reading);
+        
         JSONGenerator gen = JSON.createGenerator(false);
+        
 
         gen.writeStartObject();
         gen.writeStringField('caseId', caseId);
@@ -61,7 +67,7 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeStringField('commodity', readingCase.CommodityFormula__c);
         gen.writeFieldName('position');
         gen.writeStartArray();
-
+        
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
             gen.writeStringField('register', reading.ReadingRegisterMeter__c);
@@ -96,6 +102,7 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonInvioLetture(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
             return null;
@@ -112,6 +119,7 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
+        System.debug('readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
         String fieldsTemplate = ',ReadingRegister{0}__c,ReadingValue{0}__c,ReadingBand{0}__c,ReadingDate{0}__c,ReadingDigitNumber{0}__c,ReadingSerialNumber{0}__c,ReadingType{0}__c,ReadingUnit{0}__c';
@@ -130,7 +138,8 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         }
         Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
-
+        System.debug('reading: ' + reading);
+        
         JSONGenerator gen = JSON.createGenerator(false);
 
         gen.writeStartObject();
@@ -138,7 +147,7 @@ public with sharing class HDT_SRV_SelfReadings {
         gen.writeStringField('pod', readingCase.PODPDRFormula__c);
         gen.writeFieldName('element');
         gen.writeStartArray();
-
+        
         if (readingCase.CommodityFormula__c == 'Gas') {
             gen.writeStartObject();
             gen.writeStringField('counter', '1');
@@ -226,30 +235,37 @@ public with sharing class HDT_SRV_SelfReadings {
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
-
+        Map<String,Object> dataBody = body.get('data') != null? (Map<String, Object>) body.get('data') : new Map<String,Object>();
+        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'KO';
         // SAP restituisce codice 502 in caso di check preliminare non superato.
-        if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
+        if ((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (outcome != null && outcome.equalsIgnoreCase('KO'))) {
             retWrap.isResponseOk = false;
+            String errorMessage = '';
             List<Object> errorDetails = (List<Object>) body.get('errorDetails');
-            if (errorDetails != null && !errorDetails.isEmpty()) {
+            if(errorDetails != null && !errorDetails.isEmpty()) {
                 Map<String, Object> errorObj = (Map<String, Object>) errorDetails[0];
-                String errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
-                readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
-                HDT_QR_Case queryCase = new HDT_QR_Case();
-                List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
-                if (!cases.isEmpty()) {
-                    Case currentReadingCase = cases[0];
-                    if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                        readingCaseToUpdate.Status = 'Closed';
-                    }
-                    String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
-                    String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
-                    readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
-                    if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
-                    }
+                errorMessage = errorObj != null ? (String) errorObj.get('message') : '';
+            }else{
+                errorMessage = (String)dataBody.get('message');
+            }
+            readingCaseToUpdate.TecnicalPhase__c = 'Check preliminari KO';
+            HDT_QR_Case queryCase = new HDT_QR_Case();
+            List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
+            if(!cases.isEmpty()) {
+                Case currentReadingCase = cases[0];
+                String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
+                String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
+                readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
+                if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
+                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO');
+                }
+                HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                    readingCaseToUpdate.Status = 'Closed';
+                    readingCaseToUpdate.Phase__c = 'KO Definitivo';
                     HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 }
+                
             }
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
@@ -354,13 +370,15 @@ public with sharing class HDT_SRV_SelfReadings {
     // Verifica se per il dato Canale l'errore deve chiudere il Case.
     private static Boolean isClosingError(String msg, String origin) {
         if (String.isBlank(origin) || String.isBlank(msg)) {
-            return False;
+            return false;
         }
 
-        Boolean closeCase = False;
+        Boolean closeCase = false;
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
                 closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
+            }when 'Web', 'App', 'APP'{
+                closeCase = true;
             }
             when else {
                 // TODO

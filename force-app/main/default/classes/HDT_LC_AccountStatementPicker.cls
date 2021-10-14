@@ -91,6 +91,7 @@ public with sharing class HDT_LC_AccountStatementPicker {
     private static String submitRequest(String params){
         HttpRequest req = new HttpRequest();
         try {
+            System.debug('body: ' + params);
             req.setEndpoint('Callout:MulesoftEqualStatements');
             req.setMethod('POST');
             req.setBody(params);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Channel__c</fullName>
-    <description>Campo di configurazione usato per indicare il canale del record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
+    <description>Campo di  configurazione usato per indicare il canale del record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
     <externalId>false</externalId>
     <label>Canale</label>
     <required>false</required>
@@ -10,126 +10,16 @@
     <valueSet>
         <controllingField>ChannelOperator__c</controllingField>
         <restricted>true</restricted>
-        <valueSetName>HDT_ProductOptionChannel</valueSetName>
+        <valueSetName>HDT_SalesChannel</valueSetName>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Agente</valueName>
+            <valueName>Telefono</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Agenzia</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>App</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Assistente Web</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Associazioni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Call Center</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Camper</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Chat</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>CONSIP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Da PGM</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>e-mail</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>HERA COMM POINT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Interno</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>IVR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>ON-LINE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>PA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>PARTNER</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Postel</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Protocollo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Punto Hera</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Reseller</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>ServiziSociali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>SFA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>SMS</valueName>
+            <valueName>Back office</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
@@ -139,32 +29,7 @@
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Sportello amministratori</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>SUPPORTO AGENZIE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>SUPPORTO GDA</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Telefono</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Telefono Outbound</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Teleselling</valueName>
+            <valueName>HC Point</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
@@ -174,12 +39,37 @@
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Vendita Diretta</valueName>
+            <valueName>Vendita TopBusiness</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Vendita Indiretta</valueName>
+            <valueName>Business Agent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Agenzie SME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Agenzie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Punti Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Teleselling Inbound</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Teleselling Outbound</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
@@ -189,17 +79,17 @@
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Web-AAA</valueName>
+            <valueName>Consip</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Web-EB</valueName>
+            <valueName>Reseller</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>Web-MMS</valueName>
+            <valueName>Associazioni</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>3</visibleLines>

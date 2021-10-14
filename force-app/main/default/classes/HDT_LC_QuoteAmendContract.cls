@@ -130,13 +130,26 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if products have been created for quote
+    * @param String quoteId
+    */
+    private static Boolean haveProductsBeenCreated(String quoteId){
+        List<SBQQ__QuoteLine__c> createdQuoteLines = quoteLineQr.getRecordsByQuoteId(quoteId);
+
+        return !createdQuoteLines.isEmpty();
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Execute actions when exiting modal
     * @param String contractId - SBQQ__Quote__r.ContractReference__c
     */
     @AuraEnabled
-    public static void execModalExitActions(String contractId, String saleId){
+    public static Boolean execModalExitActions(String contractId, String saleId, String quoteId){
         assocBillingProfileFromContract(contractId, saleId);
         assocPodToQuoteLine(contractId, saleId);
+
+        return haveProductsBeenCreated(quoteId);
     }
 
 }

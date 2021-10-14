@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Prz Qvd Fix GG</label>
+    <label>Prz QVD (€/giorno)</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

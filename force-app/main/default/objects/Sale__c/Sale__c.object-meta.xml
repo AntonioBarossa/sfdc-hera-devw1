@@ -56,13 +56,17 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
+    <!-- HRDTR-00_HRAWRM-249 07/09/2021-->
     <actionOverrides>
         <actionName>Edit</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>Edit</actionName>
+        <content>HDT_LCP_OverrideEditButton</content>
         <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
+    </actionOverrides>
+    <!-- HRDTR-00_HRAWRM-249 07/09/2021-->
+    <actionOverrides>
+        <actionName>Edit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>

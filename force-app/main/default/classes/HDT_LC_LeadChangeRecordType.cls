@@ -22,6 +22,7 @@
            // res = s.replace('&c__accid={!Id}','');
            res = s.replace('&c__accid={!Id}','&c__leadId='+ leadId);
         }
+
         mapRes.put('url',res);
         String us= userinfo.getUserType();
         
@@ -31,6 +32,17 @@
             check = true;
         }
         mapRes.put('comm',check +'');
+
+        Id siteId = Site.getSiteId(); 
+            
+        if (siteId != null) {
+            mapRes.put('isCommunity', 'true');
+        } 
+        else {
+            mapRes.put('isCommunity', 'false');
+        }
+
+
         return mapRes;
     }
 }

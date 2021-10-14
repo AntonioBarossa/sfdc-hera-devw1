@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>Case</label>
     <referenceTo>Case</referenceTo>
-    <relationshipLabel>Allegati Plico Documentale</relationshipLabel>
+    <relationshipLabel>Elenco Moduli Plico</relationshipLabel>
     <relationshipName>Allegati_Plico_Documentale</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

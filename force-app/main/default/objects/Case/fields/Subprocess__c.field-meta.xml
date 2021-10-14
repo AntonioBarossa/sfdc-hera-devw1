@@ -29,21 +29,6 @@
                 <label>Accise - Errata applicazione</label>
             </value>
             <value>
-                <fullName>Account</fullName>
-                <default>false</default>
-                <label>Account</label>
-            </value>
-            <value>
-                <fullName>Account e Billing Profile</fullName>
-                <default>false</default>
-                <label>Account e Billing Profile</label>
-            </value>
-            <value>
-                <fullName>Billing Profile</fullName>
-                <default>false</default>
-                <label>Billing Profile</label>
-            </value>
-            <value>
                 <fullName>Cambio Amministratore</fullName>
                 <default>false</default>
                 <label>Cambio Amministratore</label>
@@ -158,18 +143,66 @@
                 <default>false</default>
                 <label>Processo M03</label>
             </value>
+            <value>
+                <fullName>BP</fullName>
+                <default>false</default>
+                <label>BP</label>
+            </value>
+            <value>
+                <fullName>BP e CA</fullName>
+                <default>false</default>
+                <label>BP e CA</label>
+            </value>
+            <value>
+                <fullName>CA</fullName>
+                <default>false</default>
+                <label>CA</label>
+            </value>
+            <value>
+                <fullName>Account</fullName>
+                <default>false</default>
+                <label>Account</label>
+            </value>
+            <value>
+                <fullName>Account e Billing Profile</fullName>
+                <default>false</default>
+                <label>Account e Billing Profile</label>
+            </value>
+            <value>
+                <fullName>Billing Profile</fullName>
+                <default>false</default>
+                <label>Billing Profile</label>
+            </value>
+            <value>
+                <fullName>In Continuità</fullName>
+                <default>false</default>
+                <label>In Continuità</label>
+            </value>
+            <value>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+                <label>Recupero</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Ordinaria</valueName>
+            <valueName>In Continuità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Mortis Causa</valueName>
+            <valueName>Recupero</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Incorporazione societaria</valueName>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>BP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>BP e CA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>CA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
@@ -182,30 +215,6 @@
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
             <valueName>Report storno di adeguamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
-            <valueName>Account</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
-            <valueName>Account e Billing Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
-            <valueName>Billing Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
-            <valueName>Account</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
-            <valueName>Account e Billing Profile</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
-            <valueName>Billing Profile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
@@ -238,6 +247,18 @@
         <valueSettings>
             <controllingFieldValue>Fiscale</controllingFieldValue>
             <valueName>IVA - Errata applicazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Ordinaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Mortis Causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Incorporazione societaria</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

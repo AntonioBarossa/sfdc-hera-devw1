@@ -93,10 +93,28 @@
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>HDT_Comunicazione_Documentale_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DocumentSendTracking__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_Comunicazione_Documentale_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>DocumentSendTracking__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_IER_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>et4ae5__IndividualEmailResult__c</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
@@ -489,6 +507,22 @@
         <pageOrSobjectType>Sale__c</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Vendita_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Vendita_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Sale__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

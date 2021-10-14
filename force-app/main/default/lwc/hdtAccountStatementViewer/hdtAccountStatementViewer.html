@@ -1,6 +1,8 @@
 <template>
 
-    <c-hdt-pdf-viewer-handler ></c-hdt-pdf-viewer-handler>
+    <c-hdt-pdf-viewer-handler
+        ondownloadcomplete={closeMainSpinner}
+    ></c-hdt-pdf-viewer-handler>
 
     <template if:true={showAcctStmt} >
         <c-hdt-acct-stmt-type-choise
@@ -71,6 +73,7 @@
 
     <template if:true={showFilters} >
         <c-hdt-account-statement-filters
+            tab-code={tabCode}
             onclosemodal={closeModalHandler}
             onsetobjfilter={applyFilter}
         ></c-hdt-account-statement-filters>

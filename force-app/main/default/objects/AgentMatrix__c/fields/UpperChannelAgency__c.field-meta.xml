@@ -3,9 +3,48 @@
     <fullName>UpperChannelAgency__c</fullName>
     <externalId>false</externalId>
     <label>Canale Superiore Agenzia</label>
-    <length>30</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CRM</fullName>
+                <default>false</default>
+                <label>CRM</label>
+            </value>
+            <value>
+                <fullName>id di sistema</fullName>
+                <default>false</default>
+                <label>id di sistema</label>
+            </value>
+            <value>
+                <fullName>ND</fullName>
+                <default>false</default>
+                <label>ND</label>
+            </value>
+            <value>
+                <fullName>PA&amp;CO</fullName>
+                <default>false</default>
+                <label>PA&amp;CO</label>
+            </value>
+            <value>
+                <fullName>TOP</fullName>
+                <default>false</default>
+                <label>TOP</label>
+            </value>
+            <value>
+                <fullName>VI</fullName>
+                <default>false</default>
+                <label>VI</label>
+            </value>
+            <value>
+                <fullName>WEB</fullName>
+                <default>false</default>
+                <label>WEB</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

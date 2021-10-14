@@ -21,49 +21,52 @@ public class HDT_QR_CaseTst {
     }
 
 
-@isTest
-static void testgetRecordById() {
+    @isTest
+    static void testgetRecordById() {
 
-    Test.startTest();
+        Test.startTest();
 
-    Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+        Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
 
-    HDT_QR_Case qrCase = new HDT_QR_Case();
+        HDT_QR_Case qrCase = new HDT_QR_Case();
 
-    Case testCase = qrCase.getRecordById(tCase.Id);
+        Case testCase = qrCase.getRecordById(tCase.Id);
 
-  
+    
 
-    System.assertEquals('In Lavorazione', testCase.Status, 'Case Status not populated correctly');
+        System.assertEquals('In Lavorazione', testCase.Status, 'Case Status not populated correctly');
 
-    System.assertNotEquals('Draft', testCase.Status);
 
-    Test.stopTest();
+        System.assertNotEquals('Draft', testCase.Status,'value of parameter is not matching');
+
+    
+
+
+        Test.stopTest();
     
     }
 
-@isTest
-static void testgetChageNonRegMeterByOrder() {
+    @isTest
+    static void testgetChageNonRegMeterByOrder() {
+        Test.startTest();
+        Case tCase = [SELECT Id, Status, Type, Phase__c, VulturePracticeReference__c FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+        Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
 
-    Test.startTest();
+        //tCase.Type = 'Cambio Contatore Non Registrato';
+        //tCase.Phase__c = 'Completata';
 
-    Case tCase = [SELECT Id, Status, Type, Phase__c, VulturePracticeReference__c FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+        HDT_QR_Case qrCase = new HDT_QR_Case();
 
-    Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
-
-    //tCase.Type = 'Cambio Contatore Non Registrato';
-    //tCase.Phase__c = 'Completata';
-
-    HDT_QR_Case qrCase = new HDT_QR_Case();
-
-    List<Case> testCase = qrCase.getChageNonRegMeterByOrder(tOrder.Id);
+        List<Case> testCase = qrCase.getChageNonRegMeterByOrder(tOrder.Id);
 
 
-    System.assertEquals(true, testCase.isEmpty(), 'Case list not empty');
+        System.assertEquals(true, testCase.isEmpty(), 'Case list not empty');
 
-    System.assertNotEquals(false, testCase.isEmpty());
+        System.assertNotEquals(false, testCase.isEmpty(), 'value of parameter is not matching');
 
-    Test.stopTest();
+   
+
+        Test.stopTest();
     }
 
 
@@ -73,17 +76,18 @@ static void testgetChageNonRegMeterByOrder() {
         Test.startTest();
     
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
-    
         Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
-    
         HDT_QR_Case qrCase = new HDT_QR_Case();
-    
-        Case testCase = qrCase.getParentCaseById(tCase.Id);
         
-    
+        //EMPTY TEST
+        Case emptyCase = qrCase.getParentCaseById(null);
+        System.assertEquals(null, emptyCase, 'emptyCase not null');
+        
+        //REGULAR TEST
+        Case testCase = qrCase.getParentCaseById(tCase.Id);
         System.assertEquals('BP/CA - errata categoria', testCase.Type, 'Case type not correct');
     
-        System.assertNotEquals('', testCase.Type);
+        System.assertNotEquals('', testCase.Type, 'value of parameter is not matching');
     
         Test.stopTest();
     
@@ -108,7 +112,7 @@ static void testgetChageNonRegMeterByOrder() {
     
         System.assertEquals('In Lavorazione', testCase[0].Status, 'Case status not correct');
     
-        System.assertNotEquals('', testCase[0].Status);
+        System.assertNotEquals('', testCase[0].Status, 'value of parameter is not matching');
     
         Test.stopTest();
     
@@ -137,10 +141,20 @@ static void testgetChageNonRegMeterByOrder() {
     
         System.assertEquals(true, testCase.isEmpty(), 'Case list not empty');
 
-        System.assertNotEquals(false, testCase.isEmpty());
+        System.assertNotEquals(false, testCase.isEmpty(), 'value of parameter is not matching');
     
         Test.stopTest();
     
     }
-
+    
+    //getRecordByPracticeNumber
+    @isTest
+    static void getRecordByPracticeNumberTest() {
+        Case myCase = [SELECT Id, CaseNumber FROM Case];
+        HDT_QR_Case myTestObject = new HDT_QR_Case();
+        
+        Case result = myTestObject.getRecordByPracticeNumber(myCase.CaseNumber)[0];
+        System.assertEquals(myCase.Id, result.Id, 'Case non è il medesimo');
+    }
+    
 }

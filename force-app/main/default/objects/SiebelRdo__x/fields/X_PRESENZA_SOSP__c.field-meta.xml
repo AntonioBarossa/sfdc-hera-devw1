@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Presenza Sosp</label>
+    <label>Presenza Sospensione</label>
     <length>2</length>
     <required>false</required>
     <type>Text</type>

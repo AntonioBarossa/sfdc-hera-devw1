@@ -6,6 +6,11 @@
  */
 public inherited sharing class HDT_QR_Contact {
     
+    /**
+    * @description getRecordById
+    * @param id
+    * @return Contact
+    */
     public Contact getRecordById(String id) {
 
         List<Contact> contactsList = [
@@ -35,17 +40,22 @@ public inherited sharing class HDT_QR_Contact {
         return contact;
     }
 
+    /**
+    * @description getRecordsById
+    * @param ids
+    * @return List<Contact>
+    */
     public List<Contact> getRecordsById(List<String> ids) {
 
-        String query = 'SELECT Firstname, accountId, LastName, IndividualId,Company__c,CompanyOwner__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
-        List<Contact> contacts = Database.query(query);
+        List<Contact> contacts = Database.query('SELECT Firstname, accountId, LastName, IndividualId,Company__c,CompanyOwner__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED'); //HRAWRM-588_code_review_1550
         return contacts;
     }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 14/01/2021
     * @description Get Account primary Contact
-    * @param String accountid
+    * @param accountId
     * @return Contact
     */
     public List<Contact> getPrimaryContactByAccount(String accountId){
@@ -63,8 +73,8 @@ public inherited sharing class HDT_QR_Contact {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 27/01/2021
     * @description Get all contacts related to account
-    * @param String accountid
-    * @return Contact
+    * @param accountId
+    * @return List<Contact>
     */
     public List<Contact> getContactsByAccount(String accountId){
         return [
@@ -75,7 +85,12 @@ public inherited sharing class HDT_QR_Contact {
             WITH SECURITY_ENFORCED
         ];
     }
-
+    
+    /**
+    * @description getContactsByIndividual
+    * @param individualId
+    * @return Contact
+    */
     public Contact getContactsByIndividual(String individualId){
         return [
             SELECT
@@ -87,6 +102,11 @@ public inherited sharing class HDT_QR_Contact {
         ];
     }
 
+    /**
+    * @description getContactsIdByAccountId
+    * @param accountId
+    * @return List<String>
+    */
     public List<String> getContactsIdByAccountId(String accountId) {
         List <AccountContactRelation> accountContact = [
             SELECT ContactId from AccountContactRelation 
@@ -101,12 +121,23 @@ public inherited sharing class HDT_QR_Contact {
         return res;
     }
     
+    /**
+    * @description getContactsIdByAccountIdList
+    * @param accountIds
+    * @return List<Contact>
+    */
     public List<Contact> getContactsIdByAccountIdList(List<String> accountIds) {
-        return [Select id,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds];
+        // Start HRAWRM-450 07/09/2021 add CertifiedEmail__c
+        return [Select id,CertifiedEmail__c,accountId,firstname,lastname,FiscalCode__c,Phone,MobilePhone,Email,Individual.ProfilingCompanyConsent__c from Contact where AccountId IN : accountIds WITH SECURITY_ENFORCED];
     }
 
     // INIZIO SVILUPPI EVERIS
 
+    /**
+    * @description getRecordsByIds
+    * @param ids
+    * @return List<Contact>
+    */
     public List<Contact> getRecordsByIds(Set<Id> ids) {
         return [
             SELECT 
@@ -129,9 +160,13 @@ public inherited sharing class HDT_QR_Contact {
 
     // FINE SVILUPPI EVERIS
 
+    /**
+    * @description getRecordByFiscalCode
+    * @param fiscalCode
+    * @return Contact
+    */
     public Contact getRecordByFiscalCode(String fiscalCode) {
-        String query = 'SELECT  Id, Email , MobilePhone , Phone FROM Contact WHERE FiscalCode__c = :fiscalCode WITH SECURITY_ENFORCED';
-        List<Contact> contacts = Database.query(query);
+        List<Contact> contacts = Database.query('SELECT  Id, Email , MobilePhone , Phone FROM Contact WHERE FiscalCode__c = :fiscalCode WITH SECURITY_ENFORCED');
         if(contacts.size()>0){
             return contacts[0];
         }else{
@@ -140,6 +175,12 @@ public inherited sharing class HDT_QR_Contact {
         }
     }
 
+    /**
+    * @description getContactsByOwnerId
+    * @param ownerId
+    * @param ownerName
+    * @return List<Contact>
+    */
     public List<Contact> getContactsByOwnerId(String ownerId, String ownerName) {
         return [
             SELECT Id,
@@ -153,6 +194,11 @@ public inherited sharing class HDT_QR_Contact {
         ];
     }
 
+    /**
+    * @description getContactCoordinates
+    * @param contactId
+    * @return Contact
+    */
     public Contact getContactCoordinates(String contactId) {
         return [
             SELECT Id,
@@ -167,6 +213,11 @@ public inherited sharing class HDT_QR_Contact {
         ];
     }
 
+    /**
+    * @description getContactByEmailAddress
+    * @param fromEmail
+    * @return List<Contact>
+    */
     public List<Contact> getContactByEmailAddress(String fromEmail){
         return [
             SELECT Id,
@@ -181,15 +232,16 @@ public inherited sharing class HDT_QR_Contact {
         /**
      * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
      * @description Get Contact Point records by Id
-     * @param String individualId Id of the individual to filter the Leads
-     * @param String fields fields to retrieve separated by ,
+     * @param individualId Id of the individual to filter the Leads
+     * @param fields fields to retrieve separated by ,
+     * @return List<Contact>
      */
     public List<Contact> getRecordByIndividual(String individualId, String fields) {
+        List<Contact> contacts = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED');
+        
+        SObjectAccessDecision decision = Security.stripInaccessible(AccessType.READABLE, contacts);
 
-        String query = 'SELECT '+ fields +
-                ' FROM Contact WHERE IndividualId = :individualId WITH SECURITY_ENFORCED';
-
-        return Database.query(query);
+        return decision.getRecords();
 
     }
 }

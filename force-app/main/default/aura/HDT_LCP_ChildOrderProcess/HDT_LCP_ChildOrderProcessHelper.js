@@ -1,9 +1,45 @@
 ({
     helperInit : function(component,event,helper) {
+        console.log('HDT_LCP_ChildOrderProcessHelper.helperInit');
+
         component.set('v.loading', true);
-        var pageReference = component.get("v.pageReference");
-        component.set("v.orderId", pageReference.state.c__orderId);
-        component.set("v.orderParentId", pageReference.state.c__orderParent);
+        try {
+
+            var pageReference = component.get("v.pageReference");
+            if (pageReference != null) {
+
+                component.set("v.orderId", pageReference.state.c__orderId);
+                component.set("v.orderParentId", pageReference.state.c__orderParent);
+                
+            }
+
+            /** HRAWRM-451 - Modified parameter extraction method for Community pages 
+             *  Andrei Necsulescu - andrei.necsulescu@webresults.it
+            */
+            if (component.get("v.orderId") == null || component.get("v.orderParentId") == null) {
+
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                tempParam = '';
+
+                console.log('sURLVariables ' + sURLVariables);
+                sURLVariables.forEach(element => {
+                    tempParam = element.split('=');
+                    console.log('element **** ' + element);
+                    if (tempParam[0] == 'c__orderId') {
+                        component.set("v.orderId", tempParam[1]);
+                    }
+                    if (tempParam[0] == 'c__orderParent') {
+                        component.set("v.orderParentId", tempParam[1]);
+                    }
+
+                });
+
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
 
         var action = component.get('c.controllerInit');
         var orderId = component.get('v.orderId');
@@ -47,6 +83,7 @@
     },
 
     refreshOrderChild : function (component, event, helper){
+        console.log('HDT_LCP_ChildOrderProcessHelper.refreshOrderChild');
         var action = component.get('c.refreshOrderChild');
         action.setParams({
             "orderId" : component.get('v.orderId'),
@@ -69,6 +106,7 @@
     },
     
     setCheckbox : function (component, event, helper){
+        
         var processo = component.get("v.selectedValue");
         if(processo == "Prima Attivazione")
         {
@@ -108,25 +146,56 @@
     },
 
     redirectToComponent : function(component,accountId,venditaId,orderParent){
-        var workspaceAPI = component.find("workspace");
-        console.log("Begin Redirect");
-        workspaceAPI.getFocusedTabInfo().then(function(response) {
-            console.log("Begin Redirect_2_: " + JSON.stringify(response));
-            var focusedTabId = response.parentTabId;
-            var focusedTab = response.tabId;
-
-            //INIZIO SVILUPPI EVERIS
-
-            workspaceAPI.closeTab({tabId: focusedTab}).then(function(){
-
-                $A.get('e.force:refreshView').fire();
-           
-            });
-
-            $A.get('e.force:refreshView').fire();
-
+        var checkprocess = component.get("c.isCommunity");
+        var navService = component.find("navService");
+        console.log('*********check');
+        checkprocess.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state == 'SUCCESS') {
+                let community = response.getReturnValue();
+                console.log('*******2:' + JSON.stringify(community));
+                if (community != null && community.isCommunity == true) {
+                            
+                    var pageReference = {
+                                    type: 'comm__namedPage',
+                                    attributes: {
+                                        name: "WizardOrder__c",
+                                    },
+                                    state: {
+                                        "c__accountId": accountId,
+                                        "c__venditaId": venditaId
+                                    }
+                                };
             
-            
+                 navService.navigate(pageReference);
+                } 
+                else{
+
+                    console.log('HDT_LCP_ChildOrderProcessHelper.redirectToComponent');
+                    var workspaceAPI = component.find("workspace");
+                    console.log("Begin Redirect");
+                    workspaceAPI.getFocusedTabInfo().then(function(response) {
+                        console.log("Begin Redirect_2_: " + JSON.stringify(response));
+                        var focusedTabId = response.parentTabId;
+                        var focusedTab = response.tabId;
+
+                        //INIZIO SVILUPPI EVERIS
+
+                        workspaceAPI.closeTab({tabId: focusedTab}).then(function(){
+
+                            $A.get('e.force:refreshView').fire();
+                    
+                        });
+
+                        $A.get('e.force:refreshView').fire();
+                    });
+                
+                }
+            }
+        });
+
+        $A.enqueueAction(checkprocess);
+                    
             /*workspaceAPI.openSubtab({//Subtab({ NON SEMBRA ESSERE NECESSARIO APRIRE UN NUOVO TAB
                 parentTabId: focusedTabId,
                 pageReference: {
@@ -150,13 +219,14 @@
 
             //FINE SVILUPPI EVERIS
         
-        })
-        .catch(function(error) {
+       // })
+      /*  .catch(function(error) {
             console.log('******' + error);
-        });
+        });*/
     },
 
     redirectToSObjectSubtab : function(component,objectId,objectApiname){
+        console.log('HDT_LCP_ChildOrderProcessHelper.redirectToSObjectSubtab');
         var workspaceAPI = component.find("workspace");
         console.log("Begin Redirect");
         workspaceAPI.getFocusedTabInfo().then(function(response) {
@@ -180,7 +250,12 @@
                 },
                 focus: true
             }).then(function(response2){
+                console.log("refresh", response2);
                 workspaceAPI.closeTab({tabId: focusedTab});
+                workspaceAPI.refreshTab({
+                    tabId: response2,
+                    includeAllSubtabs: true
+                });
                 $A.get('e.force:refreshView').fire();
             })
             .catch(function(error) {

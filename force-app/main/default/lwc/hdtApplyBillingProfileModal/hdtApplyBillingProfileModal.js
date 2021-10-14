@@ -11,6 +11,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
     quoteBundleData;
     disabledConfirm = true;
     selectedQuoteItems;
+    complementaryBundleArray = []; //used in case their is an additional product to main 'Offerta commerciale' - HRAWRM-424
 
     columns = [
         {label: 'Nome', fieldName: 'Name', type: 'text'},
@@ -55,15 +56,27 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                     });
                 });
 
-                data.listVas.forEach(el => {
-                    quoteBundleArray.push({
-                        "Id"                   :el.Id,
-                        "Name"                 :el.Name,
-                        "BillingProfile"       :el.BillingProfile__c !== undefined ? el.BillingProfile__r.Name : '',
-                        "ProductName"          :el.SBQQ__Product__r.Name !== undefined ? el.SBQQ__Product__r.Name : '',
-                        "ServicePointCode"     :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : ''
+                if (data.listPodPdr.length == 0) {
+                    data.listVas.forEach(el => {
+                        quoteBundleArray.push({
+                            "Id"                   :el.Id,
+                            "Name"                 :el.Name,
+                            "BillingProfile"       :el.BillingProfile__c !== undefined ? el.BillingProfile__r.Name : '',
+                            "ProductName"          :el.SBQQ__Product__r.Name !== undefined ? el.SBQQ__Product__r.Name : '',
+                            "ServicePointCode"     :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : ''
+                        });
                     });
-                });
+                } else {
+                    data.listVas.forEach(el => { //used in case their is an additional product to main 'Offerta commerciale' - HRAWRM-424
+                        this.complementaryBundleArray.push({
+                            "Id"                   :el.Id,
+                            "Name"                 :el.Name,
+                            "BillingProfile"       :el.BillingProfile__c !== undefined ? el.BillingProfile__r.Name : '',
+                            "ProductName"          :el.SBQQ__Product__r.Name !== undefined ? el.SBQQ__Product__r.Name : '',
+                            "ServicePointCode"     :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : ''
+                        });
+                    });
+                }
 
                 data.listVasCambioOfferta.forEach(el => {
                     quoteBundleArray.push({
@@ -74,6 +87,16 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                         "ServicePointCode"       :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : '',
                         "IsCambioOfferta"        :true, //not shown on table, used to perform logic later
                         "BillingProfilePrevious" :el.SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name //not shown on table, used to perform logic later
+                    });
+                });
+
+                data.listBonus?.forEach(el => {
+                    quoteBundleArray.push({
+                        "Id"                   :el.Id,
+                        "Name"                 :el.Name,
+                        "BillingProfile"       :el.BillingProfile__c !== undefined ? el.BillingProfile__r.Name : '',
+                        "ProductName"          :el.SBQQ__Product__r.Name !== undefined ? el.SBQQ__Product__r.Name : '',
+                        "ServicePointCode"     :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : ''
                     });
                 });
 
@@ -94,6 +117,15 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
     updateQuoteBundle(){
         this.loading = true;
+
+        if (this.complementaryBundleArray.length > 0) { //used in case their is an additional product to main 'Offerta commerciale' - HRAWRM-424
+
+            console.log('complementaryBundleArray assign before: ' + JSON.stringify(this.selectedQuoteItems));
+
+            this.selectedQuoteItems = [...this.selectedQuoteItems, ...this.complementaryBundleArray];
+
+            console.log('complementaryBundleArray assign after: ' + JSON.stringify(this.selectedQuoteItems));
+        }
 
         updateQuoteLinesBillingProfile({quoteLinesToUpdate: this.selectedQuoteItems, billingProfileId: this.selectedBillingProfile.Id}).then(data =>{
             this.loading = false;

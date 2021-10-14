@@ -93,6 +93,10 @@
                 <behavior>Readonly</behavior>
                 <field>DiscardReason__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Priority__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -128,6 +132,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BillingProfile__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VASBillingMode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -245,11 +253,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Order.Escalation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>99</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.Validazione_Documenti</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -359,6 +362,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
         </platformActionListItems>
+>
     </platformActionList>
     <relatedLists>
         <fields>Product2</fields>
@@ -371,10 +375,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
         <fields>wrts_prcgvr__DueDate__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
         <fields>OWNER.LAST_NAME</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Order__c</relatedList>
@@ -389,9 +393,6 @@
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists> -->
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
@@ -418,20 +419,12 @@
         <fields>NAME</fields>
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
-    <!-- <relatedLists>
-        <fields>NAME</fields>
-        <fields>SBQQ__NetAmount__c</fields>
-        <fields>SBQQ__Status__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>SBQQ__Primary__c</fields>
-        <relatedList>SBQQ__Quote__c.OrderReference__c</relatedList>
-    </relatedLists> -->
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62T</masterLabel>
+        <masterLabel>00h3N000002SmKA</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

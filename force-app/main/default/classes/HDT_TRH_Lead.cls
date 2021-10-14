@@ -26,7 +26,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         List<Lead> listNew = trigger.new;
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
-        for(Lead L : listNew){
+        for(Lead l : listNew){
             if(l.email != null){
                 String s = l.email.split('@')[1];
                 if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -54,7 +54,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.company = l.firstname + ' '  + l.lastname; 
                     }
                     }
-            }
+            } 
         }
       /*  for(Lead l : listlead){
             if('Default'.equals(l.company)){
@@ -72,6 +72,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
           
         public override void afterUpdate(){
             System.debug('afterUpdate');
+            Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
             for (Lead tempLead :   (List<Lead> ) Trigger.New) {
 
                 if (tempLead.IndividualId==null&& mapOld.get(tempLead.id)!=null &&
@@ -113,15 +114,15 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> accId = new List<String>();
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
-                accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c' );
+                accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c,MobilePhone__c' );
+                
                 for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
                         String lastName = (a.LastName__c != null && a.LastName__c != '' ? a.LastName__c : a.Name);
                         if ( a.LastName__c==null) {
                             if(r.id == a.recordtypeid){
-                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone= a.Phone, Email= a.PrimaryEmail__c, Fax= a.FAX__c);
-                                conList.add(contact);
+
                                 Lead li = mapAccountLead.get(a.id);
                                // a.FirstName__c = li.FirstName;
                             
@@ -129,6 +130,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 a.Name=li.Company;
                                 a.PrimaryEmail__c= li.Email;
                                 a.Description= li.Description;
+                                Contact contact= new Contact(AccountId= a.Id, LastName= lastName, FiscalCode__c= a.FiscalCode__c, Phone=mapAccountLead.get(a.id).Phone, Email=mapAccountLead.get(a.id).email ,MobilePhone= mapAccountLead.get(a.id).MobilePhone, Fax= a.FAX__c);
+                                conList.add(contact);
                                 accToUpdate.add(a);
 
                             }
@@ -153,20 +156,58 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     for(Contact c : conList){
                         contId.add(c.id);
                     }
-                    List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(accId, contId, 'Id');
+                    List<AccountContactRelation> listAccCon= accoContRelQr.getContactsByAccountWithRoles(accId);
+                    List<Contact> listContactToClean = new List<Contact>();
+                    Set<id> setInd = new Set<id>();
                     for(AccountContactRelation acc : listAccCon){
-                        acc.Roles='Azienda';
+                        if (contId.contains(acc.ContactId)) {
+                            acc.Roles='Azienda'; 
+                        }
+                        else {
+                            //contatti da sbiancare #HRAWRM-387 01/09/2021
+                            Contact tempContact=new Contact();
+                            tempContact.Id=acc.ContactId;
+                            tempContact.Email=null;
+                            tempContact.MobilePhone=null;
+                            tempContact.phone=null;
+                            listContactToClean.add(tempContact);
+                            setInd.add(acc.Contact.IndividualId);
+                        }  
                     }
-                    accoContRelSrv.upsertRecord(listAccCon);
-                    HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
-                    ba.dtos = accToUpdate;  
-                    Database.executeBatch(ba,80);
+                    if (setInd.size()>0) {
+                        //Start #HRAWRM-387 01/09/2021
+                        List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
+                        List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
+                        List<sObject> listToDelete = new List<sObject>();
+                        listToDelete.addAll(listToDeleteEm);
+                        listToDelete.addAll(listToDeletePh);
+                        if (listToDelete.size()>0) {
+                          delete listToDelete;
+                        }
+                        update listContactToClean;
+                        //End #HRAWRM-387 01/09/2021
+
+                        accoContRelSrv.upsertRecord(listAccCon);
+                    }
+                   
                 }
+            System.debug('before Call Batch ');
+        // Start HRAWRM-450 07/09/2021 
+
+            //Start  Lorenzo 
+            HDT_BA_AccountBpCaCallout ba = new  HDT_BA_AccountBpCaCallout();
+            ba.dtos = accToUpdate;  
+            Database.executeBatch(ba,80);
+            //End  Lorenzo 
+
+        // End HRAWRM-450 07/09/2021
+    
             }
             
         }
         public override void   beforeUpdate(){
             System.debug('HDT_TRH_Lead.beforeUpdate');
+            Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
             Set<String> setFiscalCodes = new Set<String>();
             Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
             List<Lead> listNew = trigger.new;
@@ -194,15 +235,36 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
                         wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
                        
-                        if ( wrp.isValid) {
-                            Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
-                            tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
-                            tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
-                            tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                       try { // Start RDTR-00_HRAWRM-491 08/09/2021
+                            if ( wrp.isValid) {
+                                Date myDate = Date.newInstance(Integer.valueOf( wrp.year),Integer.valueOf(wrp.month),Integer.valueOf( wrp.day));
+                                tempLead.Birthdate__c=tempLead.Birthdate__c==null?myDate:tempLead.Birthdate__c;
+                                tempLead.Birthcity__c=String.isBlank( tempLead.Birthcity__c)? wrp.city: tempLead.Birthcity__c;
+                                tempLead.Gender__c=String.isBlank( tempLead.Gender__c)? wrp.gender: tempLead.Gender__c;
+                                //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+                                Map<String,String> infoData=new  Map<String,String>();
+                                infoData.put('lastName',tempLead.LastName);
+                                infoData.put('firstName',tempLead.FirstName);
+                                infoData.put('birthDate', String.valueOf(tempLead.Birthdate__c));
+                                infoData.put('birthPlace',tempLead.Birthcity__c);
+                                infoData.put('gender',tempLead.Gender__c);
+       
+                                System.debug('return ' +HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c));
+                                if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,tempLead.FiscalCode__c)) {
+                                    tempLead.addError('Inserire un codice fiscale valido');
+                                }
+                                //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato
+
+                            }
+                            else{
+                                tempLead.addError('Inserire un codice fiscale valido');
+                            }
                         }
-                        else{
+                        catch (Exception e) {
+                           System.debug('errore: '+e.getMessage());
                             tempLead.addError('Inserire un codice fiscale valido');
-                        }
+                       }// End RDTR-00_HRAWRM-491 08/09/2021
+                       
                     }
                 }
             }

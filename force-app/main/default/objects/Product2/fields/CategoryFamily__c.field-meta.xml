@@ -199,10 +199,14 @@
                 <label>Altro</label>
             </value>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>Hera Doppio Sconto</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>TBD</label>
+                <label>Hera Doppio Sconto</label>
+            </value>
+            <value>
+                <fullName>Gas Beta</fullName>
+                <default>false</default>
+                <label>Gas Beta</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -4,6 +4,17 @@
     <active>true</active>
     <label>Escalation - Case</label>
     <picklistValues>
+        <picklist>ActivityOutcome__c</picklist>
+        <values>
+            <fullName>Negativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positivo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
             <fullName>Distributore</fullName>
@@ -22,6 +33,17 @@
         </values>
         <values>
             <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>AssigneeType__c</picklist>
+        <values>
+            <fullName>Coda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -150,6 +172,37 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DiscardCategory__c</picklist>
+        <values>
+            <fullName>Anonima</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestionale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarto complesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarto semplice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tracciatura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>IwsDemand__c</picklist>
         <values>
             <fullName>HCMARCHE_AUTOLETTURA</fullName>
@@ -261,9 +314,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ManualCheckResult__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PetitionerAssigneeStructure__c</picklist>
         <values>
+            <fullName>-</fullName>
+            <default>true</default>
+        </values>
+        <values>
             <fullName>CRM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CVM %2B Corp Mui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canone Rai e Bonus</fullName>
             <default>false</default>
         </values>
         <values>
@@ -288,6 +368,18 @@
         </values>
         <values>
             <fullName>PPT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STS x CVM %2B Corp Mui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales%26Marketing Service</fullName>
             <default>false</default>
         </values>
         <values>
@@ -376,6 +468,10 @@
         </values>
         <values>
             <fullName>Annullamento Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento Prestazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1646,11 +1742,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica calcolo bollette mercato aziende Business</fullName>
+            <fullName>Verifica calcolo bollette mercato Retail e aziende Business</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica calcolo bollette mercato Retail e aziende Business</fullName>
+            <fullName>Verifica calcolo bollette mercato aziende Business</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1768,54 +1864,6 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Annullamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Anticipo Appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione Offerte</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata Callback</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata inbound</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata outbound</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratti%2FBonus Commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Documentale%2FCopia Contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Iva e Accise</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Switch in Ripristinatorio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione dati discordanti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione processi Ultima Istanza</fullName>
             <default>false</default>
         </values>
@@ -1824,55 +1872,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavorazione Reclamo Post Survey</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifica Contratti PreAttivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Morosità Business</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Presa Appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Rapporti con i distributori e SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reporting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riapertura urgenti Errori DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta informazioni appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Commissioni Agenzie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sollecito Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sportello</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1881,10 +1885,6 @@
         </values>
         <values>
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto Catalogo Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1969,6 +1969,17 @@
         </values>
         <values>
             <fullName>Verifiche Credito Business</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Validation__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

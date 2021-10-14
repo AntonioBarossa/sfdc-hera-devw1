@@ -98,4 +98,39 @@ public inherited sharing class HDT_LC_ProcessesContainer {
         return mapResponse;
     }
 
+    /**
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+    * @date 03/09/2021
+    * @description New community check logic using Site Class
+    * @return Map<String, Object> Containing indication if it's community context or not + any errors
+    */
+    @AuraEnabled
+    public static Map<String, Object> isCommunity(){
+
+        Map<String, Object> result = new Map<String, Object>();
+
+        try {
+
+            Id siteId = Site.getSiteId(); 
+            
+            if (siteId != null) {
+                result.put('isCommunity', true);
+            } else {
+                result.put('isCommunity', false);
+            }
+
+            result.put('error', false);
+            
+            
+        } catch (Exception e) {
+            
+            result.put('error', true);
+            result.put('errorMessage', e.getMessage());
+            result.put('errorStackTrace', e.getStackTraceString());
+            
+        }
+
+        return result;
+    }
+
 }

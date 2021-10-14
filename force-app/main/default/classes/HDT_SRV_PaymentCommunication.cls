@@ -41,7 +41,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                     'numeroBollettino' => document.Bill__c,
                     'numeroFattura' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
                     'numeroFattura1' => '',
-                    'rataFattura' => '',
+                    'rataFattura' => 'RATEIZZAZIONI' == document.Type__c ? document.DocumentNumber__c : '',
                     'scadenza' => document.ExpirationDate__c,
                     'infoBlocco' => '',
                     'idProcesso' => '',

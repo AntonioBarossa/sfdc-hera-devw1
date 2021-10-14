@@ -4,7 +4,7 @@
         <name>PredefaultDataDecorrenza</name>
         <label>PredefaultDataDecorrenza</label>
         <locationX>446</locationX>
-        <locationY>278</locationY>
+        <locationY>1430</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -30,7 +30,7 @@
         <name>Assegna_a_BO</name>
         <label>Assegna a BO</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>Assegna_a_Da_Inviare</name>
         <label>Assegna a Da Inviare</label>
         <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -73,10 +73,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaCaseId</name>
+        <label>AssegnaCaseId</label>
+        <locationX>380</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>InputCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Voltura_Tecnica</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetInputCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.EffectiveDate__c</assignToReference>
             <operator>Assign</operator>
@@ -98,6 +114,20 @@
                 <elementReference>ShipToDifferentAddress</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Resident__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.Resident__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.WithdrawalClass__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.WithdrawalClass__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_0</targetReference>
         </connector>
@@ -106,7 +136,7 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>446</locationX>
-        <locationY>1334</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -126,10 +156,64 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Compatibile</name>
+        <label>Compatibile?</label>
+        <locationX>248</locationX>
+        <locationY>758</locationY>
+        <defaultConnector>
+            <targetReference>Arricchimento_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsCompatible</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsCompatible</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ParentRecordId_valorizzato</name>
+        <label>ParentRecordId valorizzato?</label>
+        <locationX>446</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>GetInputCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non valorizzato</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ParentRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetParentRecord</targetReference>
+            </connector>
+            <label>Valorizzato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Proflo_front</name>
         <label>Proflo front?</label>
         <locationX>446</locationX>
-        <locationY>878</locationY>
+        <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>Assegna_a_Da_Inviare</targetReference>
         </defaultConnector>
@@ -161,7 +245,7 @@
         <name>Quale_Azione</name>
         <label>Quale Azione?</label>
         <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationY>1910</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -240,11 +324,112 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Crea_Case_Voltura_Tecnica</name>
+        <label>Crea Case Voltura Tecnica</label>
+        <locationX>248</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Compatibilita</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>GetParentRecord.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Voltura</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>GetParentRecord.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>GetParentRecord.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>GetParentRecord.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CreatorGroup__c</field>
+            <value>
+                <elementReference>GetParentRecord.CreatorGroup__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>GetParentRecord.PhoneNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <elementReference>GetParentRecord.Origin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>GetParentRecord.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>GetParentRecord.PhoneNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RecordType_Voltura_Tecnica.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>GetParentRecord.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Station__c</field>
+            <value>
+                <elementReference>GetParentRecord.Station__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Voltura Tecnica</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationY>2366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -276,10 +461,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_RecordType_Voltura_Tecnica</name>
+        <label>Get RecordType Voltura Tecnica</label>
+        <locationX>248</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Voltura_Tecnica</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_VolturaTecnica</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCase</name>
         <label>GetInputCase</label>
         <locationX>446</locationX>
-        <locationY>158</locationY>
+        <locationY>1310</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>PredefaultDataDecorrenza</targetReference>
@@ -296,18 +502,39 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetParentRecord</name>
+        <label>GetParentRecord</label>
+        <locationX>248</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_RecordType_Voltura_Tecnica</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>1454</locationY>
+        <locationY>2606</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
         <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>Screen_Input_Dati</targetReference>
         </connector>
@@ -317,7 +544,7 @@
         <name>Screen_Input_Dati</name>
         <label>Screen Input Dati</label>
         <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -422,7 +649,7 @@
         <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>GetInputCase</targetReference>
+            <targetReference>ParentRecordId_valorizzato</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -430,7 +657,7 @@
         <name>Annullamento_Prestazione_SubFlow</name>
         <label>Annullamento Prestazione SubFlow</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>2030</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -445,11 +672,66 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Arricchimento_Dati</name>
+        <label>Arricchimento Dati</label>
+        <locationX>380</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>AssegnaCaseId</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>GetParentRecord.Contract__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_Voltura_Tecnica</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>GetParentRecord.ServicePoint__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Compatibilita</name>
+        <label>Compatibilita</label>
+        <locationX>248</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Compatibile</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_Voltura_Tecnica</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>IsCompatible</assignToReference>
+            <name>IsCompatible</name>
+        </outputAssignments>
+    </subflows>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IsCompatible</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

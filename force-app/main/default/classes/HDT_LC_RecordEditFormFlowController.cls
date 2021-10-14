@@ -166,6 +166,4 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
     }
 
-
-
 }

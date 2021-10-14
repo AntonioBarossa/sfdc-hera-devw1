@@ -82,7 +82,7 @@ public inherited sharing class HDT_QR_SearchPlug {
         if(objRes.isAccessible()){
 
             myQuote = [
-                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c,
+                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c, CampaignEleggibilityGroup__c,
                        Market__c, Channel__c, CustomerMarking__c, CategoryTypeClient__c, SuperUser__c,
                        CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c,
                        ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, MeterType__c
@@ -109,7 +109,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                        ClientAgeMin__c, ClientAgeMax__c, LoginGroup__c,
                        ConsumptionRangeEEmin__c, ConsumptionRangeEEmax__c,
                        ConsumptionRangeGASmin__c, ConsumptionRangeGASmax__c,
-                       PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c
+                       PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c,Campaign__c,product__r.productcode
 
                 FROM EligibilityCriteria__c
                 WHERE Product__r.Status__c IN :statusList AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND Product__r.NoOrderable__c = false AND
@@ -142,7 +142,8 @@ public inherited sharing class HDT_QR_SearchPlug {
                         (CompanyOwnerOperator__c = 'excludesValues' AND CompanyOwner__c excludes (:quote.CompanyOwner__c)) OR
                         (CompanyOwnerOperator__c = 'includesValues' AND CompanyOwner__c includes (:quote.CompanyOwner__c)) OR
                         (CompanyOwnerOperator__c = 'includesAll')
-                    ) AND                     
+                    ) AND
+                    (Campaign__c = :quote.CampaignEleggibilityGroup__c OR Campaign__c = null) AND
                     (CampaignName__c = :quote.CampaignName__c OR CampaignName__c = null) AND
                     (PromoCode__c = :quote.FriendCode__c OR PromoCode__c = null) AND
                     (Agency__c = :quote.Agency__c OR Agency__c = null) AND

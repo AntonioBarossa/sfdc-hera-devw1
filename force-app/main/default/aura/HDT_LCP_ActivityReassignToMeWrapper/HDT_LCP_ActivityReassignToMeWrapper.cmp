@@ -1,0 +1,3 @@
+<aura:component implements = "force:lightningQuickAction, force:hasRecordId" >
+    <c:hdtActivityReassignToMe recordId="{!v.recordId}" onclose="{!c.closeModal}"/>
+</aura:component>	

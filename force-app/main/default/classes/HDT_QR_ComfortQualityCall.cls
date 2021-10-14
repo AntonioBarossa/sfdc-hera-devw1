@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 13/07/2021
+* @description Class HDT_QR_ComfortQualityCall
+* @history Keltin Mesonjesi – 13/07/2021 – Created class
+*/
 public inherited sharing class HDT_QR_ComfortQualityCall {
     
     public static List<ComfortQualityCall__c> getRecordByOrderParams(Order order){
@@ -36,7 +42,9 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             CustomerType__c,
             DaysComfort__c,
             UniqueQuality__c,
-            ComfortDocSendingChannel__c
+            ComfortDocSendingChannel__c,
+            QualitySignatureMethod__c,
+            ComfortSignatureMethod__c
             FROM ComfortQualityCall__c
             WHERE Process__c = :order.RecordType.DeveloperName //text
             AND Channel__c = :order.Channel__c //text

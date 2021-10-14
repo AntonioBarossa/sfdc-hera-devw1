@@ -11,6 +11,9 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     estimateAmount;
     powerQuote;
     administrativeBurden;
+    get administrativeBurdenDisplay(){
+        return this.administrativeBurden.toFixed(2);
+    }
     estimatedVAT;
     validityDateEstimate; //DD-MM-YYYY format
     //change date to YYYY-MM-DD format
@@ -53,6 +56,10 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
     }
 
     submitDetails() {
+        if(!this.quoteType){
+            this.isModalOpen = false;
+            return;
+        }
         const fields = {};
         fields['Id'] = this.recordId;
         fields['QuotationType__c'] = this.quoteType;
@@ -69,7 +76,8 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
         console.log(JSON.stringify(fields));
 
         updateOrder({order: fields}).then(() => {
-            this.sendToast('Success', 'Dati preventivo salvati', 'success');
+            if(this.isRapido)
+                this.sendToast('Success', 'Dati preventivo salvati', 'success');
         })
         .catch(error => {
             this.sendToast('Errore salvataggio preventivo',  error.body.message, 'error');
@@ -103,7 +111,7 @@ export default class HdtCalculateEstimatedCost extends LightningElement {
                 this.powerQuote=wrapper.fixedQuotes.PowerQuote__c;
                 this.estimateAmount=wrapper.estimatedAmount;
             }else{
-                this.sendToast('Errore Calcolo Preventivo',  'Fallimento Nel calcolare Preventivo', 'warning');
+                this.sendToast('Errore Calcolo Preventivo',  'Non è possibile calcolare il preventivo in questa fase, sarà calcolata nelle fasi successive', 'warning');
             }
             this.isModalOpen = true;
         }catch(e){

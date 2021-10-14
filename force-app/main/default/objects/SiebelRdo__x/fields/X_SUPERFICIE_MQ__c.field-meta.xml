@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Superficie MQ Admin</label>
+    <label>Superficie MQ</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

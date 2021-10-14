@@ -18,9 +18,24 @@ public with sharing class HDT_LC_FormAccountResidenziale {
     public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress, Map<String,String> accountAddressRes){
         System.debug('accountAddressRes'+accountAddressRes);
         Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
-        Account account= new Account(CustomerType__c=dataAccount.get('customerType'),CustomerAccountStatus__c='Prospect',BirthDate__c=birthdate,BirthProvince__c=dataAccount.get('birthplace'),FirstName__c= dataAccount.get('firstName'), LastName__c= dataAccount.get('lastName'), FiscalCode__c= dataAccount.get('fiscalCode') ,PhonePrefix__c= dataAccount.get('phonePrefix') ,Phone= dataAccount.get('phoneNumber'),MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'),MobilePhone__c =dataAccount.get('mobilePhone'),Name= dataAccount.get('name'),PrimaryEmail__c= dataAccount.get('email') ,RecordTypeId= dataAccount.get('recordTypeId'),Category__c= dataAccount.get('category'),CustomerMarking__c= dataAccount.get('customerMarking'), Gender__c= dataAccount.get('gender'), OtherPhone__c= dataAccount.get('otherPhoneNumber'),DegreeOfStudies__c= dataAccount.get('education'),Profession__c= dataAccount.get('profession'), 
+        Account account= new Account(CustomerType__c=dataAccount.get('customerType'),CustomerAccountStatus__c='Prospect',BirthDate__c=birthdate,BirthProvince__c=dataAccount.get('birthplace'),FirstName__c= dataAccount.get('firstName'), LastName__c= dataAccount.get('lastName'), FiscalCode__c= dataAccount.get('fiscalCode') ,PhonePrefix__c= dataAccount.get('phonePrefix') ,Phone= dataAccount.get('phoneNumber'),MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'),MobilePhone__c =dataAccount.get('mobilePhone'),Name= dataAccount.get('name'),PrimaryEmail__c= dataAccount.get('email') ,
+        RecordTypeId= dataAccount.get('recordTypeId'),Category__c= dataAccount.get('category'),CustomerMarking__c= dataAccount.get('customerMarking'), Gender__c= dataAccount.get('gender'), OtherPhone__c= dataAccount.get('otherPhoneNumber'),DegreeOfStudies__c= dataAccount.get('education'),Profession__c= dataAccount.get('profession'), 
         CompanyOwner__c=dataAccount.get('companyOwner')
         );
+        //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+        Map<String, String> infoData = new Map<String, String>();
+        infoData.put('lastName'     , dataAccount.get('lastName')   );
+        infoData.put('firstName'    , dataAccount.get('firstName')  );
+        infoData.put('birthDate'    , dataAccount.get('birthDate')  );
+        infoData.put('birthPlace'   , dataAccount.get('birthplace') );
+        infoData.put('gender'       , dataAccount.get('gender')     );
+        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,dataAccount.get('fiscalCode') )) {
+            throw new AuraHandledException('Inserire un codice fiscale valido');
+        }
+        //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato
+
+        
+        
         for(String s: accountAddress.keySet()){
             if('BillingIsAddressVerified__c' == s){
                 account.put(s, accountAddress.get(s) == 'true' ? true : false);

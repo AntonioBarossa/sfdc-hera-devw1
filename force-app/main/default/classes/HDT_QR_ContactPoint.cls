@@ -89,6 +89,18 @@ public inherited sharing class HDT_QR_ContactPoint {
         return contemail;
 
     }
+        
+    public static List<ContactPointEmail> getIndividualContactEmailList (Set<Id> setInd){
+        return [SELECT Id FROM ContactPointEmail WHERE ParentId IN :setInd  WITH SECURITY_ENFORCED];
+
+    }
+    public static List<ContactPointPhone> getIndividualContactsPhoneList (Set<Id> setInd){
+
+
+        return [SELECT Id FROM ContactPointPhone  WHERE ParentId IN :setInd WITH SECURITY_ENFORCED];
+
+    }
+    
 
     /** The parameter "String phone" is not being used anywhere inside this method 
      *  The method was commented as it doesn't seem to be used anywhere

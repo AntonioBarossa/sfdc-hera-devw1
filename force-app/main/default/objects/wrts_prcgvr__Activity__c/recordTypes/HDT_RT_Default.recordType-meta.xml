@@ -5,6 +5,17 @@
     <description>Record Type di default per activity dei processi</description>
     <label>Default</label>
     <picklistValues>
+        <picklist>ActivityOutcome__c</picklist>
+        <values>
+            <fullName>Negativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positivo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
             <fullName>Distributore</fullName>
@@ -179,61 +190,17 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PetitionerAssigneeStructure__c</picklist>
+        <picklist>ManualCheckResult__c</picklist>
         <values>
-            <fullName>CRM</fullName>
+            <fullName>Dati corretti forniti da cliente e cambio uso - non necessario</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CVM %2B Corp Mui</fullName>
+            <fullName>Dati corretti forniti da cliente e cambio uso inserito</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Canone Rai e Bonus</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credito HC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DAFC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esercizio Clienti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fatturazione e incassi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PPT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reporting</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>STS x CVM %2B Corp Mui</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sales%26Marketing Service</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Tesoreria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VENDITA</fullName>
+            <fullName>Dati corretti forniti dal DL</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -999,6 +966,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type__c</picklist>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>

@@ -1,4 +1,4 @@
-trigger HDT_Knowledge on Knowledge__kav (before update) {
+trigger HDT_Knowledge on Knowledge__kav (before update, after update) {
     
     HDT_TRH_Knowledge myUpdateHandler = new HDT_TRH_Knowledge();
     /*for (Knowledge__kav article : Trigger.new){

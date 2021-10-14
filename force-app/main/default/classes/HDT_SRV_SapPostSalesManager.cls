@@ -1,5 +1,7 @@
 public inherited sharing class HDT_SRV_SapPostSalesManager {
 
+    //classe commentata in quanto non utilizzata
+    /*
     public void submitRequest(String recordId, String caseType){
 
         HDT_UTL_SapIntegrationInterface support = HDT_UTL_SapIntegrationAdapterFactory.getInstance('HDT_WS_GenericSapIntegrationAdapter');
@@ -18,4 +20,5 @@ public inherited sharing class HDT_SRV_SapPostSalesManager {
         System.debug('Response Body--> '+sapIntegration.responseBody);
 
     }
+    */
 }

@@ -13,16 +13,13 @@
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
-                <field>ToPublishDate__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>Language</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <field>ProblemType__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <field>SalesCompany__c</field>
             </layoutItems>
@@ -85,25 +82,8 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Informazioni Assegnazione</label>
-        <layoutColumns>
-            <layoutItems>
-                <field>AssignedById</field>
-            </layoutItems>
-            <layoutItems>
-                <field>AssignedToId</field>
-            </layoutItems>
-            <layoutItems>
-                <field>AssignmentNote</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <field>AssignmentDate</field>
-            </layoutItems>
-            <layoutItems>
-                <field>AssignmentDueDate</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

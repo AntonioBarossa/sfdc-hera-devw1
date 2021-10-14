@@ -20,6 +20,24 @@ public with sharing class HDT_QR_ContentDocumentLink {
         return [SELECT Id, LinkedEntityId, ContentDocumentId, IsDeleted, SystemModstamp, ShareType, Visibility 
                 FROM ContentDocumentLink
                 WHERE LinkedEntityId =: entityId
+                WITH SECURITY_ENFORCED
+                ORDER BY SystemModstamp DESC];
+    }
+
+    /**​
+    * @author Keltin Mesonjesi (keltin.mesonjesi@webresults.it)​
+    * @date 16/09/2021
+    * @description Get record of ContentDocumentLink based on the Linked Entity and ContentDocument Description
+    * @param entityId Id of the record Linked to the ContentDocument
+    * @param description description that has been set on ContentDocument
+    * @return List of extracted Content Document Links
+    */
+    public List<ContentDocumentLink> getRecordsByEntityAndContentDocumentDescription(String entityId, String description){
+        return [SELECT Id, LinkedEntityId, ContentDocumentId, IsDeleted, SystemModstamp, ShareType, Visibility 
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId =: entityId
+                AND ContentDocument.Description = :description
+                WITH SECURITY_ENFORCED
                 ORDER BY SystemModstamp DESC];
     }
 }
