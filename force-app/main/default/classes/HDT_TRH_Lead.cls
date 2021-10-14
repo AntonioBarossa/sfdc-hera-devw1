@@ -228,11 +228,13 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             //id currentUserId=UserInfo.getUserId(); HRAWRM-905 14/10/2021
             Map<Id, Id> mapLeadOwner = new Map<Id, Id>();
             for(Lead l : listNew){
+
                 id currentUserId=UserInfo.getUserId();
                 if (l.OwnerId!=currentUserId) {
                    // l.OwnerId=currentUserId;
                    mapLeadOwner.put(l.id,currentUserId);
                 }//HRAWRM-905 End 14/10/2021
+
                 if(l.email != null){
                     String s = l.email.split('@')[1];
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
