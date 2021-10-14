@@ -318,7 +318,7 @@ public with sharing class HDT_QR_ServicePointTst {
 
             ServicePoint__c sp = [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE MeterStatus__c = 'Bozza'];
 
-            List<ServicePoint__c> spList = qrServPoint.getServicePointsByCodeWithFilter(sp.ServicePointCode__c, 'Id', 'Status__c = \'Impianto compl. in funzione\'');
+            List<ServicePoint__c> spList = qrServPoint.getServicePointsByCodeWithFilter(sp.ServicePointCode__c, 'Id', 'AND Status__c = \'Impianto compl. in funzione\'');
 
             List<ServicePoint__c> spList2 = qrServPoint.getServicePointsByCodeWithFilter(sp.ServicePointCode__c, 'Id', 'AND SupplyCity__c = \'Firenze\'');
 
