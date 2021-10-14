@@ -14,7 +14,7 @@ public with sharing class HDT_QR_BusinessDateTst {
         Test.startTest();
         String testBd = HDT_QR_BusinessDate.getWorkingBusinessDateConf();
         System.assert(testBd == null);
-		System.assertNotEquals('BusinessHours', testBd);
+		System.assertNotEquals('BusinessHours', testBd,'value of parameter is not matching');
         Test.stopTest();    
     }
 

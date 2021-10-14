@@ -29,11 +29,11 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
         
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
 
-        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c);
+        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c,'value of parameter is not matching');
 
         Test.stopTest();
     }
-
+    
 //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this Test Method
 
 /**
@@ -45,23 +45,23 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 * Created: 2021-08-03
 * Modified By:
 **/    
-    @isTest
-    public static void testGetExtimatedCost(){
-        Test.startTest();
-        
-        Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, Phase__c
-                            FROM Order
-                            WHERE Status = 'Draft'
-                            LIMIT 1];
+@isTest
+public static void testGetExtimatedCost(){
+    Test.startTest();
+    
+    Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, Phase__c
+                        FROM Order
+                        WHERE Status = 'Draft'
+                        LIMIT 1];
 
-        HDT_LC_CalculateEstimatedCost.getExtimatedCost(updateOrder);
+    HDT_LC_CalculateEstimatedCost.getExtimatedCost(updateOrder);
 
-        
-        System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
+    
+    System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
 
-        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c);
+    System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c);
 
-        Test.stopTest();
-    }
+    Test.stopTest();
+}
 //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this Test Method
 }

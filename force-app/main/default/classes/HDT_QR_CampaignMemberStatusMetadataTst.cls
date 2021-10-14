@@ -24,7 +24,7 @@ public class HDT_QR_CampaignMemberStatusMetadataTst{
 
 		System.assertEquals('Nuovo', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 
-		System.assertNotEquals('', campMembStat.MasterLabel);
+		System.assertNotEquals('', campMembStat.MasterLabel,'value of parameter is not matching');
 
 		Test.stopTest();
 	}

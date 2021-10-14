@@ -28,7 +28,7 @@ public with sharing class HDT_LC_AccountAlertsTst {
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
-    
+
     //TESTS
     
     //getAccountAlerts
@@ -49,9 +49,9 @@ public with sharing class HDT_LC_AccountAlertsTst {
         AlertAccountConfiguration__c result = ((List<AlertAccountConfiguration__c>) JSON.deserialize(jsonResult, List<AlertAccountConfiguration__c>.class))[0];
         
         //ASSERTS
-        System.assert(String.isNotBlank(jsonResult));
-        System.assert(result != null);
-        System.assertEquals(myAlertConfig.Id, result.Id);
+        System.assert(String.isNotBlank(jsonResult), 'value of parameter is matching');
+        System.assert(result != null, 'value of parameter is matching');
+        System.assertEquals(myAlertConfig.Id, result.Id, 'value of parameter is matching');
     }
     
     //getAvailableRulesFor
@@ -83,8 +83,8 @@ public with sharing class HDT_LC_AccountAlertsTst {
         List<AlertConfiguration__c> result = (List<AlertConfiguration__c>) JSON.deserialize(jsonResult, List<AlertConfiguration__c>.class);
         
         //ASSERTS
-        System.assert(String.isNotBlank(jsonResult));
-        System.assert(result != null);
+        System.assert(String.isNotBlank(jsonResult), 'value of parameter is matching');
+        System.assert(result != null, 'value of parameter is matching');
         System.assertEquals(2, result.size(), 'Result inconsistente');
         
     }
@@ -112,10 +112,10 @@ public with sharing class HDT_LC_AccountAlertsTst {
         AlertAccountConfiguration__c accountAlert = [SELECT Id, Account__c, AlertConfiguration__c FROM AlertAccountConfiguration__c WHERE Account__c = :acc.Id];
         
         //ASSERTS
-        System.assert(result);
-        System.assert(accountAlert != null);
-        System.assertEquals(accountAlert.Account__c, acc.Id);
-        System.assertEquals(accountAlert.AlertConfiguration__c, myAlert.Id);
+        System.assert(result, 'value of parameter is matching');
+        System.assert(accountAlert != null, 'value of parameter is matching');
+        System.assertEquals(accountAlert.Account__c, acc.Id, 'value of parameter is matching');
+        System.assertEquals(accountAlert.AlertConfiguration__c, myAlert.Id, 'value of parameter is matching');
         
     }
     
@@ -143,9 +143,9 @@ public with sharing class HDT_LC_AccountAlertsTst {
         AlertAccountConfiguration__c accountAlert = [SELECT Id, IsActive__c FROM AlertAccountConfiguration__c];
         
         //ASSERTS
-        System.assert(result);
-        System.assert(accountAlert != null);
-        System.assert(accountAlert.IsActive__c);
+        System.assert(result, 'value of parameter is matching');
+        System.assert(accountAlert != null, 'value of parameter is matching');
+        System.assert(accountAlert.IsActive__c, 'value of parameter is matching');
         
     }
     
@@ -172,8 +172,8 @@ public with sharing class HDT_LC_AccountAlertsTst {
         HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails result_empty = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
         
         //ASSERTS
-        System.assertEquals('', result_empty.email);
-        System.assertEquals('', result_empty.mobilePhone);
+        System.assertEquals('', result_empty.email, 'value of parameter is matching');
+        System.assertEquals('', result_empty.mobilePhone, 'value of parameter is matching');
         
         
         //REGULAR TESTING
@@ -188,8 +188,8 @@ public with sharing class HDT_LC_AccountAlertsTst {
         HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails result = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
         
         //ASSERTS
-        System.assertEquals(con.email, result.email);
-        System.assertEquals(con.mobilePhone, result.mobilePhone);
+        System.assertEquals(con.email, result.email, 'value of parameter is matching');
+        System.assertEquals(con.mobilePhone, result.mobilePhone, 'value of parameter is matching');
         
     }
     

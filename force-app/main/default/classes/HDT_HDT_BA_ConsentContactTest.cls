@@ -92,7 +92,7 @@ public with sharing class HDT_HDT_BA_ConsentContactTest {
 		Test.StopTest();
 		
 		List<ContentVersion> listContentVersion = [SELECT id FROM ContentVersion];
-		System.assertEquals(2, listContentVersion.size());
+		System.assertEquals(2, listContentVersion.size(),'value of parameter is matching');
 
 
    }
@@ -105,6 +105,6 @@ public with sharing class HDT_HDT_BA_ConsentContactTest {
 			Id batchprocessid = Database.executeBatch(shn);
 	 	Test.StopTest();
 		List<ContentVersion> listContentVersion = [SELECT id FROM ContentVersion];
-		System.assertEquals(1, listContentVersion.size());
+		System.assertEquals(1, listContentVersion.size(),'value of parameter is matching');
 	}
 }

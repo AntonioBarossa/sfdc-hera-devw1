@@ -22,7 +22,7 @@ public with sharing class HDT_LC_AccountSelezionaRecordtypeTst {
         Test.stopTest();
         
         System.assertEquals(lstAccount.size() != null, true, 'The List is null!');
-        System.assertNotEquals(lstAccount.size() == null, true);
+        System.assertNotEquals(lstAccount.size() == null, true,'value of parameter is not matching');
         
     }
 }
