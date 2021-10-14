@@ -183,10 +183,12 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
                         List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
                         if(!listToDeleteEm.isEmpty() && listToDeleteEm.size()>0){
-                            HDT_SRV_ContactPointEmail.deleteRecord(listToDeleteEm);
+                          //  HDT_SRV_ContactPointEmail.deleteRecord(listToDeleteEm);
+                            delete listToDeleteEm;
                         }
                         if(!listToDeletePh.isEmpty() && listToDeletePh.size()>0){
-                            HDT_SRV_ContactPointPhone.deleteRecord(listToDeletePh);
+                           // HDT_SRV_ContactPointPhone.deleteRecord(listToDeletePh);
+                            delete listToDeletePh;
                         }
                         // List<sObject> listToDelete = new List<sObject>();
                         // listToDelete.addAll(listToDeleteEm);
