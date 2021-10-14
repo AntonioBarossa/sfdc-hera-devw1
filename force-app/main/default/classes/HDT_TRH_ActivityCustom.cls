@@ -50,6 +50,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // HRAWRM-672 22/09/2021 EC
         // HRAWRM-880 LG
         HDT_UTL_ActivityCustom.updateTimeRefAppointment(trigger.old,trigger.new);
+        HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);//>>> costanzo.lomele@webresults.it 14/10/21
     }
 
     public override void afterUpdate(){

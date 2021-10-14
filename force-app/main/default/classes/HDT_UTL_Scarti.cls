@@ -78,8 +78,6 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     */
     global boolean evaluate(Object args){
 		Map<String, Object> argsMap = (Map<String, Object>) args;
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject condition = (SObject) argsMap.get('condition');
         String method = (String) argsMap.get('method');
         SObject record = (SObject) argsMap.get('record');
 		
@@ -192,8 +190,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     system.debug('handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                     if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
                         Map<String,String> newData = new Map<String,String>();
-                        for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
-                        for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
+                        for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
+                            newData.put(curField2.name, curField2.value);
+                        }
+                        for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields){
+                            newData.put(curField3.name, curField3.value);
+                        }
                         dataForAttivitaTracciaturaCreation.add(newData);
                     }
                     if('FASE'.equalsIgnoreCase(curField.name) && new List<String>{'Completata', 'Ammissibilità OK'}.contains(curField.value)){
@@ -226,8 +228,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + JSON.serializePretty(dataForAttivitaTracciaturaCreation));
         System.debug('MRREQUEST dataForCheckEsitiIntermedi' + JSON.serializePretty(dataForCheckEsitiIntermedi));
-        if(!dataForAttivitaTracciaturaCreation.isEmpty()) createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
-        if(!dataForCheckEsitiIntermedi.isEmpty()) checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
+        if(!dataForAttivitaTracciaturaCreation.isEmpty()){
+            createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
+        }
+        if(!dataForCheckEsitiIntermedi.isEmpty()){
+            checkForEsitiIntermedi(dataForCheckEsitiIntermedi);
+        }
     }
 
 
@@ -278,7 +284,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
 
         Map<String, Map<String,String>> dataForSalesHandlingByRecordIdField = new Map<String, Map<String,String>>();
 
-        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+        //wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration = (wrts_prcgvr.Interfaces_1_1.IActivityIntegration) wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
         
         for(Map<String,String> curData : sourceData){
             if('Richiesta non identificata'.equalsIgnoreCase(curData.get('ATTIVITA'))){
@@ -544,7 +550,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     * @author Costanzo Lo Mele (costanzo.lomele@webresults.it)
     * @date 22/07/2021
     * @description HDT_UTL_Scarti.updatePraticaForScartoDocumentaleQueue - updates case/order with new data
-   * @param newActivities - List<wrts_prcgvr__Activity__c>
+    * @param newActivities - List<wrts_prcgvr__Activity__c>
     * @param oldActivities - List<wrts_prcgvr__Activity__c>
     */
     //////////////////////////////////////////////////////////////////////////
@@ -882,12 +888,13 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             HDT_UTL_DatabaseService.updateSObject(toUpdate);
         }
     }
-    
+       
     /**
     * @author Costanzo Pio Lo Mele (costanzo.lomele@webresults.it)
     * @date 14/10/2021
-    * @description HDT_UTL_Scarti.handleEditButtonPressed - annullamento pratica
-    * @param objectId - Id
+    * @description HDT_UTL_Scarti.handleEditButtonPress - annullamento pratica
+    * @param newActs
+    * @param oldActsMap
     */
     public static void handleEditButtonPress(List<wrts_prcgvr__Activity__c> newActs, Map<Id, wrts_prcgvr__Activity__c> oldActsMap){
         System.debug('handleEditButtonPress start');
@@ -895,7 +902,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         for(wrts_prcgvr__Activity__c curAct : newActs){
             if('Completed'.equalsIgnoreCase(curAct.wrts_prcgvr__Status__c)
                && curAct.wrts_prcgvr__Status__c != oldActsMap.get(curAct.Id).wrts_prcgvr__Status__c
-               && rtScarto.Id == curAct.RecordTypeId)
+               && rtScarto.Id == curAct.RecordTypeId){
         		System.debug('handleEditButtonPress found ' + curAct.Id);
                 if('Scarto Complesso'.equalsIgnoreCase(curAct.DiscardCategory__c)
                    || 'Contattare il cliente'.equalsIgnoreCase(curAct.Type__c)){
@@ -903,9 +910,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
                 else curAct.wrts_prcgvr__Status__c = 'Chiusa';
             	curAct.DiscardWorked__c = true;
+        	}
         }
     }
-
+ 
     /**
     * @author Marco Arci (marco.arci@webresults.it)
     * @date 27/08/2021
