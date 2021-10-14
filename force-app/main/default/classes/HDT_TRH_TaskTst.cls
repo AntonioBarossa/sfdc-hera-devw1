@@ -182,7 +182,6 @@ public with sharing class HDT_TRH_TaskTst {
         Update myContact;
         
         Task myTask = new Task();
-        myTask.WhoId = contactList[0].Id;
         myTask.PhoneNumber__c = '234987560';
         myTask.IsPec__c = false;
         myTask.IsSms__c = true;
