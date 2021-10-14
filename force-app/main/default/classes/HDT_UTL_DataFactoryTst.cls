@@ -427,12 +427,11 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 08/10/2021
 	*/
-	public static List<Order> createOrderWithPricebookAndPhaseNw(Integer amount, Boolean doInsert, List<Sale__c> sales,String developerName, Map<String,Object> params){
+	public static List<Order> createOrderWithParams(Integer amount, Boolean doInsert, List<Sale__c> sales,String developerName, Map<String,Object> params){
 
 		List<Order> orderList=new List<Order>();
 
-		Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
-		Id recordTypeId=[SELECT Id FROM RecordType  WHERE DeveloperName =:developerName AND sObjecttype ='Order'][0].Id;
+		Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
 
 		for (Integer i=0; i<amount; i++){
 
@@ -459,9 +458,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			ord.SignatureMethod__c='Vocal Order';
 			ord.DocSendingMethod__c='E-mail';
 			ord.Sale__c=sales[i].Id;
-			ord.Pricebook2Id=(String)params.get('Pricebook2Id');
-			ord.BillingProfile__c=(String)params.get('BillingProfile__c');
-			ord.ServicePoint__c=(String)params.get('ServicePoint__c');
 			ord.RecordTypeId=recordTypeId;
 
 		for(String key :params.keySet()) {
@@ -1148,6 +1144,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	public static List<Pricebook2> createPricebook(Integer amount, Boolean doInsert){
 
+		activeStandardPricebook();
+
 		List<Pricebook2> pricebookList=new List<Pricebook2>();
 
 		for (Integer i=0; i<amount; i++){
@@ -1414,31 +1412,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
                 ContactId = contact.Id,
                 TimeZoneSidKey = 'Europe/Rome',
                 UserName = 'commuser@test.com' + DateTime.now().getTime()
-        );
-        if(doInsert) {
-            insert communityUser;
-        }
-        return communityUser;
-    }
-
-	/**
-   * @author Valere (valere@noeli-it.net)
-   * @date 09/10/2021
-	*/
-	public static User createCommunityUserWithRole(Contact contact, String profileId ,Boolean doInsert,Map<String,Object> params) {
-        User communityUser = new User(
-                Alias = 'commuser',
-                FirstName = 'FirstName',
-                LastName = 'LastName',
-                Email = 'commuser@test.com',
-                EmailEncodingKey = 'UTF-8',
-                LanguageLocaleKey = 'it',
-                LocaleSidKey = 'it',
-                ProfileId = profileId,
-                ContactId = contact.Id,
-                TimeZoneSidKey = 'Europe/Rome',
-                UserName = 'commuser@test.com' + DateTime.now().getTime(),
-				UserRoleId =(String)params.get('UserRoleId') 
         );
         if(doInsert) {
             insert communityUser;

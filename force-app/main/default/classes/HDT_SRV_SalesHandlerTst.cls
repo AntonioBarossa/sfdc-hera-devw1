@@ -11,7 +11,9 @@ private class HDT_SRV_SalesHandlerTst {
     // test method that would generate an exception on method already tested
     // basically, we called the same method in different isTest method to avoid too many queries exception
     public TestBuilderCallManageSalesProcessCategory(Order order,String phase, String requestType,Map<String,Boolean> paramsBool){//withoutObjects==true will trigger an error to test failing cases
-      if(paramsBool==null) paramsBool=new Map<String,Boolean>{'withRunId'=>false,'withoutObjects'=>false,'withImpPrevDist'=>false,'withDesErrAeeg'=>false};
+      if(paramsBool==null) {
+         paramsBool=new Map<String,Boolean>{'withRunId'=>false,'withoutObjects'=>false,'withImpPrevDist'=>false,'withDesErrAeeg'=>false};
+      }
       RestResponse res = new RestResponse();
       res.statusCode = 200;
       RestContext.response = res;
@@ -148,7 +150,9 @@ private class HDT_SRV_SalesHandlerTst {
     List<PricebookEntry> pricebookentryList= HDT_UTL_DataFactoryTst.createPricebookEntry(product2List, true, pricebook.Id);
     List<Contact> contactList= HDT_UTL_DataFactoryTst.createContact(1, true,accountList[0].id);
 
-    List<Order> orderAmmissibilitaKo= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_Attivazione',new Map<String,Object>{
+    List<Order> orders;
+
+    orders = HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_Attivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Ammissibilità KO',
       'BillingProfile__c'=>billingProfileList[0].Id,
@@ -156,107 +160,109 @@ private class HDT_SRV_SalesHandlerTst {
       'ProcessType__c'=>'Prima Attivazione Fuori delibera',
       'CausalCode__c'=>'034' 
     } ); 
-    List<Order> orderAmmissibilitaOk= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_Attivazione',new Map<String,Object>{
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_Attivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Ammissibilità OK',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id,
       'ProcessType__c'=>'Prima Attivazione Fuori delibera',
       'CausalCode__c'=>'034'          
-    } ); 
-    List<Order> orderDatiTecniciRicevuti= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_TemporaneaNuovaAtt',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_TemporaneaNuovaAtt',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Dati Tecnici Ricevuti',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderEsitoOkDaDl= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Esito OK da DL',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderEsitoKoDaDl= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_Attivazione',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_Attivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Esito KO da DL',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderAmmPrecheckOkSii= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Amm. Precheck OK SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderEsitoKoDaSii= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Esito KO da SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } );
-    List<Order> orderEsitoOkDaSii= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } ));
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Esito OK da SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderAnnullamentoInviato= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Annullamento - Inviato al DL/SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderAnnullamentoAmmissibilita= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Annullamento - Ammissibilità OK',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } );
-    List<Order> orderErrorelavorazione= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } ));
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Errore lavorazione SAP',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderAnnullamentoRicezione= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_CambioOfferta',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_CambioOfferta',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Annullamento SII - Ricezione',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } );
-      List<Order> orderDatidiscordanti= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
+    } ));
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Dati discordanti',     
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderAmmPrecheckKoSii= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Amm. Precheck KO SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } );
-    List<Order> orderCompletata= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
+    } ));
+    List<Order> orderCompletata= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_SwitchInVolturaTecnica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Phase__c'=>'Completata',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id,
       'Pricebook2Id'=>pricebook.Id
     } );
-    List<Order> orderAnnullamentoEsitoOkDa= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Contact__c'=>contactList[0].id,
       'Phase__c'=>'Annullamento - Esito OK da DL/SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
-    List<Order> orderAnnullamentoEsitoKoDa= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_AttivazioneConModifica',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Contact__c'=>contactList[0].id,
       'Phase__c'=>'Annullamento - Esito KO da DL/SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
-    } ); 
+    } )); 
+    insert orders;
+    
     HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderCompletata[0].id, servicePointList[0].id, product2List[0].Id, pricebookentryList[0].id);
    
   }
@@ -357,7 +363,7 @@ static void testHandleSalesProcessCategory6() {
 static void testHandleSalesProcessCategory5() {
   Order orderEsitoKoDaSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito KO da SII' LIMIT 1];
   Order orderEsitoOkDaSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito OK da SII' LIMIT 1]; 
-  Order orderCompletata=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c,ServicePoint__c  FROM Order  WHERE Phase__c='Completata' LIMIT 1]; 
+  // Order orderCompletata=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c,ServicePoint__c  FROM Order  WHERE Phase__c='Completata' LIMIT 1]; 
   Test.startTest(); 
     new TestBuilderCallManageSalesProcessCategory(orderEsitoKoDaSii,'Esito KO da SII','NOTIF_ES',null);
     new TestBuilderCallManageSalesProcessCategory(orderEsitoOkDaSii,'Esito OK da SII','NOTIF_ES',null); 
@@ -387,7 +393,7 @@ static void testHandleSalesProcessCategory8() {
 static void testHandleSalesProcessCategory7() {
     Order orderAmmPrecheckKoSii=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck KO SII' LIMIT 1]; 
   	Order orderDatidiscordanti=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Dati discordanti' LIMIT 1]; 
-  	Order orderErrorelavorazione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Errore lavorazione SAP' LIMIT 1];
+  	// Order orderErrorelavorazione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Errore lavorazione SAP' LIMIT 1];
     Order orderCompletata=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Completata' LIMIT 1];
    
     Test.startTest(); 
@@ -443,7 +449,7 @@ static void testHandleSalesProcessCategoryAnnullamento2() {
 static void testHandleSalesProcessCategoryAnnullamento1() {
 
   Order orderAnnullamentoRicezione=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento SII - Ricezione' LIMIT 1];
-  Order orderAnnullamentoInviato=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Inviato al DL/SII' LIMIT 1];
+  // Order orderAnnullamentoInviato=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Annullamento - Inviato al DL/SII' LIMIT 1];
   Test.startTest();
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','CMPDMP_ATTR',new Map<String,Boolean>{'withRunId'=>true});
     System.assertEquals(200, RestContext.response.statusCode,'the processes above are well completed');
