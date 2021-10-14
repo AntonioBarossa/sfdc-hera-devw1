@@ -153,7 +153,7 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
+                                    <operator>EQUAL</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
                                 </criteria>
                                 <criteria>

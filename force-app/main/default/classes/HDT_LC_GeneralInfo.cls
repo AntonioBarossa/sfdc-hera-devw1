@@ -20,17 +20,24 @@ public inherited sharing class HDT_LC_GeneralInfo {
      */
     @AuraEnabled
     public static void updateSale(Sale__c sale){
-        if(String.isnotBlank(sale.CommissioningCampaign__c)){
-            List<CampaignMember> campMembList = campMembQr.getCampaignMemberByCampaingAndContact(sale.CommissioningCampaign__c, sale.SalesContact__c);
-            
-            if (campMembList!=null && !campMembList.isEmpty()) {
-                sale.Ecid__c = campMembList[0].Ecid__c;
+        try{
+
+            List<wrts_prcgvr__Activity__c> listActi = HDT_QR_ActivityCustom.getActivityTelesellingOutboundByUser();
+            if (listActi != null && !listActi.isEmpty()) {
+                sale.Ecid__c = listActi[0].Ecid__c;
+                saleSrv.updateRecord(sale);
             }
+        }catch(exception e){
+            system.debug('***********' + e);
         }
-
-        saleSrv.updateRecord(sale);
+        //if(sale.CommissioningCampaign__c != null){
+          //  List<CampaignMember> campMembList = campMembQr.getCampaignMemberByCampaingAndContact(sale.CommissioningCampaign__c, sale.SalesContact__c);
+            
+           // if (!campMembList.isEmpty()) {
+           //     sale.Ecid__c = campMembList[0].Ecid__c;
+          //  }
+        //}
     }
-
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get current username
