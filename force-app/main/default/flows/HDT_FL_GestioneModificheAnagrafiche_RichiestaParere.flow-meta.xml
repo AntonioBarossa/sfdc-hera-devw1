@@ -71,6 +71,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>Get_Templare_Richiesta_Parere.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>wrts_prcgvr__ActivityTemplate__c</field>
             <value>
                 <elementReference>Get_Templare_Richiesta_Parere.Id</elementReference>
