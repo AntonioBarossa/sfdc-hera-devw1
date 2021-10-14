@@ -136,7 +136,7 @@ public with sharing class HDT_UTL_VasManagement {
             List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
             intestatario = joinStringValues(strValues);
 
-            servizioIp = currentOrder.CommercialProduct__c;
+            servizioIp = currentOrder.CommercialProduct__c.abbreviate(30);
             versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 

@@ -1,0 +1,26 @@
+:host {
+    --card-half-width: 50%;
+    --card-margin-auto: auto;
+}
+
+.halfwidth {
+    width: var(--card-half-width);
+    margin-left: var(--card-margin-auto);
+    margin-right: var(--card-margin-auto);
+}
+
+.loginButton {
+    --sds-c-button-neutral-color-background: rgb(128, 128, 128);
+    --sds-c-button-text-color: rgb(255, 255, 255);
+    height: 4rem;
+}
+
+.loginCard .loginTitle {
+    color : #428bca;
+}
+
+.loginCard .loginHeaderBox {
+    background-color: #7fa4b7;
+    color: #fff;
+    border-radius: 0.5rem;
+}

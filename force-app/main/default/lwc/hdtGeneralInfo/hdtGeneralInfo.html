@@ -93,7 +93,7 @@
                         <template if:false={isCampaignInputVisibleCommissioning}>-->
                             <template if:true={isCampaignCommissioningVisible}>
                                 <div class={tabClass2}>
-                                    <c-hdt-campaign-to-account-list2 title="Selezione campagna Commissioning" campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid2={handleEmitCampaignIdEvent2} onemitvisibility2={handleCampaignVisibility2} campaign-category={categoriacampagna} campaign-channel={canalecampagna} ></c-hdt-campaign-to-account-list2>
+                                    <c-hdt-campaign-to-account-list2 title="Selezione campagna Commissioning" campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid2={handleEmitCampaignIdEvent2} onemitvisibility2={handleCampaignVisibility2} campaign-category={categoriacampagna} campaign-channel={canalecampagna} selected-campaign-id={saleRecord.CommissioningCampaign__c}></c-hdt-campaign-to-account-list2>
                                 </div>
                             </template>
                         <!--</template> -->

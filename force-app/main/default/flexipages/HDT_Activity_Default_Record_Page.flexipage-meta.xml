@@ -7,33 +7,33 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.AssignToMe</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>wrts_prcgvr__Activity__c.CompleteActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Sportello</rightValue>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_HCPoint</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>HDT_RT_Call</rightValue>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_RT_Sportello</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Invio Contratto</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Recupero contratto da Postel</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Invio registrazione</rightValue>
+                                    <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Escalation</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -112,14 +112,14 @@
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Approvazione Offerte</rightValue><!-- UAT Cocetta  20/09/2021 -->
+                                    <rightValue>Approvazione Offerte</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_OffertaNonApprovata</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter> <!-- UAT Cocetta  20/09/2021 -->
+                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.HDT_CP_ApproveRejectCase}</leftValue>
                                     <operator>EQUAL</operator>
@@ -128,7 +128,7 @@
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Approvazione Offerte</rightValue> <!-- UAT Cocetta  20/09/2021 -->
+                                    <rightValue>Approvazione Offerte</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
@@ -229,14 +229,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>hdtCommercialRiassignButton</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Approvazione Bonus Commerciale</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <componentName>HDT_LCP_CommercialRiassignButton</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-f4064101-e9bf-4d96-b0b2-8267c88b08d1</name>

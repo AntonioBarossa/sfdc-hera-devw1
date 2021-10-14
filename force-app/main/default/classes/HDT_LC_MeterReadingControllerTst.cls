@@ -119,19 +119,45 @@ public class HDT_LC_MeterReadingControllerTst {
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
 
         Test.startTest();
+
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords('1006689293');
+        System.assertEquals(false, meterReadingObj.success, 'success != false');
+        System.assert(meterReadingObj.data == null, 'data != null');
+
+        //Caso con HTTP STATUS KO 500
+        response.setStatusCode(500); 
+        response.setStatus('KO');
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
+
         meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords('1006689293');
 
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');
 
-        //Caso con HTTP STATUS KO
-        response.setStatusCode(500); 
-        response.setStatus('KO');
-
+        //Caso con HTTP STATUS KO 401
+        response.setStatusCode(401); 
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
 
         meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords('1006689293');
+        
+        System.assertEquals(false, meterReadingObj.success, 'success != false');
+        System.assert(meterReadingObj.data == null, 'data != null');
 
+        //Caso con HTTP STATUS KO
+        response.setStatusCode(400); 
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
+
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords('1006689293');
+        
+        System.assertEquals(false, meterReadingObj.success, 'success != false');
+        System.assert(meterReadingObj.data == null, 'data != null');
+
+        //Caso con HTTP STATUS KO 408
+        response.setStatusCode(408); 
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
+
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords('1006689293');
+        
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');
 

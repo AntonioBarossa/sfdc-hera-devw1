@@ -195,6 +195,9 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM Order
                     WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
+            when 'CONTRACT_BONUS_COMM'{
+                records = [Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where AccountId =:searchString WITH SECURITY_ENFORCED];
+            }
             //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
                 Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
@@ -214,7 +217,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
 
                 //removing subscriptions which already have a deactivation Case
-                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE Status<>'Bozza' AND Type='Disattivazione VAS'
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE (Status<>'Bozza' AND  Phase__c!='Annullato') AND Type='Disattivazione VAS'
                     AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
                 for (Case subCase:subsCases) {
                     recordMap.remove(subCase.Subscription__c);

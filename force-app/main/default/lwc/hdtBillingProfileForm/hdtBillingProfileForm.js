@@ -43,6 +43,11 @@ export default class hdtBillingProfileForm extends LightningElement {
         return options;
     }
 
+    validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
     }
@@ -496,6 +501,10 @@ export default class hdtBillingProfileForm extends LightningElement {
 
             this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value = ' ';
 
+            if (Object.keys(this.fatturazioneElettronicaFields).length > 0) {
+                this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoicingMethod__c')].required = !event.target.value;
+            }
+
             console.log('IBAN__c value on toggle: ', this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value);
         }
 
@@ -508,6 +517,22 @@ export default class hdtBillingProfileForm extends LightningElement {
         this.saveErrorMessage = [];
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
+
+        //check Email fields validity start
+        if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null 
+            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value !== null && this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value.trim() !== '') 
+            && !this.validateEmail(this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value)) {
+            
+            this.saveErrorMessage.push('Email Invio Bolletta non valido');
+        }
+
+        if (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null 
+            && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value !== null && this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value.trim() !== '') 
+            && !this.validateEmail(this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value)) {
+            
+            this.saveErrorMessage.push('PEC Fatturazione Elettronica non valido');
+        }
+        //check Email fields validity end
 
         //check iban fields logic start
         if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
@@ -592,7 +617,9 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         //check req fields fatturazione elettronica start
 
-        if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
+        if (this.template.querySelector("[data-id='IbanIsForeign__c']") !== null
+            && !this.template.querySelector("[data-id='IbanIsForeign__c']").value
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
             && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
@@ -606,7 +633,9 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
-        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null)
+        if (this.template.querySelector("[data-id='IbanIsForeign__c']") !== null
+            && !this.template.querySelector("[data-id='IbanIsForeign__c']").value
+            && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email')
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
             && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
