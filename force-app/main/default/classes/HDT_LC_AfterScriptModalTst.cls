@@ -15,28 +15,37 @@ public class HDT_LC_AfterScriptModalTst {
     @TestSetup
     static void makeData(){
         
-           
-           
-        List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
-        Profile p = [SELECT Id FROM Profile WHERE Name LIKE '%Community%' LIMIT 1];
-		User tUser=HDT_UTL_DataFactoryTst.createCommunityUser(new Contact(), p.Id, true);
+        User admin = HDT_UTL_DataFactoryTst.createInternalUser( HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME), false);
+        admin.UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId(constants.USERROLE_DEVELOPERNAME_BACKOFFICE);
+
+        insert admin;
         
+        System.runAs(admin) {
+
+            List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
+            List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accountList[0].Id);
+            
+            HDT_UTL_DataFactoryTst.createCommunityUser(contacts[0], HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_DOOR2DOOR_PARTNER_NAME), true);
+
+        }
        
     }
     
     @IsTest
     static void testOne(){
-         User user=[SELECT  id FROM User WHERE Email = 'commuser@test.com'];
-         System.runAs(user){
+        User user=[SELECT  id FROM User WHERE Alias = 'commuser'];
+
+        System.runAs(user){
              
-                    Test.startTest();
+        Test.startTest();
 
             
-    Map<String,Object> res = HDT_LC_AfterScriptModal.initPostSaleAction();
-                         Test.stopTest();
+        Map<String,Object> res = HDT_LC_AfterScriptModal.initPostSaleAction();        
 
-        System.assertEquals(1, res.size(),'returns 1 because  has 1 field different');
-        System.assertNotEquals(null, res.get('isCommunity'),' return null because has more than one field different ');
+        System.assertEquals(true, res.get('isCommunity'),'Should be true because user is community');
+        System.assertNotEquals(null, res.get('isCommunity'),'An answer should be present');
+
+        Test.stopTest();
         }
     }
     
