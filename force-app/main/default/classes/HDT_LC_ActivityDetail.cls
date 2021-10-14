@@ -25,7 +25,7 @@ public with sharing class HDT_LC_ActivityDetail {
                                                     FROM wrts_prcgvr__Activity__c 
                                                     WHERE Id=:idActivity
                                                     WITH SECURITY_ENFORCED];
-        boolean notShowStartDate = !(activity[0].CreatedDate != activity[0].StartDate__c && String.ISNOTBLANK(String.ValueOf(activity[0].StartDate__c))); 
+        boolean notShowStartDate = !((activity[0].CreatedDate).Date() != activity[0].StartDate__c && String.ISNOTBLANK(String.ValueOf(activity[0].StartDate__c))); 
         if(activity!=null && !activity.isEmpty() && activity[0].wrts_prcgvr__ActivityTemplate__c!=null){
             activityTemplate = [SELECT Id, wrts_prcgvr__FieldsTemplate__c 
                                 FROM wrts_prcgvr__ActivityTemplate__c 
