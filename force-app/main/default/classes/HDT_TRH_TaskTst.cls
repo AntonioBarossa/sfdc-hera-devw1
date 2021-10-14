@@ -103,6 +103,30 @@ public with sharing class HDT_TRH_TaskTst {
         Test.stopTest();
         
     }
+    
+    
+    //doxeeTemplateCode
+    @isTest
+    private static void doxeeTemplateCodeTest(){
+        
+        HDT_TRH_Task myObjectToTest = new HDT_TRH_Task();
+        
+        String result1 = myObjectToTest.doxeeTemplateCode('Comunicazione Forte Consumo (23)');
+        System.assert('023'.equalsIgnoreCase(result1), 'Result1 non è 023');
+        
+        String result2 = myObjectToTest.doxeeTemplateCode('Comunicazione Fuga Accertata (24)');
+        System.assert('024'.equalsIgnoreCase(result1), 'Result2 non è 024');
+        
+        String result3 = myObjectToTest.doxeeTemplateCode('Comunicazione Fuga Presunta (25)');
+        System.assert('025'.equalsIgnoreCase(result1), 'Result3 non è 025');
+        
+        String result4 = myObjectToTest.doxeeTemplateCode('Ultimo Avviso (26)');
+        System.assert('026'.equalsIgnoreCase(result1), 'Result4 non è 026');
+        
+        String result5 = myObjectToTest.doxeeTemplateCode('ELSE');
+        System.assert('0'.equalsIgnoreCase(result1), 'Result6 non è 0');
+        
+    }
 
 
 }
