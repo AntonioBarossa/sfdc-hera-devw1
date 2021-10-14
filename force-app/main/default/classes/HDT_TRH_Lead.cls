@@ -183,10 +183,12 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
                         List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
                         if(!listToDeleteEm.isEmpty() && listToDeleteEm.size()>0){
-                            HDT_SRV_ContactPointEmail.deleteRecord(listToDeleteEm);
+                          //  HDT_SRV_ContactPointEmail.deleteRecord(listToDeleteEm);
+                            delete listToDeleteEm;
                         }
                         if(!listToDeletePh.isEmpty() && listToDeletePh.size()>0){
-                            HDT_SRV_ContactPointPhone.deleteRecord(listToDeletePh);
+                           // HDT_SRV_ContactPointPhone.deleteRecord(listToDeletePh);
+                            delete listToDeletePh;
                         }
                         // List<sObject> listToDelete = new List<sObject>();
                         // listToDelete.addAll(listToDeleteEm);
@@ -223,7 +225,14 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             List<Lead> listNew = trigger.new;
             List<Lead> leadToCheck = new List<Lead>();
             //Map<String,String> leadDomain = new Map<String,String>();
+            //id currentUserId=UserInfo.getUserId(); HRAWRM-905 14/10/2021
+            Map<Id, Id> mapLeadOwner = new Map<Id, Id>();
             for(Lead l : listNew){
+                id currentUserId=UserInfo.getUserId();
+                if (l.OwnerId!=currentUserId) {
+                   // l.OwnerId=currentUserId;
+                   mapLeadOwner.put(l.id,currentUserId);
+                }//HRAWRM-905 End 14/10/2021
                 if(l.email != null){
                     String s = l.email.split('@')[1];
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -234,7 +243,11 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }
-            }   
+            }  
+           // HRAWRM-905 14/10/2021
+            if (!mapLeadOwner.isEmpty()) {
+                System.enqueueJob(new HDT_QBL_Lead(mapLeadOwner));
+            }  // HRAWRM-905 End 14/10/2021
             // Start 27-08-2021 HRAWRM-351
             if (leadToCheck.size()>0) {
                 
