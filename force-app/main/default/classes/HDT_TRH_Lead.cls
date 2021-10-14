@@ -152,7 +152,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }     
                 }
                 if (accToUpdate.size()>0) {
-                    accountSRV.updateRecordsWithCheck(accToUpdate);
+                    accountSRV.updateRecordsWithCheckTrigger(accToUpdate);
                 }
                 if (conList.size()>0) {
                     contactSrv.createRecords(conList);

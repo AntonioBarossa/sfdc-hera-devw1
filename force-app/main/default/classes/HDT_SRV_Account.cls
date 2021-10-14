@@ -89,7 +89,18 @@ public inherited sharing class HDT_SRV_Account {
         if (!account.isEmpty()) {
             List<String> fields = helperMethods.getObjAttrList(account[0]);
             checkUpdateAccess(String.join(fields, ','));
-            HDT_UTL_DatabaseService.updateSObject(account);
+            update account;
+            //HDT_UTL_DatabaseService.updateSObject(account);
+        }
+    }
+
+    public void updateRecordsWithCheckTrigger(List<Account> account){
+
+        if (!account.isEmpty()) {
+            List<String> fields = helperMethods.getObjAttrList(account[0]);
+            checkUpdateAccess(String.join(fields, ','));
+            update account;
+            //HDT_UTL_DatabaseService.updateSObject(account);
         }
     }
 
