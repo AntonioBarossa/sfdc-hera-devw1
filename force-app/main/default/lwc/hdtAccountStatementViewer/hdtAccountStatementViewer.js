@@ -68,9 +68,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     contractAccount;
     company;
 
-    totRecs;
-    fromRec;
-    toRec;
+    totRecs = 0;
+    fromRec = 0;
+    toRec = 0;
     avoidSort;
     //blob;
     //url;

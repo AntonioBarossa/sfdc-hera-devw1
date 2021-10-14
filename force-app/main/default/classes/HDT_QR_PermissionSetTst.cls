@@ -40,7 +40,7 @@ public with sharing class HDT_QR_PermissionSetTst {
         Test.startTest();
         SetupEntityAccess setupAccess = permissionSetQr.getSetupEntityAccess('HDT_CP_SuperUserCPQ');
         System.assertEquals(setupAccess != null, true, 'SetupEntityAccess was not extracted');
-        System.assertNotEquals(setupAccess == null, true);
+        System.assertNotEquals(setupAccess == null, true, 'Value of parameter is not matching');
         Test.stopTest();
     }
 
@@ -49,7 +49,7 @@ public with sharing class HDT_QR_PermissionSetTst {
         Test.startTest();
         SetupEntityAccess setupAccess = permissionSetQr.getSetupEntityAccess('');
         System.assertEquals(setupAccess == null, true, 'SetupEntityAccess should be null');
-        System.assertNotEquals(setupAccess != null, true);
+        System.assertNotEquals(setupAccess != null, true, 'Value of parameter is not matching');
         Test.stopTest();
     }
 
@@ -63,6 +63,7 @@ public with sharing class HDT_QR_PermissionSetTst {
             List<PermissionSetAssignment> lstPermSet = permissionSetQr.getPermissionSetAssignmentByName(constantsUtl.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, u.Id);
         Test.stopTest();
         System.assertEquals(!lstPermSet.isEmpty(), true, 'Permission set assignment not retrieved (by name)');
+        System.assertNotEquals(!lstPermSet.isEmpty(), false, 'Value of parameter is not matching');
         
     }
 
@@ -78,6 +79,7 @@ public with sharing class HDT_QR_PermissionSetTst {
             List<CustomPermission> customPermissions = permissionSetQr.getCustomPermissionsByUserId(u.Id);
             
             System.assertEquals(customPermissions.get(0).DeveloperName, constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN, 'Wrong Custom Permission assignment');
+            System.assertNotEquals(null, constantsUtl.CUSTOMPERMISSION_NAME_SALESFORCECPQADMIN, 'Value of parameter is not matching');
         }
 
         Test.stopTest();

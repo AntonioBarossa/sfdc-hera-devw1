@@ -28,7 +28,7 @@ public with sharing class HDT_QR_UserQueriesWithoutSharingTst {
             Test.startTest(); 
             List<User> testUser = HDT_QR_UserQueriesWithoutSharing.getRoleAndProfile(tUser.Id);
             System.assertEquals(false, testUser == null, 'testUser not populated correctly');
-            System.assertNotEquals(true, testUser == null);
+            System.assertNotEquals(true, testUser == null, 'Value of parameter is not matching');
             Test.stopTest();
         }
     }

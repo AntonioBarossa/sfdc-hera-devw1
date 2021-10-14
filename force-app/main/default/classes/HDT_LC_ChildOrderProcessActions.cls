@@ -302,12 +302,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            ComfortQualityCall__c comforQualityRes = comfortQualityList[0];
+            ComfortQualityCall__c comforQualityRes = new ComfortQualityCall__c();
+
+            system.debug('DocSendingMethod__c comfort: ' + order.DocSendingMethod__c);
 
             if (comfortQualityList.size() > 1) {
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
+                    system.debug('quality log 4 cqc.ComfortEnabled__c: ' + cqc.ComfortEnabled__c);
+                    system.debug('quality log 4 cqc.ComfortSignatureMethod__c: ' + cqc.ComfortSignatureMethod__c);
+                    system.debug('quality log 4 cqc.ComfortDocSendingChannel__c: ' + cqc.ComfortDocSendingChannel__c);
                     if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == order.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c){
+                        system.debug('Keltin quality enter here is OK');
                         comforQualityRes = cqc;
                         break;
                     } else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
@@ -316,6 +322,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     }
                 }
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case end: ' + comforQualityRes);
+            } else {
+                comforQualityRes = comfortQualityList[0];
             }
 
             if (comforQualityRes.ComfortEnabled__c) {

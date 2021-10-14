@@ -35,6 +35,9 @@
         //attributo per esito compatibilita
         var compatibile = myPageRef.state.c__compatibile;
 
+        // id dell'Order
+        var orderId = myPageRef.state.c__orderId;
+
 
         console.log('# context -> '                 + context);
         console.log('# accId -> '                   + accId);
@@ -53,6 +56,7 @@
         console.log('# billingProfileId -> '        + billingProfileId);
         console.log('# serviceRequestId -> '        + serviceRequestId);
         console.log('# compatibile -> '             + compatibile);
+        console.log('# orderId -> '                  + orderId);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -107,7 +111,8 @@
                         c__servicePointId: servicePointId,
                         c__billingProfileId: billingProfileId,
                         c__serviceRequestId: serviceRequestId,
-                        c__compatibile: compatibile
+                        c__compatibile: compatibile,
+                        c__orderId: orderId
                     }
                 },
                 focus: true

@@ -66,7 +66,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals(1, methodRet, 'Return is wrong');
 
-		System.assertNotEquals(0, methodRet);
+		System.assertNotEquals(0, methodRet, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -94,7 +94,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Negotiation', methodRet[0].StageName, 'Return is wrong');
 
-		System.assertNotEquals('', methodRet[0].StageName);
+		System.assertNotEquals('', methodRet[0].StageName, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -122,9 +122,9 @@ public class HDT_QR_OpportunityTst{
 
 		// Cannot insert IsVas= null, return is always empty
 
-		//System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		//System.assertNotEquals(0, methodRet);
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -149,7 +149,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Negotiation', methodRet.StageName, 'Return is wrong');
 
-		System.assertNotEquals('', methodRet.StageName);
+		System.assertNotEquals('', methodRet.StageName, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -174,7 +174,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Negotiation', methodRet.StageName, 'Return is wrong');
 
-		System.assertNotEquals('', methodRet.StageName);
+		System.assertNotEquals('', methodRet.StageName, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -199,7 +199,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Roma', methodRet[0].SBQQ__PrimaryQuote__r.SupplyCity__c, 'Return is wrong');
 
-		System.assertNotEquals('0', methodRet[0].SBQQ__PrimaryQuote__r.SupplyCity__c);
+		System.assertNotEquals('0', methodRet[0].SBQQ__PrimaryQuote__r.SupplyCity__c, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -222,9 +222,9 @@ public class HDT_QR_OpportunityTst{
 		System.debug('methodRet = '+methodRet);
 
 
-		//System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		//System.assertNotEquals(0, methodRet);
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
