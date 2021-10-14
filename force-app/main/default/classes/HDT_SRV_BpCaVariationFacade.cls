@@ -25,7 +25,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                     String tipoAttivita = (String) data.get('tipoAttivita');
                     if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
                         System.debug('Creazione activity Errore Lavorazione SAP');
-                        HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP');
+                        HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
 
                         response.success = false;
                         response.message = 'KO';
@@ -87,7 +87,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
-                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP');
+                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
                 }
                 output.outcome = false;
             }else {

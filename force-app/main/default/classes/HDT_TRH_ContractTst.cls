@@ -1,20 +1,46 @@
 /**
- * @author Fabricio Petkevicius Nunes (fabricio.nunes@engdb.com.br)
- * @date 09/08/2021
- * @description HDT_TRH_Contract for Test Classes
- * @history Fabricio Petkevicius Nunes – 9/08/2021 – Created class
- */
+ * Header of the class "HDT_TRH_ContractTst"
+ * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+ * @version 1.0
+ * @description: Apex Test Class of the relative Apex Class "HDT_TRH_Contract"
+ * @history
+ * @Created 12/10/2021
+ * Modified By:
+ **/
 @isTest
 public with sharing class HDT_TRH_ContractTst{
-	
-	//DATA
-	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+  
+  //DATA
+	private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
 	
 	
 	//TEST SETUP
 	
 	
 	//TESTS
+    
+	@isTest
+	public static void testUpdate(){
+
+		Test.startTest();
+
+		List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1, true, accs[0].Id);
+        List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,true,accs[0].id,'Bozza');               
+        
+        Contract contr = [Select Id from contract limit 1];
+        contr.SBQQ__Order__c = orders[0].id;
+        
+        update contr;
+        
+        Test.stopTest();
+        
+        List<Contract> query = [Select id,SBQQ__Order__c from contract];
+
+		System.assertEquals(1, query.size(), 'Contract not inserted correctly');
+		System.assertNotEquals(null, query[0].SBQQ__Order__c, 'Contract not updated correctly');
+  
+  }
 	
 	//ALSO TESTING SERVICES ON HDT_UTL_ActiveServicesKpi.updateServicesCount;
 	@isTest
@@ -191,53 +217,7 @@ public with sharing class HDT_TRH_ContractTst{
 		System.assertEquals('IT', testContract.BillingCountry, 'Contract not Updated');
 		System.assertNotEquals('', testContract.BillingCountry, 'Contract not Updated');
 		Test.stopTest();
+    
 	}
 
-	@isTest
-	public static void testTriggerContractBeforeAfterDelete(){
-		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-
-		internalUser.UserPermissionsMarketingUser=true;
-		internalUser.Title='srTest';
-
-		insert internalUser;
-
-		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false)};
-
-		insert permissionSetAssignments;
-
-		System.runAs(internalUser){
-
-			Test.startTest();
-
-			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id);
-
-			contracts[0].BillingCountry='BR';
-
-			insert contracts;
-
-			System.debug('contracts = '+contracts);
-
-			Contract testContract=[SELECT Id, SAPContractCode__c, BillingCountry, IsDeleted
-			                       FROM Contract
-			                       WHERE SAPContractCode__c='3011913470' AND BillingCountry='BR'
-			                       LIMIT 1];
-
-
-			delete testContract;
-
-			System.debug('testcontract = '+testContract);
-
-			Contract testContract2=[SELECT Id, SAPContractCode__c, BillingCountry, IsDeleted
-			                        FROM Contract
-			                        WHERE Id=:testcontract.Id ALL ROWS];
-
-			System.assertEquals(true, testContract2.IsDeleted, 'Contract not deleted');
-			System.assertNotEquals(false, testContract2.IsDeleted, 'Contract not deleted');
-			Test.stopTest();
-		}
-	}
 }

@@ -2,10 +2,12 @@
  * Class for small utilities methods
  */
 public with sharing class HDT_UTL_VoltureChangeUtilities {
-
+    
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
     //private static String waitingActivityTemplate = '';
+    @TestVisible
     private static String waitingPhase = '';
+    @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
 
     /**
