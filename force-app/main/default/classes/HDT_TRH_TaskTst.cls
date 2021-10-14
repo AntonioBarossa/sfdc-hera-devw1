@@ -136,7 +136,6 @@ public with sharing class HDT_TRH_TaskTst {
         Update myContact;
         
         Task myTask = new Task();
-        myTask.WhoId = '';
         myTask.PhoneNumber__c = '';
         myTask.IsSms__c = true;
         
