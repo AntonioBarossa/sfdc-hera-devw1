@@ -48,12 +48,7 @@ public with sharing class HDT_TRH_TaskTst {
         Task myTask2 = new Task();
         myTask2.WhoId = myLeadList[0].Id;
         myTask2.IsPec__c = true;
-
-        Task myTask3 = new Task();
-        myTask3.WhoId = myContact.Id;
-        myTask3.IsSms__c = true;
-        myTask3.Description = 'My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.My description contains UserTag.';
-
+        
         //TESTING
         Test.startTest();
         Try{
