@@ -185,12 +185,11 @@ global with sharing class ConnectorEntityController {
 		}
 	}
 
-
-	public static String GetResourceURL(String namespace,String resourceName){
-	List<StaticResource> resourceList= namespace != null ? 
-	[SELECT Name, NamespacePrefix, SystemModStamp FROM StaticResource WHERE Name = :resourceName AND NamespacePrefix = :namespace] : 
-	[SELECT Name, NamespacePrefix, SystemModStamp FROM StaticResource WHERE Name = :resourceName] ;
-		if(resourceList.size() == 1){
+	public static String GetResourceURL(String namespace,String resourceName) {
+		List<StaticResource> resourceList = namespace != null ? 
+		[SELECT Name, NamespacePrefix, SystemModStamp FROM StaticResource WHERE Name = :resourceName AND NamespacePrefix = :namespace] : 
+		[SELECT Name, NamespacePrefix, SystemModStamp FROM StaticResource WHERE Name = :resourceName];
+		if(resourceList.size() == 1) {
 			String nm = resourceList[0].NamespacePrefix;
 			return '/resource/' + resourceList[0].SystemModStamp.getTime() + '/' + (nm != null && nm != '' ? nm + '__' : '') + resourceName; 
 		}
