@@ -3004,4 +3004,24 @@ public with sharing class HDT_UTL_DataFactoryTst{
         
         return rules;
     }
+
+	public static List<PaperCommunication__c> createPaperCommunication(Integer amount, Boolean doInsert){
+
+		List<PaperCommunication__c> paperCommunicationList=new List<PaperCommunication__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			PaperCommunication__c tPaperCommTest = new PaperCommunication__c();
+        	tPaperCommTest.Name='test';
+
+			paperCommunicationList.add(tPaperCommTest);
+		}
+
+		if (doInsert){
+
+			insert paperCommunicationList;
+		}
+
+		return paperCommunicationList;
+	}
 }

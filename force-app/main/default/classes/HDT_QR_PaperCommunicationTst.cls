@@ -7,9 +7,7 @@
 public with sharing class HDT_QR_PaperCommunicationTst {
     @testSetup
     static void setup() {
-        PaperCommunication__c tPaperCommTest=new PaperCommunication__c();
-        tPaperCommTest.Name='test';
-        insert tPaperCommTest;
+        HDT_UTL_DataFactoryTst.createPaperCommunication(1, true);
     }
 
     @isTest
@@ -19,7 +17,7 @@ public with sharing class HDT_QR_PaperCommunicationTst {
 
         PaperCommunication__c tPaperCommTest = [SELECT Id, Name FROM PaperCommunication__c WHERE Name = 'test' LIMIT 1];
         PaperCommunication__c tPaperComm = HDT_QR_PaperCommunication.getRecordById(tPaperCommTest.ID);
-        System.assertEquals('test', tPaperComm.Name, 'Name match.');
+        System.assertEquals('test', tPaperComm.Name, 'The query extracted the PaperCommunitcation__c with yhe correct Name');
 
         Test.stopTest();
     }
