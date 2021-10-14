@@ -73,8 +73,7 @@ public with sharing class HDT_TRH_TaskTst {
         
     }
     
-    
-    //Test case normale senza interruzioni di funzionamento dovute alle validazioni
+    //Description troppo lunga
     @isTest
     private static void doValidationTest_DescTooLong(){
         
@@ -120,6 +119,51 @@ public with sharing class HDT_TRH_TaskTst {
     }
     
     
+    //Contatto/Lead o numero alternativo
+    @isTest
+    private static void doValidationTest_Number(){
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'doValidationTest_Number';
+        System.debug(debugString);
+        
+        //SETUP
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].Id);
+        
+        Contact myContact = contactList[1];
+        myContact.MobilePhone = '3245341020';
+        Update myContact;
+        
+        Task myTask = new Task();
+        myTask.WhoId = '';
+        myTask.PhoneNumber__c = '';
+        myTask.IsSms__c = true;
+        
+        //NB: Description deve essere sopra lunghezza di 320 caratteri.
+        myTask.Description = 'My Description';
+        
+        //TESTING
+        
+        Boolean caught = false;
+        String myExcMessage = '';
+        try{
+            insert myTask;
+            
+            
+        } catch (Exception e) {
+            System.debug(debugString + ' - Eccezione Type: ' + e.getTypeName());
+            System.debug(debugString + ' - Eccezione Message: ' + e.getMessage());
+            System.debug(debugString + ' - Eccezione StackTrace: ' + e.getStackTraceString());
+            caught = true;
+            myExcMessage = e.getMessage();
+            
+        }
+        
+        System.assert(caught, 'Eccezione non catchata. ');
+        System.assert(myExcMessage.contains('È necessario inserire un Contatto/Lead oppure un numero di telefono alternativo.'), 'Eccezione non è del tipo corretto.');
+        
+    }
     
     
     
