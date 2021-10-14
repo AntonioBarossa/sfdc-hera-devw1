@@ -161,7 +161,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getCampByCategAndChannel.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getCampByCategAndChannel.isEmpty());
+		System.assertNotEquals(true, getCampByCategAndChannel.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -180,7 +180,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getUnassCampMember.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getUnassCampMember.isEmpty());
+		System.assertNotEquals(true, getUnassCampMember.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -199,7 +199,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getUnassCampMemberSlice.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getUnassCampMemberSlice.isEmpty());
+		System.assertNotEquals(true, getUnassCampMemberSlice.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -212,7 +212,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getAccsforCampMembs.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getAccsforCampMembs.isEmpty());
+		System.assertNotEquals(true, getAccsforCampMembs.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -230,7 +230,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(true, getAccAndCamp!=null, 'Campaign Member not found');
-		System.assertNotEquals(false, getAccAndCamp!=null);
+		System.assertNotEquals(false, getAccAndCamp!=null,'value of parameter is not matching');
 	}
 
 	@isTest
@@ -249,7 +249,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getCampMembByContacts.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getCampMembByContacts.isEmpty());
+		System.assertNotEquals(true, getCampMembByContacts.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -262,7 +262,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(true, getByEcid!=null, 'Campaign Member not found');
-		System.assertNotEquals(false, getByEcid!=null);
+		System.assertNotEquals(false, getByEcid!=null,'value of parameter is not matching');
 	}
 
 	@isTest
@@ -280,7 +280,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(true, getEcidById!=null, 'Campaign Member not found');
-		System.assertNotEquals(false, getEcidById!=null);
+		System.assertNotEquals(false, getEcidById!=null,'value of parameter is not matching');
 	}
 
 	@isTest
@@ -300,7 +300,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getContactsWithinDist.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getContactsWithinDist.isEmpty());
+		System.assertNotEquals(true, getContactsWithinDist.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -322,7 +322,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getLeadsWithinDist.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getLeadsWithinDist.isEmpty());
+		System.assertNotEquals(true, getLeadsWithinDist.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -352,7 +352,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(true, getMembByAccAndCamp!=null, 'Campaign Member not found');
-		System.assertNotEquals(false, getMembByAccAndCamp!=null);
+		System.assertNotEquals(false, getMembByAccAndCamp!=null,'value of parameter is not matching');
 	}
 
 	@isTest
@@ -369,7 +369,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getCampMemForPaperProc.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getCampMemForPaperProc.isEmpty());
+		System.assertNotEquals(true, getCampMemForPaperProc.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -388,7 +388,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getCampMemByCamp.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getCampMemByCamp.isEmpty());
+		System.assertNotEquals(true, getCampMemByCamp.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -411,7 +411,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getCampMemByCampAndContact.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getCampMemByCampAndContact.isEmpty());
+		System.assertNotEquals(true, getCampMemByCampAndContact.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -443,7 +443,7 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getCampMemByCampAndContactBulk.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getCampMemByCampAndContactBulk.isEmpty());
+		System.assertNotEquals(true, getCampMemByCampAndContactBulk.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -464,6 +464,6 @@ public class HDT_QR_CampaignMemberTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getSibMembByAccId.isEmpty(), 'Campaign Member not found');
-		System.assertNotEquals(true, getSibMembByAccId.isEmpty());
+		System.assertNotEquals(true, getSibMembByAccId.isEmpty(),'value of parameter is not matching');
 	}
 }

@@ -28,7 +28,7 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         List<Order> result = myChannel.getOrderByUsernamePassword(username, password);
         
         //ASSERTS
-        System.assertEquals(0, result.size());
+        System.assertEquals(0, result.size(),'value of parameter is matching');
         
     }
     
@@ -55,8 +55,8 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         DocumentalActivity__c result = myChannel.getActivityByOrder(ordList[0].Id);
         
         //ASSERTS
-        System.assertNotEquals(null, result);
-        System.assertEquals(myDoc.Id, result.Id);
+        System.assertNotEquals(null, result,'value of parameter is not matching');
+        System.assertEquals(myDoc.Id, result.Id,'value of parameter is matching');
         
     }
     
@@ -92,8 +92,8 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assertNotEquals(null, result);
-        System.assertEquals('OK', result.get('outcome'));
+        System.assertNotEquals(null, result,'value of parameter is not matching');
+        System.assertEquals('OK', result.get('outcome'),'value of parameter is matching');
         
     }
     
@@ -126,8 +126,8 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assertNotEquals(null, result);
-        System.assertEquals('OK', result.get('outcome'));
+        System.assertNotEquals(null, result,'value of parameter is not matching');
+        System.assertEquals('OK', result.get('outcome'),'value of parameter is matching');
         
         
         //TESTING - Null
@@ -157,9 +157,9 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         Map<String,String> result_null = myChannel.getPlico(null);
         
         //ASSERTS
-        System.assertNotEquals(null, result_wrong);
-        System.assertEquals('KO', result_wrong.get('outcome'));
-        System.assertEquals('Errore interno nel recupero del documento archiviato.', result_wrong.get('errorMessage'));
+        System.assertNotEquals(null, result_wrong,'value of parameter is not matching');
+        System.assertEquals('KO', result_wrong.get('outcome'),'value of parameter is matching');
+        System.assertEquals('Errore interno nel recupero del documento archiviato.', result_wrong.get('errorMessage'),'value of parameter is matching');
         
     }
     

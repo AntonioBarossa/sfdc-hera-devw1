@@ -145,7 +145,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, tActivityCustom.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, tActivityCustom.isEmpty());
+		System.assertNotEquals(true, tActivityCustom.isEmpty(),'value of parameter is not matching');
 	}
 
 	@isTest
@@ -215,7 +215,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			System.Debug('tOrderupdated[0] = '+tOrderupdated[0]);
 
 			System.assertEquals(date.today(), tOrderupdated[0].ReadingCustomerDate__c, 'Order not found');
-			System.assertNotEquals(null, tOrderupdated[0].ReadingCustomerDate__c);
+			System.assertNotEquals(null, tOrderupdated[0].ReadingCustomerDate__c,'value of parameter not is matching');
 		}
 	}
 
@@ -267,7 +267,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals(false, quoteTypeWrp.quoteCode==null, 'quoteTypeWrp return is Wrong');
-			System.assertNotEquals(true, quoteTypeWrp.quoteCode==null);
+			System.assertNotEquals(true, quoteTypeWrp.quoteCode==null,'value of parameter is not matching');
 		}
 	}
 
@@ -293,7 +293,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals('test1', retrievedOrderCreditCheck.CreditCheckDescription__c, 'Wrong Order returned');
-			System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c);
+			System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c,'value of parameter is not matching');
 		}
 	}
 
@@ -326,7 +326,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals(0, voltureEffectiveDataCheckKO, 'Effective Date Check is wrong');
-			System.assertNotEquals(1, voltureEffectiveDataCheckKO);
+			System.assertNotEquals(1, voltureEffectiveDataCheckKO,'value of parameter is not matching');
 		}
 	}
 
@@ -352,7 +352,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals(false, orderGetDates.Id==null, 'Order returned is Wrong');
-			System.assertNotEquals(true, orderGetDates.Id==null);
+			System.assertNotEquals(true, orderGetDates.Id==null,'value of parameter is not matching');
 		}
 	}
 }

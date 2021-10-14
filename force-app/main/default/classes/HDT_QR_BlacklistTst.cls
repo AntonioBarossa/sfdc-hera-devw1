@@ -36,7 +36,7 @@ public class HDT_QR_BlacklistTst{
 			test.stopTest();
 
 			System.assertEquals(true, tGetAllBlacklist[0].Id!=null, 'Blacklists not found');
-			System.assertNotEquals(false, tGetAllBlacklist[0].Id!=null);
+			System.assertNotEquals(false, tGetAllBlacklist[0].Id!=null,'value of parameter is not matching');
 		}
 	}
 
@@ -57,7 +57,7 @@ public class HDT_QR_BlacklistTst{
 			test.stopTest();
 
 			System.assertEquals(true, tGetAllBlacklistEmail[0].Id!=null, 'Blacklists not found');
-			System.assertNotEquals(false, tGetAllBlacklistEmail[0].Id!=null);
+			System.assertNotEquals(false, tGetAllBlacklistEmail[0].Id!=null,'value of parameter is not matching');
 		}
 	}
 
@@ -78,7 +78,7 @@ public class HDT_QR_BlacklistTst{
 			test.stopTest();
 
 			System.assertEquals(true, tGetBlacklist.Id!=null, 'Blacklist not found');
-			System.assertNotEquals(false, tGetBlacklist.Id!=null);
+			System.assertNotEquals(false, tGetBlacklist.Id!=null,'value of parameter is not matching');
 		}
 	}
 }
