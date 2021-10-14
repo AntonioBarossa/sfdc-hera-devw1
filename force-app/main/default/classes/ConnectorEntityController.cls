@@ -114,72 +114,74 @@ global with sharing class ConnectorEntityController {
 		return String.isBlank(activity.Account__c) ? activityId : activity.Account__c;
 	}
 	
-	@RemoteAction
-	global static Task createTask(Task task,String field, String value) {
+	// NOT USED
+	// @RemoteAction
+	// global static Task createTask(Task task,String field, String value) {
 		
-		try{        
-			List<Contact> contacts = Database.query('Select id,AccountId,Birthdate,Email,FirstName,LastName,Phone from Contact where ' + field + ' = \'' + value + '\'');
-			System.debug('contacts found : ' + contacts);
-			if ( contacts.size() == 1 ){
-				task.WhoId = contacts.get(0).Id;
-			} 
-			} catch(Exception e){
-			System.debug('Error in finding contact ' + e);     
-		}
+	// 	try{        
+	// 		List<Contact> contacts = Database.query('Select id,AccountId,Birthdate,Email,FirstName,LastName,Phone from Contact where ' + field + ' = \'' + value + '\'');
+	// 		System.debug('contacts found : ' + contacts);
+	// 		if ( contacts.size() == 1 ){
+	// 			task.WhoId = contacts.get(0).Id;
+	// 		} 
+	// 		} catch(Exception e){
+	// 		System.debug('Error in finding contact ' + e);     
+	// 	}
 
-		try{           
-			Database.SaveResult sr =  Database.insert(task);
-				System.debug('save result : ' + sr);   
-				return task;
-			} catch(Exception e){
-			System.debug('Error in insert ' + e);
+	// 	try{           
+	// 		Database.SaveResult sr =  Database.insert(task);
+	// 			System.debug('save result : ' + sr);   
+	// 			return task;
+	// 		} catch(Exception e){
+	// 		System.debug('Error in insert ' + e);
 		
-		}
-		return null;
-	}
+	// 	}
+	// 	return null;
+	// }
 
-	@RemoteAction
-	global static Case createCase(Case obj,String field, String value) {
+	// NOT USED
+	// @RemoteAction
+	// global static Case createCase(Case obj,String field, String value) {
 		
-		try{        
-			List<Contact> contacts = Database.query('Select id,AccountId,Birthdate,Email,FirstName,LastName,Phone from Contact where ' + field + ' = \'' + value + '\'');
-			System.debug('contacts found : ' + contacts);
-			if ( contacts.size() == 1 ){
-				obj.ContactId = contacts.get(0).Id;
-			} 
-			} catch(Exception e){
-			System.debug('Error in finding contact ' + e);     
-		}
+	// 	try{        
+	// 		List<Contact> contacts = Database.query('Select id,AccountId,Birthdate,Email,FirstName,LastName,Phone from Contact where ' + field + ' = \'' + value + '\'');
+	// 		System.debug('contacts found : ' + contacts);
+	// 		if ( contacts.size() == 1 ){
+	// 			obj.ContactId = contacts.get(0).Id;
+	// 		} 
+	// 		} catch(Exception e){
+	// 		System.debug('Error in finding contact ' + e);     
+	// 	}
 
-		try{           
-			Database.SaveResult sr =  Database.insert(obj);
-				System.debug('save result : ' + sr);   
-				return obj;
-			} catch(Exception e){
-			System.debug('Error in insert ' + e);
+	// 	try{           
+	// 		Database.SaveResult sr =  Database.insert(obj);
+	// 			System.debug('save result : ' + sr);   
+	// 			return obj;
+	// 		} catch(Exception e){
+	// 		System.debug('Error in insert ' + e);
 		
-		}
-		return null;
-	}
+	// 	}
+	// 	return null;
+	// }
 
 	@RemoteAction
 	global static String ERCOmniUtilsPath {
 		get {
-		return GetResourceURL('softphoneerc','omniUtils');
+			return GetResourceURL('softphoneerc','omniUtils');
 		}
 	}
 
 	@RemoteAction
 	global static String ERCiwsscriptomniPath {
 		get {
-		return GetResourceURL(null,'iwsscript_omni');
+			return GetResourceURL(null,'iwsscript_omni');
 		}
 	}
 
 	@RemoteAction
 	global static String ERCsyncUtilsPath {
 		get {
-		return GetResourceURL(null,'syncUtils');
+			return GetResourceURL(null,'syncUtils');
 		}
 	}
 
@@ -190,7 +192,7 @@ global with sharing class ConnectorEntityController {
 	[SELECT Name, NamespacePrefix, SystemModStamp FROM StaticResource WHERE Name = :resourceName] ;
 		if(resourceList.size() == 1){
 			String nm = resourceList[0].NamespacePrefix;
-		return '/resource/' + resourceList[0].SystemModStamp.getTime() + '/' + (nm != null && nm != '' ? nm + '__' : '') + resourceName; 
+			return '/resource/' + resourceList[0].SystemModStamp.getTime() + '/' + (nm != null && nm != '' ? nm + '__' : '') + resourceName; 
 		}
 		return '';
 	}
