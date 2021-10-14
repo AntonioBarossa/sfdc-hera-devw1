@@ -92,6 +92,8 @@ public with sharing class HDT_TRH_TaskTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].Id);
         
         Contact myContact = contactList[1];
+        myContact.MobilePhone = '3245341020';
+        Update myContact;
         
         Task myTask3 = new Task();
         myTask3.WhoId = myContact.Id;
