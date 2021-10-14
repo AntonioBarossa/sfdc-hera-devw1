@@ -115,16 +115,16 @@ public with sharing class HDT_TRH_TaskTst {
         System.assert('023'.equalsIgnoreCase(result1), 'Result1 non è 023');
         
         String result2 = myObjectToTest.doxeeTemplateCode('Comunicazione Fuga Accertata (24)');
-        System.assert('024'.equalsIgnoreCase(result1), 'Result2 non è 024');
+        System.assert('024'.equalsIgnoreCase(result2), 'Result2 non è 024');
         
         String result3 = myObjectToTest.doxeeTemplateCode('Comunicazione Fuga Presunta (25)');
-        System.assert('025'.equalsIgnoreCase(result1), 'Result3 non è 025');
+        System.assert('025'.equalsIgnoreCase(result3), 'Result3 non è 025');
         
         String result4 = myObjectToTest.doxeeTemplateCode('Ultimo Avviso (26)');
-        System.assert('026'.equalsIgnoreCase(result1), 'Result4 non è 026');
+        System.assert('026'.equalsIgnoreCase(result4), 'Result4 non è 026');
         
         String result5 = myObjectToTest.doxeeTemplateCode('ELSE');
-        System.assert('0'.equalsIgnoreCase(result1), 'Result6 non è 0');
+        System.assert('0'.equalsIgnoreCase(result5), 'Result6 non è 0');
         
     }
 
