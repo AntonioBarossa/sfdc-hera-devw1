@@ -94,7 +94,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Edit</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7) AND 8</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -130,12 +130,17 @@
                                     <operator>EQUAL</operator>
                                     <rightValue>Scarto complesso</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardWorked__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.RisottomettiPratica</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND (4 AND 5)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -150,6 +155,16 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardResubmitted__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardWorked__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
