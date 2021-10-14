@@ -29,6 +29,8 @@ public with sharing class HDT_SRV_ServicePointTst {
 	
 	@isTest
     public static void testCheckReadAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -37,13 +39,19 @@ public with sharing class HDT_SRV_ServicePointTst {
             Test.startTest();
 
             srvPoint.checkReadAccess('ServicePointCode__c, Name');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Ended');
         }
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -52,13 +60,19 @@ public with sharing class HDT_SRV_ServicePointTst {
             Test.startTest();
 
             srvPoint.checkCreateAccess('ServicePointCode__c, Name');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -67,8 +81,12 @@ public with sharing class HDT_SRV_ServicePointTst {
             Test.startTest();
 
             srvPoint.checkUpdateAccess('ServicePointCode__c, Name');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Ended');
         }
     }
 
@@ -143,7 +161,7 @@ public with sharing class HDT_SRV_ServicePointTst {
                 System.debug(e);
             }
 
-            List<ServicePoint__c> spCheckList = [SELECT Id FROM ServicePoint__c WHERE Name = 'ServicePointTest'];
+            List<ServicePoint__c> spCheckList = [SELECT Id FROM ServicePoint__c WHERE Name = 'testServicePoint0'];
  
             Test.stopTest();
 

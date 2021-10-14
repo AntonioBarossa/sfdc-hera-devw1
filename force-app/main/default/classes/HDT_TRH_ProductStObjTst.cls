@@ -33,7 +33,7 @@ public class HDT_TRH_ProductStObjTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -103,7 +103,7 @@ public class HDT_TRH_ProductStObjTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -123,7 +123,7 @@ public class HDT_TRH_ProductStObjTst {
 
         finished = true;
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -156,7 +156,7 @@ public class HDT_TRH_ProductStObjTst {
 
         finished = true;
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -188,7 +188,7 @@ public class HDT_TRH_ProductStObjTst {
 
         finished = true;
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -220,7 +220,7 @@ public class HDT_TRH_ProductStObjTst {
 
         finished = true;
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -252,7 +252,7 @@ public class HDT_TRH_ProductStObjTst {
 
         finished = true;
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
@@ -284,7 +284,7 @@ public class HDT_TRH_ProductStObjTst {
 
         finished = true;
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
