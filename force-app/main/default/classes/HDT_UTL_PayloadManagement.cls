@@ -432,7 +432,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
             System.debug('subscriptions: ' + subscriptions);
-
+            
             String[] record = new List<String>();
             // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
