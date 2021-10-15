@@ -45,7 +45,7 @@ public class HDT_SRV_OpportunityTst{
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 
-			System.assertEquals(true, finished, 'Test Ended');
+			System.assertEquals(true, finished, 'Test Not Ended');
 		}
 	}
 
@@ -73,7 +73,7 @@ public class HDT_SRV_OpportunityTst{
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 
-			System.assertEquals(true, finished, 'Test Ended');
+			System.assertEquals(true, finished, 'Test Not Ended');
 		}
 	}
 
@@ -101,7 +101,7 @@ public class HDT_SRV_OpportunityTst{
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 
-			System.assertEquals(true, finished, 'Test Ended');
+			System.assertEquals(true, finished, 'Test Not Ended');
 		}
 	}
 

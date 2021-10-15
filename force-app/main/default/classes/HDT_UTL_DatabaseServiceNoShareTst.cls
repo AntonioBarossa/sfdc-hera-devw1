@@ -41,9 +41,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
 
         Boolean insertLead = HDT_UTL_DatabaseServiceNoShare.insertSObject(ld);
 
-        System.assertEquals(true, insertLead);
+        System.assertEquals(true, insertLead, 'Lead Inserted');
 
-        System.assertNotEquals(false, insertLead);
+        System.assertNotEquals(false, insertLead, 'Lead Inserted');
 
         //Create and test an empty Lead
         Lead emptyLead = new Lead();
@@ -56,9 +56,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
             insertEmptyLead = false;
         }
         
-        System.assertEquals(false, insertEmptyLead);
+        System.assertEquals(false, insertEmptyLead, 'Empty Lead Inserted');
 
-        System.assertNotEquals(true, insertEmptyLead);
+        System.assertNotEquals(true, insertEmptyLead, 'Empty Lead Inserted');
 
         Test.stopTest();
     }
@@ -78,9 +78,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
 
         Boolean updateLead = HDT_UTL_DatabaseServiceNoShare.updateSObject(ld);
         
-        System.assertEquals(true, updateLead);
+        System.assertEquals(true, updateLead, 'Lead Updated');
 
-        System.assertNotEquals(false, updateLead);
+        System.assertNotEquals(false, updateLead, 'Lead Updated');
 
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
 
@@ -114,9 +114,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
 
         Boolean upsertLead = HDT_UTL_DatabaseServiceNoShare.upsertSObject(ld);
         
-        System.assertEquals(true, upsertLead);
+        System.assertEquals(true, upsertLead, 'Lead Upserted');
 
-        System.assertNotEquals(false, upsertLead);
+        System.assertNotEquals(false, upsertLead, 'Lead Upserted');
 
         Test.stopTest();
     }
@@ -146,9 +146,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
 
         Boolean deleteSObject = HDT_UTL_DatabaseServiceNoShare.deleteSObject(ld.Id);
 
-        System.assertEquals(true, deleteSObject);
+        System.assertEquals(true, deleteSObject, 'Object Deleted');
 
-        System.assertNotEquals(false, deleteSObject);
+        System.assertNotEquals(false, deleteSObject, 'Object Deleted');
 
         //Create and test an empty Lead
         Lead emptyLead = new Lead();
@@ -164,9 +164,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
             deleteEmptyLead = false;
         }
         
-        System.assertEquals(false, deleteEmptyLead);
+        System.assertEquals(false, deleteEmptyLead, 'Empty Lead not Deleted');
 
-        System.assertNotEquals(true, deleteEmptyLead);
+        System.assertNotEquals(true, deleteEmptyLead, 'Empty Lead not Deleted');
 
         Test.stopTest();
     }
@@ -185,9 +185,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
 
         Boolean deleteOppList = HDT_UTL_DatabaseServiceNoShare.deleteSObject(oppList);
 
-        System.assertEquals(true, deleteOppList);
+        System.assertEquals(true, deleteOppList, 'Opportunity List Deleted');
         
-        System.assertNotEquals(false, deleteOppList);
+        System.assertNotEquals(false, deleteOppList, 'Opportunity List Deleted');
         
         Test.stopTest();
     }
@@ -213,9 +213,9 @@ public with sharing class HDT_UTL_DatabaseServiceNoShareTst {
 
         Boolean upsertSObjectExternalId = HDT_UTL_DatabaseServiceNoShare.upsertSObjectExternalId(oppList, 'Opportunity', 'Name');
 
-        System.assertEquals(true, upsertSObjectExternalId);
+        System.assertEquals(true, upsertSObjectExternalId, 'External Object Upserted');
         
-        System.assertNotEquals(false, upsertSObjectExternalId);        
+        System.assertNotEquals(false, upsertSObjectExternalId, 'External Object Upserted');        
 
         Test.stopTest();
     }

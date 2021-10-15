@@ -9,8 +9,11 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     private static String waitingPhase = '';
     @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
+    @TestVisible
     private static Integer btLimit = 10;
+    @TestVisible
     private static Integer mtLimit = 20;
+    @TestVisible
     private static Integer atLimit = 30;
 
     /**
