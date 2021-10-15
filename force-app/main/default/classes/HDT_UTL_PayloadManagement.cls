@@ -773,17 +773,20 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         queryString = queryString + relatedQueryString + fromString + whereString; 
         System.debug('contracts query ' + queryString);
+        
         List<sObject> recordList = new List<sObject>();
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
         if (objRes.isAccessible()) {
             recordList = Database.query(queryString);
         }
+        System.debug('recordList: ' + recordList);
 
         Map<Id, String> offersMap = new Map<Id, String>(); // mappa tra id contratto e offerta commerciale del contratto.
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+            System.debug('subscriptions: ' + subscriptions);
             offersMap.put(c.Id, subscriptions[0].SBQQ__ProductName__c);
         }
 
