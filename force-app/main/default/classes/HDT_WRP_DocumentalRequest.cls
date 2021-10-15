@@ -15,7 +15,11 @@ public class HDT_WRP_DocumentalRequest{
             this.driver.addAll(driver);
             this.payloadBase64 = payload;
         }
-        public HDT_WRP_DocumentalPackage(){}
+        public HDT_WRP_DocumentalPackage()
+        {
+            this.driver = new List<HDT_WRP_DocumentalDriver>();
+            this.payloadBase64 = '';
+        }
 	}
 
 	public class HDT_WRP_DocumentalDeliverPackageRequest{
@@ -39,10 +43,14 @@ public class HDT_WRP_DocumentalRequest{
             this.name = input.name;
             this.value = input.value;
         }
-        public HDT_WRP_DocumentalDriver(){
-            
+        public HDT_WRP_DocumentalDriver()
+        {
+            this.name = '';
+            this.value = '';
         }
+            
     }
+    
     public class HDT_WRP_DocumentalCustomerInfo
     {
         public string vatNumber { get; set; }
