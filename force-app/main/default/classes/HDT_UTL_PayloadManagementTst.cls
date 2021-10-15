@@ -850,25 +850,23 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO cluster not Reclami
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        /*
         String result1 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
         System.assert(String.isBlank(result1), 'Risultato NON è stringa vuota.');
-        */
+        
         
         
         //TESTING - Caso HTML Response Blank
         myItem.Cluster__c = 'Reclami';
-        /*
         myObjectToTest = new HDT_UTL_PayloadManagement();
         String result2 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
         System.debug('result2 length ' + result2.length());
         System.assert(String.isBlank(result2), 'Risultato NON è stringa vuota.');
-        */
+        
         
         
         //TESTING - caso normale
