@@ -214,11 +214,13 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     }
     
     
-    //Update Activity Fail
+    //Update Activity and Handlers Fail
     @isTest
-    private static void updateActivityFail(){
+    private static void updateActivity_withHandlersFail(){
         
         Boolean caught = false;
+        
+        //UPDATE ACTIVITY FAIL
         try {
 			HDT_LC_AccountSelectorController.updateActivity('MalformedActivityId', null, null, 'MalformedLeadId');
 		} catch (Exception e) {
@@ -229,9 +231,39 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
             
 		}
         
-        System.assert(caught, 'Eccezione non avvenuta per scenario.');
+        System.assert(caught, 'Eccezione non avvenuta per updateActivity.');
+        
+        
+        
+        //HANDLE ACCOUNT FAIL
+        try {
+			HDT_LC_AccountSelectorController.handleAccount('MalformedContactId', 'MalformedActivityId');
+		} catch (Exception e) {
+            caught = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caught, 'Eccezione non avvenuta per handleAccount.');
+        
+        
+        
+        //HANDLE ACCOUNT FAIL
+        try {
+			HDT_LC_AccountSelectorController.handleLead('MalformedLeadId', 'MalformedActivityId');
+		} catch (Exception e) {
+            caught = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caught, 'Eccezione non avvenuta per handleLead.');
+        
     }
-    
     
     
     
