@@ -265,7 +265,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
         
             ServicePoint__c sp = [SELECT Id, ServicePointCode__c,  MeterStatus__c, CommoditySector__c,
                                     PlugPresence__c, PowerRequested__c, PowerContractual__c, RecordTypeId,
-                                    SupplyCity__c, MarketOrigin__c 
+                                    SupplyCity__c, MarketOrigin__c, ImplantType__c, SupplyType__c
                                   FROM ServicePoint__c
                                   WHERE Name = 'servicepointTest'];
 
