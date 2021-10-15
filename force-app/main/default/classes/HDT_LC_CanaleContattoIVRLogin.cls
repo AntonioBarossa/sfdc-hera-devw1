@@ -40,11 +40,30 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
     }
             
     @AuraEnabled
-    public static String checkListenVO(String orderId){
-        System.debug('It\'s inside the method checkListenVO');
-        Order ord = orderQr.getRecordById(orderId);
-        String prefix = 'PREFISSO';//+ ord.Ecid__c;
-        return prefix;
+    public static map<String,String> checkListenVO(String orderId,String username,String password){
+        map<String,String> mapReturn = new Map<String,String>();
+        try {
+                Order ord = checkLogin(username,password);
+                if(ord.id == orderId){
+                    String[] s = ord.UniqueAutentication__c.split('_');
+                    if(s.size() == 2 && s[0] != null && s[1] != null){
+                        mapReturn.put('ecid',s[0]);
+                        mapReturn.put('token',s[1]);
+                        return mapReturn;
+                    }
+                    else{
+                        mapReturn.put('res','NonPossibile');
+                        return mapReturn;
+                    }
+                }
+                else{
+                    mapReturn.put('res','NonPossibile');
+                    return mapReturn;
+                }
+            }
+            catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+            }
   
     }
     @AuraEnabled
@@ -184,10 +203,21 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         String password = day + month + year.substring(2,4);
         System.debug('********:4User');
         //System.debug(password);
+        String ecid = parentOrd.Sale__r.Ecid__c;
+        //text to encrypt
+        //16 byte string. since characters used are ascii, each char is 1 byte.
+        Blob key = Crypto.generateAesKey(128);
+        //encrypted blob
+        Blob cipherText = Crypto.encryptWithManagedIV('AES128', key, Blob.valueOf(username+password));
+        //encrypted string
+        String encodedCipherText = EncodingUtil.base64Encode(cipherText);
+
+
         Order newOrder = new Order();
         newOrder.Id = parentOrder;
         newOrder.UniqueCredentials__c = username + '_' + password;
         newOrder.Username__c = username;
+        newOrder.UniqueAutentication__c = ecid + '_' + encodedCipherText;
         newOrder.Password__c = password;
         orderSrv.updateRecord(newOrder);
     
