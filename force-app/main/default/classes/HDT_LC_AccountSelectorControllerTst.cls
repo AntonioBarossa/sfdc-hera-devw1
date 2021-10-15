@@ -157,7 +157,9 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     }
     
     
-    //GETTER FAILS
+    //Testing fails
+    
+    //getter Fails
     @isTest
     private static void getContactsFail(){
         
@@ -211,6 +213,24 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         System.assert(caughtAcc, 'Eccezione non avvenuta per Accounts.');
     }
     
+    
+    //Update Activity Fail
+    @isTest
+    private static void updateActivityFail(){
+        
+        Boolean caught = false;
+        try {
+			HDT_LC_AccountSelectorController.updateActivity('MalformedActivityId', null, null, 'MalformedLeadId');
+		} catch (Exception e) {
+            caught = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caught, 'Eccezione non avvenuta per scenario.');
+    }
     
     
     
