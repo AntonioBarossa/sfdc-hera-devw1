@@ -110,6 +110,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.CompanyOwner__c,
             Sale__r.SalesContact__c,
+            Sale__r.Ecid__c,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -550,8 +551,7 @@ public inherited sharing class HDT_QR_Order {
             DistributorFormula__c,
             VASType__c,
             DateComfortCall__c,
-            DocumentPackage__c,
-            ParentOrder__c
+            DocumentPackage__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
