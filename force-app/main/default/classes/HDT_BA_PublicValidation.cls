@@ -23,12 +23,13 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
         for(VocalOrderPublicConfirm__c vo : scope){
             orderParentList.add(vo.order__c);
             vo.Status__c = 'Chiusa';
-            vo.Phase__c  ='Documentazione Validata'; //HRAWRM-906 15/10/2021
             vocalToUpdate.add(vo);
             Order ord = new Order();
             ord.id = vo.Order__c;
             ord.SignedDate__c = vo.createddate.date();
             ord.MethodSignedAccepted__c = 'web assistito';
+            ord.Phase__c  ='Documentazione Validata'; //HRAWRM-906 15/10/2021
+
             //orderToUpdate.add(ord);
             orderToUpdate.put(ord.id,ord);
         }
