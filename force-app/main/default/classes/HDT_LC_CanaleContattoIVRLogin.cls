@@ -161,9 +161,21 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
       String password = day + month + year.substring(2,4);
       System.debug('********:4User');
+
+      String ecid = parentOrd.Sale__r.Ecid__c;
+      //text to encrypt
+      //16 byte string. since characters used are ascii, each char is 1 byte.
+      Blob key = Crypto.generateAesKey(128);
+      //encrypted blob
+      Blob cipherText = Crypto.encryptWithManagedIV('AES128', key, Blob.valueOf(username+password));
+      //encrypted string
+      String encodedCipherText = EncodingUtil.base64Encode(cipherText);
+
+
       Order newOrder = new Order();
       newOrder.Id = childOrder.parentOrder__c;
       newOrder.UniqueCredentials__c = username + '_' + password;
+      newOrder.UniqueAutentication__c = ecid + '_' + encodedCipherText;
       newOrder.Username__c = username;
       newOrder.Password__c = password;
       orderSrv.updateRecord(newOrder);
