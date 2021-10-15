@@ -233,30 +233,6 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         System.assert(caughtUpd, 'Eccezione non avvenuta per updateActivity.');
         
         
-        
-        //HANDLE ACCOUNT FAIL
-        String insanelyLongString = 'This is an insanely long string to make the query fail.';
-        
-        for(Integer i = 0; i<10; i++){
-            insanelyLongString += insanelyLongString;
-        }
-        System.debug('insanelyLongString length: ' + insanelyLongString.length());
-        
-        Boolean caughtHandleAcc = false;
-        try {
-			HDT_LC_AccountSelectorController.handleAccount(insanelyLongString, 'MalformedActivityId');
-		} catch (Exception e) {
-            caughtHandleAcc = true;
-            System.debug('seach - exception message: ' + e.getMessage());
-            System.debug('seach - exception type name: ' + e.getTypeName());
-            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
-            
-		}
-        
-        System.assert(caughtHandleAcc, 'Eccezione non avvenuta per handleAccount.');
-        
-        
-        
         //HANDLE LEAD FAIL
         Boolean caughtHandleLead = false;
         try {
@@ -270,6 +246,26 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
 		}
         
         System.assert(caughtHandleLead, 'Eccezione non avvenuta per handleLead.');
+        
+        
+        
+        
+        //HANDLE ACCOUNT FAIL
+        mySetup();
+        Contact con = [SELECT Id FROM Contact];
+        
+        Boolean caughtHandleAcc = false;
+        try {
+			HDT_LC_AccountSelectorController.handleAccount(con.Id, 'MalformedActivityId');
+		} catch (Exception e) {
+            caughtHandleAcc = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caughtHandleAcc, 'Eccezione non avvenuta per handleAccount.');
         
     }
     
