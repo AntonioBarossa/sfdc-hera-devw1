@@ -857,6 +857,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         */
         
         //TESTING - NB: CRASH A CAUSA DI ECCEZIONE OUT OF BOUNDS - MANCANZA DI SUBSCRIPTION SU CONTRATTO
+        myItem.Cluster__c = 'Reclami';
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
         //myItem.IsContainer__c = true;
         myObjectToTest = new HDT_UTL_PayloadManagement();

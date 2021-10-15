@@ -839,6 +839,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 payloadSection += emptyLine;
             }
         }
+        System.debug('payloadSection big part length: ' + payloadSection.length());
 
         // Info allegati al reclamo, se presenti.
         HDT_QR_CaseValidations docQueryHandler = new HDT_QR_CaseValidations();
