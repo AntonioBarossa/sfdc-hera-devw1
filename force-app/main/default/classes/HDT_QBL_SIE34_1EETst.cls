@@ -34,7 +34,7 @@ public with sharing class HDT_QBL_SIE34_1EETst {
     }
     
     @isTest
-    public static void testGetChannelAgency() {
+    public static void testQueue() {
         List<String> varContentVersionIds= new List<String>();
         ContentVersion c = [SELECT Id FROM ContentVersion Limit 1];   
         varContentVersionIds.add(c.Id);
@@ -43,5 +43,6 @@ public with sharing class HDT_QBL_SIE34_1EETst {
         	Id res = System.enqueueJob(qb);
         Test.stopTest();
         System.assertEquals('Completed' , [SELECT Id , Status FROM AsyncApexJob WHERE Id=:res][0].Status, 'The job has not been completed');
+        System.assertNotEquals(null , [SELECT Id , Status FROM AsyncApexJob WHERE Id=:res][0].Status, 'The job has not been completed');
     }
 }
