@@ -972,10 +972,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installPhaseManagerSObjectSetting() {
+	public static void installPhaseManagerSObjectSetting(String targetObject) {
         try{
-            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order',
-			wrts_prcgvr__ObjectType__c = 'Order',
+            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = targetObject,
+			wrts_prcgvr__ObjectType__c = targetObject,
 			wrts_prcgvr__PivotField__c = 'Phase__c');
             upsert setting Name;
         }catch (Exception ex){
@@ -988,10 +988,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installCsDependecyPhaseCheckSetting() {
+	public static void installCsDependecyPhaseCheckSetting(String phase) {
         try{
-            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = 'Comunicazione verso Heroku',
-			Phase__c = 'Comunicazione verso Heroku');
+            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = phase,
+			Phase__c = phase);
             upsert setting Name;
         }catch (Exception ex){
             
