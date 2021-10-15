@@ -21,7 +21,7 @@ public with sharing class HDT_SRV_ServiceTwentySix {
         logCase.Causal__c = 'CALLOUT-Service26';
         logCase.Note__c = JSON.serializePretty(req);
         logCase.Description = JSON.serialize(res);
-        Database.insert(logCase);
+        //Database.insert(logCase);
         return res;
     }
 }

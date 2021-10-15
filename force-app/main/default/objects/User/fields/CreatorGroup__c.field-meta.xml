@@ -163,10 +163,6 @@
             <valueName>HC_Vendita Condomini</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Vendita MM</controllingFieldValue>
-            <valueName>HC_VenditaMM</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Vendita TopBusiness</controllingFieldValue>
             <valueName>HC_TopBusiness</valueName>
         </valueSettings>

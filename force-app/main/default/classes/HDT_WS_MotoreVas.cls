@@ -47,7 +47,7 @@ public  class HDT_WS_MotoreVas {
         logCase.Causal__c = 'CALLOUT-'+WS_CONFIG_DEACTIVATION;
         logCase.Note__c = JSON.serializePretty(req);
         logCase.Description = JSON.serialize(res);
-        Database.insert(logCase);
+        //Database.insert(logCase);
 
         return res;
     }
