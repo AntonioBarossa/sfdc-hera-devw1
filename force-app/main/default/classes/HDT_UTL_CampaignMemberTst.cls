@@ -236,6 +236,8 @@ public with sharing class HDT_UTL_CampaignMemberTst {
     @isTest
     public static void testCampaignSuspension(){
 
+        Boolean finished = false;
+
         List<Campaign> lstCampaign = [SELECT Id, Status FROM Campaign LIMIT 1];
 
         List<Campaign> newCampaigns = new List<Campaign>{new Campaign(Id = lstCampaign.get(0).Id, Status = 'Cancellata', Channel__c = 'Telefonico Outbound')};
@@ -246,12 +248,18 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         HDT_UTL_CampaignMember.campaignSuspension(newCampaigns, oldCampaigns);
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Ended');
     }
 
    @isTest
    public static void testFutureCampaignOutboundSuspensionRequest(){
-        
+    
+        Boolean finished = false;
+
         List<String> lstString = new List<String>();
         
         Campaign campaignIds = [SELECT Id FROM Campaign LIMIT 1];
@@ -261,12 +269,18 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         HDT_UTL_CampaignMember.futureCampaignOutboundSuspensionRequest(lstString);
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Ended');
 
     }
 
     @isTest
     public static void testActivateCampaign(){
+
+        Boolean finished = false;
 
         List<Campaign> lstCampaign = [SELECT Id, Status FROM Campaign LIMIT 1];
 
@@ -278,6 +292,10 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         HDT_UTL_CampaignMember.activateCampaign(newCampaigns, oldCampaigns);
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Ended');
     }
 }

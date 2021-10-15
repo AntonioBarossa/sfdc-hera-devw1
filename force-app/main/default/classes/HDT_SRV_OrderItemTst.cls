@@ -63,7 +63,7 @@ public class HDT_SRV_OrderItemTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test is Ended');
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
@@ -93,7 +93,7 @@ public class HDT_SRV_OrderItemTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test is Ended');
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
@@ -123,7 +123,7 @@ public class HDT_SRV_OrderItemTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test is Ended');
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
@@ -153,6 +153,6 @@ public class HDT_SRV_OrderItemTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test is Ended');
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 }

@@ -36,7 +36,6 @@ public class HDT_UTL_ScartiTst {
             Id pricebookId = Test.getStandardPricebookId();            
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
-            Id contractId = contracts[0].id;
             
             List<Individual> individuals = HDT_UTL_DataFactoryTst.createIndividual(2,true);
             
@@ -63,8 +62,7 @@ public class HDT_UTL_ScartiTst {
             insert orders;
             Id orderId = orders[0].id;
             
-            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);
-            Id orderItemId = orderItems[0].id;
+            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);            
                      
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, contacts[0].id, null, contracts[0].Id, orders[0].Id);
             cases[0].TraderPracticeCode__c = 'testcode';
@@ -180,7 +178,7 @@ public class HDT_UTL_ScartiTst {
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
         boolean b = classInstance.evaluate(argsMap);
         
-        System.assertEquals(true, b, 'evaluate did not work correctly');
+        System.assertEquals(false, b, 'evaluate did not work correctly');
         System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
     
@@ -196,7 +194,7 @@ public class HDT_UTL_ScartiTst {
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
         boolean b = classInstance.evaluate(argsMap);
         
-        System.assertEquals(false, b, 'evaluate did not work correctly');
+        System.assertEquals(true, b, 'evaluate did not work correctly');
         System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
     
@@ -370,62 +368,14 @@ public class HDT_UTL_ScartiTst {
         
     }
     
-    @isTest static void createAttivitaTracciaturaHeroku2(){
-        
-        Order record = [Select id from Order];
-        
-        List<Map<String,String>> arg = new List<Map<String,String>>();
-        Map<String,String> mapp = new Map<String,String>();
-        mapp.put('ATTIVITA','Esito non elaborato');
-        mapp.put('UTENZA','testutenza');
-        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
-        mapp.put('ERROR_MESSAGE','erroretest');
-        mapp.put('RECORD_ID',record.id);
-        mapp.put('PROCESS_CATEGORY','sales');
-        
-        arg.add(mapp);
-        
-        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
-        
-        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
-        
-        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
-        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
-        
-    }
-    
-    @isTest static void createAttivitaTracciaturaHeroku3(){
-        
-        Order record = [Select id from Order limit 1];
-        
-        List<Map<String,String>> arg = new List<Map<String,String>>();
-        Map<String,String> mapp = new Map<String,String>();
-        mapp.put('ATTIVITA','Esito non elaborato');
-        mapp.put('UTENZA','testutenza');
-        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
-        mapp.put('ERROR_MESSAGE','erroretest');
-        mapp.put('RECORD_ID',record.id);
-        mapp.put('PROCESS_CATEGORY','postsales');
-        
-        arg.add(mapp);
-        
-        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
-        
-        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
-        
-        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
-        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
-        
-    }
-    
     @isTest static void createActivityByObjectIdAndTemplateNameBulk(){
         
         Order record = [Select id from Order limit 1];
         
-        List<String> Ids = new List<String>();
-        Ids.add(record.id);
+        List<String> ids = new List<String>();
+        ids.add(record.id);
         
-        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(Ids, 'CBS_ATT006__AMMISSIBILITA_KO');
+        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(ids, 'CBS_ATT006__AMMISSIBILITA_KO');
         
         System.assertEquals(1, activities.size(), 'createActivityByObjectIdAndTemplateNameBulk did not work correctly');
         System.assertNotEquals(null, activities, 'createActivityByObjectIdAndTemplateNameBulk did not work correctly');
@@ -623,6 +573,7 @@ public class HDT_UTL_ScartiTst {
         System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
         List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
     	System.assertEquals(2, jobs.size(), 'expecting one queued job');
+        System.assertNotEquals(null, jobID, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
                
     }        
 }
