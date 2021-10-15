@@ -3,7 +3,7 @@
     <fullName>ClientIdentificationDate__c</fullName>
     <description>La data di identificazione del cliente</description>
     <externalId>false</externalId>
-    <label>Data identificazione cliente</label>
+    <label>Data Richiesta</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
