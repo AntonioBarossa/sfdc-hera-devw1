@@ -82,6 +82,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
         if(isSubscriptionSetup){
+            caseList[0].ComplaintType__c = 'Reclamo Scritto';
             caseList[0].FirstLevelComplaintClassification__c = 'Reclamo Scritto';
             caseList[0].IndemnityConfirmed__c = true;
             //caseList[0].IndemnityMotivation__c = '';
