@@ -136,13 +136,18 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
 			acc.BillingIsAddressVerified__c=true;
+			
+			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
+				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
+			} else {
+				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
+			}
+
 			//@frpanico 06/08 added Customer Code
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -152,6 +157,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
+			System.debug('Business account created in Data Factory ' + acc);
 			accList.add(acc);
 
 		}
