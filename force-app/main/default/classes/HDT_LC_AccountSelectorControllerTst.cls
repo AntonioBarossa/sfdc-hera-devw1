@@ -218,50 +218,51 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     @isTest
     private static void updateActivity_withHandlersFail(){
         
-        Boolean caught = false;
-        
         //UPDATE ACTIVITY FAIL
+        Boolean caughtUpd = false;
         try {
 			HDT_LC_AccountSelectorController.updateActivity('MalformedActivityId', null, null, 'MalformedLeadId');
 		} catch (Exception e) {
-            caught = true;
+            caughtUpd = true;
             System.debug('seach - exception message: ' + e.getMessage());
             System.debug('seach - exception type name: ' + e.getTypeName());
             System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
             
 		}
         
-        System.assert(caught, 'Eccezione non avvenuta per updateActivity.');
+        System.assert(caughtUpd, 'Eccezione non avvenuta per updateActivity.');
         
         
         
         //HANDLE ACCOUNT FAIL
+        Boolean caughtHandleAcc = false;
         try {
 			HDT_LC_AccountSelectorController.handleAccount('MalformedContactId', 'MalformedActivityId');
 		} catch (Exception e) {
-            caught = true;
+            caughtHandleAcc = true;
             System.debug('seach - exception message: ' + e.getMessage());
             System.debug('seach - exception type name: ' + e.getTypeName());
             System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
             
 		}
         
-        System.assert(caught, 'Eccezione non avvenuta per handleAccount.');
+        System.assert(caughtHandleAcc, 'Eccezione non avvenuta per handleAccount.');
         
         
         
-        //HANDLE ACCOUNT FAIL
+        //HANDLE LEAD FAIL
+        Boolean caughtHandleLead = false;
         try {
 			HDT_LC_AccountSelectorController.handleLead('MalformedLeadId', 'MalformedActivityId');
 		} catch (Exception e) {
-            caught = true;
+            caughtHandleLead = true;
             System.debug('seach - exception message: ' + e.getMessage());
             System.debug('seach - exception type name: ' + e.getTypeName());
             System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
             
 		}
         
-        System.assert(caught, 'Eccezione non avvenuta per handleLead.');
+        System.assert(caughtHandleLead, 'Eccezione non avvenuta per handleLead.');
         
     }
     
