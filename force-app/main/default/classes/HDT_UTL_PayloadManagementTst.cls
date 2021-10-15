@@ -6,6 +6,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static Boolean isSubscriptionSetup = false;
     
     
     //TEST SETUP
@@ -62,6 +63,18 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         contractList[0].ServicePoint__c = servPoint.Id;
         contractList[0].StartDate = Date.today();
         insert contractList;
+        
+        if(isSubscriptionSetup){
+            //CODICE REPLICATO
+            SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
+            SBQQ__Contract__c = contr.Id, 
+            SBQQ__Product__c = prod.Id, 
+            SBQQ__Quantity__c = 10.2, 
+            SBQQ__Account__c = accList[0].Id,
+            SBQQ__NetPrice__c = 100.2,
+            SBQQ__SubscriptionEndDate__c = Date.Today());
+            insert subs;
+        }
         
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
     }
