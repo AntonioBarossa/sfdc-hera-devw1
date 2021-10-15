@@ -333,6 +333,7 @@
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>BillingProfile__c</fields>
         <fields>CommercialProduct__c</fields>
         <fields>SAPContractCode__c</fields>
         <fields>CONTRACT.STATUS</fields>
@@ -347,6 +348,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Opportunity__c</fields>
+        <fields>Quote__c</fields>
         <relatedList>SaleServiceItem__c.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -26,6 +26,11 @@ export default class HdtCambioUso extends NavigationMixin(LightningElement){
         {label:'Si', value:'Si'},
         {label:'No', value:'No'}
     ];
+    discochangevalue = [{label:'--None--', value:'--None--'}];
+    discoTipoOptions=[
+        {label:'01- App. medico terapeutiche', value:'01- App. medico terapeutiche'},
+        {label:'02- Pubblica utilità', value:'02- Pubblica utilità'}
+    ]
 
     fornituraOption =[
         {label:"Domestico", value:"Domestico"},
@@ -52,6 +57,17 @@ export default class HdtCambioUso extends NavigationMixin(LightningElement){
 @api handleChange(event){
     
         this.res =  event.target.value;
+}
+
+@api handleChangeDisco(event){
+
+    if('No' == event.target.value){
+        this.discochangevalue = this.discoTipoOptions;
+    }
+    else{
+        this.discochangevalue = [{label:'--None--', value:'--None--'}];
+    }
+    
 }
     @api
     handleSave(){

@@ -674,6 +674,8 @@ public with sharing class HDT_SRV_SalesHandler {
         RestContext.response.statusCode = 400;
 
     }
+
+    @TestVisible
     private static void updateServicePoint(ServicePoint__c sp){
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
