@@ -29,6 +29,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cv.PathOnClient = filename + '.pdf';
 		cv.ContentLocation = 'S';
 		try {
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
 			insert cv;
 			return cv;
 		} catch(DMLException e) {
@@ -50,6 +51,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// V = Viewer, C = Collaborator, I = Inferred
 		cdl.ShareType = 'V';
 		try {
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
 			insert cdl;
 			return cdl;
 		} catch(DMLException e) {
@@ -82,6 +84,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cd.PreferencesPasswordRequired=false;
 		cd.PreferencesAllowOriginalDownload= true;
 		try {
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
 			insert cd;
 			return getSharedLink(cd.Id);
 		} catch(DMLException e) {
