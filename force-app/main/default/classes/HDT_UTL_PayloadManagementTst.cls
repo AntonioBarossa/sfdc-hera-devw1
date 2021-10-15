@@ -837,7 +837,10 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         isSubscriptionSetup = true;
         mySetup();
         
-        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c, Note__c, IsContainer__c FROM Case];
+        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c, Note__c, IsContainer__c, FirstLevelComplaintClassification__c, IndemnityConfirmed__c, 
+                              IndemnityMotivation__c, IndemnityDueSendResponse__c, IndemnityDueBilllingCorrection__c, CorrectionRight__c, 
+                              CorrectionDocumentEmissionDay__c
+                       FROM Case];
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
         inputs.put('Case', new List<Case>{myItem});
