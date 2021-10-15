@@ -553,8 +553,7 @@ public inherited sharing class HDT_QR_Order {
             DateComfortCall__c,
             DocumentPackage__c,
             ProcessType__c,
-            ParentOrder__c,
-            DocumentPackage__c
+            ParentOrder__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
