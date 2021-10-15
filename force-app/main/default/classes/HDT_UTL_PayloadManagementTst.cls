@@ -840,7 +840,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO cluster not Reclami
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        /*
+        
         String result1 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
@@ -858,10 +858,9 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         System.debug('result2 length ' + result2.length());
         System.assert(String.isBlank(result2), 'Risultato NON è stringa vuota.');
         
-        */
         
-        //TESTING - NB: CRASH A CAUSA DI ECCEZIONE OUT OF BOUNDS - MANCANZA DI SUBSCRIPTION SU CONTRATTO
-        myItem.Cluster__c = 'Reclami';//TODO: COMMENT/REMOVE
+        
+        //TESTING - caso normale
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
         //myItem.IsContainer__c = true;
         myObjectToTest = new HDT_UTL_PayloadManagement();
