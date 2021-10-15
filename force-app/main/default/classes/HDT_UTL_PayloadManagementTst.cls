@@ -706,11 +706,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
-        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        //System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
-        
-        
-        //TESTING - CASO con SBQQ Subscriptions dove non c'è family offerta commerciale
+        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
         
     }
     
@@ -827,6 +823,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void generateSectionReclamiTest(){
         
         //SETUP
+        isSubscriptionSetup = true;
         mySetup();
         
         Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c, Note__c, IsContainer__c FROM Case];
@@ -866,7 +863,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ASSERTS
         System.debug('result3 length ' + result3.length());
-        //System.assert(String.isNotBlank(result3), 'Risultato è stringa vuota.');
+        System.assert(String.isNotBlank(result3), 'Risultato è stringa vuota.');
         
     }
     
