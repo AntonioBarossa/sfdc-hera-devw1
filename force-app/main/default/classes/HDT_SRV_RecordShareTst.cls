@@ -47,7 +47,7 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -67,7 +67,7 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -160,7 +160,7 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
