@@ -1,9 +1,18 @@
+/**
+
+Header of the class "HDT_ClassNameTst"
+@author Pooyan Ghadiri Abkenar, pooyan.ghadiriabkenar@webresults.it
+@Version 1.0
+@description: Apex Test Class of the relative Apex Class "HDT_DocumentSendTracking"
+@history
+@created 12/10/2021
+Modified By:
+**/
+
 @isTest
 public with sharing class HDT_DocumentSendTrackingTst {
     @isTest
     public static void testDocumentSendTracking() {
-
-
 
         List<Account> testAcc =  HDT_UTL_DataFactoryTst.createAccountPartner(1, false , 'testact');
         testAcc[0].CompanyOwner__c  = 'HERA COMM';
