@@ -87,7 +87,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
             caseList[0].IndemnityConfirmed__c = true;
             //caseList[0].IndemnityMotivation__c = '';
             caseList[0].CorrectionRight__c = 'Si';
-            caseList[0].SendDate__c = date.today();
+            caseList[0].SendDate__c = date.today().addDays(35);
             //caseList[0].IndemnityDueSendResponse__c = 5.45;
             //caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
         }
