@@ -48,7 +48,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                     phase = 'Comunicazione verso Heroku';
                 }
             }
-
+            
+            orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
         } else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
@@ -56,6 +57,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             
             if(isMonitoringList.contains(orderActiveMonitoring[0].AgencyCode__c)){
                 orderUpdate.Phase__c = 'Quality Call OK';
+                orderUpdate.SignedDate__c = Date.today();
             }
 
             causalQuality = 'Quality Call OK';

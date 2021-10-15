@@ -29,12 +29,10 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
     }
 
     public void execute(Database.BatchableContext BC, List<Contact> scope) {
-        System.debug('HDT_BA_AttributesContact execute ');
 
-        System.debug('HDT_BA_AttributesLead execute ');
 
 		Map<String, Contact> mapContactByEmail = new Map<String, Contact>();
-		List<Contact> listContacts             = new List<Contact>();
+		//List<Contact> listContacts             = new List<Contact>();
 	
 		
 		Map<String, String> mapApiNameToAttribute = new Map<String, String>{'email'=>'email',
@@ -317,17 +315,13 @@ public with sharing class HDT_BA_AttributesContact implements Database.Batchable
 
 		}
 		catch (Exception e) {
-			System.debug('Exception : '+e.getMessage());
-			System.debug('lineNumber : '+e.getLineNumber());
 			status='failed';
 			errorMessage=e.getMessage();
 		}
 
     }
 
-    public void finish(Database.BatchableContext bc){
-        System.debug('Finish HDT_BA_ConsentContact ');
-		
+    public void finish(Database.BatchableContext bc){		
 		HDT_WS_CampagenDmDmp.callService(runId,status,'CMPDMP_ATTR',errorMessage,listIdContentVersion);
 
     }

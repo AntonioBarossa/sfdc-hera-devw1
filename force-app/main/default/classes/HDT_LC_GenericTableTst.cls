@@ -36,8 +36,8 @@ public with sharing class HDT_LC_GenericTableTst {
         Map<String, Object> tstOutput = (Map<String,Object>) JSON.deserializeUntyped(output);
         columns.add(tstOutput.get('columns'));
         rowData.add(tstOutput.get('rowData'));
-        System.Assert(columns.size() > 0);
-        System.Assert(rowData.size() > 0);
+        System.Assert(columns.size() > 0, 'getData did not work correctly');
+        System.Assert(rowData.size() > 0, 'getData did not work correctly');
     } 
 
 }

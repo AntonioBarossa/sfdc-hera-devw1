@@ -23,7 +23,6 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         //for vocal order, you start from order father but some sections must be looped for each child order
         HDT_LC_HdtScriptManagementModal scriptFormatter = new HDT_LC_HdtScriptManagementModal();
         scriptFormatter.childRecordIdentifier=childRecordIdentifier;
-        system.debug(processName);
         return scriptFormatter.getScriptTextPages(processName, recordId);
     }
 
@@ -65,18 +64,13 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId){
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
-        system.debug('fields to query '+allFieldsToQuery);
-        String textToFormat='';
         SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
-        system.debug('id '+recordId);
         List<HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_WRP_ScriptOutput>();
 
         for(ScriptConfig__c section : process.ChildSections__r){
             if(section.isChildLoopEvaluated__C){
                 //here the check is run for each child of the context object
                 //for each object visible, a section copy is generated
-                system.debug(record);
-                system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
                 for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
                     if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
                         String additionalLabel=String.isBlank(childRecordIdentifier)? '' :
@@ -150,8 +144,6 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         String textToFormat='';
 
         String childScriptTextToFormat='';//used to store child relationship fields
-
-        system.debug(process.ChildSections__r.size());
         
         List<String> conditions = new List<String>();
         List<String> conditionsForChilds = new List<String>();
@@ -220,8 +212,6 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         if (conditions == null || conditions.trim().equals('')){
             return true;
         }
-
-        conditions = conditions.deleteWhitespace();
         
         Boolean isOrOperator = conditions.contains('OR');
         Boolean isAndOperator = !isOrOperator;
@@ -236,9 +226,9 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 String compareOperator = checkCompare? '==' : '!=';
 				
                 List<String> arraySingleCondition = condition.split(compareOperator);
-                fieldName=arraySingleCondition[0];
-                valueToCheck=arraySingleCondition[1];
-                actualFieldValue=getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
+                fieldName = arraySingleCondition[0].trim();
+                valueToCheck = arraySingleCondition[1].trim();
+                actualFieldValue = getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
                 Boolean conditionVisibility = assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
 
                 if (isOrOperator) {
@@ -253,8 +243,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 }
             }
 
-        }catch(Exception ex ){
-            System.debug('Exception: Script Section Check Condition - ' + ex.getTypeName() + ': ' + ex.getMessage() + ' -- ' + ex.getCause());
+        }catch(Exception ex){
 			return false;
         }
         return visibility;

@@ -136,7 +136,7 @@ public with sharing class HDT_UTL_VasManagement {
             List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
             intestatario = joinStringValues(strValues);
 
-            servizioIp = currentOrder.CommercialProduct__c;
+            servizioIp = currentOrder.CommercialProduct__c.abbreviate(30);
             versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 
@@ -237,7 +237,8 @@ public with sharing class HDT_UTL_VasManagement {
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
-            nrRate = parentOrderItem?.Product2?.NumberRateMonthly__c;
+            Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
+            nrRate = tempRate!=null? tempRate : 0;
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
 
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;

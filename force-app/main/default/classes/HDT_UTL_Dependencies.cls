@@ -44,7 +44,7 @@ public inherited sharing class HDT_UTL_Dependencies {
             }
             if(orders.size()>0){
                 try{
-                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
+                    List<ServiceRequest__c> srs = [SELECT ID, ProcessType__c, Order__c, Order__r.isTransition__c, Order__r.RecordTypeId, Order__r.OrderReference__c, Order__r.ContractReference__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ServicePointCode__c, Account__c, BillingProfile__c
                                     FROM ServiceRequest__c 
                                     WHERE Order__r.ID IN: orders.keySet()
                                     WITH SECURITY_ENFORCED];
@@ -126,12 +126,10 @@ public inherited sharing class HDT_UTL_Dependencies {
                 }
             }
 
-            String queryDependenciesMatrix = 'SELECT Id, IncomingProcessType__c, BlockingProcessType__c, MatchingField__c '                                           
-                        + 'FROM DependenciesMatrix__c '
-                        + conditions 
-                        + ' WITH SECURITY_ENFORCED';
-
-            DependenciesMatrix__c[] dependencies = Database.query(queryDependenciesMatrix);
+            DependenciesMatrix__c[] dependencies = Database.query('SELECT Id, IncomingProcessType__c, BlockingProcessType__c, MatchingField__c '                                           
+            + 'FROM DependenciesMatrix__c '
+            + conditions 
+            + ' WITH SECURITY_ENFORCED');
 
             Map<String,List<List<String>>> dependenciesMap = new Map<String,List<List<String>>>();
             for(DependenciesMatrix__c dependency : dependencies){
@@ -194,15 +192,14 @@ public inherited sharing class HDT_UTL_Dependencies {
                     }
                 }
             }
-            String queryServiceRequest = 'SELECT ID, Case__c, Order__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
-                                    + 'FROM ServiceRequest__c '
-                                    + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
-                                    + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
-                                    + 'ProcessType__c IN :matches '
-                                    + 'WITH SECURITY_ENFORCED';
-
+           
             try{
-                srBlockings = (List<ServiceRequest__c>)Database.query(queryServiceRequest);
+                srBlockings = (List<ServiceRequest__c>)Database.query('SELECT ID, Case__c, Order__c, Order__r.isTransition__c, Order__r.OrderReference__r.ServicePoint__r.ServicePointCode__c, Order__r.ContractReference__r.ServicePoint__r.ServicePointCode__c, Type__c, ProcessType__c, ServicePointCode__c, BillingProfile__c, Account__c '
+                + 'FROM ServiceRequest__c '
+                + 'WHERE (ServicePointCode__c IN :matchValueServicePoints OR Account__c IN :matchValueAccounts OR BillingProfile__c IN :matchValueBillings) AND '
+                + 'Status__c = \''+String.escapeSingleQuotes(STATUS_LAVORAZIONE)+'\' AND '
+                + 'ProcessType__c IN :matches '
+                + 'WITH SECURITY_ENFORCED');
 
                 String rtVas = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
                 for(ServiceRequest__c sr : incomingProcesses){
@@ -257,11 +254,11 @@ public inherited sharing class HDT_UTL_Dependencies {
                                     casesToBeUpdated.add(caseToUpdate);
                                 }
                             }else if(sr.Type__c.equalsIgnoreCase(TIPOLOGY_SALES)){
-                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c);
+                                Order orderToUpdate = new Order(ID=sr.Order__c,RecordTypeId=sr.Order__r.RecordTypeId,isTransition__c=sr.Order__r.isTransition__c,OrderReference__c=sr.Order__r.OrderReference__c,ContractReference__c=sr.Order__r.ContractReference__c);
                                 orderToUpdate.Status = STATUS_SEQUENZIALIZZATO;
                                 orderToUpdate.Phase__c = PHASE_SEQUENZIALIZZATO;
                                 String orderRecordType = orderToUpdate.RecordTypeId;
-                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.ContractReference__c == null)){
+                                if(orderRecordType.equalsIgnoreCase(rtVas) && (orderToUpdate.OrderReference__c == null && orderToUpdate.ContractReference__c == null) && !(orderToUpdate.isTransition__c && srBlocking.Order__r.isTransition__c)){
                                     valueToUpdate = false;
                                 }
                                 

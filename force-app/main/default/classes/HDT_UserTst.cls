@@ -31,7 +31,7 @@ public class HDT_UserTst {
             
             List<User> users = [Select id from User where Alias='testef56'];
             
-            System.assertEquals(1, users.size(), 'One user successfully inserted');
+            System.assertEquals(1, users.size(), 'User not inserted');
             
         }
      }

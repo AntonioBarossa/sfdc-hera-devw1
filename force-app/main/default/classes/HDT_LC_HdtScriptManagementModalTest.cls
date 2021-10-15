@@ -54,7 +54,7 @@
         HDT_LC_HdtScriptManagementModal.getScriptSections(process.name, process.id, '');
         List<HDT_LC_HdtScriptManagementModal.HDT_WRP_ScriptOutput>
             output=HDT_LC_HdtScriptManagementModal.getScriptSections(process.name, process.id, 'name');
-        system.assertEquals(3, output.size());
+        system.assertEquals(3, output.size(), 'childs objects were not filtered as expected');
     } 
     
     

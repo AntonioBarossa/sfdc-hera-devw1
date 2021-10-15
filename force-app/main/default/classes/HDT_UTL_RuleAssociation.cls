@@ -7,7 +7,7 @@ public with sharing class HDT_UTL_RuleAssociation {
         List<String> familyList = getFamilyList();
 
         Product2 filterProduct = (Product2)JSON.deserialize(filterString, Product2.class);
-        System.debug('>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
+        System.debug(logginglevel.DEBUG, '>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
 
         List<String> whereConditionList = new List<String>();
         if(!String.isEmpty(filterProduct.Name)){
@@ -42,6 +42,10 @@ public with sharing class HDT_UTL_RuleAssociation {
             whereConditionList.add('CategoryFamily__c=\'' + String.escapeSingleQuotes(filterProduct.CategoryFamily__c) + '\'');
         }
 
+        if(!String.isEmpty(filterProduct.Service__c)){
+            whereConditionList.add('Service__c=\'' + String.escapeSingleQuotes(filterProduct.Service__c) + '\'');
+        }
+
         queryString += 'FROM Product2 ';
         queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';
         queryString += 'AND Id ';
@@ -69,7 +73,7 @@ public with sharing class HDT_UTL_RuleAssociation {
 
     public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj createProductRuleAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String confRuleObj, List<String> recordList, String executionType, String filterString, String findMethod){
         
-        System.debug('>>> createProductRuleAssociation');
+        System.debug(logginglevel.DEBUG, '>>> createProductRuleAssociation');
 
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
@@ -108,7 +112,7 @@ public with sharing class HDT_UTL_RuleAssociation {
                 //run batch for all Product2 using where condition
 
                 String queryString = generateQueryString(filterString, 'AND', configurationRuleToClone.SBQQ__ProductRule__c, findMethod);
-                System.debug('>>> queryString: ' + queryString);
+                System.debug(logginglevel.DEBUG, '>>> queryString: ' + queryString);
                 
                 HDT_BA_ProductRuleAssociation createAssociationBatch = new HDT_BA_ProductRuleAssociation(executionType, configurationRuleToClone, new List<String>(), queryString);
                 Id batchId = Database.executeBatch(createAssociationBatch);
@@ -122,7 +126,7 @@ public with sharing class HDT_UTL_RuleAssociation {
 
     public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj deleteProductRuleAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String ruleId, List<String> recordList, String executionType, String filterString, String findMethod){
         
-        System.debug('>>> deleteProductRuleAssociation');
+        System.debug(logginglevel.DEBUG, '>>> deleteProductRuleAssociation');
         
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
@@ -169,7 +173,7 @@ public with sharing class HDT_UTL_RuleAssociation {
                 //run batch for all Product2 using where condition
 
                 String queryString = generateQueryString(filterString, 'AND', ruleId, findMethod);
-                System.debug('>>> queryString: ' + queryString);
+                System.debug(logginglevel.DEBUG, '>>> queryString: ' + queryString);
 
                 HDT_BA_DeleteProductRuleAssociation deleteAssociationBatch = new HDT_BA_DeleteProductRuleAssociation(executionType, ruleId, new List<String>(), queryString);
                 Id batchId = Database.executeBatch(deleteAssociationBatch);

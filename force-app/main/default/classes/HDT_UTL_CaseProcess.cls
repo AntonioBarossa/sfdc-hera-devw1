@@ -3,7 +3,7 @@ public with sharing class HDT_UTL_CaseProcess {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
-
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
 
@@ -16,9 +16,10 @@ public with sharing class HDT_UTL_CaseProcess {
                     SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c,
                     PraxidiaUpdateDate__c = newCase.PraxidiaDateOutcome__c  
                 ));
-            }
+            } 
         }
-        update accountsToUpdate;
+        accountSrv.updateRecordsWithCheck(accountsToUpdate);
+        //update accountsToUpdate; 
     }
 
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
@@ -91,7 +92,7 @@ public with sharing class HDT_UTL_CaseProcess {
                 //Variazione Indirizzzo di Fornitura
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
                     System.debug('Inside Condition');
-                    createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
+                    HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
                 }
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
                 //Annullamento activities legate al case di Richiesta Parere
@@ -163,11 +164,11 @@ public with sharing class HDT_UTL_CaseProcess {
                 if(caseNew.Cluster__c == 'Autolettura'){
                     // Annullamento dopo l'invio al DL
                     if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
-                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione M02','Gestione M02');
+                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione M01/M02','Gestione M01/M02','Gestione M01/M02');
                     }
                     // Annullamento dopo la validazione da MDM ma prima dell'invio al DL
                     else if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Esito OK da SAP') && !caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
-                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP');
+                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP','Gestione Manuale SAP');
                     }
                 }
                 return true;
@@ -179,22 +180,7 @@ public with sharing class HDT_UTL_CaseProcess {
 		}
 		return false;
 	}
-
-    private static void createActivity(String recordId, String description, String type){
-        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
-        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
-        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
-        if(listRecord.size()>0){
-            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
-            activity.Case__c = recordId;
-            activity.CausalError__c = description;
-            activity.wrts_prcgvr__Description__c = description;
-            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
-        }
-    }
+    
     public static void updateMemberStatusforClosedCases(List<Case> newCasesList, List<Case> oldCasesList) {
         try{
             List<Id> closedCaseIds = new List<Id>();
@@ -236,7 +222,7 @@ public with sharing class HDT_UTL_CaseProcess {
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
-		
+            System.debug('*******Error:' + e);
 		}
     }
 

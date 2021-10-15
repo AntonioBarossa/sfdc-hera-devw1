@@ -23,7 +23,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
     private static Set<String> prodFields;
     private static HDT_QR_Sobject utl = new HDT_QR_Sobject();
     private static Id ordId;
-   
+
+    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description', 'product2.description'};
+
     private inherited sharing class HDT_QR_Sobject extends HDT_UTL_FormatTextScript{
 
         private List<SObject> getSObj(Set<Id> listIds, List<String> fieldsToQuery, String fromCondition){
@@ -34,7 +36,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                 fromCondition;
                 system.debug(query);
                 //mapSobjs = new Map<id, SObject>( (List<SObject>) Database.query(query));
-                lSobjs= (List<SObject>) Database.query(query);
+                lSobjs= (List<SObject>) Database.query(String.escapeSingleQuotes(query));
             }
             return lSobjs;
         }
@@ -54,7 +56,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
         private String dinamicFieldValue(String fieldPath, SObject relation){
-            return getFieldValue(fieldPath, relation);
+            String retValue = getFieldValue(fieldPath, relation);
+            //retValue = fieldPath.equalsIgnoreCase('DurationVAS__c')? '999999' : retValue;
+            return retValue=='null'? '' : retValue;
         }
     }
     
@@ -105,7 +109,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //If there's already a query on order items (or on Order), modify this method to get that list
         ordId=OrderId;
         Order order = [SELECT 
-                        (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description FROM OrderItems), 
+                        (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description, Product2.Description FROM OrderItems), 
                         CommodityFormula__c, OrderNumber, ServicePointCode__c, ActivationMode__c,
                         HerokuPracticeCode__c, SupplyType__c, SupplyTypeTechnical__c
                         FROM Order WHERE Id=:OrderId WITH SECURITY_ENFORCED];
@@ -174,9 +178,10 @@ public with sharing class HDT_UTL_ServiceTwentySix {
                     productIds.add(item.Product2Id);
                 }
                 for(Service26Config__c position : Operando.Service26Configs__r){
+                    system.debug('ivaste '+json.serialize(position));
                     if(prodFields.contains(Position.Field__c?.toLowerCase())){
                         fieldsToQuery.add(Position.Field__c?.toLowerCase());
-                    }else if(Position.Field__c?.startsWith('OrderItem.')){
+                    }else if(STring.isNotBlank(Position.Field__c) && Position.Field__c.startsWith('OrderItem.')){
                         ordItemFields.add(Position.Field__c.split('OrderItem\\.')[1].toLowerCase());
                     }
                 }
@@ -238,7 +243,8 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             return utl.dinamicFieldValue(posField?.split('OrderItem\\.')[1], ordItem);
         }
         if(prodFields.contains(posField.toLowerCase())){
-            return STRING.valueOf(relatedProduct.get(posField));
+            //return STRING.valueOf(relatedProduct.get(posField));
+            return utl.dinamicFieldValue(posField, relatedProduct);
         }
         return posField;
     }
@@ -246,7 +252,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
     private String getCustomChecks(String posField, SObject OrdItem){
         switch on posField.split('\\.')[1]{
             when 'isAnalisiConsumi'{
-                return utl.dinamicFieldValue('Product2.Description', OrdItem).containsIgnoreCase('analisi consumi') ? 'x' : '';
+                return utl.dinamicFieldValue('Product2.Description', OrdItem).containsIgnoreCase('analisi consumi') ? 'X' : '';
             }
             when 'isConstraint'{
                 Boolean check = String.isBlank( utl.dinamicFieldValue('Product2.ConstraintExemption__c', OrdItem) );
@@ -258,9 +264,4 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         return '';
 
     }
-    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description'};
-
-
-
-
 }

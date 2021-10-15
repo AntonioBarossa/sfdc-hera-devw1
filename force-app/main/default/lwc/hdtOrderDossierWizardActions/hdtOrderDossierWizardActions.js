@@ -110,8 +110,6 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                         if(resultParsed.result === '000'){
                             var base64 = resultParsed.base64;
                             var sliceSize = 512;
-                            base64 = base64.replace(/^[^,]+,/, '');
-                            base64 = base64.replace(/\s/g, '');
                             var byteCharacters = window.atob(base64);
                             var byteArrays = [];
 

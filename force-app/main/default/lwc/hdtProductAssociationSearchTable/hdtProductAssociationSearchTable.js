@@ -10,7 +10,8 @@ const columns = [
     { label: 'Servizio', fieldName: 'Service__c' },
     { label: 'Descrizione prodotto', fieldName: 'DescriptionSAP__c' },
     //{ label: 'Famiglia di prodotti', fieldName: 'Family'},
-    { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'}
+    { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'},
+    { label: 'Stato', fieldName: 'Status__c'}
 ];
 
 const fieldsList = [
@@ -20,7 +21,8 @@ const fieldsList = [
     'DescriptionSAP__c',
     'CategoryFamily__c',
     'Status__c',
-    'TypeOffer__c'
+    'TypeOffer__c',
+    'Service__c'
 ];
 
 export default class HdtProductAssociationSearchTable extends LightningElement {
@@ -76,6 +78,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     fromRec;//pagination
     toRec;//pagination
     criteriaObj = {};
+    enforceConfirmation = false;
     //value = 'In Sviluppo';
 
     //get options() {
@@ -139,9 +142,32 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log('>>>> APPLY FILTER');
         
         //var criteriaObj = {};
+        var nullValue = 0;
+        var objLength = 0;
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
           this.criteriaObj[field.fieldName] = field.value;
         });
+
+        for(var key in this.criteriaObj){
+            objLength++;
+            if(this.criteriaObj[key] === null || this.criteriaObj[key] === ''){
+                nullValue++;
+            }
+        }
+
+        console.log('>>> null value ' + nullValue);
+        console.log('>>> obj lenght ' + objLength);
+
+        if(nullValue === objLength){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Devi inserire almeno un filtro',
+                    variant: 'warning',
+                }),
+            );
+            return;           
+        }
 
         if(this.criteriaObj.Status__c != undefined && this.criteriaObj.Status__c === 'Annullata'){
             this.dispatchEvent(
@@ -163,8 +189,12 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.showPagination = false;
         this.getData(jsonRecord, false, '1');
 
-        this.disableButton('confirmFilter', false);
+        //this.disableButton('confirmFilter', false);
         
+    }
+
+    checkValues(){
+
     }
 
     getData(filter, usePagination, pageNumber){
@@ -199,6 +229,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     }
 
                 }
+
+                this.disableButton('confirmFilter', !this.showResultTable);
 
             } else {
                 this.illustrationMessage = result.message;
@@ -247,11 +279,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     this.modalObj.header = this.label.closeTitle;
                     this.modalObj.body = this.label.closeBody;
                     break;
-                //case 'confirmAll':
-                //    this.modalObj.header = this.label.confirmAllTitle;
-                //    this.modalObj.body = this.label.confirmAllBody;
-                //    break;
                 case 'confirmFilter':
+                    this.enforceConfirmation = true;
                     this.modalObj.header = this.label.confirmFilterTitle;
                     this.modalObj.body = this.label.confirmFilterBody;
             }
@@ -272,6 +301,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 this[event.detail.operation](event);
             }
             this.modalObj.isVisible = false;
+            this.enforceConfirmation = false;
         } catch(e){
             console.error('# Name => ' + e.name );
             console.error('# Message => ' + e.message );
@@ -284,8 +314,10 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
         if(selectedRows.length > 0){
             this.disableButton('confirmSelected', false);
+            this.disableButton('confirmFilter', true);
         } else {
             this.disableButton('confirmSelected', true);
+            this.disableButton('confirmFilter', false);
         }
 
         //this.checkboxCounter = this.selectedIdList.length.toString();

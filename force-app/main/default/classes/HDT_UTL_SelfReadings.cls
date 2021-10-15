@@ -82,6 +82,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         List<Order> activeOrders = queryHandler.accountOrders(accountId, servicePointId, recordTypeIds, badPhases, badStates);
+        System.debug('activeOrders size: ' + activeOrders.size());
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {
@@ -171,7 +172,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
                 c.Status = 'Closed';
             }
             when else {
-                c.Phase__c = 'Attesa check preliminari';
+                c.Phase__c = 'Bozza';
                 c.Status = 'In Lavorazione';
             }
         }
@@ -285,6 +286,10 @@ public inherited sharing class HDT_UTL_SelfReadings {
         
         HDT_UTL_DatabaseService.upsertSObject(r);
         response.readingId = r.Id;
+        if('Bozza'.equalsIgnoreCase(c.Phase__c)){
+            c.Phase__c = 'Attesa check preliminari';
+            HDT_UTL_DatabaseService.upsertSObject(c);
+        } 
     }
 
     /*public static Boolean isAutomaticDiscard(String errorType, String errorCode) {

@@ -48,9 +48,9 @@ public class HDT_UTL_ServiceCatalogOrFilterProcessTst {
         
         Test.stopTest();
         
-        System.assertEquals(false, res, 'Cluster not found in the map');
+        System.assertEquals(false, res, 'ServiceCatalogOrFilterProcess did not work correctly');
         
-        System.assertNotEquals(null, res, 'Result returned correctly');
+        System.assertNotEquals(null, res, 'Result not returned correctly');
         
     }
     
@@ -65,9 +65,9 @@ public class HDT_UTL_ServiceCatalogOrFilterProcessTst {
         
         Test.stopTest();
         
-        System.assertEquals(true, res, 'Case found');
+        System.assertEquals(true, res, 'Case not found');
         
-        System.assertNotEquals(null, res, 'Result returned correctly');
+        System.assertNotEquals(null, res, 'Result not returned correctly');
         
     }
 }

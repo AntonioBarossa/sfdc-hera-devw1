@@ -55,7 +55,7 @@ public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sOb
     }
 
     public void finish(Database.BatchableContext bc) {
-        
+        System.debug('FinishRequiredForBatch');
     }
 
     public String setNumberOfDays() {

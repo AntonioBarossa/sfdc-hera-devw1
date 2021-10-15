@@ -17,6 +17,11 @@ public with sharing class HDT_SRV_ServiceTwentySix {
         HDT_UTL_ServiceTwentySix reqClass = new HDT_UTL_ServiceTwentySix();
         HDT_UTL_ServiceTwentySix.HDT_WRP_DtoServiceTwentySix req = reqClass.startProcess(orderId);
         HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest('VAS.Service26', req, HDT_WS_ArrichmentDataEntityResponse.class);
+        Case logCase = new Case();
+        logCase.Causal__c = 'CALLOUT-Service26';
+        logCase.Note__c = JSON.serializePretty(req);
+        logCase.Description = JSON.serialize(res);
+        //Database.insert(logCase);
         return res;
     }
 }

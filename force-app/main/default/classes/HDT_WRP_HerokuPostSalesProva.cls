@@ -1,6 +1,7 @@
 public inherited sharing class HDT_WRP_HerokuPostSalesProva {
 
-    public class HDT_WRP_MultiResponse{
+    //Classe Deprecata
+    /* public class HDT_WRP_MultiResponse{
 
         public List<HDT_WRP_Response> responses;
 
@@ -43,7 +44,7 @@ public inherited sharing class HDT_WRP_HerokuPostSalesProva {
         public List<HDT_WRP_WObject> objects;
         public String objectType;
 
-    }
+    } */
 
 
 }

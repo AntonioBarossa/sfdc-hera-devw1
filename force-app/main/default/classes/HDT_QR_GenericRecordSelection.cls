@@ -73,7 +73,7 @@ public with sharing class HDT_QR_GenericRecordSelection {
             }
 
             system.debug(LoggingLevel.DEBUG, 'query => '+ query);
-            sObjectList = Database.query(String.escapeSingleQuotes(query));
+            sObjectList = Database.query(query);
 
             //system.debug('sObjectList => '+sObjectList);
 

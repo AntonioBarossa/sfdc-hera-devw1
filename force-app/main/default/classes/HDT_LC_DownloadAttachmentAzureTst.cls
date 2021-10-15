@@ -37,8 +37,8 @@ public class HDT_LC_DownloadAttachmentAzureTst {
         }catch(Exception e){
             msg = e.getMessage();
         }
-        System.assertEquals('Script-thrown exception', msg, 'The method throws an exception because the input is not a real id');
-        System.assertNotEquals('', msg, 'The exception message should not be empty');
+        System.assertEquals('Script-thrown exception', msg, 'DownloadAttachmentAzure did not work correctly');
+        System.assertNotEquals('', msg, 'The exception message is empty');
         
     }
 }

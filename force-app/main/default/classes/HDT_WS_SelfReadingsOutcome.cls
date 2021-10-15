@@ -33,6 +33,8 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
     }
 
     static HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse handleRequest(HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest req) {
+        
+        System.debug('handleRequest - Req: ' + req);
         List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data = req.data;
 
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
@@ -71,8 +73,11 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 }
             }
         }
+        System.debug('handleRequest - errorCodes size: ' + errorCodes.size());
+        System.debug('handleRequest - errorCodesDescriptionSet size: ' + errorCodesDescriptionSet.size());
 
         Map<String, Boolean> isAutomaticDiscardMap = HDT_UTL_SelfReadings.isAutomaticDiscard(errorCodesDescriptionSet);
+        Map<Id, Boolean> isAutomaticDiscardCasesMap = new Map<Id,Boolean>();
 
         // TODO: verificare quanti record ci passa mulesoft per non sforare i limiti di sfdc.
         for (HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData outcomeData : data) {
@@ -99,23 +104,29 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                     isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorCode);
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
+                    System.debug('Stacktrace: ' + e.getStackTraceString());
                 }
             }else if(String.isNotBlank(outcomeData.errorDescription)){
                 try {
                     isAutomaticDiscard = isAutomaticDiscardMap.get(outcomeData.errorDescription);
                 } catch (Exception e) {
                     System.debug('Exception: ' + e.getMessage());
+                    System.debug('Stacktrace: ' + e.getStackTraceString());
                 }
             }
+            
             if (isAutomaticDiscard) {
+                System.debug('Entering isAutomaticDiscard');
+                
                 caseToUpdate.Status = 'Closed';
                 String errorDescription = caseToUpdate.Phase__c; // Esito KO pre-MDM oppure Esito KO da SAP
                 if (String.isNotBlank(outcomeData.errorDescription)) {
                     errorDescription += ' - ' + outcomeData.errorDescription;
                 }
                 caseToUpdate.Subject = errorDescription;  // tracciamo l'errore su Subject poichè Description potrebbe già contenere qualcosa e non possiamo permetterci di querare il case per andare in append.
-                caseToUpdate.Phase__c = 'KO Definitivo';  // skippiamo le fasi Esito KO pre-MDM / Esito KO da SAP poichè non possiamo permetterci un doppio update di fase.
             } else {
+                System.debug('Entering NOT isAutomaticDiscard');
+                
                 // Creazione activity per successiva lavorazione dello scarto.
                 String errorDescriptionAct = '';
                 if(String.isNotBlank(outcomeData.errorDescription)){
@@ -124,12 +135,15 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                 if(String.isNotBlank(outcomeData.errorCode)){
                     errorDescriptionAct = errorDescriptionAct + ' ' + outcomeData.errorCode;
                 }
+                System.debug('Switching on Case Phase: ' + caseToUpdate.Phase__c);
+                
                 switch on caseToUpdate.Phase__c {
                     when 'Esito KO da SAP' {
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
                         activity.wrts_prcgvr__ActivityTemplate__c = templateKoSap.Id;
                         activity.Case__c = caseToUpdate.Id;
                         activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                        activity.Type__c = 'Esito KO da SAP';
                         activitiesToCreate.add(activity);
                     }
                     when 'Esito KO pre-MDM' {
@@ -137,16 +151,18 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         activity.wrts_prcgvr__ActivityTemplate__c = templateKoMdm.Id;
                         activity.Case__c = caseToUpdate.Id;
                         activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                        activity.Type__c = 'Esito KO pre-MDM';
                         activitiesToCreate.add(activity);
                     }
                 }
             }
 
+            isAutomaticDiscardCasesMap.put(caseToUpdate.Id, isAutomaticDiscard);
             casesToUpdate.add(caseToUpdate);
         }
 
         // Deleghiamo le DML ad un queueable per non fare andare in timeout Mulesoft.
-        System.enqueueJob(new HDT_QBL_SelfReadingsOutcome(casesToUpdate, activitiesToCreate));
+        System.enqueueJob(new HDT_QBL_SelfReadingsOutcome(casesToUpdate, activitiesToCreate, isAutomaticDiscardCasesMap));
 
         HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse res = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
         if (casesToUpdate.isEmpty() && activitiesToCreate.isEmpty()) {

@@ -7645,6 +7645,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Alexa</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>
@@ -9522,6 +9526,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>In Continuità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recupero</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Cambio Amministratore</fullName>
             <default>false</default>

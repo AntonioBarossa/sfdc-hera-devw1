@@ -22,9 +22,9 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
         String result = HDT_LC_DocumentSignatureManager.showOriginalDocument(docAct.Id);
         Map<String,Object> mapResult = (Map<String,Object>) JSON.deserializeUntyped(result); 
-        System.assertEquals('OK', (String)mapResult.get('outcome'));
-        System.assertEquals('pdf', (String)mapResult.get('type'));
-        System.assertEquals('base64', (String)mapResult.get('base64'));
+        System.assertEquals('OK', (String)mapResult.get('outcome'), 'showOriginalDocumentPdf did not work correctly');
+        System.assertEquals('pdf', (String)mapResult.get('type'), 'showOriginalDocumentPdf did not work correctly');
+        System.assertEquals('base64', (String)mapResult.get('base64'), 'showOriginalDocumentPdf did not work correctly');
     }
     @isTest
     static void showArchivedAttachmentPdf(){
@@ -33,8 +33,8 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         DocumentalActivity__c docAct = [SELECT Id FROM DocumentalActivity__c LIMIT 1];
         String result = HDT_LC_DocumentSignatureManager.showArchivedAttachment(docAct.Id);
         Map<String,Object> mapResult = (Map<String,Object>) JSON.deserializeUntyped(result); 
-        System.assertEquals('OK', (String)mapResult.get('outcome'));
-        System.assertEquals('base64', (String)mapResult.get('base64'));    
+        System.assertEquals('OK', (String)mapResult.get('outcome'), 'showArchivedAttachmentPdf did not work correctly');
+        System.assertEquals('base64', (String)mapResult.get('base64'), 'showArchivedAttachmentPdf did not work correctly');    
     }
     @isTest
     static void previewDocumentFileCase() {
@@ -45,7 +45,7 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         Map<String,Object> resultMap = new Map<String,Object>();
         String mappa = HDT_LC_DocumentSignatureManager.previewDocumentFile(tCase.Id, 'Case', JSON.serialize(formParams));
         resultMap = (Map<String,Object>) JSON.deserializeUntyped(mappa);
-        System.assertEquals('000', (String)resultMap.get('result'));
+        System.assertEquals('000', (String)resultMap.get('result'), 'previewDocumentFileCase did not work correctly');
         Test.stopTest();
     }
 
@@ -57,7 +57,7 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         Map<String,String> formParams = new Map<String,String>();
         Map<String,Object> resultMap = new Map<String,Object>();
         HDT_LC_DocumentSignatureManager.sendDocumentFile(tCase.Id, 'Case', JSON.serialize(formParams));
-        System.assertEquals('000', '000');
+        System.assertEquals('000', '000', 'sendDocumentFile did not work correctly');
         Test.stopTest();
     }
 
@@ -67,7 +67,7 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
         Map<String,String> formParams = new Map<String,String>();
         String result = HDT_LC_DocumentSignatureManager.getSignSendMode('Variazione Potenza','Sportello');
-        System.assert(String.isNotBlank(result));
+        System.assert(String.isNotBlank(result), 'getSignSendMode did not work correctly');
         Test.stopTest();
     }
 
@@ -77,7 +77,7 @@ public with sharing class HDT_LC_DocumentSignatureManagerTst {
         Account tAccount = [SELECT Id FROM Account LIMIT 1];
         Map<String,String> formParams = new Map<String,String>();
         String result = HDT_LC_DocumentSignatureManager.getInfoAccountStatement(tAccount.Id);
-        System.assert(String.isNotBlank(result));
+        System.assert(String.isNotBlank(result), 'getInfoAccountStatement did not work correctly');
         Test.stopTest();
     }
 

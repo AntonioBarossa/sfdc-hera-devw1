@@ -560,6 +560,21 @@ public class HDT_SRV_PostSalesManagerTst {
         
     }
 
+    @IsTest
+    static void checkLocalDispatcher(){
+
+        String dispatcherName = 'HERA SPA-13R0000000';
+        
+        Test.startTest();
+        HDT_QR_PostSalesManager psm = new HDT_QR_PostSalesManager();
+        Integer count = psm.checkLocalDispatcher(dispatcherName);
+
+        System.assert(count > 0, 'count = 0');
+
+        Test.stopTest();
+        
+    }
+
     //occorre mockare la chiamata al WS
     // @IsTest
     // static void sendDocumentFile(){

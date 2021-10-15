@@ -16,8 +16,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 15/02/2021
-     * @param Order order
      * @description Execute child order process save actions
+     * @param order
+     * @param lastStepData
      */
     @AuraEnabled
     public static void save(Order order, Map<String,Object> lastStepData){
@@ -277,7 +278,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('quality log 1 CustomerCategory__c: ' + order.CustomerCategory__c);
         system.debug('quality log 1 MarketOrigin__c: ' + order.MarketOrigin__c);
         system.debug('quality log 1 SignatureMethod__c: ' + order.SignatureMethod__c);
-        List<ComfortQualityCall__c> comfortQualityList = order.RecordType.DeveloperName == 'HDT_RT_VAS' ? HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order) : HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+
+        Boolean isVasProcess = order.RecordType.DeveloperName == 'HDT_RT_VAS';
+        system.debug('quality log 1 isVasProcess: ' + isVasProcess);
+
+        List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
+
+        if (order.RecordType.DeveloperName == 'HDT_RT_VAS') {
+            comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParamsVas(order);
+        } else {
+            comfortQualityList = HDT_QR_ComfortQualityCall.getRecordByOrderParams(order);
+        }
 
         system.debug('quality log 2: ' + comfortQualityList);
 
@@ -291,17 +302,28 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            ComfortQualityCall__c comforQualityRes = comfortQualityList[0];
+            ComfortQualityCall__c comforQualityRes = new ComfortQualityCall__c();
+
+            system.debug('DocSendingMethod__c comfort: ' + order.DocSendingMethod__c);
 
             if (comfortQualityList.size() > 1) {
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
-                    if (cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c) {
+                    system.debug('quality log 4 cqc.ComfortEnabled__c: ' + cqc.ComfortEnabled__c);
+                    system.debug('quality log 4 cqc.ComfortSignatureMethod__c: ' + cqc.ComfortSignatureMethod__c);
+                    system.debug('quality log 4 cqc.ComfortDocSendingChannel__c: ' + cqc.ComfortDocSendingChannel__c);
+                    if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == order.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c){
+                        system.debug('Keltin quality enter here is OK');
+                        comforQualityRes = cqc;
+                        break;
+                    } else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
                         comforQualityRes = cqc;
                         break;
                     }
                 }
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case end: ' + comforQualityRes);
+            } else {
+                comforQualityRes = comfortQualityList[0];
             }
 
             if (comforQualityRes.ComfortEnabled__c) {
@@ -432,8 +454,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param String objectApiName
-     * @param SObject objectToUpdate
+     * @param objectApiName
+     * @param objectToUpdate
      * @description Save child order as draft
      */
     @AuraEnabled
@@ -460,10 +482,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param String objectApiName
-     * @param SObject objectToUpdate
-     * @param String diffObjectApiName
-     * @param SObject diffObjectToUpdate
+     * @param objectApiName
+     * @param objectToUpdate
+     * @param diffObjectApiName
+     * @param diffObjectToUpdate
      * @description Save child order as draft with diff fields
      */
     @AuraEnabled
@@ -509,8 +531,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
-     * @param Order order
-     * @param String cancellationReason
+     * @param order
+     * @param cancellationReason
      * @description Execute child order process cancel actions
      */
     @AuraEnabled
@@ -527,8 +549,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     /**
      * @author Federico de Felice (federico.defelice@webresults.it)
      * @date 14/07/2021
-     * @param Order order
-     * @param String cancellationReason
+     * @param orderId
+     * @param searchKey
+     * @return Decimal
      * @description Execute child order process cancel actions
      */
     @TestVisible

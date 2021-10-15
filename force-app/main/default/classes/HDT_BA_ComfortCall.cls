@@ -4,7 +4,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_ComfortCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
+        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
         return Database.getQueryLocator(query);
     }
 
@@ -48,7 +48,9 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                     IsClientInResolution153__c = true,
                     Type__c = 'Comfort Call',
                     Status__c = 'Creata',
-                    OwnerId = comfortQualityQueId
+                    OwnerId = comfortQualityQueId,
+                    ActivatedDate__c = ord.ActivatedDate,
+                    LoginChannel__c = ord.LoginChannel__c
                 );
 
                 mapActivities.put(ord.ParentOrder__c, activity);

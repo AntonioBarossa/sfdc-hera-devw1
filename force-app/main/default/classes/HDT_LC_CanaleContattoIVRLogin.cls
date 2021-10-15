@@ -22,7 +22,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
                // Order order = orderQr.getRecordById(orderId);
                 List<VocalOrderPublicConfirm__c> voList = HDT_QR_VocalOrderPublicConfirm.getVocalPublicConfirm(orderId);
                 if(voList != null && voList.isEmpty()){
-                    VocalOrderPublicConfirm__c Vo = new VocalOrderPublicConfirm__c();
+                    VocalOrderPublicConfirm__c vo = new VocalOrderPublicConfirm__c();
                     vo.order__c = orderId;
                     HDT_SRV_VocalOrderPublicConfirm.createRecord(vo);
                     return 'success';
@@ -183,7 +183,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
         String day = birthDate.day() > 9 ? String.valueOf(birthDate.day()) : '0'+String.valueOf(birthDate.day());
         String password = day + month + year.substring(2,4);
         System.debug('********:4User');
-        System.debug(password);
+        //System.debug(password);
         Order newOrder = new Order();
         newOrder.Id = parentOrder;
         newOrder.UniqueCredentials__c = username + '_' + password;

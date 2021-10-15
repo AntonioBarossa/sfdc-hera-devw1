@@ -37,8 +37,10 @@
         //attributo per sequenzializzazione
         var serviceRequestId = myPageRef.state.c__serviceRequestId;
         //attributo per esito compatibilita
-        var compatibile = myPageRef.state.c__compatibile;       
-
+        var compatibile = myPageRef.state.c__compatibile; 
+        
+        // id dell'Order
+        var orderId = myPageRef.state.c__orderId;
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -59,6 +61,7 @@
         console.log('# billingProfileId -> '        + billingProfileId);
         console.log('# serviceRequestId -> '        + serviceRequestId);
         console.log('# compatibile -> '             + compatibile);
+        console.log('# orderId -> '             + orderId);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -157,6 +160,9 @@
         }
         if(compatibile != null){
             inputVariables.push({ name : 'Compatibile', type : 'String', value : compatibile});
+        }
+        if(orderId != null){
+            inputVariables.push({ name : 'OrderId', type : 'String', value : orderId});
         }
 
         console.log('## inputVariables -> ');

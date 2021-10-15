@@ -70,8 +70,6 @@ export default class HdtShowOriginalDocument extends NavigationMixin(LightningEl
 
     showDocumentFromBase64(base64, mimeType){
         var sliceSize = 512;
-        base64 = base64.replace(/^[^,]+,/, '');
-        base64 = base64.replace(/\s/g, '');
         var byteCharacters = window.atob(base64);
         var byteArrays = [];
 

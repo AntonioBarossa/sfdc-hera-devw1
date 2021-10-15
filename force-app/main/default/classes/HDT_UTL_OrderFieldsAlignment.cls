@@ -1,3 +1,7 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @description HDT_UTL_OrderFieldsAlignment – Align Order fields with Service Point, Account, Billing Profile
+*/
 public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
@@ -364,7 +368,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         system.debug('quote aligned');
     }
 
-    private static void alignOrderItem(Order orderToUpdate) {
+    private static void alignOrderItem(Order orderToUpdate, Order originalOrder) {
 
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
 
@@ -376,9 +380,22 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name.abbreviate(30);
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
             orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
+            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
+                //fai il match con l'orderItem di tipo pod che ha lo stesso quote
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0].SBQQ__QuoteLine__r.SBQQ__RequiredBy__c);
+                if(!orderItemsPod.isEmpty()){
+                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                }
+            }
         }
     }
 
+    /**
+    * @description getRecordsByIdWithFields
+    * @param implantType - String
+    * @param powerContractual - Decimal
+    * @return String
+    */
     public static String calculateRequestedOption(String implantType, Decimal powerContractual){
 
         String result = '';
@@ -427,6 +444,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         return result;
     }
 
+    /**
+    * @description alignFields
+    * @param order - Order
+    */
     public static void alignFields(Order order) {
 
         Order orderToUpdate = new Order();
@@ -451,20 +472,15 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if(order.ServicePoint__c == null || (mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo') )){
             //Enter here for VAS or BonusESconti
-            alignOrderItem(orderToUpdate);
-            if(orderToUpdate.isVas__c && order.OrderReference__c==null){
-                //fai il match con l'orderItem di tipo pod che ha lo stesso quote
-                List<Order> ordersPod=orderQr.getPodOrderFromQuote(order.SBQQ__Quote__c);
-                if(!ordersPod.isEmpty()){
-                    orderToUpdate.OrderReference__c=ordersPod[0].Id;
-                }
-            }
+            alignOrderItem(orderToUpdate, order);
+            
             if(mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo')){
                 //only for Amend Bonus
                 orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
                 orderToUpdate.BillingProfile__c=mixedData.billProf;
-                if(orderToUpdate.BillingProfile__c!=null)
+                if(orderToUpdate.BillingProfile__c!=null){
                     alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
+                }
             }
         }
 

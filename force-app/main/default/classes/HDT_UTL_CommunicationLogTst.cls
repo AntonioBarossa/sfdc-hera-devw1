@@ -26,8 +26,8 @@ public with sharing class HDT_UTL_CommunicationLogTst {
 
         Test.startTest();
         CommunicationLog__c communicationLog = new HDT_UTL_CommunicationLog().instanceCommunicationLog('cluster', 'process', 'phase', 'status', 'motivazioneCausale', tOrder.Id, tCase.Id,  tContact.Id, tAccount.Id, 'company', 'companyOwner');
-        System.assertEquals(communicationLog != null, true);
-        System.assertNotEquals(communicationLog == null, true);
+        System.assertEquals(communicationLog != null, true,'Instance Communication Log OK');
+        System.assertNotEquals(communicationLog == null, true,'Instance Communication Log OK');
         Test.stopTest();
     }
 }

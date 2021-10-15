@@ -17,12 +17,26 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     private static Order orderRecived = null;
 
 
-
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description HDT_WRP_Process
+     */
     public class HDT_WRP_Process {
+        /**
+         * @description processType
+         */
         @AuraEnabled
         public String processType {get; set;}
+
+        /**
+         * @description processType
+         */
         @AuraEnabled
         public String recordType {get; set;}
+
+        /**
+         * @description processType
+         */
         @AuraEnabled
         public String processCode {get; set;}
         Set<String> meterStatus {get; set;}
@@ -32,12 +46,34 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isChangeUse {get; set;}
         Boolean isSwitchInRipristinatorio {get; set;}
         Boolean isAttivazioneConModifica {get; set;}
+
+        /**
+         * @description processType
+         */
         @AuraEnabled
         public String commodity {get; set;}
         Boolean isAmendmentAllowed {get; set;}
         Boolean isSwitchOut {get; set;} //only for winback case is true
         Boolean isReseller {get; set;}
 
+        /**
+         * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+         * @description HDT_WRP_Process
+         * @param processType
+         * @param recordType
+         * @param processCode
+         * @param meterStatus
+         * @param marketOrigin
+         * @param plugPresence
+         * @param isOwnAccount
+         * @param isChangeUse
+         * @param isSwitchInRipristinatorio
+         * @param isAttivazioneConModifica
+         * @param commodity
+         * @param isAmendmentAllowed
+         * @param isSwitchOut
+         * @param isReseller
+         */
         public HDT_WRP_Process(
             String processType,
             String recordType,
@@ -71,6 +107,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
     }
 
+    /**
+     * @description initProcesses
+     * @return List<HDT_WRP_Process>
+     */
     public static List<HDT_WRP_Process> initProcesses(){
         return new List<HDT_WRP_Process>{
             new HDT_WRP_Process('Subentro Gas', 'HDT_RT_Subentro','A01', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
@@ -82,13 +122,13 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             new HDT_WRP_Process('Prima Attivazione con modifica', 'HDT_RT_AttivazioneConModifica','A10', new Set<String>{'Bozza'}, new Set<String>(), 'Si', null, false, false, true, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Connessione con Attivazione', 'HDT_RT_ConnessioneConAttivazione','PN1', new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Temporanea - Nuova Attivazione', 'HDT_RT_TemporaneaNuovaAtt', getTempNewActivationCode(), new Set<String>{'Bozza'}, new Set<String>(), 'No', null, false, false, false, 'HDT_RT_Ele', false, false, false),
-            new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', false, false, false),
+            new HDT_WRP_Process('Cambio Offerta Gas', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Cambio Offerta Ele', 'HDT_RT_CambioOfferta','MA1', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, false, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Cambio Uso', 'HDT_RT_CambioUso','CAU', new Set<String>{'Attivo'}, new Set<String>{'Libero'}, 'Si', true, true, false, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Attivo'}, new Set<String>(), 'Si', true, false, false, false, 'HDT_RT_Ele', true, false, false),//Processo Amend
             new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Attivo'}, new Set<String>(), null, true, false, false, false, 'HDT_RT_Gas', true, false, false),//Processo Amend
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', true, false, false),
-            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Ele', 'HDT_RT_ScontiBonus','VCE', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), 'Si', null, false, false, false, 'HDT_RT_Ele', true, false, false),
+            new HDT_WRP_Process('Aggiunta Sconti o Bonus VAS Gas', 'HDT_RT_ScontiBonus','VCG', new Set<String>{'Inattivo','Bozza', 'Attivo'}, new Set<String>(), null, null, false, false, false, 'HDT_RT_Gas', true, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo'}, new Set<String>(), 'Si', true, false, true, false, 'HDT_RT_Ele', false, false, false),
             new HDT_WRP_Process('Switch in Ripristinatorio', 'HDT_RT_SwitchIn','SG1', new Set<String>{'Inattivo'}, new Set<String>(), null, true, false, true, false, 'HDT_RT_Gas', false, false, false),
             new HDT_WRP_Process('Switch In Fittizio', 'HDT_RT_SwitchIn','SE1', new Set<String>{'Inattivo','Bozza'}, new Set<String>(), 'Si', true, false, false, false, null, false, false, false),
@@ -120,6 +160,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return 'SG1';
     }
 
+    /**
+     * @description getAvailableProcesses
+     * @param ord
+     * @return List<HDT_WRP_Process>
+     */
     public static List<HDT_WRP_Process> getAvailableProcesses(Order ord){
         orderRecived=ord;
         List<HDT_WRP_Process> allProcesses = initProcesses();
@@ -177,6 +222,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 
     }
     
+    /**
+     * @description getAvailableProcesses
+     * @param ord
+     * @return Boolean
+     */
     public static Boolean isCambioOfferta(Order ord){
 
         system.debug('HDT_UTL_OrderProcessAssignment.isCambioOfferta START');
@@ -202,6 +252,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             if(String.isNotBlank((String) ag.get('fam')))
                 famils.add((String) ag.get('fam'));
         }
+        famils.add('Promozione');
         return famils;
     }
 
@@ -229,6 +280,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return result;
     }
 
+    /**
+     * @description getAvailableProcesses
+     * @param ord
+     */
     public static void switchInRipristinatorioAction(Order ord) {
 
         system.debug('HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction START');
@@ -244,6 +299,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         system.debug('HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction END');
     }
 
+    /**
+     * @description isAttivazioneConModifica
+     * @param ord
+     * @return Boolean
+     */
     public static Boolean isAttivazioneConModifica(Order ord){
         Boolean result = false;
 
@@ -261,6 +321,11 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return result;
     }
 
+    /**
+     * @description fieldsTransition
+     * @param sale
+     * @return String
+     */
     @AuraEnabled
     public static String fieldsTransition(Sale__c sale){
         ServicePoint__c serpoint = new ServicePoint__c();
@@ -375,10 +440,25 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return res;
     }
 
+    /**
+     * @description fieldsTransition
+     */
     private class HDT_WRP_RemiUbd{
+        /**
+        * @description remiCode
+        */
         public String remiCode {get;set;}
+
+        /**
+        * @description vatUbd
+        */
         public String vatUbd {get;set;}
 
+        /**
+        * @description HDT_WRP_RemiUbd
+        * @param remiCode
+        * @param vatUbd
+        */
         public HDT_WRP_RemiUbd(String remiCode, String vatUbd){
             this.remiCode=remiCode;
             this.vatUbd=vatUbd;

@@ -15,7 +15,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         return code;
     }
 
-    public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
+    //Metodo Deprecato
+    /* public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
         HDT_UserInputFlow__mdt cl = [SELECT FieldsJSON__c 
         FROM HDT_UserInputFlow__mdt 
         WHERE ProcessType__c = 'prova callout' 
@@ -30,7 +31,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         } else {
             return null;
         }
-    }
+    } */
 
     public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
@@ -366,9 +367,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
                 //no action needed
+            }else if(currentPhase.equalsIgnoreCase('Annullato') && nextPhase.equalsIgnoreCase('Completata'))
+            {
+                //no action needed
             }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
+                currentCase.Phase__c = 'Elaborazione Manuale';
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && recordCase.IbanIsForeign__c){
                 currentCase.Phase__c = 'Elaborazione Manuale';
             }else{
                 currentCase.Phase__c = nextPhase;
@@ -481,7 +487,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
-            }
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
+            currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+            updateFuture(JSON.serialize(currentCase));
+        }
     }
     //se Annullamento SII - Ricezione e Storno N --> Aggiornare in Annullamento SII e dopo in Annullato SII
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
@@ -496,10 +506,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
             switch on objectType {
                 when 'Case' {
-                    createActivity((String)recordObj.get('Id'),null, '', activity);
+                    createActivity((String)recordObj.get('Id'),null, '', activity, activity);
                 }
                 when else {
-                    createActivity(null,(String)recordObj.get('Id'), '', activity);
+                    createActivity(null,(String)recordObj.get('Id'), '', activity, activity);
                 }
             }
         }
@@ -705,7 +715,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseInsertList.add(currentCase);           
             HDT_UTL_DatabaseService.insertSObject(caseInsertList);
             if(currentCase.EarlyRecess__c){
-                createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
+                createActivity(currentCase.Id,null, '', 'Recesso Anticipato', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
             System.debug('Commodity: ' + currentCase.CommodityFormula__c);
@@ -886,8 +896,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
         }
     }
-    private static void createActivity(String caseId,String orderId, String description, String type){
-        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+    private static void createActivity(String caseId,String orderId, String description, String templateName, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ templateName +'\'';
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
@@ -899,6 +909,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity.Order__c = orderId;
             activity.CausalError__c = description;
             activity.wrts_prcgvr__Description__c = description;
+            activity.Type__c = type;
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
         }
     }

@@ -31,7 +31,7 @@ public without sharing class HDT_BA_DeleteProductRuleAssociation implements Data
 
                 List<Product2> productFiltered;
                 productFiltered = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(productFiltered, filterProductString);
-                System.debug('>>>> PRODUCT FILTERED ' + productFiltered.size());
+                System.debug(logginglevel.DEBUG, '>>>> PRODUCT FILTERED ' + productFiltered.size());
             
                 queryStringTemp += 'WHERE SBQQ__Product__c IN :productFiltered AND SBQQ__ProductRule__c = :productRuleIdToDelete';
                 queryString = queryStringTemp;
@@ -41,13 +41,13 @@ public without sharing class HDT_BA_DeleteProductRuleAssociation implements Data
             }
         }
 
-        System.debug('>>> QUERY: ' + queryString);
+        System.debug(logginglevel.DEBUG, '>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 
     public void execute(Database.BatchableContext bc, List<SBQQ__ConfigurationRule__c> chunkList){
-        System.debug('>>> EXECUTE');
-        System.debug('>>> delete: ' + chunkList.size());
+        System.debug(logginglevel.DEBUG, '>>> EXECUTE');
+        System.debug(logginglevel.DEBUG, '>>> delete: ' + chunkList.size());
 
         List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
         errorData = HDT_SRV_RuleAssociation.deleteProductRule(chunkList, errorData);
@@ -64,7 +64,7 @@ public without sharing class HDT_BA_DeleteProductRuleAssociation implements Data
         notification = new HDT_WRP_ProductAssociation.HDT_WRP_Notification();
         notification.targetId = productRuleIdToDelete;
         notification.userId = Userinfo.getUserId();
-        notification.title = Label.ProdOptAssociationNotification_Title;
+        notification.title = Label.ProdRuleAssociationNotification_DeleteTitle;
 
         if(errorCounter > 0){
             notification.body = 'Attenzione, si sono verificati [' + String.valueOf(errorCounter) + '] errori';

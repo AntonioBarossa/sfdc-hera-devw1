@@ -103,7 +103,7 @@ public with sharing class HDT_LC_ContactSelection {
             }
 
             List<List<SObject>> contacts = soslHandler.executeQuery(fields, filters, '', soslSearchTerm, 'Contact');
-            if (contacts.isEmpty()) {
+            if (contacts[0].size() == 0) { //Davide Viola - 05/10/2021 Modificata la condizione da contacts.isEmpty() a contacts[0].size() == 0.
                 System.debug('HDT_LC_ContactSelection: nessun amministratore di condominio trovato con il filtro: ' + soslSearchTerm);
                 return '';
             }

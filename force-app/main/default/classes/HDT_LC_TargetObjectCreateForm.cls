@@ -201,6 +201,9 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
+                        if(resp.result[0].effectiveDate != null){
+                            servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
+                        }
                         System.debug('******7:' + resp.result[0].status);
                     }
                     else{
@@ -244,19 +247,26 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 HDT_WS_TransitionWinBack.HDT_WS_TransitionWinBackResponse resp = HDT_WS_TransitionWinBack.callTransitionCom(servicePo.ServicePointCode__c);
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
+                        //effectiveDate
                         servicePo.SwitchInWinback__c = true;
+                        if(resp.result[0].effectiveDate != null){
+                            servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
+                        }
                         System.debug('******7:' + resp.result[0].status);
                     }
                     else{
-                        servicePo.SwitchInWinback__c = false;
+                      //  servicePo.SwitchInWinback__c = false;
+                      //  servicePo.SwitchOutDate__c = null;
                     }
                 }
                 else{
-                    servicePo.SwitchInWinback__c = false;
+                  //  servicePo.SwitchInWinback__c = false;
+                  //  servicePo.SwitchOutDate__c = null;
                 }
             }
             else{
-                servicePo.SwitchInWinback__c = false;
+              //  servicePo.SwitchInWinback__c = false;
+              //  servicePo.SwitchOutDate__c = null;
             }
             
         

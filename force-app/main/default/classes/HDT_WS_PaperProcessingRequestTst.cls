@@ -27,13 +27,13 @@ public class HDT_WS_PaperProcessingRequestTst {
         
         Test.stopTest();
         
-        System.assertNotEquals(null, req1, 'A request was successfully created');
+        System.assertNotEquals(null, req1, 'A request was not created');
         
-        System.assertEquals('test', req1.filezipName, 'Value of the field filezipName successfully set');
+        System.assertEquals('test', req1.filezipName, 'Value of the field filezipName not set');
         
-        System.assertNotEquals(null, req2, 'A request was successfully created');
+        System.assertNotEquals(null, req2, 'A request was not created');
         
-        System.assertEquals(1, req2.contentVersion.size(), 'Value of the field contentVersion successfully set');
+        System.assertEquals(1, req2.contentVersion.size(), 'Value of the field contentVersion not set');
 
     }
 }

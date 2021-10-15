@@ -26,14 +26,14 @@ public class HDT_TRH_AccountTst {
                        
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
             
-            System.assertEquals(1, [Select id from Account].size(), 'One Account successfully inserted');
+            System.assertEquals(1, [Select id from Account].size(), 'One Account not inserted');
             
             accs[0].BirthDate__c = System.today();
             accs[0].isPartner = true;
             accs[0].Published__c = true;
             update accs;
             
-            System.assertNotEquals(false, accs[0].Published__c, 'Account successfully updated');
+            System.assertNotEquals(false, accs[0].Published__c, 'Account not updated');
             
         }
      }

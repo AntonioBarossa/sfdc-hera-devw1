@@ -404,17 +404,19 @@ public class HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
 				Contact caseContact = (Contact) caseRecord.Contact;
-				individualId = caseContact.IndividualId;
+				if (caseContact != null){
+					individualId = caseContact.IndividualId;
+				}
 			}else{
 				Order orderRecord = (Order) record;
 				Contact orderContact = (Contact) orderRecord.Contact__r;
-				if (orderContact == null){
+				if (orderContact != null){
+					individualId = orderContact.IndividualId;
+				}else{
 					System.debug('Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
-					return;
 				}
 			}
 			Individual individualRecord = new Individual();
-			individualRecord.Id = individualId;
 
 			if(record.getSobjectType() == Case.getSobjectType()){
 				//Settare phase del case in completata
@@ -434,21 +436,22 @@ public class HDT_SRV_DocumentalManagement{
 							record.put('MarketingPrivacy__c', value);
 							individualRecord.MarketingPrivacy__c = value;
 							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
-							individualRecord.PrivacyMarketingChoiceSource__c = 'post-sales';
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
 						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
 							record.put('ProfilingPrivacy__c', value);
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
-							individualRecord.PrivacyProfilingChoiceSource__c = 'post-sales';
+							individualRecord.PrivacyProfilingChoiceSource__c = 'CONTRATTO';
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
 					}
 				}
-				HDT_UTL_DatabaseService.updateSObject(individualRecord);
 			}else{
-				//in caso di order aggiornare privacy individual
+				Boolean datiCatastaliCompilati = false;
+				//Boolean leggeOttantaCompilata = false; // TODO: come si chiamano i radio button della legge 80?
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					System.debug('Checking radiobutton: ' + JSON.serialize(singleRadio));
 					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
 					String privacyCompany;
@@ -468,15 +471,30 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
+						// Verifica radiobutton nei modulo opzionali (dati catastali, legge 80)
+						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1') && singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+							datiCatastaliCompilati = true;
+						}
 					}
 				}
+				try {
+					if (datiCatastaliCompilati){ // TODO: gestire anche leggeOttantaCompilata
+						record.put('IsDocusignAttachment__c', True);
+						HDT_UTL_DatabaseService.updateSObject(record);
+					}
+				}catch(Exception ex){
+					System.debug('Errore DML: ' + ex.getMessage());
+				}
+			}
+
+			if (individualId != null){
+				individualRecord.Id = individualId;
 				try {
 					HDT_UTL_DatabaseService.updateSObject(individualRecord);
 				}catch(Exception ex){
 					System.debug('Errore DML: ' + ex.getMessage());
 				}
 			}
-			
 		}
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
@@ -514,7 +532,11 @@ public class HDT_SRV_DocumentalManagement{
 			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
-				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+				try{
+					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+				}catch(Exception ex){
+					System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+				}
 			}
 			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
@@ -1228,25 +1250,34 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 				signMode.put('label', singleRecord.SignMode__c);
 				signMode.put('value', singleRecord.SignMode__c);
 				signSendConfiguration.signMode = new Map<String,String>(signMode);
-				if(singleRecord.SendMode1__c != null && singleRecord.SendMode1__c != ''){
-					System.debug('adding send mode: ' + singleRecord.SendMode1__c);
-					sendMode.put('label',singleRecord.SendMode1__c);
-					sendMode.put('value',singleRecord.SendMode1__c);
-					Map<String,String> prova = new Map<String,String>(sendMode);
-					signSendConfiguration.sendMode.add(prova);
-				}
-				if(singleRecord.SendMode2__c != null && singleRecord.SendMode2__c != ''){
-					System.debug('adding send mode: ' + singleRecord.SendMode2__c);
-					sendMode.put('label',singleRecord.SendMode2__c);
-					sendMode.put('value',singleRecord.SendMode2__c);
+
+				if (source == 'Sportello' && singleRecord.SignMode__c == 'Cartacea'){ // workaround per non far esplodere il numero di configurazioni in HDT_SignModeSettings__mdt
+					System.debug('forcing send mode Stampa Cartacea');
+					sendMode.put('label','Stampa Cartacea');
+					sendMode.put('value','Stampa Cartacea');
 					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
+				} else {
+					if(singleRecord.SendMode1__c != null && singleRecord.SendMode1__c != ''){
+						System.debug('adding send mode: ' + singleRecord.SendMode1__c);
+						sendMode.put('label',singleRecord.SendMode1__c);
+						sendMode.put('value',singleRecord.SendMode1__c);
+						Map<String,String> prova = new Map<String,String>(sendMode);
+						signSendConfiguration.sendMode.add(prova);
+					}
+					if(singleRecord.SendMode2__c != null && singleRecord.SendMode2__c != ''){
+						System.debug('adding send mode: ' + singleRecord.SendMode2__c);
+						sendMode.put('label',singleRecord.SendMode2__c);
+						sendMode.put('value',singleRecord.SendMode2__c);
+						signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
+					}
+					if(singleRecord.SendMode3__c != null && singleRecord.SendMode3__c != ''){
+						System.debug('adding send mode: ' + singleRecord.SendMode3__c);
+						sendMode.put('label',singleRecord.SendMode3__c);
+						sendMode.put('value',singleRecord.SendMode3__c);
+						signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
+					}
 				}
-				if(singleRecord.SendMode3__c != null && singleRecord.SendMode3__c != ''){
-					System.debug('adding send mode: ' + singleRecord.SendMode3__c);
-					sendMode.put('label',singleRecord.SendMode3__c);
-					sendMode.put('value',singleRecord.SendMode3__c);
-					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
-				}
+
 				signSendConfigurationList.add(new HDT_WRP_SignModeConfiguration(signSendConfiguration));
 			}
 			configurationJson = JSON.serialize(signSendConfigurationList);
@@ -1255,6 +1286,31 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
         }
         return configurationJson;
     }
+
+	public static void logEmailForAccountStatement(String recordId, String formParams) {
+		if (String.isBlank(recordId) || String.isBlank(formParams)){
+			System.debug(LoggingLevel.WARN, 'Invalid inputs for logEmailForAccountStatement method');
+			return;
+		}
+
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String email = (String) formParamsMap.get('email');
+
+		if (String.isBlank(email)) {
+			System.debug(LoggingLevel.WARN, 'logEmailForAccountStatement: empty email');
+			return;
+		}
+
+		Account acc = new Account();
+		acc.Id = recordId;
+		acc.LastUsedPostelEmail__c = email;
+
+		try {
+			HDT_UTL_DatabaseService.updateSObject(acc);
+		} catch(Exception ex) {
+			System.debug('DLM error: ' + ex.getMessage());
+		}
+	}
 
 	public class HDT_WRP_SignModeConfiguration{
 		Map<String,String> signMode;

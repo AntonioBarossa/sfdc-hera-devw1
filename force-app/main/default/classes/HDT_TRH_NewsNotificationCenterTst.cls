@@ -45,8 +45,8 @@ public with sharing class HDT_TRH_NewsNotificationCenterTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myNews != null);
-        System.assert(myNews2 != null);
+        System.assert(myNews != null, 'Attenzione, myNews non può essere null!');
+        System.assert(myNews2 != null, 'Attenzione, myNews2 non può essere null!');
         
     }
 

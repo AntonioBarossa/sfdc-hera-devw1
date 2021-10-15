@@ -22,17 +22,23 @@ public inherited sharing class HDT_QR_QuoteManagement {
 
     }
 	
-	public static QuoteManagement__c queryString(String fields, String conditions){
+    /*
+        *@frpanico 05/10/2021
+        *Refactoring due to PMD
+        *Metodo deprecato poiche' il DataBase.Query viene invocato nel metodo principale. 
+    */
+
+	/*public static QuoteManagement__c queryString(String fields, String conditions){
         QuoteManagement__c quoteConfig = new QuoteManagement__c();
 		String query = 'SELECT ' + fields + ' FROM QuoteManagement__c WHERE ' + conditions + ' WITH SECURITY_ENFORCED LIMIT 1';
         System.debug(LoggingLevel.DEBUG,'Query--> '+query);
         try{
-            quoteConfig = Database.query(String.escapeSingleQuotes(query));
+            quoteConfig = Database.query(query);
         } catch(Exception e){
             quoteConfig = null;
             //System.debug('Config Not Found -> ' + e.getMessage());
         }
 		return quoteConfig;
 		 
-	}
+	}*/
 }

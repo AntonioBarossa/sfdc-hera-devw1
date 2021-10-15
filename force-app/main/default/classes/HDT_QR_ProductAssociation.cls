@@ -9,7 +9,7 @@ public inherited sharing class HDT_QR_ProductAssociation {
         if(objRes.isAccessible()){
             selectQuery = 'SELECT count() ' + queryString;
         }
-        System.debug('>>> queryString: ' + selectQuery);
+        System.debug(logginglevel.DEBUG, '>>> queryString: ' + selectQuery);
         return Database.countQuery(selectQuery);
     }
 
@@ -21,8 +21,8 @@ public inherited sharing class HDT_QR_ProductAssociation {
         String selectQuery = '';
 
         if(objRes.isAccessible()){
-            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c ' + queryString;
-            System.debug('>>> queryString: ' + selectQuery);
+            selectQuery = 'SELECT Id, DescriptionSAP__c, ProductCode, Version__c, Name, Family, CategoryFamily__c, Service__c, Status__c ' + queryString;
+            System.debug(logginglevel.DEBUG, '>>> queryString: ' + selectQuery);
 
             prodList = Database.query(selectQuery);
         }
@@ -135,6 +135,26 @@ public inherited sharing class HDT_QR_ProductAssociation {
         }
 
         return configurationRuleList;
+
+    }
+
+    public static List<GroupMember> getGroupMembers(List<GroupMember> groupMembers, Id currentUserId, String groupDeveloperName){
+        groupMembers = new List<GroupMember>();
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('GroupMember');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+        if(objRes.isAccessible()){
+
+            groupMembers = [
+                SELECT Id
+                FROM GroupMember
+                WHERE Group.DeveloperName = :groupDeveloperName
+                AND UserOrGroupId = :currentUserId
+            ];
+        }
+
+        return groupMembers;
 
     }
 

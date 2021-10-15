@@ -23,6 +23,7 @@ public with sharing class HDT_QR_MassiveLoaderRequest {
                 FROM MassiveLoaderRequest__c 
                 WHERE Status__c =: constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE 
                 AND Phase__c =: constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
+                WITH SECURITY_ENFORCED
                 ORDER BY Priority__c LIMIT 1];
     }
 }

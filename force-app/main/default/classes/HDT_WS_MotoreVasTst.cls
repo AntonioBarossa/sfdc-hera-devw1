@@ -67,9 +67,9 @@ public class HDT_WS_MotoreVasTst {
         
         Test.stopTest();
         
-        System.assertEquals(null, res.body, 'The body is null since the mock is not instantiated');
+        System.assertEquals(null, res.body, 'The body should be null since the mock is not instantiated');
         
-        System.assertNotEquals(null, res, 'The response is correctly returned');
+        System.assertNotEquals(null, res, 'The response is not correctly returned');
         
     }
     
@@ -88,9 +88,9 @@ public class HDT_WS_MotoreVasTst {
         
         Test.stopTest();
         
-        System.assertEquals(null, res.body, 'The body is null since the mock is not instantiated');
+        System.assertEquals(null, res.body, 'The body should be null since the mock is not instantiated');
         
-        System.assertNotEquals(null, res, 'The response is correctly returned');
+        System.assertNotEquals(null, res, 'The response is not correctly returned');
         
     }
 }

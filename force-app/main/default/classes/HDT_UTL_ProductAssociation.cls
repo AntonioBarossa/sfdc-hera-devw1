@@ -1,5 +1,11 @@
 public inherited sharing class HDT_UTL_ProductAssociation {
 
+    public static Boolean getEnabledUser(){
+        List<GroupMember> groupMembers;
+        groupMembers = HDT_QR_ProductAssociation.getGroupMembers(groupMembers, UserInfo.getUserId(), 'HDT_PG_CpqAssociationTool');
+        return (groupMembers.size()==0) ? false : true;
+    }
+
     public static String generateQueryString(String filterString, String operator, String optionalSkuId, String findMethod){
         
         String op = ' ' + operator + ' ';
@@ -7,7 +13,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         List<String> familyList = getFamilyList();
 
         Product2 filterProduct = (Product2)JSON.deserialize(filterString, Product2.class);
-        System.debug('>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
+        System.debug(logginglevel.DEBUG, '>>> FILTER PRODUCT: ' + String.valueOf(filterProduct));
 
         List<String> whereConditionList = new List<String>();
         if(!String.isEmpty(filterProduct.Name)){
@@ -42,6 +48,10 @@ public inherited sharing class HDT_UTL_ProductAssociation {
             whereConditionList.add('CategoryFamily__c=\'' + String.escapeSingleQuotes(filterProduct.CategoryFamily__c) + '\'');
         }
 
+        if(!String.isEmpty(filterProduct.Service__c)){
+            whereConditionList.add('Service__c=\'' + String.escapeSingleQuotes(filterProduct.Service__c) + '\'');
+        }
+
         queryString += 'FROM Product2 ';
         queryString += 'WHERE ' + String.join(whereConditionList, op) + ' ';
         queryString += 'AND Id ';
@@ -56,7 +66,8 @@ public inherited sharing class HDT_UTL_ProductAssociation {
         }
 
         queryString +=  ' (SELECT SBQQ__ConfiguredSKU__c FROM SBQQ__ProductOption__c WHERE SBQQ__OptionalSKU__c = \'' + optionalSkuId + '\') ';
-        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\')';
+        queryString += 'AND Family IN (\'' + String.join(familyList, '\',\'') + '\') ';
+        queryString += 'AND (NOT Name LIKE \'template%\')';
         
         //if(!String.isEmpty(filterProduct.Family)){
         //    queryString += ',\'' + filterProduct.Family + '\'';
@@ -69,7 +80,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
     
     public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj createProductOptionAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String productOptionObj, List<String> recordList, String executionType, String filterString, String findMethod){
         
-        System.debug('>>> createProductOptionAssociation');
+        System.debug(logginglevel.DEBUG, '>>> createProductOptionAssociation');
 
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
@@ -103,18 +114,12 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                     respRunBatchObj.success = true;
                 }
-            }	
-            //when 'all' {
-            //    //run batch for all Product2 record -> recordList == 0
-            //    HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), '');
-            //    Id batchId = Database.executeBatch(createAssociationBatch);
-            //    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
-            //}
+            }
             when 'filter' {
                 //run batch for all Product2 using where condition
 
                 String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', productOptionToClone.SBQQ__OptionalSKU__c, findMethod);
-                System.debug('>>> queryString: ' + queryString);
+                System.debug(logginglevel.DEBUG, '>>> queryString: ' + queryString);
                 
                 HDT_BA_ProductAssociation createAssociationBatch = new HDT_BA_ProductAssociation(executionType, productOptionToClone, new List<String>(), queryString);
                 Id batchId = Database.executeBatch(createAssociationBatch);
@@ -128,7 +133,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
 
     public static HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj deleteProductOptionAssociation(HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj, String optionalSkuId, List<String> recordList, String executionType, String filterString, String findMethod){
         
-        System.debug('>>> deleteProductOptionAssociation');
+        System.debug(logginglevel.DEBUG, '>>> deleteProductOptionAssociation');
         
         respRunBatchObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj();
 
@@ -145,22 +150,16 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     Schema.DescribeSObjectResult objRes = objtype.getDescribe();
              
                     if(objRes.isDeletable ()){
-                        //try{
-                            List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
-                            errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
+                        List<HDT_WRP_ProductAssociation.HDT_WRP_LineError> errorData;
+                        errorData = HDT_SRV_ProductAssociation.deleteProductOption(productOptionToDelete, errorData);
 
-                            if(errorData.size() > 0){
-                                respRunBatchObj.success = false;
-                                respRunBatchObj.message = 'Si sono verificati [' + String.valueOf(errorData.size()) + '] errori.';
-                            } else {
-                                respRunBatchObj.success = true;
-                                respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
-                            }
-
-                        //} catch(Exception ex){
-                        //    respRunBatchObj.success = false;
-                        //    respRunBatchObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
-                        //}
+                        if(errorData.size() > 0){
+                            respRunBatchObj.success = false;
+                            respRunBatchObj.message = 'Si sono verificati [' + String.valueOf(errorData.size()) + '] errori.';
+                        } else {
+                            respRunBatchObj.success = true;
+                            respRunBatchObj.message = Label.ProdOptAssociationSuccessDelete;
+                        }
                     }
                     
                 } else {
@@ -169,18 +168,12 @@ public inherited sharing class HDT_UTL_ProductAssociation {
                     respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
                     respRunBatchObj.success = true;
                 }
-            }	
-            //when 'all' {
-            //    //run batch for all Product2 record -> recordList == 0
-            //    HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), '');
-            //    Id batchId = Database.executeBatch(deleteAssociationBatch);
-            //    respRunBatchObj.message = Label.ProdOptAssociationRunBatch;
-            //}
+            }
             when 'filter' {
                 //run batch for all Product2 using where condition
 
                 String queryString = HDT_UTL_ProductAssociation.generateQueryString(filterString, 'AND', optionalSkuId, findMethod);
-                System.debug('>>> queryString: ' + queryString);
+                System.debug(logginglevel.DEBUG, '>>> queryString: ' + queryString);
 
                 HDT_BA_DeleteProductAssociation deleteAssociationBatch = new HDT_BA_DeleteProductAssociation(executionType, optionalSkuId, new List<String>(), queryString);
                 Id batchId = Database.executeBatch(deleteAssociationBatch);
@@ -212,7 +205,7 @@ public inherited sharing class HDT_UTL_ProductAssociation {
             notification.setTargetId(notificationWrp.targetId);
             notification.send(new Set<String> {notificationWrp.userId});
         } catch(Exception ex){
-            System.debug('>>> somethig goes wrong with comunication: ' + ex.getMessage() + ' [' + String.valueOf(ex.getLineNumber()) + ']');
+            System.debug(logginglevel.DEBUG, '>>> somethig goes wrong with comunication: ' + ex.getMessage() + ' [' + String.valueOf(ex.getLineNumber()) + ']');
         }
 
     }

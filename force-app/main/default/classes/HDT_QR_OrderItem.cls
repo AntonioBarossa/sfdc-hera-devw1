@@ -10,7 +10,7 @@ public inherited sharing class HDT_QR_OrderItem {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
     * @description Get list of records by listOrderId and filtered by Product2 IN ('PDR','POD')
-    * @param List<Id> listOrderId
+    * @param listOrderId
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
@@ -32,7 +32,6 @@ public inherited sharing class HDT_QR_OrderItem {
 
     public List<OrderItem> getRecordsByOrderIdFilteredFamilyBonus(List<Id> listOrderId){
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
-
         return [
             SELECT
             ServicePoint__c,
@@ -60,7 +59,7 @@ public inherited sharing class HDT_QR_OrderItem {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 08/01/2020
     * @description Get record by orderId and filtered by Product2 IN ('PDR','POD')
-    * @param String orderId
+    * @param orderId
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsByOrderIdFilteredPdrPod(String orderId){
@@ -83,7 +82,7 @@ public inherited sharing class HDT_QR_OrderItem {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 10/02/2021
     * @description Get record that have BillingProfile__c value set
-    * @param List<Id> listOrderId
+    * @param listOrderId
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsWithBillingProfile(List<Id> listOrderId){
@@ -100,6 +99,12 @@ public inherited sharing class HDT_QR_OrderItem {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getRecordsWithAmend
+    * @param listOrderId
+    * @return List<OrderItem>
+    */
     public List<OrderItem> getRecordsWithAmend(List<Id> listOrderId){
         return [
             SELECT 
@@ -115,6 +120,12 @@ public inherited sharing class HDT_QR_OrderItem {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getMainItem
+    * @param orderId
+    * @return List<OrderItem>
+    */
     public List<OrderItem> getMainItem(String orderId){
         return [
             SELECT 
@@ -126,7 +137,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.ProductCode,
             Product2.Name,
             Product2.DescriptionSAP__c,
-            VASBillingMode__c
+            VASBillingMode__c,
+            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
@@ -135,6 +147,35 @@ public inherited sharing class HDT_QR_OrderItem {
         ];
     }
 
+
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 11-10-2021 
+    * @param quoteId 
+    * @param quoteLineId 
+    * @return List<Order> 
+    **/
+    public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id quoteLineId){
+        return [
+            SELECT
+            OrderId
+            FROM
+            OrderItem
+            WHERE
+            Order.SBQQ__Quote__c =:quoteId
+            AND SBQQ__QuoteLine__c =:quoteLineId
+            AND Order.ServicePoint__c!=null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description getAnalisiConsumi
+    * @param orderId
+    * @return List<OrderItem>
+    */
     public List<OrderItem> getAnalisiConsumi(String orderId){
         return [
             SELECT 

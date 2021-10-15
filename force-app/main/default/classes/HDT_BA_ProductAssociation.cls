@@ -34,7 +34,7 @@ public without sharing class HDT_BA_ProductAssociation implements Database.Batch
             }
         }
 
-        System.debug('>>> QUERY: ' + queryString);
+        System.debug(logginglevel.DEBUG, '>>> QUERY: ' + queryString);
         return Database.getQueryLocator(queryString);
     }
 

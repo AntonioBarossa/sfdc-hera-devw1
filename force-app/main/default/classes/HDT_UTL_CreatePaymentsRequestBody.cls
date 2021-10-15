@@ -134,7 +134,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                         ? 'Paperless Non Generato'
                         : 'Esito KO da SAP';
                     }
-                    createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
+                    //createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
                     // if(caseToUpdate.Description != null){
                     //     caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
                     // }else{
@@ -148,7 +148,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         } else {
 
             caseToUpdate.TecnicalPhase__c = 'Esito KO da SAP';
-            createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
+            //createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
 
@@ -208,7 +208,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             } else {
 
                 phase = failedPhase;
-                createActivity(recordId, response.data.note, 'Esito KO da SAP');
+                //createActivity(recordId, response.data.note, 'Esito KO da SAP');
 
             }
 
@@ -218,7 +218,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
-    private static void createActivity(String recordId, String description, String type){
+    /*private static void createActivity(String recordId, String description, String type){
         String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
@@ -235,7 +235,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             activity.wrts_prcgvr__Description__c = description;
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
         }
-    }
+    }*/
 
     private static void updateFuture(String inputString){
 

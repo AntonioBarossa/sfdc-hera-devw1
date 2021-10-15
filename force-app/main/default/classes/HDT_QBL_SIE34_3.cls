@@ -4,7 +4,7 @@
 **/
 public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
    private String runId                   ;   
-   private Date filterDate                ;
+   private Datetime filterDate            ;
    private String fileType                ;
    private List<String> contentVersionIds ;
    private final String NOTMAPPED='';
@@ -17,11 +17,11 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
    * @param varDate 
    * @param varFileType 
    **/
-   public HDT_QBL_SIE34_3(String varRunId,Date varDate,String varFileType) {
-      this.runId             = varRunId            ;
-      this.filterDate        = varDate             ;
-      this.fileType          = varFileType         ;
-      this.contentVersionIds = new List<String>()  ;
+   public HDT_QBL_SIE34_3(String varRunId,String varDate,String varFileType) {
+      this.runId             = varRunId                                           ;
+      this.filterDate        = HDT_UTL_LeadProcess.getDateTimeFromString(varDate) ;
+      this.fileType          = varFileType                                        ;
+      this.contentVersionIds = new List<String>()                                 ;
    }
 
 
@@ -34,7 +34,7 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
       String errorMessage            = ''          ;
 
       String condition = ' WHERE Cluster__c IN (\'Disattivazioni\',\'Morosità\') AND Type=\'Interruzione Fornitura\' AND Status !=\'Closed\' AND LastModifiedDate >=:filterDate ';
-      String query     = 'SELECT Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,Subscription__r.SBQQ__ProductName__c FROM Case';
+      String query     = 'SELECT Contract__r.ContractSalesCompany__c,Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,Subscription__r.SBQQ__ProductName__c FROM Case';
       String separator = ';';
 
    
@@ -89,7 +89,7 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
             tempCase.DeliveryAddress__c                                                         +separator+                                                                                   
             NOTMAPPED                                                                           +separator+                                        
             tempCase.Subscription__r.SBQQ__ProductName__c                                       +separator+
-            NOTMAPPED                                                                           +separator+                                                    
+            tempCase.Contract__r.ContractSalesCompany__c                                        +separator+                                                    
             tempCase.CausalCode__c                                                                 ;
 
 
@@ -104,12 +104,12 @@ public with sharing class HDT_QBL_SIE34_3 implements Queueable  {
          if (listCase!=null && listCase.size()>0 ) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_IN_RETE.txt','OUT_CESSAZIONE_IN_RETE'));
          }
-        Id jobID2File = System.enqueueJob(new HDT_QBL_SIE34_3File2(runId,filterDate, fileType,contentVersionIds));
+        System.enqueueJob(new HDT_QBL_SIE34_3File2(runId,filterDate, fileType,contentVersionIds));
       } 
       catch (Exception e) {
          errorMessage=e.getMessage();
          status='failed';
-         Id jobID = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+         System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
       }
      
    }

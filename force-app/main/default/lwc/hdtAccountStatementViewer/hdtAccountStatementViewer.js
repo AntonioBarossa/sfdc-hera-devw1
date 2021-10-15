@@ -68,9 +68,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     contractAccount;
     company;
 
-    totRecs;
-    fromRec;
-    toRec;
+    totRecs = 0;
+    fromRec = 0;
+    toRec = 0;
     avoidSort;
     //blob;
     //url;
@@ -488,6 +488,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     errorCheck(parameters, record){
+        console.log('>>> parameters: ' + parameters);
+
+        if(parameters === null || parameters === undefined || parameters === ''){
+            return false;
+        }
+
         var obj = JSON.parse(parameters);
         console.log('>>> contract: ' + record.contratto);
         console.log('>>> processType: ' + obj.processType);
@@ -496,7 +502,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Attenzione',
-                    message: 'Non è prsente il contratto',
+                    message: 'Non è presente il contratto',
                     variant: 'warning'
                 })
             );
@@ -1461,6 +1467,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         var selectedId = this.getSingleSelectedId();
 
         if(selectedId==undefined){
+            this.closeMainSpinner();
             return;
         }
 
@@ -1471,7 +1478,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             billNumber: selected.numeroFattura.replace(/^0+/, ''),
             channel: 'CRM',
             date: date[2] + '-' + date[1] + '-' + date[0],
-            type: 'Bolletta',
+            documentType: 'Bollette',
             company: selected.societa
         }
 

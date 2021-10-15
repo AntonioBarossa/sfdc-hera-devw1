@@ -33,8 +33,11 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      * @param ServicePoint__c oldServicePoint
      */
     private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, ServicePoint__c oldServicePoint) {
-
-        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && newServicePoint.SupplyType__c !=null && newServicePoint.SupplyType__c != newServicePoint.SupplyTypeTemp__c;
+        System.debug('**********:1' +oldServicePoint.supplytype__c );
+        System.debug('**********:2' +newServicePoint.supplytype__c );
+        System.debug('**********:3' +oldServicePoint.SupplyTypeTemp__c );
+        System.debug('**********:4' +newServicePoint.SupplyTypeTemp__c );
+        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldServicePoint.supplytype__c !=null && oldServicePoint.supplytype__c != newServicePoint.SupplyTypeTemp__c;
 
     }
 
@@ -72,6 +75,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      */
     @AuraEnabled
     public static void updateSale(Sale__c sale){
+        system.debug(sale.CurrentStep__c);
         saleSrv.updateRecord(sale);
     }
 }

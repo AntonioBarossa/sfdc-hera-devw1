@@ -149,11 +149,14 @@ public with sharing class HDT_LC_LastBill {
     // Callback method
     @AuraEnabled(cacheable=true)
     public static String processResponse(List<String> labels, Object state) {
+        System.debug('processResponse - labels: ' + labels);
+        System.debug('processResponse - state: ' + state);
         HttpResponse response = Continuation.getResponse(labels[0]);
         Integer statusCode = response.getStatusCode();
         Map<String,String> result = new Map<String,String>();
         Map<String,String> commodity = new Map<String,String>();
-
+        
+        //CAUSA DI ERRORE - TODO: FIX TEST
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
         System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
         if (responseBodyMap.containsKey('data')) {
@@ -219,7 +222,7 @@ public with sharing class HDT_LC_LastBill {
                 gen.writeStringField('billNumber', billNumber.replaceAll('^0+', ''));
                 gen.writeStringField('channel', 'CRM');
                 gen.writeStringField('date', dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0]);
-                gen.writeStringField('type', 'Bolletta');
+                gen.writeStringField('documentType', 'Bollette');
                 gen.writeStringField('company', companyCode);
                 gen.writeEndObject();
                 jsonObjString = gen.getAsString();

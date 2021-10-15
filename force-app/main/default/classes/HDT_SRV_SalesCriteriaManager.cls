@@ -6,8 +6,8 @@ global inherited sharing class HDT_SRV_SalesCriteriaManager implements wrts_prcg
 
         Map<String, Object> argsMap = (Map<String, Object>) args;
 
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
+        //SObject transition = (SObject) argsMap.get('transition');
+        //SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('record');
 

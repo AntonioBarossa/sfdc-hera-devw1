@@ -28,6 +28,8 @@ public inherited sharing class HDT_QR_SelfReadings {
         /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
             recordList.add(singleRecord);
         }*/
+        System.debug('firstQuery.values() size:' + firstQuery.values().size());
+        
         return firstQuery.values();
     }
 
@@ -127,6 +129,14 @@ public inherited sharing class HDT_QR_SelfReadings {
             }
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
+            
+            /*
+            System.debug('utl_isProcessReadingTest: accountId => ' + accountId);
+            System.debug('utl_isProcessReadingTest: servicePointId => ' + servicePointId);
+            System.debug('utl_isProcessReadingTest: recordTypeIds => ' + recordTypeIds);
+            System.debug('utl_isProcessReadingTest: badPhases => ' + badPhases);
+            System.debug('utl_isProcessReadingTest: badStates => ' + badStates);
+            */
             orders = Database.query(query);
 
             //System.debug('HDT_QR_SelfReadings: orders => ' + orders);

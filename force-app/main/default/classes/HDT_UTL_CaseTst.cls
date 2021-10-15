@@ -109,8 +109,8 @@ public with sharing class HDT_UTL_CaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
-        System.assert(inputs != null);
+        System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
+        System.assert(inputs != null,  'Attenzione, inputs non può essere null!');
         
     }
     
@@ -142,7 +142,7 @@ public with sharing class HDT_UTL_CaseTst {
         Test.startTest();
         Try{
 
-            HDT_UTL_Case.createActivity(idCase, 'my Test', 'myPClickTestTemplate');            
+            HDT_UTL_Case.createActivity(idCase, 'my Test', 'myPClickTestTemplate', '');
             
             
         }catch(DmlException e) {
@@ -151,8 +151,8 @@ public with sharing class HDT_UTL_CaseTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
-        System.assert(idCase != null);
+        System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
+        System.assert(idCase != null, 'Attenzione, idCase non può essere null!');
         
     }
 
