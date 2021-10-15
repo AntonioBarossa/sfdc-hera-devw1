@@ -227,7 +227,6 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-
         <platformActionListItems>
             <actionName>Case.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>
@@ -290,6 +289,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>
