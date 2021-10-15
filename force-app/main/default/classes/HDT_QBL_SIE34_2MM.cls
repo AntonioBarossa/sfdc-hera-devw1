@@ -63,9 +63,7 @@ public with sharing class HDT_QBL_SIE34_2MM implements Queueable  {
           body=HDT_UTL_SIE34.createBodySIE34_2MMGas(body,listCaseGas);
 
       
-          if(Test.isRunningTest()){
-            throw new TypeException('Throwing an exception to cover the catch block and avoid the enqueue');
-         }else if (String.isNotBlank(body)) {
+         if (String.isNotBlank(body)) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_MM.txt','PP_OUT_PREVENTIVI_MM'));
          }
          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
