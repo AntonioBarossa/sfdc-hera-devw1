@@ -67,8 +67,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         if(isSubscriptionSetup){
             //CODICE REPLICATO
             SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
-            SBQQ__Contract__c = contr.Id, 
-            SBQQ__Product__c = prod.Id, 
+            SBQQ__Contract__c = contractList[0].Id, 
+            SBQQ__Product__c = productList[0].Id, 
             SBQQ__Quantity__c = 10.2, 
             SBQQ__Account__c = accList[0].Id,
             SBQQ__NetPrice__c = 100.2,
