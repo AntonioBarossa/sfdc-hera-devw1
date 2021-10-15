@@ -12,6 +12,8 @@
 
 
 public with sharing virtual class HDT_UTL_FormatTextScript {
+
+    private static final String EMPTY_PLACEHOLDER = '[Vuoto]';
     
     protected String regEx= '\\{\\{[\\xa0\\s]?+([A-Za-z0-9_.]+)[\\xa0\\s]?+\\}\\}';
     //'<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
@@ -112,8 +114,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 relation=relation.getSobject(fieldOrRelation);
             }else{
                 if(relation==null){
-                    fieldValue='*valore mancante*';
-                    return fieldValue ;
+                    return fieldValue;
                 }
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
                                             .get(fieldOrRelation)
@@ -124,19 +125,19 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                         fieldValue = (String) relation.get(fieldOrRelation);
                     }
                     when 'DATETIME'{
-                        fieldValue = ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
+                        Datetime dt = (Datetime) relation.get(fieldOrRelation);
+                        if (dt!=null) {
+                            fieldValue = dt.format('dd/MM/yyyy');
+                        }
                     }
                     when 'DATE'{
-                        Date d = (DATE) relation.get(fieldOrRelation);
-                        if(d!=null){
+                        Date d = (Date) relation.get(fieldOrRelation);
+                        if (d!=null){
                             DateTime tempDate = DateTime.newInstance(d.year(), d.month(), d.day());
                             fieldValue = tempDate.format('dd/MM/yyyy');
-                        }else{
-                            fieldValue = 'null';
                         }
                     }when 'CURRENCY'{
                         fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
-                        fieldValue = String.isNotBlank(fieldValue)? fieldValue : '0';
                     }
                     when else {
                         fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
@@ -167,9 +168,8 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
     private String overwriteValue(String fieldValue, String sobjectApiName, String fieldApiName){
-        //controlla su CS o CMT se il valore va sovrascritto (ossia se c'è una corrispondenza tra fieldApiName e ObjectApiName),
-        // se sì converti in decimal, aumenta, riconverti in stringa, altrimenti rimanda indietro il valore che ti è arrivato
 
+        //reading overrides from HDT_CallScriptValue__mdt
         String key = sobjectApiName+'-'+fieldApiName;
         if (overrideMap.containsKey(key.toLowerCase())) {
             List<HDT_CallScriptValue__mdt> overrideValues = overrideMap.get(key.toLowerCase());
@@ -180,6 +180,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                     fieldValue = String.format(overrideValue.Value__c, formatParams);
                 }
             }
+        }
+
+        //overriding empty values with placeholder
+        if (String.isBlank(fieldValue) || fieldValue=='null') {
+            fieldValue = EMPTY_PLACEHOLDER;
         }
 
         return fieldValue;

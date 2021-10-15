@@ -15,6 +15,17 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
 
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
+    /**
+    * @description 
+    * @author gabriele.rota@webresults.it | 2021-09-13 
+    * @param recordId 
+    * @return List<HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig> 
+    **/
+    @AuraEnabled
+    public static List<HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig> getScriptConfig(String recordId){
+        return HDT_SRV_ScriptManager.getScriptConfig(recordId);
+    }
+
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled(cacheable=true)
     public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
@@ -254,14 +265,24 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     private static Boolean assertDynamicValues(String actualFieldValue, String valueToCheck, Boolean checkEquals){
         //This method dinamically compares two string, it can be used to check if they match or they differ
         //checkEquals set true means that you must check if the two strings matches, if it false you check if the strings differ
+
+        Boolean areStringsEqual;
         if ('null'.equalsIgnoreCase(valueToCheck)) {//null means "empty string"
-            if (String.isBlank(actualFieldValue) == !checkEquals) {
-                return false;
-            }
-        }else if(valueToCheck.equalsIgnoreCase(String.valueOf(actualFieldValue)) == !checkEquals){
-            return false;
+            areStringsEqual = String.isBlank(actualFieldValue);
         }
-        return true;
+        else {
+            if (valueToCheck.endsWithIgnoreCase('%')) {
+                areStringsEqual = actualFieldValue.startsWithIgnoreCase( valueToCheck.substringBefore('%') );
+            }
+            else if (valueToCheck.startsWithIgnoreCase('%')) {
+                areStringsEqual = actualFieldValue.endsWithIgnoreCase( valueToCheck.substringAfter('%') );
+            }
+            else {
+                areStringsEqual = actualFieldValue.equalsIgnoreCase( valueToCheck );
+            }
+        }
+
+        return areStringsEqual==checkEquals;
     }
 
 }

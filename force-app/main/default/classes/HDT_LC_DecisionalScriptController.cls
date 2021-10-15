@@ -6,21 +6,6 @@
  * @last modified by  : gabriele.rota@webresults.it
 **/
 public with sharing class HDT_LC_DecisionalScriptController extends HDT_LC_HdtScriptManagementModal {
-
-    private static final String DECISIONAL_TYPE = 'Decisionale';
-
-    /**
-    * @description Check if the given script is decisional
-    * @author gabriele.rota@webresults.it | 2021-10-05 
-    * @param processName  
-    * @return Boolean
-    **/
-    @AuraEnabled
-    public static Boolean isDecisionalScript(String processName){
-        List<ScriptConfig__c> decisionalPages = [SELECT Id FROM ScriptConfig__c
-            WHERE ParentSection__r.Name=:processName AND ScriptType__c=:DECISIONAL_TYPE WITH SECURITY_ENFORCED LIMIT 1];
-        return (!decisionalPages.isEmpty());
-    }
     
     /**
     * @description Get a single page of the given decisional script

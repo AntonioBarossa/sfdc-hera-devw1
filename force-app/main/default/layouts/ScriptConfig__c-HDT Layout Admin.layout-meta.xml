@@ -146,6 +146,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>SectionOrder__c</fields>
+        <fields>IsChildLoopEvaluated__c</fields>
+        <fields>CheckVisibility__c</fields>
         <relatedList>ScriptConfig__c.ParentSection__c</relatedList>
         <sortField>SectionOrder__c</sortField>
         <sortOrder>Asc</sortOrder>
@@ -162,7 +164,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002Wkxg</masterLabel>
+        <masterLabel>00h3N000002fOwg</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

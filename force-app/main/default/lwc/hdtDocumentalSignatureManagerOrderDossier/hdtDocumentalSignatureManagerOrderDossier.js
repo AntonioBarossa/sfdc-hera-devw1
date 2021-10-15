@@ -23,7 +23,6 @@ import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-import getSignatureScript from '@salesforce/apex/HDT_LC_OrderDossierWizardSignature.getSignatureScript';//gabriele.rota@webresults.it | 2021-09-13 
 
 const FIELDS = [
     'Order.Id',
@@ -66,18 +65,6 @@ const FIELDS = [
 	'Order.Account.BillingStreetCode__c'
 ];
 
-const SCRIPT_SIGNATURE_METHODS = [
-    'Vocal Order',
-    'OTP Remoto',
-    'OTP Coopresenza'
-];
-
-const SCRIPT_ENABLED_CHANNELS = [
-    'Teleselling',
-    'Telefono Outbound',
-    'Telefono Inbound'
-];
-
 export default class hdtOrderDossierWizardSignature extends LightningElement {
     
     @api orderParentRecord;
@@ -104,8 +91,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
     openAfterScriptModal = false;
     
-    @api scriptMap = {};
-
     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
     oldPhoneValue;
     oldEmailValue;
@@ -155,34 +140,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }
 
         return result;
-    }
-
-    get isScriptBtnVisible(){
-        if (this.orderRecord) {
-
-            /*let hiddenEdit = true;
-            if(this.orderParentRecord.Step__c <= this.currentStep || this.orderParentRecord.Status === 'Completed'){
-                hiddenEdit = true;
-            } else if(this.orderParentRecord.Step__c > this.currentStep){
-                hiddenEdit = false;
-            }*/
-
-            let loginChannel = this.orderRecord.fields.CreatedBy.value.fields.LoginChannel__c.value;
-            let isChannelEnabled = (loginChannel==null || SCRIPT_ENABLED_CHANNELS.indexOf(loginChannel)>=0);
-
-            let signatureMethod = this.orderRecord.fields.SignatureMethod__c.value;
-            let isSignatureEnabled = (SCRIPT_SIGNATURE_METHODS.indexOf(signatureMethod)>=0);
-
-            return (this.orderRecord.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && isChannelEnabled && isSignatureEnabled);
-        }
-        else return false;
-    }
-
-    loadScriptMap() {
-        getSignatureScript({orderParentId: this.recordId}).then(scriptMap => {
-            console.log('getSignatureScript: '+JSON.stringify(scriptMap));
-            this.scriptMap = scriptMap;
-        });
     }
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
@@ -335,8 +292,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }
         this.handleFormInit();
         this.handleControllerInit();
-
-        this.loadScriptMap();
     }
 
     outputFormatedAddress(address){
@@ -512,8 +467,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
                     this.dispatchEvent(new CustomEvent('tablerefresh'));
                     getRecordNotifyChange([{recordId: this.recordId}]);
-
-                    this.loadScriptMap();
                 }).catch(error => {
                     this.loading = false;
                     console.log((error.body.message !== undefined) ? error.body.message : error.message);
@@ -547,8 +500,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dispatchEvent(new CustomEvent('tablerefresh'));
             this.dispatchEvent(new CustomEvent('documentalrefresh'));
             this.disabled = false;
-
-            this.loadScriptMap();
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
