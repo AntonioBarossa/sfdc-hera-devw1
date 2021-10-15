@@ -37,7 +37,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //PRODUCT
         List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
         productList[0].Name = 'POD';
-        productList[0].Family = 'VAS Fatturabili';
+        if(isSubscriptionSetup){
+            productList[0].Family = 'Offerta commerciale';
+        } else {
+            productList[0].Family = 'VAS Fatturabili';
+        }
         insert productList;
         
         //PRICE BOOK
@@ -683,6 +687,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void generateSection20Test(){
         
         //SETUP
+        isSubscriptionSetup = true;
         mySetup();
         
         Account myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];

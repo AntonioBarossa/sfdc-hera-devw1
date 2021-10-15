@@ -423,14 +423,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         
         queryString = queryString + relatedQueryString + fromString + whereString;
-        System.debug('query ' + queryString);
+        System.debug('query: ' + queryString);
 
         List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        System.debug('recordList ' + recordList);
+        System.debug('recordList: ' + recordList);
         
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+            System.debug('subscriptions: ' + subscriptions);
 
             String[] record = new List<String>();
             // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
