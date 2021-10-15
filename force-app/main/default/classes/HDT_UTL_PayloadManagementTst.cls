@@ -80,7 +80,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
             insert subs;
         }
         
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
+        if(isSubscriptionSetup){
+            caseList[0].SendDate__c = date.today();
+        }
+        insert caseList;
     }
 
     
@@ -857,7 +861,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         */
         
         //TESTING - NB: CRASH A CAUSA DI ECCEZIONE OUT OF BOUNDS - MANCANZA DI SUBSCRIPTION SU CONTRATTO
-        myItem.Cluster__c = 'Reclami';
+        myItem.Cluster__c = 'Reclami';//TODO: COMMENT/REMOVE
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
         //myItem.IsContainer__c = true;
         myObjectToTest = new HDT_UTL_PayloadManagement();
