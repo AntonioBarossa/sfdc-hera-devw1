@@ -3105,4 +3105,40 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return vocalOrders;
 	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 14/10/2021
+	 */
+	public static List<Case> createCaseWithStatusClosedNw(Integer amount, Map<String,Object> params){
+			
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='BP/CA - errata categoria';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+			for(String key:params.keySet()){
+				testCase.put(key, params.get(key));
+			}
+			caseList.add(testCase);
+		}
+		insert caseList;
+
+		for(Case testCase:caseList){
+			testCase.Status='Closed';
+			testCase.PraxidiaOverrallSatisfaction__c=2;
+		}
+		update caseList;
+
+		return caseList;
+	}
 }

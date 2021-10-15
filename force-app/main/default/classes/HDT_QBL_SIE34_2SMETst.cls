@@ -8,42 +8,6 @@
 public class HDT_QBL_SIE34_2SMETst {
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
 
-  /**
-   * @author Valere (valere@noeli-it.net)
-   * @date 14/10/2021
-  */
-  public static List<Case> createCaseWithStatusClosedNw(Integer amount, Map<String,Object> params){
-		
-		List<Case> caseList=new List<Case>();
-		
-		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
-
-		for (Integer i=0; i<amount; i++){
-
-			Case testCase=new Case();
-			testCase.Phase__c='Bozza';
-			testCase.Subject='test';
-			testCase.Type='BP/CA - errata categoria';
-			testCase.Subprocess__c='Account';
-			testCase.HerokuPracticeCode__c='21313232132132';
-			testCase.RecordTypeId=rtId;
-			testCase.CompanyOwner__c='HERA COMM';
-      for(String key:params.keySet()){
-        testCase.put(key, params.get(key));
-      }
-			caseList.add(testCase);
-		}
-		insert caseList;
-
-    for(Case testCase:caseList){
-      testCase.Status='Closed';
-      testCase.PraxidiaOverrallSatisfaction__c=2;
-    }
-    update caseList;
-
-		return caseList;
-	}
-
   @TestSetup
   static void makeData(){
     HDT_UTL_DataFactoryTst.pClickInstance();
@@ -53,7 +17,7 @@ public class HDT_QBL_SIE34_2SMETst {
     List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact (1,true,accountList[0].id); 
     List<ServicePoint__c> servicepointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
     List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accountList[0].id);
-    List<Case> caseList = createCaseWithStatusClosedNw(1,new Map<String,Object>{
+    List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseWithStatusClosedNw(1,new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Contract__c'=>contractList[0].id,
       'ServicePoint__c'=>null,
