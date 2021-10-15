@@ -156,6 +156,31 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         
     }
     
+    @isTest
+    private static void getContactsFail(){
+        
+        String insanelyLongString = 'This is an insanely long string to make the query fail.';
+        
+        for(Integer i = 0; i<10; i++){
+            insanelyLongString += insanelyLongString;
+        }
+        System.debug('insanelyLongString length: ' + insanelyLongString.length());
+        
+        Boolean caught = false;
+        try{
+            HDT_LC_AccountSelectorController.getContacts(insanelyLongString);         
+        } catch (Exception e) {
+            caught = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        
+        System.assert(caught, 'Eccezione non avvenuta.');
+    }
+    
+    
+    
     
     @isTest 
     private static void handleAccountSerialized() {
@@ -181,9 +206,36 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     
     @isTest 
     public static void reset() {
+        
+        //SETUP
         mySetup();
+        
+        //TESTING LEGIT
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         HDT_LC_AccountSelectorController.reset(activity.Id);
+        
+        //ASSERTS
+        wrts_prcgvr__Activity__c activityUpdated = [SELECT Id, Contact__c, Account__c, Lead__c FROM wrts_prcgvr__Activity__c];
+        System.assertEquals(null, activityUpdated.Contact__c, 'Field Non resettato');
+        System.assertEquals(null, activityUpdated.Account__c, 'Field Non resettato');
+        System.assertEquals(null, activityUpdated.Lead__c, 'Field Non resettato');
+        
+        
+        
+        //TESTING EXCPT
+        Boolean caught = false;
+        try{
+            HDT_LC_AccountSelectorController.reset('MalformedId');
+            
+        } catch (Exception e) {
+            System.debug('reset - Exception Name: ' + e.getTypeName());
+            System.debug('reset - Exception Message: ' + e.getMessage());
+            System.debug('reset - Exception Stack Trace String: ' + e.getStackTraceString());
+            caught = true;
+            
+        }
+        System.assert(caught, 'Eccezione non catchata.');
+        
     }
     
 }
