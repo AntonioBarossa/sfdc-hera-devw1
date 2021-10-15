@@ -23,6 +23,8 @@ public class HDT_LC_ActivityDetailTst {
 		insert internalUser;
 
         System.runAs(internalUser){
+
+            HDT_UTL_DataFactoryTst.pClickInstance();
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;
