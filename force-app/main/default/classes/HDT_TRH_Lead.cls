@@ -224,15 +224,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
             List<Lead> listNew = trigger.new;
             List<Lead> leadToCheck = new List<Lead>();
-            //Map<String,String> leadDomain = new Map<String,String>();
-            //id currentUserId=UserInfo.getUserId();
-            Map<Id, Id> mapLeadOwner = new Map<Id, Id>();
+         
             for(Lead l : listNew){
-                id currentUserId=UserInfo.getUserId();
-              /*  if (l.OwnerId!=currentUserId) {
-                   // l.OwnerId=currentUserId;
-                   mapLeadOwner.put(l.id,currentUserId);
-                }*/
+               
                 if(l.email != null){
                     String s = l.email.split('@')[1];
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -244,9 +238,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     leadToCheck.add(l);
                 }
             }  
-           /* if (!mapLeadOwner.isEmpty()) {
-                System.enqueueJob(new HDT_QBL_Lead(mapLeadOwner));
-            }*/ 
+
             // Start 27-08-2021 HRAWRM-351
             if (leadToCheck.size()>0) {
                 
