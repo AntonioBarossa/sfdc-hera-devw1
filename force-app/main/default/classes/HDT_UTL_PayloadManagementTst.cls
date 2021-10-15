@@ -82,7 +82,13 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
         if(isSubscriptionSetup){
+            caseList[0].FirstLevelComplaintClassification__c = 'Reclamo Scritto';
+            caseList[0].IndemnityConfirmed__c = true;
+            caseList[0].IndemnityMotivation__c = '';
+            caseList[0].CorrectionRight__c = 'Si';
             caseList[0].SendDate__c = date.today();
+            caseList[0].IndemnityDueSendResponse__c = 5.45;
+            caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
         }
         insert caseList;
     }
@@ -840,24 +846,25 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO cluster not Reclami
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        
+        /*
         String result1 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
         System.assert(String.isBlank(result1), 'Risultato NON è stringa vuota.');
-        
+        */
         
         
         //TESTING - Caso HTML Response Blank
         myItem.Cluster__c = 'Reclami';
+        /*
         myObjectToTest = new HDT_UTL_PayloadManagement();
         String result2 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
         System.debug('result2 length ' + result2.length());
         System.assert(String.isBlank(result2), 'Risultato NON è stringa vuota.');
-        
+        */
         
         
         //TESTING - caso normale
