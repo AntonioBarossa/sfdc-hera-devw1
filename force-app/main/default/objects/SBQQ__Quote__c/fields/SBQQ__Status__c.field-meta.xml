@@ -38,6 +38,11 @@
                 <default>false</default>
                 <label>Chiusa</label>
             </value>
+            <value>
+                <fullName>In Revisione</fullName>
+                <default>false</default>
+                <label>In Revisione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

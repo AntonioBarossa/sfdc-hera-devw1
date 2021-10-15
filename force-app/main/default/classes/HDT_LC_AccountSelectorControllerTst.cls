@@ -11,6 +11,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     
     //TEST SETUP
     private static void mySetup() {
+        HDT_UTL_DataFactoryTst.pClickInstance();
         //ACCOUNT
         Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
         

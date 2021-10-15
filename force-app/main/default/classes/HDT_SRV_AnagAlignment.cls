@@ -200,9 +200,17 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             }
             when VARIAZIONE_STATO_POD {
                 // TODO
+                /**@frpanico 15/10/2021
+                 * Risoluzione "Avoid using empty block statement"
+                 */
+                return returnCases;
             }
             when VARIAZIONE_STATO_PDR {
                 // TODO
+                /**@frpanico 15/10/2021
+                 * Risoluzione "Avoid using empty block statement"
+                 */
+                return returnCases;
             }
         }
 
@@ -388,6 +396,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 newCaseList.add(createCaseUtility.createCaseFromOrder(inputMap));
             }
             when else {
+                /**@frpanico 15/10/2021
+                 * Risoluzione "Avoid using empty block statement"
+                 */
+                return null;
             }
         }
 
@@ -403,6 +415,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
      * Aggiorna il Case di allineamento anagrafica con i dati di anagrafica del cliente ed eventuali logiche specifiche 
      * del processo che ha originato l'allineamento, e infine invia il Case ad Heroku.
      */
+    /**@frpanico 15/10/2021
+     * Annotato con @SuppressWatnings
+     * Gli switch block sono stati inseriti in maniera preventiva per futuri update.
+     */
+    @SuppressWarnings('PMD.EmptyStatementBlock')
     private static Boolean updateAnagAlignmentCasePostSalesDispatcher(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
 
         updateAnagAlignmentCaseCustomerData(anagAlignCase);
@@ -535,6 +552,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             }
             when else {
                 // TODO
+                /**@frpanico 15/10/2021
+                 * Risoluzione "Avoid empty block statements"
+                 */
+                processType = '';
             }
         }
 
