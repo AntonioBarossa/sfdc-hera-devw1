@@ -156,6 +156,8 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         
     }
     
+    
+    //GETTER FAILS
     @isTest
     private static void getContactsFail(){
         
@@ -166,18 +168,49 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
         }
         System.debug('insanelyLongString length: ' + insanelyLongString.length());
         
-        Boolean caught = false;
+        
+        //CONTACTS
+        Boolean caughtContacts = false;
         try{
             HDT_LC_AccountSelectorController.getContacts(insanelyLongString);         
         } catch (Exception e) {
-            caught = true;
+            caughtContacts = true;
             System.debug('seach - exception message: ' + e.getMessage());
             System.debug('seach - exception type name: ' + e.getTypeName());
             System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
         }
         
-        System.assert(caught, 'Eccezione non avvenuta.');
+        System.assert(caughtContacts, 'Eccezione non avvenuta per Contacts.');
+        
+        
+        //LEADS
+        Boolean caughtLeads = false;
+        try{
+            HDT_LC_AccountSelectorController.getLeads(insanelyLongString);         
+        } catch (Exception e) {
+            caughtLeads = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        
+        System.assert(caughtLeads, 'Eccezione non avvenuta per Leads.');
+        
+        
+        //ACCOUNT
+        Boolean caughtAcc = false;
+        try{
+            HDT_LC_AccountSelectorController.getAccounts(insanelyLongString);         
+        } catch (Exception e) {
+            caughtAcc = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        
+        System.assert(caughtAcc, 'Eccezione non avvenuta per Accounts.');
     }
+    
     
     
     
