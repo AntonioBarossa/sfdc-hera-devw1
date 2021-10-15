@@ -241,6 +241,11 @@ public with sharing class HDT_UTL_Constants {
     //Voltura Retroattiva Permission set
     @AuraEnabled
     public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
+
+    // Enable Credit Check Permission set
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_ENABLECREDITCHECK = 'HDT_EnableCreditCheck';
+
     
     //ProtocolManualActivities
     @AuraEnabled
