@@ -453,8 +453,9 @@ public with sharing class HDT_SRV_SalesHandler {
                 try {
                     List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
                     requiredFields(listFieldsReq, request);
-                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
                     RestContext.response.statusCode = 200; 
+                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                   
                   
                 } 
                 catch (Exception e) {
@@ -466,8 +467,9 @@ public with sharing class HDT_SRV_SalesHandler {
                 try {
                     List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
                     requiredFields(listFieldsReq, request);
-                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
                     RestContext.response.statusCode = 200;
+                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                  
 
                 } 
                 catch (Exception e) {
@@ -478,8 +480,9 @@ public with sharing class HDT_SRV_SalesHandler {
                 try {
                     List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
                     requiredFields(listFieldsReq, request);
-                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
                     RestContext.response.statusCode = 200;
+                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                    
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
@@ -490,8 +493,9 @@ public with sharing class HDT_SRV_SalesHandler {
                 try {
                     List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
                     requiredFields(listFieldsReq, request);
+                    RestContext.response.statusCode = 200; 
                     HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
-                    RestContext.response.statusCode = 200;  
+                     
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
@@ -502,8 +506,9 @@ public with sharing class HDT_SRV_SalesHandler {
                 try {
                     List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
                     requiredFields(listFieldsReq, request);
-                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
                     RestContext.response.statusCode = 200;
+                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                  
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
