@@ -199,12 +199,35 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
     handleListenVO(event) {
 
 
-        checkListenVO({
+        checkListenVO({orderId : this.orderId,username : this.username,password : this.password}).then(res => {
 
-            orderId: this.orderId
+            if(res.res == null || res.res == undefined){
 
-        }).then(result => {
+                let ecid = res.ecid;
+                let token = res.token
+                if(res.errorMessage == null || res.errorMessage == undefined){
 
+                    let searchparams2 = 'token=' + encodeURIComponent(token) +'&ecid=' + encodeURIComponent(ecid); 
+                    let reiteklink = 'https://herapresfdc.cloudando.com/HeraSfdc/rec/download?' + searchparams2;
+                    const link = document.createElement("a");
+                    link.href = reiteklink;
+                    link.click();
+                }
+                else{
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Errore',
+                        message: res.errorMessage,
+                        variant: 'error'
+                    }));
+                } 
+                }
+                else{
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Si è verificato un errore!',
+                        variant: 'error'
+                    }));
+                }
             console.log(JSON.stringify(result));
         }).catch(err => {
             console.log(JSON.stringify(err));

@@ -90,16 +90,15 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     ];
 
     shippingFields=[
-        new fieldData(null, "ShippingCity__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingStreetName__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingStreetNumber__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingProvince__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingCountry__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingPostalCode__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingCityCode__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingStreetCode__c", "slds-size_1-of-3 fieldsData"),
-        new fieldData(null, "ShippingPlace__c", "slds-size_1-of-3 fieldsData")
+        new fieldData(null, "BillingCity__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingStreetName__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingStreetNumber__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingProvince__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingCountry__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingPostalCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingCityCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingPlace__c", "slds-size_1-of-3 fieldsData")
     ];
 
 

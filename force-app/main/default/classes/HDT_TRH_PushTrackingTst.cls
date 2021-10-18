@@ -10,10 +10,12 @@ public with sharing class HDT_TRH_PushTrackingTst {
     
     @TestSetup
     static void setup(){
+
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         
-        PushTracking__c pt = new PushTracking__c(
-            CompanyOwner__c = 'HERA COMM'
-        );
+        PushTracking__c pt = new PushTracking__c(CompanyOwner__c = 'HERA COMM');
+        pt.ContactID__c = contactList[0].ID;
         insert pt;
 
     }

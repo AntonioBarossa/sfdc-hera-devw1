@@ -152,7 +152,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }     
                 }
                 if (accToUpdate.size()>0) {
-                    accountSRV.updateRecordsWithCheck(accToUpdate);
+                    accountSRV.updateRecordsWithCheckTrigger(accToUpdate);
                 }
                 if (conList.size()>0) {
                     contactSrv.createRecords(conList);
@@ -224,8 +224,9 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
             List<Lead> listNew = trigger.new;
             List<Lead> leadToCheck = new List<Lead>();
-            //Map<String,String> leadDomain = new Map<String,String>();
+         
             for(Lead l : listNew){
+               
                 if(l.email != null){
                     String s = l.email.split('@')[1];
                     if(mapResBlacklist.get(s.toUpperCase()) != null){
@@ -236,7 +237,8 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }
-            }   
+            }  
+
             // Start 27-08-2021 HRAWRM-351
             if (leadToCheck.size()>0) {
                 

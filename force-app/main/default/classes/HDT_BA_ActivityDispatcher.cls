@@ -71,7 +71,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
             ORDER BY RulePriority__c ASC
         ];
     }
-
+    
     public void execute(Database.BatchableContext BC, List<sObject> scope) {
         List<AssignmentRule__c> rules = (List<AssignmentRule__c>) scope;
 
@@ -135,6 +135,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         }
     }
 
+    
     public void finish(Database.BatchableContext BC) {
         //RESCHEDULE
     }

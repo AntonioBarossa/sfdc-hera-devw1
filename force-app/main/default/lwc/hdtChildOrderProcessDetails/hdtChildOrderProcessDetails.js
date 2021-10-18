@@ -1357,7 +1357,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'riepilogoDatiAmend',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.isBillable,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus',
                 data: [
                     //constructor(
                     //    label, apiname, 
@@ -1403,7 +1403,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'analisiConsumi',
                 objectApiName: 'OrderItem',
                 recordId: this.analisiConsumi.Id !== undefined ? this.analisiConsumi.Id : '',//this.analisiConsumi.Id
-                processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.isBillable ) && this.analisiConsumi.Id !== undefined,
+                processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' ) && this.analisiConsumi.Id !== undefined,
                 data: [
 
                     //constructor(
@@ -1654,7 +1654,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility)
                     new fieldData('Ordine di riferimento','OrderReferenceNumber', true, false, true, ''),
@@ -1675,7 +1675,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     
                 ]
@@ -1687,7 +1687,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 hasAddrComp: true,
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     
                 ]
@@ -1698,7 +1698,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'fatturazione',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable || this.order.RecordType.DeveloperName=="HDT_RT_ScontiBonus"
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName=="HDT_RT_ScontiBonus"
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
@@ -1907,7 +1907,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoFirma',
                 objectApiName: 'Order',
                 recordId: this.order.ParentOrder__c,
-                processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' || this.isBillable ),
+                processVisibility: ( this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus' ),
                 data: [
 
                     //constructor(
@@ -1939,7 +1939,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoPagamento',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.isBillable 
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_VAS' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ScontiBonus'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
@@ -2120,7 +2120,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'metodoFirmaCanaleInvio',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.isNotBillable || (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS' || (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
@@ -2273,7 +2273,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleFields();
 
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
-        if((this.selectedProcess === 'HDT_RT_VAS' && !this.order.IsBillableVas__c && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
+        if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReference__c == null || this.order.OrderReference__c === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
             this.retryEsitiCreditCheck();
         }        
 

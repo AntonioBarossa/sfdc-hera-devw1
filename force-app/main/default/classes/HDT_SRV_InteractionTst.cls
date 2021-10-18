@@ -44,7 +44,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest
@@ -74,7 +74,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest
@@ -104,7 +104,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest
@@ -134,7 +134,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest

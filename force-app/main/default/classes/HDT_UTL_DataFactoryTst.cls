@@ -136,13 +136,18 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
 			acc.BillingIsAddressVerified__c=true;
+			
+			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
+				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
+			} else {
+				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
+			}
+
 			//@frpanico 06/08 added Customer Code
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -152,6 +157,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
+			System.debug('Business account created in Data Factory ' + acc);
 			accList.add(acc);
 
 		}
@@ -281,6 +287,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return orderList;
 	}
 
+
+	
 	public static List<Order> createOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales){
 
 		List<Order> orderList=new List<Order>();
@@ -324,6 +332,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return orderList;
 	}
+	
+
 
 	public static List<Order> createChildOrder(Integer amount, Boolean doInsert, Id accId, List<Sale__c> sales, Id parentOrderId, Id contactId){
 
@@ -415,6 +425,60 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return orderList;
+	}
+
+
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 08/10/2021
+	*/
+	public static List<Order> createOrderWithParams(Integer amount, Boolean doInsert, List<Sale__c> sales,String developerName, Map<String,Object> params){
+
+		List<Order> orderList=new List<Order>();
+
+		Id recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
+
+		for (Integer i=0; i<amount; i++){
+
+			Order ord=new Order();
+
+			ord.Name='testOrderName'+i;
+			ord.Status='Draft';
+			ord.EffectiveDate=Date.today();
+			ord.AccountId=(String)params.get('AccountId');
+			ord.EstimateAmount__c=1000;
+			ord.PowerQuote__c=1000;
+			ord.AdministrativeBurden__c=1;
+			ord.EstimatedVAT__c=1;
+			ord.ValidityDateEstimate__c=Date.today().addDays(30);
+			ord.Phase__c=(String)params.get('Phase__c');
+			ord.CIAccoutn__c='Richiesto';
+			ord.QuickQuote__c='Richiesto';
+			ord.ChamberCommerceRegistration__c='Richiesto';
+			ord.Instance326__c='Richiesto';
+			ord.DocumentLow80__c='Richiesto';
+			ord.AutorizationVolturaThirdTrader__c='Richiesto';
+			ord.ContractSigned__c=true;
+			ord.SignedDate__c=Date.today();
+			ord.SignatureMethod__c='Vocal Order';
+			ord.DocSendingMethod__c='E-mail';
+			ord.Sale__c=sales[i].Id;
+			ord.RecordTypeId=recordTypeId;
+
+			for(String key :params.keySet()) {
+				ord.put(key, params.get(key));
+			}
+
+			orderList.add(ord);
+		}
+
+		if (doInsert){
+
+			insert orderList;
+		}
+
+			return orderList;
 	}
 
 	public static List<Sale__c> createSale(Integer amount, Boolean doInsert, Id accId, String status){
@@ -908,10 +972,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installPhaseManagerSObjectSetting() {
+	public static void installPhaseManagerSObjectSetting(String targetObject) {
         try{
-            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order',
-			wrts_prcgvr__ObjectType__c = 'Order',
+            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = targetObject,
+			wrts_prcgvr__ObjectType__c = targetObject,
 			wrts_prcgvr__PivotField__c = 'Phase__c');
             upsert setting Name;
         }catch (Exception ex){
@@ -924,10 +988,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installCsDependecyPhaseCheckSetting() {
+	public static void installCsDependecyPhaseCheckSetting(String phase) {
         try{
-            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = 'Comunicazione verso Heroku',
-			Phase__c = 'Comunicazione verso Heroku');
+            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = phase,
+			Phase__c = phase);
             upsert setting Name;
         }catch (Exception ex){
             
@@ -1086,6 +1150,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	public static List<Pricebook2> createPricebook(Integer amount, Boolean doInsert){
 
+		activeStandardPricebook();
+
 		List<Pricebook2> pricebookList=new List<Pricebook2>();
 
 		for (Integer i=0; i<amount; i++){
@@ -1106,7 +1172,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return pricebookList;
 	}
 
-	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id account){
+   /**
+   * @author Valere (valere@noeli-it.net)
+   * @date 09/10/2021
+  */
+	public static Pricebook2 activeStandardPricebook(){
+		Pricebook2 standardPricebook = new Pricebook2(
+				Id = Test.getStandardPricebookId(),
+				IsActive = true
+		);
+		update standardPricebook;
+		return standardPricebook;
+	}
+
+	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
 
@@ -3004,4 +3083,32 @@ public with sharing class HDT_UTL_DataFactoryTst{
         
         return rules;
     }
+
+	/**
+     * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
+     * @date 12/10/2021
+     * @description createVocalOrderPublicConfirm Method
+     * @history Sabina Levonja - 12/10/2021– Created method
+     */
+	public static List<VocalOrderPublicConfirm__c> createVocalOrderPublicConfirm(Integer amount, Boolean doInsert,String status, Id order) {
+
+		List<VocalOrderPublicConfirm__c> vocalOrders = new List<VocalOrderPublicConfirm__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			VocalOrderPublicConfirm__c voc = new VocalOrderPublicConfirm__c(
+				Order__c = order,
+				Status__c= status
+			);
+
+			vocalOrders.add(voc);
+		}
+
+		if (doInsert){
+
+			insert vocalOrders;
+		}
+
+		return vocalOrders;
+	}
 }
