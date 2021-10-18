@@ -250,8 +250,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
         String fineTuningCriteria = '';
         String fineTuningRule = '';
+        Boolean skipped = false;
         if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('Domiciliato')){
-            //Skip 
+            skipped = true;//SKIP
+            
         } else {
             if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
                 fineTuningCriteria = 'Flaggato';
@@ -265,6 +267,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             }
             errorMessage += '\t' + fieldLabel + ': ' + fineTuningCriteria + ' (prova invece: ' + fineTuningRule + ')\n';
         }
+        System.debug('formattingErrorMessage - Eseguito Skip.');
+        
         return errorMessage;
     }
 
