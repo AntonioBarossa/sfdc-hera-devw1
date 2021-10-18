@@ -34349,7 +34349,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_chiamataoutbound</recordType>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
