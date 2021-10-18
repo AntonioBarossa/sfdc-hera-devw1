@@ -314,7 +314,10 @@ public class HDT_SRV_DocumentalManagement{
 		return transactionId;
 	}
 	public static SObject getSobjectFromTransactionId(String transactionId){
-		if(String.isBlank(transactionId)) return null;
+		if(String.isBlank(transactionId)){ 
+			return null;
+		}
+		
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
@@ -360,9 +363,9 @@ public class HDT_SRV_DocumentalManagement{
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');					
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
-				}else{
+				}/*else{
 					//Che fase documentale settare?			
-				}
+				}*/
 			}
 			handleRadioGroup(record,listOfRadio);
 			handleDataText(record,listOfData);
@@ -781,8 +784,9 @@ public class HDT_SRV_DocumentalManagement{
 						payloadArray.add(value);
 					}
 					//VERIFICO SE HO SETTATO UN VALORE DIVERSO DA NULL, UTILIZZO LA VARIABILE recordNull PER CAPIRE SE TUTTO IL RECORD è COMPOSTO DA | VUOTI
-					if(value != '' || defaultVal != '')
+					if(value != '' || defaultVal != ''){
 						recordNull = false;
+					}
 				}
 				if(!recordNull){
 					payloadArray.add(fineRiga);

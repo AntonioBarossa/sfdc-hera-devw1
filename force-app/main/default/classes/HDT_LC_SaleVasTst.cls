@@ -44,6 +44,9 @@ public with sharing class HDT_LC_SaleVasTst {
             cttList[0].SBQQ__Order__c = orderList[0].Id;
             insert cttList;
 
+            orderList[0].ContractReference__c = cttList[0].Id;
+            update orderList;
+
             List<Campaign> cmpList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
 
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');

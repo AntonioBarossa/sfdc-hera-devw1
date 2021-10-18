@@ -143,6 +143,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         activity.wrts_prcgvr__ActivityTemplate__c = templateKoSap.Id;
                         activity.Case__c = caseToUpdate.Id;
                         activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                        activity.Type__c = 'Esito KO da SAP';
                         activitiesToCreate.add(activity);
                     }
                     when 'Esito KO pre-MDM' {
@@ -150,6 +151,7 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
                         activity.wrts_prcgvr__ActivityTemplate__c = templateKoMdm.Id;
                         activity.Case__c = caseToUpdate.Id;
                         activity.wrts_prcgvr__Description__c = outcomeData.errorDescription + ' ' + outcomeData.errorCode;
+                        activity.Type__c = 'Esito KO pre-MDM';
                         activitiesToCreate.add(activity);
                     }
                 }

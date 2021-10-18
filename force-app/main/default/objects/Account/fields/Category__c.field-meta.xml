@@ -20,7 +20,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Accedi</valueName>
         </valueSettings>
         <valueSettings>
@@ -31,7 +30,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Aziende</valueName>
         </valueSettings>
         <valueSettings>
@@ -42,16 +40,12 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Aziende SME</valueName>
         </valueSettings>
         <valueSettings>
@@ -62,19 +56,15 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
             <controllingFieldValue>AAS Ditta individuale</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>Ditta individuale</controllingFieldValue>
             <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
             <controllingFieldValue>MMS Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Aziende Soho</valueName>
         </valueSettings>
         <valueSettings>
@@ -85,16 +75,12 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Aziende TOP</valueName>
         </valueSettings>
         <valueSettings>
@@ -105,7 +91,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Banca centrale</valueName>
         </valueSettings>
         <valueSettings>
@@ -116,16 +101,12 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Comuni Territorio</valueName>
         </valueSettings>
         <valueSettings>
@@ -136,7 +117,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Default gas</valueName>
         </valueSettings>
         <valueSettings>
@@ -147,16 +127,12 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Enti</valueName>
         </valueSettings>
         <valueSettings>
@@ -206,7 +182,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Famiglie</valueName>
         </valueSettings>
         <valueSettings>
@@ -217,7 +192,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>FUI domestico</valueName>
         </valueSettings>
         <valueSettings>
@@ -228,7 +202,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>FUI non domestico</valueName>
         </valueSettings>
         <valueSettings>
@@ -259,13 +232,10 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Intercompany</valueName>
         </valueSettings>
         <valueSettings>
@@ -276,7 +246,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>NRI</valueName>
         </valueSettings>
         <valueSettings>
@@ -287,7 +256,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Personale</valueName>
         </valueSettings>
         <valueSettings>
@@ -357,7 +325,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Reseller - Extra Gruppo</valueName>
         </valueSettings>
         <valueSettings>
@@ -404,7 +371,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Reseller - Gruppo</valueName>
         </valueSettings>
         <valueSettings>
@@ -415,7 +381,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Salvaguardia Aziende</valueName>
         </valueSettings>
         <valueSettings>
@@ -426,7 +391,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Salvaguardia Enti</valueName>
         </valueSettings>
         <valueSettings>
@@ -437,16 +401,12 @@
             <controllingFieldValue>Azienda</controllingFieldValue>
             <controllingFieldValue>AAS Associazione</controllingFieldValue>
             <controllingFieldValue>AAS Azienda</controllingFieldValue>
-            <controllingFieldValue>AAS Condominio</controllingFieldValue>
-            <controllingFieldValue>Condominio</controllingFieldValue>
             <controllingFieldValue>MMS Associazione</controllingFieldValue>
             <controllingFieldValue>MMS Azienda</controllingFieldValue>
-            <controllingFieldValue>MMS Condominio</controllingFieldValue>
             <controllingFieldValue>D1 - Persona fisica</controllingFieldValue>
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Societa Vendita Terze</valueName>
         </valueSettings>
         <valueSettings>
@@ -457,7 +417,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>VIP</valueName>
         </valueSettings>
         <valueSettings>
@@ -468,7 +427,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Agenzia di confisca</valueName>
         </valueSettings>
         <valueSettings>
@@ -479,7 +437,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Applicazione della legge</valueName>
         </valueSettings>
         <valueSettings>
@@ -490,7 +447,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Assicuratore</valueName>
         </valueSettings>
         <valueSettings>
@@ -501,7 +457,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Assistenza a lungo termine</valueName>
         </valueSettings>
         <valueSettings>
@@ -512,7 +467,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Assistenza gestita</valueName>
         </valueSettings>
         <valueSettings>
@@ -523,7 +477,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Associazione grossisti</valueName>
         </valueSettings>
         <valueSettings>
@@ -534,7 +487,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Attività bancaria</valueName>
         </valueSettings>
         <valueSettings>
@@ -545,7 +497,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Auto/Casalinghi</valueName>
         </valueSettings>
         <valueSettings>
@@ -556,7 +507,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Azienda</valueName>
         </valueSettings>
         <valueSettings>
@@ -567,7 +517,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Azienda wireline</valueName>
         </valueSettings>
         <valueSettings>
@@ -578,7 +527,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Azienda/Di passaggio</valueName>
         </valueSettings>
         <valueSettings>
@@ -589,7 +537,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Broker</valueName>
         </valueSettings>
         <valueSettings>
@@ -600,7 +547,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>BSU ESP</valueName>
         </valueSettings>
         <valueSettings>
@@ -611,7 +557,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Casa progettazione</valueName>
         </valueSettings>
         <valueSettings>
@@ -622,7 +567,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Casalinghi</valueName>
         </valueSettings>
         <valueSettings>
@@ -633,7 +577,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Centro convegni</valueName>
         </valueSettings>
         <valueSettings>
@@ -644,7 +587,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Centro di assistenza</valueName>
         </valueSettings>
         <valueSettings>
@@ -655,7 +597,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Centro di formazione aziendale</valueName>
         </valueSettings>
         <valueSettings>
@@ -666,7 +607,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Centro formaz altri produttori</valueName>
         </valueSettings>
         <valueSettings>
@@ -677,7 +617,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Chain Drug</valueName>
         </valueSettings>
         <valueSettings>
@@ -688,7 +627,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Chain Food</valueName>
         </valueSettings>
         <valueSettings>
@@ -699,7 +637,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Cliente</valueName>
         </valueSettings>
         <valueSettings>
@@ -710,7 +647,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Cliente azienda</valueName>
         </valueSettings>
         <valueSettings>
@@ -721,7 +657,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Clinica</valueName>
         </valueSettings>
         <valueSettings>
@@ -732,7 +667,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Commerciale</valueName>
         </valueSettings>
         <valueSettings>
@@ -743,7 +677,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Commerciante</valueName>
         </valueSettings>
         <valueSettings>
@@ -754,7 +687,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Commerciante all&apos;ingrosso</valueName>
         </valueSettings>
         <valueSettings>
@@ -765,7 +697,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Commerciante non in negozio</valueName>
         </valueSettings>
         <valueSettings>
@@ -776,7 +707,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Commercio di massa</valueName>
         </valueSettings>
         <valueSettings>
@@ -787,7 +717,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Company</valueName>
         </valueSettings>
         <valueSettings>
@@ -798,7 +727,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Concorrente</valueName>
         </valueSettings>
         <valueSettings>
@@ -809,7 +737,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Consulente</valueName>
         </valueSettings>
         <valueSettings>
@@ -820,7 +747,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Dettagliante diretto</valueName>
         </valueSettings>
         <valueSettings>
@@ -831,7 +757,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Dettagliante indiretto</valueName>
         </valueSettings>
         <valueSettings>
@@ -842,7 +767,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Distributore</valueName>
         </valueSettings>
         <valueSettings>
@@ -853,7 +777,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Ditta individuale</valueName>
         </valueSettings>
         <valueSettings>
@@ -864,7 +787,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Drogheria</valueName>
         </valueSettings>
         <valueSettings>
@@ -875,7 +797,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Elettrodomestici</valueName>
         </valueSettings>
         <valueSettings>
@@ -886,7 +807,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Enti Consip</valueName>
         </valueSettings>
         <valueSettings>
@@ -897,7 +817,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Esperto finanziario</valueName>
         </valueSettings>
         <valueSettings>
@@ -908,7 +827,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Farmacia</valueName>
         </valueSettings>
         <valueSettings>
@@ -919,7 +837,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Federale</valueName>
         </valueSettings>
         <valueSettings>
@@ -930,7 +847,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Filiale</valueName>
         </valueSettings>
         <valueSettings>
@@ -941,7 +857,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Fornitore</valueName>
         </valueSettings>
         <valueSettings>
@@ -952,7 +867,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Funzionario produttore</valueName>
         </valueSettings>
         <valueSettings>
@@ -963,7 +877,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Governo</valueName>
         </valueSettings>
         <valueSettings>
@@ -974,7 +887,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Grossista di prod. farmac.</valueName>
         </valueSettings>
         <valueSettings>
@@ -985,7 +897,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Gruppo di programmazione</valueName>
         </valueSettings>
         <valueSettings>
@@ -996,7 +907,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Gruppo reparto</valueName>
         </valueSettings>
         <valueSettings>
@@ -1007,7 +917,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Hotel</valueName>
         </valueSettings>
         <valueSettings>
@@ -1018,7 +927,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>HQ</valueName>
         </valueSettings>
         <valueSettings>
@@ -1029,7 +937,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>In sede</valueName>
         </valueSettings>
         <valueSettings>
@@ -1040,7 +947,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Individuale</valueName>
         </valueSettings>
         <valueSettings>
@@ -1051,7 +957,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Industriale</valueName>
         </valueSettings>
         <valueSettings>
@@ -1062,7 +967,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Investitore</valueName>
         </valueSettings>
         <valueSettings>
@@ -1073,7 +977,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Località</valueName>
         </valueSettings>
         <valueSettings>
@@ -1084,7 +987,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Luogo di vacanza</valueName>
         </valueSettings>
         <valueSettings>
@@ -1095,7 +997,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Magazzino a prezzi scontati</valueName>
         </valueSettings>
         <valueSettings>
@@ -1106,7 +1007,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Meeting/Congressi</valueName>
         </valueSettings>
         <valueSettings>
@@ -1117,7 +1017,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Negozio prod. farmac./propr.</valueName>
         </valueSettings>
         <valueSettings>
@@ -1128,7 +1027,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Non a scopo di lucro</valueName>
         </valueSettings>
         <valueSettings>
@@ -1139,7 +1037,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Non Definito</valueName>
         </valueSettings>
         <valueSettings>
@@ -1150,7 +1047,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Normale</valueName>
         </valueSettings>
         <valueSettings>
@@ -1161,7 +1057,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>ODM</valueName>
         </valueSettings>
         <valueSettings>
@@ -1172,7 +1067,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>OEM</valueName>
         </valueSettings>
         <valueSettings>
@@ -1183,7 +1077,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>OEM del concorrente</valueName>
         </valueSettings>
         <valueSettings>
@@ -1194,7 +1087,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Offerta di investimento</valueName>
         </valueSettings>
         <valueSettings>
@@ -1205,7 +1097,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Officina</valueName>
         </valueSettings>
         <valueSettings>
@@ -1216,7 +1107,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Ospedale</valueName>
         </valueSettings>
         <valueSettings>
@@ -1227,7 +1117,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Paramedici</valueName>
         </valueSettings>
         <valueSettings>
@@ -1238,7 +1127,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Partner</valueName>
         </valueSettings>
         <valueSettings>
@@ -1249,7 +1137,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Partnership</valueName>
         </valueSettings>
         <valueSettings>
@@ -1260,7 +1147,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Polizia</valueName>
         </valueSettings>
         <valueSettings>
@@ -1271,7 +1157,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Produttore su contratto</valueName>
         </valueSettings>
         <valueSettings>
@@ -1282,7 +1167,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Reparto</valueName>
         </valueSettings>
         <valueSettings>
@@ -1293,7 +1177,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Residenziale</valueName>
         </valueSettings>
         <valueSettings>
@@ -1304,7 +1187,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Rivenditore</valueName>
         </valueSettings>
         <valueSettings>
@@ -1315,7 +1197,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Rivenditore del concorrente</valueName>
         </valueSettings>
         <valueSettings>
@@ -1326,7 +1207,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>S-Corp</valueName>
         </valueSettings>
         <valueSettings>
@@ -1337,7 +1217,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Servizio affari Internet</valueName>
         </valueSettings>
         <valueSettings>
@@ -1348,7 +1227,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Società</valueName>
         </valueSettings>
         <valueSettings>
@@ -1359,7 +1237,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Società a resp. limitata</valueName>
         </valueSettings>
         <valueSettings>
@@ -1370,7 +1247,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Società d&apos;assicurazioni</valueName>
         </valueSettings>
         <valueSettings>
@@ -1381,7 +1257,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Società fiduciaria</valueName>
         </valueSettings>
         <valueSettings>
@@ -1392,7 +1267,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Società immobiliare</valueName>
         </valueSettings>
         <valueSettings>
@@ -1403,7 +1277,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Società in accomandita</valueName>
         </valueSettings>
         <valueSettings>
@@ -1414,7 +1287,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Soggiorno esteso</valueName>
         </valueSettings>
         <valueSettings>
@@ -1425,7 +1297,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Spedizioniere</valueName>
         </valueSettings>
         <valueSettings>
@@ -1436,7 +1307,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Subcontraente</valueName>
         </valueSettings>
         <valueSettings>
@@ -1447,7 +1317,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Suite</valueName>
         </valueSettings>
         <valueSettings>
@@ -1458,7 +1327,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Supermarket</valueName>
         </valueSettings>
         <valueSettings>
@@ -1469,7 +1337,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Supermercato</valueName>
         </valueSettings>
         <valueSettings>
@@ -1480,7 +1347,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Ufficio</valueName>
         </valueSettings>
         <valueSettings>
@@ -1491,7 +1357,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Ulteriori informazioni</valueName>
         </valueSettings>
         <valueSettings>
@@ -1502,7 +1367,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Università</valueName>
         </valueSettings>
         <valueSettings>
@@ -1513,7 +1377,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Venditore</valueName>
         </valueSettings>
         <valueSettings>
@@ -1524,7 +1387,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Venditore di varie</valueName>
         </valueSettings>
         <valueSettings>
@@ -1535,7 +1397,6 @@
             <controllingFieldValue>D2 - Ditta individuale</controllingFieldValue>
             <controllingFieldValue>D3 - Azienda</controllingFieldValue>
             <controllingFieldValue>D4 - Parti comuni</controllingFieldValue>
-            <controllingFieldValue>D5 - Condominio</controllingFieldValue>
             <valueName>Vigili del Fuoco</valueName>
         </valueSettings>
     </valueSet>

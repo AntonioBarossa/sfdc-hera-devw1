@@ -28,15 +28,16 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
            SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
 
-           if(objRes.isCreateable() && objRes.isUpdateable()){
-               upsert criteria;
-           } else {
-               //saveResponse.success = false;
-               //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
-               //saveResponse.dataError = false;
-               //return saveResponse;
-               return setSaveResponse(saveResponse, Label.HDT_EligCriteria_ErrorObj, false); 
-           }
+            if(objRes.isCreateable() && objRes.isUpdateable()){
+                HDT_UTL_DatabaseService.upsertSObject(criteria);
+                //upsert criteria;
+            } else {
+                //saveResponse.success = false;
+                //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;
+                //saveResponse.dataError = false;
+                //return saveResponse;
+                return setSaveResponse(saveResponse, Label.HDT_EligCriteria_ErrorObj, false); 
+            }
 
         } catch (Exception e){
             //saveResponse.success = false;
@@ -136,7 +137,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
      
             if(objRes.isCreateable()){
-                insert newCriteria;
+                HDT_UTL_DatabaseService.insertSObject(newCriteria);
+                //insert newCriteria;
             } else {
                 //saveResponse.success = false;
                 //saveResponse.message = Label.HDT_EligCriteria_ErrorObj;

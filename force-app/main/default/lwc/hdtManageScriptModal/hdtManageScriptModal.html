@@ -14,7 +14,6 @@ Changes:
 
 <template>
     <template if:false={isInsideModal}>
-        <template if:true={scriptProcessName}>
 
             <template if:false={isScriptConfirmed}>
                 <lightning-button label={buttonLabel} icon-name="utility:call" onclick={showModal} variant="brand"> </lightning-button>
@@ -24,7 +23,6 @@ Changes:
                 <lightning-button label={buttonLabel} icon-name="utility:call" disabled variant="brand"> </lightning-button>
             </template>
 
-        </template>
     </template>
 
     <template if:true={openModal}>

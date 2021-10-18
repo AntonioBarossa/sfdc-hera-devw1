@@ -45,10 +45,15 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         DocSendingMethod__c,
         Sale__c,
         Pricebook2Id,
-        Contact__c 
+        Contact__c,
+        CompanyOwner__c
         FROM Order];   
         
-        Map<String,Object> extraParams = new Map<String,Object>{'sobjName' => 'Order'};
+        Map<String,Object> extraParams = new Map<String,Object>
+        {
+            'sobjName' => 'Order',
+            'excludedFields' => new Set<String>{'Instance326__c'}
+        };
         
         Test.startTest();
         Order clonedOrder = (Order)voltureChangeUtl.cloneSObject(orderList[0], extraParams);
@@ -86,7 +91,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         {
             'accountType' => orderList[0].Account.RecordType.DeveloperName,
             'orderId' => orderList[0].Id,
-            'dataDecorrenza' => System.today(),
+            'dataDecorrenza' => '',
             'preavvisoRecesso' => 3
         };
         Test.startTest();
@@ -113,5 +118,111 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Test.stopTest();
 
         System.assertEquals(HDT_UTL_VoltureChangeManager.lawEightyPhase, accountCheck.nextPhase, 'Fase non correttamente calcolata');
+    }
+
+    @IsTest
+    static void handleResponseTst()
+    {
+        List<Order> currentOrder = [SELECT Id FROM Order];
+        Map<String,Object> fieldsMap = new Map<String,Object>
+        {
+            'FASE' => 'Amm. Precheck OK SII',
+            'CODERR' => 'ERR',
+            'ANNOTAZIONI' => 'Error Ok',
+            'VIA' => 'VIA NUOVA',
+            'CIV' => '12',
+            'CAP' => '00076',
+            'ISTAT' => '120192380',
+            'LOCALITA' => 'ROMA',
+            'PROV' => 'RM',
+            'NAZIONE' => 'IT',
+            'DES_ERR_AEEG' => 'No Error',
+            'COD_PRAT_UTENTE' => '10922312839',
+            'COD_PRAT_DISTR' => '123812938123_DL',
+            'DATA_DECORRENZA_SW' => '2021-10-15',
+            'DATA_DECORRENZA_VT_TIT_III' => '2021-10-15',
+            'DATA_DECORRENZA_VT_TIT_IV' => '2021-10-15',
+            'POTCONTRIMP' => '3.97',
+            'POTDISP' => '4.00',
+            'TENSIONE' => '13'
+        };
+        Test.startTest();
+        currentOrder[0] = voltureChangeUtl.handleResponse(fieldsMap, currentOrder[0]);
+        Test.stopTest();
+        System.assertEquals('Amm. Precheck OK SII', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
+        System.assertEquals('ERR', currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
+    }
+
+    @IsTest
+    static void handleResponseMissingFieldsTst()
+    {
+        List<Order> currentOrder = [SELECT Id FROM Order];
+        Map<String,Object> fieldsMap = new Map<String,Object>
+        {
+            'FASE' => 'Amm. Precheck OK SII',
+            'CODERR' => 'ERR',
+            'ANNOTAZIONI' => 'Error Ok',
+            'VIA' => 'VIA NUOVA',
+            'CIV' => '12',
+            'CAP' => '00076',
+            'ISTAT' => '120192380',
+            'LOCALITA' => 'ROMA',
+            'PROV' => 'RM',
+            'NAZIONE' => 'IT',
+            'DES_ERR_AEEG' => 'No Error',
+            'COD_PRAT_UTENTE' => '10922312839',
+            'COD_PRAT_DISTR' => '123812938123_DL'
+        };
+        Test.startTest();
+        currentOrder[0] = voltureChangeUtl.handleResponse(fieldsMap, currentOrder[0]);
+        Test.stopTest();
+        System.assertEquals('Amm. Precheck OK SII', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
+        System.assertEquals('ERR', currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckTrueTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+    
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+        };
+
+        Test.startTest();
+        Boolean result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(true, result, 'Check True non eseguito correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckFalseTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+    
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+        };
+
+        Test.startTest();
+        Boolean result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(false, result, 'Check False non eseguito correttamente');
     }
 }

@@ -1,11 +1,13 @@
-public with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
+global with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
 
     /**@frpanico 13/10/2021
      * WS class that handles the new Precheck call for "Voltura con Switch"
      * Implements the ProcessClick standard interface to make the call
      */
 
-    HDT_QR_HerokuPostSalesManager herokuPostSalesQr = new HDT_QR_HerokuPostSalesManager();
+    private static HDT_QR_HerokuPostSalesManager herokuPostSalesQr = new HDT_QR_HerokuPostSalesManager();
+    private static HDT_UTL_VoltureChangeManager voltureChangeManagerUtl = new HDT_UTL_VoltureChangeManager();  
+    private static HDT_SRV_VoltureChangeManager voltureChangeManagerSrv = new HDT_SRV_VoltureChangeManager();
 
     public Object execute(Object args)
     {   
@@ -72,13 +74,14 @@ public with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
 
         /*Handle Response*/
         if(responseMrr != null)
-        {
-
+        {   
+            voltureChangeManagerSrv.handleResponse(responseMrr, currentOrder);            
         }
         /*Expected output of the Interface method*/
         response.success = true;
         response.message = 'OK';
         return response;
     }
+
 
 }
