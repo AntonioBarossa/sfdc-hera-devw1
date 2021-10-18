@@ -2159,21 +2159,21 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 */
     public static List<CommercialCode__c> createCommercialCode(Integer amount, Boolean doInsert){
 
-		List<CommercialCode__c> CommercialCode=new List<CommercialCode__c>();
+		List<CommercialCode__c> commercialCode=new List<CommercialCode__c>();
 
 		for (Integer i=0; i<amount; i++){
 
 			CommercialCode__c cp=new CommercialCode__c(Name='Test CommercialCode',FullCode__c= '11112365');
 
-			CommercialCode.add(cp);
+			commercialCode.add(cp);
 		}
 
 		if (doInsert){
 
-			insert CommercialCode;
+			insert commercialCode;
 		}
 
-		return CommercialCode;
+		return commercialCode;
 	}
 
 	
