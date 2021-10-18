@@ -369,7 +369,7 @@ public class HDT_UTL_GestionePrivacyTst {
     public static void testConvertLeadPrivacy(){
         Test.startTest();
 
-        Lead l = [SELECT Id FROM Lead limit 1];
+        Lead l = [SELECT Id FROM Lead WHERE CompanyOwner__c = 'HERA COMM' limit 1];
         Contact con = [SELECT Id, AccountId FROM Contact limit 1];
         Database.LeadConvert convLead=new Database.LeadConvert();
 			convLead.setLeadId(l.Id);
@@ -396,6 +396,7 @@ public class HDT_UTL_GestionePrivacyTst {
         Contact con = [SELECT Id,MobilePhone,MobilePhonePrefix__c,Phone,Email,IndividualId,PhonePrefix__c,LastName, FirstName,Company__c,CompanyOwner__c FROM Contact limit 1];
         Contact c= con.clone(false,true,false,true);
         c.Company__c='HCM';
+        c.LastName = con.LastName + 'clone';
         insert c;
         conts.add(c);
         HDT_UTL_GestionePrivacy.checkCloneCompany(conts);

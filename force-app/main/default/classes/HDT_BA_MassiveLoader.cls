@@ -5,17 +5,7 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
-global with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sObject>, Database.Stateful{
-
-    public with sharing class HDT_WRP_FileHeader{
-        Public String columnName;
-        Public String columnApiName;
-        Public Boolean mandatory = false;
-        Public String dataType;
-        Public String validationRegex;
-        Public String sobjectType;
-
-    }
+public with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sObject>, Database.Stateful{
 
     HDT_QR_ContentDocumentLink contentDocumentLinkQr = new HDT_QR_ContentDocumentLink();
     HDT_QR_ContentVersion contentVersionQr = new HDT_QR_ContentVersion();
@@ -34,8 +24,18 @@ global with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sOb
 
     Integer requestOk;
     Integer requestKo;
+
+    public with sharing class HDT_WRP_FileHeader{
+        Public String columnName;
+        Public String columnApiName;
+        Public Boolean mandatory = false;
+        Public String dataType;
+        Public String validationRegex;
+        Public String sobjectType;
+
+    }    
     
-    global Database.QueryLocator start(Database.BatchableContext bc){
+    public Database.QueryLocator start(Database.BatchableContext bc){
         
         massiveLoaderRequest = massiveLoaderRequestQr.getRecordForImport().get(0);
 
@@ -44,7 +44,7 @@ global with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sOb
         return Database.getQueryLocator(contentVersionQr.recordByDocumentIdQueryString(massiveLoaderRequest.ContentDocumentLinks.get(0).ContentDocumentId));
     }
 
-    global void execute(Database.BatchableContext bc, List<SObject> scope) {
+    public void execute(Database.BatchableContext bc, List<SObject> scope) {
 
         massiveLoaderRequest.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
         massiveLoaderRequest.Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILEINELABORAZIONE;
@@ -114,9 +114,10 @@ global with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sOb
         //TODO: Finish dml operation implementation
     }
 
-    global void finish(Database.BatchableContext bc) {
+    public void finish(Database.BatchableContext bc) {
 
         //TODO: Implement finish logic
+        System.debug('HDT_BA_MassiveLoader finish');
     }
 
     /**​
