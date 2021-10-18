@@ -227,7 +227,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                      //  ord.status = 'Activated';
                         childToUpdate.add(ord);
                     } 
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
@@ -248,7 +248,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' ){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                       // ord.status = 'Activated';
                         childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
@@ -328,7 +328,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                      //  ord.status = 'Activated';
                        // childToUpdate.add(ord);
                     }
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
@@ -349,7 +349,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                       // ord.status = 'Activated';
                     //    childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
