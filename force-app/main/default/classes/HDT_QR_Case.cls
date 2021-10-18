@@ -66,6 +66,15 @@ public inherited sharing class HDT_QR_Case {
         LIMIT 1];
 
     }
+    
+    public List<Case> getCasesByCaseNumbers(list<String> caseNumbers){
+
+        if (caseNumbers == null || caseNumbers.isEmpty()) {
+            return null;
+        }
+        return [SELECT Id,Type,Phase__c,DistributorName__c FROM Case
+                                                           WHERE CaseNumber IN :caseNumbers WITH SECURITY_ENFORCED];
+    }
 
     public List<Case> getRecordsById(List<String> Ids, String fields) {
         String query = 'SELECT '+ fields +

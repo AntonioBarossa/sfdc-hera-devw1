@@ -122,7 +122,6 @@ public with sharing class HDT_LC_MassiveLoader {
     public static Map<String, Object> createMassiveLoaderRequest(String selectedProcessName) {
 
         Map<String, Object> response = new Map<String, Object>();
-
         try {
 
             HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
