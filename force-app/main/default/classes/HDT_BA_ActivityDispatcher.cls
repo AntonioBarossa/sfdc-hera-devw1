@@ -135,7 +135,12 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         }
     }
 
-    
+    /*
+    * @Author: Salvatore A. Sarà 18/10/2021
+    * Risoluzione "Avoid Empty Block Statements"
+    * Inserito SuppressWarnings per metodo required che in questo caso specifico non deve eseguire azioni
+    */
+    @SuppressWarnings('PMD.EmptyStatementBlock')
     public void finish(Database.BatchableContext BC) {
         //RESCHEDULE
     }
