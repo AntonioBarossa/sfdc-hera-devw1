@@ -865,6 +865,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         if (event.target.fieldName == 'Distributor__c') {
             this.recordDistributorPointCode = event.target.value;
+            this.fieldsData['Distributor__c'] = event.target.value;
         }
         if (event.target.fieldName == 'Disconnectable__c' && event.target.value == 'NO') {
             console.log(' if event target = disconnectable NO');
@@ -1561,7 +1562,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         }
         confirmServicePoint({ servicePoint: this.allSubmitedFields, sap: this.isSap, sale: this.sale }).then(data => {
-
+            console.log('*********:PROVA');
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;
