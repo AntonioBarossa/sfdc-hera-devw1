@@ -866,7 +866,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             //@frpanico closes open activities on "Annullato" or "Ripensato"
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {                
                 List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
                 try
@@ -884,7 +884,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
             }
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
                 orderNew.Status = 'Annullato';
             }
