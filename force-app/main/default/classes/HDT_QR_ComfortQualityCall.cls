@@ -79,4 +79,21 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
         ];
     }
 
+    public static List<ComfortQualityCall__c> getRecordsWithDocumentValidationAndQualityEnabled(){
+        return [
+            SELECT
+            Id,
+            Process__c,
+            Channel__c,
+            MarketType__c,
+            CustomerType__c,
+            UniqueQuality__c,
+            ComfortDocSendingChannel__c
+            FROM ComfortQualityCall__c
+            WHERE DocumentValidation__c = true
+            AND QualityEnabled__c = true
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }

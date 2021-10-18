@@ -96,5 +96,32 @@ public with sharing class HDT_UTL_Utils {
         return result;
         
     }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Exctract date for phase to transition from phase story string
+     * @param phaseStory - String
+     * @param phaseTo - String
+     * @return Date
+     */
+    public static Date exctrPhaseTransDateFromStory(String phaseStory, String phaseTo){
+        String[] strArr = phaseStory.split('@@');
+        String strNumber = '';
+        String myNumber;
+
+        for (Integer i = 0; i < strArr.size(); i++) {
+            if (phaseTo.equalsIgnoreCase(strArr[i])) {
+                strNumber = strArr[i+1];
+                myNumber = strNumber;
+                break;
+            }
+        }
+
+        String unixDatetime = myNumber;
+        Datetime myDateTime = datetime.newinstance(long.valueOf(myNumber));
+        Date myDate = date.newinstance(myDateTime.year(), myDateTime.month(), myDateTime.day());
+
+        return myDate;
+    }
   
 }
