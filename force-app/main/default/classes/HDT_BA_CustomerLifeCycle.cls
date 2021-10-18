@@ -15,7 +15,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
     };
     private static final Date TODAY = Date.today();
 
-    public Database.QueryLocator start(Database.BatchableContext BC) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'SELECT ' +
                 'Id,' +
                 'ActiveServicesEle__c,' +
@@ -36,7 +36,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext BC, List<SObject> scope) {
+    public void execute(Database.BatchableContext bc, List<SObject> scope) {
         Map<Id, Account> accountMap = new Map<Id, Account>((List<Account>) scope);
         Map<Id, Account> processedAccountMap = new Map<Id, Account>();
 
@@ -161,7 +161,8 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         update processedAccountMap.values();
     }
 
-    public void finish(Database.BatchableContext BC) {
+    public void finish(Database.BatchableContext bc) {
+        Boolean fakeBool = true;
     }
 
     private Boolean isEnergy(String commodity) {
