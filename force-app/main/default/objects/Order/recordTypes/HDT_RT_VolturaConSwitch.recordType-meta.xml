@@ -2272,6 +2272,14 @@
             <fullName>Ripensamento - Da inviare</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Amm. Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm. Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
