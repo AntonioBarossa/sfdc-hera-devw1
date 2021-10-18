@@ -106,20 +106,17 @@ public with sharing class HDT_UTL_Utils {
      */
     public static Date exctrPhaseTransDateFromStory(String phaseStory, String phaseTo){
         String[] strArr = phaseStory.split('@@');
-        String strNumber = '';
-        String myNumber;
+        String unixDateTime = '';
 
         for (Integer i = 0; i < strArr.size(); i++) {
             if (phaseTo.equalsIgnoreCase(strArr[i])) {
-                strNumber = strArr[i+1];
-                myNumber = strNumber;
+                unixDateTime = strArr[i+1];
                 break;
             }
         }
 
-        String unixDatetime = myNumber;
-        Datetime myDateTime = datetime.newinstance(long.valueOf(myNumber));
-        Date myDate = date.newinstance(myDateTime.year(), myDateTime.month(), myDateTime.day());
+        Datetime myDateTime = Datetime.newinstance(long.valueOf(unixDateTime));
+        Date myDate = Date.newinstance(myDateTime.year(), myDateTime.month(), myDateTime.day());
 
         return myDate;
     }
