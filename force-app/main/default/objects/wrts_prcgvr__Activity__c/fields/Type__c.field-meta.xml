@@ -385,6 +385,86 @@
                 <default>false</default>
                 <label>Esito KO da SAP</label>
             </value>
+            <value>
+                <fullName>Accettazione Voltura</fullName>
+                <default>false</default>
+                <label>Accettazione Voltura</label>
+            </value>
+            <value>
+                <fullName>Attesa Preventivo DL</fullName>
+                <default>false</default>
+                <label>Attesa Preventivo DL</label>
+            </value>
+            <value>
+                <fullName>Attivazioni</fullName>
+                <default>false</default>
+                <label>Attivazioni</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni con DL</fullName>
+                <default>false</default>
+                <label>Comunicazioni con DL</label>
+            </value>
+            <value>
+                <fullName>Conferma Preventivo</fullName>
+                <default>false</default>
+                <label>Conferma Preventivo</label>
+            </value>
+            <value>
+                <fullName>Creare Istruttoria</fullName>
+                <default>false</default>
+                <label>Creare Istruttoria</label>
+            </value>
+            <value>
+                <fullName>Elaborazione Manuale</fullName>
+                <default>false</default>
+                <label>Elaborazione Manuale</label>
+            </value>
+            <value>
+                <fullName>Esito Da Gestire</fullName>
+                <default>false</default>
+                <label>Esito Da Gestire</label>
+            </value>
+            <value>
+                <fullName>Esito KO pre-MDM</fullName>
+                <default>false</default>
+                <label>Esito KO pre-MDM</label>
+            </value>
+            <value>
+                <fullName>Esito Lavori</fullName>
+                <default>false</default>
+                <label>Esito Lavori</label>
+            </value>
+            <value>
+                <fullName>Gestione Manuale SAP</fullName>
+                <default>false</default>
+                <label>Gestione Manuale SAP</label>
+            </value>
+            <value>
+                <fullName>Gestione Sblocco al Calcolo</fullName>
+                <default>false</default>
+                <label>Gestione Sblocco al Calcolo</label>
+            </value>
+            <value>
+                <fullName>Inviare Comunicazione Disconoscimento</fullName>
+                <default>false</default>
+                <label>Inviare Comunicazione Disconoscimento</label>
+            </value>
+            <value>
+                <fullName>Inviare Lettera di Legittimità</fullName>
+                <default>false</default>
+                <label>Inviare Lettera di Legittimità</label>
+            </value>
+            <value>
+                <fullName>Inviare Preventivo</fullName>
+                <default>false</default>
+                <label>Inviare Preventivo</label>
+            </value>
+            <value>
+                <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+                <default>false</default>
+                <label>Risposta Inviata - Attesa Rettifica</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
