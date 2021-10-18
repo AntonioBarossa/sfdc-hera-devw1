@@ -106,8 +106,9 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         HDT_StatoMotoreVas__mdt statusMapping = getStatusMapping(requestMap);
 
         Case currentCase = (Case)sObjMap.get('Case');
-        populateFieldsFromRequest(requestMap, currentCase);
-        
+        if(currentCase!=null){
+            populateFieldsFromRequest(requestMap, currentCase);
+        }
         if (sObjMap.containsKey('Order')) {
             Order currentOrder = (Order)sObjMap.get('Order');
             populateFieldsFromRequest(requestMap, sObjMap.get('Order'));
