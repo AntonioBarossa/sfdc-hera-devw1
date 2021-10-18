@@ -1142,6 +1142,66 @@
             <fullName>Gestione M01/M02</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Accettazione Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Preventivo DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazioni con DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma Preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Creare Istruttoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Da Gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Lavori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Sblocco al Calcolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Comunicazione Disconoscimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Lettera di Legittimità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Priority__c</picklist>
