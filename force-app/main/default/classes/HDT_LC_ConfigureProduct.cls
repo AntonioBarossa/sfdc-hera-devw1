@@ -257,7 +257,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         wrapReturnValidity resp = new wrapReturnValidity();
         resp.wrapCheck = true;
         resp.responseError = '';
-        Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
+        // Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
         Map<String,wrts_prcgvr__Activity__c> orderLineActivity = new Map<String,wrts_prcgvr__Activity__c>();
             List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
             for(SBQQ__QuoteLine__c line : quoteLinesActive){

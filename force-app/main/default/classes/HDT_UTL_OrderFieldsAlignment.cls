@@ -254,8 +254,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             changeCustomerMarking(account);
         }
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
-        String customerName = null;
-        String customerLastName = null;
+        // String customerName = null;
+        // String customerLastName = null;
         // if(toCheck.vat__c == null || toCheck.vat__c == ''){
             if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
                 orderToUpdate.CustomerCompanyName__c = account.LastName__c;

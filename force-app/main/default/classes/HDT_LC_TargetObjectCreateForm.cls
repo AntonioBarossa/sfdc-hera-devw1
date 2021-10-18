@@ -404,7 +404,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         system.debug('code : '+ code);
 
         HDT_QR_DistributorPointCode queryClass = new HDT_QR_DistributorPointCode();
-        List<Map<String,Object>> listCustomDistributorPoint = new List<Map<String,Object>>();
+        // List<Map<String,Object>> listCustomDistributorPoint = new List<Map<String,Object>>();
         //Map<String,String> customDistributorPoint = new Map<String,String>();
 
         // String[] splitCode = code.split('');
