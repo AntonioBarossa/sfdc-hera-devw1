@@ -15,6 +15,11 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     private static Integer mtLimit = 20;
     @TestVisible
     private static Integer atLimit = 30;
+    @TestVisible
+    private static Decimal lowerThreshold = 10.0;
+    @TestVisible
+    private static Decimal higherThreshold = 30.0;
+
 
     /**
      * @frpanico 06/10/2021
@@ -76,6 +81,16 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
                 ? 'MT' /* If tension value between btLimit and mtLimit : MT */
                 : tensionNumberValue > mtLimit 
                     ? 'AT' : ''; /* If thension value greater than mtLimit: AT */
+    }
+
+    public String getPowerBand(Decimal power)
+    {
+        return power <= lowerThreshold ? 'Fascia 1' : power > lowerThreshold && power <= higherThreshold ? 'Fascia 2' : 'Fascia 3';
+    }
+
+    public Boolean powerCheck(Decimal powerExpected, Decimal powerActual)
+    {
+        return getPowerBand(powerExpected) == getPowerBand(powerActual);
     }
 
 }
