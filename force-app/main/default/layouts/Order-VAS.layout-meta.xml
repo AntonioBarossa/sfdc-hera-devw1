@@ -94,6 +94,10 @@
                 <field>Campaign__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RipensamentoVas__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ImplantType__c</field>
             </layoutItems>
@@ -504,7 +508,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>21</sortOrder>
         </platformActionListItems>
->
     </platformActionList>
     <relatedLists>
         <fields>Product2</fields>
