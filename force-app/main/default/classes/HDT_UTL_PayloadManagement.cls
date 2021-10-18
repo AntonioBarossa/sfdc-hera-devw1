@@ -55,7 +55,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Double amountNoIva = 0;
             Double fixedAmountNoIva = 0;
             Integer quantity = 0;
-            if (itemVasList == null) return '||';
+            if (itemVasList == null){
+                return '||';
+            }
             Integer i = 0;
             for (SObject singleVas : itemVasList) {
                 amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams));
@@ -74,14 +76,25 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     
     private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String context = (String) formParams.get('Contesto');
-        if(!context.equalsIgnoreCase('Order')) return '';
+        if(!context.equalsIgnoreCase('Order')){
+            return '';
+        }
+        
         String contractCode = HDT_UTL_DocumentalManagement.getValue('Order', 'ContractId', 1, inputs, formParams);
-        if(String.isNotBlank(contractCode))return '';
+        if(String.isNotBlank(contractCode)){
+            return '';
+        }
+        
         String accountAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ResidentialStreetName__c', 1, inputs, formParams);
         String deliveryAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 1, inputs, formParams);
         String supplyAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyStreetName__c', 1, inputs, formParams);
-        if(supplyAddress.equalsIgnoreCase(supplyAddress)) return 'IF';
-        if(supplyAddress.equalsIgnoreCase(accountAddress)) return 'SL';
+        if(supplyAddress.equalsIgnoreCase(supplyAddress)){
+            return 'IF';
+        }
+        
+        if(supplyAddress.equalsIgnoreCase(accountAddress)) {
+            return 'SL';
+        }
 
         return '';
     }
@@ -89,10 +102,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     private String handleFlagPaperless(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String isPaperless = 'N';
         String context = (String) formParams.get('Contesto');
-        if(!context.equalsIgnoreCase('Case')) return isPaperless;
+        if(!context.equalsIgnoreCase('Case')){
+            return isPaperless;
+        }
+        
         String processType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
         String depositPaymentMode = HDT_UTL_DocumentalManagement.getValue('Case', 'DepositPaymentMode__c', 0, inputs, formParams);
-        if(String.isBlank(processType)) return isPaperless;
+        if(String.isBlank(processType)){
+            return isPaperless;
+        }
+        
         if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
             isPaperless = 'Y';
         }
@@ -206,15 +225,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     oldCoTemp = false;
                 }
             }
-            if(societaTemp)
+            if(societaTemp){
                 result = '2060';
-            else if(newCoTemp) // Migrazione Ascopiave 2019
+            } else if(newCoTemp) { // Migrazione Ascopiave 2019
                 result = '7030';// 7030 (NewCo)
-            else if(oldCoTemp) // Migrazione Ascopiave 2019
+            } else if(oldCoTemp) { // Migrazione Ascopiave 2019
                 result = '7015'; // 7015 (OldCo)
-            else
+            } else {
                 result = '1070';
-        }catch(Exception ex){
+            }
+        } catch(Exception ex) {
             System.debug('Errore calcolo società per Estratto Conto');
         }
         return result;
@@ -275,6 +295,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String caseType = '';
         String supplyType = '';
         String cluster = '';
+        
+        Boolean isElse = false;
         switch on context {
             when 'Case' {
                 amount = HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', 0, inputs, formParams);
@@ -286,10 +308,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
             }
             when else {
+                isElse = true;
                 //quotationType = ''; //da ordine manca il campo
                 //processType =  HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
             }
         }
+        System.debug('isElse: ' + isElse);
         
         System.debug('Amount: ' + amount);
         if(String.isNotBlank(amount)){
@@ -300,8 +324,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else if(iva.indexOf('22') > -1){
                     ivaInteger = 22;
                 }
-                if(ivaInteger > 0)
+                if(ivaInteger > 0){
                     ivaAmount = ((amountDouble/100)*ivaInteger);
+                }
             }
             totalAmount = amountDouble + ivaAmount;
 
@@ -778,7 +803,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
         if (objRes.isAccessible()) {
-            recordList = Database.query(queryString);
+            recordList = Database.query(String.escapeSingleQuotes(queryString));
         }
         System.debug('recordList: ' + recordList);
 
