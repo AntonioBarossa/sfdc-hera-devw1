@@ -131,9 +131,7 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             System.debug('field ' +(String)singleRecord.get(field) );
             System.debug('mappa ' + mapRecords.get((String)singleRecord.get(field)));
             System.debug('mappa intera ' + mapRecords);
-            if(mapRecords.get((String)singleRecord.get(field)) != null){
-                //go next
-            } else {
+            if(mapRecords.get((String)singleRecord.get(field)) == null){
                 distinctRecords.add(singleRecord);
                 mapRecords.put((String)singleRecord.get(field), (String)singleRecord.get(field));
             }
