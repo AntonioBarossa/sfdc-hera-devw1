@@ -153,17 +153,17 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                         if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                             servicePo.SwitchInWinback__c = true;
                         }
-                        else{
+                        // else{
                            // servicePo.SwitchInWinback__c = false;
-                        }
+                        // }
                     }
-                    else{
+                    // else{
                       //  servicePo.SwitchInWinback__c = false;
-                    }
+                    // }
                 }
-                else{
+                // else{
                   //  servicePo.SwitchInWinback__c = false;
-                }    
+                // }    
             }
         }
         serviceSp.updateRecord(servicePo);
@@ -206,17 +206,17 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                         }
                         System.debug('******7:' + resp.result[0].status);
                     }
-                    else{
+                    // else{
                       //  servicePo.SwitchInWinback__c = false;
-                    }
+                    // }
                 }
-                else{
+                // else{
                    // servicePo.SwitchInWinback__c = false;
-                }
+                // }
             }
-            else{
+            // else{
                // servicePo.SwitchInWinback__c = false;
-            }
+            // }
             
         
         }
@@ -254,20 +254,20 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                         }
                         System.debug('******7:' + resp.result[0].status);
                     }
-                    else{
+                    // else{
                       //  servicePo.SwitchInWinback__c = false;
                       //  servicePo.SwitchOutDate__c = null;
-                    }
+                    // }
                 }
-                else{
+                // else{
                   //  servicePo.SwitchInWinback__c = false;
                   //  servicePo.SwitchOutDate__c = null;
-                }
+                // }
             }
-            else{
+            // else{
               //  servicePo.SwitchInWinback__c = false;
               //  servicePo.SwitchOutDate__c = null;
-            }
+            // }
             
         
         }
