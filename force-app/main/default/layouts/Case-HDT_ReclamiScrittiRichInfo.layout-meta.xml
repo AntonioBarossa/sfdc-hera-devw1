@@ -346,7 +346,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
-
     </platformActionList>
     <quickActionList/>
     <relatedContent>
@@ -364,6 +363,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>

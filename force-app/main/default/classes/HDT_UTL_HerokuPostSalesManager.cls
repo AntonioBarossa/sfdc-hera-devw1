@@ -506,10 +506,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(String.isNotBlank(activity) && activity.equalsIgnoreCase('Eseguire Gestione Manuale SAP')){
             switch on objectType {
                 when 'Case' {
-                    createActivity((String)recordObj.get('Id'),null, '', activity);
+                    createActivity((String)recordObj.get('Id'),null, '', activity, activity);
                 }
                 when else {
-                    createActivity(null,(String)recordObj.get('Id'), '', activity);
+                    createActivity(null,(String)recordObj.get('Id'), '', activity, activity);
                 }
             }
         }
@@ -715,7 +715,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseInsertList.add(currentCase);           
             HDT_UTL_DatabaseService.insertSObject(caseInsertList);
             if(currentCase.EarlyRecess__c){
-                createActivity(currentCase.Id,null, '', 'Recesso Anticipato');
+                createActivity(currentCase.Id,null, '', 'Recesso Anticipato', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
             System.debug('Commodity: ' + currentCase.CommodityFormula__c);
@@ -896,8 +896,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
         }
     }
-    private static void createActivity(String caseId,String orderId, String description, String type){
-        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+    private static void createActivity(String caseId,String orderId, String description, String templateName, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ templateName +'\'';
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
@@ -909,6 +909,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity.Order__c = orderId;
             activity.CausalError__c = description;
             activity.wrts_prcgvr__Description__c = description;
+            activity.Type__c = type;
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
         }
     }
