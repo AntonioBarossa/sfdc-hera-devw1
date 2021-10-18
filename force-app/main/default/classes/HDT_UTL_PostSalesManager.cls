@@ -373,6 +373,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
         activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+        activity.Type__c = templateName;
         return activity;
     }
 

@@ -51,7 +51,7 @@ public with sharing class HDT_SRV_QuoteTst {
  
             Test.stopTest();
 
-            System.assertEquals(true, finished, 'Test Ended');
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
@@ -72,7 +72,7 @@ public with sharing class HDT_SRV_QuoteTst {
  
             Test.stopTest();
 
-            System.assertEquals(true, finished, 'Test Ended');
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
@@ -93,7 +93,7 @@ public with sharing class HDT_SRV_QuoteTst {
  
             Test.stopTest();
 
-            System.assertEquals(true, finished, 'Test Ended');
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 

@@ -27,10 +27,14 @@ public inherited sharing class HDT_QR_CausalCodeCalculation {
             } catch(Exception e){
 
                 //blank code
+                /**@frpanico 15/10/2021
+                * Risoluzione "Empty catch block
+                */
+                return cccRecord;
 
         }
 
-        if(cccRecord.OperationCode__c == null){
+        if(cccRecord!= null && cccRecord.OperationCode__c == null){
 
             cccRecord.OperationCode__c = '';
 
