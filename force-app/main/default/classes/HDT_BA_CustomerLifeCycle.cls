@@ -162,7 +162,9 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
     }
 
     public void finish(Database.BatchableContext bc) {
-        Boolean fakeBool = true;
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug('HDT_BA_CustomerLifeCycle - finished job: ' + a);
+        
     }
 
     private Boolean isEnergy(String commodity) {

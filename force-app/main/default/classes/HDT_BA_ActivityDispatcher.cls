@@ -150,7 +150,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     
     public void finish(Database.BatchableContext bc) {
         //RESCHEDULE
-        Boolean fakeBool = true;
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug('HDT_BA_ActivityDispatcher - finished job: ' + a);
+        
     }
 
     private Map<String,Queue__c> getQueuesMap() {
