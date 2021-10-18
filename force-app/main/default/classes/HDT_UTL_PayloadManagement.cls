@@ -179,13 +179,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     }
 
     private String getCompanyCode(String companyDesc){
-        if(companyDesc==null || String.isBlank(companyDesc)) return '';
+        if(companyDesc==null || String.isBlank(companyDesc)){
+            return '';
+        }
+        
         String queryString = 'SELECT id,Label, CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=\''+companyDesc+'\'';
         String objectName = 'HDT_HeraCompany__mdt';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         if(recordList != null && recordList.size()>0){
             return (String) recordList[0].get('CompanyCode__c');
-        }else {
+        } else {
             return '';
         }
     }
