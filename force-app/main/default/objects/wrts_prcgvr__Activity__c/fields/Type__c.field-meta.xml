@@ -436,11 +436,6 @@
                 <label>Esito Lavori</label>
             </value>
             <value>
-                <fullName>Gestione Manuale SAP</fullName>
-                <default>false</default>
-                <label>Gestione Manuale SAP</label>
-            </value>
-            <value>
                 <fullName>Gestione Sblocco al Calcolo</fullName>
                 <default>false</default>
                 <label>Gestione Sblocco al Calcolo</label>

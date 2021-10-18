@@ -1183,10 +1183,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione Manuale SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Sblocco al Calcolo</fullName>
             <default>false</default>
         </values>
