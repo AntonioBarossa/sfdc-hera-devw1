@@ -18,6 +18,7 @@ public class HDT_QBL_SIE34CallServiceTst {
         HDT_QBL_SIE34CallService thisCallService = new HDT_QBL_SIE34CallService(runId,status,fileType,errorMessage,contentVersionIds);
         System.enqueueJob(thisCallService);
         System.assertEquals(true,JSON.serialize(thisCallService).contains('fileType'),'The HDT_QBL_SIE34CallService has been well instantiated with the fileType value');
+        System.assertNotEquals(false,JSON.serialize(thisCallService).contains('fileType'),'The value fileType has been provided during the instantiation');
         Test.stopTest();
     }
 }
