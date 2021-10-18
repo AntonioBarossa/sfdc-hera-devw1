@@ -93,4 +93,15 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
 
     }
 
+    @IsTest
+    static void handleAmmissibilityCheckTst()
+    {
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => 12,
+            'POTDISP' => 22,
+            'POTCONTRIMP' => 13
+        };
+    }
+
 }
