@@ -2,8 +2,7 @@
 public with sharing class HDT_SRV_InstallmentPlansTst {
     
     @TestSetup
-    static void setup()
-    {
+    static void setup(){
 
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         String rtName = 'HDT_RT_PianoRateizzazione';
@@ -43,8 +42,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
     }
 
     @isTest
-    static void predefaultInstallmentsValuesTst()
-    {
+    static void predefaultInstallmentsValuesTst(){
         //1. Se dovesse essere necessario creare un case di Sospensione Fornitura
         //2. Mock per chiamata a vista rate
         //3. Valorizzare metodo di pagamento su BillingProfile
@@ -82,8 +80,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
     }
 
     @isTest
-    static void predefaultInstallmentsValuesTstWithFakeResp()
-    {
+    static void predefaultInstallmentsValuesTstWithFakeResp(){
         Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];
         Account testAccount = [SELECT Id, CustomerCode__c FROM Account LIMIT 1];
         Test.startTest();
@@ -116,8 +113,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
     }
 
     @isTest
-    static void createRequestBody()
-    {
+    static void createRequestBody(){
         HDT_SRV_InstallmentPlans srvInstallments = new HDT_SRV_InstallmentPlans();
         String body = '';
         Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];
@@ -133,8 +129,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         System.Assert(body != '', 'body = null');
     }
     @isTest
-    static void transcodeInstallmentPlanTst()
-    {
+    static void transcodeInstallmentPlanTst(){
         HDT_SRV_InstallmentPlans srvInstallments = new HDT_SRV_InstallmentPlans();
         Test.startTest();
         String testOne = srvInstallments.transcodeInstallmentPlan(null,false);
@@ -156,8 +151,7 @@ public with sharing class HDT_SRV_InstallmentPlansTst {
         System.AssertEquals('Z003', testEight, 'testEight != Z003');
     }
     @isTest 
-    static void evaluateRuleListTst()
-    {
+    static void evaluateRuleListTst(){
         HDT_SRV_InstallmentPlans srvInstallments = new HDT_SRV_InstallmentPlans();
         HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs output = new HDT_UTL_InstallmentPlans.HDT_UTL_FlowOutputs();
         Case testCase = [SELECT Id, TotalToPay__c FROM Case LIMIT 1];

@@ -30,7 +30,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cv.ContentLocation = 'S';
 		try {
 			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
-			insert cv;
+			HDT_UTL_DatabaseService.insertSObject(cv);
 			return cv;
 		} catch(DMLException e) {
 			System.debug(e);
@@ -51,8 +51,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// V = Viewer, C = Collaborator, I = Inferred
 		cdl.ShareType = 'V';
 		try {
-			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
-			insert cdl;
+			HDT_UTL_DatabaseService.insertSObject(cdl);
 			return cdl;
 		} catch(DMLException e) {
 			System.debug(e);
@@ -84,8 +83,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cd.PreferencesPasswordRequired=false;
 		cd.PreferencesAllowOriginalDownload= true;
 		try {
-			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
-			insert cd;
+			HDT_UTL_DatabaseService.insertSObject(cd);
 			return getSharedLink(cd.Id);
 		} catch(DMLException e) {
 			System.debug(e);
@@ -160,8 +158,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.mandatory == '1')
+			if(singleAttachment.mandatory == '1'){
 				return true;
+			}
 		}
 		return false;
 	}
@@ -271,9 +270,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when 'Order' {
 					documentalActivity.OrderId__c = (Id) requestId;
 				}
-				when else {
-
-				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
 			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
@@ -295,9 +291,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 				when 'Order' {
 					documentalActivity.OrderId__c = requestId;
-				}
-				when else {
-
 				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
@@ -578,10 +571,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if(resultOne != null && resultOne != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
 			resultTwo += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
 		}
-		if(singleRecord.separetor == 'space')
+		if(singleRecord.separetor == 'space'){
 			return resultOne + ' ' + resultTwo;
-		else
+		} else {
 			return resultOne + singleRecord.separetor + resultTwo;
+		}
 	}
 
 	public static String calculateExpression(Map<String,List<sObject>> inputs,String expression, Map<String,Object> formParams){
