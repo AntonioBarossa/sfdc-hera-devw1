@@ -120,7 +120,7 @@ public with sharing class HDT_QR_Campaign {
         return [
             SELECT Id,Name,MacroActivityEasyCIM__c, MacroActivityEasyCIM__r.idMacroActivityEasyCIM__c,AssignmentType__c,MacroActivityEasyCIM__r.Name,CreatedDate 
             FROM Campaign
-            WHERE MacroActivityEasyCIM__r.Name = :name AND Category__c!='Campagna Outbound' AND ReitekIntegrationTechnology__c !='Web Service' WITH SECURITY_ENFORCED
+            WHERE MacroActivityEasyCIM__r.Name = :name AND Category__c='Campagna Outbound' AND ReitekIntegrationTechnology__c ='Web Service' WITH SECURITY_ENFORCED
         ];
     }
 }
