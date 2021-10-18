@@ -11,6 +11,9 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
 	
 	@TestSetup
     static void setup(){
+
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
         User adminUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);

@@ -118,4 +118,32 @@ public class HDT_BA_AttributesLeadTst {
         System.assertEquals(2, cvs.size(), 'AttributesLead did not work correctly');
             
     }
+    
+    @isTest
+    static void test2(){
+                
+        List<Contact> contacts = [Select id, Email from contact];
+        integer i = 0;
+        for(Contact c : contacts){
+            c.Email = c.Email + i;
+            i++;
+        }
+        update contacts;
+        
+        String paramRunId = 'someid';
+        
+        Test.startTest();
+        
+        HDT_BA_AttributesLead al = new HDT_BA_AttributesLead(paramRunId);
+        Id batchId = Database.executeBatch(al,200);
+        
+        Test.stopTest();
+        
+        List<ContentVersion> cvs = [Select id From ContentVersion];
+        
+        System.assertNotEquals(0, cvs.size(), 'ContentVersions not created');
+        
+        System.assertEquals(null, al.errormessage, 'AttributesLead did not work correctly');
+            
+    }
 }

@@ -17,9 +17,13 @@ public with sharing class HDT_LC_DecisionalScriptController extends HDT_LC_HdtSc
     **/
     @AuraEnabled
     public static Boolean isDecisionalScript(String processName){
-        List<ScriptConfig__c> decisionalPages = [SELECT Id FROM ScriptConfig__c
+        if(processName!=null && String.isNotBlank(processName)){
+            List<ScriptConfig__c> decisionalPages = [SELECT Id FROM ScriptConfig__c
             WHERE ParentSection__r.Name=:processName AND ScriptType__c=:DECISIONAL_TYPE WITH SECURITY_ENFORCED LIMIT 1];
-        return (!decisionalPages.isEmpty());
+            return (!decisionalPages.isEmpty());
+        }else{
+            return false;
+        }       
     }
     
     /**
@@ -45,11 +49,17 @@ public with sharing class HDT_LC_DecisionalScriptController extends HDT_LC_HdtSc
     * @return HDT_WRP_ScriptOutput
     **/
     private HDT_WRP_ScriptOutput getScriptTextPage(String processName, String recordId, Integer pageIndex){
-        ScriptConfig__c process = [SELECT Name, contextObject__c, ChildRelationName__c,
+        List<ScriptConfig__c> processList = [SELECT Name, contextObject__c, ChildRelationName__c,
             (SELECT textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C,
                 ScriptType__c, LabelOption1__c, LabelOption2__c, LabelOption3__c, NextSection__c
                 FROM ChildSections__r WHERE SectionOrder__c=:pageIndex)
-            FROM ScriptConfig__c WHERE Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1];
-        return getScriptPagesFromScript(process, recordId)[0];
+            FROM ScriptConfig__c WHERE Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED];
+            if(!processList.isEmpty()){
+                List<HDT_WRP_ScriptOutput> scriptPages= getScriptPagesFromScript(processList[0], recordId);
+                if(!scriptPages.isEmpty()){
+                    return scriptPages[0];
+                }
+            }
+        return null;
     }
 }
