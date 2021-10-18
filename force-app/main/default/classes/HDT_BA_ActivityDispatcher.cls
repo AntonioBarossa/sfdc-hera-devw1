@@ -147,7 +147,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         }
     }
 
-    
+    //NB: risolto merge conflict durante cleanup PMD
     public void finish(Database.BatchableContext bc) {
         //RESCHEDULE
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
