@@ -69,9 +69,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
         //Retrieve and test
         Test.startTest();
 
-        Lead ld = [SELECT Id 
+        Lead ld = [SELECT Id, Email 
                    FROM Lead
-                   WHERE Email LIKE 'test@test.com%'
+                   WHERE Email LIKE 'test@test.com0'
                    LIMIT 1];
         
         ld.Email = 'test@testUpdateEmail.com';
@@ -105,9 +105,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
         //Retrieve and test
         Test.startTest();
 
-        Lead ld = [SELECT Id 
+        Lead ld = [SELECT Id, Email 
                    FROM Lead
-                   WHERE Email LIKE 'test@test.com%'
+                   WHERE Email LIKE 'test@test.com0'
                    LIMIT 1];
         
         ld.Email = 'test@testUpsertEmail.com';
@@ -129,7 +129,7 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Lead ld = [SELECT Id 
                    FROM Lead
-                   WHERE Email LIKE 'test@test.com%'
+                   WHERE Email LIKE 'test@test.com0'
                    LIMIT 1];
 
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];

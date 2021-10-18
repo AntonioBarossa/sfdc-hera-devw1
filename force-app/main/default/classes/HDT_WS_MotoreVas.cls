@@ -23,12 +23,7 @@ public  class HDT_WS_MotoreVas {
         HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest(WS_CONFIG_ACTIVATION, req,HDT_WS_ArrichmentDataEntityResponse.class);
 
         //23/09/2021 - gabriele.rota@webresults.it - Temporary Logging
-        Case logCase = new Case();
-        logCase.Causal__c = 'CALLOUT-'+WS_CONFIG_ACTIVATION;
-        logCase.Note__c = JSON.serializePretty(req);
-        logCase.Description = JSON.serialize(res);
-        Database.insert(logCase);
-
+        HDT_SRV_ServiceTwentySix.insertCalloutLog('CALLOUT-'+WS_CONFIG_ACTIVATION, req, res);
         return res;
     } 
 
@@ -43,12 +38,7 @@ public  class HDT_WS_MotoreVas {
         HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest(WS_CONFIG_DEACTIVATION, req,HDT_WS_ArrichmentDataEntityResponse.class);
 
         //23/09/2021 - gabriele.rota@webresults.it - Temporary Logging
-        Case logCase = new Case();
-        logCase.Causal__c = 'CALLOUT-'+WS_CONFIG_DEACTIVATION;
-        logCase.Note__c = JSON.serializePretty(req);
-        logCase.Description = JSON.serialize(res);
-        //Database.insert(logCase);
-
+        HDT_SRV_ServiceTwentySix.insertCalloutLog('CALLOUT-'+WS_CONFIG_DEACTIVATION, req, res);
         return res;
     }
 }

@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>OperationCode__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:int">02</value>
     </values>
     <values>
         <field>PowerQuote__c</field>
