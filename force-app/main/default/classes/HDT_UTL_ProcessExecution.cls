@@ -7,14 +7,17 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     public static HDT_QR_Order                  qrOrder                 = new HDT_QR_Order()                    ;
     public static HDT_QR_Case                   qrCase                  = new HDT_QR_Case()                     ;
     public HDT_UTL_Constants                    constant                = new HDT_UTL_Constants()               ;
+    private static HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr   = new HDT_QR_MassiveLoaderProcess()     ;
     public HDT_WRP_ProcessEntities              currentProcess                                                  ;
+
+
     
     //public  MassiveLoaderRequestItem__c varRequestItem;
     public  String processName;
-    public  Map<Integer, String> mapHeaderByPosition; 
-    public  Map<Integer, String> mapRequiredByPosition; 
-    public  Id recordTypeBus;
-    public  Id recordTypeRes;
+    public  Map<Integer, String> mapHeaderByPosition    = new  Map<Integer, String>(); 
+    public  Map<Integer, String> mapRequiredByPosition  = new  Map<Integer, String>(); 
+    public  Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
+    public  Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
 
     public void setMassiveLoaderRequestItem(MassiveLoaderRequestItem__c requestItem){
 
@@ -27,21 +30,20 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         }
     
         this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
-        List<StaticResource> staticResources = staticResourceQr.getRecordByName(processName);
+        HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
+        List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
        
 
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
         for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
-            if (temp.containsIgnoreCase('*')) {
+           if (temp.containsIgnoreCase('*')) {
                 temp=temp.remove('*'); 
                 mapRequiredByPosition.put(count,temp);
             }
             mapHeaderByPosition.put(count,temp);
             count++;
         }
-        recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
-        recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     }
 
     public virtual void checks(){
@@ -71,15 +73,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
    
     public String getTypeField(String objName,String fieldApiName){
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
-        System.debug('fieldTypeName: ' + fieldTypeName);   
         return fieldTypeName;
     }
 
     public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
 
         String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
-        System.debug(String.valueOf(sObj.getSObjectType())+' column N° :'+position+' FieldapiName : '+mapSobjField.get(mapHeaderByPosition.get(position))+'  HeaderName : '+mapHeaderByPosition.get(position) + ' FieldValue : '+value );
-
         switch on typeField.toUpperCase() {
             when 'BOOLEAN'  {
                 sObj.put(mapSobjField.get(mapHeaderByPosition.get(position)),Boolean.valueOf(value));

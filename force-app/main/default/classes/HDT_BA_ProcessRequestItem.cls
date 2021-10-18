@@ -31,8 +31,14 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
         
         try {
             cls.execute();
-        } catch (Exception e) {
-            massiveItem.Status__c   = 'Errore'                      ;
+        } 
+        catch (HDT_UTL_ProcessExecution.HDT_WRP_ProcessEntitiesException e) {
+            massiveItem.Status__c               = 'Errore'          ;
+            massiveItem.StatusDescription__c    = e.Message         ;
+            update massiveItem;
+        }
+        catch (Exception e) {
+            massiveItem.Status__c               = 'Errore'          ;
             massiveItem.StatusDescription__c    = e.getMessage()    ;
             update massiveItem;
 

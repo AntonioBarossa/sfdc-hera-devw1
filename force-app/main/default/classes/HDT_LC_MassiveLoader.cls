@@ -169,7 +169,8 @@ public with sharing class HDT_LC_MassiveLoader {
             ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
             Boolean deleteUploadedFile = false;
 
-            if (fileName.toUpperCase() == (selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION).toUpperCase()) {                
+
+            if (fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
 
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
 
