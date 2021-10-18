@@ -118,10 +118,8 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
             wrapperAddress['Civico'] = this.theCase["InvoicingStreetNumber__c"];
         }
         //wrapperAddress["AbilitaVerifica"]=false;//abilita il tasto verifica
-        if(this.validateAddress(wrapperAddress)?.isValid){
-            wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
-            wrapperAddress["FlagVerificato"]=true;//questi due abilitano la check "verificata"
-        }
+        wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
+        wrapperAddress["FlagVerificato"]=true;//questi due abilitano la check "verificata"
         console.log('wrapper addr'+JSON.stringify(wrapperAddress));
         const targetFields = this.template.querySelector("c-hdt-target-object-address-fields");
         //getInstanceWrapObject()
