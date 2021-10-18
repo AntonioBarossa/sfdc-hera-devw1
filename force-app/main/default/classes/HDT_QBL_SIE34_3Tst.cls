@@ -1,3 +1,8 @@
+/**
+* @author Andrea Arosio (andrea.arosio@webresults.it)
+* @date 22/07/2021
+* @description Test Class for HDT_QBL_SIE34_3T
+*/
 @isTest
 public with sharing class HDT_QBL_SIE34_3Tst {
 
