@@ -76,9 +76,9 @@ public with sharing class HDT_LC_MassiveLoader {
         try {
 
             List<Map<String, String>> processesPicklist = new List<Map<String, String>>()            ;
-            
-
-            for (HDT_MassiveLoaderProcess__mdt massiveLoaderProcess : massiveLoaderProcessQr.getAllRecords()) {
+            List<HDT_MassiveLoaderProcess__mdt> listProcess = massiveLoaderProcessQr.getAllRecords();
+            listProcess.sort();
+            for (HDT_MassiveLoaderProcess__mdt massiveLoaderProcess : listProcess) {
 
                 processesPicklist.add(new Map<String, String>{'value' => massiveloaderProcess.DeveloperName, 'label' => massiveloaderProcess.MasterLabel});
 
