@@ -35,6 +35,6 @@ public with sharing class HDT_LC_DecisionalScriptController extends HDT_LC_HdtSc
                 ScriptType__c, LabelOption1__c, LabelOption2__c, LabelOption3__c, NextSection__c
                 FROM ChildSections__r WHERE SectionOrder__c=:pageIndex)
             FROM ScriptConfig__c WHERE Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1];
-        return getScriptPagesFromScript(process, recordId)[0];
+        return getScriptPagesFromScript(process, recordId, true)[0];
     }
 }

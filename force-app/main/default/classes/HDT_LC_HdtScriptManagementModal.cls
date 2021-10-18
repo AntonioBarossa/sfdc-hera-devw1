@@ -54,25 +54,12 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         }
     }
 
-    public class HDT_WRP_ScriptOutput{
-        @AuraEnabled public string sectionLabel;
-        @AuraEnabled public string sectionText;
-        @AuraEnabled public String type;
-        @AuraEnabled public Decimal nextSection;
-        @AuraEnabled public List<HDT_WRP_ScriptDecision> decisions;
-    }
-
-    public class HDT_WRP_ScriptDecision{
-        @AuraEnabled public String label;
-        @AuraEnabled public Integer targetPage;
-    }
-
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
         ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
-        return getScriptPagesFromScript(process, recordId);
+        return getScriptPagesFromScript(process, recordId, false);
     }
 
-    protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId){
+    protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId, Boolean isDecisional){
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
@@ -100,7 +87,14 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 listSectionWrappers.add(
                     createSectionWrapper(section, record)
                 );
-            }            
+            }
+            else {
+                if (isDecisional) {
+                    listSectionWrappers.add(
+                        createEmptySectionWrapper(section)
+                    );
+                }
+            }
         }
         return listSectionWrappers;
     }
@@ -145,6 +139,15 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         return sectionWrapper;
     }
 
+    private HDT_WRP_ScriptOutput createEmptySectionWrapper(ScriptConfig__c section){
+        HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
+
+        if (section.isSet('NextSection__c')) {
+            sectionWrapper.nextSection = (Decimal)section.get('NextSection__c');
+        }
+
+        return sectionWrapper;
+    }
 
     /* private override String formatText(String textScript, String recordId){
 
@@ -206,9 +209,8 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
             String splitOperator = isOrOperator?'OR':'AND';
             List<String> arrayConditions = conditions.split(splitOperator);
             for(String condition : arrayConditions){
-                Boolean checkCompare = condition.contains('==');
-                String compareOperator = checkCompare? '==' : '!=';
-                String field = condition.split(compareOperator)[0].toLowerCase();
+                HDT_WRP_ScriptCondition condWrp = new HDT_WRP_ScriptCondition(condition);
+                String field = condWrp.fieldName.toLowerCase();
                 returnSetFieldsToQuery.add(field);
             }
         }
@@ -228,19 +230,13 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         Boolean isAndOperator = !isOrOperator;
         String splitOperator = isOrOperator?'OR':'AND';
 
-        String fieldName, valueToCheck, actualFieldValue;
         List<String> arrayConditions = conditions.split(splitOperator);
         Boolean visibility = isAndOperator?true:false;
         try{
             for(String condition : arrayConditions){
-                Boolean checkCompare = condition.contains('==');
-                String compareOperator = checkCompare? '==' : '!=';
-				
-                List<String> arraySingleCondition = condition.split(compareOperator);
-                fieldName = arraySingleCondition[0].trim();
-                valueToCheck = arraySingleCondition[1].trim();
-                actualFieldValue = getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
-                Boolean conditionVisibility = assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
+                HDT_WRP_ScriptCondition condWrp = new HDT_WRP_ScriptCondition(condition);
+                String actualFieldValue = getFieldValue(condWrp.fieldName, record);
+                Boolean conditionVisibility = condWrp.checkCondition(actualFieldValue);
 
                 if (isOrOperator) {
                     visibility = visibility || conditionVisibility;
@@ -260,29 +256,71 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         return visibility;
     }
 
+    public class HDT_WRP_ScriptOutput{
+        @AuraEnabled public string sectionLabel;
+        @AuraEnabled public string sectionText;
+        @AuraEnabled public String type;
+        @AuraEnabled public Decimal nextSection;
+        @AuraEnabled public List<HDT_WRP_ScriptDecision> decisions;
+    }
 
+    public class HDT_WRP_ScriptDecision{
+        @AuraEnabled public String label;
+        @AuraEnabled public Integer targetPage;
+    }
 
-    private static Boolean assertDynamicValues(String actualFieldValue, String valueToCheck, Boolean checkEquals){
-        //This method dinamically compares two string, it can be used to check if they match or they differ
-        //checkEquals set true means that you must check if the two strings matches, if it false you check if the strings differ
+    private class HDT_WRP_ScriptCondition{
 
-        Boolean areStringsEqual;
-        if ('null'.equalsIgnoreCase(valueToCheck)) {//null means "empty string"
-            areStringsEqual = String.isBlank(actualFieldValue);
-        }
-        else {
-            if (valueToCheck.endsWithIgnoreCase('%')) {
-                areStringsEqual = actualFieldValue.startsWithIgnoreCase( valueToCheck.substringBefore('%') );
+        private String fieldName;
+        private String operator;
+        private String valueToCheck;
+
+        private final List<String> OPERATORS = new List<String>{'==','!=','NOT LIKE','LIKE'};
+
+        HDT_WRP_ScriptCondition(String condition) {
+            for (String operatorLoop:OPERATORS) {
+                if (condition.contains(operatorLoop)) {
+                    operator = operatorLoop;
+                    break;
+                }
             }
-            else if (valueToCheck.startsWithIgnoreCase('%')) {
-                areStringsEqual = actualFieldValue.endsWithIgnoreCase( valueToCheck.substringAfter('%') );
+            
+            List<String> arraySingleCondition = condition.split(operator);
+            fieldName = arraySingleCondition[0].trim();
+            valueToCheck = arraySingleCondition[1].trim();
+        }
+
+        private Boolean checkCondition(String actualFieldValue) {
+            switch on operator {
+                when '==' {
+                    return checkEqual(actualFieldValue);
+                }
+                when '!=' {
+                    return !checkEqual(actualFieldValue);
+                }
+                when 'LIKE' {
+                    return checkLike(actualFieldValue);
+                }
+                when 'NOT LIKE' {
+                    return !checkLike(actualFieldValue);
+                }
+            }
+            return false;
+        }
+
+        private Boolean checkEqual(String actualFieldValue) {
+            Boolean areStringsEqual;
+            if ('null'.equalsIgnoreCase(valueToCheck)) {//null means "empty string"
+                areStringsEqual = String.isBlank(actualFieldValue);
             }
             else {
                 areStringsEqual = actualFieldValue.equalsIgnoreCase( valueToCheck );
             }
+            return areStringsEqual;
         }
 
-        return areStringsEqual==checkEquals;
+        private Boolean checkLike(String actualFieldValue) {
+            return actualFieldValue.containsIgnoreCase(valueToCheck);
+        }
     }
-
 }

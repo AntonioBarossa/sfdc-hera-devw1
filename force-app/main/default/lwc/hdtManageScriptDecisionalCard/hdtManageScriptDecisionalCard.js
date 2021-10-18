@@ -89,14 +89,23 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
 
     loadScriptPage() {
         this.isLoading = true;
+        console.log("loadScriptPage", this.recordId);
         return getScriptPage({
             processName : this.scriptProcessName, 
             recordId : this.recordId, 
             pageIndex : this.pageHistory[ this.historyIndex ]
         }).then(page => {
             console.log("scriptPage", JSON.stringify(page));
-            this.scriptPage = page;
-            this.isLoading = false;
+
+            if (page.sectionText) {
+                this.scriptPage = page;
+                this.isLoading = false;
+            }
+            else {
+                this.pageHistory[ this.pageHistory.length-1 ] = page.nextSection;
+                this.loadScriptPage();
+            }
+            
         },error => {
             console.log(error.body.message);
             this.showGenericErrorToast();

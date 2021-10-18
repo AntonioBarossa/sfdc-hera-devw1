@@ -213,10 +213,26 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         Set<String> fieldsToSelect = new Set<String>();
         //fieldsToSelect.addAll(listFields);
         for(String field : listFields){
-            if((!field.startsWith('globaltag') && !field.startsWith('constant')) || field.startsWith('globaltag.redirlink')){//exclude global tags from query
-                //querySelectStatement=querySelectStatement+', '+field;
-                fieldsToSelect.add(field.removeStart('globaltag.redirlink.').trim());
+
+            Boolean isConstant = field.startsWith('constant');
+            Boolean isGlobalTag = field.startsWith('globaltag');
+
+            if (isGlobalTag){
+                if (field.startsWith('globaltag.redirlink') || field.startsWith('globaltag.modificaprivacy') || field.startsWith('globaltag.varanagcliente')) {
+                    field = field.removeStart('globaltag.redirlink.');
+                    field = field.removeStart('globaltag.modificaprivacy.');
+                    field = field.removeStart('globaltag.varanagcliente.');
+                }
+                else {
+                    continue;
+                }
             }
+
+            if (isConstant) {
+                continue;
+            }
+
+            fieldsToSelect.add( field.trim() );
         }
         querySelectStatement = String.join(new List<String>(fieldsToSelect), ', ');
         if(String.isBlank(querySelectStatement)){
@@ -255,6 +271,28 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 idToRedirect = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.redirlink.'), relation);
                 return '<a href="/'+idToRedirect+'" target="_blank">'+linkLabel+'</a>';
             }
+            when 'modificaprivacy' {
+                //{{globaltag.modificaprivacy.AccountId}}
+                if (constantMap.containsKey(tagName)) {
+                    String accountId = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.modificaprivacy.'), relation);
+                    String link = String.format(constantMap.get(tagName), new List<String>{accountId});
+                    return '<a href="'+link+'" target="_blank">Modifica Privacy</a>';
+                }
+                else {
+                    return '*Costante '+tagName+' non trovata*';
+                }
+            }
+            when 'varanagcliente' {
+                //{{globaltag.varanagcliente.AccountId}}
+                if (constantMap.containsKey(tagName)) {
+                    String accountId = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.varanagcliente.'), relation);
+                    String link = String.format(constantMap.get(tagName), new List<String>{accountId});
+                    return '<a href="'+link+'" target="_blank">Variazione Anagrafica Cliente</a>';
+                }
+                else {
+                    return '*Costante '+tagName+' non trovata*';
+                }
+            }
             when 'username'{
                 return UserInfo.getName();
             }
@@ -262,6 +300,8 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 tagValue='*valore mancante*';
             }
         }
+        //lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Modifica+Privacy&c__recordTypeName=HDT_RT_GestionePrivacy&c__accid={!Id}&c__flowName=HDT_FL_PostSalesMasterDispatch
+        //lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Variazione+Anagrafica+Cliente&c__recordTypeName=HDT_RT_VariazioneAnagraficaCliente&c__accid={0}&c__flowName=HDT_FL_PostSalesMasterDispatch
         return ''+tagValue+'';
     }
 
