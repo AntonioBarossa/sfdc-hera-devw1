@@ -1,3 +1,8 @@
+/**
+* @author Andrea Arosio (andrea.arosio@webresults.it)
+* @date 14/10/2021
+* @description Test Class for HDT_QBL_SIE34_7
+*/
 @isTest
 public with sharing class HDT_QBL_SIE34_7Tst {
     private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
