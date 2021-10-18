@@ -1,6 +1,10 @@
 @isTest
 public with sharing class HDT_WS_EngageOnePrintTst {
     
+    /**@frpanico 15/10/2021
+     * @DEPRECATED
+     */
+    /*
     //DATA
     private static Boolean isFailure = false;
     private static Boolean isException = false;
@@ -106,5 +110,5 @@ public with sharing class HDT_WS_EngageOnePrintTst {
             return response;
         }
     }
-    
+    */
 }

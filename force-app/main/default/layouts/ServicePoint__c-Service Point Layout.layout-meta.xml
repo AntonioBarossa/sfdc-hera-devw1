@@ -107,11 +107,11 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SAPImplantCode__c</field>
-            </layoutItems><!--HRAWRM-251 17/09/2021 -->
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Resident__c</field>
-            </layoutItems><!--HRAWRM-251 17/09/2021 -->
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -159,20 +159,24 @@
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CommercialProduct__c</fields><!--HRAWRM-251 17/09/2021 -->
-        <fields>SAPContractCode__c</fields><!--HRAWRM-251 17/09/2021 -->
+        <fields>BillingProfile__c</fields>
+        <fields>CommercialProduct__c</fields>
+        <fields>SAPContractCode__c</fields>
         <fields>CONTRACT.STATUS</fields>
         <relatedList>Contract.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.TYPE</fields>
         <fields>Phase__c</fields>
+        <fields>CASES.TYPE</fields>
         <fields>CASES.STATUS</fields>
         <relatedList>Case.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Opportunity__c</fields>
+        <fields>Quote__c</fields>
         <relatedList>SaleServiceItem__c.ServicePoint__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -181,7 +185,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000001Kv5Y</masterLabel>
+        <masterLabel>00h3N000002LiVD</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

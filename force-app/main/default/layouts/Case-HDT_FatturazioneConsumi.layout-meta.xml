@@ -330,7 +330,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
-
     </platformActionList>
     <quickActionList/>
     <relatedContent>
@@ -421,6 +420,7 @@
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>CreaAttivitaManuale</customButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>wrts_prcgvr__Description__c</fields>

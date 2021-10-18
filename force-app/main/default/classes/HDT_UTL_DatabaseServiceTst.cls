@@ -18,8 +18,8 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
         minimumAccessUser.Email = 'sales@force.com';
         insert minimumAccessUser;
 
-        HDT_UTL_DataFactoryTst.createLead(1, true);
-
+        List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1, true);
+        
         HDT_UTL_DataFactoryTst.createOpportunity(2, true);
 
     }
@@ -41,9 +41,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Boolean insertLead = HDT_UTL_DatabaseService.insertSObject(ld);
 
-        System.assertEquals(true, insertLead);
+        System.assertEquals(true, insertLead, 'Lead Inserted');
 
-        System.assertNotEquals(false, insertLead);
+        System.assertNotEquals(false, insertLead, 'Lead Inserted');
 
         //Create and test an empty Lead
         Lead emptyLead = new Lead();
@@ -56,9 +56,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
             insertEmptyLead = false;
         }
         
-        System.assertEquals(false, insertEmptyLead);
+        System.assertEquals(false, insertEmptyLead, 'Empty Lead Inserted');
 
-        System.assertNotEquals(true, insertEmptyLead);
+        System.assertNotEquals(true, insertEmptyLead, 'Empty Lead Inserted');
 
         Test.stopTest();
     }
@@ -71,16 +71,16 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Lead ld = [SELECT Id 
                    FROM Lead
-                   WHERE Email LIKE 'test@test.com'
+                   WHERE Email LIKE 'test@test.com%'
                    LIMIT 1];
         
         ld.Email = 'test@testUpdateEmail.com';
 
         Boolean updateLead = HDT_UTL_DatabaseService.updateSObject(ld);
         
-        System.assertEquals(true, updateLead);
+        System.assertEquals(true, updateLead, 'Lead Updated');
 
-        System.assertNotEquals(false, updateLead);
+        System.assertNotEquals(false, updateLead, 'Lead Updated');
 
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
 
@@ -107,16 +107,16 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Lead ld = [SELECT Id 
                    FROM Lead
-                   WHERE Email LIKE 'test@test.com'
+                   WHERE Email LIKE 'test@test.com%'
                    LIMIT 1];
         
         ld.Email = 'test@testUpsertEmail.com';
 
         Boolean upsertLead = HDT_UTL_DatabaseService.upsertSObject(ld);
         
-        System.assertEquals(true, upsertLead);
+        System.assertEquals(true, upsertLead, 'Lead Upserted');
 
-        System.assertNotEquals(false, upsertLead);
+        System.assertNotEquals(false, upsertLead, 'Lead Upserted');
 
         Test.stopTest();
     }
@@ -129,7 +129,7 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Lead ld = [SELECT Id 
                    FROM Lead
-                   WHERE Email LIKE 'test@test.com'
+                   WHERE Email LIKE 'test@test.com%'
                    LIMIT 1];
 
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
@@ -146,9 +146,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Boolean deleteSObject = HDT_UTL_DatabaseService.deleteSObject(ld.Id);
 
-        System.assertEquals(true, deleteSObject);
+        System.assertEquals(true, deleteSObject, 'Lead Deleted');
 
-        System.assertNotEquals(false, deleteSObject);
+        System.assertNotEquals(false, deleteSObject, 'Lead Deleted');
 
         //Create and test an empty Lead
         Lead emptyLead = new Lead();
@@ -164,9 +164,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
             deleteEmptyLead = false;
         }
         
-        System.assertEquals(false, deleteEmptyLead);
+        System.assertEquals(false, deleteEmptyLead, 'Empty Lead Deleted');
 
-        System.assertNotEquals(true, deleteEmptyLead);
+        System.assertNotEquals(true, deleteEmptyLead, 'Empty Lead Deleted');
 
         Test.stopTest();
     }
@@ -185,9 +185,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Boolean deleteOppList = HDT_UTL_DatabaseService.deleteSObject(oppList);
 
-        System.assertEquals(true, deleteOppList);
+        System.assertEquals(true, deleteOppList, 'Opportunyty List Deleted');
         
-        System.assertNotEquals(false, deleteOppList);
+        System.assertNotEquals(false, deleteOppList, 'Opportunyty List Deleted');
         
         Test.stopTest();
     }
@@ -213,9 +213,9 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
 
         Boolean upsertSObjectExternalId = HDT_UTL_DatabaseService.upsertSObjectExternalId(oppList, 'Opportunity', 'Name');
 
-        System.assertEquals(true, upsertSObjectExternalId);
+        System.assertEquals(true, upsertSObjectExternalId, 'External Object Upserted');
         
-        System.assertNotEquals(false, upsertSObjectExternalId);        
+        System.assertNotEquals(false, upsertSObjectExternalId, 'External Object Upserted');        
 
         Test.stopTest();
     }

@@ -67,4 +67,16 @@ public with sharing class HDT_SRV_VoltureChangeManager
         clonedOrder.put('Phase__c',accountCheck.nextPhase);
         HDT_UTL_DatabaseService.updateSObject(clonedOrder);
     }
+
+    /**@frpanico 14/10/2021
+     * This method handle the response from the WS
+     * Takes in input the Response 
+     * Updates the order with the information returned from the WS
+     */
+    public void handleResponse(wrts_prcgvr.MRR_1_0.MultiResponse response, Order currentOrder)
+    {   
+        Map<String,Object> fieldsMap = voltureChangeUtils.getFieldsMap(response);
+        Order orderToUpdate = voltureChangeUtl.handleResponse(fieldsMap, currentOrder);
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
+    }
 }
