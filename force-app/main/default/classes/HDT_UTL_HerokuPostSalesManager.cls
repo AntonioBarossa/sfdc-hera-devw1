@@ -365,11 +365,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
+            
+            Boolean noActionNeeded = false;
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
-                //no action needed
-            }else if(currentPhase.equalsIgnoreCase('Annullato') && nextPhase.equalsIgnoreCase('Completata'))
-            {
-                //no action needed
+                noActionNeeded = true;//no action needed
+            }else if(currentPhase.equalsIgnoreCase('Annullato') && nextPhase.equalsIgnoreCase('Completata')){
+                noActionNeeded = true;//no action needed
             }else if(currentPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && nextPhase.equalsIgnoreCase('Completata')){
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(recordCase.Type.equalsIgnoreCase('Fiscale') && nextPhase.equalsIgnoreCase('Completata') && recordCase.CalculationBlock__c){
@@ -382,6 +383,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 extraParams.put('oldContractCode',recordCase?.ContractCode__c); 
                 handleEntityUpdate(reqWrp, extraParams);
             }
+            System.debug('handleRequest - no Action Needed');
 
             if(noteSap != null && noteSap != ''){
                 newDescription = nowDateFormat + ': ' + noteSap + '\n';
