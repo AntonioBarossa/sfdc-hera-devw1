@@ -1,3 +1,7 @@
+/**@frpanico 12/10/2021
+ * Test Class for HDT_SRV_VoltureChangeDispatcher
+ */
+
 @IsTest
 public with sharing class HDT_SRV_VoltureChangeDispatcherTst 
 {
@@ -8,7 +12,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         //Create 1 order one for the parent and one for the child 1
         //Create 2 OrderItems (to test loop with more than one item)
-        List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+        List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
 		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -28,10 +32,21 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         childOrderList[0].ProcessType__c = 'Switch in Ele';
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,priceBookEntryList[0].Id);
+        
+        String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
+        String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
+
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', recordTypeIdVolturaConSwitch, recordTypeNameVolturaConSwitch,'A','','','');
+    
     }
 
+    /**@frpanico 12/10/2021
+     * The on-top class covers only one test case.
+     * A full coverage of test cases can be found on "child" classes
+     */
+
     @IsTest
-    static void cloneOrderAndUpdateTst()
+    static void executeTst()
     {
         HDT_SRV_VoltureChangeDispatcher voltureDispatcher = new HDT_SRV_VoltureChangeDispatcher();
         HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
@@ -40,6 +55,8 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         ParentOrder__c,
         Name,
         EffectiveDate,
+        EffectiveDate__c,
+        RecessNotice__c,
         AccountId,
         EstimateAmount__c,
         PowerQuote__c,
@@ -70,12 +87,15 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         voltureDispatcher.execute(argsMap);
         Test.stopTest();
 
-        List<Order> newOrderList = [SELECT Id, ParentOrder__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
+        List<Order> newOrderList = [SELECT Id, ParentOrder__c, Phase__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
         List<OrderItem> newOrderItemList = [SELECT Id FROM OrderItem];
         System.assertEquals(2, newOrderList.size(),'Order non trovati');
         System.Assert(orderList[0].ParentOrder__c == newOrderList[0].ParentOrder__c, 'Parent order non associato correttamente');
         System.Assert(orderList[0].ParentOrder__c == newOrderList[1].ParentOrder__c, 'Parent order non associato correttamente');
         System.assertEquals(4, newOrderItemList.size(),'OrderItem non correttamente clonati');
+        System.assert(newOrderList[0].Phase__c == 'Annullato' || newOrderList[0].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
+        System.assert(newOrderList[1].Phase__c == 'Annullato' || newOrderList[1].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
+
     }
 
 

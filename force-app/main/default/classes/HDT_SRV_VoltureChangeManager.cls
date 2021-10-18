@@ -67,4 +67,47 @@ public with sharing class HDT_SRV_VoltureChangeManager
         clonedOrder.put('Phase__c',accountCheck.nextPhase);
         HDT_UTL_DatabaseService.updateSObject(clonedOrder);
     }
+
+    /**@frpanico 14/10/2021
+     * This method handle the response from the WS
+     * Takes in input the Response 
+     * Updates the order with the information returned from the WS
+     */
+    public void handleResponse(wrts_prcgvr.MRR_1_0.MultiResponse response, Order currentOrder)
+    {   
+        Map<String,Object> fieldsMap = voltureChangeUtils.getFieldsMap(response);
+        Order orderToUpdate = voltureChangeUtl.handleResponse(fieldsMap, currentOrder);
+        HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
+    }
+
+    /**@frpanico 18/10/2021
+     * This method handle the ammissibility checks
+     * Takes in input the paramsMap returned from the response
+     * returns true or false depending on the outcome of the results
+     */
+    public Boolean handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
+    {
+        Boolean flagResult = false;
+
+        /**
+         * Address check stand by
+         */
+        String tension = String.valueOf(paramsMap.get('TENSIONE'));
+        String powerAvailable = String.valueOf(paramsMap.get('POTDISP'));
+        String powerCommitted = String.valueOf(paramsMap.get('POTCONTRIMP'));
+        //String address = '';
+
+        if(voltureChangeUtils.getTension(Integer.valueOf(tension)) == currentOrder.VoltageLevel__c)
+        {
+            if(String.isNotEmpty(powerAvailable) && String.isNotEmpty(powerCommitted))
+            {
+                flagResult = voltureChangeUtils.powerCheck(Decimal.valueOf(powerAvailable), currentOrder.PowerAvailable__c) 
+                    && voltureChangeUtils.powerCheck(Decimal.valueOf(powerCommitted), currentOrder.PowerCommitted__c);
+            }
+        }
+
+        return flagResult;
+    
+    }
+
 }

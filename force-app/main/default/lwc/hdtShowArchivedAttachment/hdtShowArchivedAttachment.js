@@ -63,8 +63,6 @@ export default class HdtShowArchivedAttachment extends NavigationMixin(Lightning
 
     showPdfFromBase64(base64){
         var sliceSize = 512;
-        base64 = base64.replace(/^[^,]+,/, '');
-        base64 = base64.replace(/\s/g, '');
         var byteCharacters = window.atob(base64);
         var byteArrays = [];
 

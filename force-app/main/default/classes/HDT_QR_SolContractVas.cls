@@ -1,7 +1,7 @@
 public with sharing class HDT_QR_SolContractVas {
     public static List<SObject> getContractWithOffer(String accountId){
         if(Contract.SObjectType.getDescribe().isAccessible() && SBQQ__Subscription__c.SObjectType.getDescribe().isAccessible()){
-            String queryString = 'SELECT Id, SAPContractCode__c,(select SBQQ__Product__r.ProductCode, SBQQ__Product__r.Version__c from SBQQ__Subscriptions__r where SBQQ__Product__r.Family=\'Offerta commerciale\') FROM Contract WHERE Status = \'Attivo\' AND AccountId = \''+accountId+'\'';
+            String queryString = 'SELECT Id, SAPContractCode__c,(select SBQQ__Product__r.ProductCode, SBQQ__Product__r.Version__c from SBQQ__Subscriptions__r where SBQQ__Product__r.Family=\'Offerta commerciale\') FROM Contract WHERE Status = \'Attivo\' AND AccountId = \''+String.escapeSingleQuotes(accountId)+'\'';
             return Database.query(queryString);
         }else {
             return new List<SObject>();

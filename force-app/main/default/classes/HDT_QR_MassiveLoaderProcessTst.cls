@@ -22,8 +22,6 @@ public with sharing class HDT_QR_MassiveLoaderProcessTst {
        
     }
 */
-
-
     
     @isTest
     public static void testGetAllRecords(){
@@ -38,7 +36,7 @@ public with sharing class HDT_QR_MassiveLoaderProcessTst {
        
 
         System.assertEquals(false, testGetAllRecords.isEmpty(), 'Massive Loader Process All Records not found');
-        System.assertNotEquals(true, testGetAllRecords.isEmpty());
+        System.assertNotEquals(true, testGetAllRecords.isEmpty(), 'Expecte to retrieve at least one record');
 
         
         
@@ -52,7 +50,7 @@ public with sharing class HDT_QR_MassiveLoaderProcessTst {
 
 
         String devName = [SELECT DeveloperName FROM HDT_MassiveLoaderProcess__mdt WHERE IsActive__c = true LIMIT 1].DeveloperName;
-        System.debug('devName ' + devName);
+        // System.debug('devName ' + devName);
        // String devName = String.valueOf(queryDev[0].DeveloperName);
 
        HDT_QR_MassiveLoaderProcess testMassiveProcess = new HDT_QR_MassiveLoaderProcess();
@@ -63,7 +61,7 @@ public with sharing class HDT_QR_MassiveLoaderProcessTst {
        
        Test.stopTest();
 
-        System.assertEquals('subentro', testRecord.DeveloperName , 'Massive Loader Process Record by Name has been found');
+        System.assertEquals(devName, testRecord.DeveloperName , 'Massive Loader Process Record by Name has been found');
         System.assertNotEquals('',testRecord.DeveloperName,'DeveloperName is not empty' );
         
         

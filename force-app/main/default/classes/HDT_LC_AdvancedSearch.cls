@@ -1,3 +1,9 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@protonmail.ch)
+ * @date 05/10/2020
+ * @description HDT_LC_AdvancedSearch Class
+ * @history Keltin Mesonjesi – 05/10/2020 – Created Class
+ */
 public with sharing class HDT_LC_AdvancedSearch {
 
 	private static List<ServicePoint__c> servicePoints;
@@ -535,6 +541,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	/*
 	 * Checking Number of records
 	 */
+	@TestVisible
 	static void checkTheNumberOfRecords(Integer records) {
 		if (records > (customSetting.Max_Record__c).intValue()) {
 			throw new AuraHandledException('Numero massimo di record superato');

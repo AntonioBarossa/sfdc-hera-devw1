@@ -12,6 +12,8 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
 
+    //private static Boolean isDisatt = false;
+
     /**
     * @description close old discard activities
     * @author costanzo.lomele@webresults.it | 2021-10-05
@@ -72,11 +74,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         setResponse(mrrResponseItem, processExc);
 
         //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
-        Case logCase = new Case();
-        logCase.Causal__c = 'CALLIN-Vas.'+request.header.fields.get(0).value;
-        logCase.Note__c = JSON.serializePretty(request);
-        logCase.Description = RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem);
-        insert logCase;
+        HDT_SRV_ServiceTwentySix.insertCalloutLog('CALLIN-Vas.'+request.header.fields.get(0).value, JSON.serializePretty(request), RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem));
     }
 
     /**
@@ -235,10 +233,10 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
     **/
     private static void mapPhaseAndStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         try {
-            if (sObjMap.containsKey('Order')) {
+            if (sObjMap.containsKey('Order') && !sObjMap.containsKey('Case')) {
                 Order currentOrder = (Order)sObjMap.get('Order');
                 if (String.isNotBlank(statusMapping.OrderPhase__c)) {
-                    //currentOrder.Phase__c = statusMapping.OrderPhase__c;
+                    currentOrder.Phase__c = statusMapping.OrderPhase__c;
                 }
 
                 if (String.isNotBlank(statusMapping.OrderStatus__c)) {

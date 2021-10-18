@@ -158,8 +158,7 @@ export default class HdtDocumentalPhaseHistory extends NavigationMixin(Lightning
 
     showPdfFromBase64(base64){
         var sliceSize = 512;
-        base64 = base64.replace(/^[^,]+,/, '');
-        base64 = base64.replace(/\s/g, '');
+        console.log('base64 length: ' + base64.length);
         var byteCharacters = window.atob(base64);
         var byteArrays = [];
 

@@ -2,6 +2,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
     //private static String lawEightyActivityTemplate = '';
+    @TestVisible
     private static String lawEightyPhase = 'In Attesa Legge 80';
 
     /*
@@ -95,5 +96,46 @@ public with sharing class HDT_UTL_VoltureChangeManager {
         return accountCheck;
     }
 
+    public Order handleResponse(Map<String,Object> fieldsMap, Order currentOrder)
+    {
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = currentOrder.Id;
+        /* Write text fields */
+        orderToUpdate.TecnicalPhase__c = (String)fieldsMap.get('FASE');
+        orderToUpdate.CausalCode__c = (String)fieldsMap.get('CODERR');
+        orderToUpdate.Description = (String)fieldsMap.get('ANNOTAZIONI');
+        orderToUpdate.SupplyStreetName__c = (String)fieldsMap.get('VIA');
+        orderToUpdate.SupplyStreetNumber__c = (String)fieldsMap.get('CIV');
+        orderToUpdate.SupplyPostalCode__c = (String)fieldsMap.get('CAP');
+        orderToUpdate.SupplyCityCode__c = (String)fieldsMap.get('ISTAT');
+        orderToUpdate.SupplyCity__c = (String)fieldsMap.get('LOCALITA');
+        orderToUpdate.SupplyState__c = (String)fieldsMap.get('PROV');
+        orderToUpdate.SupplyCountry__c = (String)fieldsMap.get('NAZIONE');
+        orderToUpdate.DiscardReason__c = (String)fieldsMap.get('DES_ERR_AEEG');
+        orderToUpdate.HerokuPracticeCode__c = (String)fieldsMap.get('COD_PRAT_UTENTE');
+        orderToUpdate.DistributorPracticeCode__c = (String)fieldsMap.get('COD_PRAT_DISTR');
+        /* Date Fields */
+        orderToUpdate.SwitchOutDate__c = fieldsMap.get('DATA_DECORRENZA_SW') != null
+            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_SW'))
+            : null;   
+        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_III') != null
+            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_III'))
+            : null;
+        orderToUpdate.EffectiveDate__c = fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV') != null 
+            ? Date.valueOf((String)fieldsMap.get('DATA_DECORRENZA_VT_TIT_IV'))
+            : null;
+        /* Number Fields */
+        orderToUpdate.PowerCommitted__c = fieldsMap.get('POTCONTRIMP') != null 
+            ? Decimal.valueOf((String)fieldsMap.get('POTCONTRIMP'))
+            : null;
+        orderToUpdate.PowerAvailable__c = fieldsMap.get('POTDISP') != null 
+            ? Decimal.valueOf((String)fieldsMap.get('POTDISP'))
+            : null;
+        /* Field "TENSIONE" */
+        orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
+            ? voltureChangeUtils.getTension(Integer.valueOf((String)fieldsMap.get('TENSIONE')))
+            : null;
+        return orderToUpdate;
+    }   
 
 }

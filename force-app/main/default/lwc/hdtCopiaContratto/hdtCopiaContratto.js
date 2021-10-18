@@ -11,12 +11,13 @@ import confirmAction2Draft from '@salesforce/apex/HDT_LC_CopiaContratto.confirmA
 import getListRecords from '@salesforce/apex/HDT_LC_ContactSelection.getListRecords';
 
 class fieldData{
-    constructor(label, apiname, required, disabled, value) {
+    constructor(label, apiname,cssClass, required, disabled, value) {
         this.label = label;
         this.apiname=apiname;
         this.required=required;
         this.disabled=disabled;
         this.value=value;
+        this.cssClass=cssClass;
     }
 }
 export default class HdtCopiaContratto extends NavigationMixin(LightningElement){
@@ -55,6 +56,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     @api isRunFromFlow= false;
     @track showOperationSubType= false;
     @track ordChild;
+    @track linkReitek = null;
     @track selectedOperationType;
     @track showSubmitForApprovalButton=false;
     @track disableConfirmButton= false;
@@ -79,15 +81,35 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
     @track columns = [
         {label: 'Order Number', fieldName: 'OrderNumber', type: 'text'},
-        {label: 'Status', fieldName: 'Status', type: 'text'}        
+        {label: 'Status', fieldName: 'Status', type: 'text'},
+        {label: 'Data Creazione', fieldName: 'CreatedDate', type: 'date', typeAttributes: {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }}       
+    ];
+
+    shippingFields=[
+        new fieldData(null, "BillingCity__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingStreetName__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingStreetNumber__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingProvince__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingStreetNumberExtension__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingCountry__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingPostalCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingCityCode__c", "slds-size_1-of-3 fieldsData"),
+        new fieldData(null, "BillingPlace__c", "slds-size_1-of-3 fieldsData")
     ];
 
 
 
     get columnsChild(){
         return [
-            ...this.columns, 
-            {label: 'Pod/Pdr', fieldName: 'ServicePointCode__c', type: 'text'}
+            //...this.columns, 
+            {label: 'Order Number', fieldName: 'OrderNumber', type: 'text'},
+            {label: 'Status', fieldName: 'Status', type: 'text'},
+            {label: 'Pod/Pdr', fieldName: 'ServicePointCode__c', type: 'text'},
+            {label: 'Tipo Processo', fieldName: 'ProcessType__c', type: 'text'}
         ]
     }
     @track caseRecord;
@@ -152,9 +174,9 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
     getMapFields(){
         let mFields = new Map();
         //    constructor(label, apiname, required, disabled, value) {
-        mFields.set("Copia contratto firmato",
+        mFields.set("Copia contratto non firmato",
             [
-                new fieldData(null, "CustomerName__c" ),
+                new fieldData(null, "CustomerName__c"),
                 new fieldData(null, "CustomerLastName__c" ),
                 new fieldData(null, "CustomerFiscalCode__c" ),
                 new fieldData(null, "CustomerVATNumber__c" )
@@ -382,7 +404,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
 
         console.log('*****:' + this.tipoCopia);
         let Case = this.catchFieldsToSave({Id: this.recordid});
-        if(this.tipoCopia != 'Copia della registrazione' && (this.selectedActivity === undefined ||  this.selectedActivity == null || this.selectedActivity == '' || (this.selectedActivity == 'Inbound' && (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ))){
+        if(this.tipoCopia != 'Copia della registrazione' &&  (this.selectedSend === undefined ||  this.selectedSend == null || this.selectedSend == '') ){
             const event = new ShowToastEvent({
                 message: 'Popolare i campi Obbligatori',
                 variant: 'error',
@@ -425,12 +447,12 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                             this.dispatchEvent(event);
                     }
                     else{
-                        const event = new ShowToastEvent({
+                        /*const event = new ShowToastEvent({
                             message: 'è stata creata la seguente activity :' + response    ,
                             variant: 'warning',
                             mode: 'dismissable'
                             });
-                            this.dispatchEvent(event);
+                            this.dispatchEvent(event);*/
                             this[NavigationMixin.Navigate]({
                                 type: 'standard__recordPage',
                                 attributes: {
@@ -440,7 +462,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                                 }
                             });
                         const closeclickedevt = new CustomEvent('closeaction');
-                        this.dispatchEvent(closeclickedevt); 
+                        this.dispatchEvent(closeclickedevt);
                     }
                 });
             }

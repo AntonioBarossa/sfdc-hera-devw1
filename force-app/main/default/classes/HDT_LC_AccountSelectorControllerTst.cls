@@ -11,6 +11,7 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     
     //TEST SETUP
     private static void mySetup() {
+        HDT_UTL_DataFactoryTst.pClickInstance();
         //ACCOUNT
         Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
         
@@ -156,6 +157,120 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     }
     
     
+    //Testing fails
+    
+    //getter Fails
+    @isTest
+    private static void getContactsFail(){
+        
+        String insanelyLongString = 'This is an insanely long string to make the query fail.';
+        
+        for(Integer i = 0; i<10; i++){
+            insanelyLongString += insanelyLongString;
+        }
+        System.debug('insanelyLongString length: ' + insanelyLongString.length());
+        
+        
+        //CONTACTS
+        Boolean caughtContacts = false;
+        try{
+            HDT_LC_AccountSelectorController.getContacts(insanelyLongString);         
+        } catch (Exception e) {
+            caughtContacts = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        
+        System.assert(caughtContacts, 'Eccezione non avvenuta per Contacts.');
+        
+        
+        //LEADS
+        Boolean caughtLeads = false;
+        try{
+            HDT_LC_AccountSelectorController.getLeads(insanelyLongString);         
+        } catch (Exception e) {
+            caughtLeads = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        
+        System.assert(caughtLeads, 'Eccezione non avvenuta per Leads.');
+        
+        
+        //ACCOUNT
+        Boolean caughtAcc = false;
+        try{
+            HDT_LC_AccountSelectorController.getAccounts(insanelyLongString);         
+        } catch (Exception e) {
+            caughtAcc = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+        }
+        
+        System.assert(caughtAcc, 'Eccezione non avvenuta per Accounts.');
+    }
+    
+    
+    //Update Activity and Handlers Fail
+    @isTest
+    private static void updateActivity_withHandlersFail(){
+        
+        //UPDATE ACTIVITY FAIL
+        Boolean caughtUpd = false;
+        try {
+			HDT_LC_AccountSelectorController.updateActivity('MalformedActivityId', null, null, 'MalformedLeadId');
+		} catch (Exception e) {
+            caughtUpd = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caughtUpd, 'Eccezione non avvenuta per updateActivity.');
+        
+        
+        //HANDLE LEAD FAIL
+        Boolean caughtHandleLead = false;
+        try {
+			HDT_LC_AccountSelectorController.handleLead('MalformedLeadId', 'MalformedActivityId');
+		} catch (Exception e) {
+            caughtHandleLead = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caughtHandleLead, 'Eccezione non avvenuta per handleLead.');
+        
+        
+        
+        
+        //HANDLE ACCOUNT FAIL
+        mySetup();
+        Contact con = [SELECT Id FROM Contact];
+        
+        Boolean caughtHandleAcc = false;
+        try {
+			HDT_LC_AccountSelectorController.handleAccount(con.Id, 'MalformedActivityId');
+		} catch (Exception e) {
+            caughtHandleAcc = true;
+            System.debug('seach - exception message: ' + e.getMessage());
+            System.debug('seach - exception type name: ' + e.getTypeName());
+            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+            
+		}
+        
+        System.assert(caughtHandleAcc, 'Eccezione non avvenuta per handleAccount.');
+        
+    }
+    
+    
+    
     @isTest 
     private static void handleAccountSerialized() {
         mySetup();
@@ -180,9 +295,36 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     
     @isTest 
     public static void reset() {
+        
+        //SETUP
         mySetup();
+        
+        //TESTING LEGIT
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c];
         HDT_LC_AccountSelectorController.reset(activity.Id);
+        
+        //ASSERTS
+        wrts_prcgvr__Activity__c activityUpdated = [SELECT Id, Contact__c, Account__c, Lead__c FROM wrts_prcgvr__Activity__c];
+        System.assertEquals(null, activityUpdated.Contact__c, 'Field Non resettato');
+        System.assertEquals(null, activityUpdated.Account__c, 'Field Non resettato');
+        System.assertEquals(null, activityUpdated.Lead__c, 'Field Non resettato');
+        
+        
+        
+        //TESTING EXCPT
+        Boolean caught = false;
+        try{
+            HDT_LC_AccountSelectorController.reset('MalformedId');
+            
+        } catch (Exception e) {
+            System.debug('reset - Exception Name: ' + e.getTypeName());
+            System.debug('reset - Exception Message: ' + e.getMessage());
+            System.debug('reset - Exception Stack Trace String: ' + e.getStackTraceString());
+            caught = true;
+            
+        }
+        System.assert(caught, 'Eccezione non catchata.');
+        
     }
     
 }
