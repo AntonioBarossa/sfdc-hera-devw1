@@ -113,9 +113,9 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             returnMap.put('source', userRecord.LoginChannel__c);
             
         } catch (Exception ex) {
-            System.debug('getInfoAccountStatement Exception TypeName: ' + e.getTypeName());
-            System.debug('getInfoAccountStatement Exception Message: ' + e.getMessage());
-            System.debug('getInfoAccountStatement Exception StackTraceString: ' + e.getStackTraceString());
+            System.debug('getInfoAccountStatement Exception TypeName: ' + ex.getTypeName());
+            System.debug('getInfoAccountStatement Exception Message: ' + ex.getMessage());
+            System.debug('getInfoAccountStatement Exception StackTraceString: ' + ex.getStackTraceString());
             return null;
             
         }
