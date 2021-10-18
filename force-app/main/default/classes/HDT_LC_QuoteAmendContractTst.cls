@@ -64,13 +64,15 @@ public with sharing class HDT_LC_QuoteAmendContractTst {
 
         ServicePoint__c sp = [SELECT Id FROM ServicePoint__c WHERE Name = 'servicePoint test'];
 
-        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id);
+        SBQQ__QuoteLine__c sbqqQuote = [SELECT Id, ServicePoint__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID' LIMIT 1];
 
-        SBQQ__QuoteLine__c sbqqQuote = [SELECT id, ServicePoint__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID' LIMIT 1];
+        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id, sbqqQuote.Id);
+
+        sbqqQuote = [SELECT Id, ServicePoint__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID' LIMIT 1];
         sbqqQuote.ServicePoint__c = null;
         update sbqqQuote;
 
-        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id);
+        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id, sbqqQuote.Id);
 
         System.assertEquals(null, sbqqQuote.ServicePoint__c, 'QuoteLine successfully updated');
         System.assertNotEquals(sp.Id, sbqqQuote.ServicePoint__c, 'QuoteLine update failed');
