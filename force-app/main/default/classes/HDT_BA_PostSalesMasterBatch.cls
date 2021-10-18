@@ -89,7 +89,11 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     }
 
 
-    public void finish(Database.BatchableContext bc){}
+    public void finish(Database.BatchableContext bc){
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug('HDT_BA_PostSalesMasterBatch - finished job: ' + a);
+        
+    }
 
 
 }

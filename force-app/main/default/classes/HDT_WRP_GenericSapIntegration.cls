@@ -6,5 +6,9 @@ global inherited sharing class HDT_WRP_GenericSapIntegration {
     public String recordId;
     public Integer responseCode;
     public String responseStatus;
-    public HDT_WRP_GenericSapIntegration() {}
+    
+    //EMPTY CONSTRUCTOR
+    public HDT_WRP_GenericSapIntegration(){
+        this.requestType = '';
+    }
 }

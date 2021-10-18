@@ -360,7 +360,11 @@ public with sharing class HDT_SRV_SelfReadings {
                 createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
             }
             when else {
-                // TODO
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return createActivity;
             }
         }
 
@@ -381,7 +385,11 @@ public with sharing class HDT_SRV_SelfReadings {
                 closeCase = true;
             }
             when else {
-                // TODO
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return closeCase;
             }
         }
 
