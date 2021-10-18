@@ -26,7 +26,7 @@ public with sharing class HDT_SRV_ServiceTwentySix {
         calloutLog.wrts_prcgvr__Code__c = String.valueof(system.now().format('yyyyMMddHHmmssSSS'));
         calloutLog.wrts_prcgvr__Message__c = message;
         calloutLog.wrts_prcgvr__Description__c = 'request: \n'+JSON.serializePretty(req)+'\n\n\n\nresponse:\n'+JSON.serialize(res);
-        insert calloutLog;
+        insert calloutLog;//those debug logs must violate crud permission, those are registered for admins only
     }
 
     public static void insertCalloutLog(String message, String req, String res){
@@ -34,6 +34,6 @@ public with sharing class HDT_SRV_ServiceTwentySix {
         calloutLog.wrts_prcgvr__Code__c = String.valueof(system.now().format('yyyyMMddHHmmssSSS'));
         calloutLog.wrts_prcgvr__Message__c = message;
         calloutLog.wrts_prcgvr__Description__c = 'request: \n'+req+'\n\n\n\nresponse:\n'+res;
-        insert calloutLog;
+        insert calloutLog;//those debug logs must violate crud permission, those are registered for admins only
     }
 }
