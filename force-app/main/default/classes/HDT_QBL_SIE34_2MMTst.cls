@@ -40,6 +40,9 @@ public class HDT_QBL_SIE34_2MMTst {
         System.assertEquals(true,JSON.serialize(this2sme).contains('varRunId00') && JSON.serialize(this2sme).contains('varFileType00'),
         'HDT_QBL_SIE34_2MM has been well instantiated will the value passed'
         );
+        System.assertNotEquals(false,JSON.serialize(this2sme).contains('varRunId00') && JSON.serialize(this2sme).contains('varFileType00'),
+        'varRunId00 has been provided instantiating the HDT_QBL_SIE34_2MM object'
+        );
         //No other checks because the call of this queue doesn't impact any data into the current transaction
     }
 }
