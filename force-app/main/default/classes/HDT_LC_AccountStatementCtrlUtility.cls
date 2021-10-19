@@ -301,6 +301,12 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog, String tabValue){
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCaSet = new Set<String>();
@@ -329,7 +335,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             tot += Decimal.valueOf(obj.residuo);
         }
 
-        System.debug('>>>>>>>>>>>> isInstallmentSet ' + String.valueOf(isInstallmentSet));
+        System.debug(LoggingLevel.DEBUG, '>>>>>>>>>>>> isInstallmentSet ' + String.valueOf(isInstallmentSet));
 
         if(isInstallmentSet.size() > 0){
             if(isInstallmentSet.contains('SI')){
@@ -358,7 +364,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         //    }                       
         //}
 
-        System.debug('>>>>>>>>>>>> IsInstallment__c ' + String.valueOf(serviceCatalog.IsInstallment__c));
+        System.debug(LoggingLevel.DEBUG, '>>>>>>>>>>>> IsInstallment__c ' + String.valueOf(serviceCatalog.IsInstallment__c));
 
         serviceCatalog.OnCredit__c = (tot<0) ? true : false;
         serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;

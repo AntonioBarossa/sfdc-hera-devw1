@@ -1,5 +1,12 @@
 public without sharing class HDT_WS_MulesoftCaller {
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    * Risoluzione "Local variable is declared and-or assigned but not used"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_Response retrieveDataCtrl(String body, HDT_WRP_HttpObj httpObj) {
 
         HDT_WRP_Response respObj = new HDT_WRP_Response();
@@ -10,7 +17,7 @@ public without sharing class HDT_WS_MulesoftCaller {
         HttpRequest req = new HttpRequest();
 
         String endPoint;
-        String authValueString;
+        // String authValueString;
 
         try{
 
@@ -32,7 +39,7 @@ public without sharing class HDT_WS_MulesoftCaller {
             HTTPResponse res = http.send(req);
 
             String responseStatus = res.getStatus();
-            System.debug('## Response status -> ' + responseStatus);
+            System.debug(LoggingLevel.DEBUG, '## Response status -> ' + responseStatus);
 
             if(responseStatus != 'OK'){
                 switch on res.getStatusCode() {
@@ -72,7 +79,7 @@ public without sharing class HDT_WS_MulesoftCaller {
             System.debug('# ' + endTime + ' - ' + startTime);*/
 
         } catch (Exception ex){
-            System.debug('HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
             respObj.success = false;
             respObj.message = 'HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage();       
         }
