@@ -193,5 +193,20 @@ public with sharing class HDT_QR_VoltureChangeManager {
 
         return securityDecision.getRecords();
     }
+    
+    public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplateByName(String templateName)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT id,
+            wrts_prcgvr__Assignees__c, 
+            wrts_prcgvr__Subject__c, 
+            wrts_prcgvr__DueDateField__c,Name 
+            FROM wrts_prcgvr__ActivityTemplate__c  
+            WHERE Name = :templateName]);
+
+        return securityDecision.getRecords();
+    }
+        
 
 }

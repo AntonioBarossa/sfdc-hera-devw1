@@ -67,8 +67,9 @@ public with sharing class HDT_WS_VoltureChangeManagerTst {
         Test.startTest();
         HDT_UTL_DatabaseService.updateSObject(orderList);
         Test.stopTest();
-        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c FROM Order];
-        System.assertEquals('Amm. Precheck OK SII', orderListUpdated[0].TecnicalPhase__c, 'Fase non correttamente aggiornata');
+        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c, Phase__c FROM Order];
+        System.assert((orderListUpdated[0].TecnicalPhase__c =='Amm. Precheck OK SII' || orderListUpdated[0].Phase__c =='Amm. Precheck OK SII'),
+            'Fase non correttamente aggiornata');
     }
 
     public class HDT_WS_VoltureChanageManagerMock implements HTTPCalloutMock

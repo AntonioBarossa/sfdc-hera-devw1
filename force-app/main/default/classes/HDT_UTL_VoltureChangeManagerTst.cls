@@ -179,4 +179,50 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         System.assertEquals('Amm. Precheck OK SII', currentOrder[0].TecnicalPhase__c,'Fase non calcolata correttamente');
         System.assertEquals('ERR', currentOrder[0].CausalCode__c,'Codice causale calcolato correttamente');
     }
+
+    @IsTest
+    static void handleAmmissibilityCheckTrueTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+    
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+        };
+
+        Test.startTest();
+        Boolean result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(true, result, 'Check True non eseguito correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckFalseTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+    
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+        };
+
+        Test.startTest();
+        Boolean result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(false, result, 'Check False non eseguito correttamente');
+    }
 }

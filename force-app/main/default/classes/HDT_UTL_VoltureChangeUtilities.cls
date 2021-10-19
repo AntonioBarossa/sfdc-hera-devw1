@@ -93,4 +93,20 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         return getPowerBand(powerExpected) == getPowerBand(powerActual);
     }
 
+    public wrts_prcgvr__Activity__c createActivity(String templateName)
+    {
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = voltureChangeQr.getActivityTemplateByName(templateName);
+        if(activityTemplates.size() > 0)
+        {
+            activity.wrts_prcgvr__ActivityTemplate__c = activityTemplates[0].Id;
+            activity.CausalError__c = templateName;
+            activity.wrts_prcgvr__Description__c = templateName;
+            activity.Type__c = templateName;
+            activity.wrts_prcgvr__IsRequired__c = true;
+
+        }
+        return activity;
+    }
+
 }
