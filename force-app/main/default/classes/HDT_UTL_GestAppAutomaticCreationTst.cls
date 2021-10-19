@@ -24,6 +24,8 @@ public class HDT_UTL_GestAppAutomaticCreationTst {
 
         System.runAs(internalUser){
             
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
