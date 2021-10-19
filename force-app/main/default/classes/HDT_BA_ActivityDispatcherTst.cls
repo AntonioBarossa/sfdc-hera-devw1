@@ -1,7 +1,8 @@
 @isTest
 public with sharing class HDT_BA_ActivityDispatcherTst {
     @TestSetup
-    private static void makeData(){
+    private static void makeData() {
+        HDT_UTL_DataFactoryTst.pClickInstance();
         insert new Group(Name = 'testnamegroup1');
     }
 
