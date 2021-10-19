@@ -6,6 +6,8 @@ public inherited sharing class HDT_UTL_HelperMethods {
     
     private static HDT_QR_PermissionSet permissionSetQr = new HDT_QR_PermissionSet();
 
+    private Set<String> fieldsToIgnore = new Set<String>{'id', 'attributes', 'systemmodstamp', 'createddate', 'ordernumber', 'createdbyid', 'campaignid'};
+
     /**
      * @description Get object attributes as a list
      * @param obj - SObject
@@ -17,7 +19,7 @@ public inherited sharing class HDT_UTL_HelperMethods {
 
         List<String> fields = new List<String>();
         for (String field: objMap.keySet()) {
-            if (! (field.equalsIgnoreCase('Id') || field.equalsIgnoreCase('attributes'))){
+            if (!fieldsToIgnore.contains(field?.toLowerCase())){
                 fields.add(field); 
             } 
         }

@@ -175,9 +175,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
 //**** AGGIUNTA Validazione Documentale LG 2009 FF */
         List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
+        system.debug('******:123' + ordersFullList);
 
-
-        for(Order o : ordersFullList){
+        for(Order o : ordersFullList2){
             if (o.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && (o.Phase__c == 'Documentazione Gestita' || o.DocumentPackage__c == 'Validato')) {
                 ordersParent.add(o.id);
             }
@@ -215,7 +215,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 ));
             }
         }
-
+        if(ordersFullList != null && !ordersFullList.isEmpty()){
+            childOrdersDocValid.addAll(ordersFullList);
+        }
         if (!childOrdersDocValid.isEmpty()) {
             orderSrv.updateRecords(childOrdersDocValid);
         }
@@ -243,10 +245,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         vasOrdersToUpdate.putAll(
             updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
         );
+        /*if(ordersFullList != null && !ordersFullList.isEmpty()){
+          
+        }*/
         if(!vasOrdersToUpdate.isEmpty()){
             system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
         }
-
         insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
     }
 	
@@ -838,13 +842,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     // FINE @Picchiri Credit check Date 15.06.21
 
     public static void updatePhaseForFirm(List<Order> newListOrder){
-        for(Order ord1 : newListOrder){
+        System.debug('********:Debug');
+       /* for(Order ord1 : newListOrder){
             if(ord1.phase__c == 'Documentazione da firmare' && ord1.DocumentalPhase__c == 'Plico firmato'){
                 ord1.phase__c = 'Documentazione Gestita';
                 ord1.status = 'Activated';
                 ord1.SignedDate__c = date.today();
             } 
-        }
+        }*/
     }
 
 
@@ -866,7 +871,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 }
             }
             //@frpanico closes open activities on "Annullato" or "Ripensato"
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {                
                 List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
                 try
@@ -884,7 +889,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     System.debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                 }
             }
-            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+            if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out'))
             {
                 orderNew.Status = 'Annullato';
             }

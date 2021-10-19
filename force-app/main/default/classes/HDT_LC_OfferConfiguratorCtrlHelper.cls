@@ -114,7 +114,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         
             if(objRes.isCreateable() && objRes.isUpdateable()){
-                upsert tecOff;
+                HDT_UTL_DatabaseService.updateSObject(tecOff);
                 tecOffId = tecOff.Id;
             } else {
                 saveResponse.success = false;
@@ -362,7 +362,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
      
             if(objRes.isCreateable()){
-                insert newTechOff;
+                HDT_UTL_DatabaseService.insertSObject(newTechOff);
             } else {
                 saveResponse.success = false;
                 saveResponse.message = Label.HDT_OfferConfig_ErrorObj;
@@ -671,7 +671,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
         if(objRes.isUpdateable()){
-            update tecOffList;
+            HDT_UTL_DatabaseService.updateSObject(tecOffList);
         }
 
         return true;

@@ -45,7 +45,7 @@ public class HDT_UTL_GestAppAutomaticCreationTst {
         Order ord = [Select id From Order];
         
         Map<String,Object> argsMap = new Map<String,Object>();
-        argsMap.put('method','Modifica impianto');
+        argsMap.put('method','Modificaimpianto');
         argsMap.put('sender',ord);
         
         Test.startTest();
