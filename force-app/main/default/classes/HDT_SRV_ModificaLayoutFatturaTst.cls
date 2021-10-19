@@ -36,7 +36,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         
         //SUB-SETUP
         ///CLICK
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        //HDT_UTL_DataFactoryTst.pClickCasePhase();
         
         ///AUTORIZZARE CAMBI DI FASE SUL CASE
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
