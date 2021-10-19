@@ -24,7 +24,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     
     //executeTest
     @isTest
-    private static void executeTest_ok() {
+    private static void executeTestOk() {
         
         //DEBUG
         String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest_ok';
@@ -40,13 +40,13 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
         
-        String method_OK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
+        String methodOK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
         
         Map<String, Object> argsMap = new Map<String,Object>();
-        argsMap.put('method', method_OK);
+        argsMap.put('method', methodOK);
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
@@ -62,15 +62,15 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Case myCase = [SELECT Id, Phase__c,TecnicalPhase__c FROM Case];
         
         //ASSERTS
-        System.assert(result.success);
-        System.assertEquals('OK', result.message);
+        System.assert(result.success, 'Result non true.');
+        System.assertEquals('OK', result.message, 'Message non OK');
         //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
-        System.assertEquals('Completata', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
+        System.assertEquals('Completata', myCase.TecnicalPhase__c, 'Tecnical Phase errata.');//TODO: 'Errore Lavorazione SAP'
         
     }
     
     @isTest
-    private static void executeTest_null() {
+    private static void executeTestNULL() {
         
         //DEBUG
         String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest_null';
@@ -109,15 +109,15 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Case myCase = [SELECT Id, Phase__c,TecnicalPhase__c FROM Case];
         
         //ASSERTS
-        System.assert(result.success);
-        System.assertEquals('OK', result.message);
+        System.assert(result.success, 'Result non true.');
+        System.assertEquals('OK', result.message, 'Message non OK');
         //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
-        System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
+        System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c, 'Tecnical Phase errata');//TODO: 'Errore Lavorazione SAP'
         
     }
     
     @isTest
-    private static void executeTest_NotOk() {
+    private static void executeTestNotOK() {
         
         //DEBUG
         String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest_NotOk';
@@ -156,10 +156,10 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Case myCase = [SELECT Id, Phase__c,TecnicalPhase__c FROM Case];
         
         //ASSERTS
-        System.assert(result.success);
-        System.assertEquals('OK', result.message);
+        System.assert(result.success, 'Result non true.');
+        System.assertEquals('OK', result.message, 'Message non OK');
         //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
-        System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c);//TODO: 'Errore Lavorazione SAP'
+        System.assertEquals('Errore Lavorazione SAP', myCase.TecnicalPhase__c, 'Tecnical Phase errata');//TODO: 'Errore Lavorazione SAP'
         
     }
     
@@ -172,7 +172,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         public HTTPResponse respond(HTTPRequest request){
             
             HttpResponse response = new HttpResponse();
-            System.debug('request.getEndpoint: ' + request.getEndpoint());
+            System.debug(LoggingLevel.DEBUG, 'request.getEndpoint: ' + request.getEndpoint());
             
             if('Callout:ModificaLayoutFattura'.equals(request.getEndpoint())){
                 
@@ -233,7 +233,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
                 return response;
                 
             } else {
-                System.debug('Invalid Callout Endpoint - Empty HTTP Response.');
+                System.debug(LoggingLevel.DEBUG, 'Invalid Callout Endpoint - Empty HTTP Response.');
                 
             }
             
