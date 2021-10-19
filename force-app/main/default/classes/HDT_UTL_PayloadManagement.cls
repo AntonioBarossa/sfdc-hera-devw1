@@ -806,7 +806,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
         if (objRes.isAccessible()) {
-            recordList = Database.query(/*String.escapeSingleQuotes(*/queryString/*)*/);
+            recordList = Database.query(queryString);
         }
         System.debug('recordList: ' + recordList);
 
