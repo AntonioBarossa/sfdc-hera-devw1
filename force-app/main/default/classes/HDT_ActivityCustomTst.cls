@@ -2,8 +2,10 @@
 public with sharing class HDT_ActivityCustomTst {
 
     @isTest
-    public static void HDT_ActivityCustomTst() {
+    public static void testActivityCustomTst() {
 
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        
         List<Account> testAcc = HDT_UTL_DataFactoryTst.createAccountPartner(1,false, 'Pooyan');
         testAcc[0].CompanyOwner__c = 'HERA COMM';
 
