@@ -102,4 +102,24 @@ public with sharing class HDT_SRV_VoltureChangeManager
         return;
     }
 
+    /**@frpanico 19/10/2021
+     * This method handle the PlatformEvent publish to update the order and make the callout
+     * This method takes in input the order to update
+     * update the order and publish the event
+     */
+    public void handlePublishUpdate(Order inputOrder)
+    {
+        HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+
+        inputOrder.Phase__c = 'Comunicazione verso Heroku';
+        platEvent.SerializedSobj__c = JSON.serialize(inputOrder);
+        Database.SaveResult sr = Eventbus.publish(platEvent);
+        
+        if(sr.isSuccess())
+        {
+            return;
+        }
+        return;
+    }
+
 }
