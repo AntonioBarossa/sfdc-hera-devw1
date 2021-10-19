@@ -88,7 +88,7 @@ public inherited sharing class HDT_LC_GeneralInfo {
     @AuraEnabled
     public static List<AgentMatrix__c> getAgents(String AgencyName, String Channel){
         System.debug('test');
-        Id userId=UserInfo.getUserId();
+        // Id userId=UserInfo.getUserId();
 
         List<AgentMatrix__c> agentList = new List<AgentMatrix__c>();
 
