@@ -21,6 +21,16 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
     }
+
+    /**@frpanico 19/10/2021
+     * Added TestSetup
+     */
+    @TestSetup
+    static void setup()
+    {
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+    }
     
     //TESTS
     
@@ -34,13 +44,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         //SETUP
         mySetup();
         
-        //SUB-SETUP
-        ///CLICK
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
-        
-        ///AUTORIZZARE CAMBI DI FASE SUL CASE
-        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
         
         String methodOk = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
         
@@ -81,13 +84,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         //SETUP
         mySetup();
         
-        //SUB-SETUP
-        ///CLICK
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
-        
-        ///AUTORIZZARE CAMBI DI FASE SUL CASE
-        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
         
         //TESTING
         String methodDataNull = 'ModificaLayoutFattura_null';//NOTA: in verità è endpoint.
@@ -128,13 +124,6 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         //SETUP
         mySetup();
         
-        //SUB-SETUP
-        ///CLICK
-        HDT_UTL_DataFactoryTst.pClickCasePhase();
-        
-        ///AUTORIZZARE CAMBI DI FASE SUL CASE
-        Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
         
         //TESTING
         String methodNotOk = 'ModificaLayoutFattura_notOK';//NOTA: in verità è endpoint.
