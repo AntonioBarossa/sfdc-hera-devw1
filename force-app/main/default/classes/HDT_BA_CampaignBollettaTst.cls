@@ -71,7 +71,7 @@ public class HDT_BA_CampaignBollettaTst {
         update listaCMpreBatch;
         
         Test.startTest();
-        HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(campaignId);        
+        HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(new List<String>{campaignId});
         Id batchId = Database.executeBatch(cb,200);
         Test.stopTest();
         
