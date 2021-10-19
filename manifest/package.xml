@@ -1,31 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-<!--	<types>
-		<members>HDT_BA_MassiveLoader</members>
-		<members>HDT_LC_MassiveLoader</members>
-		<members>HDT_QR_MassiveLoaderProcess</members>
-		<members>HDT_QR_MassiveLoaderRequest</members>
-		<members>HDT_SRV_MassiveLoaderRequest</members>
-		<members>HDT_UTL_ProcessExecution</members>
-		<members>HDT_UTL_ProcessTakeOver</members>
-		
-		<name>ApexClass</name>
-	</types>-->
 	<types>
-		<members>HDT_MassiveLoaderProcess__mdt</members>
-		<members>MassiveLoaderRequestItem__c</members>
-		<members>MassiveLoaderRequest__c</members>
+		<members>*</members>
+		<name>CustomMetadata</name>
+	</types>
+	<types>
+		<members>HDT_MassiveFieldsObjectMap__mdt</members>
 		<name>CustomObject</name>
 	</types>
-	<!--<types>
-		<members>MassiveLoader</members>
-		<members>MassiveLoaderRequest__c</members>
-		<name>CustomTab</name>
-	</types>
-	<types>
-		<members>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</members>
-		<members>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</members>
-		<name>Layout</name>
-	</types>-->
 	<version>51.0</version>
 </Package>
