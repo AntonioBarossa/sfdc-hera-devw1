@@ -49,9 +49,9 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
             response = http.send(request);
 
         } catch (Exception e){
-            System.debug(LoggingLevel.DEBUG, 'Exception TypeName: ' + e.getTypeName());
-            System.debug(LoggingLevel.DEBUG, 'Exception Message: ' + e.getMessage());
-            System.debug(LoggingLevel.DEBUG, 'Exception StackTraceString: ' + e.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception StackTraceString: ' + e.getStackTraceString());
             response = null;
             
         }
