@@ -31,10 +31,13 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         recordId = (String) obj.get('Id');
         currentCase.Id = recordId;
         bodyWrp.rds = (String) obj.get('CaseNumber');
+        
         System.debug(LoggingLevel.DEBUG, 'contratti -> ' +(String) obj.get('ContractCode__c'));
-        System.debug(LoggingLevel.DEBUG, 'dettaglioBolletta -> ' + (Boolean) obj.get('ElementDetail__c'));
         positions.contratti = (String) obj.get('ContractCode__c');
+        
+        System.debug(LoggingLevel.DEBUG, 'dettaglioBolletta -> ' + (Boolean) obj.get('ElementDetail__c'));
         positions.dettaglioBolletta = (Boolean) obj.get('ElementDetail__c') ? 'Y' : 'N';
+        
         bodyWrp.posizioni = positions;
         requestBody = JSON.serialize(bodyWrp);
         
