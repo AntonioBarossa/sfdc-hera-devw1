@@ -15,7 +15,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
     };
     private static final Date TODAY = Date.today();
 
-    public Database.QueryLocator start(Database.BatchableContext BC) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'SELECT ' +
                 'Id,' +
                 'ActiveServicesEle__c,' +
@@ -36,7 +36,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         return Database.getQueryLocator(query);
     }
 
-    public void execute(Database.BatchableContext BC, List<SObject> scope) {
+    public void execute(Database.BatchableContext bc, List<SObject> scope) {
         Map<Id, Account> accountMap = new Map<Id, Account>((List<Account>) scope);
         Map<Id, Account> processedAccountMap = new Map<Id, Account>();
 
@@ -161,7 +161,16 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         update processedAccountMap.values();
     }
 
-    public void finish(Database.BatchableContext BC) {
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public void finish(Database.BatchableContext bc) {
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_CustomerLifeCycle - finished job: ' + a);
+        
     }
 
     private Boolean isEnergy(String commodity) {

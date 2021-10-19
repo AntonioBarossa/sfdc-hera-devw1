@@ -11,10 +11,9 @@ public inherited sharing class HDT_QR_CausalCodeCalculation {
         && Schema.SObjectType.HDT_CausalCodeCalculation__mdt.fields.OperationCode__c.isAccessible()
         && Schema.SObjectType.HDT_CausalCodeCalculation__mdt.fields.Cluster__c.isAccessible()
         && Schema.SObjectType.HDT_CausalCodeCalculation__mdt.fields.Process__c.isAccessible()
-        && Schema.SObjectType.HDT_CausalCodeCalculation__mdt.fields.Subprocess__c.isAccessible())
-
+        && Schema.SObjectType.HDT_CausalCodeCalculation__mdt.fields.Subprocess__c.isAccessible()){
+            
             try{
-
                 cccRecord = [SELECT CausalCode__c, OperationCode__c 
                 FROM HDT_CausalCodeCalculation__mdt
                 WHERE (Cluster__c = :cluster OR Cluster__c = null)
@@ -25,12 +24,15 @@ public inherited sharing class HDT_QR_CausalCodeCalculation {
                 LIMIT 1];
 
             } catch(Exception e){
+                System.debug('calculateCausalCode Exception TypeName: ' + e.getTypeName());
+                System.debug('calculateCausalCode Exception Message: ' + e.getMessage());
+                System.debug('calculateCausalCode Exception StackTraceString: ' + e.getStackTraceString());
+                return cccRecord;
 
-                //blank code
-
+            }
         }
 
-        if(cccRecord.OperationCode__c == null){
+        if(cccRecord!= null && cccRecord.OperationCode__c == null){
 
             cccRecord.OperationCode__c = '';
 

@@ -48,6 +48,12 @@ public with sharing class HDT_QR_InformativeManager {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 18/10/2021
+    * Risoluzione "Avoid Empty Block Statements"
+    * Inserito SuppressWarnings, gli statements vuoti sono stati creati per possibili implementazioni future
+    */
+    @SuppressWarnings('PMD.EmptyStatementBlock')
     public static SObject getPrePopulationInfo(String recordId,String sObjName){
 
         SObject contextSobj;

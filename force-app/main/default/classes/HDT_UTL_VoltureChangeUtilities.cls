@@ -2,11 +2,24 @@
  * Class for small utilities methods
  */
 public with sharing class HDT_UTL_VoltureChangeUtilities {
-
+    
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
     //private static String waitingActivityTemplate = '';
+    @TestVisible
     private static String waitingPhase = '';
+    @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
+    @TestVisible
+    private static Integer btLimit = 10;
+    @TestVisible
+    private static Integer mtLimit = 20;
+    @TestVisible
+    private static Integer atLimit = 30;
+    @TestVisible
+    private static Decimal lowerThreshold = 10.0;
+    @TestVisible
+    private static Decimal higherThreshold = 30.0;
+
 
     /**
      * @frpanico 06/10/2021
@@ -20,28 +33,6 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         Order currentOrder = (Order) JSON.deserialize(serializedOrder, Order.class);
         HDT_UTL_DatabaseService.updateSObject(currentOrder);
     }
-
-    /**@frpanico 12/10/2021
-     * The method takes in inptu orderId and isRequired to create the Activity
-     * Returns the activityId
-     * Method actually not necessary since the activity is always created on phase change
-     */
-    /*
-    public String createActivityToOrder(String orderId, Boolean isRequired, String templateName)
-    {
-        List<wrts_prcgvr__ActivityTemplate__c> activityTemplate = voltureChangeQr.getActivityTemplate(templateName);
-        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.wrts_prcgvr__ActivityTemplate__c = activityTemplate[0]?.Id;
-        activity.wrts_prcgvr__Description__c = templateName;
-        activity.wrts_prcgvr__IsRequired__c	= isRequired;
-        activity.Order__c = orderId;
-        activity.Type__c = templateName;
-
-        HDT_UTL_DatabaseService.insertSObject(activity);
-
-        return activity.Id;
-    }
-    */
 
     /*@frpanico 12/10/2021
      * Calculate next phase for business account
@@ -63,6 +54,59 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         }
 
         return accountCheck;
+    }
+
+    /**@frpanico 14/10/2021 
+     * Method that takes the response as input 
+     * Returns a Map<String,Object> containing fileds from response
+     */
+    public Map<String,Object> getFieldsMap(wrts_prcgvr.MRR_1_0.MultiResponse mrrObj)
+    {
+        Map<String,Object> fieldsMap = new Map<String,Object>();
+        for(wrts_prcgvr.MRR_1_0.Field field : mrrObj.responses[0].objects[0].fields)
+        {
+            fieldsMap.put(field.name, field.value);
+        }
+        return fieldsMap;
+    }
+
+    /**@frpanico 14/10/2021
+     * Method that takes in input the tension number returned from the response
+     * Returns the string value for the VoltageLevel__c field
+     */
+    public String getTension(Integer tensionNumberValue)
+    {
+        return tensionNumberValue <= btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
+            : (btLimit < tensionNumberValue && tensionNumberValue <= mtLimit)
+                ? 'MT' /* If tension value between btLimit and mtLimit : MT */
+                : tensionNumberValue > mtLimit 
+                    ? 'AT' : ''; /* If thension value greater than mtLimit: AT */
+    }
+
+    public String getPowerBand(Decimal power)
+    {
+        return power <= lowerThreshold ? 'Fascia 1' : power > lowerThreshold && power <= higherThreshold ? 'Fascia 2' : 'Fascia 3';
+    }
+
+    public Boolean powerCheck(Decimal powerExpected, Decimal powerActual)
+    {
+        return getPowerBand(powerExpected) == getPowerBand(powerActual);
+    }
+
+    public wrts_prcgvr__Activity__c createActivity(String templateName)
+    {
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = voltureChangeQr.getActivityTemplateByName(templateName);
+        if(activityTemplates.size() > 0)
+        {
+            activity.wrts_prcgvr__ActivityTemplate__c = activityTemplates[0].Id;
+            activity.CausalError__c = templateName;
+            activity.wrts_prcgvr__Description__c = templateName;
+            activity.Type__c = templateName;
+            activity.wrts_prcgvr__IsRequired__c = true;
+
+        }
+        return activity;
     }
 
 }

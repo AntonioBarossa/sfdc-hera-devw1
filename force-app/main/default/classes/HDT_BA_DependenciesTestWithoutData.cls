@@ -23,8 +23,8 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         wrts_prcgvr.PostInstall postinstall = new wrts_prcgvr.PostInstall();
         Test.testInstall(postinstall, null);
 
-        HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting();
-        HDT_UTL_DataFactoryTst.installCSDependecyPhaseCheckSetting();
+        HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Order');
+        HDT_UTL_DataFactoryTst.installCSDependecyPhaseCheckSetting('Comunicazione verso Heroku');
 
         HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Bozza To Heroku',
             PHASE_INC_NEXT,null,null,null,false, PHASE_INC, null,null,
@@ -101,7 +101,7 @@ public with sharing class HDT_BA_DependenciesTestWithoutData {
         System.debug(LoggingLevel.DEBUG, srSeq);
 
         HDT_BA_Dependencies bad = new HDT_BA_Dependencies();
-        Id batchId = Database.executeBatch(bad);
+        Database.executeBatch(bad);
 
         Test.stopTest();
         System.assertEquals(0, [select count() from ServiceRequest__c where Status__c =: HDT_UTL_Dependencies.STATUS_SEQUENZIALIZZATO], 'Test OK');

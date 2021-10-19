@@ -193,21 +193,20 @@ public with sharing class HDT_QR_VoltureChangeManager {
 
         return securityDecision.getRecords();
     }
-
-    /* Get the activity template for the activity creation */
-    /* Method seems to not be useful */
-    /*public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplate(String templateName)
+    
+    public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplateByName(String templateName)
     {
-        SObjectAccessDecision securityDecision =
+        SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(AccessType.READABLE, 
-            [SELECT wrts_prcgvr__Assignees__c, 
+            [SELECT id,
+            wrts_prcgvr__Assignees__c, 
             wrts_prcgvr__Subject__c, 
-            wrts_prcgvr__DueDateField__c,
-            Name 
+            wrts_prcgvr__DueDateField__c,Name 
             FROM wrts_prcgvr__ActivityTemplate__c  
             WHERE Name = :templateName]);
-    
+
         return securityDecision.getRecords();
     }
-    */
+        
+
 }
