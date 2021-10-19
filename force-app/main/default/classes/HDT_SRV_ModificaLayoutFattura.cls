@@ -1,9 +1,9 @@
 /**@frpanico 15/10/2021
  * Per implementare interfaccia di PClick il modifier deve essere global
  */
-@SuppressWarnings('PMD.AvoidGlobalModifier')
+@SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
 global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
-
+    
     global Object execute(Object args) {
 
         System.debug(LoggingLevel.DEBUG, 'HDT_SRV_ModificaLayoutFattura callout action');
