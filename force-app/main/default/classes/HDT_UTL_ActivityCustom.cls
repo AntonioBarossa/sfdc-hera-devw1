@@ -25,7 +25,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
-            HDT_QR_Case caseQr = new HDT_QR_Case();
+            // HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
           //  Case c = caseQr.getRecordById(s.case__c);
             Case c = new Case();
@@ -181,7 +181,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             orderSrv.updateRecord(ord);
         }
         else{
-            Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+            // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
             List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
             if(actCusList != null && !actCusList.isEmpty()){
                 if(actCusList[0].wrts_prcgvr__status__c == 'Completed'){
