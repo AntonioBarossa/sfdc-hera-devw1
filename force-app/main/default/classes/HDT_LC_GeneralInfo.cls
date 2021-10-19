@@ -25,11 +25,14 @@ public inherited sharing class HDT_LC_GeneralInfo {
             List<wrts_prcgvr__Activity__c> listActi = HDT_QR_ActivityCustom.getActivityTelesellingOutboundByUser();
             if (listActi != null && !listActi.isEmpty()) {
                 sale.Ecid__c = listActi[0].Ecid__c;
-                saleSrv.updateRecord(sale);
             }
+            
         }catch(exception e){
             system.debug('***********' + e);
         }
+
+        saleSrv.updateRecord(sale);
+        
         //if(sale.CommissioningCampaign__c != null){
           //  List<CampaignMember> campMembList = campMembQr.getCampaignMemberByCampaingAndContact(sale.CommissioningCampaign__c, sale.SalesContact__c);
             
