@@ -20,8 +20,8 @@ public with sharing class HDT_WS_VoltureChangeManagerTst {
         List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', 
         '{"name": "Order","label": "Ordine","sObjectType": "Order","queryable": true,"fields": ['
         +'{"name": "ServicePointCode__c","label": "POD"},'
-        +'{"name": "OrderNumber","label": "RIF_RICH"},'
-        +'{"name": "Id","label": "RECORD_ID"},'
+        +'{"name": "Id","label": "RIF_RICH"},'
+        +'{"name": "OrderNumber","label": "RECORD_ID"},'
         +'{"name": "DistributorCode__c","label": "SERVICEID_DIS"},'
         +'{"name": "SalesCompanyCode__c","label": "SERVICEID_VEN"}'
         +'],'
@@ -67,8 +67,9 @@ public with sharing class HDT_WS_VoltureChangeManagerTst {
         Test.startTest();
         HDT_UTL_DatabaseService.updateSObject(orderList);
         Test.stopTest();
-        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c FROM Order];
-        System.assertEquals('Amm. Precheck OK SII', orderListUpdated[0].TecnicalPhase__c, 'Fase non correttamente aggiornata');
+        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c, Phase__c FROM Order];
+        System.assert((orderListUpdated[0].TecnicalPhase__c =='Amm. Precheck OK SII' || orderListUpdated[0].Phase__c =='Amm. Precheck OK SII'),
+            'Fase non correttamente aggiornata');
     }
 
     public class HDT_WS_VoltureChanageManagerMock implements HTTPCalloutMock

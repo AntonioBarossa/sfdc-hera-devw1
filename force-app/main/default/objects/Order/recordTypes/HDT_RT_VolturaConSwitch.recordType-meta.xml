@@ -2210,6 +2210,10 @@
             <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
+        <!-- <values>
+            <fullName>Caricamento KO</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Annullamento - Da inviare</fullName>
             <default>false</default>
@@ -2237,7 +2241,7 @@
         <values>
             <fullName>Bozza Annullata</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Chiuso</fullName>
             <default>false</default>
@@ -2294,14 +2298,24 @@
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--values>
             <fullName>Inviato al SII</fullName>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values> -->
+        <!-- <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values> -->
+        <!-- <values>
+            <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>KO Rilavorato</fullName>
             <default>false</default>
@@ -2348,6 +2362,14 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm. Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm. Precheck OK SII</fullName>
             <default>false</default>
         </values>
     </picklistValues>

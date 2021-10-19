@@ -12,9 +12,12 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
+        List<wrts_prcgvr__ActivityTemplate__c> activitiesTemplate = new List<wrts_prcgvr__ActivityTemplate__c>();
+
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');	
 		List<Order> orderList =HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id); 
+        activitiesTemplate = HDT_UTL_DataFactoryTst.createActivityTemplate(1,true);
 
         String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
         String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
@@ -145,6 +148,62 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         String result = voltureChangeUtilities.getTension(HDT_UTL_VoltureChangeUtilities.atLimit);
         Test.stopTest();
         System.assertEquals('AT', result, 'Livello Tensione AT non calcolato correttamente');
+    }
+
+    @IsTest
+    static void getPowerBandFasciaUnoTst()
+    {
+        Decimal power = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('Fascia 1', result, 'Fascia 1 non calcolata correttamente');
+    }
+
+    
+    @IsTest
+    static void getPowerBandFasciaDueTst()
+    {
+        Decimal power = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('Fascia 2', result, 'Fascia 2 non calcolata correttamente');
+    }
+
+    
+    @IsTest
+    static void getPowerBandFasciaTreTst()
+    {
+        Decimal power = HDT_UTL_VoltureChangeUtilities.higherThreshold + 1.0;
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('Fascia 3', result, 'Fascia 3 non calcolata correttamente');
+    }
+
+    @IsTest
+    static void powerCheckTst()
+    {
+        Test.startTest();
+        Boolean result = voltureChangeUtilities.powerCheck(HDT_UTL_VoltureChangeUtilities.higherThreshold, HDT_UTL_VoltureChangeUtilities.higherThreshold);
+        Test.stopTest();
+
+        System.assertEquals(true, result,'Check non eseguito correttamente');
+    }
+
+    @IsTest
+    static void createActivityTst()
+    {
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplate = [SELECT Name FROM wrts_prcgvr__ActivityTemplate__c];
+        Test.startTest();
+        wrts_prcgvr__Activity__c activity = voltureChangeUtilities.createActivity(activityTemplate[0].Name);
+        Test.stopTest();
+
+        System.assert(activity != null, 'Activity non creata correttamente');
     }
 
 }

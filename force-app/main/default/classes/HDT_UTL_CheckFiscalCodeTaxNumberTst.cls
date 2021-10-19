@@ -8,7 +8,9 @@
 public with sharing class HDT_UTL_CheckFiscalCodeTaxNumberTst {
     @TestSetup
     static void setup(){
-        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+        acc[0].fiscalCode__C = 'RSSMRA90L12E514M';
+        insert acc;
     }
 
     @isTest
