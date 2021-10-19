@@ -2,5 +2,5 @@
 <StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
     <cacheControl>Public</cacheControl>
     <contentType>application/vnd.ms-excel</contentType>
-    <description>hdtMassiveLoader</description>
+    <description>Template Caricatore Massivo Lead</description>
 </StaticResource>
