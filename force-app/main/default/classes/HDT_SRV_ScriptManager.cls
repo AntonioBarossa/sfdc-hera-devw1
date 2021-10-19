@@ -14,7 +14,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
 
     /**
-    * @description 
+    * @description Get script configuration for a given record
     * @author gabriele.rota@webresults.it | 2021-15-10 
     * @param recordId  
     * @return List<HDT_WRP_ScriptConfig>
@@ -44,42 +44,34 @@ public inherited sharing class HDT_SRV_ScriptManager {
     **/
     private static List<HDT_WRP_ScriptConfig> getOrderScriptConfig(Id orderParentId){
 
-        List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
-
         Order parentOrder = orderQr.getRecordById(orderParentId);
-        
-        Id commOfferOrderId;
+        Map<String,String> scriptPerOfferMap = getScriptPerOfferMap();
+
+        Set<String> scriptNames = new Set<String>();
         for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
-            if (childOrder.RecordType.DeveloperName!=ORDER_RT_VAS) {
-                commOfferOrderId = childOrder.Id;
-                break;
+
+            if (String.isNotBlank(childOrder.OrderReference__c)) {
+                continue;
             }
-        }
-
-        if (String.isNotBlank(commOfferOrderId)) {
-            Order targetOrder = orderQr.getRecordById(commOfferOrderId);
-
-            List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(targetOrder.SBQQ__Quote__c);
-            String productName = quoteLineList[0].SBQQ__Product__r.ProductCode;
-
+            
             switch on parentOrder.SignatureMethod__c {
                 when 'OTP Remoto','OTP Coopresenza' {
-                    HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
-                    config.scriptTarget = orderParentId;
-                    config.scriptName = 'Mini Vocal Order';
-                    configs.add(config);
+                    scriptNames.add('Mini Vocal Order');
                 }
                 when 'Vocal Order' {
-                    for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
-                        if (scriptPerOffer.OfferCode__c==productName) {
-                            HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
-                            config.scriptTarget = orderParentId;
-                            config.scriptName = scriptPerOffer.ScriptName__c;
-                            configs.add(config);
-                        }
+                    if (String.isNotBlank(childOrder.CommercialProductCode__c) && scriptPerOfferMap.containsKey(childOrder.CommercialProductCode__c)) {
+                        scriptNames.add( scriptPerOfferMap.get(childOrder.CommercialProductCode__c) );
                     }
                 }
             }
+        }
+
+        List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
+        for (String scriptName:scriptNames) {
+            HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
+            config.scriptTarget = orderParentId;
+            config.scriptName = scriptName;
+            configs.add(config);
         }
 
         return configs;
@@ -136,6 +128,19 @@ public inherited sharing class HDT_SRV_ScriptManager {
         for (HDT_WRP_ScriptConfig config:configs) {
             config.isScriptDecisional = scriptTypeMap.get(config.scriptName);
         }
+    }
+
+    /**
+    * @description Get map for checking wich script needs to be launched for which commercial offer
+    * @author gabriele.rota@webresults.it | 2021-10-19 
+    * @return Map<String,String>
+    **/
+    private static Map<String,String> getScriptPerOfferMap() {
+        Map<String,String> scriptPerOfferMap = new Map<String,String>();
+        for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
+            scriptPerOfferMap.put(scriptPerOffer.OfferCode__c, scriptPerOffer.ScriptName__c);
+        }
+        return scriptPerOfferMap;
     }
 
     public class HDT_WRP_ScriptConfig{

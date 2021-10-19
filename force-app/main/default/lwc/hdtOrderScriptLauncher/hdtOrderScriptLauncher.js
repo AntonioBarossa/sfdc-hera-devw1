@@ -26,7 +26,7 @@ export default class HdtOrderScriptLauncher extends LightningElement {
             let signatureMethod = this.order.fields.SignatureMethod__c.value;
             let isSignatureEnabled = (SCRIPT_SIGNATURE_METHODS.indexOf(signatureMethod)>=0);
 
-            return (this.order.fields.Status.value=='In Lavorazione' /*&& !hiddenEdit*/ && isChannelEnabled && isSignatureEnabled);
+            return (this.order.fields.Status.value=='In Lavorazione' && isChannelEnabled && isSignatureEnabled);
         }
         else return false;
     }
@@ -34,11 +34,4 @@ export default class HdtOrderScriptLauncher extends LightningElement {
     showModal() {
         this.template.querySelector('c-hdt-manage-script-modal').showModal();
     }
-
-    /*loadScriptMap() {
-        getSignatureScript({orderParentId: this.recordId}).then(scriptMap => {
-            console.log('getSignatureScript: '+JSON.stringify(scriptMap));
-            this.scriptMap = scriptMap;
-        });
-    }*/
 }

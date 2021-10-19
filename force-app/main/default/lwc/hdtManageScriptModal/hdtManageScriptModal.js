@@ -55,32 +55,13 @@ export default class HdtManageScriptModal extends LightningElement {
     }
     
     connectedCallback(){
-        this.isLoading = true;
-        getScriptConfig({recordId: this.recordId}).then(scriptConfigs => {
-            
-            if (scriptConfigs.length>0) {
-                scriptConfigs.forEach(scriptConfig => {
-                    scriptConfig.status = 'Da Completare';
-                    scriptConfig.completed = false;
-                });
-                this.scriptConfigs = scriptConfigs;
-            }
-
-            this.isLoading = false;
-        },error => {
-            console.log(error);
-            const evt = new ShowToastEvent({
-                title: 'Errore caricamento Script',
-                message: 'Non è stato possibile recuperare le informazioni relative agli script',
-                variant: 'error'
-            });
-            this.dispatchEvent(evt);    
-        });
+        this.loadScriptConfig();
     }
 
     @api
     showModal(){
         this.openModal = true;
+        this.loadScriptConfig();
     }
 
     closeModal(){
@@ -111,6 +92,33 @@ export default class HdtManageScriptModal extends LightningElement {
 
         if (action.value === 'startScript') {
             this.scriptConfig = scriptConfig;
+        }
+    }
+
+    loadScriptConfig(){
+        if (this.recordId) {
+            this.isLoading = true;
+            getScriptConfig({recordId: this.recordId}).then(scriptConfigs => {
+                
+                if (scriptConfigs.length>0) {
+                    scriptConfigs.forEach(scriptConfig => {
+                        scriptConfig.status = 'Da Completare';
+                        scriptConfig.completed = false;
+                    });
+                    console.log(JSON.stringify(scriptConfigs));
+                    this.scriptConfigs = scriptConfigs;
+                }
+
+                this.isLoading = false;
+            },error => {
+                console.log(error);
+                const evt = new ShowToastEvent({
+                    title: 'Errore caricamento Script',
+                    message: 'Non è stato possibile recuperare le informazioni relative agli script',
+                    variant: 'error'
+                });
+                this.dispatchEvent(evt);
+            });
         }
     }
 }
