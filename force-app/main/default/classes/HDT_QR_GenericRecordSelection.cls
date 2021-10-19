@@ -52,7 +52,7 @@ public with sharing class HDT_QR_GenericRecordSelection {
         return sObjectsList;
     }
     
-    //@suppressWarnings('PMD.ApexSOQLInjection')
+    //c
     public List<sObject> executeSoqlQuery(String fields, String filters, String limitStr, String objectName) {
         String query;
 
