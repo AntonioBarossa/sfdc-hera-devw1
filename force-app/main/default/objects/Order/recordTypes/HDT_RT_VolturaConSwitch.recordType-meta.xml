@@ -677,10 +677,6 @@
     <picklistValues>
         <picklist>ConventionAssociation__c</picklist>
         <values>
-            <fullName>UISMO-UISP MODENA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>AADPG-Associazione Amici di Pi</fullName>
             <default>false</default>
         </values>
@@ -1265,6 +1261,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>UISMO-UISP MODENA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>UNIFC-UNINDUSTRIA FORLI CESENA</fullName>
             <default>false</default>
         </values>
@@ -1827,7 +1827,7 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>E-Mail</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1841,6 +1841,25 @@
     </picklistValues>
     <picklistValues>
         <picklist>DocumentLow80__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DocumentPackage__c</picklist>
         <values>
             <fullName>Non Validato</fullName>
             <default>false</default>
@@ -2098,6 +2117,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MethodSignedAccepted__c</picklist>
+        <values>
+            <fullName>Comfort call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>firma digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>web assistito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OdvCreated__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2141,11 +2179,51 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2158,14 +2236,6 @@
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Caricamento KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Caricamento OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2217,22 +2287,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In Lavorazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa conferma cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa tempi di ripensamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -2257,19 +2311,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Da inviare</fullName>
             <default>false</default>
         </values>
     </picklistValues>
