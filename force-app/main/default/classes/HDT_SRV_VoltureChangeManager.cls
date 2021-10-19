@@ -121,7 +121,6 @@ public with sharing class HDT_SRV_VoltureChangeManager
         {
             return;
         }
-        return;
     }
 
 }

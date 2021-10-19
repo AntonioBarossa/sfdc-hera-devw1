@@ -2211,6 +2211,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chiuso</fullName>
             <default>false</default>
         </values>
