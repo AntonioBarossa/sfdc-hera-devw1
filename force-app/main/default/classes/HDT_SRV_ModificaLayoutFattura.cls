@@ -6,7 +6,7 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
 
     global Object execute(Object args) {
 
-        System.debug('HDT_SRV_ModificaLayoutFattura callout action');
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_ModificaLayoutFattura callout action');
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responsePclick = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         //Map<String,Object> arg = new Map<String,Object>();
         //List<Case> caseToUpdate = new List<Case>();
