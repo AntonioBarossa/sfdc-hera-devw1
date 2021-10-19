@@ -165,7 +165,11 @@ public with sharing class HDT_SRV_EmailMessage {
         
         System.debug(debugString + ' - ### Case To Update --> ' + caseToUpdate);
         if(caseToUpdate.size()>0){
-            Boolean result = HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean result = */HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
         }
     }
     

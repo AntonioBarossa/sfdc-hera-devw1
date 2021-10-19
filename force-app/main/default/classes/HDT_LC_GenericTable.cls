@@ -22,7 +22,11 @@ public inherited sharing class HDT_LC_GenericTable {
         List<String> objList = new List<String>();
         List<String> columnList = new List<String>();
 
-        Integer count = 0;
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Integer count = 0;
         Integer fieldCount = 0;
 
         //Actions

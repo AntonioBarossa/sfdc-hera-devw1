@@ -98,9 +98,13 @@ public with sharing class HDT_LC_LastBill {
     @AuraEnabled(continuation=true cacheable=true)
     public static Object startRequest(String accountCode, String mode, String kpiId) {
 
-        Map<String,String> result = new Map<String,String>();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,String> result = new Map<String,String>();
         Map<String,String> commodity = new Map<String,String>();
-        String namedCredential = '';
+        String namedCredential = '';*/
         //HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject('EC', '');
         //namedCredential = String.valueOf(httpObj.endPoint);
 
@@ -152,7 +156,11 @@ public with sharing class HDT_LC_LastBill {
         System.debug('processResponse - labels: ' + labels);
         System.debug('processResponse - state: ' + state);
         HttpResponse response = Continuation.getResponse(labels[0]);
-        Integer statusCode = response.getStatusCode();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Integer statusCode = response.getStatusCode();
         Map<String,String> result = new Map<String,String>();
         Map<String,String> commodity = new Map<String,String>();
         
