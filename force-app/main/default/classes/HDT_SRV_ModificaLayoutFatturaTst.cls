@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.DebugsShouldUseLoggingLevel')
 @isTest
 public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     
@@ -9,6 +10,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     
     
     //TEST SETUP
+    @SuppressWarnings('PMD.UnusedLocalVariable')
     private static void mySetup(){
         
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -40,17 +42,17 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         Id rt=constants.CASE_RECORDTYPEID_MOROSITA;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
         
-        String methodOK = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
+        String methodOk = 'ModificaLayoutFattura';//NOTA: in verità è endpoint.
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
         
         Map<String, Object> argsMap = new Map<String,Object>();
-        argsMap.put('method', methodOK);
+        argsMap.put('method', methodOk);
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
-        Test.setMock(HttpCalloutMock.class, new myMockForTest());
+        Test.setMock(HttpCalloutMock.class, new MyMockForTest());
         
         //TESTING
         Test.startTest();
@@ -70,7 +72,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     }
     
     @isTest
-    private static void executeTestNULL() {
+    private static void executeTestNull() {
         
         //DEBUG
         String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest_null';
@@ -87,17 +89,17 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
         
         //TESTING
-        String method_dataNull = 'ModificaLayoutFattura_null';//NOTA: in verità è endpoint.
+        String methodDataNull = 'ModificaLayoutFattura_null';//NOTA: in verità è endpoint.
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
         
         Map<String, Object> argsMap = new Map<String,Object>();
-        argsMap.put('method', method_dataNull);
+        argsMap.put('method', methodDataNull);
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
-        Test.setMock(HttpCalloutMock.class, new myMockForTest());
+        Test.setMock(HttpCalloutMock.class, new MyMockForTest());
         
         //TESTING
         Test.startTest();
@@ -117,7 +119,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     }
     
     @isTest
-    private static void executeTestNotOK() {
+    private static void executeTestNotOk() {
         
         //DEBUG
         String debugString = 'HDT_SRV_ModificaLayoutFatturaTst - executeTest_NotOk';
@@ -134,17 +136,17 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         HDT_UTL_DataFactoryTst.newPhaseTransition('Errore Lavorazione SAP', 'Bozza', rt, 'HDT_RT_Morosita');
         
         //TESTING
-        String method_notOK = 'ModificaLayoutFattura_notOK';//NOTA: in verità è endpoint.
+        String methodNotOk = 'ModificaLayoutFattura_notOK';//NOTA: in verità è endpoint.
         
         Case obj = [SELECT Id, CaseNumber, ContractCode__c, ElementDetail__c FROM Case];
         System.debug(debugString + ' - case obj: ' + obj);
         
         Map<String, Object> argsMap = new Map<String,Object>();
-        argsMap.put('method', method_notOK);
+        argsMap.put('method', methodNotOk);
         argsMap.put('sender', obj);
         
         //WEBSERVICE MOCK
-        Test.setMock(HttpCalloutMock.class, new myMockForTest());
+        Test.setMock(HttpCalloutMock.class, new MyMockForTest());
         
         //TESTING
         Test.startTest();
@@ -167,7 +169,8 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
     
     
     //WEBSERVICE MOCK
-    public class myMockForTest implements HTTPCalloutMock{
+    @SuppressWarnings('PMD.ClassNamingConventions')
+    public class MyMockForTest implements HTTPCalloutMock{
         
         public HTTPResponse respond(HTTPRequest request){
             
@@ -176,15 +179,15 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
             
             if('Callout:ModificaLayoutFattura'.equals(request.getEndpoint())){
                 
-                HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
-                wrpDATA.rds = 'rds';
-                wrpDATA.attivita = 'Esito OK da SAP';
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpData = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+                wrpData.rds = 'rds';
+                wrpData.attivita = 'Esito OK da SAP';
                 
                 HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
                 bodyResp.status = 'TST_Status';
                 bodyResp.correlationId = 'TST_CorrelId';
                 bodyResp.timestamp = 'TST_TimeStamp';
-                bodyResp.data = wrpDATA;
+                bodyResp.data = wrpData;
                 
                 
                 String bodyResponse = JSON.serialize(bodyResp);
@@ -213,15 +216,15 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
                 
             } else if('Callout:ModificaLayoutFattura_notOK'.equals(request.getEndpoint())){
                 
-                HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpDATA = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
-                wrpDATA.rds = 'rds';
-                wrpDATA.attivita = 'Test';//TARGET
+                HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data wrpData = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_Data();
+                wrpData.rds = 'rds';
+                wrpData.attivita = 'Test';//TARGET
                 
                 HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse bodyResp = new HDT_SRV_ModificaLayoutFattura.HDT_WRP_SuccessResponse();
                 bodyResp.status = 'TST_Status';
                 bodyResp.correlationId = 'TST_CorrelId';
                 bodyResp.timestamp = 'TST_TimeStamp';
-                bodyResp.data = wrpDATA;
+                bodyResp.data = wrpData;
                 
                 String bodyResponse = JSON.serialize(bodyResp);
                 
