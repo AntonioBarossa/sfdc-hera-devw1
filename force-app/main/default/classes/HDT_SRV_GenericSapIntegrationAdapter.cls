@@ -172,7 +172,16 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
             this.controllingField = item.controllingField;
             this.childs = item.childs;
         }
-        public HDT_WRP_SetupParameter(){}
+        
+        //EMPTY CONSTRUCTOR
+        public HDT_WRP_SetupParameter(){
+            this.objectName = '';
+            this.fields = '';
+            this.staticConditions = '';
+            this.relationName = '';
+            this.controllingField = '';
+            this.childs = new List<HDT_WRP_SetupParameter>();
+        }
 
     }
 
@@ -183,14 +192,21 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         public String relationName;
         public List<HDT_WRP_QueryParameter> childs;
 
-        public HDT_WRP_QueryParameter(){}
         public HDT_WRP_QueryParameter(HDT_WRP_QueryParameter item){
             this.fields = item.fields;
             this.objectName = item.objectName;
             this.conditions = item.conditions;
             this.relationName = item.relationName;
             this.childs = item.childs;
-
+        }
+        
+        //EMPTY CONSTRUCTOR
+        public HDT_WRP_QueryParameter(){
+            this.fields = '';
+            this.objectName = '';
+            this.conditions = '';
+            this.relationName = '';
+            this.childs = new List<HDT_WRP_QueryParameter>();
         }
     }
 }

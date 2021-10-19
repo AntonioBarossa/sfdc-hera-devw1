@@ -1,44 +1,41 @@
 public with sharing class HDT_WRP_AddressObject {
 
-    @AuraEnabled Public String Stato { get; set; }
-	@AuraEnabled Public String Provincia { get; set; }
-	@AuraEnabled Public String Comune { get; set; }
-	@AuraEnabled Public string CAP { get; set; }
-	@AuraEnabled Public string Via { get; set; }
-	@AuraEnabled Public string Civico { get; set; }
-	@AuraEnabled Public String CodiceComuneSAP { get; set; }
-	@AuraEnabled Public String EstensCivico { get; set; }
-    @AuraEnabled Public String CodiceViaStradarioSAP { get; set; }
-    @AuraEnabled Public Boolean FlagForzato { get; set; }
-    @AuraEnabled Public Boolean FlagVerificato { get; set; }
-    @AuraEnabled Public String Localita { get; set; }
-    @AuraEnabled Public String CodiceLocalita { get; set; }
+    @AuraEnabled Public String stato { get; set; }
+	@AuraEnabled Public String provincia { get; set; }
+	@AuraEnabled Public String comune { get; set; }
+	@AuraEnabled Public string cap { get; set; }
+	@AuraEnabled Public string via { get; set; }
+	@AuraEnabled Public string civico { get; set; }
+	@AuraEnabled Public String codiceComuneSAP { get; set; }
+	@AuraEnabled Public String estensCivico { get; set; }
+    @AuraEnabled Public String codiceViaStradarioSAP { get; set; }
+    @AuraEnabled Public Boolean flagForzato { get; set; }
+    @AuraEnabled Public Boolean flagVerificato { get; set; }
+    @AuraEnabled Public String localita { get; set; }
+    @AuraEnabled Public String codiceLocalita { get; set; }
 
+    public HDT_WRP_AddressObject(){
+        System.debug('HDT_WRP_AddressObject empty constructor');
+    }
     
-    
-    
-
-
-    public HDT_WRP_AddressObject(){}
-    
-    public HDT_WRP_AddressObject(String Stato, string Provincia, string Comune, 
-                                    string CAP, string Via, string Civico, 
-                                    string CodiceComuneSAP, string EstensCivico, string CodiceViaStradarioSAP,Boolean FlagForzato,Boolean FlagVerificato,String Localita,String CodiceLocalita) 
+    public HDT_WRP_AddressObject(String stato, string provincia, string comune, 
+                                    string cAP, string via, string civico, 
+                                    string codiceComuneSAP, string estensCivico, string codiceViaStradarioSAP,Boolean flagForzato,Boolean flagVerificato,String localita,String codiceLocalita) 
     {
 
-        this.Stato = Stato;
-		this.Provincia= Provincia;
-		this.Via = Via;
-		this.CAP= CAP;
-		this.Comune = Comune;
-		this.Civico = Civico;
-		this.CodiceComuneSAP = CodiceComuneSAP	;
-		this.EstensCivico= EstensCivico	;
-        this.CodiceViaStradarioSAP = CodiceViaStradarioSAP;
-        this.FlagForzato = FlagForzato;
-        this.FlagVerificato = FlagVerificato;
-        this.Localita= Localita;
-        this.CodiceLocalita = CodiceLocalita;
+        this.stato = stato;
+		this.provincia= provincia;
+		this.via = via;
+		this.cap= cAP;
+		this.comune = comune;
+		this.civico = civico;
+		this.codiceComuneSAP = codiceComuneSAP	;
+		this.estensCivico= estensCivico	;
+        this.codiceViaStradarioSAP = codiceViaStradarioSAP;
+        this.flagForzato = flagForzato;
+        this.flagVerificato = flagVerificato;
+        this.localita= localita;
+        this.codiceLocalita = codiceLocalita;
     }
 
     @AuraEnabled(cacheable=true)
@@ -48,8 +45,5 @@ public with sharing class HDT_WRP_AddressObject {
         return h;
      
     }
-
-
-
 
 }

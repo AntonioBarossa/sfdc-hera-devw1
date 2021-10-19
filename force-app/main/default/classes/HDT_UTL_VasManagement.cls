@@ -30,17 +30,28 @@ public with sharing class HDT_UTL_VasManagement {
     * @param caseId 
     * @return HDT_WRP_VASDisactivationReq 
     **/
-    public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
-        Case currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
-            Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
-            FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
-        
-        Id orderId = currentCase.Order__c;
-        if (String.isBlank(orderId)) {
-            orderId = currentCase.Asset.SBQQ__OrderProduct__r.OrderId;
-        }
-        if (String.isBlank(orderId)) {
-            orderId = currentCase.Subscription__r.SBQQ__Contract__r.SBQQ__Order__c;
+    public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id sobjId) {
+        String objectName = ((Id) sobjId).getSobjectType().getDescribe().getName();
+        Id orderId;
+        Case currentCase;
+        switch on objectName{
+            when 'Case'{
+                Id caseId = sobjId;
+                currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
+                FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
+            
+                orderId = currentCase.Order__c;
+                if (String.isBlank(orderId)) {
+                    orderId = currentCase.Asset.SBQQ__OrderProduct__r.OrderId;
+                }
+                if (String.isBlank(orderId)) {
+                    orderId = currentCase.Subscription__r.SBQQ__Contract__r.SBQQ__Order__c;
+                }
+            }when 'Order'{
+                orderId=sobjId;
+                currentCase= new Case(VasStatus__c='ANNUL PER RIPENS');
+            }
         }
 
         Order currentOrder = getOrderData(orderId);
