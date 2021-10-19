@@ -18,7 +18,9 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             CustomerType__c,
             DaysComfort__c,
             UniqueQuality__c,
-            ComfortDocSendingChannel__c
+            ComfortDocSendingChannel__c,
+            QualitySignatureMethod__c,
+            ComfortSignatureMethod__c
             FROM ComfortQualityCall__c
             WHERE Process__c = :order.RecordType.DeveloperName //text
             AND Channel__c = :order.Channel__c //text
@@ -42,7 +44,9 @@ public inherited sharing class HDT_QR_ComfortQualityCall {
             CustomerType__c,
             DaysComfort__c,
             UniqueQuality__c,
-            ComfortDocSendingChannel__c
+            ComfortDocSendingChannel__c,
+            QualitySignatureMethod__c,
+            ComfortSignatureMethod__c
             FROM ComfortQualityCall__c
             WHERE Process__c = :order.RecordType.DeveloperName //text
             AND Channel__c = :order.Channel__c //text

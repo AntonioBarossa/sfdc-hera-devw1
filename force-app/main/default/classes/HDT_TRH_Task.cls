@@ -9,6 +9,8 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
     // }
 
     protected override void afterInsert() {
+        Boolean hasAfterInsert = true;
+        System.debug('hasAfterInsert' + hasAfterInsert);
         // Il campo WhoId non può essere sbiancato in before insert, quindi dobbiamo farlo in after.
         // removeWhoId();  // NOT WORKING
     }
@@ -133,6 +135,10 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                     } else {
                         t.PecAddress__c = leadsPecMap.get(t.WhoId);
                     }
+
+                    if (String.isBlank(t.PecAddress__c)) {
+                        t.addError('Il destinatario selezionato non ha nessun indirizzo PEC in anagrafica.');
+                    }
                 }
             }
         }
@@ -186,7 +192,8 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         }
 
     }*/
-
+    
+    @testVisible
     private String doxeeTemplateCode(String doxeeTemplate) {
 
         switch on doxeeTemplate {

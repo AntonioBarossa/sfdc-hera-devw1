@@ -4,7 +4,7 @@ public with sharing class HDT_LC_ContactSelection {
     public static String getListRecords(String accountId){
         String recordListString;
         try{
-            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId);
+            System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: accountId: ' + accountId);
 
             List<List<sObject>> recordList = new List<List<sObject>>();
             Map<Id, String> rolesMap = new Map<Id, String>();
@@ -14,7 +14,7 @@ public with sharing class HDT_LC_ContactSelection {
             List<AccountContactRelation> relationList = acrQueryHandler.getContactsByAccountWithRoles(accountId);
             Set<Id> contactIds = new Set<Id>();
             for (AccountContactRelation acr : relationList) {
-                System.debug('HDT_LC_ContactSelection: ACR: ' + acr);
+                System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: ACR: ' + acr);
                 contactIds.add(acr.ContactId);
                 rolesMap.put(acr.ContactId, acr.Roles);
             }
@@ -49,10 +49,10 @@ public with sharing class HDT_LC_ContactSelection {
 
             gen.writeEndArray();
             recordListString = gen.getAsString();
-            System.debug('HDT_LC_ContactSelection: recordListString: ' + recordListString);
+            System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: recordListString: ' + recordListString);
 
         }catch(Exception e){
-            System.debug(e.getMessage());
+            System.debug(LoggingLevel.DEBUG,e.getMessage());
         }
         return recordListString;
     }
@@ -61,7 +61,7 @@ public with sharing class HDT_LC_ContactSelection {
     public static String getAdministrators(String accountId, String soslSearchTerm){
         String recordListString;
         try{
-            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId + ' soslSearchTerm: ' + soslSearchTerm);
+            System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: accountId: ' + accountId + ' soslSearchTerm: ' + soslSearchTerm);
 
             List<List<sObject>> recordList = new List<List<sObject>>();
 
@@ -70,7 +70,7 @@ public with sharing class HDT_LC_ContactSelection {
             Set<Id> contactIds = new Set<Id>();
             Id accountAdministratorId = null;
             for (AccountContactRelation acr : relationList) {
-                System.debug('HDT_LC_ContactSelection: ACR: ' + acr);
+                System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: ACR: ' + acr);
                 if (acr.AccountId == accountId) {
                     // Memorizziamo l'Id dell'amministratore che gestisce l'Account in modo da poterlo togliere dopo.
                     accountAdministratorId = acr.ContactId;
@@ -84,7 +84,7 @@ public with sharing class HDT_LC_ContactSelection {
             }
 
             if (contactIds.isEmpty()) {
-                System.debug('HDT_LC_ContactSelection: nessun amministratore di condominio a sistema');
+                System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: nessun amministratore di condominio a sistema');
                 return '';
             }
 
@@ -98,13 +98,13 @@ public with sharing class HDT_LC_ContactSelection {
             }
             filters += ')';
             if (String.isBlank(soslSearchTerm)) {
-                System.debug('HDT_LC_ContactSelection: default search term = 1900*');
+                System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: default search term = 1900*');
                 soslSearchTerm = '1900*'; // tutti i codici contatto SAP iniziano con 1900*
             }
 
             List<List<SObject>> contacts = soslHandler.executeQuery(fields, filters, '', soslSearchTerm, 'Contact');
-            if (contacts.isEmpty()) {
-                System.debug('HDT_LC_ContactSelection: nessun amministratore di condominio trovato con il filtro: ' + soslSearchTerm);
+            if (contacts[0].size() == 0) { //Davide Viola - 05/10/2021 Modificata la condizione da contacts.isEmpty() a contacts[0].size() == 0.
+                System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: nessun amministratore di condominio trovato con il filtro: ' + soslSearchTerm);
                 return '';
             }
 
@@ -128,10 +128,10 @@ public with sharing class HDT_LC_ContactSelection {
 
             gen.writeEndArray();
             recordListString = gen.getAsString();
-            System.debug('HDT_LC_ContactSelection: recordListString: ' + recordListString);
+            System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: recordListString: ' + recordListString);
 
         }catch(Exception e){
-            System.debug(e.getMessage());
+            System.debug(LoggingLevel.DEBUG,e.getMessage());
         }
         return recordListString;
     }
@@ -140,7 +140,7 @@ public with sharing class HDT_LC_ContactSelection {
     public static String getSolContacts(String accountId){
         String recordListString;
         try{
-            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId);
+            System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: accountId: ' + accountId);
 
             List<List<sObject>> recordList = new List<List<sObject>>();
             Map<Id, String> rolesMap = new Map<Id, String>();
@@ -149,7 +149,7 @@ public with sharing class HDT_LC_ContactSelection {
             List<AccountContactRelation> relationList = acrQueryHandler.getSolContactRelations(accountId);
             Set<Id> contactIds = new Set<Id>();
             for (AccountContactRelation acr : relationList) {
-                System.debug('HDT_LC_ContactSelection: ACR: ' + acr);
+                System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: ACR: ' + acr);
                 contactIds.add(acr.ContactId);
                 rolesMap.put(acr.ContactId, acr.Roles);
             }
@@ -163,7 +163,7 @@ public with sharing class HDT_LC_ContactSelection {
 
             HDT_QR_SolManager solManagerQuery = new HDT_QR_SolManager();
             List<ContactPointEmail> logins = solManagerQuery.getSolLogins(individualIds);
-            System.debug('# LOGIN SOL: ' + logins.size());
+            System.debug(LoggingLevel.DEBUG,'# LOGIN SOL: ' + logins.size());
             Map<Id, String> loginsMap = new Map<Id, String>();
             for (ContactPointEmail login : logins) {
                 loginsMap.put(login.ParentId, login.EmailAddress);
@@ -188,10 +188,10 @@ public with sharing class HDT_LC_ContactSelection {
 
             gen.writeEndArray();
             recordListString = gen.getAsString();
-            System.debug('HDT_LC_ContactSelection: recordListString: ' + recordListString);
+            System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: recordListString: ' + recordListString);
 
         }catch(Exception e){
-            System.debug(e.getMessage());
+            System.debug(LoggingLevel.DEBUG,e.getMessage());
         }
         return recordListString;
     }

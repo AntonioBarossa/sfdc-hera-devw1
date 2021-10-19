@@ -3,7 +3,7 @@
     <fullName>OwnerAC__c</fullName>
     <description>Indica se il dato record di subscription deve essere associato al Proprietario della fornitura</description>
     <externalId>false</externalId>
-    <label>Prorietario</label>
+    <label>Proprietario</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

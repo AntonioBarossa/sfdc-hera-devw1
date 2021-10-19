@@ -19,6 +19,9 @@ export default class hdtVOActivityValidation extends LightningElement {
 
     @wire(getRecord, { recordId: '$recordId', fields: [TYPE_ACTIVITY] })
     wiredParentOrder({ error, data }) {
+        console.log('*********' + this.recordId);
+        console.log('*********' + data);
+        
         if (error) {
             let message = 'Unknown error';
             if (Array.isArray(error.body)) {
@@ -34,8 +37,8 @@ export default class hdtVOActivityValidation extends LightningElement {
                 }),
             );
         } else if (data) {
-            this.parentOrder = data;
-            this.showFunction = data.fields.Type__c.value;
+           // this.parentOrder = data;
+            this.showFunction = data.fields.Type__c.value == 'Validazione Vocal Order' ? true : false;
         }
     }
 

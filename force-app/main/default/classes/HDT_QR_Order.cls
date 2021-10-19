@@ -110,6 +110,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.CompanyOwner__c,
             Sale__r.SalesContact__c,
+            Sale__r.Ecid__c,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -186,6 +187,8 @@ public inherited sharing class HDT_QR_Order {
 			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
             OrderReference__c,
+            OrderReference__r.SBQQ__Quote__c,
+            SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
             ActivationStreetName__c,
@@ -507,7 +510,13 @@ public inherited sharing class HDT_QR_Order {
             ComfortCallDaysDue__c,
             QualityCall__c,
             QualityCallUnique__c,
-            Contact__r.Email
+            Contact__r.Email,
+            CreditCheckDescription__c,
+            IncomingCreditCheckResult__c,
+            OutgoingCreditCheckResult__c,
+            OrderReference__c,
+            ProcessType__c,
+            SBQQ__Quote__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -542,7 +551,9 @@ public inherited sharing class HDT_QR_Order {
             DistributorFormula__c,
             VASType__c,
             DateComfortCall__c,
-            DocumentPackage__c
+            DocumentPackage__c,
+            ProcessType__c,
+            ParentOrder__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -706,7 +717,8 @@ public inherited sharing class HDT_QR_Order {
             Channel__c,
             FriendCode__c,
             CampaignCode__c,
-            CreatedBy__c
+            CreatedBy__c,
+            CreatedDate
             FROM
             Order
             WHERE AccountId = :accountId
@@ -930,7 +942,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<order> getOrderCreatedYesterday(){
-        return [Select id,Account.Segment__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     /**

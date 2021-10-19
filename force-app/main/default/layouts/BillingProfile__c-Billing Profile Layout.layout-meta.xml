@@ -257,6 +257,16 @@
             <sortOrder>1</sortOrder>
         </platformActionListItems>
     </platformActionList>
+     <!-- HRAWRM-250 -->
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ServicePoint__c</fields>
+        <fields>CommercialProduct__c</fields>
+        <fields>SAPContractCode__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>Contract.BillingProfile__c</relatedList>
+    </relatedLists>
+     <!-- HRAWRM-250 -->
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
@@ -302,13 +312,6 @@
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>Order.BillingProfile__c</relatedList>
     </relatedLists>
-    <relatedLists><!--HRAWRM-250 Start 30/09/2021 -->
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CommercialProduct__c</fields>
-        <fields>SAPContractCode__c</fields>
-        <fields>CONTRACT.STATUS</fields>
-        <relatedList>Contract.BillingProfile__c</relatedList>
-    </relatedLists><!--HRAWRM-250 End 30/09/2021 -->
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

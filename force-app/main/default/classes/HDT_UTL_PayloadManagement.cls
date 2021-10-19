@@ -44,13 +44,20 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         return result;
     }
+    
+    
+    @TestVisible
     private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         try{
             List<SObject> itemVasList = inputs.get('ItemVAS');
+            System.debug('itemVasList: ' + itemVasList);
+            
             Double amountNoIva = 0;
             Double fixedAmountNoIva = 0;
             Integer quantity = 0;
-            if (itemVasList == null) return '||';
+            if (itemVasList == null){
+                return '||';
+            }
             Integer i = 0;
             for (SObject singleVas : itemVasList) {
                 amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams));
@@ -58,22 +65,36 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 quantity += Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
                 i++;
             }
+            
             return amountNoIva + '|' + fixedAmountNoIva + '|' + quantity;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return '||';
         }
-       
+        
     }
+    
+    
     private String handleFlagDeliveryAddress(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String context = (String) formParams.get('Contesto');
-        if(!context.equalsIgnoreCase('Order')) return '';
+        if(!context.equalsIgnoreCase('Order')){
+            return '';
+        }
+        
         String contractCode = HDT_UTL_DocumentalManagement.getValue('Order', 'ContractId', 1, inputs, formParams);
-        if(String.isNotBlank(contractCode))return '';
+        if(String.isNotBlank(contractCode)){
+            return '';
+        }
+        
         String accountAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ResidentialStreetName__c', 1, inputs, formParams);
         String deliveryAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 1, inputs, formParams);
         String supplyAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyStreetName__c', 1, inputs, formParams);
-        if(supplyAddress.equalsIgnoreCase(supplyAddress)) return 'IF';
-        if(supplyAddress.equalsIgnoreCase(accountAddress)) return 'SL';
+        if(supplyAddress.equalsIgnoreCase(supplyAddress)){
+            return 'IF';
+        }
+        
+        if(supplyAddress.equalsIgnoreCase(accountAddress)) {
+            return 'SL';
+        }
 
         return '';
     }
@@ -81,10 +102,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     private String handleFlagPaperless(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String isPaperless = 'N';
         String context = (String) formParams.get('Contesto');
-        if(!context.equalsIgnoreCase('Case')) return isPaperless;
+        if(!context.equalsIgnoreCase('Case')){
+            return isPaperless;
+        }
+        
         String processType = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
         String depositPaymentMode = HDT_UTL_DocumentalManagement.getValue('Case', 'DepositPaymentMode__c', 0, inputs, formParams);
-        if(String.isBlank(processType)) return isPaperless;
+        if(String.isBlank(processType)){
+            return isPaperless;
+        }
+        
         if (processType == 'Paperless' || (processType == 'Piano Rateizzazione' && depositPaymentMode == 'Paperless')){
             isPaperless = 'Y';
         }
@@ -142,17 +169,26 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 companyDesc = '';
             }
         }
+        System.debug('context: ' + context);
+        System.debug('city: ' + city);
+        System.debug('distributorName: ' + distributorName);
+        System.debug('commodity: ' + commodity);
+        System.debug('companyDesc: ' + companyDesc);
+        
         return getCompanyCode(companyDesc);
     }
 
     private String getCompanyCode(String companyDesc){
-        if(companyDesc==null || String.isBlank(companyDesc)) return '';
+        if(companyDesc==null || String.isBlank(companyDesc)){
+            return '';
+        }
+        
         String queryString = 'SELECT id,Label, CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=\''+companyDesc+'\'';
         String objectName = 'HDT_HeraCompany__mdt';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         if(recordList != null && recordList.size()>0){
             return (String) recordList[0].get('CompanyCode__c');
-        }else {
+        } else {
             return '';
         }
     }
@@ -192,15 +228,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     oldCoTemp = false;
                 }
             }
-            if(societaTemp)
+            if(societaTemp){
                 result = '2060';
-            else if(newCoTemp) // Migrazione Ascopiave 2019
+            } else if(newCoTemp) { // Migrazione Ascopiave 2019
                 result = '7030';// 7030 (NewCo)
-            else if(oldCoTemp) // Migrazione Ascopiave 2019
+            } else if(oldCoTemp) { // Migrazione Ascopiave 2019
                 result = '7015'; // 7015 (OldCo)
-            else
+            } else {
                 result = '1070';
-        }catch(Exception ex){
+            }
+        } catch(Exception ex) {
             System.debug('Errore calcolo società per Estratto Conto');
         }
         return result;
@@ -240,6 +277,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             return '';
         }
     }
+    
+    
     private String calculateQuotationAmount(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         //imponibile = importo preventivo
         //aliquota iva
@@ -259,6 +298,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String caseType = '';
         String supplyType = '';
         String cluster = '';
+        
+        Boolean isElse = false;
         switch on context {
             when 'Case' {
                 amount = HDT_UTL_DocumentalManagement.getValue('Case', 'Amount__c', 0, inputs, formParams);
@@ -270,10 +311,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
             }
             when else {
+                isElse = true;
                 //quotationType = ''; //da ordine manca il campo
                 //processType =  HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
             }
         }
+        System.debug('isElse: ' + isElse);
+        
+        System.debug('Amount: ' + amount);
         if(String.isNotBlank(amount)){
             amountDouble = Double.valueOf(amount);
             if(String.isNotBlank(iva)){
@@ -282,8 +327,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else if(iva.indexOf('22') > -1){
                     ivaInteger = 22;
                 }
-                if(ivaInteger > 0)
+                if(ivaInteger > 0){
                     ivaAmount = ((amountDouble/100)*ivaInteger);
+                }
             }
             totalAmount = amountDouble + ivaAmount;
 
@@ -404,14 +450,17 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String whereString = ' WHERE ' + controllingField + ' =\''+ accountId + '\'';
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         
-        queryString = queryString + relatedQueryString + fromString + whereString; 
-        System.debug('query ' + queryString);
+        queryString = queryString + relatedQueryString + fromString + whereString;
+        System.debug('query: ' + queryString);
 
         List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        System.debug('recordList: ' + recordList);
+        
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-
+            System.debug('subscriptions: ' + subscriptions);
+            
             String[] record = new List<String>();
             // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
             if (i > 0) {
@@ -433,6 +482,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             payloadSection += String.join(record, div);
         }
+        System.debug('payloadSection ' + payloadSection);
 
         return payloadSection;
     }
@@ -731,10 +781,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         } else {
             caseIds.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', 0, inputs, formParams));
         }
+        System.debug('caseIds: ' + caseIds);
 
         HDT_QR_Case queryCase = new HDT_QR_Case();
         String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
         List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
+        System.debug('responseCases: ' + responseCases);
 
         List<String> contractIds = new List<String>();
         for (Case c : responseCases) {
@@ -749,17 +801,20 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         queryString = queryString + relatedQueryString + fromString + whereString; 
         System.debug('contracts query ' + queryString);
+        
         List<sObject> recordList = new List<sObject>();
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
         if (objRes.isAccessible()) {
-            recordList = Database.query(queryString);
+            recordList = Database.query(String.escapeSingleQuotes(queryString));
         }
+        System.debug('recordList: ' + recordList);
 
         Map<Id, String> offersMap = new Map<Id, String>(); // mappa tra id contratto e offerta commerciale del contratto.
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
+            System.debug('subscriptions: ' + subscriptions);
             offersMap.put(c.Id, subscriptions[0].SBQQ__ProductName__c);
         }
 
@@ -812,6 +867,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 payloadSection += emptyLine;
             }
         }
+        System.debug('payloadSection big part length: ' + payloadSection.length());
 
         // Info allegati al reclamo, se presenti.
         HDT_QR_CaseValidations docQueryHandler = new HDT_QR_CaseValidations();

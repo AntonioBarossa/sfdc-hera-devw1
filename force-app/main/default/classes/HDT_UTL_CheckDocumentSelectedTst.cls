@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    20/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_CheckDocumentSelectedTst {
 
@@ -88,7 +93,7 @@ public with sharing class HDT_UTL_CheckDocumentSelectedTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseList != null);
+        System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
         
     }
 

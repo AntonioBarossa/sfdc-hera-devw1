@@ -55,8 +55,14 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     }
 
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
-        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
-        return getScriptPagesFromScript(process, recordId, false);
+        List<HDT_WRP_ScriptOutput> scriptPages= new List<HDT_WRP_ScriptOutput>();
+        if(processName != null && String.isNotBlank(processName)){
+            List<ScriptConfig__c> processList = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED];
+            if(!processList.isEmpty()){
+                scriptPages= getScriptPagesFromScript(processList[0], recordId, false);
+            }
+        }
+        return scriptPages;
     }
 
     protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId, Boolean isDecisional){

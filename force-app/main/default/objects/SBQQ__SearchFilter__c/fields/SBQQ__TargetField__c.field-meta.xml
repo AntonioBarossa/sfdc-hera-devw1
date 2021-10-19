@@ -43,6 +43,26 @@
                 <default>false</default>
                 <label>Status</label>
             </value>
+            <value>
+                <fullName>Status__c</fullName>
+                <default>false</default>
+                <label>Stato</label>
+            </value>
+            <value>
+                <fullName>Version__c</fullName>
+                <default>false</default>
+                <label>Versione</label>
+            </value>
+            <value>
+                <fullName>StartDate__c</fullName>
+                <default>false</default>
+                <label>Data Inizio</label>
+            </value>
+            <value>
+                <fullName>EndDate__c</fullName>
+                <default>false</default>
+                <label>Data Fine</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Product</controllingFieldValue>
@@ -64,6 +84,22 @@
             <controllingFieldValue>Product</controllingFieldValue>
             <controllingFieldValue>Asset</controllingFieldValue>
             <valueName>Product Description</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Status__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Version__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>StartDate__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>EndDate__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Asset</controllingFieldValue>

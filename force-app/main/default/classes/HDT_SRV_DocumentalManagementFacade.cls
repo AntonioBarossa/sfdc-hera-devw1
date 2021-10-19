@@ -47,11 +47,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
-            System.debug(debugString + ' - Superato generateRequest');
-            
+            if (context == 'EC' || context == 'GC') {
+                HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
+            }
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
-            System.debug(debugString + ' - Superato executeCalloutRequestFuture');
-            
+
         }catch(Exception ex){
             System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }
@@ -111,7 +111,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             returnMap.put('email', accountRecord.PrimaryEmail__c);
             returnMap.put('telefono', accountRecord.MobilePhone__c);
             returnMap.put('source', userRecord.LoginChannel__c);
+            
         } catch (Exception ex) {
+            System.debug('getInfoAccountStatement Exception TypeName: ' + ex.getTypeName());
+            System.debug('getInfoAccountStatement Exception Message: ' + ex.getMessage());
+            System.debug('getInfoAccountStatement Exception StackTraceString: ' + ex.getStackTraceString());
+            return null;
             
         }
         return JSON.serialize(returnMap);

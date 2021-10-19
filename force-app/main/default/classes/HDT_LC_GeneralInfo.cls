@@ -10,6 +10,7 @@ public inherited sharing class HDT_LC_GeneralInfo {
     private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_AccountContactRelation accoContRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_SRV_AccountContactRelation accoContRelSrv = new HDT_SRV_AccountContactRelation();
+    private static HDT_QR_CampaignMember campMembQr = new HDT_QR_CampaignMember();
 
     
     /**
@@ -19,10 +20,27 @@ public inherited sharing class HDT_LC_GeneralInfo {
      */
     @AuraEnabled
     public static void updateSale(Sale__c sale){
-        saleSrv.updateRecord(sale);
-        System.debug(sale);
-    }
+        try{
 
+            List<wrts_prcgvr__Activity__c> listActi = HDT_QR_ActivityCustom.getActivityTelesellingOutboundByUser();
+            if (listActi != null && !listActi.isEmpty()) {
+                sale.Ecid__c = listActi[0].Ecid__c;
+            }
+            
+        }catch(exception e){
+            system.debug('***********' + e);
+        }
+
+        saleSrv.updateRecord(sale);
+        
+        //if(sale.CommissioningCampaign__c != null){
+          //  List<CampaignMember> campMembList = campMembQr.getCampaignMemberByCampaingAndContact(sale.CommissioningCampaign__c, sale.SalesContact__c);
+            
+           // if (!campMembList.isEmpty()) {
+           //     sale.Ecid__c = campMembList[0].Ecid__c;
+          //  }
+        //}
+    }
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get current username
@@ -124,7 +142,8 @@ public inherited sharing class HDT_LC_GeneralInfo {
         List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
 
         if (user[0].UserRole != null) {
-            result.put('userRole', user[0].UserRole.DeveloperName );
+            result.put('userRole', user[0].UserRole.DeveloperName);
+            result.put('userProfile', user[0].Profile.Name);
         }
 
         return result;

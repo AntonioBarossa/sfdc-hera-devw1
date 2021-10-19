@@ -536,7 +536,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_Mod_Anagrafica</targetReference>
+            <targetReference>Check_Parent_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -581,7 +581,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_Mod_Anagrafica</targetReference>
+            <targetReference>Check_Parent_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -978,7 +978,7 @@
                 <leftValueReference>BillingProfileId</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1142,6 +1142,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Parent_Case</name>
+        <label>Parent Case?</label>
+        <locationX>4846</locationX>
+        <locationY>2558</locationY>
+        <defaultConnector>
+            <targetReference>Arricchimento_Dati_Mod_Anagrafica_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Case stand-alone</defaultConnectorLabel>
+        <rules>
+            <name>Parent_Case_Outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ParentRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Parent_Case_RCU</targetReference>
+            </connector>
+            <label>Parent Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Per l&apos;allineamento anagrafica, eseguiamo la selezione fornitura solo se innescato da contesto Account. Se invece è innescato da contesto Case, la fornitura da usare va presa dal parent Case.</description>
         <name>Check_Processo_ModAnagrafica</name>
         <label>Processo?</label>
         <locationX>5242</locationX>
@@ -1173,6 +1199,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Allineamento Anagrafica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ParentRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1902,7 +1935,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -1931,7 +1964,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -1960,7 +1993,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -1989,7 +2022,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -2018,7 +2051,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -2047,7 +2080,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -2076,7 +2109,7 @@
                 <leftValueReference>IsCompatibile</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <label>Non Compatibile</label>
@@ -4037,6 +4070,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -4129,6 +4168,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4227,6 +4272,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ParentId</field>
             <value>
                 <elementReference>ParentRecordId</elementReference>
@@ -4298,6 +4349,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -4363,6 +4420,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
@@ -4425,6 +4488,12 @@
             <field>Lead__c</field>
             <value>
                 <elementReference>LeadId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>OrderId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6561,6 +6630,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Parent_Case_RCU</name>
+        <label>Get Parent Case</label>
+        <locationX>4714</locationX>
+        <locationY>2678</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Contratto_e_fornitura</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Annullamento</name>
         <label>Get RT Annullamento</label>
         <locationX>9246</locationX>
@@ -7063,6 +7153,36 @@
         </connector>
         <inputReference>CaseFatturazione_0</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Set_Contratto_e_fornitura</name>
+        <label>Set Contratto e fornitura</label>
+        <locationX>4714</locationX>
+        <locationY>2798</locationY>
+        <connector>
+            <targetReference>Arricchimento_Dati_Mod_Anagrafica_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche_Account_0</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Get_Parent_Case_RCU.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>Get_Parent_Case_RCU.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
@@ -7380,10 +7500,10 @@
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Arricchimento_Dati_Mod_Anagrafica</name>
+        <name>Arricchimento_Dati_Mod_Anagrafica_0</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
-        <locationX>4846</locationX>
-        <locationY>2558</locationY>
+        <locationX>4978</locationX>
+        <locationY>2678</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </connector>
@@ -7404,6 +7524,34 @@
             <name>ServicePointId</name>
             <value>
                 <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Arricchimento_Dati_Mod_Anagrafica_0_0</name>
+        <label>Arricchimento Dati Mod. Anagrafica</label>
+        <locationX>4714</locationX>
+        <locationY>2918</locationY>
+        <connector>
+            <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Get_Parent_Case_RCU.Contract__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>Get_Parent_Case_RCU.ServicePoint__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -7731,7 +7879,7 @@
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>5242</locationX>
-        <locationY>2894</locationY>
+        <locationY>3230</locationY>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -8731,6 +8879,14 @@
     </variables>
     <variables>
         <name>LeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Id Ordine</description>
+        <name>OrderId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    07/10/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_CaseProcessTst {
 
@@ -26,9 +31,45 @@ public with sharing class HDT_UTL_CaseProcessTst {
         caseList[0].recordTypeId = rtId;
         caseList[0].Phase__c = 'Bozza';
         caseList[0].Status = 'New';
-        
+        caseList[0].Type = 'Variazione indirizzo di fornitura';
+
+        Case child = new Case();
+        child.parentId = caseList[0].Id;
+        String rtName2 = 'HDT_RT_RichiestaParere';
+        String rtId2 = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtName2).getRecordTypeId();
+        child.recordTypeId = rtId2;
+        child.Phase__c = 'Annullato';
+        insert child;
+
+        List<wrts_prcgvr__Activity__c> myActivityList = HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accList[0].Id);
+        myActivityList[0].wrts_prcgvr__Status__c  = 'Not Started';
+        myActivityList[0].Case__c = child.Id;
+        update myActivityList;
+
+        List<Campaign> myCampaignList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
+        myCampaignList[0].Category__c = 'Campagna Outbound';
+        myCampaignList[0].Channel__c = 'Bolletta';
+        update myCampaignList;
+        List<Lead> myLeadList = HDT_UTL_DataFactoryTst.createLead(1, true);
+        List<CampaignMember> myCampaignMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(1, true, myCampaignList[0].Id, myLeadList[0].Id, contactList[0].Id);
+        update myCampaignMemberList;
+
+        caseList[0].recordTypeId = rtId;
+        caseList[0].Phase__c = 'Bozza';
+        caseList[0].Status = 'New';
+        caseList[0].Type = 'Variazione indirizzo di fornitura';
+        caseList[0].Campaign__c = myCampaignList[0].Id;
+
+
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
         update caseList;
+
+        Case nonReqContr = new Case();
+        nonReqContr.recordTypeId = caseList[0].RecordTypeId;
+        nonReqContr.RelatedCase__c = caseList[0].Id;
+        nonReqContr.Type = 'Contratto Non Richiesto';
+        insert nonReqContr;
+        
 
     }
     
@@ -116,10 +157,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
         List<Case> newCasesList = new List<Case>();
         List<Case> oldCasesList = [Select Id, RecordTypeId, RecordType.Name, Phase__c, Type from Case where Phase__c = 'Bozza'];
         newCasesList.add(oldCasesList[0]);
-        newCasesList[0].Phase__c = 'Annullato';
-        newCasesList[0].RecordTypeId = oldCasesList[0].RecordTypeId;
-        newCasesList[0].RecordType.Name = oldCasesList[0].RecordType.Name;
-        newCasesList[0].Type = 'Variazione indirizzo di fornitura';
+        newCasesList[0].Phase__c = 'Annullato';        
         Map<Id, Case> oldMap = new Map<Id, Case>(oldCasesList);
 
         List<wrts_prcgvr__ActivityTemplate__c> myATList = new List<wrts_prcgvr__ActivityTemplate__c>();
@@ -162,7 +200,6 @@ public with sharing class HDT_UTL_CaseProcessTst {
         System.debug(debugString);
         
         //SETUP      
-        
         List<Case> newCasesList = new List<Case>();
         List<Case> oldCasesList = [Select Id, Status from Case where Status = 'New'];
         newCasesList.add(oldCasesList[0]);

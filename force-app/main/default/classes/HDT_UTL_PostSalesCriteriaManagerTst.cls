@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    29/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
 
@@ -34,7 +39,7 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phaseStory != null);
+        System.assert(phaseStory != null, 'Attenzione, phaseStory non può essere null!');
         
     }
 
@@ -62,7 +67,7 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phaseStory != null);
+        System.assert(phaseStory != null, 'Attenzione, phaseStory non può essere null!');
         
     }
 
@@ -90,7 +95,7 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phaseStory != null);
+        System.assert(phaseStory != null, 'Attenzione, phaseStory non può essere null!');
         
     }
 

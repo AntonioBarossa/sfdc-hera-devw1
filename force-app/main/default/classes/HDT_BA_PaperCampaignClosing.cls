@@ -10,17 +10,17 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_SRV_CampaignMember campSRV = new HDT_SRV_CampaignMember();
-    public String paperProcessingId;
+    public List<String> paperProcessingIds = new List<String>();
     public date daten = System.today();
     public list<String> contentVersionIdList = new List<String>();
 
-    public HDT_BA_PaperCampaignClosing(String paperProcessingId) {
-        this.paperProcessingId = paperProcessingId;
+    public HDT_BA_PaperCampaignClosing(List<Id> paperProcessingIds) {
+        this.paperProcessingIds = paperProcessingIds;
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
-        String query = 'SELECT campaignId,Status,contactId FROM CampaignMember WHERE PaperProcess__c = :paperProcessingId AND status != \'Gestito da CRM\' AND contactId != null WITH SECURITY_ENFORCED';
+        String query = 'SELECT campaignId,Status,contactId FROM CampaignMember WHERE PaperProcess__c IN :paperProcessingIds AND status != \'Gestito da CRM\' AND contactId != null WITH SECURITY_ENFORCED';
         return Database.getQueryLocator(query);
     }
 
@@ -28,11 +28,11 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
         List<PaperCommunication__C> ppWrapList = new List<PaperCommunication__C>();
         for(CampaignMember cm : scope) {
             PaperCommunication__C pc = new PaperCommunication__c();
-            pc.PaperProcessing__c = this.paperProcessingId;
+            pc.PaperProcessing__c = cm.PaperProcess__c;
             pc.Contact__c = cm.ContactId;
             pc.Campaign__c = cm.CampaignId;
             pc.Date__c = this.daten;
-            pc.CommunicationId__c=this.paperProcessingId+'_'+cm.id;
+            pc.CommunicationId__c=cm.PaperProcess__c+'_'+cm.id;
             cm.status = 'Gestito da CRM';
             ppWrapList.add(pc);
             

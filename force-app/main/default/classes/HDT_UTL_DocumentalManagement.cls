@@ -29,7 +29,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cv.PathOnClient = filename + '.pdf';
 		cv.ContentLocation = 'S';
 		try {
-			insert cv;
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
+			HDT_UTL_DatabaseService.insertSObject(cv);
 			return cv;
 		} catch(DMLException e) {
 			System.debug(e);
@@ -50,7 +51,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// V = Viewer, C = Collaborator, I = Inferred
 		cdl.ShareType = 'V';
 		try {
-			insert cdl;
+			HDT_UTL_DatabaseService.insertSObject(cdl);
 			return cdl;
 		} catch(DMLException e) {
 			System.debug(e);
@@ -82,7 +83,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cd.PreferencesPasswordRequired=false;
 		cd.PreferencesAllowOriginalDownload= true;
 		try {
-			insert cd;
+			HDT_UTL_DatabaseService.insertSObject(cd);
 			return getSharedLink(cd.Id);
 		} catch(DMLException e) {
 			System.debug(e);
@@ -157,8 +158,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.mandatory == '1')
+			if(singleAttachment.mandatory == '1'){
 				return true;
+			}
 		}
 		return false;
 	}
@@ -208,7 +210,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
-				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c,LastUsedPostelEmail__c';
 				fromString = 'Account';
 				whereString = 'Id = \''+requestId + '\'';
 			}
@@ -230,19 +232,21 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					System.debug('### Account Id: '+processRecord.get('AccountId'));
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Type__c = 'Plico';
 				}
 				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
-					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('ShippingMail__c');
+					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					// l'email sull'account potrebbe non essere quella inserita nella modale dell'EC, che non tracciamo da nessuna parte.
-					//documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('LastUsedPostelEmail__c');
+					documentalSendTracking.Type__c = 'Estratto Conto';
 				}
 			}
 			
@@ -266,9 +270,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when 'Order' {
 					documentalActivity.OrderId__c = (Id) requestId;
 				}
-				when else {
-
-				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
 			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
@@ -290,9 +291,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 				when 'Order' {
 					documentalActivity.OrderId__c = requestId;
-				}
-				when else {
-
 				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
@@ -573,10 +571,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if(resultOne != null && resultOne != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
 			resultTwo += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
 		}
-		if(singleRecord.separetor == 'space')
+		if(singleRecord.separetor == 'space'){
 			return resultOne + ' ' + resultTwo;
-		else
+		} else {
 			return resultOne + singleRecord.separetor + resultTwo;
+		}
 	}
 
 	public static String calculateExpression(Map<String,List<sObject>> inputs,String expression, Map<String,Object> formParams){

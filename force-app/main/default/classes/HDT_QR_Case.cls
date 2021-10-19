@@ -25,6 +25,8 @@ public inherited sharing class HDT_QR_Case {
             /*** Sviluppo Gest Appuntamento */
             ServicePoint__r.distributor__r.name,
             ServicePoint__r.distributor__c,
+            ServicePoint__r.CommoditySector__c, //@Elfrida Kora,06/10/2021
+            ServicePoint__r.Account__c, //@Elfrida Kora,06/10/2021
             /*** FINE */
             ContactId,
             ServicePoint__c,
@@ -104,9 +106,9 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public List<Case> getRecordsById(List<String> Ids, String fields) {
-        String query = 'SELECT '+ fields +
+        String query = 'SELECT '+ String.escapeSingleQuotes(fields) +
                 ' From Case where id IN :Ids';
-        List<Case> cases = Database.query(query);
+        List<Case> cases = Database.query(query); 
 
         return cases;
     }

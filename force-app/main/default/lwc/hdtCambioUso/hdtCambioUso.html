@@ -30,6 +30,21 @@
         <div class="slds-col slds-grid">
             <div
                 class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                <lightning-combobox data-id="Disconnetibilita" name="Disconnetibilita" label="Disalimentabile" placeholder="Disalimentabile"
+                         options={addebitoOptions} onchange={handleChangeDisco} required>
+                </lightning-combobox>
+            
+            </div>
+            <div
+                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                <lightning-combobox data-id="tipoDisconnetibilita" name="tipoDisconnetibilita" label="Tipologia Disalimentabilità" placeholder="Tipologia Disalimentabilità"
+                         options={discochangevalue} required>
+                </lightning-combobox>
+            </div>
+        </div>
+        <div class="slds-col slds-grid">
+            <div
+                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                 <lightning-input type="Checkbox"  name='redidente' onchange={handleChange} label='Residente' variant="label-stacked" ></lightning-input>
             
             </div>

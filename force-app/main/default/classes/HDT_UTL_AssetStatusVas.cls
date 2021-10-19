@@ -18,7 +18,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
     * @author gabriele.rota@webresults.it | 2021-09-27 
     * @param assets  
     **/
-    public static void processAssets(List<Asset> assets) {
+    public static void processAssets(List<Asset> assets, Map<Id, sobject> oldMap) {
         Set<Id> orderItemsIds = new Set<Id>();
         for (Asset asset:assets) {
             if (String.isNotBlank(asset.SBQQ__OrderProduct__c)) {
@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
         }
 
         Map<Id,Order> orderPerItem = new Map<Id,Order>();
-        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c FROM OrderItem
+        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c, Order.ContractReference__c FROM OrderItem
                                 WHERE Id IN :orderItemsIds WITH SECURITY_ENFORCED]) {
             orderPerItem.put( ordItem.Id, ordItem.Order );
         }
@@ -38,8 +38,9 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
                 Boolean isParentAsset = (asset.SBQQ__RootAsset__c==null);
                 Boolean isVasOrder = (currentOrder.RecordType.DeveloperName==ORDER_VAS_RT);
 
-                if (isVasOrder && isParentAsset) {
+                if (isVasOrder && isParentAsset && String.isBlank((String) oldMap?.get(asset.Id)?.get('DigitalAssetStatus'))) {//dont set status if was already setted
                     asset.DigitalAssetStatus = ASSET_ACTIVE_STATUS;//setting status to active
+                    asset.Contract__c = currentOrder.ContractReference__c;
                     asset.VasPracticeCode__c = String.isNotBlank(asset.VasPracticeCode__c)? asset.VasPracticeCode__c : currentOrder.VasPracticeCode__c;//copying Vas fields from order
                 }
             }

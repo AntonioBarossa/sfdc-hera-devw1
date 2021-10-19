@@ -5,12 +5,36 @@
  * @last modified on  : 29-07-2021
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
-public with sharing class HDT_UTL_NotifVas {
+public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0.IApexAction{
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
+
+    //private static Boolean isDisatt = false;
+
+    /**
+    * @description close old discard activities
+    * @author costanzo.lomele@webresults.it | 2021-10-05
+    * @param args 
+    **/
+    public Object execute(Object args){
+        Map<String, Object> argsMap = (Map<String, Object>) args;
+        SObject transition = (SObject) argsMap.get('transition');
+        SObject action = (SObject) argsMap.get('action');
+        String method = (String) argsMap.get('method');
+        SObject sender = (SObject) argsMap.get('sender');
+
+        if(method.equalsIgnoreCase('ClearDiscardActivities')){
+            Id parentId = (Id) sender.get('Id');
+            wrts_prcgvr__Activity__c fakeActivity = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Scarto semplice');
+            if(Schema.Case.SObjectType == parentId.getSobjectType()) fakeActivity.Case__c = parentId;
+            if(Schema.Order.SObjectType == parentId.getSobjectType()) fakeActivity.Order__c = parentId;
+            HDT_UTL_Scarti.checkForEsitiIntermedi(new List<wrts_prcgvr__Activity__c>{fakeActivity});
+        }
+        return null;
+    }
 
     /**
     * @description Handling Vas notify requests
@@ -50,13 +74,9 @@ public with sharing class HDT_UTL_NotifVas {
         setResponse(mrrResponseItem, processExc);
 
         //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
-        Case logCase = new Case();
-        logCase.Causal__c = 'CALLIN-Vas.'+request.header.fields.get(0).value;
-        logCase.Note__c = JSON.serializePretty(request);
-        logCase.Description = RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem);
-        insert logCase;
+        HDT_SRV_ServiceTwentySix.insertCalloutLog('CALLIN-Vas.'+request.header.fields.get(0).value, JSON.serializePretty(request), RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem));
     }
-    
+
     /**
     * @description Handling Vas activation requests
     * @author gabriele.rota@webresults.it | 2021-07-28 
@@ -86,15 +106,16 @@ public with sharing class HDT_UTL_NotifVas {
         HDT_StatoMotoreVas__mdt statusMapping = getStatusMapping(requestMap);
 
         Case currentCase = (Case)sObjMap.get('Case');
-        populateFieldsFromRequest(requestMap, currentCase);
-        
+        if(currentCase!=null){
+            populateFieldsFromRequest(requestMap, currentCase);
+        }
         if (sObjMap.containsKey('Order')) {
             Order currentOrder = (Order)sObjMap.get('Order');
             populateFieldsFromRequest(requestMap, sObjMap.get('Order'));
         }
         
         mapPhaseAndStatus(statusMapping, sObjMap);
-        
+        system.debug('ivaste '+json.serialize(sObjMap));
         updateRecords(sObjMap);
     }
 
@@ -161,16 +182,16 @@ public with sharing class HDT_UTL_NotifVas {
 
                     List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
                         WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
-                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId)
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId) AND Status NOT IN ('Closed', 'Bozza')
                         WITH SECURITY_ENFORCED LIMIT 1];
 
                     if (!cases.isEmpty()) {
                         sObjMap.put('Case', cases.get(0));
 
-                        if (cases.get(0).Asset!=null) {
+                        if (cases.get(0).getSobject('Asset')!=null) {
                             sObjMap.put('Asset', cases.get(0).Asset);
                         }
-                        if (cases.get(0).Subscription__r!=null) {
+                        if (cases.get(0).getSobject('Subscription__r')!=null) {
                             sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
                         }
                     }
@@ -213,7 +234,7 @@ public with sharing class HDT_UTL_NotifVas {
     **/
     private static void mapPhaseAndStatus(HDT_StatoMotoreVas__mdt statusMapping, Map<String,SObject> sObjMap) {
         try {
-            if (sObjMap.containsKey('Order')) {
+            if (sObjMap.containsKey('Order') && !sObjMap.containsKey('Case')) {
                 Order currentOrder = (Order)sObjMap.get('Order');
                 if (String.isNotBlank(statusMapping.OrderPhase__c)) {
                     currentOrder.Phase__c = statusMapping.OrderPhase__c;
@@ -240,6 +261,8 @@ public with sharing class HDT_UTL_NotifVas {
                 if (String.isNotBlank(statusMapping.AssetStatus__c)) {
                     currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
                 }
+            }else{
+                throw new HDT_UTL_HeraException('Error while mapping Phase/Status to Objects');
             }
 
         } catch (Exception e) {
@@ -278,14 +301,17 @@ public with sharing class HDT_UTL_NotifVas {
         Savepoint sp = Database.setSavepoint();
         try {
             if (orderToUpdate!=null) {
+                system.debug('ivaste ord updated');
                 orderSrv.updateRecord(orderToUpdate);
             }
 
             if (caseToUpdate!=null) {
+                system.debug('ivaste case updated');
                 caseSrv.updateRecord(caseToUpdate);
             }
 
             if (!recordsToUpdate.isEmpty()) {
+                system.debug('ivaste else updated');
                 HDT_UTL_DatabaseService.updateSObject(recordsToUpdate);
             }
         } catch (Exception e) {

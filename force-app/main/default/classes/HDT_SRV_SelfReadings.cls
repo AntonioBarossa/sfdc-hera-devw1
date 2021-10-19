@@ -6,8 +6,14 @@ public with sharing class HDT_SRV_SelfReadings {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
-        System.debug('Generating JSON for request type: ' + inputParams.requestType);
+        System.debug(LoggingLevel.DEBUG, 'Generating JSON for request type: ' + inputParams.requestType);
         switch on inputParams.requestType {
             when 'CheckAutolettura' {
                 return generateJsonCheckAutolettura(inputParams);
@@ -22,10 +28,16 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
-            System.debug('inputParams null.');
+            System.debug(LoggingLevel.DEBUG, 'inputParams null.');
             return null;
         }
 
@@ -36,12 +48,12 @@ public with sharing class HDT_SRV_SelfReadings {
 
         List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,ContractCode__c,CommodityFormula__c');
         if (cases.isEmpty()) {
-            System.debug('No Cases found.');
+            System.debug(LoggingLevel.DEBUG, 'No Cases found.');
             return null;
         }
 
         Case readingCase = cases[0];
-        System.debug('readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
+        System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
         
         String readingFields = 'Id';
         if (readingCase.CommodityFormula__c == 'Gas') {
@@ -55,7 +67,7 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         }
         Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
-        System.debug('reading: ' + reading);
+        System.debug(LoggingLevel.DEBUG, 'reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
         
@@ -102,6 +114,12 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonInvioLetture(HDT_WRP_GenericSapIntegration inputParams) {
         if (inputParams == null) {
@@ -119,7 +137,7 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Case readingCase = cases[0];
-        System.debug('readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
+        System.debug(LoggingLevel.DEBUG, 'readingCase.CommodityFormula__c: ' + readingCase.CommodityFormula__c);
 
         String readingFields = 'Id';
         String fieldsTemplate = ',ReadingRegister{0}__c,ReadingValue{0}__c,ReadingBand{0}__c,ReadingDate{0}__c,ReadingDigitNumber{0}__c,ReadingSerialNumber{0}__c,ReadingType{0}__c,ReadingUnit{0}__c';
@@ -138,7 +156,7 @@ public with sharing class HDT_SRV_SelfReadings {
             }
         }
         Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
-        System.debug('reading: ' + reading);
+        System.debug(LoggingLevel.DEBUG, 'reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
 
@@ -208,8 +226,14 @@ public with sharing class HDT_SRV_SelfReadings {
         public String checkAutoletturaDescription;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
-        System.debug('Handling response for request type: ' + sapIntegration.requestType);
+        System.debug(LoggingLevel.DEBUG, 'Handling response for request type: ' + sapIntegration.requestType);
         switch on sapIntegration.requestType {
             when 'CheckAutolettura' {
                 return handleResponseCheckAutolettura(sapIntegration);
@@ -236,7 +260,7 @@ public with sharing class HDT_SRV_SelfReadings {
         readingCaseToUpdate.Id = caseId;
         Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
         Map<String,Object> dataBody = body.get('data') != null? (Map<String, Object>) body.get('data') : new Map<String,Object>();
-        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'OK';
+        String outcome = dataBody.get('outcome') != null? (String)dataBody.get('outcome'):'KO';
         // SAP restituisce codice 502 in caso di check preliminare non superato.
         if ((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (outcome != null && outcome.equalsIgnoreCase('KO'))) {
             retWrap.isResponseOk = false;
@@ -253,16 +277,19 @@ public with sharing class HDT_SRV_SelfReadings {
             List<Case> cases = queryCase.getRecordsById(new List<String> {caseId}, 'Id,Origin,Description');
             if(!cases.isEmpty()) {
                 Case currentReadingCase = cases[0];
-                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    readingCaseToUpdate.Status = 'Closed';
-                }
                 String nowDateFormat = Datetime.now().format('dd/MM/yyyy h:mm');
                 String currentDescription = currentReadingCase.Description != null ? currentReadingCase.Description : '';
                 readingCaseToUpdate.Description = nowDateFormat + ': ' + errorMessage + '\n' + currentDescription;
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
-                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'Check preliminari KO');
+                    HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                if (isClosingError(errorMessage, currentReadingCase.Origin)) {
+                    readingCaseToUpdate.Status = 'Closed';
+                    readingCaseToUpdate.Phase__c = 'Annullato';
+                    HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
+                }
+                
             }
         } else {
             // L'aggiornamento a Check preliminari OK non possiamo farlo adesso, poichè va fatta prima la seconda callout per l'invio letture a SAP.
@@ -299,7 +326,11 @@ public with sharing class HDT_SRV_SelfReadings {
 
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
-        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+        /*
+        * @Author: Salvatore A. Sarà 19/10/2021
+        * Risoluzione "Detects when a local variable is declared and-or assigned but not used."
+        */
+        // Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
             retWrap.isResponseOk = false;
@@ -330,7 +361,11 @@ public with sharing class HDT_SRV_SelfReadings {
 
         Case readingCaseToUpdate = new Case();
         readingCaseToUpdate.Id = caseId;
-        Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+        /*
+        * @Author: Salvatore A. Sarà 19/10/2021
+        * Risoluzione "Detects when a local variable is declared and-or assigned but not used."
+        */
+        // Map<String, Object> body = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
 
         if (sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) {
             retWrap.isResponseOk = false;
@@ -357,7 +392,11 @@ public with sharing class HDT_SRV_SelfReadings {
                 createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
             }
             when else {
-                // TODO
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return createActivity;
             }
         }
 
@@ -374,9 +413,15 @@ public with sharing class HDT_SRV_SelfReadings {
         switch on origin {
             when 'Sportello', 'Telefono Inbound' {
                 closeCase = msg.contains('data fuori finestra (non acquisibile)') || msg.contains('inferiore valore minimo concesso');
+            }when 'Web', 'App', 'APP'{
+                closeCase = true;
             }
             when else {
-                // TODO
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return closeCase;
             }
         }
 

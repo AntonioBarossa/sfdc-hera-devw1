@@ -59,7 +59,7 @@ public with sharing class HDT_SRV_CommunicationLogTst{
 			List<CommunicationLog__c> testCeateRecords=commLogSrv.createRecords(commLogs);
 
 			System.assertEquals(false, testCeateRecords.isEmpty(), 'Communication Log not Created');
-			System.assertNotEquals(true, testCeateRecords.isEmpty());
+			System.assertNotEquals(true, testCeateRecords.isEmpty(), 'Value of parameter is not matching');
 
 			Test.stopTest();
 		}

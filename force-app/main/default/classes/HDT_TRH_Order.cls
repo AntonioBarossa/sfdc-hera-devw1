@@ -24,11 +24,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         }
         
         //Checks Mandatory Activity
-        //((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
-        //        .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
+        ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
+                .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
         
-        
-
         HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old); 
 
         HDT_UTL_OrderProcess.updateServiceRequest(trigger.new, trigger.old);
@@ -38,7 +36,9 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         HDT_UTL_Dependencies.processSequentializationBefore(Trigger.newMap,Trigger.oldMap,'Order'); 
         
         //HDT_UTL_OrderProcess.updateServicePointToComplete(trigger.old,trigger.new);
-        HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+        //HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
+
+        HDT_UTL_PclickBulkActionVas.checkVasContractAlignmentBeforeUpdate(trigger.new);
     }
     public override void afterUpdate() {
         HDT_UTL_OrderProcess.overturningFields((List<Order>)Trigger.old,(List<Order>)Trigger.new); // HRDTR-00_HRAWRM-638
