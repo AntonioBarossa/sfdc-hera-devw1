@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>K__c</fullName>
+    <description>Indica il parametro K (BRIM)</description>
+    <externalId>false</externalId>
+    <label>K</label>
+    <precision>8</precision>
+    <required>false</required>
+    <scale>7</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

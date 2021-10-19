@@ -57,7 +57,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         }
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
-        if (String.isNotBlank( account.CustomerMarking__c) &&  !account.CustomerMarking__c.containsIgnoreCase('Condomini')) {
+        if (String.isNotBlank( account.CustomerMarking__c) &&  !account.CustomerMarking__c.containsIgnoreCase('Condomini')||account.CustomerMarking__c.containsIgnoreCase('Associazione')) {
             Account.FiscalCode__c=Account.VATNumber__c;  
         }
         //HRDTR-00_HRAWRM-720 12/10/2021
