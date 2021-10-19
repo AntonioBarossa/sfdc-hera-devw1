@@ -49,12 +49,11 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
             response = http.send(request);
 
         } catch (Exception e){
-
-            //blank code
-            /**@frpanico 15/10/2021
-             * Risoluzione "Empty catch block
-             */
+            System.debug(LoggingLevel.DEBUG, 'Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'Exception StackTraceString: ' + e.getStackTraceString());
             response = null;
+            
         }
         System.debug(LoggingLevel.DEBUG, 'response -> ' + response);
 
