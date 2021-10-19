@@ -6,6 +6,11 @@ public with sharing class HDT_SRV_SelfReadings {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
         System.debug(LoggingLevel.DEBUG, 'Generating JSON for request type: ' + inputParams.requestType);
@@ -23,6 +28,11 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonCheckAutolettura(HDT_WRP_GenericSapIntegration inputParams) {
@@ -104,6 +114,11 @@ public with sharing class HDT_SRV_SelfReadings {
     }
 
     // TODO WAVE 2: adeguare per altre commodity.
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     @testVisible
     private static HDT_WRP_GenericSapIntegration generateJsonInvioLetture(HDT_WRP_GenericSapIntegration inputParams) {
@@ -211,6 +226,11 @@ public with sharing class HDT_SRV_SelfReadings {
         public String checkAutoletturaDescription;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_SelfReadingResponse handleResponse(HDT_WRP_GenericSapIntegration sapIntegration, String checkAutoletturaDescription) {
         System.debug(LoggingLevel.DEBUG, 'Handling response for request type: ' + sapIntegration.requestType);

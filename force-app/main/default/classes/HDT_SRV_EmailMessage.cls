@@ -12,6 +12,11 @@ public with sharing class HDT_SRV_EmailMessage {
         HDT_UTL_DatabaseService.insertSObject(m);
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static void checkEmailSender(List<EmailMessage> emailList){
         
@@ -55,6 +60,11 @@ public with sharing class HDT_SRV_EmailMessage {
         }
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public static void checkIncomingEmails(List<EmailMessage> emailList){
         
@@ -94,6 +104,11 @@ public with sharing class HDT_SRV_EmailMessage {
     }
     
     //params: mappa EmailMessage ---> Parent Id (Case)
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
     @SuppressWarnings('PMD.AvoidDebugStatements')
     private static void manageEmailCase(Map<SObject, Id> params){
         
