@@ -32,7 +32,13 @@ public with sharing class HDT_LC_DownloadAttachmentAzure {
     @AuraEnabled
     public static Boolean getExtensionFile(String rId){
         try {
-            String extension = [SELECT FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId LIMIT 1].FILE_EXT__c; //get estensione
+            
+            //String extension = [SELECT FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId];	//get estensione
+            
+            List<SiebelDocumentLink__x> records = HDT_UTL_ObjectManagerTst.records([SELECT FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId]);
+            String extension = (String)records[0].get('FILE_EXT__c');
+            
+            
             if('URL'.equalsIgnoreCase(extension) || ''.equalsIgnoreCase(extension)){    //check estensione
                 return false;
             }else{
