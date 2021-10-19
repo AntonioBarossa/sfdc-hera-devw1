@@ -181,7 +181,8 @@ export default class hdtBillingProfileForm extends LightningElement {
                     this.fatturazioneElettronicaFields.push({
                         fieldName: el,
                         required: required,
-                        value: value
+                        value: value,
+                        disabled: false
                     });
                 });
 
@@ -501,11 +502,19 @@ export default class hdtBillingProfileForm extends LightningElement {
 
             this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value = ' ';
 
-            if (Object.keys(this.fatturazioneElettronicaFields).length > 0) {
-                this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoicingMethod__c')].required = !event.target.value;
-            }
-
             console.log('IBAN__c value on toggle: ', this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value);
+        }
+
+        if (event.target.fieldName === 'ElectronicInvoicingMethod__c' && event.target.value === 'Estero') {
+            console.log('Keltin electronic invoicing method: ' + event.target.value);
+
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CUP__c')].disabled = true;
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CIG__c')].disabled = true;
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCode__c')].disabled = true;
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeStartDate__c')].disabled = true;
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeEndDate__c')].disabled = true;
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].disabled = true;
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].disabled = true;
         }
 
     }
@@ -633,9 +642,9 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
-        if (this.template.querySelector("[data-id='IbanIsForeign__c']") !== null
-            && !this.template.querySelector("[data-id='IbanIsForeign__c']").value
-            && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email')
+        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email'
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'Estero')
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
             && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
