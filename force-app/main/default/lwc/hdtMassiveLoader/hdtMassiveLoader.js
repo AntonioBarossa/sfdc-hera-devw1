@@ -53,7 +53,7 @@ export default class HdtMassiveLoader extends LightningElement {
     exportCSV;
     downloadDisabled;
     exportFileName;
-
+    disabledPicklist=false;
     //Import
     importTypeValue;
     fileUploadDisabled;
@@ -74,7 +74,7 @@ export default class HdtMassiveLoader extends LightningElement {
         this.exportCSV = null;
         this.downloadDisabled = true;
         this.exportFileName = null;
-
+        this.disabledPicklist=false;
         this.importTypeValue = null;
         this.fileUploadDisabled = true;
         this.importDisabled = true;
@@ -158,6 +158,7 @@ export default class HdtMassiveLoader extends LightningElement {
     
                     this.massiveLoaderRecordId = result.massiveLoaderRequestId;
                     this.fileUploadDisabled = false;
+                    this.disabledPicklist=true;
     
                 } else {
     
