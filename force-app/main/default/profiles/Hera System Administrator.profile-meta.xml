@@ -3963,6 +3963,36 @@
         <field>product2.CampaignEleggibilityGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.DefaulStartTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.DefaultSpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.FreeDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.SpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.StartTimeSlot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.VariableOrFixed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.CampaignEleggibilityGroup__c</field>
@@ -14676,6 +14706,36 @@
         <field>OrderItem.Activity__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.DefaulStartTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.DefaultSpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.FreeDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.SpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.StartTimeSlot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.VariableOrFixed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.Agency__c</field>
@@ -22031,6 +22091,36 @@
         <field>SBQQ__QuoteLine__c.UseCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.DefaulStartTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.DefaultSpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.FreeDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.SpecialDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.StartTimeSlot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.VariableOrFixed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.VASBillingMode__c</field>
@@ -28759,6 +28849,41 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOffer__c.AdmittingProfileModification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.Discount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.Hours__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.I0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.K__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.Lambda__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.P0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.ProductIdentifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37620,6 +37745,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewUserPII</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SendCustomNotifications</name>
     </userPermissions>
     <pageAccesses>
         <apexPage>HDT_VFP_LeadMessage</apexPage>
