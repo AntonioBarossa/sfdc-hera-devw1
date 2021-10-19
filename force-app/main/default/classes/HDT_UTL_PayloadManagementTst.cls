@@ -6,6 +6,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     //DATA
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
+    private static Boolean isSubscriptionSetup = false;
     
     
     //TEST SETUP
@@ -36,7 +37,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         //PRODUCT
         List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
         productList[0].Name = 'POD';
-        productList[0].Family = 'VAS Fatturabili';
+        if(isSubscriptionSetup){
+            productList[0].Family = 'Offerta commerciale';
+        } else {
+            productList[0].Family = 'VAS Fatturabili';
+        }
         insert productList;
         
         //PRICE BOOK
@@ -63,7 +68,30 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         contractList[0].StartDate = Date.today();
         insert contractList;
         
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
+        if(isSubscriptionSetup){
+            //CODICE REPLICATO
+            SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
+            SBQQ__Contract__c = contractList[0].Id, 
+            SBQQ__Product__c = productList[0].Id, 
+            SBQQ__Quantity__c = 10.2, 
+            SBQQ__Account__c = accList[0].Id,
+            SBQQ__NetPrice__c = 100.2,
+            SBQQ__SubscriptionEndDate__c = Date.Today());
+            insert subs;
+        }
+        
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
+        if(isSubscriptionSetup){
+            caseList[0].ComplaintType__c = 'Reclamo Scritto';
+            caseList[0].FirstLevelComplaintClassification__c = 'Reclamo Scritto';
+            caseList[0].IndemnityConfirmed__c = true;
+            //caseList[0].IndemnityMotivation__c = '';
+            caseList[0].CorrectionRight__c = 'Si';
+            caseList[0].SendDate__c = date.today().addDays(35);
+            //caseList[0].IndemnityDueSendResponse__c = 5.45;
+            //caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
+        }
+        insert caseList;
     }
 
     
@@ -227,7 +255,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     //calculateCompanyCode
     ///Order
     @isTest
-    private static void calculateCompanyCodeTest_Order(){
+    private static void calculateCompanyCodeTestOrder(){
         
         //SETUP
         mySetup();
@@ -260,7 +288,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///Case
     @isTest
-    private static void calculateCompanyCodeTest_Case(){
+    private static void calculateCompanyCodeTestCase(){
         
         //SETUP
         mySetup();
@@ -291,7 +319,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///Account
     @isTest
-    private static void calculateCompanyCodeTest_Account(){
+    private static void calculateCompanyCodeTestAccount(){
         
         //SETUP
         mySetup();
@@ -325,7 +353,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///EC GC
     @isTest
-    private static void calculateCompanyCodeTest_EC(){
+    private static void calculateCompanyCodeTestEC(){
         
         //SETUP
         mySetup();
@@ -392,7 +420,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///else
     @isTest
-    private static void calculateCompanyCodeTest_Else(){
+    private static void calculateCompanyCodeTestElse(){
         
         //SETUP
         mySetup();
@@ -670,6 +698,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void generateSection20Test(){
         
         //SETUP
+        isSubscriptionSetup = true;
         mySetup();
         
         Account myItem = [SELECT Id FROM Account WHERE RecordTypeId = :constants.ACCOUNT_RECORDTYPEID_BUSINESS];
@@ -688,11 +717,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ASSERTS
         System.debug('result1 length ' + result1.length());
-        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        //System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
-        
-        
-        //TESTING - CASO con SBQQ Subscriptions dove non c'è family offerta commerciale
+        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
         
     }
     
@@ -809,9 +834,13 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     private static void generateSectionReclamiTest(){
         
         //SETUP
+        isSubscriptionSetup = true;
         mySetup();
         
-        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c, Note__c, IsContainer__c FROM Case];
+        Case myItem = [SELECT Id, Cluster__c, ComplaintBodyResponse__c, Note__c, IsContainer__c, FirstLevelComplaintClassification__c, IndemnityConfirmed__c, 
+                              IndemnityMotivation__c, IndemnityDueSendResponse__c, IndemnityDueBilllingCorrection__c, CorrectionRight__c, 
+                              CorrectionDocumentEmissionDay__c
+                       FROM Case];
         
         Map<String,List<SObject>> inputs = new Map<String,List<SObject>>();
         inputs.put('Case', new List<Case>{myItem});
@@ -840,7 +869,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         
         
-        //TESTING - NB: CRASH A CAUSA DI ECCEZIONE OUT OF BOUNDS - MANCANZA DI SUBSCRIPTION SU CONTRATTO
+        //TESTING - caso normale
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
         //myItem.IsContainer__c = true;
         myObjectToTest = new HDT_UTL_PayloadManagement();
@@ -848,7 +877,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //ASSERTS
         System.debug('result3 length ' + result3.length());
-        //System.assert(String.isNotBlank(result3), 'Risultato è stringa vuota.');
+        System.assert(String.isNotBlank(result3), 'Risultato è stringa vuota.');
         
     }
     

@@ -17,11 +17,23 @@ public with sharing class HDT_SRV_ServiceTwentySix {
         HDT_UTL_ServiceTwentySix reqClass = new HDT_UTL_ServiceTwentySix();
         HDT_UTL_ServiceTwentySix.HDT_WRP_DtoServiceTwentySix req = reqClass.startProcess(orderId);
         HDT_WS_ArrichmentDataEntityResponse res = (HDT_WS_ArrichmentDataEntityResponse) HDT_WS_HTTPServiceCall.sendRequest('VAS.Service26', req, HDT_WS_ArrichmentDataEntityResponse.class);
-        Case logCase = new Case();
-        logCase.Causal__c = 'CALLOUT-Service26';
-        logCase.Note__c = JSON.serializePretty(req);
-        logCase.Description = JSON.serialize(res);
-        //Database.insert(logCase);
+        insertCalloutLog('CALLOUT-Service26', req, res);
         return res;
+    }
+
+    public static void insertCalloutLog(String message, HDT_WS_Request req, HDT_WS_Response res){
+        wrts_prcgvr__Log__c calloutLog = new wrts_prcgvr__Log__c();
+        calloutLog.wrts_prcgvr__Code__c = String.valueof(system.now().format('yyyyMMddHHmmssSSS'));
+        calloutLog.wrts_prcgvr__Message__c = message;
+        calloutLog.wrts_prcgvr__Description__c = 'request: \n'+JSON.serializePretty(req)+'\n\n\n\nresponse:\n'+JSON.serialize(res);
+        insert calloutLog;//those debug logs must violate crud permission, those are registered for admins only
+    }
+
+    public static void insertCalloutLog(String message, String req, String res){
+        wrts_prcgvr__Log__c calloutLog = new wrts_prcgvr__Log__c();
+        calloutLog.wrts_prcgvr__Code__c = String.valueof(system.now().format('yyyyMMddHHmmssSSS'));
+        calloutLog.wrts_prcgvr__Message__c = message;
+        calloutLog.wrts_prcgvr__Description__c = 'request: \n'+req+'\n\n\n\nresponse:\n'+res;
+        insert calloutLog;//those debug logs must violate crud permission, those are registered for admins only
     }
 }

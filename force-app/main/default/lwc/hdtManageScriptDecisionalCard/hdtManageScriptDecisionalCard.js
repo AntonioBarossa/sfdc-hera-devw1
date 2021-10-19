@@ -94,9 +94,15 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
             recordId : this.recordId, 
             pageIndex : this.pageHistory[ this.historyIndex ]
         }).then(page => {
-            console.log("scriptPage", JSON.stringify(page));
-            this.scriptPage = page;
-            this.isLoading = false;
+            if(page){
+                console.log("scriptPage", JSON.stringify(page));
+                this.scriptPage = page;
+                this.isLoading = false;
+            }else{
+                this.showToast('error', 'Non è disponibile lo script per questa campagna!');
+                this.closeModal();
+            }
+            
         },error => {
             console.log(error.body.message);
             this.showGenericErrorToast();

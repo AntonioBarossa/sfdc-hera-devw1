@@ -66,6 +66,12 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
 
+            //Activity Custom RecordType comfort quality call
+            @AuraEnabled
+            public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL = 'HDT_RT_ComfortQualityCall';
+            @AuraEnabled
+            public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
+            Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
@@ -241,6 +247,11 @@ public with sharing class HDT_UTL_Constants {
     //Voltura Retroattiva Permission set
     @AuraEnabled
     public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
+
+    // Enable Credit Check Permission set
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_ENABLECREDITCHECK = 'HDT_EnableCreditCheck';
+
     
     //ProtocolManualActivities
     @AuraEnabled

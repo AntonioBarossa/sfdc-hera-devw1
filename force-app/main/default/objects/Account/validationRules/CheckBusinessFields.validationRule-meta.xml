@@ -2,9 +2,9 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckBusinessFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)) , false,
+    <errorConditionFormula>IF(OR(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)),RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;) , false,
 		
-			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, OR( Not(BillingIsAddressVerified__c),AND(NOT(IsWrongFiscalData__c)), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true ,
+			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, OR( Not(BillingIsAddressVerified__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true ,
 
 				IF(AND( 
 						OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;)),ISBLANK(FiscalCode__c)

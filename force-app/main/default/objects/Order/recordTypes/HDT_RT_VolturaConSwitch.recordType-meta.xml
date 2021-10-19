@@ -2160,14 +2160,14 @@
             <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Caricamento KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Caricamento OK</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Chiuso</fullName>
             <default>false</default>
@@ -2216,22 +2216,22 @@
             <fullName>Esportazione VS Siebel</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>In attesa conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>In attesa tempi di ripensamento</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
@@ -2270,6 +2270,14 @@
         </values>
         <values>
             <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm. Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm. Precheck OK SII</fullName>
             <default>false</default>
         </values>
     </picklistValues>

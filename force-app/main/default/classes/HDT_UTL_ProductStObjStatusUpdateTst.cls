@@ -10,7 +10,7 @@ public class HDT_UTL_ProductStObjStatusUpdateTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
 }

@@ -111,7 +111,12 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             returnMap.put('email', accountRecord.PrimaryEmail__c);
             returnMap.put('telefono', accountRecord.MobilePhone__c);
             returnMap.put('source', userRecord.LoginChannel__c);
+            
         } catch (Exception ex) {
+            System.debug('getInfoAccountStatement Exception TypeName: ' + ex.getTypeName());
+            System.debug('getInfoAccountStatement Exception Message: ' + ex.getMessage());
+            System.debug('getInfoAccountStatement Exception StackTraceString: ' + ex.getStackTraceString());
+            return null;
             
         }
         return JSON.serialize(returnMap);

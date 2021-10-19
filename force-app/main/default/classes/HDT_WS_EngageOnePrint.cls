@@ -1,5 +1,9 @@
 public inherited sharing class HDT_WS_EngageOnePrint {
 
+    /**@frpanico 15/10/2021
+     * @DEPRECATED
+     */
+    /*
     public static HDT_WRP_ReturnObj sendFile(String bodyString) {
 
         HDT_WRP_ReturnObj returnObj = new HDT_WRP_ReturnObj();
@@ -65,5 +69,5 @@ public inherited sharing class HDT_WS_EngageOnePrint {
         @TestVisible String message;
         @TestVisible String bodyBase64;
     }
-
+    */
 }

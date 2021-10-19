@@ -276,6 +276,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 }
 
                 orderToUpdate.AtecoCode__c = '999999';
+                orderToUpdate.HerAteco__c = '999999';
             }
         // }
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;

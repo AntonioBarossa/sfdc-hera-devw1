@@ -74,11 +74,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         setResponse(mrrResponseItem, processExc);
 
         //20/09/2021 - gabriele.rota@webresults.it - Temporary Logging
-        Case logCase = new Case();
-        logCase.Causal__c = 'CALLIN-Vas.'+request.header.fields.get(0).value;
-        logCase.Note__c = JSON.serializePretty(request);
-        logCase.Description = RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem);
-        //insert logCase;
+        HDT_SRV_ServiceTwentySix.insertCalloutLog('CALLIN-Vas.'+request.header.fields.get(0).value, JSON.serializePretty(request), RestContext.response.statusCode+'\n'+JSON.serializePretty(mrrResponseItem));
     }
 
     /**
@@ -110,8 +106,9 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         HDT_StatoMotoreVas__mdt statusMapping = getStatusMapping(requestMap);
 
         Case currentCase = (Case)sObjMap.get('Case');
-        populateFieldsFromRequest(requestMap, currentCase);
-        
+        if(currentCase!=null){
+            populateFieldsFromRequest(requestMap, currentCase);
+        }
         if (sObjMap.containsKey('Order')) {
             Order currentOrder = (Order)sObjMap.get('Order');
             populateFieldsFromRequest(requestMap, sObjMap.get('Order'));
@@ -185,16 +182,16 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
 
                     List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
                         WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
-                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId)
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId) AND Status NOT IN ('Closed', 'Bozza')
                         WITH SECURITY_ENFORCED LIMIT 1];
 
                     if (!cases.isEmpty()) {
                         sObjMap.put('Case', cases.get(0));
 
-                        if (cases.get(0).Asset!=null) {
+                        if (cases.get(0).getSobject('Asset')!=null) {
                             sObjMap.put('Asset', cases.get(0).Asset);
                         }
-                        if (cases.get(0).Subscription__r!=null) {
+                        if (cases.get(0).getSobject('Subscription__r')!=null) {
                             sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
                         }
                     }
@@ -264,6 +261,8 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
                 if (String.isNotBlank(statusMapping.AssetStatus__c)) {
                     currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
                 }
+            }else{
+                throw new HDT_UTL_HeraException('Error while mapping Phase/Status to Objects');
             }
 
         } catch (Exception e) {
