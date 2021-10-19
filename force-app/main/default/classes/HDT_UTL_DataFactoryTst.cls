@@ -18,6 +18,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
 	}
 
+	public static void pClickInstanceActivityIntegration(){
+
+		wrts_prcgvr.InstallIntegration.install();
+		wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+	}
+
 	//Metho to avoid PClick for OrderPhase Errors
 	public static void pClickOrderPhase(){
 

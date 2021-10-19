@@ -140,7 +140,7 @@
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.RisottomettiPratica</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND (4 AND 5)</booleanFilter>
+                                <booleanFilter>((1 OR 2) AND 3 AND (4 AND 5)) OR ( 6 AND 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.DiscardCategory__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -153,7 +153,7 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
+                                    <operator>NE</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
                                 </criteria>
                                 <criteria>
@@ -165,6 +165,11 @@
                                     <leftValue>{!Record.DiscardWorked__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestione dati discordanti</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

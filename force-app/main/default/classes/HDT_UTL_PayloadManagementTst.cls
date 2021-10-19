@@ -255,7 +255,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     //calculateCompanyCode
     ///Order
     @isTest
-    private static void calculateCompanyCodeTest_Order(){
+    private static void calculateCompanyCodeTestOrder(){
         
         //SETUP
         mySetup();
@@ -288,7 +288,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///Case
     @isTest
-    private static void calculateCompanyCodeTest_Case(){
+    private static void calculateCompanyCodeTestCase(){
         
         //SETUP
         mySetup();
@@ -319,7 +319,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///Account
     @isTest
-    private static void calculateCompanyCodeTest_Account(){
+    private static void calculateCompanyCodeTestAccount(){
         
         //SETUP
         mySetup();
@@ -353,7 +353,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///EC GC
     @isTest
-    private static void calculateCompanyCodeTest_EC(){
+    private static void calculateCompanyCodeTestEC(){
         
         //SETUP
         mySetup();
@@ -420,7 +420,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///else
     @isTest
-    private static void calculateCompanyCodeTest_Else(){
+    private static void calculateCompanyCodeTestElse(){
         
         //SETUP
         mySetup();

@@ -8,10 +8,6 @@ public with sharing class HDT_SRV_EmailMessage {
     public static final String CASE_TYPE2 = 'Comunicazione di Fallimento';
     public static final String CASE_TYPE3 = 'Richiesta Parere';
     
-    public HDT_SRV_EmailMessage() {
-
-    }
-    
     public static void insertEmailMessage(EmailMessage m){
         HDT_UTL_DatabaseService.insertSObject(m);
     }
@@ -45,7 +41,11 @@ public with sharing class HDT_SRV_EmailMessage {
                         mapEmailCase.put(email, parentId);
                     }
                     when else{
-                        //no other cases yet
+                        /*
+                        * @Author: Salvatore A. Sarà 18/10/2021
+                        * Risoluzione "Avoid Empty Block Statements"
+                        */
+                        mapEmailCase = null;
                     }
                 }
             }    
@@ -79,7 +79,11 @@ public with sharing class HDT_SRV_EmailMessage {
                         mapEmailCase.put(email, parentId);
                     }
                     when else {
-                        //no other case yet
+                        /*
+                        * @Author: Salvatore A. Sarà 18/10/2021
+                        * Risoluzione "Avoid Empty Block Statements"
+                        */
+                        mapEmailCase = null;
                     }
                 }
             }

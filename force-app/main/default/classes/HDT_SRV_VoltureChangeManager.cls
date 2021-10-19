@@ -6,6 +6,8 @@ public with sharing class HDT_SRV_VoltureChangeManager
 
     private static String voltureChangeRecordTypeName = 'HDT_RT_VolturaConSwitch';
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
+
+    private static String ammissibilityCheckTemplate = 'Controlli Ammissibilità';
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -79,4 +81,25 @@ public with sharing class HDT_SRV_VoltureChangeManager
         Order orderToUpdate = voltureChangeUtl.handleResponse(fieldsMap, currentOrder);
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
+
+    /**@frpanico 18/10/2021
+     * This method handle the ammissibility checks
+     * Takes in input the paramsMap returned from the response
+     * if the check is false it creates an activity
+     */
+    public void handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
+    {
+        /**Execute the check and if its false creates the activity*/
+        if(!voltureChangeUtl.handleAmmissibilityCheck(paramsMap, currentOrder))
+        {
+            wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
+            if(activity != null)
+            {
+                activity.Order__c = currentOrder.Id;
+                HDT_UTL_DatabaseService.insertSObject(activity);
+            }
+        }
+        return;
+    }
+
 }
