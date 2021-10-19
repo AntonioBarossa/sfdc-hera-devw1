@@ -39,7 +39,6 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         requestBody = JSON.serialize(bodyWrp);
         
         try{
-
             request.setEndpoint(endpoint);
             request.setMethod('POST');
             request.setBody(requestBody);
@@ -49,15 +48,15 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
 
             response = http.send(request);
 
-        }catch(Exception e){
+        } catch (Exception e){
 
             //blank code
             /**@frpanico 15/10/2021
              * Risoluzione "Empty catch block
              */
             response = null;
-
         }
+        System.debug(LoggingLevel.DEBUG, 'response -> ' + response);
 
         if(response != null){
             currentCase = manageResponse(response, recordId);
