@@ -2,7 +2,7 @@
  * Trigger for the platform event HDT_PEV_VoltureChangeManagerUpdateSObj__e
  * Runs in after insert
  */
-trigger HDT_VoltureChangeManagerUpdateSObj on HDT_PEV_VoltureChangeManagerUpdateSObj__e (after insert) 
+trigger HDT_VoltureChangeManagerUpdateSobjEvt on HDT_PEV_VoltureChangeManagerUpdateSObj__e (after insert) 
 {
     new HDT_TRH_VoltureChangeManagerUpdateSobj().run();
 }
