@@ -698,6 +698,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         00310|120|PDR: 03081000243674|
         00310|130|1|25|
     */
+    @suppressWarnings('PMD.ApexSOQLInjection')
     private String generateSectionReclami(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String endLine = '\n';
         String div = '|';
@@ -794,19 +795,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         String objectName = 'Contract';
         String queryFieldsContract = 'Id';
-        String queryString = 'SELECT ' + queryFieldsContract;
-        String fromString = ' FROM '+ objectName;
+        String queryString = 'SELECT ' + String.escapeSingleQuotes(queryFieldsContract);
+        String fromString = ' FROM '+ String.escapeSingleQuotes(objectName);
         String controllingField = 'Id';
-        String whereString = ' WHERE ' + controllingField + ' IN :contractIds';
+        String whereString = ' WHERE ' + String.escapeSingleQuotes(controllingField) + ' IN :contractIds';
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
-        queryString = queryString + relatedQueryString + fromString + whereString; 
+        queryString = queryString + relatedQueryString + fromString + whereString;
         System.debug('contracts query ' + queryString);
         
         List<sObject> recordList = new List<sObject>();
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe(); 
         if (objRes.isAccessible()) {
-            recordList = Database.query(String.escapeSingleQuotes(queryString));
+            recordList = Database.query(queryString);
         }
         System.debug('recordList: ' + recordList);
 
