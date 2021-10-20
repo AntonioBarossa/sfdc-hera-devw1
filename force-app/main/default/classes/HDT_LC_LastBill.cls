@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_LastBill {
 
     @AuraEnabled
@@ -21,7 +22,7 @@ public with sharing class HDT_LC_LastBill {
                 commodity = kpiList[0].LastBillCommodity__c;
                 billStatus = kpiList[0].LastBillPaymentStatus__c;
 
-                System.debug('>>>> lastUpdate ' + lastUpdate);
+                System.debug(LoggingLevel.DEBUG, '>>>> lastUpdate ' + lastUpdate);
 
                 if(lastUpdate != null && lastUpdate.isSameDay(now)){
                     result.put('outcome', 'OK'); 
@@ -46,7 +47,8 @@ public with sharing class HDT_LC_LastBill {
             result.put('outcome', 'KO'); 
             result.put('message', 'Non è stato possibile accedere all\'Estratto conto del cliente'); 
         }
-        System.debug(JSON.serialize(result));
+        
+        System.debug(LoggingLevel.DEBUG, 'Result: ' + JSON.serialize(result));
         return JSON.serialize(result);
         //verifico se esiste il KPI Tracking
         //se esiste controllo la data
@@ -78,7 +80,7 @@ public with sharing class HDT_LC_LastBill {
         recordKpi.LastBillNumber__c = mapping.get('billNumber');
         recordKpi.LastBillAmount__c = Double.valueOf(mapping.get('amount'));
 
-        System.debug('>>>>>> ' + String.valueOf(recordKpi));
+        System.debug(LoggingLevel.DEBUG, '>>>>>> ' + String.valueOf(recordKpi));
 
         HDT_UTL_KpiTracking.updateKpiRecord(recordKpi);
     }
@@ -124,7 +126,7 @@ public with sharing class HDT_LC_LastBill {
         //bodyWrapper.codiceCliente = accountCode;
 //
         //String body = JSON.serialize(bodyWrapper, true);
-        //System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
+        //System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
 
         // Create continuation. Argument is timeout in seconds.
         Continuation con = new Continuation(40);
@@ -141,7 +143,7 @@ public with sharing class HDT_LC_LastBill {
         req.setbody(body);
         req.setTimeout(120000);
 
-        System.debug('>>> ' + String.valueOf(req));
+        System.debug(LoggingLevel.DEBUG, '>>> ' + String.valueOf(req));
 
         // Add callout request to continuation
         con.addHttpRequest(req);
@@ -152,8 +154,8 @@ public with sharing class HDT_LC_LastBill {
     // Callback method
     @AuraEnabled(cacheable=true)
     public static String processResponse(List<String> labels, Object state) {
-        System.debug('processResponse - labels: ' + labels);
-        System.debug('processResponse - state: ' + state);
+        System.debug(LoggingLevel.DEBUG, 'processResponse - labels: ' + labels);
+        System.debug(LoggingLevel.DEBUG, 'processResponse - state: ' + state);
         HttpResponse response = Continuation.getResponse(labels[0]);
         /*
             @Author: Davide Viola - 19/10/2021
@@ -165,7 +167,7 @@ public with sharing class HDT_LC_LastBill {
         
         //CAUSA DI ERRORE - TODO: FIX TEST
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-        System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
         if (responseBodyMap.containsKey('data')) {
             List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
             if(dataObj.size() > 0){
@@ -213,7 +215,7 @@ public with sharing class HDT_LC_LastBill {
 
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
-        System.debug('Parsed response body = ' + JSON.serialize(responseBodyMap));
+        System.debug(LoggingLevel.DEBUG, 'Parsed response body = ' + JSON.serialize(responseBodyMap));
 
         if (responseBodyMap.containsKey('data')) {
             List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
@@ -259,7 +261,7 @@ public with sharing class HDT_LC_LastBill {
         bodyWrapper.codiceCliente = accountCode;
 
         String body = JSON.serialize(bodyWrapper, true);
-        System.debug('Request body = ' + body);
+        System.debug(LoggingLevel.DEBUG, 'Request body = ' + body);
 
         return body;
     }
@@ -283,10 +285,10 @@ public with sharing class HDT_LC_LastBill {
         bodyWrapper.codiceCliente = accountCode;
 
         String body = JSON.serialize(bodyWrapper, true);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
         if (responseBodyMap.containsKey('data')) {
             List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
             if(dataObj.size() > 0){
