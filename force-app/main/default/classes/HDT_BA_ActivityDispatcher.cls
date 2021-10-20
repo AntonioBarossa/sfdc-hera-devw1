@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements, OperationWithLimitsInLoop')
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
@@ -73,6 +73,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         ];
     }
     
+    //NOTA: For loop query autorizzata.
     public void execute(Database.BatchableContext bc, List<sObject> scope) {
         List<AssignmentRule__c> rules = (List<AssignmentRule__c>) scope;
 
