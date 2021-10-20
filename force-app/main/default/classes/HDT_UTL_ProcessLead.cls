@@ -67,6 +67,7 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
 
 
     public override void finalUpdate(){
+        currentProcess.currentRequestItem.Lead__c=currentProcess.currentLead.Id;
         currentProcess.currentRequestItem.Status__c=constant.MASSIVLOADER_STATUS_CHIUSO;
         update  currentProcess.currentRequestItem;
     }
