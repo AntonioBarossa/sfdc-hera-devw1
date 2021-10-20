@@ -38,5 +38,16 @@ public  inherited sharing class HDT_QR_Lead {
         return Database.query(query);
 
     }
+    public static List<Lead> getCurrentRecords(String name,String lastname,String owner ){
+        return [SELECT Id,CompanyOwner__c,Company__c,Company,LastName,FirstName,DegreeOfStudies__c,
+        Profession__c,Street,PostalCode,State,FiscalCode__c,VATNumber__c,SubscriptionCategory__c,AddressIstatCode__c,
+        Age__c,AgeGroup__c,Gender__c,Nationality__c,LeadSource,SourceDetail__c,CollectionAgency__c,ProductCategory__c,
+        AtecoDescription__c,LeadReceptionDate__c,LeadValidityEndDate__c,WebFormField01__c,WebFormField02__c,WebFormField03__c,
+        WebFormField04__c,WebFormField05__c,WebFormField06__c,WebFormField07__c,WebFormField08__c,WebFormField09__c FROM Lead 
+        WHERE FirstName=:name AND LastName=:lastname AND CompanyOwner__c=:owner
+        
+        WITH SECURITY_ENFORCED];
+    }
+
     
 }

@@ -31,8 +31,9 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     
         this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
+        System.debug('selectedProcess.DeveloperName :'+selectedProcess.DeveloperName);
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
-       
+        System.debug('staticResources :'+staticResources.size());
 
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
@@ -41,6 +42,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 temp=temp.remove('*'); 
                 mapRequiredByPosition.put(count,temp);
             }
+            System.debug('temp: '+temp);
             mapHeaderByPosition.put(count,temp);
             count++;
         }
@@ -72,6 +74,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     }
    
     public String getTypeField(String objName,String fieldApiName){
+        System.debug('objName: '+objName);
+        System.debug('fieldApiName: '+fieldApiName);
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
         return fieldTypeName;
     }
@@ -213,7 +217,6 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
       
         for (HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj tempRes : rs) {
            Integer tempMatchingPoints=0;
-           System.debug('obj Resp' +tempRes.city1);
            if(tempRes.city1.equalsIgnoreCase(city)){
                 tempMatchingPoints=tempMatchingPoints+1;
             }
@@ -231,7 +234,6 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 addressWinner=tempRes;
             }
         }
-        System.debug('AddressSearch winner '+addressWinner);
         return addressWinner;
     }
     public void arricchimentoDati(){
@@ -246,6 +248,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
    public class HDT_WRP_ProcessEntities{
       public Account                      currentAccount                ;
+      public Lead                         currentLead                   ;
+      public Individual                   currentIndividual             ;
       public Contact                      currentPrimaryContact         ;
       public Order                        currentFatherOrder            ;
       public Order                        currentChildOrder             ;
@@ -264,6 +268,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
         public  HDT_WRP_ProcessEntities(){          
             currentAccount                  =   new  Account                     ();
+            currentLead                     =   new  Lead                        ();
+            currentIndividual               =   new  Individual                  ();
             currentPrimaryContact           =   new  Contact                     ();
             currentFatherOrder              =   new  Order                       ();
             currentChildOrder               =   new  Order                       ();  
