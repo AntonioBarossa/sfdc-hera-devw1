@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_DocumentalManagementInterface{
     public HDT_QR_PayloadManagement queryClass = new HDT_QR_PayloadManagement();
     public String execute(String method,Map<String,List<sObject>> inputs, Map<String,Object> formParams){
@@ -40,7 +41,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }
             }
         } catch (Exception ex) {
-            System.debug('Si è verificato un errore nel richiamo del metodo ' + method + ': ' + ex.getMessage() + ' alla riga ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Si è verificato un errore nel richiamo del metodo ' + method + ': ' + ex.getMessage() + ' alla riga ' + ex.getLineNumber());
         }
         return result;
     }
@@ -50,7 +51,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     private String handleAmountVas(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         try{
             List<SObject> itemVasList = inputs.get('ItemVAS');
-            System.debug('itemVasList: ' + itemVasList);
+            System.debug(LoggingLevel.DEBUG, 'itemVasList: ' + itemVasList);
             
             Double amountNoIva = 0;
             Double fixedAmountNoIva = 0;
@@ -86,7 +87,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         
         String accountAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ResidentialStreetName__c', 1, inputs, formParams);
-        String deliveryAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 1, inputs, formParams);
+        /*String deliveryAddress = */HDT_UTL_DocumentalManagement.getValue('Order', 'ShippingStreetName__c', 1, inputs, formParams);
         String supplyAddress = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyStreetName__c', 1, inputs, formParams);
         if(supplyAddress.equalsIgnoreCase(supplyAddress)){
             return 'IF';
@@ -169,11 +170,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 companyDesc = '';
             }
         }
-        System.debug('context: ' + context);
-        System.debug('city: ' + city);
-        System.debug('distributorName: ' + distributorName);
-        System.debug('commodity: ' + commodity);
-        System.debug('companyDesc: ' + companyDesc);
+        System.debug(LoggingLevel.DEBUG, 'context: ' + context);
+        System.debug(LoggingLevel.DEBUG, 'city: ' + city);
+        System.debug(LoggingLevel.DEBUG, 'distributorName: ' + distributorName);
+        System.debug(LoggingLevel.DEBUG, 'commodity: ' + commodity);
+        System.debug(LoggingLevel.DEBUG, 'companyDesc: ' + companyDesc);
         
         return getCompanyCode(companyDesc);
     }
@@ -199,8 +200,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String documents = (String) formParams.get('EstrattoConto');
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
-            List<Object> secondoLivelloList = new List<Object>();
-            Map<String, Object> secondoLivello = new Map<String, Object>();
             String hcm = 'HERA COMM MARCHE';
             String newCo = 'ESTENERGY SPA';
             String oldCo = 'HERA COMM NORDEST';
@@ -238,7 +237,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 result = '1070';
             }
         } catch(Exception ex) {
-            System.debug('Errore calcolo società per Estratto Conto');
+            System.debug(LoggingLevel.DEBUG, 'Errore calcolo società per Estratto Conto');
         }
         return result;
     }
@@ -316,9 +315,9 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 //processType =  HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
             }
         }
-        System.debug('isElse: ' + isElse);
+        System.debug(LoggingLevel.DEBUG, 'isElse: ' + isElse);
         
-        System.debug('Amount: ' + amount);
+        System.debug(LoggingLevel.DEBUG, 'Amount: ' + amount);
         if(String.isNotBlank(amount)){
             amountDouble = Double.valueOf(amount);
             if(String.isNotBlank(iva)){
@@ -451,15 +450,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         
         queryString = queryString + relatedQueryString + fromString + whereString;
-        System.debug('query: ' + queryString);
+        System.debug(LoggingLevel.DEBUG, 'query: ' + queryString);
 
         List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        System.debug('recordList: ' + recordList);
+        System.debug(LoggingLevel.DEBUG, 'recordList: ' + recordList);
         
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-            System.debug('subscriptions: ' + subscriptions);
+            System.debug(LoggingLevel.DEBUG, 'subscriptions: ' + subscriptions);
             
             String[] record = new List<String>();
             // Il primo 310|20 è già presente, evitiamo di aggiungerlo una seconda volta.
@@ -482,7 +481,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             payloadSection += String.join(record, div);
         }
-        System.debug('payloadSection ' + payloadSection);
+        System.debug(LoggingLevel.DEBUG, 'payloadSection ' + payloadSection);
 
         return payloadSection;
     }
@@ -643,7 +642,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
         AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
         if (acr == null) {
-            System.debug('Nessun contatto titolare trovate per accountId: ' + accountId);
+            System.debug(LoggingLevel.DEBUG, 'Nessun contatto titolare trovate per accountId: ' + accountId);
             return '';
         }
 
@@ -728,7 +727,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             List<String> splittedLine = new List<String>();  // array in caso la riga sia troppo lunga e debba essere splittata.
             // Split righe più di lunghe di 150 caratteri, altrimenti Engage1 non riesce a calcolare lo spazio necessario nel PDF.
             if (cleanResponseLine.length() > 150) {
-                System.debug('Riga troppo lunga per Engage1: ' + cleanResponseLine);
+                System.debug(LoggingLevel.DEBUG, 'Riga troppo lunga per Engage1: ' + cleanResponseLine);
                 // https://stackoverflow.com/a/10735971/16766541
                 // regex per splittare in base al word boundary (\b) se la riga supera 150 caratteri
                 Pattern splitPattern = Pattern.compile('.{1,150}\\b'); 
@@ -736,7 +735,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 while (splitMatcher.find()) {
                     splittedLine.add(splitMatcher.group(0).trim());
                 }
-                System.debug('splitted line: ' + splittedLine);
+                System.debug(LoggingLevel.DEBUG, 'splitted line: ' + splittedLine);
             }
 
             if (!splittedLine.isEmpty()) {
@@ -782,12 +781,12 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         } else {
             caseIds.add(HDT_UTL_DocumentalManagement.getValue('Case', 'Id', 0, inputs, formParams));
         }
-        System.debug('caseIds: ' + caseIds);
+        System.debug(LoggingLevel.DEBUG, 'caseIds: ' + caseIds);
 
         HDT_QR_Case queryCase = new HDT_QR_Case();
         String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
         List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
-        System.debug('responseCases: ' + responseCases);
+        System.debug(LoggingLevel.DEBUG, 'responseCases: ' + responseCases);
 
         List<String> contractIds = new List<String>();
         for (Case c : responseCases) {
@@ -801,7 +800,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String whereString = ' WHERE ' + String.escapeSingleQuotes(controllingField) + ' IN :contractIds';
         String relatedQueryString = ',(SELECT Id,SBQQ__ProductName__c FROM SBQQ__Subscriptions__r WHERE SBQQ__Product__r.Family = \'Offerta commerciale\')';
         queryString = queryString + relatedQueryString + fromString + whereString;
-        System.debug('contracts query ' + queryString);
+        System.debug(LoggingLevel.DEBUG, 'contracts query ' + queryString);
         
         List<sObject> recordList = new List<sObject>();
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
@@ -809,13 +808,13 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         if (objRes.isAccessible()) {
             recordList = Database.query(queryString);
         }
-        System.debug('recordList: ' + recordList);
+        System.debug(LoggingLevel.DEBUG, 'recordList: ' + recordList);
 
         Map<Id, String> offersMap = new Map<Id, String>(); // mappa tra id contratto e offerta commerciale del contratto.
         for (Integer i = 0; i < recordList.size(); i++) {
             Contract c = (Contract) recordList[i];
             List<SBQQ__Subscription__c> subscriptions = (List<SBQQ__Subscription__c>) c.SBQQ__Subscriptions__r;
-            System.debug('subscriptions: ' + subscriptions);
+            System.debug(LoggingLevel.DEBUG, 'subscriptions: ' + subscriptions);
             offersMap.put(c.Id, subscriptions[0].SBQQ__ProductName__c);
         }
 
@@ -868,7 +867,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 payloadSection += emptyLine;
             }
         }
-        System.debug('payloadSection big part length: ' + payloadSection.length());
+        System.debug(LoggingLevel.DEBUG, 'payloadSection big part length: ' + payloadSection.length());
 
         // Info allegati al reclamo, se presenti.
         HDT_QR_CaseValidations docQueryHandler = new HDT_QR_CaseValidations();
@@ -996,8 +995,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             boxType = '6';
         }
 
-        System.debug('calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
-        System.debug('calculateIndemnityBox boxType output: ' + boxType);
+        System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox inputs: ' + complaintClassification + ', ' + indemnityConfirmed + ', ' + indemnityMotivation + ', ' + correctionRight + ', ' + expiredCorrection + ', ' + correctionDocumentEmissionDate + ', ' + indemnityDueSendResponse);
+        System.debug(LoggingLevel.DEBUG, 'calculateIndemnityBox boxType output: ' + boxType);
         return boxType;
     }
 
