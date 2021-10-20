@@ -169,9 +169,7 @@ public with sharing class HDT_LC_MassiveLoader {
             ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
             Boolean deleteUploadedFile = false;
 
-
             if (fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
-
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
 
                     List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcessName);
@@ -185,7 +183,8 @@ public with sharing class HDT_LC_MassiveLoader {
                     //List<List<String>> file = new List<List<String>>();
                     for (String fileRow : fileBody.split('\n')) {
                         List<String> rowFields = fileRow.split(',');
-                        
+                        System.debug('row size '+rowFields.size());
+                        System.debug('expectedNumberOfFields '+expectedNumberOfFields);
                         if (rowFields.size() != expectedNumberOfFields) {
                             parsingError = true;
                             break;

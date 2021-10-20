@@ -59,8 +59,11 @@ public  inherited sharing class HDT_QR_Lead {
         WebFormField08__c, WebFormField09__c, WebFormField10__c, WebFormField11__c, WebFormField12__c, WebFormField13__c, WebFormField14__c, 
         WebFormField15__c, WebFormField16__c, WebFormField17__c, WebFormField18__c, WebFormField19__c, WebFormField20__c, WebFormField21__c,
         WebFormField22__c, WebFormField23__c, WebFormField24__c, WebFormField25__c, WebFormField26__c, WebFormField27__c, WebFormField28__c,
-         WebFormField29__c, WebFormField30__c, WebFormField31__c, WebFormField32__c, WebFormField33__c, WebFormField34__c, WebFormField35__c,
-        WebFormField36__c, WebFormField37__c, WebFormField38__c, WebFormField39__c, WebFormField40__c, isSendToReitek__c  FROM Lead 
+        WebFormField29__c, WebFormField30__c, WebFormField31__c, WebFormField32__c, WebFormField33__c, WebFormField34__c, WebFormField35__c,
+        WebFormField36__c, WebFormField37__c, WebFormField38__c, WebFormField39__c, WebFormField40__c, isSendToReitek__c,individual.MarketingPrivacy__c,
+        individual.MarketingPrivacyVersion__c,individual.PrivacyMarketingChoiceDate__c,individual.PrivacyMarketingChoiceSource__c,individual.MarketingCompanyConsent__c,
+        individual.PrivacyMarketingConsentInitiative__c,individual.ProfilingPrivacy__c,individual.ProfilingPrivacyVersion__c,individual.PrivacyProfilingChoiceDate__c,
+        individual.PrivacyProfilingChoiceSource__c,individual.ProfilingCompanyConsent__c,individual.PrivacyProfilingConsentInitiative__c  FROM Lead 
         WHERE FirstName=:name AND LastName=:lastname AND CompanyOwner__c=:owner
         
         WITH SECURITY_ENFORCED];

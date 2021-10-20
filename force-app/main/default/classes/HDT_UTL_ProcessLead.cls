@@ -5,44 +5,56 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
     public override void checks(){
         mapFieldsObject();
         Integer count=0;
+
         for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
-            if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count))) ){
+            if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count)))&& String.isNotBlank(tempField) ){
                 mapTypeField(currentProcess.currentLead,mapLeadFields,count,tempField);
+            }
+            if(String.isNotBlank(mapIndividualFields.get(mapHeaderByPosition.get(count)))&& String.isNotBlank(tempField) ){
+                mapTypeField(currentProcess.currentIndividual,mapIndividualFields,count,tempField);
             }
            
             count++;
         }
+
         if (String.isBlank( currentProcess.currentLead.Company)) {
             currentProcess.currentLead.Company=currentProcess.currentLead.FirstName+currentProcess.currentLead.LastName;
         }
-        system.debug('currentProcess.currentLead '+currentProcess.currentLead);
     }
 
     public override void getRecords(){
         if (String.isNotBlank(currentProcess.currentLead.FirstName)&&String.isNotBlank(currentProcess.currentLead.LastName)&& String.isNotBlank(currentProcess.currentLead.CompanyOwner__c) ) {
             listLead =HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead.FirstName, currentProcess.currentLead.LastName, currentProcess.currentLead.CompanyOwner__c);
         }
-        System.debug('listLead.size '+listLead.size());
        
     }
 
     public override void registryCreation(){
 
        
-        if (listLead.size()>0) {
+        if (listLead!=null && listLead.size()>0) {
             Lead oldLead=listLead.get(0);
             for (String tempField : mapLeadFields.values()) {
-                if ( String.isBlank(String.valueOf(oldLead.get(tempField)))) {
+                if ( String.isBlank(String.valueOf(oldLead.get(tempField))) ||'LeadValidityEndDate__c'.equalsIgnoreCase(tempField)) {
                     oldLead.put(tempField,currentProcess.currentLead.get(tempField));
                 }
             }
+           
             oldLead.LeadReceptionDate__c=currentProcess.currentLead.LeadReceptionDate__c;
             currentProcess.currentLead=oldLead;
+
             update currentProcess.currentLead;
         }
         else {
             insert currentProcess.currentLead;
         }
+
+        List<Lead> listAfterInsert              = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead.FirstName, currentProcess.currentLead.LastName, currentProcess.currentLead.CompanyOwner__c);
+        currentProcess.currentLead              = listAfterInsert.get(0);
+        currentProcess.currentIndividual.id     = currentProcess.currentLead.IndividualId;
+        system.debug('currentProcess.currentIndividual: '+currentProcess.currentIndividual);
+        update currentProcess.currentIndividual;
+
     }
 
 
@@ -50,6 +62,7 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
 
     }
 
+  
 
     private void mapFieldsObject(){
         List<HDT_MassiveFieldsObjectMap__mdt> listLeadFields = getMapFieldsObject('Lead', this.processName);

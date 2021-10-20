@@ -80,6 +80,9 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     }
 
     public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
+        System.debug('position : '+position);
+        System.debug('label : '+mapHeaderByPosition.get(position));
+        System.debug('value : '+value);
 
         String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
         switch on typeField.toUpperCase() {
