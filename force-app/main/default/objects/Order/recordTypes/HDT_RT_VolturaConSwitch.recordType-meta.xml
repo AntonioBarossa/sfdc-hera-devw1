@@ -2251,6 +2251,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
         </values>
