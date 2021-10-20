@@ -51,7 +51,11 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        /*Set<Id> eligibleProductsId = */getEligibleProducts(myQuote);
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
@@ -99,7 +103,11 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        /*Set<Id> eligibleProductsId = */getEligibleProducts(myQuote);
 
         //whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         whereClause += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
@@ -162,7 +170,11 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
+        /*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		/*Set<Id> eligibleProductsId = */getEligibleProducts(myQuote);
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
