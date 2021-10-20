@@ -59,7 +59,7 @@ public with sharing class HDT_BA_PaperCampaignClosingTst{
 
 			Test.stopTest();
 
-			System.assert(bc!=null);
+			System.assertEquals(true, bc!=null, 'HDT_BA_PaperCampaignClosing is null');
 			System.assertNotEquals(null, bc, 'HDT_BA_PaperCampaignClosing is null');
 		}
 	}
