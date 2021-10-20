@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
 public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
@@ -346,11 +346,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
         }else if(method.equalsIgnoreCase('esito_finale')){
-            HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
+            //HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
-            String contractCode = reqWrp.requestMap.get('VERTRAG');
+            //String contractCode = reqWrp.requestMap.get('VERTRAG');
             String paymentDate = reqWrp.requestMap.get('DT_CREA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
@@ -875,7 +875,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(contractEndDate != null){
                 contracRecord.EndDate = contractEndDate;
             }
-            Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
+            HDT_UTL_DatabaseService.updateSObject(contracRecord);
+            
         }catch(Exception ex){
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
         }
@@ -894,7 +895,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity.CausalError__c = description;
             activity.wrts_prcgvr__Description__c = description;
             activity.Type__c = type;
-            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
+            HDT_UTL_DatabaseService.insertSObject(activity);
         }
     }
     public class HDT_UTL_RichPassException extends Exception {

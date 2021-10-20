@@ -200,8 +200,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String documents = (String) formParams.get('EstrattoConto');
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
-            List<Object> secondoLivelloList = new List<Object>();
-            Map<String, Object> secondoLivello = new Map<String, Object>();
             String hcm = 'HERA COMM MARCHE';
             String newCo = 'ESTENERGY SPA';
             String oldCo = 'HERA COMM NORDEST';
