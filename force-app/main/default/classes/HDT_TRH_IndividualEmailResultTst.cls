@@ -16,6 +16,7 @@ public with sharing class HDT_TRH_IndividualEmailResultTst{
 
         System.runAs(internalUser){
             HDT_UTL_DataFactoryTst.pClickInstance();
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         }
 	}
 
@@ -40,6 +41,18 @@ public with sharing class HDT_TRH_IndividualEmailResultTst{
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
             List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accounts[0].Id, contacts[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
+            
+            List<wrts_prcgvr__FieldsTemplate__c> fieldTemplates = HDT_UTL_DataFactoryTst.createFieldsTemplate(1,false);
+            fieldTemplates[0].wrts_prcgvr__Code__c = 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
+            fieldTemplates[0].wrts_prcgvr__ObjectType__c= 'Order';
+            insert fieldTemplates;
+            
+            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(1,false);
+            activityTemplates[0].Name = 'CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
+            activityTemplates[0].wrts_prcgvr__Code__c = 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
+            activityTemplates[0].wrts_prcgvr__FieldsTemplate__c= fieldTemplates[0].id;
+            activityTemplates[0].wrts_prcgvr__ObjectType__c = 'Order'; 
+            insert activityTemplates;
 
             List<et4ae5__Automated_Send__c> autoSend = HDT_UTL_DataFactoryTst.createTriggeredSend(1, true);
             List<et4ae5__IndividualEmailResult__c> indEmailResult = HDT_UTL_DataFactoryTst.createIndividualEmailResult(1, true, autoSend[0].Id);
