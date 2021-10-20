@@ -1,3 +1,9 @@
+/*
+* @Author: Salvatore A. Sarà 20/10/2021
+* Risoluzione "Debug Should Use Logging Level"
+* Risoluzione "Avoid debug statements since they impact on performance"
+*/
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_Case {
 
 
