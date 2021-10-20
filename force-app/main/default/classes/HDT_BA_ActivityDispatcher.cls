@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
@@ -141,7 +142,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
             for(Database.SaveResult result : results) {
                 if(!result.isSuccess()) {
-                    System.debug(result.getId() + ' | ' + result.getErrors());
+                    System.debug(LoggingLevel.DEBUG, result.getId() + ' | ' + result.getErrors());
                 }
             }
         }
@@ -151,7 +152,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     public void finish(Database.BatchableContext bc) {
         //RESCHEDULE
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
-        System.debug('HDT_BA_ActivityDispatcher - finished job: ' + a);
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_ActivityDispatcher - finished job: ' + a);
         
     }
 
