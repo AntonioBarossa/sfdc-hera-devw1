@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, OperationWithLimitsInLoop')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.OperationWithLimitsInLoop')
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
