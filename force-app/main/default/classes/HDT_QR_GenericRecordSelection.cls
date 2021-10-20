@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_QR_GenericRecordSelection {
 
     public List<HDT_Generic_Record_Selection__mdt>  getConfigurationByName(String searchKey) {

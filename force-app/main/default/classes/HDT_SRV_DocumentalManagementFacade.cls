@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_DocumentalManagementFacade {
     
     public static String getBase64(String recordId, String context, String formParams){
@@ -40,7 +41,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocument';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
         
         String body='';
         /*
@@ -56,8 +57,8 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             }
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
 
-        }catch(Exception ex){
-            System.debug('exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
         }
     }
 
@@ -65,7 +66,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocumentAsync';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
         
         System.enqueueJob(new HDT_QBL_DocumentalManagement(recordId,context,formParams));
     }
@@ -74,7 +75,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendAdvanceDocumentation';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
         
         String baseSixtyFour = '';
         /*
@@ -93,9 +94,9 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             if(result == '000'){
                 HDT_SRV_DocumentalManagement.createPublicLinkFuture(recordId,baseSixtyFour,tipoPlico);
             }
-
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
+            
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, ex.getMessage());
         }
     }
      
@@ -121,9 +122,9 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             returnMap.put('source', userRecord.LoginChannel__c);
             
         } catch (Exception ex) {
-            System.debug('getInfoAccountStatement Exception TypeName: ' + ex.getTypeName());
-            System.debug('getInfoAccountStatement Exception Message: ' + ex.getMessage());
-            System.debug('getInfoAccountStatement Exception StackTraceString: ' + ex.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG, 'getInfoAccountStatement Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'getInfoAccountStatement Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'getInfoAccountStatement Exception StackTraceString: ' + ex.getStackTraceString());
             return null;
             
         }
@@ -252,7 +253,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
                 }
             }
         } catch (Exception ex) {
-            System.debug('Error in method handleDocusignNotify ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'Error in method handleDocusignNotify ' + ex.getMessage());
         }
     }
 }
