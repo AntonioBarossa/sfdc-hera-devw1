@@ -12,6 +12,8 @@ public inherited sharing class HDT_QR_Case {
         WHERE CaseNumber = :caseNumber WITH SECURITY_ENFORCED LIMIT 1];
     }
     
+    
+    @SuppressWarnings('PMD.FormalParameterNamingConventions')
     public Case getRecordById(String Id) {
         return [
             SELECT 
@@ -46,6 +48,8 @@ public inherited sharing class HDT_QR_Case {
     /*******
      *  Cambio uso TEcnico
      */
+    
+    @SuppressWarnings('PMD.FormalParameterNamingConventions')
     public Case getRecordByIdCambioUso(String Id) {
         return [
             SELECT 
@@ -104,10 +108,10 @@ public inherited sharing class HDT_QR_Case {
         LIMIT 1];
 
     }
-
+    
+    @SuppressWarnings('PMD.FormalParameterNamingConventions')
     public List<Case> getRecordsById(List<String> Ids, String fields) {
-        String query = 'SELECT '+ String.escapeSingleQuotes(fields) +
-                ' From Case where id IN :Ids';
+        String query = 'SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Case where Id IN :Ids';
         List<Case> cases = Database.query(query); 
 
         return cases;
