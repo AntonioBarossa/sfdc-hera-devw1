@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>*</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb1</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb2</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb3</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb4</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb5</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb6</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb7</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb8</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CampoWeb9</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Cap</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CategoriaAbbonamento</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CategoriaMerceologica</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Cellulare</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_City</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Civico</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_CodiceIstat</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Codicefiscale</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Cognome</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_DataFineValidita</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_DataRicezione</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_DescrizioneAteco</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Dettagliofonte</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Email</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_FasciaEta</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Fonte</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Localita</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Nazionalita</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Nome</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_PartitaIva</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Professione</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_RaccoltodaAgenzia</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_RagioneSociale</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Sesso</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Silos</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_SocietaSilos</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_State</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_StreetName</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Telefonofisso</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_TitoloDiStudio</members>
+		<members>HDT_MassiveFieldsObjectMap.Lead_Via</members>
 		<name>CustomMetadata</name>
-	</types>
-	<types>
-		<members>HDT_MassiveFieldsObjectMap__mdt</members>
-		<name>CustomObject</name>
 	</types>
 	<version>51.0</version>
 </Package>

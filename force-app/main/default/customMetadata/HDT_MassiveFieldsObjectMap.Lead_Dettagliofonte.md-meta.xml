@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>labelField__c</field>
-        <value xsi:type="xsd:string">Lead_Dettagliofonte</value>
+        <value xsi:type="xsd:string">Lead_DettaglioFonte</value>
     </values>
     <values>
         <field>nameField__c</field>

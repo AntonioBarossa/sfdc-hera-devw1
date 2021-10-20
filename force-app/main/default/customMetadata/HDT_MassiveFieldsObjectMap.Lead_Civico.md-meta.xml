@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>nameField__c</field>
-        <value xsi:type="xsd:string">Atteso nome API (Civico)</value>
+        <value xsi:type="xsd:string">StreetNumber__c</value>
     </values>
     <values>
         <field>objectType__c</field>
-        <value xsi:type="xsd:string">Individual</value>
+        <value xsi:type="xsd:string">Lead</value>
     </values>
     <values>
         <field>processType__c</field>
