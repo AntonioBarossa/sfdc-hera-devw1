@@ -1,7 +1,8 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_ComboboxOptionsInterface {
     public String getOptions(String params) {
         
-        System.debug('getOptions - params: ' + params);
+        System.debug(LoggingLevel.DEBUG, 'getOptions - params: ' + params);
         
         Map<String, Object> paramsMap = (Map<String, Object>) JSON.deserializeUntyped(params);
         String method = (String) paramsMap.get('method');
@@ -27,7 +28,7 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
 
     private String getCluster(Map<String, Object> paramsMap){
         
-        System.debug('getOptions - getCluster: ' + paramsMap);
+        System.debug(LoggingLevel.DEBUG, 'getOptions - getCluster: ' + paramsMap);
         
         /*
             @Author: Davide Viola - 20/10/2021
@@ -42,14 +43,14 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
-        System.debug('getCluster - context: ' + context);
+        System.debug(LoggingLevel.DEBUG, 'getCluster - context: ' + context);
         List<HDT_Informative_Configuration__mdt> clusterList =  HDT_QR_InformativeManager.getClusterProcess(context);
         return JSON.serialize(convertToListMap(distinctRecords(clusterList,'Cluster__c'),'Cluster__c'));
     }
     
     private String getTopic(Map<String, Object> paramsMap){
         
-        System.debug('getOptions - getTopic: ' + paramsMap);
+        System.debug(LoggingLevel.DEBUG, 'getOptions - getTopic: ' + paramsMap);
         
         /*
             @Author: Davide Viola - 20/10/2021
@@ -64,14 +65,14 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
-        System.debug('getTopic - context: ' + context);
+        System.debug(LoggingLevel.DEBUG, 'getTopic - context: ' + context);
         List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getTopicByCluster((String) paramsMap.get('cluster'),context);
         return JSON.serialize(convertToListMap(distinctRecords(topic,'MacroTopic__c'),'MacroTopic__c'));
     }
     
     private String getProcess(Map<String, Object> paramsMap){
         
-        System.debug('getOptions - getProcess: ' + paramsMap);
+        System.debug(LoggingLevel.DEBUG, 'getOptions - getProcess: ' + paramsMap);
         
         /*
             @Author: Davide Viola - 20/10/2021
@@ -85,7 +86,7 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
     
     private String getInfo(Map<String, Object> paramsMap){
         
-        System.debug('getOptions - getInfo: ' + paramsMap);
+        System.debug(LoggingLevel.DEBUG, 'getOptions - getInfo: ' + paramsMap);
         
         /*
             @Author: Davide Viola - 20/10/2021
@@ -100,13 +101,13 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
             context = contextId.getSObjectType().getDescribe().getName();
         }
         
-        System.debug('getInfo - context: ' + context);
+        System.debug(LoggingLevel.DEBUG, 'getInfo - context: ' + context);
         
         String myTopic = (String) paramsMap.get('topic');
-        System.debug('getInfo - myTopic: ' + myTopic);
+        System.debug(LoggingLevel.DEBUG, 'getInfo - myTopic: ' + myTopic);
         
         String myCluster = (String) paramsMap.get('cluster');
-        System.debug('getInfo - myCluster: ' + myCluster);
+        System.debug(LoggingLevel.DEBUG, 'getInfo - myCluster: ' + myCluster);
         
         List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster(myTopic, myCluster, context);
         List<Map<String,String>> listMapInfo = convertToListMap(topic,'InformationDetail__c');
@@ -120,8 +121,8 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
    
     private List<Map<String,String>> convertToListMap(List<SObject> records, String field){
         
-        System.debug('convertToListMap - records: ' + records);
-        System.debug('convertToListMap - field: ' + field);
+        System.debug(LoggingLevel.DEBUG, 'convertToListMap - records: ' + records);
+        System.debug(LoggingLevel.DEBUG, 'convertToListMap - field: ' + field);
         
         Map<String,String> resultMap = new Map<String,String>();
         List<Map<String,String>> resultList = new List<Map<String,String>>();
@@ -136,8 +137,8 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
     }
     
     private List<SObject> distinctRecords(List<SObject> records, String field){
-        System.debug('distinctRecords - records: ' + records);
-        System.debug('distinctRecords - field: ' + field);
+        System.debug(LoggingLevel.DEBUG, 'distinctRecords - records: ' + records);
+        System.debug(LoggingLevel.DEBUG, 'distinctRecords - field: ' + field);
         
         /*
             @Author: Davide Viola - 20/10/2021
@@ -148,9 +149,9 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         Map<String,String> mapRecords = new Map<String,String>();
         
         for(SObject singleRecord : records){
-            System.debug('field ' +(String)singleRecord.get(field) );
-            System.debug('mappa ' + mapRecords.get((String)singleRecord.get(field)));
-            System.debug('mappa intera ' + mapRecords);
+            System.debug(LoggingLevel.DEBUG, 'field ' +(String)singleRecord.get(field) );
+            System.debug(LoggingLevel.DEBUG, 'mappa ' + mapRecords.get((String)singleRecord.get(field)));
+            System.debug(LoggingLevel.DEBUG, 'mappa intera ' + mapRecords);
             if(mapRecords.get((String)singleRecord.get(field)) == null){
                 distinctRecords.add(singleRecord);
                 mapRecords.put((String)singleRecord.get(field), (String)singleRecord.get(field));

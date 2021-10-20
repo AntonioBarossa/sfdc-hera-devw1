@@ -2,6 +2,13 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
 
     private static HDT_QR_Knowledge qrKb = new HDT_QR_Knowledge();
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    * Risoluzione "Local variable is declared and-or assigned but not used"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static String sendNotification(Knowledge__kav article){
 
         List<String> rolesToNotificate = new List<String>();
@@ -29,7 +36,7 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
 		
         } catch(Exception e){
 
-            System.debug(e.getMessage());
+            System.debug(LoggingLevel.DEBUG, e.getMessage());
 
         }
 
@@ -72,10 +79,10 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
                         if((retainAllResult && tmpChannel.size() > 0) || (!retainAllResult) || news.EntryChannel__c.containsIgnoreCase('Tutti')){
                             rolesString += news.Role__c;
                         }else{
-                            System.debug('Rule Not Found');
+                            System.debug(LoggingLevel.DEBUG, 'Rule Not Found');
                         }
                     }else{
-                        System.debug('Rule Not Found');
+                        System.debug(LoggingLevel.DEBUG, 'Rule Not Found');
                     }
                     
                 }
