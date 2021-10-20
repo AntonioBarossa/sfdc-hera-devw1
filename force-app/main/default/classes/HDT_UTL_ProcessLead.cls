@@ -6,29 +6,30 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
         mapFieldsObject();
         Integer count=0;
         for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
-            if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count).toUpperCase())) ){
-                System.debug('tempField: '+tempField);
-                System.debug('Api: '+mapLeadFields.get(mapHeaderByPosition.get(count).toUpperCase()));
-                System.debug('Count: '+count);
+            if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count))) ){
                 mapTypeField(currentProcess.currentLead,mapLeadFields,count,tempField);
             }
            
             count++;
         }
+        if (String.isBlank( currentProcess.currentLead.Company)) {
+            currentProcess.currentLead.Company=currentProcess.currentLead.FirstName+currentProcess.currentLead.LastName;
+        }
+        system.debug('currentProcess.currentLead '+currentProcess.currentLead);
     }
 
     public override void getRecords(){
-        List<Lead> listLead;
-        
         if (String.isNotBlank(currentProcess.currentLead.FirstName)&&String.isNotBlank(currentProcess.currentLead.LastName)&& String.isNotBlank(currentProcess.currentLead.CompanyOwner__c) ) {
             listLead =HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead.FirstName, currentProcess.currentLead.LastName, currentProcess.currentLead.CompanyOwner__c);
         }
+        System.debug('listLead.size '+listLead.size());
        
     }
 
     public override void registryCreation(){
 
-        if (listLead!=null && listLead.size()>0) {
+       
+        if (listLead.size()>0) {
             Lead oldLead=listLead.get(0);
             for (String tempField : mapLeadFields.values()) {
                 if ( String.isBlank(String.valueOf(oldLead.get(tempField)))) {
@@ -55,12 +56,12 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
         mapLeadFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt temp : listLeadFields){
             system.debug('temp Map '+temp.labelField__c);
-            mapLeadFields.put(temp.labelField__c.toUpperCase(), temp.nameField__c);
+            mapLeadFields.put(temp.labelField__c, temp.nameField__c);
         }
         List<HDT_MassiveFieldsObjectMap__mdt> listIndividualFields = getMapFieldsObject('Individual', this.processName);
         mapIndividualFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt temp : listIndividualFields){
-            mapIndividualFields.put(temp.labelField__c.toUpperCase(), temp.nameField__c);
+            mapIndividualFields.put(temp.labelField__c, temp.nameField__c);
         }
 
     }
