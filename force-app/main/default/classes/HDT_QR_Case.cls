@@ -4,7 +4,7 @@
 * @description HDT_QR_Case– Contains queries for Case
 * @history Fatjola Memishaj – 10/03/2021 – Created class
 */
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_Case {
 
     public List<Case> getRecordByPracticeNumber(String caseNumber){
@@ -141,7 +141,7 @@ public inherited sharing class HDT_QR_Case {
             AND RecordType.DeveloperName = 'HDT_RT_RichiestaParere'
             WITH SECURITY_ENFORCED];
         }catch(Exception e){
-            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return childCases;
     }
@@ -162,7 +162,7 @@ public inherited sharing class HDT_QR_Case {
             WITH SECURITY_ENFORCED
             ];
         }catch(Exception e){
-            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return activities;
     }
@@ -193,7 +193,7 @@ public inherited sharing class HDT_QR_Case {
             WITH SECURITY_ENFORCED
             LIMIT 1];
         } catch(Exception e){
-            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return nonReqContr;
     }
@@ -210,7 +210,7 @@ public inherited sharing class HDT_QR_Case {
             WITH SECURITY_ENFORCED
             LIMIT 1];
         } catch(Exception e){
-            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return nonReqContr;
     }
@@ -237,7 +237,7 @@ public inherited sharing class HDT_QR_Case {
         }
         catch(Exception e)
         {
-            System.Debug('Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
         }
         return childCases;
     }
