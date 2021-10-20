@@ -14,7 +14,11 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
         Set<String> channelSet = new Set<String>();
 
         String title;
-        String body;
+        /*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		//String body;
         String result;
         String rolesString = '';
 

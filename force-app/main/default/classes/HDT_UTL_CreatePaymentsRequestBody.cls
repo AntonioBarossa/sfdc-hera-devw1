@@ -3,7 +3,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     public String createBodyRequest(List<HDT_UTL_WrapperInput> inputs){
 
         JSONGenerator gen = JSON.createGenerator(true);
-        String pretty;
+        /*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		//String pretty;
 
         gen.writeStartObject();
 

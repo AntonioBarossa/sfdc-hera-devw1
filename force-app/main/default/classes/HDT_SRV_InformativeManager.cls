@@ -29,9 +29,13 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug('getOptions - getCluster: ' + paramsMap);
         
-        String result;
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result;
+        String sObjName;*/
         String context = (String) paramsMap.get('context');
-        String sObjName;
         
         if(context instanceOf Id){
             Id contextId = (Id) Context;
@@ -47,9 +51,13 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug('getOptions - getTopic: ' + paramsMap);
         
-        String result;
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result;
+        String sObjName;*/
         String context = (String) paramsMap.get('context');
-        String sObjName;
         
         if(context instanceOf Id){
             Id contextId = (Id) Context;
@@ -65,7 +73,11 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug('getOptions - getProcess: ' + paramsMap);
         
-        String result;
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String result;
         String process = HDT_QR_InformativeManager.getProcessByCluster((String) paramsMap.get('cluster'));
         
         return process;
@@ -75,9 +87,13 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug('getOptions - getInfo: ' + paramsMap);
         
-        String result;
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result;
+        String sObjName;*/
         String context = (String) paramsMap.get('context');
-        String sObjName;
         
         if(context instanceOf Id){
             Id contextId = (Id) Context;
@@ -123,7 +139,11 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         System.debug('distinctRecords - records: ' + records);
         System.debug('distinctRecords - field: ' + field);
         
-        Set<String> setValue = new Set<String>();
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Set<String> setValue = new Set<String>();
         List<SObject> distinctRecords = new List<SObject>();
         Map<String,String> mapRecords = new Map<String,String>();
         

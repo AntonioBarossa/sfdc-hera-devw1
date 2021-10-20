@@ -1,6 +1,10 @@
 public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
-		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		/*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		//List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		switch on context {
 			when 'Context1' {
 				return getRecordObjectsListContext1(recordsList);
@@ -252,7 +256,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			
 			documentalSendTracking.SendDate__c = Date.today();
 			documentalSendTracking.EnvelopeId__c = envelopeId;
-			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
+			/*
+				@Author: Davide Viola - 20/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
 			
 		} catch (Exception ex) {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
@@ -274,7 +282,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			documentalActivity.EnvelopeId__c = envelopeId;
 			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
 
-			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+			/*
+				@Author: Davide Viola - 20/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 		} catch (Exception ex) {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
@@ -654,8 +666,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 							break;
 						}
 					}else if(operatore == '>'){
-						Integer propValueInt = Integer.valueOf(propValue);
-						Integer condizioneInt = Integer.valueOf(condizione);
+						/*
+							@Author: Davide Viola - 20/10/2021
+							Description: PMD -> Commentate variabili non utilizzate.
+						*/
+						/*Integer propValueInt = Integer.valueOf(propValue);
+						Integer condizioneInt = Integer.valueOf(condizione);*/
 						if(propValue > condizione){
 							resultToReturn = result;
 							break;

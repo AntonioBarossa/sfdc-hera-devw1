@@ -8,9 +8,13 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
 
         System.debug('HDT_SRV_PrescrizioneFattura callout action');
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,Object> arg = new Map<String,Object>();
         List<Case> caseToUpdate = new List<Case>();
-        Case currentCase = new Case();
+        Case currentCase = new Case();*/
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
         //String method = (String) argsMap.get('method');

@@ -144,7 +144,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     ? Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'))
                     : null;
                 String clientCategory = getFieldValue(fields, 'ClientCategory__c');
-                String reason = getFieldValue(fields, 'Reason__c');
+                /*
+                    @Author: Davide Viola - 20/10/2021
+                    Description: PMD -> Commentata variabile non utilizzata.
+                */
+                //String reason = getFieldValue(fields, 'Reason__c');
                 String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
                 String sendPaperlessMode = getFieldValue(fields, 'SendPaperlessCodeMode__c');
 

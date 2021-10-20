@@ -27,7 +27,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompanyCode;
         String salesCompany;
         String method;
-        String value;
+        /*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		//String value;
         Decimal decValue;
 
         positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
