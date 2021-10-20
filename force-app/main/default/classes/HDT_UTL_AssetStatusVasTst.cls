@@ -81,7 +81,7 @@ public class HDT_UTL_AssetStatusVasTst {
 
         Test.startTest();
         
-        HDT_UTL_AssetStatusVas.processAssets(assets, oldAssetsMap);
+        HDT_UTL_AssetStatusVas.processAssets(assets, oldAssetsMap); //Updated method signature
             
         Test.stopTest();
         

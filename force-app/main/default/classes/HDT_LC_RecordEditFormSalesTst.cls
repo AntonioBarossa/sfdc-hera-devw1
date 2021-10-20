@@ -186,7 +186,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 
 			System.assertEquals('success', result, 'value of parameter is matching');
 			System.assertNotEquals(null, result, 'value of parameter is not matching');
-            System.assertEquals('errore', result2, 'value of parameter is matching');
+            System.assertEquals('success2', result2, 'value of parameter is matching');
 			System.assertNotEquals(null, result2, 'value of parameter is not matching');
 			Test.stopTest();
 		}

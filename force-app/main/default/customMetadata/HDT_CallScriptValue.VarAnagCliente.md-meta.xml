@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>VarAnagCliente</label>
+    <protected>false</protected>
+    <values>
+        <field>ConstantName__c</field>
+        <value xsi:type="xsd:string">varanagcliente</value>
+    </values>
+    <values>
+        <field>FieldName__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ObjectName__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Type__c</field>
+        <value xsi:type="xsd:string">CONSTANT</value>
+    </values>
+    <values>
+        <field>ValueToOverride__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Value__c</field>
+        <value xsi:type="xsd:string">/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Variazione+Anagrafica+Cliente&amp;c__recordTypeName=HDT_RT_VariazioneAnagraficaCliente&amp;c__accid={0}&amp;c__flowName=HDT_FL_PostSalesMasterDispatch</value>
+    </values>
+</CustomMetadata>
