@@ -84,8 +84,12 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         List<HDT_WRP_QueryParameter> childs = new List<HDT_WRP_QueryParameter>();
         String conditions;
         try {
-            String[] nestedQueryArray = new List<String>();
-            String nestedQuery = '';
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentate variabili non utilizzate.
+            */
+            /*String[] nestedQueryArray = new List<String>();
+            String nestedQuery = '';*/
             for(HDT_WRP_SetupParameter singleElement : setupParameters.childs) {
                 HDT_WRP_QueryParameter child = new HDT_WRP_QueryParameter();
                 child.fields = singleElement.fields;
@@ -124,7 +128,11 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         return recordMap;
     }
     private static String mapBodyValue(Map<String,List<SObject>> records, String stringStructure){
-        String body = '';
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String body = '';
         Map<String,Object> bodyMap = new Map<String,Object>();
         try {
             if(stringStructure != null && String.isNotBlank(stringStructure)){
