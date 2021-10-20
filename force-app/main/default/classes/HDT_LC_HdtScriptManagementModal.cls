@@ -16,7 +16,7 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
     /**
-    * @description 
+    * @description Get script configuration for a given record
     * @author gabriele.rota@webresults.it | 2021-09-13 
     * @param recordId 
     * @return List<HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig> 
