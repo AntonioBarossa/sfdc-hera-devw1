@@ -3,7 +3,7 @@
     <fullName>OfferCode__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Codice Offerta</label>
+    <label>Codice Offerta Ordine</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>
