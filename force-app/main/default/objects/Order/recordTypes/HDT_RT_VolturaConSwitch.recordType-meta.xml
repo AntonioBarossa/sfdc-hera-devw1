@@ -2227,11 +2227,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento KO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2256,6 +2268,10 @@
         </values>
         <values>
             <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
         <values>
