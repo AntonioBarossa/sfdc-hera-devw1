@@ -45,27 +45,20 @@ public inherited sharing class HDT_SRV_ScriptManager {
     private static List<HDT_WRP_ScriptConfig> getOrderScriptConfig(Id orderParentId){
 
         Order parentOrder = orderQr.getRecordById(orderParentId);
-        Map<String,String> scriptPerOfferMap = getScriptPerOfferMap();
 
-        Set<String> scriptNames = new Set<String>();
+        Set<String> offerCodes = new Set<String>();
         for (Order childOrder:orderQr.getChildOrdersByParentId(orderParentId)) {
 
             if (String.isNotBlank(childOrder.OrderReference__c)) {
                 continue;
             }
-            
-            switch on parentOrder.SignatureMethod__c {
-                when 'OTP Remoto','OTP Coopresenza' {
-                    scriptNames.add('Mini Vocal Order');
-                }
-                when 'Vocal Order' {
-                    if (String.isNotBlank(childOrder.CommercialProductCode__c) && scriptPerOfferMap.containsKey(childOrder.CommercialProductCode__c)) {
-                        scriptNames.add( scriptPerOfferMap.get(childOrder.CommercialProductCode__c) );
-                    }
-                }
+
+            if (String.isNotBlank(childOrder.CommercialProductCode__c)) {
+                offerCodes.add( childOrder.CommercialProductCode__c );
             }
         }
 
+        Set<String> scriptNames = getOrderScriptsFromMetadata(parentOrder.SignatureMethod__c, offerCodes);
         List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
         for (String scriptName:scriptNames) {
             HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
@@ -73,7 +66,6 @@ public inherited sharing class HDT_SRV_ScriptManager {
             config.scriptName = scriptName;
             configs.add(config);
         }
-
         return configs;
     }
 
@@ -85,25 +77,16 @@ public inherited sharing class HDT_SRV_ScriptManager {
     **/
     private static List<HDT_WRP_ScriptConfig> getActivityScriptConfig(Id activityId){
 
-        List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
-
         wrts_prcgvr__Activity__c activity = HDT_QR_ActivityCustom.getActivityByRecordId(activityId)[0];
 
-        switch on activity.Type__c {
-            when 'Quality Call'{
-                HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
-                config.scriptTarget = activity.Order__c;
-                config.scriptName = 'Quality call';
-                configs.add(config);
-            }
-            when 'Comfort Call'{
-                HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
-                config.scriptTarget = activity.Order__c;
-                config.scriptName = 'Comfort call';
-                configs.add(config);
-            }
+        Set<String> scriptNames = getActivityScriptsFromMetadata(activity.Type__c);
+        List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
+        for (String scriptName:scriptNames) {
+            HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
+            config.scriptTarget = activity.Order__c;
+            config.scriptName = scriptName;
+            configs.add(config);
         }
-
         return configs;
     }
 
@@ -131,16 +114,35 @@ public inherited sharing class HDT_SRV_ScriptManager {
     }
 
     /**
-    * @description Get map for checking wich script needs to be launched for which commercial offer
-    * @author gabriele.rota@webresults.it | 2021-10-19 
-    * @return Map<String,String>
+    * @description Getting script names for given order(s)
+    * @author gabriele.rota@webresults.it | 2021-10-20 
+    * @return Set<String>
     **/
-    private static Map<String,String> getScriptPerOfferMap() {
-        Map<String,String> scriptPerOfferMap = new Map<String,String>();
+    private static Set<String> getOrderScriptsFromMetadata(String signatureMethod, Set<String> offerCodes) {
+        Set<String> scriptNames = new Set<String>();
         for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
-            scriptPerOfferMap.put(scriptPerOffer.OfferCode__c, scriptPerOffer.ScriptName__c);
+            if (scriptPerOffer.Object__c=='Order' && scriptPerOffer.SignatureMethod__c==signatureMethod) {
+                if (signatureMethod!='Vocal Order' || offerCodes.contains(scriptPerOffer.OfferCode__c)) {
+                    scriptNames.add(scriptPerOffer.ScriptName__c);
+                }
+            }
         }
-        return scriptPerOfferMap;
+        return scriptNames;
+    }
+
+    /**
+    * @description Getting script names for given activity
+    * @author gabriele.rota@webresults.it | 2021-10-20 
+    * @return Set<String>
+    **/
+    private static Set<String> getActivityScriptsFromMetadata(String activityType) {
+        Set<String> scriptNames = new Set<String>();
+        for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
+            if (scriptPerOffer.Object__c=='Activity' && scriptPerOffer.ActivityType__c==activityType) {
+                scriptNames.add(scriptPerOffer.ScriptName__c);
+            }
+        }
+        return scriptNames;
     }
 
     public class HDT_WRP_ScriptConfig{
