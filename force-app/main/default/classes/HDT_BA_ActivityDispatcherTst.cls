@@ -28,6 +28,7 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
             Name = 'rule1',
             Type__c = 'Sportello',
             RulePriority__c = 40,
+            Queue__c = queue.Id,
             HighPriorityQueue__c = queue.Id,
             LowPriorityQueue__c = queue.Id,
             MediumPriorityQueue__c = queue.Id
