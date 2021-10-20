@@ -34,6 +34,8 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
         
         //TEST WITH ID
         Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'tOrder ' + tOrder);
+        
         String result = HDT_LC_DocumentalPhaseHistory.getParentOrderId(tOrder.Id);
         System.assert(String.isNotBlank(result), 'getParentOrderId did not work correctly');
         
