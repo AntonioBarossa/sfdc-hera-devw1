@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
@@ -25,7 +26,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
-        System.debug('Case Phase --> '+currentCase.TecnicalPhase__c);
+        System.debug(LoggingLevel.DEBUG, 'Case Phase --> '+currentCase.TecnicalPhase__c);
         if(currentCase.TecnicalPhase__c == 'Da Inviare'){
             return mrrResponse;
         } else {
@@ -36,33 +37,18 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
         List<HDT_WRP_HerokuPostSalesManager> responseResults = new List<HDT_WRP_HerokuPostSalesManager>();
-
-        String requestType;
-        String result;
-        String errorMessage;
-        String refReq;
-        String communicationChannel;
-        String reqId;
-        String herokuCode;
-        String dlCode;
+        
         try{
             responseResults.add(new HDT_WRP_HerokuPostSalesManager(responseMrr.responses[0].objects[0].fields, responseMrr.responses[0].header.requestType));
         }catch(Exception ex){
-            System.debug('Error in Heroku Response');
+            System.debug(LoggingLevel.DEBUG, 'Error in Heroku Response');
         }
         return responseResults;
     }
 
     public HDT_WRP_HerokuPostSalesManager manipulateRequest(HDT_WRP_MrrRequest.HDT_WRP_Request request){
-
-        String flowType;
-        String phase;
-        String recordId;
-        String herokuCode;
-        String contractCode;
-        String contractStatus;
-        String dlCode;
-        System.debug('UTL_CLASS_Request--> '+request);
+        
+        System.debug(LoggingLevel.DEBUG, 'UTL_CLASS_Request--> '+request);
         HDT_WRP_HerokuPostSalesManager toReturn = new HDT_WRP_HerokuPostSalesManager(request.objects[0].fields);
         toReturn.requestMap.put('requestId', request.header.requestId);
         return toReturn; 
@@ -114,7 +100,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 } when 'ANNULL'{
                     herokuCancellationCode = responseResult.responseMap.get('COD_PRAT_UTENTE');
                     errorMessage = responseResult.responseMap.get('errorMessage');
-                    System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
+                    System.debug(LoggingLevel.DEBUG, 'SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
                         when 'OK'{
                             phase = 'Annullamento - Comunicazione verso Heroku OK';
@@ -125,7 +111,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     }
                 } 
                 when else {
-                    System.debug('Error non existing request');
+                    System.debug(LoggingLevel.DEBUG, 'Error non existing request');
                     return null;
                 }
             }
@@ -140,8 +126,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
         || currentCase.Phase__c == 'Annullamento - Da inviare'){
 
-            System.debug('SRV_Class_Phase--> '+phase);
-            System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
+            System.debug(LoggingLevel.DEBUG, 'SRV_Class_Phase--> '+phase);
+            System.debug(LoggingLevel.DEBUG, 'SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             caseNew.Id = currentCase.Id;
             caseNew.TecnicalPhase__c = phase;
@@ -291,7 +277,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(reqWrp.requestMap.get('NOTE_ANN') != null && reqWrp.requestMap.get('NOTE_ANN') != ''){
                 String noteAnn = recordCase.CancellationNote__c != null?recordCase.CancellationNote__c:'';
-                System.debug('NoteAnn: '  + noteAnn);
+                System.debug(LoggingLevel.DEBUG, 'NoteAnn: '  + noteAnn);
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
@@ -316,7 +302,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 try{
                     dtMaxPrev = Date.valueOf(reqWrp.requestMap.get('DT_MAX_PREV'));
                 } catch(Exception e) {
-                     System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                     System.debug(LoggingLevel.DEBUG, 'DT_MAX_PREV Exception -> ' + e.getMessage());
                 }
                 
                 if(dtMaxPrev == null){
@@ -324,7 +310,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                        dtMaxPrev = enrichSrv.getDateFromString(reqWrp.requestMap.get('DT_MAX_PREV'));
                     }
                     catch(Exception e){
-                         System.debug('DT_MAX_PREV Exception -> ' + e.getMessage());
+                         System.debug(LoggingLevel.DEBUG, 'DT_MAX_PREV Exception -> ' + e.getMessage());
                     }
                 }
                 try{
@@ -339,7 +325,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         }
                     }
                 } catch(Exception e) {
-                    System.debug('DT_MAX_PREV assignment Exception -> ' + e.getMessage());
+                    System.debug(LoggingLevel.DEBUG, 'DT_MAX_PREV assignment Exception -> ' + e.getMessage());
                 }
             }
             
@@ -348,7 +334,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 try{
                     currentCase.CancellationRequestDate__c	= Date.valueOf(reqWrp.requestMap.get('DATA'));
                 } catch (Exception e){
-                    System.debug('DATA Exception -> ' + e.getMessage());
+                    System.debug(LoggingLevel.DEBUG, 'DATA Exception -> ' + e.getMessage());
                 }
             }
             
@@ -386,7 +372,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 extraParams.put('oldContractCode',recordCase?.ContractCode__c); 
                 handleEntityUpdate(reqWrp, extraParams);
             }
-            System.debug('handleRequest - no Action Needed');
+            System.debug(LoggingLevel.DEBUG, 'handleRequest - no Action Needed');
 
             if(noteSap != null && noteSap != ''){
                 newDescription = nowDateFormat + ': ' + noteSap + '\n';
@@ -405,7 +391,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     Date payDate = Date.valueOf(paymentDate);
                     currentCase.PaymentDate__c = payDate;
                 } catch(Exception e) {
-                    System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
+                    System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
                 }
             }
             
@@ -450,8 +436,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.QuotationNumber__c = numPrev;
         }
         if(expectedExec != null && expectedExec != ''){
-            System.debug('#QUOTATIONTYPE -> ' + quotationType);
-            System.debug('#NEXTPHASE -> ' +nextPhase);
+            System.debug(LoggingLevel.DEBUG, '#QUOTATIONTYPE -> ' + quotationType);
+            System.debug(LoggingLevel.DEBUG, '#NEXTPHASE -> ' +nextPhase);
             if(quotationType.equalsIgnoreCase('Analitico') && (nextPhase.containsIgnoreCase('Dati Tecnici Ricevuti') || nextPhase.containsIgnoreCase('Ammissibilità OK'))){
                 currentCase.ExpectedExecutionTime__c = expectedExec;
             }else if(!quotationType.equalsIgnoreCase('Analitico')){
@@ -494,8 +480,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     //se Annullamento SII - Ricezione e Attivita Eseguire Gestione Manuale SAP --> Creazione Activity
     //se Annullamento SII - Ricezione e Storno null --> No action
     public void handlePassiveCancellation(SObject recordObj, String objectType, String storno, String activity){
-        Case recordCase;
-        Order recordOrder;
         
         if(String.isNotBlank(storno) && storno.equalsIgnoreCase('N')) {
             recordObj.put('Phase__c', 'Annullato SII');
@@ -583,7 +567,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     } else {
                         throw new HDT_UTL_RichPassException('Non è stato possibile determinare il processo da creare');
                     }
-                    System.debug('Morosità: ' + morosita);
+                    System.debug(LoggingLevel.DEBUG, 'Morosità: ' + morosita);
                     
                     currentCase.Origin = source;
                     Contact contact = qrClass.getContact(account.Id);
@@ -638,7 +622,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                     HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
                                     currentCase.EffectiveDate__c = enrichSrv.getDateFromString(dataDecorrenza);
                                 } catch(Exception e){
-                                    System.debug('DATA_DECORRENZA Exception -> ' + e.getMessage());
+                                    System.debug(LoggingLevel.DEBUG, 'DATA_DECORRENZA Exception -> ' + e.getMessage());
                                 }
                             }
                             if(String.isNotBlank(processType)){
@@ -705,7 +689,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             try{
                 currentCase = dataEnrichment(pod,sapContractCode,currentCase);
             }catch(Exception e){
-                System.debug('Impossibile arrichire dati: ' + e.getMessage());
+                System.debug(LoggingLevel.DEBUG, 'Impossibile arrichire dati: ' + e.getMessage());
             }
             //add causal code
             causalCodeMdt = qrClass.getCausalCode(currentCase.Cluster__c, currentCase.Type, sp.CommoditySector__c);
@@ -718,7 +702,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 createActivity(currentCase.Id,null, '', 'Recesso Anticipato', 'Recesso Anticipato');
             }
             currentCase = qrClass.getCaseRecord(currentCase.Id);
-            System.debug('Commodity: ' + currentCase.CommodityFormula__c);
+            System.debug(LoggingLevel.DEBUG, 'Commodity: ' + currentCase.CommodityFormula__c);
             //CompatibilityCheck
             String compatibility = '';
             //checkCompatibility Method Call
@@ -733,11 +717,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             //Check Compatibility Output
             if(String.isEmpty(compatibility))
             {
-                System.debug('Compatibilita superata con successo ' + compatibility);
+                System.debug(LoggingLevel.DEBUG, 'Compatibilita superata con successo ' + compatibility);
             }
             else
             {
-                System.debug('Compatibilita non superata ' + compatibility);
+                System.debug(LoggingLevel.DEBUG, 'Compatibilita non superata ' + compatibility);
                 for(Case c : caseInsertList){
                     c.Phase__c = 'Bozza Annullata';
                     c.Status = 'Closed';
@@ -864,7 +848,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         try{
             contractEndDate = Date.valueOf(wrapper.requestMap.get('DT_FINE_VERT'));
         }catch(Exception e){
-            System.debug('UTL_CLASS_ContractEndDate_error--> '+e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'UTL_CLASS_ContractEndDate_error--> '+e.getMessage());
         }
         if(contractCode != null){
            handleContractUpdate(contractCode, oldContractCode,contractStatus,contractEndDate);
