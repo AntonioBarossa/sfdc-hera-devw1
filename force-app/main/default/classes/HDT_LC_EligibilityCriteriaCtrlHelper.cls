@@ -198,7 +198,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.rowId = itemList[n].Name;
@@ -383,7 +387,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
                 if (!dr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
                     for(Database.Error err : dr.getErrors()) {
                         lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';

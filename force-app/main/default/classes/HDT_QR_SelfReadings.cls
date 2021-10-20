@@ -24,7 +24,11 @@ public inherited sharing class HDT_QR_SelfReadings {
         Map<Id, HDT_SelfReadingError__mdt> secondQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND Description__c IN :errorCodes  WITH SECURITY_ENFORCED]);
         //List<HDT_SelfReadingError__mdt> configs = [SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND (ErrorCode__c IN :errorCodes OR Description__c IN:errorCodes) WITH SECURITY_ENFORCED];
         firstQuery.putAll(secondQuery);
-        List<HDT_SelfReadingError__mdt> recordList = new List<HDT_SelfReadingError__mdt>();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //List<HDT_SelfReadingError__mdt> recordList = new List<HDT_SelfReadingError__mdt>();
         /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
             recordList.add(singleRecord);
         }*/

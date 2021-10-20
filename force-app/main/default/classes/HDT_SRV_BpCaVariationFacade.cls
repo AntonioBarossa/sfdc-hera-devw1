@@ -3,12 +3,17 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
     global Object execute(Object args) {
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
-        //List<Case> caseToUpdate = new List<Case>();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,Object> arg = new Map<String,Object>();
         Case currentCase = new Case();
+        String method = (String) argsMap.get('method');
+        */
+        //List<Case> caseToUpdate = new List<Case>();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 

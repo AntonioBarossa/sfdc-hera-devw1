@@ -206,7 +206,11 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
                 
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError lineError = new HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.docName = docList[n].Name;
