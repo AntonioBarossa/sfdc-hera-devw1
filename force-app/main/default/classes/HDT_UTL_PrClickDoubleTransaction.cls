@@ -48,7 +48,7 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
         Map<Id, String> bulkMapForDoubleTransasction = new Map<Id, String>(idToNewPhase);
         idToNewPhase.clear();
         Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
-        if(system.isQueueable() && !limitQueueablesOk){
+        if(system.isQueueable()){
             asyncBulkUpdateFuture(bulkMapForDoubleTransasction);
         }else if((!system.isBatch()) || limitQueueablesOk){
             system.enqueueJob(new HDT_QBL_BulkUpdate(bulkMapForDoubleTransasction));
