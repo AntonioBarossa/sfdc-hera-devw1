@@ -7,6 +7,11 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
         Integer count=0;
 
         for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
+             // Se devo essere aggiunti altri campi req
+             if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField)) {
+                throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field '+mapHeaderByPosition.get(count));
+            }
+            // Se devo essere aggiunti altri campi req
             if(String.isNotBlank(mapLeadFields.get(mapHeaderByPosition.get(count)))&& String.isNotBlank(tempField) ){
                 mapTypeField(currentProcess.currentLead,mapLeadFields,count,tempField);
             }
