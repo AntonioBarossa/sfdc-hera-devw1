@@ -43,7 +43,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
 		System.debug(debugString);
         
         String body='';
-        HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
@@ -73,7 +77,11 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
 		System.debug(debugString);
         
         String baseSixtyFour = '';
-        HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
         String tipoPlico = (String) formParamsMap.get('TipoPlico');
         String result = '';
@@ -123,12 +131,16 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
     }
 
     public static String showOriginalDocument(String recordId){
-        String context;
         String baseSixtyFour = '';
         String body='';
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String context;
         String result='';
         String responseCode;
-        String responseStatus;
+        String responseStatus;*/
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
@@ -150,9 +162,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
     public static String showArchivedAttachment(String recordId){
         String baseSixtyFour = '';
         String body='';
-        String result='';
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result='';
         String responseCode;
-        String responseStatus;
+        String responseStatus;*/
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
@@ -170,9 +186,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
 
     public static String resendDocusignEnvelope(String recordId){
         String body='';
-        String result='';
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result='';
         String responseCode;
-        String responseStatus;
+        String responseStatus;*/
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
         try{
@@ -188,9 +208,13 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
 
     public static String discardDocusignEnvelope(String recordId){
         String body='';
-        String result='';
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result='';
         String responseCode;
-        String responseStatus;
+        String responseStatus;*/
         Map<String,String> resultMap = new Map<String,String>();
         HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
         try{

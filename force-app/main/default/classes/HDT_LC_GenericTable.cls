@@ -1,9 +1,3 @@
-/*
-* @Author: Salvatore A. Sarà 20/10/2021
-* Risoluzione "Debug Should Use Logging Level"
-* Risoluzione "Avoid debug statements since they impact on performance"
-*/
-@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_GenericTable {
 
     public static List<List<SObject>> rowData { get; set; }
@@ -28,7 +22,11 @@ public inherited sharing class HDT_LC_GenericTable {
         List<String> objList = new List<String>();
         List<String> columnList = new List<String>();
 
-        // Integer count = 0; // Risoluzione "Local variable is declared and-or assigned but not used"
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Integer count = 0;
         Integer fieldCount = 0;
 
         //Actions
@@ -55,7 +53,7 @@ public inherited sharing class HDT_LC_GenericTable {
             }
             query += 'From ' + singleObj.obj + ' ';
             if((searchKey!=null && searchKey != '') && (searchTerm != null && searchKey != null) && (singleObj.whereCond != null && singleObj.whereCond != '')){
-                System.debug(LoggingLevel.DEBUG, singleObj.whereCond);      
+                System.debug(singleObj.whereCond);      
                 query+='WHERE ' + searchKey + '= \'' + searchTerm + '\' AND ' + singleObj.whereCond + ' ';      
             }
             query += 'WITH SECURITY_ENFORCED';
@@ -63,10 +61,10 @@ public inherited sharing class HDT_LC_GenericTable {
             objList.add(singleObj.obj);
         }
         /*Execute Recursive Queries */
-        System.debug(LoggingLevel.DEBUG, 'QueryList-> ' +queryList);
-        System.debug(LoggingLevel.DEBUG, 'ObjList -> ' +objList);
+        System.debug('QueryList-> ' +queryList);
+        System.debug('ObjList -> ' +objList);
         doRecursion(queryList, objList);
-        System.debug(LoggingLevel.DEBUG, 'Data -> ' + rowData);
+        System.debug('Data -> ' + rowData);
         /*Create Data Map*/
         for(List<SObject> sobjList : rowData){
             if(sobjList != null){
@@ -89,12 +87,12 @@ public inherited sharing class HDT_LC_GenericTable {
                 }
             }
         }
-        System.debug(LoggingLevel.DEBUG, dataMap);
-        System.debug(LoggingLevel.DEBUG, columns);
-        System.debug(LoggingLevel.DEBUG, columns.size());
+        System.debug(dataMap);
+        System.debug(columns);
+        System.debug(columns.size());
         output.columns = columns;
         output.rowData = dataMap;
-        System.debug(LoggingLevel.DEBUG, output);
+        System.debug(output);
         // for(List<SObject> sObjList : rowData){
         //     if(sObjList != null){
         //         Map<String, Object> objMap = sObjList[0].getSObjectType().getDescribe().fields.getMap();
@@ -123,7 +121,7 @@ public inherited sharing class HDT_LC_GenericTable {
             Schema.DescribeSObjectResult objRes = objType.getDescribe();
             if(objRes.isAccessible()){
                 queryObj = Database.query(queryList[(queryList.size()-1)]);
-                System.debug(LoggingLevel.DEBUG, queryObj);
+                System.debug(queryObj);
                 rowData.add(queryObj);
             }
             queryList.remove((queryList.size()-1));

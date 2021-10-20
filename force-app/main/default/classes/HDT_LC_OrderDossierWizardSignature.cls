@@ -92,16 +92,4 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             Step__c = 1
         ));
     }
-
-    
-    /**
-    * @description Get script name and target order id for vocal signing
-    * @author gabriele.rota@webresults.it | 2021-09-13 
-    * @param orderParentId 
-    * @return HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig 
-    **/
-    @AuraEnabled
-    public static HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig getSignatureScript(String orderParentId){
-        return HDT_SRV_ScriptManager.getOrderScriptConfig(orderParentId);
-    }
 }

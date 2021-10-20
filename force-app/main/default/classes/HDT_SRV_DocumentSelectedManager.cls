@@ -60,7 +60,11 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             String queryObject = 'AccountStatementFilter__c';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, queryObject);
             String documentJson = (String) recordList[0].get('DocumentSelected__c');
-            String context = (String) recordList[0].get('Context__c');
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            //String context = (String) recordList[0].get('Context__c');
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
@@ -143,10 +147,18 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
@@ -240,10 +252,18 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
@@ -316,10 +336,18 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
