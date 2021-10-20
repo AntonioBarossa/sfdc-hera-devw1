@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
 
     public static HDT_WRP_AccountDataEnrichment.HDT_WRP_ReturnMetadataObj getTableConfigHelper(String recordId, String type, HDT_WRP_AccountDataEnrichment.HDT_WRP_ReturnMetadataObj retObj){
@@ -36,7 +37,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
 
     public static Object startRequestHelper(String recordId, String type) {
 
-        System.debug('>>> recordId > ' + recordId);
+        System.debug(LoggingLevel.DEBUG, '>>> recordId > ' + recordId);
 
         String httpBody = '';
 
@@ -75,7 +76,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
         req.setbody(httpBody);
         req.setTimeout(120000);
 
-        System.debug('>>> ' + String.valueOf(req));
+        System.debug(LoggingLevel.DEBUG, '>>> ' + String.valueOf(req));
 
         // Add callout request to continuation
         con.addHttpRequest(req);
