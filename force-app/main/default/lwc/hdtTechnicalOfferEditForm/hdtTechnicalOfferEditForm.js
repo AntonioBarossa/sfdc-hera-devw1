@@ -36,7 +36,16 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         {fieldName: 'NumberOfTimeUnits__c', required: true},
         {fieldName: 'UnitOfTimeMeasurement__c', required: true},
         {fieldName: 'AdmittingProfileModification__c', required: false},
-        {fieldName: 'OfferToBeModified__c', required: false}
+        {fieldName: 'OfferToBeModified__c', required: false},
+        //BRIM dev
+        {fieldName: 'Hours__c', required: false},
+        {fieldName: 'Discount__c', required: false},
+        {fieldName: 'P0__c', required: false},
+        {fieldName: 'K__c', required: false},
+        {fieldName: 'I0__c', required: false},
+        {fieldName: 'Lambda__c', required: false},
+        {fieldName: 'ProductIdentifier__c', required: false}
+
     ];
 
     @api mode;
@@ -161,6 +170,48 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
             let isnum = /^\d+$/.test(techOffObj.NumberOfTimeUnits__c);
             if(!isnum){
                 returnObj.message = this.label.numberOfTimeUnitsError;
+                return returnObj;             
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.Hours__c)){
+            if(techOffObj.Hours__c >= 100){
+                returnObj.message = 'Incremento non valido per I0';
+                return returnObj;             
+            }
+        }
+        
+        if(this.checkIsNotNull(techOffObj.Discount__c)){
+            if(techOffObj.Discount__c >= 1000){
+                returnObj.message = 'Incremento non valido per Lambda';
+                return returnObj;             
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.P0__c)){
+            if(techOffObj.P0__c >= 10){
+                returnObj.message = 'Incremento non valido per P0';
+                return returnObj;             
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.K__c)){
+            if(techOffObj.K__c >= 10){
+                returnObj.message = 'Incremento non valido per K';
+                return returnObj;             
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.I0__c)){
+            if(techOffObj.I0__c >= 10){
+                returnObj.message = 'Incremento non valido per I0';
+                return returnObj;             
+            }
+        }
+        
+        if(this.checkIsNotNull(techOffObj.Lambda__c)){
+            if(techOffObj.Lambda__c >= 100){
+                returnObj.message = 'Incremento non valido per Lambda';
                 return returnObj;             
             }
         }

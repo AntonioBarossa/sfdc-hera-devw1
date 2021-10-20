@@ -118,6 +118,15 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         public String unitaTempoRecesso;
         public Boolean isModificabile;
         public Boolean isOffertaDaModificare;
+        //BRIM fields
+        public String ore;
+        public String percentuale;
+        public String p0;
+        public String k;
+        public String i0;
+        public String lambda;
+        public String productIdentifier;
+
         public List<HDT_WRP_Position> input;
     }
 

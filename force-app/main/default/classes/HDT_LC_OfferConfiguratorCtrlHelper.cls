@@ -625,6 +625,20 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.isModificabile = techOff.AdmittingProfileModification__c;
             obj.header.isOffertaDaModificare = techOff.OfferToBeModified__c;
 
+            //BRIM
+            obj.header.ore = String.valueOf(techOff.Hours__c);
+            obj.header.percentuale = String.valueOf(techOff.Discount__c);
+            obj.header.p0 = String.valueOf(techOff.P0__c);
+            obj.header.k = String.valueOf(techOff.K__c);
+            obj.header.i0 = String.valueOf(techOff.I0__c);
+            obj.header.lambda = String.valueOf(techOff.Lambda__c);
+            obj.header.productIdentifier = String.valueOf(techOff.ProductIdentifier__c);
+
+            obj.header.p0 = obj.header.p0.replace('.', ',');
+            obj.header.k = obj.header.k.replace('.', ',');
+            obj.header.i0 = obj.header.i0.replace('.', ',');
+            obj.header.lambda = obj.header.lambda.replace('.', ',');
+
             obj.header.input = new List<HDT_WRP_TechnicalOffer.HDT_WRP_Position>();
 
             HDT_WRP_TechnicalOffer.HDT_WRP_Position position;
