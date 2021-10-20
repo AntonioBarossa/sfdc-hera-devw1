@@ -9,5 +9,5 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>X_HER_DATA_CONSENSO_PEC</label>
     <required>false</required>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>
