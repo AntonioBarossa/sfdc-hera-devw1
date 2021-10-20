@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public with sharing class HDT_WRP_DocumentalResponse {
     
     //DATA
