@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
@@ -16,7 +17,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
     public static HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer getExistingOffer(String productId) {
-        System.debug('### recordId -> ' + productId);
+        System.debug(LoggingLevel.DEBUG, '### recordId -> ' + productId);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer respObj = new HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer();
         List<TechnicalOffer__c> tecOffList;
@@ -175,13 +176,13 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
 
         } catch (Exception e){
-            System.debug('# ERROR -> ' + e.getMessage() + String.valueOf(e.getLineNumber()));
+            System.debug(LoggingLevel.DEBUG, '# ERROR -> ' + e.getMessage() + String.valueOf(e.getLineNumber()));
             throw new AuraHandledException('# Error -> ' + e.getMessage() + ', at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
 
         
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
-            System.debug('>>> ' + setSingleRow.Id+ ' - ' + setSingleRow.numValue.value);
+            System.debug(LoggingLevel.DEBUG, '>>> ' + setSingleRow.Id+ ' - ' + setSingleRow.numValue.value);
         }
 
         return matrixTable;
@@ -190,10 +191,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     @AuraEnabled
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate){
         
-        System.debug('# saveNewOfferConfigured #');
-        System.debug('# techOffObj > ' + techOffObj);
-        System.debug('# idToClone > ' + idToClone);
-        System.debug('# technicalofferid > ' + technicalofferid);
+        System.debug(LoggingLevel.DEBUG, '# saveNewOfferConfigured #');
+        System.debug(LoggingLevel.DEBUG, '# techOffObj > ' + techOffObj);
+        System.debug(LoggingLevel.DEBUG, '# idToClone > ' + idToClone);
+        System.debug(LoggingLevel.DEBUG, '# technicalofferid > ' + technicalofferid);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
@@ -209,7 +210,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSap(String technicalofferid){
-        System.debug('# sendTechOfferToSAP #');
+        System.debug(LoggingLevel.DEBUG, '# sendTechOfferToSAP #');
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
         try{
@@ -225,15 +226,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     @AuraEnabled
     public static String cloneRecord(String recIdToClone, String productId){
         
-        System.debug('# recIdToClone -> ' + recIdToClone + ' - ' + productId);
+        System.debug(LoggingLevel.DEBUG, '# recIdToClone -> ' + recIdToClone + ' - ' + productId);
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
         try{
             saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.cloneRecordHandler(recIdToClone, productId);
             if(!saveResponse.success){
-                System.debug('# on clone controller #');
+                System.debug(LoggingLevel.DEBUG, '# on clone controller #');
                 for(HDT_WRP_TechnicalOffer.HDT_WRP_LineError le : saveResponse.errorData){
-                    System.debug('# ' + le);
+                    System.debug(LoggingLevel.DEBUG, '# ' + le);
                 }
             }
         } catch (Exception e){
@@ -256,7 +257,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     @AuraEnabled
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse deleteTechnicalOffer(String productId, String technicalOfferId){
         
-        System.debug('# deleteOfferMatrix >>> productId: ' + productId + ' - >>> technicalOfferId: ' + technicalOfferId);
+        System.debug(LoggingLevel.DEBUG, '# deleteOfferMatrix >>> productId: ' + productId + ' - >>> technicalOfferId: ' + technicalOfferId);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
