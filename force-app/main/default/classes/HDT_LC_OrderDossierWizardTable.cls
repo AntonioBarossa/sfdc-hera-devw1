@@ -38,7 +38,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         Map<String,String> orderToQuoteLinePrime = new Map<String,String>();
 
         for(OrderItem itm : orderProducts){
-            String productName = itm.Order.RecordType.DeveloperName!='HDT_RT_ScontiBonus'? itm.Product2.Name : itm.SBQQ__QuoteLine__r.SBQQ__RequiredBy__r.SBQQ__Product__r.Name ;
+            String productName = itm.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__r?.SBQQ__Product__r?.Name ;
+            productName=itm.Order.RecordType.DeveloperName!='HDT_RT_ScontiBonus'? itm.Product2.Name : productName;
             orderToQuoteLinePrime.put(itm.orderId, productName);
         }
 
