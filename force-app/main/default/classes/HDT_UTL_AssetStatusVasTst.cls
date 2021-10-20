@@ -71,10 +71,17 @@ public class HDT_UTL_AssetStatusVasTst {
 	static void test1(){
         
         List<Asset> assets = [Select id, SBQQ__OrderProduct__c, SBQQ__RootAsset__c, DigitalAssetStatus, VasPracticeCode__c From Asset];
-		List<Order> orders = [Select id,RecordTypeId from Order];        
+		List<Order> orders = [Select id,RecordTypeId from Order];
+
+        Map<Id, SObject> oldAssetsMap = new Map<Id, SObject>();
+
+        for (Asset ass : assets) {
+            oldAssetsMap.put(ass.Id, ass);
+        }
+
         Test.startTest();
         
-        HDT_UTL_AssetStatusVas.processAssets(assets);
+        HDT_UTL_AssetStatusVas.processAssets(assets, oldAssetsMap); //Updated method signature
             
         Test.stopTest();
         
