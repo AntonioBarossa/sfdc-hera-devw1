@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
 public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
 		switch on context {
