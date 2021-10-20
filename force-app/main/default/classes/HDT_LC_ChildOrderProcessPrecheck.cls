@@ -238,4 +238,35 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
         return newOrder;
     }
+
+    @AuraEnabled
+    public static Boolean checkVasAndCommodity(String parentOrdId){
+        try {
+            List<Order> childOrders = orderQr.getChildOrdersByParentId(parentOrdId);
+
+            Order ordCommodity = new Order();
+            Order vasOrd = new Order();
+
+            if (childOrders.size() > 1) {
+                for (Order ord : childOrders) {
+                    if (ord.RecordType.DeveloperName != 'HDT_RT_VAS') {
+                        ordCommodity = ord;
+                    } else {
+                        vasOrd.Id = ord.Id;
+                    }
+                }
+
+                if (vasord.Id != null) {
+                    vasOrd.IncomingCreditCheckResult__c = ordCommodity.IncomingCreditCheckResult__c;
+                    vasOrd.OutgoingCreditCheckResult__c = ordCommodity.OutgoingCreditCheckResult__c;
+                    vasOrd.CreditCheckDescription__c = ordCommodity.CreditCheckDescription__c;
+                    orderSrv.updateRecord(vasOrd);
+                }
+            }
+
+            return childOrders.size() > 1 ? true : false;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }
