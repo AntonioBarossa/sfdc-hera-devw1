@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Using Global Modifier
+*/
 global inherited sharing class HDT_WRP_GenericSapIntegration {
     public String requestType;
     public String requestBody;

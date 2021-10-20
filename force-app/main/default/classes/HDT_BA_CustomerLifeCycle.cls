@@ -161,9 +161,15 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         update processedAccountMap.values();
     }
 
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public void finish(Database.BatchableContext bc) {
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
-        System.debug('HDT_BA_CustomerLifeCycle - finished job: ' + a);
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_CustomerLifeCycle - finished job: ' + a);
         
     }
 

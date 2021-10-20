@@ -1,7 +1,4 @@
 public with sharing class HDT_LC_LastBill {
-    public HDT_LC_LastBill() {
-
-    }
 
     @AuraEnabled
     public static string getData(String accountCode, String mode, String kpiId){
@@ -86,7 +83,9 @@ public with sharing class HDT_LC_LastBill {
         HDT_UTL_KpiTracking.updateKpiRecord(recordKpi);
     }
     private static Date formatDate(String inputDate){
-        if(inputDate==null || String.isBlank(inputDate)) return null;
+        if(inputDate==null || String.isBlank(inputDate)){
+            return null;
+        }
         List<String> listString = inputDate.split('/');
         String gg = listString[0];
         String mm = listString[1];
@@ -180,15 +179,15 @@ public with sharing class HDT_LC_LastBill {
                 //se residuo è 0 pagato
                 if(residuo > 0 || residuo < 0){
                     result.put('billStatus', 'NON PAGATA');    
-                }else {
+                } else {
                     result.put('billStatus', 'PAGATA'); 
                 }
                 result.put('commodity', JSON.serialize(commodity));
-            }else {
+            } else {
                 result.put('outcome', 'KO'); 
                 result.put('message', 'Non sono presenti bollette recenti. Per maggiori dettagli accedi all\'Estratto Conto del Cliente'); 
             }
-        }else {
+        } else {
             result.put('outcome', 'KO'); 
             result.put('message', 'Non sono presenti bollette recenti. Per maggiori dettagli accedi all\'Estratto Conto del Cliente');
         }

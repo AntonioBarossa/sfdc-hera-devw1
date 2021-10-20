@@ -288,4 +288,24 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         System.assertEquals(1, activities.size(),'Activity non create incorrettamente');
     }
 
+    @IsTest
+    static void handlePublishUpdateTst()
+    {
+        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
+
+        List<Order> orderList = [SELECT Id, Phase__c FROM Order WHERE ParentOrder__c != null];
+        String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
+        String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
+        orderList[0].RecordTypeId = recordTypeIdVolturaConSwitch;
+        update orderList;
+        
+        Test.startTest();
+        voltureManager.handlePublishUpdate(orderList[0]);
+        Test.stopTest();
+
+        List<Order> orderListUpdated = [Select Id,Phase__c FROM Order WHERE Id = :orderList[0].Id];
+
+        System.assertEquals(HDT_SRV_VoltureChangeManager.publishUpdatePhase, orderListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
+    }
+
 }
