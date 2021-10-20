@@ -86,7 +86,11 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
     public static Object processResponseHelper(List<String> labels, Object state){
         HttpResponse response = Continuation.getResponse(labels[0]);
         
-        Integer statusCode = response.getStatusCode();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Integer statusCode = response.getStatusCode();
         return response.getBody();
     }
 

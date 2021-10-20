@@ -4,9 +4,13 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
 
         System.debug('HDT_SRV_EditAlert callout action');
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        /*Map<String,Object> arg = new Map<String,Object>();
         List<Case> caseToUpdate = new List<Case>();
-        Case currentCase = new Case();
+        Case currentCase = new Case();*/
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
         //String method = (String) argsMap.get('method');

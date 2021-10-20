@@ -224,7 +224,11 @@ public class HDT_SRV_DocumentalManagement{
 	public static String createPublicLink(String recordId,String base64,String fileName){
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
-			ContentDocumentLink cl = HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*ContentDocumentLink cl = */HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
 			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id,fileName);
 			return publicLink;
 		} catch (Exception ex) {
@@ -335,7 +339,11 @@ public class HDT_SRV_DocumentalManagement{
 	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
 		if(record != null){
 			String status = requestBody.status;
-			String processType = (String)record.get('DocumentalProcessType__c');
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			//String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
@@ -375,9 +383,13 @@ public class HDT_SRV_DocumentalManagement{
 
 	public static void logDocusignError(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
 		if(record != null && requestBody != null){
-			String status = requestBody.status;
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentate variabili non utilizzate.
+			*/
+			/*String status = requestBody.status;
 			String processType = (String)record.get('DocumentalProcessType__c');
-			String cluster = (String)record.get('Cluster__c');
+			String cluster = (String)record.get('Cluster__c');*/
 			Id recordId = (Id)record.get('Id');
 			HDT_UTL_DocumentalManagement.createDocumentalActivityForError(requestBody.outcomeDescription, recordId, requestBody.envelopeId, record);
 		}
@@ -427,7 +439,11 @@ public class HDT_SRV_DocumentalManagement{
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
-					String privacyCompany;
+					/*
+						@Author: Davide Viola - 19/10/2021
+						Description: PMD -> Commentata variabile non utilizzata.
+					*/
+					//String privacyCompany;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -457,7 +473,11 @@ public class HDT_SRV_DocumentalManagement{
 					System.debug('Checking radiobutton: ' + JSON.serialize(singleRadio));
 					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
-					String privacyCompany;
+					/*
+						@Author: Davide Viola - 19/10/2021
+						Description: PMD -> Commentata variabile non utilizzata.
+					*/
+					//String privacyCompany;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -663,8 +683,12 @@ public class HDT_SRV_DocumentalManagement{
 		String debugString = 'HDT_SRV_DocumentalManagement - generateDriver';
 		System.debug(debugString);
 		
-		List<Map<String,String>> driverListMap = new List<Map<String,String>>();
-		Map<String,String> driverMap = new Map<String,String>();
+		/*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*List<Map<String,String>> driverListMap = new List<Map<String,String>>();
+		Map<String,String> driverMap = new Map<String,String>();*/
 		String value = '';
 		
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver driver = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver();
@@ -729,8 +753,12 @@ public class HDT_SRV_DocumentalManagement{
 		String div='|';
 		String fineRiga='\n';
 		String value = '';
-		Map<String,String> context = new Map<String,String>();
-		Map<String,String> iteratorContext = new Map<String,String>();
+		/*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,String> context = new Map<String,String>();
+		Map<String,String> iteratorContext = new Map<String,String>();*/
 		Integer countRecords = 1;
 		
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
@@ -840,7 +868,11 @@ public class HDT_SRV_DocumentalManagement{
 			//Inizializzo le variabili con i valori del primo record
 			String previousCa = (String)primolivello.get('contoContrattuale');
 			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
-			String previousSocieta = (String)primolivello.get('societa');
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			//String previousSocieta = (String)primolivello.get('societa');
 			Double residuoTotale = 0.0;
 			String payloadRecordOttantuno = '';
 			Integer i = -1;
@@ -1034,8 +1066,12 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			String documents = (String) formParams.get('EstrattoConto');
 			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
 			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
-			List<Object> secondoLivelloList = new List<Object>();
-			Map<String, Object> secondoLivello = new Map<String, Object>();
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*List<Object> secondoLivelloList = new List<Object>();
+			Map<String, Object> secondoLivello = new Map<String, Object>();*/
 			System.debug(primolivello);
 			
 			Boolean ordineDiPagamento = false;
