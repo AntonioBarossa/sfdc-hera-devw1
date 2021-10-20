@@ -20,9 +20,12 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
        
         if (String.isNotBlank( currentProcess.currentRequestItem.Data__c)) {
-         
+
             Integer count=0;
             for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
+                if ('null'.equalsIgnoreCase(tempField)) {
+                    tempField='';
+                }
                 //! Controllo campi required
                 // if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField) ) {
                 //     throw new HDT_WRP_ProcessEntitiesException( 'Missing required field',mapHeaderByPosition.get(count)+' can\'t be null');

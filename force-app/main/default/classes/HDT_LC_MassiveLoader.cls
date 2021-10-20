@@ -182,10 +182,13 @@ public with sharing class HDT_LC_MassiveLoader {
 
                     //List<List<String>> file = new List<List<String>>();
                     for (String fileRow : fileBody.split('\n')) {
+                        fileRow=fileRow.replaceAll(',,', ',null,');
                         List<String> rowFields = fileRow.split(',');
                         System.debug('row size '+rowFields.size());
                         System.debug('expectedNumberOfFields '+expectedNumberOfFields);
                         if (rowFields.size() != expectedNumberOfFields) {
+                            System.debug('problemi con la riga  '+fileLines);
+           
                             parsingError = true;
                             break;
                         }
@@ -208,7 +211,8 @@ public with sharing class HDT_LC_MassiveLoader {
                         
                         deleteUploadedFile = true;
 
-                    } else {
+                    } 
+                    else {
                         
                         MassiveLoaderRequest__c request = new MassiveLoaderRequest__c(Id = massiveLoaderRequestId, 
                                                                                       TotalRequest__c = fileLines-1,

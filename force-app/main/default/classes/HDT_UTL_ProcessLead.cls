@@ -5,9 +5,12 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
     public override void checks(){
         mapFieldsObject();
         Integer count=0;
-
         for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
              // Se devo essere aggiunti altri campi req
+             if ('null'.equalsIgnoreCase(tempField)) {
+                tempField='';
+             }
+             System.debug('required :' +mapRequiredByPosition.get(count));
              if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField)) {
                 throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field '+mapHeaderByPosition.get(count));
             }
@@ -64,7 +67,8 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
 
 
     public override void finalUpdate(){
-
+        currentProcess.currentRequestItem.Status__c=constant.MASSIVLOADER_STATUS_CHIUSO;
+        update  currentProcess.currentRequestItem;
     }
 
   
