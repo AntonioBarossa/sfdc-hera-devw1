@@ -127,16 +127,19 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
         act.validation__c = validazione;
         boolean res = false;
+        Order ord = new Order();
+        ord.id = act.order__c;
         if(validazione == 'Si'){
             act.wrts_prcgvr__status__c = 'Completed';
             res = true;
-            Order ord = new Order();
-            ord.id = act.order__c;
             ord.DocumentPackage__c = 'Validato';
             //ord.phase__c = 'Documentazione Gestita';
             //ord.status = 'Activated';
-            orderSrv.updateRecord(ord);
         }
+        else{
+            ord.CancellationReason__c = 'Registrazione non conforme';
+        }
+        orderSrv.updateRecord(ord);
         activityCustomSrv.updateRecord(act);
 
         return res;
