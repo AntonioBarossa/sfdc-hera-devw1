@@ -168,11 +168,13 @@ public with sharing class HDT_LC_MassiveLoader {
 
             ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
             Boolean deleteUploadedFile = false;
+            System.debug('selectedProcessName '+selectedProcessName);
 
             if (fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
-
-                    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcessName);
+                    System.debug('selectedProcessName '+selectedProcessName);
+                    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName );
+                    System.debug('staticResources '+staticResources.size());
                     Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split(',').size();
 
                     String fileBody = uploadedFile.VersionData.toString();
