@@ -1,8 +1,9 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     global Object execute(Object args) {
 
-        System.debug('HDT_SRV_EditAlert callout action');
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_EditAlert callout action');
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         /*
             @Author: Davide Viola - 19/10/2021
@@ -22,8 +23,12 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
             HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
             sapIntegration = submitRequest(recordId);
             manageResponse(sapIntegration);
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
+            
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Execute - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'Execute - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'Execute - Exception StackTraceString: ' + ex.getStackTraceString());
+            
         }
 
         response.success = true;
@@ -42,7 +47,7 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
         try {
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug('HDT_SRV_EditAlert callout ERROR: ' + ex.getMessage()); 
+            System.debug(LoggingLevel.DEBUG, 'HDT_SRV_EditAlert callout ERROR: ' + ex.getMessage()); 
         }
         return sapIntegration;
     }
@@ -54,7 +59,7 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
             if (responseBodyMap != null) {
                 String responseOutcome = (String) responseBodyMap.get('note');
-                System.debug('Esito WS Modifica Alert: ' + responseOutcome);
+                System.debug(LoggingLevel.DEBUG, 'Esito WS Modifica Alert: ' + responseOutcome);
 
                 if (responseOutcome != 'KO') {
                     Case caseToUpdate = new Case();

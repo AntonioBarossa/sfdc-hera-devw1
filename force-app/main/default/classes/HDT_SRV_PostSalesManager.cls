@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction{
 
     private HDT_UTL_PostSalesManager psmUtl = new HDT_UTL_PostSalesManager();
@@ -12,81 +13,44 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
         SObject sender = (SObject) argsMap.get('sender');
 
         switch on method{
-
             when 'changeCaseValue'{
-
                 psmUtl.changeCaseValue(sender);
-
             }
-
             when 'changeQuotationType'{
-
                 psmUtl.changeQuotationType(sender);
-
             }
-
             when 'closeContract'{
-
                 psmUtl.closeContract(sender);
-
             }
-
             when 'handleVariazioneAnagraficaCliente'{
-
                 psmUtl.handleVariazioneAnagraficaCliente(sender);
-
             }
-
             when 'innescoAllineamentoAnagraficaFiscale'{
-
                 psmUtl.innescoAllineamentoAnagraficaFiscale(sender);
-
             }
-
             when 'innescoAllineamentoAnagraficaCanoneRai'{
-
                 psmUtl.innescoAllineamentoAnagraficaCanoneRai(sender);
-
             }
-
             when 'innescoAllineamentoAnagraficaGestioneDisalimentabilita'{
-
                 psmUtl.innescoAllineamentoAnagraficaGestioneDisalimentabilita(sender);
-
             }
-
             when 'evaluateEffectiveDate'{
-
                 psmUtl.evaluateEffectiveDate(sender);
-
             }
-
             when 'sbloccoVoltura'{
-
                 psmUtl.sbloccoVoltura(sender);
-
             }
-
             when 'changePaymentMethod'{
-
                 psmUtl.changePaymentMethod(sender);
-
             }
-
             when 'handleVariazioneAmministratore'{
-
                 psmUtl.handleVariazioneAmministratore(sender);
-
             }
             when 'advanceParentCasePhase' {
-
                 psmUtl.advanceParentCasePhase(sender);
-            
             }
             when 'advanceRelatedCase'{
-
                 psmUtl.advanceRelatedCase(sender);
-
             }
             when 'sendDocumentFile'{
                 psmUtl.sendDocumentFile(sender);
@@ -97,8 +61,7 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             when 'handleInvioLettureForzato'{
                 HDT_SRV_SelfReadings.handleInvioLettureForzato(sender);
             }
-            when 'closeRiattivazione'
-            {
+            when 'closeRiattivazione'{
                 psmUtl.closeRiattivazione(sender);
             }
         }

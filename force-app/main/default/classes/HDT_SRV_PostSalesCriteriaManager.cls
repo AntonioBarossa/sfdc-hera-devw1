@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
 
     HDT_UTL_PostSalesCriteriaManager criteriaUtl = new HDT_UTL_PostSalesCriteriaManager();
@@ -15,27 +16,18 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
         Boolean result;
 
         switch on method{
-
             when 'distributorManagement'{
-
                 result = criteriaUtl.distributorManagement(currentCase.PhaseStory__c);
-
             }
             when 'secondAdmissibility'{
-
                 result = criteriaUtl.secondAdmissibility(currentCase.PhaseStory__c);
-
             }
             when 'notExecWorks'{
-
                 result = criteriaUtl.notExecWorks(currentCase.PhaseStory__c);
-            
             }
-
         }
 
         return result;
-
     }
 
 }

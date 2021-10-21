@@ -1,5 +1,13 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public with sharing class HDT_WRP_BpCaVariationVatGroup {
-
+	
+	public String numeroSr;
+	public String codiceCausale;
+	public String dataCreazione;
+	public String cancellaBpAlternativo;
+	public String nomeContatto;
+	public HDT_WRP_BpCaVariationAccount account;
+	
     public class HDT_WRP_BpCaVariationAccount {
 		public String nome;
 		public String alias;
@@ -21,13 +29,6 @@ public with sharing class HDT_WRP_BpCaVariationVatGroup {
 		}
 	}
 
-	public String numeroSr;
-	public String codiceCausale;
-	public String dataCreazione;
-	public String cancellaBpAlternativo;
-	public String nomeContatto;
-	public HDT_WRP_BpCaVariationAccount account;
-	
 	public HDT_WRP_BpCaVariationVatGroup(){
 		this.account = new HDT_WRP_BpCaVariationAccount();
 	}
