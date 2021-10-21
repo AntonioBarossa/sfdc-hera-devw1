@@ -8,7 +8,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         String result;
 
         if(fieldName == 'PhaseTypeAvailable__c'){
-            try{   
+            try{
                 Decimal phaseCondition = Decimal.valueOf(condition);
                 if(phaseCondition <= 1.0 ){
                     condition = 'Monofase';
