@@ -10,7 +10,8 @@ public class HDT_UTL_CommunicationLog {
         
         CommunicationLog__c comm = new CommunicationLog__c();
         comm.Cluster__c= cluster;
-        comm.Processo__c = process;
+        //09/09/2021 gabriele.rota@webresults.it - Added default value as Processo__c is required
+        comm.Processo__c = String.isBlank(process)?'Default':process;
         comm.Fase__c = phase;
         comm.Stato__c = status;
         comm.Causale__c = motivazioneCausale;

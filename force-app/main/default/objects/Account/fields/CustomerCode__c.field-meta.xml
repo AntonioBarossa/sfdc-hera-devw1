@@ -3,7 +3,7 @@
     <fullName>CustomerCode__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Codice Business Partner (BP) di SAP</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>Codice cliente</label>
     <length>30</length>
     <required>false</required>

@@ -59,9 +59,9 @@ public inherited sharing class HDT_QR_Variations {
 
         List<Case> toReturnList = new List<Case>();
         try{
-            toReturnList = [SELECT Id 
+            toReturnList = [SELECT Id, ServicePoint__r.Id 
             FROM Case
-            WHERE Id IN :servicePointIds
+            WHERE ServicePoint__r.Id IN :servicePointIds
             AND Id != :caseId
             AND Resident__c = false
             WITH SECURITY_ENFORCED];

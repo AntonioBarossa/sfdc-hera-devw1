@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_InstallmentPlans {
 
     HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
@@ -23,7 +24,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String recordId = inputs[0].recordId;
         String accountId = inputs[0].accountId;
         String customerCode = inputs[0].customerCode;
-        Decimal totalToPay = inputs[0].totalToPay; 
+        //Decimal totalToPay = inputs[0].totalToPay; 
         String paymentMethod;
 
         currentCase.Id = recordId;
@@ -49,8 +50,11 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         try{
             outputs = HDT_SRV_AccountInstallmentsCheck.execute(inputsCheck);
             currentCase.ExistingInstallmentsPlanNumber__c = outputs[0].existingInstallmentPlanUnpaid;
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'predefaultInstallmentsValues - exception TypeName' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'predefaultInstallmentsValues - exception Message' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'predefaultInstallmentsValues - exception StackTraceString' + e.getStackTraceString());
+            
         }
 
         //check CA with/without SEPA
@@ -59,10 +63,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
-        System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
+        System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans created date -> ' + createdCase);
         currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
         currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
-        System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
+        System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
         //If totalResidue is Zero amount is DocumentTotalAmount
@@ -116,8 +120,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         currentCase = installmentsQr.getCaseById(recordId);
         documents = installmentsQr.getDocumentSelectedByCase(recordId);
 
-        System.debug('SRV_InstallmentPlans Case--> '+currentCase);
-        System.debug('SRV_InstallmentPlans Documetns--> '+documents);
+        System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans Case--> '+currentCase);
+        System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans Documetns--> '+documents);
 
         String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
         Decimal total;
@@ -170,7 +174,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         pretty = paymentsUtl.createBodyRequest(inputList);
 
-        System.debug('SRV_InstallmentPlans -->' +pretty);
+        System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans -->' +pretty);
 
         return pretty;
     }
@@ -250,8 +254,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
     private String formattingErrorMessage(String errorMessage, String fieldLabel, Object criteriaField, Object ruleField){
         String fineTuningCriteria = '';
         String fineTuningRule = '';
-        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('CA con')){
-            //Skip 
+        Boolean skipped = false;
+        if(errorMessage.indexOf(fieldLabel) > -1 || fieldLabel.containsIgnoreCase('Domiciliato')){
+            skipped = true;//SKIP
+            
         } else {
             if(criteriaField instanceOf Boolean && Boolean.valueOf(criteriaField) == true){
                 fineTuningCriteria = 'Flaggato';
@@ -265,6 +271,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             }
             errorMessage += '\t' + fieldLabel + ': ' + fineTuningCriteria + ' (prova invece: ' + fineTuningRule + ')\n';
         }
+        System.debug(LoggingLevel.DEBUG, 'formattingErrorMessage - Eseguito Skip.');
+        
         return errorMessage;
     }
 

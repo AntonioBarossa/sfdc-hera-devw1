@@ -3,12 +3,17 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
     global Object execute(Object args) {
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
-        //List<Case> caseToUpdate = new List<Case>();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,Object> arg = new Map<String,Object>();
         Case currentCase = new Case();
+        String method = (String) argsMap.get('method');
+        */
+        //List<Case> caseToUpdate = new List<Case>();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
@@ -25,7 +30,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                     String tipoAttivita = (String) data.get('tipoAttivita');
                     if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
                         System.debug('Creazione activity Errore Lavorazione SAP');
-                        HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP');
+                        HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
 
                         response.success = false;
                         response.message = 'KO';
@@ -87,7 +92,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
-                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP');
+                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
                 }
                 output.outcome = false;
             }else {

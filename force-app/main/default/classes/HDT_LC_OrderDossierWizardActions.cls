@@ -16,7 +16,105 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @param Order orderParent
     */
     @AuraEnabled
-    public static void save(Order orderParent){
+    public static void save(Order orderParent){ 
+
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
+        List<Order> ordersToUpdate = new List<Order>();
+        List<Order> childOrdersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+
+          //fix CC Generazione Credential LG MB
+         // orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
+        // if (orderParent.ContractSigned__c == false) {
+                // LG Ripristino logica 18/09 FF
+        if (orderParent.ContractSigned__c == false) {
+            orderToUpdate.Phase__c = 'Documentazione da inviare';
+        } else {
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+             //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        }
+           // orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+         //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+        // }
+
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
+
+        Set<Id> quoteIds = new Set<Id>();//if quote is in this set and sp!=null, blank quote
+
+        for (Order childOrd : childOrders) {
+            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
+                Order o = new Order(
+                    Id = childOrd.Id,
+                    Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
+                );
+                if(quoteIds.contains(childOrd.SBQQ__Quote__c)){
+                    o.SBQQ__Quote__c=null;
+                }else{
+                    quoteIds.add(childOrd.SBQQ__Quote__c);
+                }
+                ordersToUpdate.add( o );
+            } else if(childOrd.RecordType.DeveloperName == 'HDT_RT_VAS' && mapChildOrders.get(childOrd?.OrderReference__c) != null ){
+                Order o = new Order(
+                    Id = childOrd.Id,
+                    CreditCheckDescription__c=mapChildOrders.get(childOrd?.OrderReference__c)?.CreditCheckDescription__c,
+                    IncomingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.IncomingCreditCheckResult__c,
+                    OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
+                );
+                ordersToUpdate.add(o);//get CCheck Result from offer
+            }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
+                if(quoteIds.contains(childOrd.SBQQ__Quote__c)){
+                    ordersToUpdate.add(new Order( Id = childOrd.Id, SBQQ__Quote__c=null));
+                }else{
+                    quoteIds.add(childOrd.SBQQ__Quote__c);
+                }
+            }
+        }
+        
+        ordersToUpdate.add(orderToUpdate);
+
+        //update child orders
+        for (Order childOrder : childOrders) {
+            if (childOrder.ComfortCallDaysDue__c != null) {
+                ordersToUpdate.add(new Order(
+                    Id = childOrder.Id,
+                    Phase__c = 'In attesa conferma cliente'
+                ));
+            }
+        }
+
+        orderSrv.updateRecords(ordersToUpdate);
+
+    }
+
+    @AuraEnabled
+    public static String createActivityVocalOrder(Order orderParent){
+
+        List<Order> ordersToUpdate = new List<Order>();
+        
+        Order orderToUpdate = new Order(
+            Id = orderParent.Id
+        );
+        system.debug('********DEBUGLOL:' + orderParent);
+        if(orderParent.SignatureMethod__c == 'Vocal Order' && orderParent.Phase__c == 'In Lavorazione'){
+            if (orderParent.ContractSigned__c == false) {
+                orderToUpdate.Phase__c = 'Documentazione da inviare';
+            } else {
+                orderToUpdate.Phase__c = 'Documentazione da validare';
+                 //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+            }
+            ordersToUpdate.add(orderToUpdate );
+            orderSrv.updateRecords(ordersToUpdate);
+        }
+        return orderToUpdate.Phase__c;
+    }
+
+    @AuraEnabled
+    public static void save2(Order orderParent,boolean isPlicoSend){
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -25,11 +123,35 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             Id = orderParent.Id
         );
 
-        if (orderParent.ContractSigned__c == false) {
-            orderToUpdate.Phase__c = 'Documentazione da inviare';
-        } else {
-            orderToUpdate.Phase__c = 'Documentazione da validare';
+          //fix CC Generazione Credential LG MB
+        //  orderToUpdate = HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate);
+        // if (orderParent.ContractSigned__c == false) {
+        //     orderToUpdate.Phase__c = 'Documentazione da inviare';
+        // } else {
+                // LG Ripristino logica 18/09 FF
+        System.debug('********LOL:' + orderParent);
+        if(orderParent.Phase__c == 'In Lavorazione'){
+            if (orderParent.ContractSigned__c == false) {
+                orderToUpdate.Phase__c = 'Documentazione da inviare';
+            } else {
+                orderToUpdate.Phase__c = 'Documentazione da validare';
+                //   orderToUpdate.Phase__c = 'Plico da inviare'; 
+            }
         }
+        else if(orderParent.Phase__c == 'Registrazione  da validare'){
+            orderToUpdate.Phase__c = 'Documentazione Gestita';
+            orderToUpdate.status = 'Activated';
+        }
+      /*  if(isPlicoSend){
+          //  orderToUpdate.Phase__c = 'Plico da inviare';
+          orderToUpdate.Phase__c = 'Documentazione da validare';
+        }
+        else{
+            orderToUpdate.Phase__c = 'Documentazione da validare';
+        }*/
+        // }
+
+        orderToUpdate.DocumentPackage__c = 'Richiesto';
 
         for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
@@ -103,7 +225,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         Boolean check = true;
 
-        if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null)
+        if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.DocumentPackage__c != null)
         {
            	check = true;
             if(ord.CILegalRepresentative__c != null && !'Validato'.EqualsIgnoreCase(ord.CILegalRepresentative__c)){
@@ -127,7 +249,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             if(ord.AutorizationVolturaThirdTrader__c != null && !'Validato'.EqualsIgnoreCase(ord.AutorizationVolturaThirdTrader__c)){
                 check = false;
             }
-        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null) {
+            if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
+                check = false;
+            }
+        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
             check = true;
         }
 

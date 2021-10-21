@@ -11,7 +11,10 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     @api accountId;
     @api selectionType;
     @api cancelCase = false;
-    
+    //@frpanico 13/09 added variable to skip required selection (process "BP/CA errata categoria")
+    @api nonReqSelection = false;
+
+
     @track queryParams;
     @track maxRow;
     @track showSelector;
@@ -56,7 +59,7 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     }
    
     handleNext(event){
-        if(this.results != null && this.results != "" && this.results != "undefined"){
+        if((this.results != null && this.results != "" && this.results != "undefined") || this.nonReqSelection === true){
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
         }else{

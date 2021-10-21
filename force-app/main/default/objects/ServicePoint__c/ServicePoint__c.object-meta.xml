@@ -161,7 +161,11 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Service Points</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SupplyAddress__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>MeterStatus__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

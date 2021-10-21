@@ -33,8 +33,11 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      * @param ServicePoint__c oldServicePoint
      */
     private static Boolean hasUsoEnergiaChangedForEle(String accountId, ServicePoint__c newServicePoint, ServicePoint__c oldServicePoint) {
-
-        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldServicePoint.SupplyType__c !=null && newServicePoint.SupplyType__c != oldServicePoint.SupplyType__c;
+        System.debug('**********:1' +oldServicePoint.supplytype__c );
+        System.debug('**********:2' +newServicePoint.supplytype__c );
+        System.debug('**********:3' +oldServicePoint.SupplyTypeTemp__c );
+        System.debug('**********:4' +newServicePoint.SupplyTypeTemp__c );
+        return isServicePointLinkedToContract(newServicePoint, accountId) && newServicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && oldServicePoint.supplytype__c !=null && oldServicePoint.supplytype__c != newServicePoint.SupplyTypeTemp__c;
 
     }
 
@@ -50,8 +53,8 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         Map<String,String> extraParams = new Map<String,String>();
 
         if (hasUsoEnergiaChangedForEle(sale.Account__c, servicePoint, oldServicePoint)) {
-            List<SaleServiceItem__c> linkedContracts = saleServiceItemQr.getRecordsWithContractsByServicePointAndAccount(servicePoint.Id, sale.Account__c);
-            String contractReference = linkedContracts[0].Quote__r.ContractReference__c;
+            List<Contract> linkedContracts = contractQr.getRecordsWithContractsByServicePointAndAccountId(servicePoint.Id, sale.Account__c);
+            String contractReference = linkedContracts[0].id;
             extraParams.put('AllowChangeUse__c', 'true');
             extraParams.put('contractReference', contractReference);
         }
@@ -72,6 +75,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
      */
     @AuraEnabled
     public static void updateSale(Sale__c sale){
+        system.debug(sale.CurrentStep__c);
         saleSrv.updateRecord(sale);
     }
 }

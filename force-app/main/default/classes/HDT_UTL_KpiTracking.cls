@@ -20,7 +20,8 @@ public with sharing class HDT_UTL_KpiTracking {
         
         try {
             if (KpiTracking__c.SObjectType.getDescribe().isAccessible() && KpiTracking__c.SObjectType.getDescribe().isCreateable()) {
-                HDT_UTL_DatabaseService.insertSObject(kpiList);
+                //HDT_UTL_DatabaseService.insertSObject(kpiList);
+                HDT_UTL_DatabaseService.upsertSObjectExternalId(kpiList, 'KpiTracking__c', 'CustomerCode__c');
                 for(KpiTracking__c kpi : kpiList){
                     accountMap.get(kpi.CustomerCode__c).KpiTracking__c = kpi.Id;
                 }
@@ -44,7 +45,7 @@ public with sharing class HDT_UTL_KpiTracking {
         List<KpiTracking__c> kpiList = new List<KpiTracking__c>();
         KpiTracking__c singleKpi;
         for (Account singleAccount : accountList) {
-            if(singleAccount.KpiTracking__c != null && singleAccount.KpiTracking__c != ''){
+            if(singleAccount.KpiTracking__c != null){
                 singleKpi = new KpiTracking__c();
                 singleKpi.Id = singleAccount.KpiTracking__c;
                 kpiList.add(singleKpi);

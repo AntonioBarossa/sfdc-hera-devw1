@@ -1,3 +1,9 @@
+ /**
+* @author Luca Molino (Luca.Molino@dunegroup.it)
+* @date 08/07/21
+* @description HDT_QR_DistributorPointCode
+* @history Luca Molino – 08/07/21 – created class
+*/
 public inherited sharing class HDT_QR_DistributorPointCode {
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 

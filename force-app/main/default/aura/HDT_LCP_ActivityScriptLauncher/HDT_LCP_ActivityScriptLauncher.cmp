@@ -1,0 +1,35 @@
+<!--
+  @description       : Component for launching script from Activity record page
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-10-05
+  @last modified by  : gabriele.rota@webresults.it
+-->
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+
+    <aura:attribute name="recordId" type="String" />
+
+    <!--Workaround for setting modal width-->
+    <aura:html tag="style">
+        .slds-modal__container {
+            min-width: 64vw;
+        }
+    </aura:html>
+
+    <lightning:tabset>
+        <lightning:tab label="Script">
+            <c:hdtManageScriptModal recordId="{!v.recordId}"
+                activityId="{!v.recordId}"
+                onclose="{!c.handleCloseAction}"
+                onconfirm="{!c.handleCloseAction}">
+            </c:hdtManageScriptModal>
+        </lightning:tab>
+
+        <lightning:tab label="Riepilogo">
+            <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}"
+                onresultevent="{!c.handleResultEvent}">
+            </c:hdtOrdersForComfortQualityList>
+        </lightning:tab>
+    </lightning:tabset>
+
+</aura:component>	

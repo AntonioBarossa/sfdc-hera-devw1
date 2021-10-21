@@ -20,15 +20,13 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action logic
-     * @param String selectedOption
-     * @param Order order
-     * @param Contract contract
-     * @param String supplyCity
-     * @param String accountId
-     * @param Sale sale
+     * @param selectedOption
+     * @param order
+     * @param contract
+     * @param supplyCity
+     * @param accountId
+     * @param sale
      */
-
-     
     @AuraEnabled
     public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
@@ -44,6 +42,12 @@ public inherited sharing class HDT_LC_SaleVas {
             
         }
     }
+
+    /**
+     * @description transitionCheck
+     * @param salesId
+     * @return Boolean
+     */
     @AuraEnabled
     public static boolean transitionCheck(String salesId){
         Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -52,9 +56,6 @@ public inherited sharing class HDT_LC_SaleVas {
         //System.debug('*****MAVUOIANNA:'+ transitionlist);
         //ServicePoint__c sa = new ServicePoint__c(SupplyProvince__c = 'AQ');
         wrapReturn wrpRes = new wrapReturn();
-
-
-
 
         if(HDT_UTL_Sales.isTransitionNoUp(sal)){
             check = false;
@@ -66,6 +67,14 @@ public inherited sharing class HDT_LC_SaleVas {
         System.debug('*****VUOIANNA2:' + check);
         return check;
     }
+
+    /**
+     * @description transitionCheck2
+     * @param salesId
+     * @param comune
+     * @param tipologia
+     * @return wrapReturn
+     */
     @AuraEnabled
     public static wrapReturn transitionCheck2(String salesId,String comune,string tipologia){
         Sale__c sal = saleQr.getRecordById(salesid,'id,isTransition__c,Account__r.Category__c,Account__r.CompanyOwner__c');
@@ -98,15 +107,22 @@ public inherited sharing class HDT_LC_SaleVas {
         System.debug('*****VUOIANNA2:' + check);
         return wrpRes;
     }
+
+    /**
+     * @description wrapReturn
+     */
     public class wrapReturn{
         @AuraEnabled public boolean res = true;
+        /**
+        * @description messRes
+        */
         @AuraEnabled public string messRes {get;set;}
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active orders based on accountId when 'Ordini in corso' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Order>
      */
     @AuraEnabled
@@ -115,6 +131,12 @@ public inherited sharing class HDT_LC_SaleVas {
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
+
+    /**
+     * @description getOrdersListNotActive
+     * @param accountId
+     * @return List<Order>
+     */
     @AuraEnabled
     public static List<Order> getOrdersListNotActive(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
@@ -124,7 +146,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Contact>
      */
     @AuraEnabled
@@ -138,7 +160,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Federico de Felice (federico.defelice@webresults.it)
      * @description Get list of active contracts based on accountId when 'Contratti Attivi' is selected
-     * @param String accountId
+     * @param accountId
      * @return List<Contact>
      */
     @AuraEnabled
@@ -151,52 +173,81 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
     * @description Getting list of Orders/Assets/Subscription
     * @author gabriele.rota@webresults.it | 2021-07-21 
-    * @param accountId 
+    * @param searchString 
     * @param key 
     * @return List<SObject> 
     **/
     @AuraEnabled
-    public static List<SObject> getFornitura(Id accountId, String key){
+    public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records;
+        system.debug('searchString '+searchString);
+        system.debug('key '+key);
 
         switch on key {
             when 'ORDERS_IN_PROGRESS_VAS'{
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
                     WHERE RecordType.DeveloperName='HDT_RT_VAS' AND Status='In Lavorazione' AND SBQQ__Quote__r.IsVAS__c = true
-                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    AND SBQQ__Quote__r.AmendmentAllowed__c != true AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
             when 'ORDERS_ELE'{
                 records = [SELECT Type, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
                     FROM Order
-                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:accountId WITH SECURITY_ENFORCED];
+                    WHERE CommodityFormula__c='Energia Elettrica' AND AccountId=:searchString WITH SECURITY_ENFORCED];
             }
+            when 'CONTRACT_BONUS_COMM'{
+                records = [Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where AccountId =:searchString WITH SECURITY_ENFORCED];
+            }
+            //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
-                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId WITH SECURITY_ENFORCED];
-            }
-            when 'ASSETS_ACTIVATED_VAS'{
-                records = [SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND AccountId=:accountId
-                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];
+                Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
+                
+                //removing assets which already have a deactivation Case
+                List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'
+                    AND AssetId IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case assetCase:assetsCases) {
+                    recordMap.remove(assetCase.AssetId);
+                }
+                records = recordMap.values();
             }
             when 'SUBS_ANALISI_CONSUMI'{ 
-                records = [SELECT SBQQ__Contract__r.ContractNumber,
+                Map<Id,SBQQ__Subscription__c> recordMap = new Map<Id,SBQQ__Subscription__c>([SELECT SBQQ__Contract__r.ContractNumber,
                     SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:accountId WITH SECURITY_ENFORCED];
+                    FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c='Analisi Consumi' AND SBQQ__Account__c=:searchString WITH SECURITY_ENFORCED]);
+
+                //removing subscriptions which already have a deactivation Case
+                List<Case> subsCases = [SELECT Subscription__c FROM Case WHERE (Status<>'Bozza' AND  Phase__c!='Annullato') AND Type='Disattivazione VAS'
+                    AND Subscription__c IN :recordMap.keySet() WITH SECURITY_ENFORCED];
+                for (Case subCase:subsCases) {
+                    recordMap.remove(subCase.Subscription__c);
+                }
+                records = recordMap.values();
             }
-            when 'SUBS_VAS'{ 
-                /*records = [SELECT SBQQ__Contract__r.ContractNumber,
-                    SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
-                    FROM SBQQ__Subscription__c WHERE SBQQ__Account__c=:accountId
-                    AND RecordType.DeveloperName IN ('HDT_RT_CompositionVASproductsnotbillable','HDT_RT_VASConsumptionanalysis',
-                    'HDT_RT_VASPoductsnotbillable','HDT_RT_VASServicesnotbillable') WITH SECURITY_ENFORCED];*/
-                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE AccountId=:accountId AND SBQQ__Order__r.RecordType.DeveloperName='HDT_RT_VAS'];
+            //Disattivazione VAS - END
+            //Segnalazioni VAS - START
+            when 'CONTRACTS_VAS'{ 
+                Set<Id> contractIds = new Set<Id>();
+                for(Order o : [SELECT ContractReference__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' AND AccountId=:searchString AND ContractReference__c!=null WITH SECURITY_ENFORCED]){
+                    contractIds.add(o.ContractReference__c);
+                }
+                records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract
+                    WHERE Id IN :contractIds WITH SECURITY_ENFORCED];
             }
+            when 'SUBS_FROM_CONTRACT'{ 
+                records = [SELECT Name, SBQQ__ProductName__c
+                    FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            when 'ASSETS_FROM_CONTRACT'{
+                records = [SELECT Name, Product2.Name
+                    FROM Asset WHERE Contract__c=:searchString
+                    WITH SECURITY_ENFORCED];
+            }
+            //Segnalazioni VAS - END
             when 'CONTRACT_ELE_ACTIVE'{
                 records = [SELECT ContractNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
-                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:accountId
+                    FROM Contract WHERE Status IN ('Attivo','Activated') AND AccountId=:searchString
                     AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
                     WITH SECURITY_ENFORCED];
             }
@@ -207,7 +258,7 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get map with lists of active contracts and orders
-     * @param String accountId
+     * @param accountId
      * @return Map<String,List<SObject>>
      */
     @AuraEnabled
@@ -229,12 +280,12 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check for duplicated contract/order reference in current sale
-     * @param String saleId
-     * @param String objectId (OrderReference__c/ContractReference__c)
-     * @param String type (contract or order)
+     * @param saleId
+     * @param objectId (OrderReference__c/ContractReference__c)
+     * @param type (contract or order)
+     * @return Boolean
      */
     private static Boolean isDuplicated(String saleId, String objectId, String type) {
-        Boolean result = false;
 
         List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
 
@@ -253,8 +304,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
-     * @param Order order
-     * @param String supplyCity
+     * @param order
+     * @param supplyCity
+     * @param sale
      */
     public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
         
@@ -265,7 +317,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, order.Id, 'order')) {
             throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
-        String pdrCode = order.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = order.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -304,8 +356,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Contratti Attivi'
-     * @param Contract contract
-     * @param String supplyCity
+     * @param contract
+     * @param supplyCity
+     * @param sale
      */
     public static void handleActiveContractConfirm(Contract contract, String supplyCity, Sale__c sale){
         
@@ -316,7 +369,7 @@ public inherited sharing class HDT_LC_SaleVas {
         if (isDuplicated(sale.Id, contract.Id, 'contract')) {
             throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
-        String pdrCode = contract.ServicePoint__r?.ServicePointCode__c;
+        String pdrCode = contract.ServicePoint__r.ServicePointCode__c;
         pdrCode = String.isBlank(pdrCode)? '' : ' '+pdrCode;
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -355,8 +408,9 @@ public inherited sharing class HDT_LC_SaleVas {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for "VAS Stand Alone" option
-     * @param String supplyCity
-     * @param String accountId
+     * @param supplyCity
+     * @param accountId
+     * @param sale
      */
     public static void handleVasStandAloneConfirm(String supplyCity, String accountId, Sale__c sale){
         

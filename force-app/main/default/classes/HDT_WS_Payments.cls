@@ -8,15 +8,15 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
 
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        SObject transition = (SObject) argsMap.get('transition'); //phase transition
-        SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        //SObject transition = (SObject) argsMap.get('transition'); //phase transition
+        //SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
 
         HttpRequest request = new HttpRequest();
         Http http = new Http();
         HttpResponse response = new HttpResponse();
-        String result;
+        //String result;
         String recordId;
         String depositMode;
         String process;
@@ -41,7 +41,7 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
 
         }catch(Exception e){
 
-            //blank code
+            response = null;
 
         }
 

@@ -7,9 +7,9 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Order</label>
+    <label>RDO</label>
     <length>15</length>
-    <referenceTo>SiebelOrder__x</referenceTo>
+    <referenceTo>SiebelRdo__x</referenceTo>
     <relationshipLabel>Documenti</relationshipLabel>
     <relationshipName>SiebelDocumentLink</relationshipName>
     <type>ExternalLookup</type>

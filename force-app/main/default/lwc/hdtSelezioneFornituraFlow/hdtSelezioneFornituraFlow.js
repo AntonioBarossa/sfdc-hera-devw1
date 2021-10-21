@@ -28,6 +28,7 @@ export default class HdtSelezioneFornituraFlow extends SaleVas {
         {label: 'Tipo', fieldName: 'Type', type: 'text'},
         {label: 'Numero Ordine', fieldName: 'OrderNumber', type: 'text'},
         {label: 'Processo', fieldName: 'ProcessType__c', type: 'text'},
+        {label: 'Status', fieldName: 'Status', type: 'text'},
         {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
         {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
     ];

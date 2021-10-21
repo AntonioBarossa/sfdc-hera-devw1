@@ -1,0 +1,25 @@
+<!--
+  @description       : Component for Clone quick action on canceled Orders
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-08-02
+  @last modified by  : gabriele.rota@webresults.it
+-->
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId" controller="HDT_LC_CloneCanceledOrder">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isLoading" type="Boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <lightning:navigation aura:id="navService"/>
+
+    <h2 class="slds-text-heading_medium slds-text-align_center">Clona Ordine</h2>
+    <div class="slds-is-relative" style="height: 150px">
+        <aura:if isTrue="{!v.isLoading}">
+            <lightning:spinner alternativeText="Loading" size="medium" variant="brand"/>
+        </aura:if>
+    </div>
+
+</aura:component>	

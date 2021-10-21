@@ -778,6 +778,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>Get_Template.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>wrts_prcgvr__ActivityTemplate__c</field>
             <value>
                 <elementReference>Get_Template.Id</elementReference>

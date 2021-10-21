@@ -8,7 +8,6 @@
     <approvalPageFields>
         <field>Title</field>
         <field>ArticleNumber</field>
-        <field>ArticleType</field>
         <field>ArticleTotalViewCount</field>
         <field>ProblemType__c</field>
         <field>Owner</field>
@@ -17,11 +16,11 @@
         <field>AssignmentDate</field>
         <field>ArticleCreatedBy</field>
         <field>CreatedDate</field>
+        <field>Question__c</field>
+        <field>Answer__c</field>
         <field>LastModifiedBy</field>
         <field>LastModifiedDate</field>
         <field>MailArea__c</field>
-        <field>Question__c</field>
-        <field>Answer__c</field>
         <field>FirstLevelClassification__c</field>
         <field>SecondLevelClassification__c</field>
         <field>Language</field>
@@ -30,6 +29,9 @@
         <field>CommercialDocumentationType__c</field>
         <field>ValidationStatus</field>
         <field>PublishStatus</field>
+        <field>FlowDiagram__c</field>
+        <field>FlowManagement__c</field>
+        <field>MainArticle__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>

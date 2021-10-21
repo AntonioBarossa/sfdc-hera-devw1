@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_DocumentalConfigController {
 
     @AuraEnabled
@@ -7,8 +8,8 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
 
     @AuraEnabled
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult controllerHandler(){
-
-        HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult response;
+        
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult response = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
 
         try{
 
@@ -25,7 +26,7 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
             return response;
             
         } catch(Exception e){
-            System.debug('>>> Error: ' + e.getMessage() + '; at line: [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG, '>>> Error: ' + e.getMessage() + '; at line: [' + String.valueOf(e.getLineNumber()) + ']');
             response.success = false;
             response.message = '>>> Error: ' + e.getMessage() + '; at line: [' + String.valueOf(e.getLineNumber()) + ']';
             return response;
@@ -111,10 +112,14 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
 
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
         databaseResult = databaseInsert(docList, databaseResult);
-
+        
+        System.debug(LoggingLevel.DEBUG, 'generateJsonObject - databaseResult errordata size: ' + databaseResult.errorData.size());
+        
         if(!databaseResult.success){
-            if(Document.SObjectType.getDescribe().isAccessible())
+            System.debug(LoggingLevel.DEBUG, 'databaseInsert failed.');
+            if(Document.SObjectType.getDescribe().isAccessible()){
                 Database.rollback(sp);
+            }
         }
 
         return databaseResult;
@@ -183,18 +188,31 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
     }
 
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseInsert(List<Document> docList, HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult){
-
+        
+        //DEBUG
+        String debugString = 'HDT_LC_DocumentalConfigController - databaseInsert';
+        System.debug(LoggingLevel.DEBUG, debugString + ' - docList size:' + docList.size() + ' - databaseResult: ' + databaseResult);
+        System.debug(LoggingLevel.DEBUG, debugString + ' - Document.SObjectType.getDescribe().isAccessible(): ' + Document.SObjectType.getDescribe().isAccessible());  
+        System.debug(LoggingLevel.DEBUG, debugString + ' - Document.SObjectType.getDescribe().isCreateable(): ' + Document.SObjectType.getDescribe().isCreateable());        
+        
         databaseResult = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
         databaseResult.docIdList = new List<Id>();
         databaseResult.errorData = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError>();
         if (Document.SObjectType.getDescribe().isAccessible() && Document.SObjectType.getDescribe().isCreateable()) {
             List<Database.SaveResult> insertResults = Database.insert(docList, false);
+            System.debug(LoggingLevel.DEBUG, debugString + ' - insertResults size:' + insertResults.size());
+            System.debug(LoggingLevel.DEBUG, debugString + ' - insertResults:' + insertResults);
+            
             for(Integer n=0; n<insertResults.size(); n++){
                 Database.SaveResult sr = insertResults[n];
-
+                
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError lineError = new HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.docName = docList[n].Name;
@@ -207,6 +225,7 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
             }
     
             if(databaseResult.errorData.size()>0){
+                System.debug(LoggingLevel.DEBUG, debugString + ' - has errors.');
                 databaseResult.success = false;
                 databaseResult.message = '>> Error during database insert';
                 databaseResult.dataError = true;

@@ -4,8 +4,7 @@
     <description>Campo dove vengono indicati servizi offerti dallo sportello</description>
     <externalId>false</externalId>
     <label>Servizi Offerti</label>
-    <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <length>131072</length>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
 </CustomField>

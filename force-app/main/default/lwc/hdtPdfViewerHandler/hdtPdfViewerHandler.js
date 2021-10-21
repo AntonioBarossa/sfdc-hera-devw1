@@ -12,7 +12,11 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
 
     sendToApex(bodyString){
         console.log('# sendToApex #');
-        console.log('>>> TO SEND ' + bodyString);
+        //console.log('>>> TO SEND ' + bodyString);
+        //bodyString = '{"billNumber":"411911206203","channel":"SOL","date":"2019-11-29","type":"D66l7V","company":"1070"}';
+        //bodyString = '{"billNumber":"411709832686","channel":"CRM","date":"2017-12-09","type":"D66l7V","company":"1070"}';
+        //bodyString = '{"billNumber":"431900888769","channel":"CRM","date":"2019-12-04","documentType":"Bollette","company":"2060"}';
+        console.log('>>> BODY TO RETRIEVE PDF ' + bodyString);
         sendFileToPrint({body: bodyString})
         .then(result => {
             console.log('# save success #');
@@ -25,8 +29,8 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
             };
     
             if(result.success){
-                toastObj.title = 'Great Success!';
-                toastObj.message = 'The selected record have been printed!';
+                toastObj.title = 'Successo!';
+                toastObj.message = 'Il documento è stato recuperato correttamente';
                 toastObj.variant = 'success';
 
 
@@ -74,14 +78,16 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
                     console.log(err.message);
                 }
 
-
             } else {
-                toastObj.title = 'Something goes wrong!';
-                toastObj.message = result.message;
+                toastObj.title = 'Errore!';
+                //toastObj.message = result.message;
+                toastObj.message = 'Bolletta non disponibile';
                 toastObj.variant = 'warning';
             }
         
-            this.spinner = false;
+            //this.spinner = false;
+
+            this.downloadComplete();
 
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -129,4 +135,14 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
         this.blob = null;
         this.blobURL = URL.revokeObjectURL();
     }
+
+    downloadComplete(){
+        const downloadComplete = new CustomEvent("downloadcomplete", {
+            detail:  ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(downloadComplete);   
+    }
+
 }

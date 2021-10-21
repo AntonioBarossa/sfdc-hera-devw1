@@ -7,7 +7,7 @@
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:false,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;Reason__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;EffectiveDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;ExternalTrader__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
 ]</value>
@@ -19,6 +19,8 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Contract__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;ContractCode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;EffectiveDate__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;ServicePoint__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
     </values>
     <values>

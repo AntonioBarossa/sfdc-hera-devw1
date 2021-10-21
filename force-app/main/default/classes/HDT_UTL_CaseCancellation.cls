@@ -8,7 +8,7 @@ Libreria Errori
 public inherited sharing class HDT_UTL_CaseCancellation {
 
     @InvocableMethod
-    public static List<HDT_UTL_ResponseCancellationReason>  dispatchMethod(List<HDT_UTL_RequestCancellationReason> inputs) {
+    public static List<HDT_UTL_ResponseCancellationReason> dispatchMethod(List<HDT_UTL_RequestCancellationReason> inputs) {
         List<HDT_UTL_ResponseCancellationReason> toReturn = new List<HDT_UTL_ResponseCancellationReason>();
         if(inputs != null && inputs.size() > 0){
             switch on inputs[0].method {
@@ -34,11 +34,11 @@ public inherited sharing class HDT_UTL_CaseCancellation {
     public static HDT_UTL_ResponseCancellationReason getCancellationReason(HDT_UTL_RequestCancellationReason input) {
         HDT_UTL_ResponseCancellationReason toReturn;
         try{
-            List<String> listDescription = new List<String>();
-            String queryCmd = 'SELECT Technical_Causal_Cancellation_Reason__c, CancellationReasonDescription__c FROM HDT_TechnicalCancellationReason__mdt WHERE (Causal_Process_to_Cancell__c = \''
-            + input.causalCode +'\' OR Causal_Process_to_Cancell__c = null) AND SelectedProcessCancellationReason__c = \''
-            + input.processCancellationReason +'\' AND (SelectedProcessCancellationReason__c = null) WITH SECURITY_ENFORCED';
-            List<HDT_TechnicalCancellationReason__mdt> technicalCancellationReasonList = Database.query(queryCmd);
+            //List<String> listDescription = new List<String>();
+            List<HDT_TechnicalCancellationReason__mdt> technicalCancellationReasonList = Database.query('SELECT Technical_Causal_Cancellation_Reason__c, CancellationReasonDescription__c FROM HDT_TechnicalCancellationReason__mdt WHERE (Causal_Process_to_Cancell__c = \''
+            + String.escapeSingleQuotes(input.causalCode) +'\' OR Causal_Process_to_Cancell__c = null) AND SelectedProcessCancellationReason__c = \''
+            + String.escapeSingleQuotes(input.processCancellationReason) +'\' AND (SelectedProcessCancellationReason__c = null) WITH SECURITY_ENFORCED');
+            // List<HDT_TechnicalCancellationReason__mdt> technicalCancellationReasonList = Database.query(queryCmd);
             if(technicalCancellationReasonList != null && technicalCancellationReasonList.size()>0){
                 toReturn = new HDT_UTL_ResponseCancellationReason(technicalCancellationReasonList[0].Technical_Causal_Cancellation_Reason__c, technicalCancellationReasonList[0].CancellationReasonDescription__c,'OK','Causale ricavata con successo',null);
             }else{
@@ -61,12 +61,12 @@ public inherited sharing class HDT_UTL_CaseCancellation {
         HDT_UTL_ResponseCancellationReason toReturn;
         try{
             List<HDT_UTL_Option> listDescription = new List<HDT_UTL_Option>();
-            String queryCmd = 'SELECT Process_Cancellation_Reason__c FROM HDT_ProcessCancellationReason__mdt WHERE (RecordType__c = NULL OR RecordType__c = \''
-            + input.recordType +'\') AND (Commodity__c = NULL OR Commodity__c = \''
-            + input.commodity +'\') AND Process_Type__c = \''
-            + input.processType +'\' AND (Process_Type_to_Cancell__c = NULL OR Process_Type_to_Cancell__c = \''
-            + input.processTypeToCancell +'\') WITH SECURITY_ENFORCED';
-            List<HDT_ProcessCancellationReason__mdt> processCancellationReasons = Database.query(queryCmd);
+            List<HDT_ProcessCancellationReason__mdt> processCancellationReasons = Database.query('SELECT Process_Cancellation_Reason__c FROM HDT_ProcessCancellationReason__mdt WHERE (RecordType__c = NULL OR RecordType__c = \''
+            + String.escapeSingleQuotes(input.recordType) +'\') AND (Commodity__c = NULL OR Commodity__c = \''
+            + String.escapeSingleQuotes(input.commodity) +'\') AND Process_Type__c = \''
+            + String.escapeSingleQuotes(input.processType) +'\' AND (Process_Type_to_Cancell__c = NULL OR Process_Type_to_Cancell__c = \''
+            + String.escapeSingleQuotes(input.processTypeToCancell) +'\') WITH SECURITY_ENFORCED');
+            //List<HDT_ProcessCancellationReason__mdt> processCancellationReasons = Database.query(queryCmd);
             for(HDT_ProcessCancellationReason__mdt singleRecord : processCancellationReasons){
                 listDescription.add(new HDT_UTL_Option(singleRecord.Process_Cancellation_Reason__c));
             }
@@ -97,7 +97,7 @@ public inherited sharing class HDT_UTL_CaseCancellation {
             this.outcomeDescription = outcomeDescription;
         }
 
-        public HDT_UTL_ResponseCancellationReason( String outcome, String outcomeDescription){
+        public HDT_UTL_ResponseCancellationReason(String outcome, String outcomeDescription){
             this.outcome = outcome;
             this.outcomeDescription = outcomeDescription;
         }

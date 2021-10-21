@@ -90,7 +90,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     mdtButtonList = HDT_QR_AccountStatement.getButtonParameters(mdtButtonList, tObj.tabCode, 'expiredFromDay');
 
                     if(mdtButtonList.size()==0){
-
+                        /*
+                        * @Author: Salvatore A. Sarà 18/10/2021
+                        * Risoluzione "Avoid Empty Block Statements"
+                        */
+                        return dbr;
                     }
 
                     Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped(mdtButtonList[0].Parameters__c);
@@ -110,7 +114,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     mdtButtonList = HDT_QR_AccountStatement.getButtonParameters(mdtButtonList, tObj.tabCode, 'manageableItems');
 
                     if(mdtButtonList.size()==0){
-
+                        /*
+                        * @Author: Salvatore A. Sarà 18/10/2021
+                        * Risoluzione "Avoid Empty Block Statements"
+                        */
+                        return dbr;
                     }
 
                     Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped(mdtButtonList[0].Parameters__c);
@@ -130,7 +138,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Filtri-Paperless
                 when 'paperlessFilters' {
-
+                    /*
+                    * @Author: Salvatore A. Sarà 18/10/2021
+                    * Risoluzione "Avoid Empty Block Statements"
+                    */
+                    return dbr;
                 }
 
             }
@@ -153,11 +165,19 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             }
             //Gestione del credito
             when 'EC1' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;
             }
             //Indennizzi
             when 'EC8' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;                
             }
             //Note Var. IVA
             when 'EC3' {
@@ -167,7 +187,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             }
             //Pagamenti e compensazioni
             when 'EC5' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;
             }
             //Paperless
             when 'paperless' {
@@ -176,19 +200,35 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             }
             //Parite non fatturate
             when 'EC7' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;
             }
             //Rate
             when 'EC4' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;
             }
             //Scaduto per riattivazione
             when 'EC9' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;
             }
             //Solleciti
             when 'EC6' {
-
+                /*
+                * @Author: Salvatore A. Sarà 18/10/2021
+                * Risoluzione "Avoid Empty Block Statements"
+                */
+                return dbr;
             }
         }
         return dbr;
@@ -261,6 +301,12 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog, String tabValue){
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCaSet = new Set<String>();
@@ -289,22 +335,36 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             tot += Decimal.valueOf(obj.residuo);
         }
 
-        switch on isInstallmentSet.size() {
-            when 0 {
-                serviceCatalog.IsInstallment__c = false;
-            }
+        System.debug(LoggingLevel.DEBUG, '>>>>>>>>>>>> isInstallmentSet ' + String.valueOf(isInstallmentSet));
 
-            when 1 {
-                String f = (new List<String>(isInstallmentSet) )[0];
-                if(f.equalsIgnoreCase('SI')){
-                    serviceCatalog.IsInstallment__c = true;
-                }
-            }
-            
-            when 2 {
+        if(isInstallmentSet.size() > 0){
+            if(isInstallmentSet.contains('SI')){
+                serviceCatalog.IsInstallment__c = true;
+            } else {
                 serviceCatalog.IsInstallment__c = false;
-            }                       
+            }
+        } else {
+            serviceCatalog.IsInstallment__c = false;
         }
+
+        //switch on isInstallmentSet.size() {
+        //    when 0 {
+        //        serviceCatalog.IsInstallment__c = false;
+        //    }
+
+        //    when 1 {
+        //        String f = (new List<String>(isInstallmentSet) )[0];
+        //        if(f.equalsIgnoreCase('SI')){
+        //            serviceCatalog.IsInstallment__c = true;
+        //        }
+        //    }
+        //    
+        //    when 2 {
+        //        serviceCatalog.IsInstallment__c = false;
+        //    }                       
+        //}
+
+        System.debug(LoggingLevel.DEBUG, '>>>>>>>>>>>> IsInstallment__c ' + String.valueOf(serviceCatalog.IsInstallment__c));
 
         serviceCatalog.OnCredit__c = (tot<0) ? true : false;
         serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;

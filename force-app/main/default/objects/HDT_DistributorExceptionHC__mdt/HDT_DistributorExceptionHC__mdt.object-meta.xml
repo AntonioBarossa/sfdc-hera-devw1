@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Elenco distributori che fanno eccezione su territorio HCM e richiedono il logo di HC.</description>
+    <label>Distributor Exception HC</label>
+    <pluralLabel>Distributor Exception HC</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

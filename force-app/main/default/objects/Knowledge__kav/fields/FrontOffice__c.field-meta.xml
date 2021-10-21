@@ -4,7 +4,7 @@
     <description>Descrizione sportello</description>
     <externalId>false</externalId>
     <label>Sportelli</label>
-    <length>32768</length>
-    <type>LongTextArea</type>
-    <visibleLines>5</visibleLines>
+    <length>131072</length>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
 </CustomField>

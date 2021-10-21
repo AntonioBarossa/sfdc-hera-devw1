@@ -571,7 +571,7 @@
                 //}
                 mapLeadInd.put(l.id,l.IndividualId);
             }
-            List<ContactPointPhone> cpToUpdate = new list<ContactPointPhone>();
+            // List<ContactPointPhone> cpToUpdate = new list<ContactPointPhone>();
             List<ContactPointEmail> ceToUpdate = new list<ContactPointEmail>();
             // map<String,ContactPointPhone> cpToUpdatePrim = new map<String,ContactPointPhone>();
             // map<string,ContactPointEmail> ceToUpdatePrim = new map<string,ContactPointEmail>();
@@ -948,12 +948,12 @@
      */
 
    
-    public static void convertLeadPrivacy(Id ContactId,Id LeadId) {
+    public static void convertLeadPrivacy(Id contactId,Id leadId) {
 
-        Lead l = leadQr.getRecordById(String.valueOf(LeadId));
+        Lead l = leadQr.getRecordById(String.valueOf(leadId));
         
 
-        Contact cont = HDT_UTL_Individual.convertLeadToContact(ContactId,l.IndividualId);
+        Contact cont = HDT_UTL_Individual.convertLeadToContact(contactId,l.IndividualId);
         
         l.IndividualId = null;
         contactSrv.updateRecord(cont);
@@ -1010,11 +1010,11 @@
         createDefaultPrivacyLead(leadIds,mapMobilePhone,mapPhone,mapEmail, mobilePrefixes,phonePrefixes );
     }
 
-    public static void updatePrivacyConsentPostSales(Id recordId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing,String VersioneInformativaProfilazione,String IniziativaConsensoProfilazione, Date DataConsensoProfilazione,String CompanyConsensoProfilazione){
+    public static void updatePrivacyConsentPostSales(Id recordId,String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing,String versioneInformativaProfilazione,String iniziativaConsensoProfilazione, Date dataConsensoProfilazione,String companyConsensoProfilazione){
                                                       
-        Individual ind =new Individual(Id = recordId ,  MarketingPrivacyVersion__c = VersioneInformativaMarketing,MarketingCompanyConsent__c = CompanyConsensoMarketing,
-         PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing,ProfilingPrivacyVersion__c = VersioneInformativaProfilazione,
-         PrivacyProfilingConsentInitiative__c = IniziativaConsensoProfilazione,PrivacyProfilingChoiceDate__c = DataConsensoProfilazione,ProfilingCompanyConsent__c = CompanyConsensoProfilazione);
+        Individual ind =new Individual(Id = recordId ,  MarketingPrivacyVersion__c = versioneInformativaMarketing,MarketingCompanyConsent__c = companyConsensoMarketing,
+         PrivacyMarketingConsentInitiative__c = iniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = dataConsensoMarketing,ProfilingPrivacyVersion__c = versioneInformativaProfilazione,
+         PrivacyProfilingConsentInitiative__c = iniziativaConsensoProfilazione,PrivacyProfilingChoiceDate__c = dataConsensoProfilazione,ProfilingCompanyConsent__c = companyConsensoProfilazione);
         
                 
         HDT_SRV_Individual.checkCreateAccess(ind);
@@ -1022,11 +1022,11 @@
 
     }
 
-    public static void updatePrivacyConsentContractualEnvelope(Id recordId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing,String VersioneInformativaProfilazione,String IniziativaConsensoProfilazione, Date DataConsensoProfilazione,String CompanyConsensoProfilazione){
+    public static void updatePrivacyConsentContractualEnvelope(Id recordId,String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing,String versioneInformativaProfilazione,String iniziativaConsensoProfilazione, Date dataConsensoProfilazione,String companyConsensoProfilazione){
 
-        Individual ind =new Individual(Id = recordId ,  MarketingPrivacyVersion__c = VersioneInformativaMarketing,MarketingCompanyConsent__c = CompanyConsensoMarketing,
-         PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing,ProfilingPrivacyVersion__c = VersioneInformativaProfilazione,
-         PrivacyProfilingConsentInitiative__c = IniziativaConsensoProfilazione,PrivacyProfilingChoiceDate__c = DataConsensoProfilazione,ProfilingCompanyConsent__c = CompanyConsensoProfilazione);
+        Individual ind =new Individual(Id = recordId ,  MarketingPrivacyVersion__c = versioneInformativaMarketing,MarketingCompanyConsent__c = companyConsensoMarketing,
+         PrivacyMarketingConsentInitiative__c = iniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = dataConsensoMarketing,ProfilingPrivacyVersion__c = versioneInformativaProfilazione,
+         PrivacyProfilingConsentInitiative__c = iniziativaConsensoProfilazione,PrivacyProfilingChoiceDate__c = dataConsensoProfilazione,ProfilingCompanyConsent__c = companyConsensoProfilazione);
         
                 
         HDT_SRV_Individual.checkCreateAccess(ind);
@@ -1034,46 +1034,47 @@
 
     }
 
-    public static void updatePrivacyConsentFormWebEvent(Id leadId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing){
+    public static void updatePrivacyConsentFormWebEvent(Id leadId,String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing){
 
-        Individual ind =new Individual(Id = leadId,MarketingPrivacyVersion__c = VersioneInformativaMarketing,MarketingCompanyConsent__c = CompanyConsensoMarketing,
-        PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
-
-        HDT_SRV_Individual.checkCreateAccess(ind);
-        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
-    }
-
-    public static void updatePrivacyConsentFormWebWinback(Id leadId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing){
-
-        Individual ind =new Individual(Id = leadId,MarketingPrivacyVersion__c = VersioneInformativaMarketing,MarketingCompanyConsent__c = CompanyConsensoMarketing,
-        PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
+        Individual ind =new Individual(Id = leadId,MarketingPrivacyVersion__c = versioneInformativaMarketing,MarketingCompanyConsent__c = companyConsensoMarketing,
+        PrivacyMarketingConsentInitiative__c = iniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = dataConsensoMarketing);
 
         HDT_SRV_Individual.checkCreateAccess(ind);
         /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
     }
 
-    public static void updatePrivacyConsentFormWebCallback(Id leadId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing){
+    public static void updatePrivacyConsentFormWebWinback(Id leadId,String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing){
 
-        Individual ind =new Individual(Id = leadId,MarketingPrivacyVersion__c = VersioneInformativaMarketing,MarketingCompanyConsent__c = CompanyConsensoMarketing,
-        PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
+        Individual ind =new Individual(Id = leadId,MarketingPrivacyVersion__c = versioneInformativaMarketing,MarketingCompanyConsent__c = companyConsensoMarketing,
+        PrivacyMarketingConsentInitiative__c = iniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = dataConsensoMarketing);
 
         HDT_SRV_Individual.checkCreateAccess(ind);
         /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
     }
 
-    public static void updatePrivacyConsentSol(Id contactId,String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing,String email){
+    public static void updatePrivacyConsentFormWebCallback(Id leadId,String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing){
+
+        Individual ind =new Individual(Id = leadId,MarketingPrivacyVersion__c = versioneInformativaMarketing,MarketingCompanyConsent__c = companyConsensoMarketing,
+        PrivacyMarketingConsentInitiative__c = iniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = dataConsensoMarketing);
+
+        HDT_SRV_Individual.checkCreateAccess(ind);
+        /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
+    }
+
+    public static void updatePrivacyConsentSol(Id contactId,String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing,String email){
 		Contact cont = contactQr.getRecordById(contactId);
-        Individual ind =new Individual(Id = cont.IndividualId,MarketingPrivacyVersion__c = VersioneInformativaMarketing,MarketingCompanyConsent__c = CompanyConsensoMarketing, 
-        PrivacyMarketingConsentInitiative__c = IniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = DataConsensoMarketing);
+        Individual ind =new Individual(Id = cont.IndividualId,MarketingPrivacyVersion__c = versioneInformativaMarketing,MarketingCompanyConsent__c = companyConsensoMarketing, 
+        PrivacyMarketingConsentInitiative__c = iniziativaConsensoMarketing,PrivacyMarketingChoiceDate__c = dataConsensoMarketing);
         
         ContactPointEmail contemail = HDT_QR_ContactPoint.searchContactPointEmail(email);
         if(contemail !=null){
             ContactPointEmail emailContact = new ContactPointEmail(Id = contemail.Id,Type__c = 'E-mail SOL');
             HDT_SRV_ContactPointEmail.updateRecord(emailContact);
-        }else
+        }else{
             ContactPointEmail emailContact = new ContactPointEmail(ParentId = ind.id,EmailAddress = email,Type__c = 'E-mail SOL');
-         	HDT_SRV_ContactPointEmail.checkUpdateAccess(contemail);
-
+         	HDT_SRV_ContactPointEmail.checkCreateAccess(emailContact);
+            HDT_SRV_ContactPointEmail.createRecord(emailContact);
+        }
             HDT_SRV_Individual.checkCreateAccess(ind);
             /*Individual indvid=*/ HDT_SRV_Individual.updateRecord(ind);
         }
@@ -1108,14 +1109,14 @@
             }
         }
 
-        public static Map<String,Object> generateMapMarketingFieldsValue(String VersioneInformativaMarketing,String IniziativaConsensoMarketing,Date DataConsensoMarketing,String CompanyConsensoMarketing){
+        public static Map<String,Object> generateMapMarketingFieldsValue(String versioneInformativaMarketing,String iniziativaConsensoMarketing,Date dataConsensoMarketing,String companyConsensoMarketing){
             Map<String,Object> maps = new Map<String,Object> ();
 
           
-            maps.put('MarketingPrivacyVersion__c ',VersioneInformativaMarketing);
-            maps.put('PrivacyMarketingConsentInitiative__c',IniziativaConsensoMarketing);
-            maps.put('PrivacyMarketingChoiceDate__c',DataConsensoMarketing);
-            maps.put('MarketingCompanyConsent__c',CompanyConsensoMarketing);
+            maps.put('MarketingPrivacyVersion__c ',versioneInformativaMarketing);
+            maps.put('PrivacyMarketingConsentInitiative__c',iniziativaConsensoMarketing);
+            maps.put('PrivacyMarketingChoiceDate__c',dataConsensoMarketing);
+            maps.put('MarketingCompanyConsent__c',companyConsensoMarketing);
             
             return maps;
 

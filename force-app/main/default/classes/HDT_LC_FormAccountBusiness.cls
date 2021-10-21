@@ -1,3 +1,9 @@
+/**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 21/04/21
+* @description HDT_LC_FormAccountBusiness
+* @history Sabina Levonja – 21/04/21 – created class
+*/
 public with sharing class HDT_LC_FormAccountBusiness {
 
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
@@ -12,7 +18,22 @@ public with sharing class HDT_LC_FormAccountBusiness {
         String name;
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
-        System.debug('PROVAACCOUNT:' + dataAccount);
+        //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+        Map<String, String> infoData = new Map<String, String>();
+        infoData.put('lastName'     , dataAccount.get('lastName')   );
+        infoData.put('firstName'    , dataAccount.get('firstName')  );
+        infoData.put('birthDate'    , dataAccount.get('birthDate')  );
+        infoData.put('birthPlace'   , dataAccount.get('birthplace') );
+        infoData.put('gender'       , dataAccount.get('gender')     );
+
+        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,dataAccount.get('personFiscalCode') )) {
+            throw new AuraHandledException('Inserire un codice fiscale valido');
+        }  
+        //End HRAWRM-491 27/09/2021 Controllo codice fiscale stimato
+ 
+     
+        
+      //  System.debug('PROVAACCOUNT:' + dataAccount);
         if(dataAccount.get('businessName')!= null){
             name =dataAccount.get('businessName');
             account.put('LastName__c', dataAccount.get('businessName'));
@@ -34,7 +55,12 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 account.put(s, accountAddress.get(s));
             }
         }
-        System.debug('ACCOUNT:' + account);
+        //System.debug('ACCOUNT:' + account);
+        //HRDTR-00_HRAWRM-720 12/10/2021
+        if (String.isNotBlank( account.CustomerMarking__c) &&  !account.CustomerMarking__c.containsIgnoreCase('Condomini')||account.CustomerMarking__c.containsIgnoreCase('Associazione')) {
+            Account.FiscalCode__c=Account.VATNumber__c;  
+        }
+        //HRDTR-00_HRAWRM-720 12/10/2021
         accountSrv.checkCreateAccess(account);
         Account acct= accountSrv.createRecord(account);
         
@@ -61,19 +87,19 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Boolean samePhone=false;
 
             if(personCon.Email ==null||(personCon.Email !=null && personCon.Email== dataAccount.get('contactEmail'))){
-                System.debug('1');
+             //   System.debug('1');
                 sameEmail=true;
             }
             if(sameEmail && (personCon.MobilePhone ==null||(personCon.MobilePhone!=null && personCon.MobilePhone== dataAccount.get('mobilePhone')))){
-                System.debug('2');
+             //   System.debug('2');
                 sameMobile=true;
             }
             if(sameMobile && (personCon.Phone ==null ||(personCon.Phone !=null&& personCon.Phone== dataAccount.get('contactPhoneNumber')))){
-                System.debug('3');
+            //    System.debug('3');
                 samePhone=true;
             }
             if(samePhone){
-                System.debug('contact not null');
+            //   System.debug('contact not null');
                 Contact c= new Contact(Id= personCon.Id,AccountId= acct.Id);
                 if(personCon.Email ==null && String.isNotBlank(dataAccount.get('contactEmail'))){
                     c.put('Email', dataAccount.get('contactEmail'));
@@ -88,7 +114,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 contactSrv.updateRecord(c);
 
                 List<AccountContactRelation> listAccCon1 = accoContRelQr.getAccountContactRelation(acct.Id, personCon.Id, 'Id');
-                System.debug(listAccCon1);
+               // System.debug(listAccCon1);
 
                 if(dataAccount.get('role')!=null && listAccCon1 != null && listAccCon1.size() > 0){
            
@@ -105,14 +131,14 @@ public with sharing class HDT_LC_FormAccountBusiness {
                     accoContRelSrv.createRecord(ac);
                 }
             }else{
-                System.debug('contact to be updated ');
+               // System.debug('contact to be updated ');
 
                 Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
                 Contact newCon = new Contact(Company__c=dataAccount.get('companyValue'),AccountId= acct.Id,LastName= dataAccount.get('lastName'),FirstName= dataAccount.get('firstName'),Birthcity__c= dataAccount.get('birthplace') ,Birthdate= birthdate,Gender__c= dataAccount.get('gender'),FiscalCode__c= dataAccount.get('personFiscalCode') ,Email= dataAccount.get('contactEmail'),Fax= dataAccount.get('contactFax') ,MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'), MobilePhone= dataAccount.get('mobilePhone') ,PhonePrefix__c= dataAccount.get('phonePrefix'), Phone= dataAccount.get('contactPhoneNumber'));
                 contactSrv.checkCreateAccess(newCon);
                 contactSrv.createRecord(newCon);
                 List<AccountContactRelation> listAccCon2 = accoContRelQr.getAccountContactRelation(acct.Id, newCon.Id, 'Id');
-                System.debug(listAccCon2);
+               // System.debug(listAccCon2);
 
                 if(dataAccount.get('role')!=null && listAccCon2 != null && listAccCon2.size() > 0){
            
@@ -123,7 +149,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 }
             }
         }else{
-            System.debug('contact is null');
+            //System.debug('contact is null');
 
             String recordTypeResId='';
             //RecordType recordtype=recordtypeQR.getRecordType('HDT_RT_Residenziale', 'Account');
@@ -137,7 +163,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
            
             Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
             String namePerson= dataAccount.get('firstName') + ' '+ dataAccount.get('lastName');
-            System.debug('marcatura : '+dataAccount.get('companyOwner'));
+            //System.debug('marcatura : '+dataAccount.get('companyOwner'));
             //? fix UAT 31/08/2021 verrà definita una logica in wave 3 come da feedback Analisi
             String varMarking;
             if ('Reseller'.equalsIgnoreCase(dataAccount.get('companyOwner'))){
@@ -184,8 +210,8 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Contact personCont= contactSrv.createRecord(personContact);
             //Start HRDTR-00_HRAWRM-455 07/09/2021
 
-            Id jobId1 = System.enqueueJob(new HDT_QBL_BpCaRequest(accPerson,personCont));
-            System.debug('jobId: '+jobId1);
+            System.enqueueJob(new HDT_QBL_BpCaRequest(accPerson,personCont));
+            //System.debug('jobId: '+jobId1);
             //End HRDTR-00_HRAWRM-455 07/09/2021
 
             //List<AccountContactRelation> listAccCon3 = accoContRelQr.getAccountContactRelation(accPerson.Id, personCont.Id, 'Id');
@@ -203,8 +229,8 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // HDT_UTL_GestionePrivacy.createDefaultPrivacyContact(cont.Id, emails, phones);
         }
         //HDT_UTL_Account.makeRequest(account,contact);
-        Id jobId = System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
-        System.debug('jobId: '+jobId);
+        System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
+        //System.debug('jobId: '+jobId);
 
     
         return acct;

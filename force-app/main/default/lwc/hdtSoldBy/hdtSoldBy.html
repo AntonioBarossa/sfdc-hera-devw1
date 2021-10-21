@@ -1,0 +1,165 @@
+<template>
+    <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large">
+    </lightning-spinner>
+
+    <div class="slds-grid slds-wrap slds-m-top_small">
+        <div class="slds-size_1-of-2">
+            <lightning-record-edit-form object-api-name="Lead">
+                
+                    <lightning-input-field onchange={handleChannelSelection}
+                        class="slds-align_absolute-center" 
+                        field-name="Channel__c"
+                        data-id="Channel__c"
+                        data-name="Channel__c"
+                        variant="label-stacked"></lightning-input-field>
+                
+            </lightning-record-edit-form>
+        </div>
+        <div class="slds-size_1-of-2">
+            <lightning-button class="slds-align_absolute-center slds-m-top_medium"
+                             disabled={disabledAgency}
+                            onclick={handleAgencySelection} 
+                            label="Seleziona Agenzia" 
+                            variant="brand"
+                            icon-name="utility:right"></lightning-button>
+        </div>
+    </div>
+
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true"
+            class="slds-modal slds-fade-in-open panel slds-modal_large">
+            <div class="modal-container slds-modal__container">
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close closeIcon slds-button_icon-bare slds-button_icon-inverse"
+                        title="close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="medium">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-modal__title slds-hyphenate">Seleziona </h2>
+                </header>
+
+                <div class="modal-body slds-modal__content slds-p-around--large">
+                    <template if:true={showpage1}>
+                        <lightning-layout-item padding="around-small" size="4">
+                            <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search"
+                                label="Filter Agency" onchange={searchAgencyName} class="searchInput">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-medium" size="3">
+                        </lightning-layout-item>
+                        <lightning-layout horizontal-align="end">
+                            <lightning-layout-item padding="around-small" size="4">
+                                <div
+                                    class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
+                                    <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon"
+                                        aria-hidden="true">
+                                    </svg>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <template if:true={showEmptyMessage} class="slds-size_1-of-1">
+                            <div class="slds-align_absolute-center" >Non ci sono agienzie attive in
+                                corso</div>
+                        </template>
+                        <template if:false={showEmptyMessage} class="slds-size_1-of-1">
+                            <div style="height: 14rem;">
+                                <lightning-datatable key-field="Id" data={tableData} columns={completeListcolumns}
+                                max-row-selection=1 onrowselection={getSelectedFromCompleteList}>
+                            </lightning-datatable>
+                            </div>
+                            <template if:true={showPaginationButtons}>
+                                <div class="slds-grid slds-grid_align-center">
+                                    <div class="slds-col">
+                                        <button disabled={disabledInput} onclick={previousPage}
+                                            class="slds-button slds-button_neutral pagination-button">
+                                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                                <use
+                                                    xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft">
+                                                </use>
+                                            </svg>Previous</button>
+                                    </div>
+                                    <div class="slds-col">
+                                        <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPages}</p>
+                                    </div>
+                                    <div class="slds-col">
+                                        <button onclick={nextPage}
+                                            class="slds-button slds-button_neutral pagination-button next">Next
+                                            <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                                <use
+                                                    xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright">
+                                                </use>
+                                            </svg></button>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:true={showPaginationButtons2}>
+                            <div class="slds-grid slds-grid_align-center">
+                                <div class="slds-col">
+                                    <button onclick={previousPage2}
+                                        class="slds-button slds-button_neutral pagination-button">
+                                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                            <use
+                                                xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft">
+                                            </use>
+                                        </svg>Previous</button>
+                                </div>
+                                <div class="slds-col">
+                                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage2} / {totalPages2}</p>
+                                </div>
+                                <div class="slds-col">
+                                    <button disabled={disabledInput2} onclick={nextPage2}
+                                        class="slds-button slds-button_neutral pagination-button next">Next
+                                        <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                            <use
+                                                xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright">
+                                            </use>
+                                        </svg></button>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:true={showpage2}>
+                        <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
+                                size="small"></lightning-spinner>
+                                <!-- onkeyup={handleSearchAdditionalKeyChange} -->
+                            <!-- <lightning-input onkeyup={handleSearchInputKeyChange}  name="enter-search" type="search"
+                                label="Filtro Addizionale" onchange={searchAdditionalFilter} class="searchInput">
+                            </lightning-input> -->
+                            <lightning-input  name="enter-search" type="search"
+                                label="Filter Agent" onchange={searchAgentTable} class="searchInput">
+                            </lightning-input>
+                            <lightning-layout-item padding="around-medium" size="3">
+                            </lightning-layout-item>
+                        <lightning-datatable key-field="Id" data={tableDataAgent} columns={completeListcolumnsAgent}
+                            max-row-selection=1 onrowselection={getSelectedFromCompleteListAgent}>
+                        </lightning-datatable>
+
+                    </template>
+
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button disabled={disabledBack} onclick={handleBackPage} label="Indietro" variant="brand"
+                        icon-name="utility:left" class="slds-p-right--small"></lightning-button>
+                    <lightning-button disabled={disabledNextAgency} onclick={handleNextPage} label="Avanti" variant="brand"
+                        icon-name="utility:right" class="slds-p-right--small"></lightning-button>
+                    <lightning-button variant="brand" disabled={disabledSave} name="" type="submit" label="Salva"
+                        onclick={handleSave}>
+
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- <div class="slds-clearfix slds-p-around_small">
+        <div class="slds-float_right">
+            <lightning-button class="slds-m-right_x-small" disabled={disabledAgency} hidden={hiddenAgency}
+                onclick={handleAgencySelection} label="Seleziona Agenzia" variant="brand"
+                icon-name="utility:right"></lightning-button>
+        </div>
+    </div> -->
+</template>

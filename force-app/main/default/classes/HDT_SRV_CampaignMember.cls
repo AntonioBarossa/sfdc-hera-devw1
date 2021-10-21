@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/06/2021
+* @description Class HDT_SRV_CampaignMember
+* @history Keltin Mesonjesi – 30/06/2021 – Created class
+*/
 public inherited sharing class HDT_SRV_CampaignMember {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
@@ -9,8 +15,8 @@ public inherited sharing class HDT_SRV_CampaignMember {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 01/05/2021
     * @description Initialize security access instance
-    * @param String fields - Fields to check for access
-    * @param String crud - crud operation passed as a string (create, read, update, delete)
+    * @param fields - Fields to check for access
+    * @param crud - crud operation passed as a string (create, read, update, delete)
     */
     public void checkAccessInit(String fields, String crud){
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('CampaignMember', fields, crud);
@@ -20,7 +26,7 @@ public inherited sharing class HDT_SRV_CampaignMember {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
-     * @param String fields
+     * @param fields
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
@@ -29,7 +35,7 @@ public inherited sharing class HDT_SRV_CampaignMember {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Check if current user has create permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkCreateAccess(String fields){
         checkAccessInit(fields, CREATEPERMISSION);
@@ -38,12 +44,16 @@ public inherited sharing class HDT_SRV_CampaignMember {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Check if current user has update permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
     }
 
+    /**
+    * @description updateRecord
+    * @param cMember
+    */
     public void updateRecord(CampaignMember cMember){
         //List<String> fields = helperMethods.getObjAttrList(cMember);
         //checkUpdateAccess(String.join(fields, ','));
@@ -51,6 +61,11 @@ public inherited sharing class HDT_SRV_CampaignMember {
         HDT_UTL_DatabaseService.updateSObject(cMember);
     }
 
+    /**
+    * @description createRecord
+    * @param cMember
+    * @return CampaignMember
+    */
     public CampaignMember createRecord(CampaignMember cMember){
         //List<String> fields = helperMethods.getObjAttrList(cMember);
        // checkUpdateAccess(String.join(fields, ','));
@@ -60,7 +75,10 @@ public inherited sharing class HDT_SRV_CampaignMember {
     }
 
     
-
+    /**
+    * @description createRecord
+    * @param cmembers
+    */
     public void updateRecords(List<CampaignMember> cmembers){
     //! non riabilitare perche da dei falsi positivi sull' oggetto CampaignMember
         // for (CampaignMember cm : cmembers) {

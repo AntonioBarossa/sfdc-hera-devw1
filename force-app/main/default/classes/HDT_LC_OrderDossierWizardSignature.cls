@@ -92,5 +92,4 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             Step__c = 1
         ));
     }
-
 }

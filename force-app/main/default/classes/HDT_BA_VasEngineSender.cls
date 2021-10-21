@@ -52,5 +52,12 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
         orderSrv.updateRecords(orders);
     }
 
-    public void finish(Database.BatchableContext bc) {}
+    /**
+    * @description Finish logic
+    * @author gabriele.rota@webresults.it | 2021-07-27 
+    * @param bc 
+    **/
+    public void finish(Database.BatchableContext bc) {
+        return;
+    }
 }

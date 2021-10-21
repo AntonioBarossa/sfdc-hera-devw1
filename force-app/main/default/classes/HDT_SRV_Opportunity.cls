@@ -20,8 +20,8 @@ public inherited sharing class HDT_SRV_Opportunity {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Initialize security access instance
-    * @param String fields - Fields to check for access
-    * @param String crud - crud operation passed as a string (create, read, update, delete)
+    * @param fields - Fields to check for access
+    * @param crud - crud operation passed as a string (create, read, update, delete)
     */
     public void checkAccessInit(String fields, String crud){
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Opportunity', fields, crud);
@@ -31,7 +31,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
-     * @param String fields
+     * @param fields
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
@@ -41,7 +41,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Check if current user has update permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
@@ -50,7 +50,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Generate default Opportunity name when creating SaleServiceItem
-     * @param String Sale__c.Name
+     * @param sale
      * @return String name ex. 'Opportunity 1 Vendita 50'
      */
     public String generateName(Sale__c sale){
@@ -63,7 +63,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create Opportunity record
-     * @param Opportunity
+     * @param opportunity
      * @return Opportunity
      */
     public Opportunity createRecord(Opportunity opportunity){
@@ -82,7 +82,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Update Opportunity record based on Opportunity.Id
-    * @param Opportunity opportunity - Opportunity record with fields to update
+    * @param opportunity - Opportunity record with fields to update
     */
     public void updateRecord(Opportunity opportunity){
         List<String> fields = helperMethods.getObjAttrList(opportunity);
@@ -95,7 +95,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 14/12/2020
     * @description Update Opportunity records based on Opportunity.Id
-    * @param List<Opportunity>
+    * @param opportunities
     */
     public void updateRecords(List<Opportunity> opportunities){
 
@@ -110,7 +110,7 @@ public inherited sharing class HDT_SRV_Opportunity {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Delete single record
-     * @param Opportunity.Id
+     * @param opportunityId
      */
     public void deleteRecord(String opportunityId){
         List<SaleServiceItem__c> saleServiceItemRecords = saleServiceItemQuery.getRecordsByOpportunityId(opportunityId);
@@ -125,6 +125,11 @@ public inherited sharing class HDT_SRV_Opportunity {
         HDT_UTL_DatabaseService.deleteSObject(opportunityId);
     }
 
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Delete records
+     * @param opportunities
+     */
     public void deleteRecords(List<String> opportunities){
         HDT_UTL_DatabaseService.deleteSObject(opportunities);
     }

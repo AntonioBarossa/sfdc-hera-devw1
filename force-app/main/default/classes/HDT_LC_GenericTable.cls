@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_GenericTable {
 
     public static List<List<SObject>> rowData { get; set; }
@@ -22,7 +23,11 @@ public inherited sharing class HDT_LC_GenericTable {
         List<String> objList = new List<String>();
         List<String> columnList = new List<String>();
 
-        Integer count = 0;
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Integer count = 0;
         Integer fieldCount = 0;
 
         //Actions
@@ -49,7 +54,7 @@ public inherited sharing class HDT_LC_GenericTable {
             }
             query += 'From ' + singleObj.obj + ' ';
             if((searchKey!=null && searchKey != '') && (searchTerm != null && searchKey != null) && (singleObj.whereCond != null && singleObj.whereCond != '')){
-                System.debug(singleObj.whereCond);      
+                System.debug(LoggingLevel.DEBUG, 'singleObj.whereCond: ' + singleObj.whereCond);      
                 query+='WHERE ' + searchKey + '= \'' + searchTerm + '\' AND ' + singleObj.whereCond + ' ';      
             }
             query += 'WITH SECURITY_ENFORCED';
@@ -57,10 +62,10 @@ public inherited sharing class HDT_LC_GenericTable {
             objList.add(singleObj.obj);
         }
         /*Execute Recursive Queries */
-        System.debug('QueryList-> ' +queryList);
-        System.debug('ObjList -> ' +objList);
+        System.debug(LoggingLevel.DEBUG, 'QueryList-> ' +queryList);
+        System.debug(LoggingLevel.DEBUG, 'ObjList -> ' +objList);
         doRecursion(queryList, objList);
-        System.debug('Data -> ' + rowData);
+        System.debug(LoggingLevel.DEBUG, 'Data -> ' + rowData);
         /*Create Data Map*/
         for(List<SObject> sobjList : rowData){
             if(sobjList != null){
@@ -83,12 +88,12 @@ public inherited sharing class HDT_LC_GenericTable {
                 }
             }
         }
-        System.debug(dataMap);
-        System.debug(columns);
-        System.debug(columns.size());
+        System.debug(LoggingLevel.DEBUG, 'dataMap: ' + dataMap);
+        System.debug(LoggingLevel.DEBUG, 'columns: ' + columns);
+        System.debug(LoggingLevel.DEBUG, 'columns size: ' + columns.size());
         output.columns = columns;
         output.rowData = dataMap;
-        System.debug(output);
+        System.debug(LoggingLevel.DEBUG, 'output: ' + output);
         // for(List<SObject> sObjList : rowData){
         //     if(sObjList != null){
         //         Map<String, Object> objMap = sObjList[0].getSObjectType().getDescribe().fields.getMap();
@@ -97,9 +102,9 @@ public inherited sharing class HDT_LC_GenericTable {
         //             Schema.sObjectField fieldObj= (Schema.sObjectField) objMap.get(key);
         //             if(fieldObj != null){
         //                 Schema.DescribeFieldResult fieldRes = fieldObj.getDescribe();
-        //                 System.debug('Label: ' + fieldRes.getLabel());
-        //                 System.debug('Value: ' + singleObjMap.get(key));
-        //                 System.debug('Type: '  + String.valueOf(fieldRes.getType()));
+        //                 System.debug(LoggingLevel.DEBUG, 'Label: ' + fieldRes.getLabel());
+        //                 System.debug(LoggingLevel.DEBUG, 'Value: ' + singleObjMap.get(key));
+        //                 System.debug(LoggingLevel.DEBUG, 'Type: '  + String.valueOf(fieldRes.getType()));
         //                 //Customizations
         //             }
         //         } 
@@ -117,7 +122,7 @@ public inherited sharing class HDT_LC_GenericTable {
             Schema.DescribeSObjectResult objRes = objType.getDescribe();
             if(objRes.isAccessible()){
                 queryObj = Database.query(queryList[(queryList.size()-1)]);
-                System.debug(queryObj);
+                System.debug(LoggingLevel.DEBUG, 'queryObj: ' + queryObj);
                 rowData.add(queryObj);
             }
             queryList.remove((queryList.size()-1));

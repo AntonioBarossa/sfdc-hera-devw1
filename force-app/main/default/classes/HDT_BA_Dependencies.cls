@@ -3,9 +3,15 @@
 * @date 15/07/2021
 * @description HDT_BA_Dependencies – Batch per lo sblocco dei processi sequenzializzati
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject> {
     
-    public Database.QueryLocator start(Database.BatchableContext BC) {
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 15/07/2021
+    * @description start method
+    */
+    public Database.QueryLocator start(Database.BatchableContext bc) {
          
         String query = 'SELECT Id, Status__c, Case__c, Order__c, Type__c, NextPhase__c '
                     + 'FROM ServiceRequest__c '
@@ -16,7 +22,12 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
         return Database.getQueryLocator(query);
     }
      
-    public void execute(Database.BatchableContext BC, List<ServiceRequest__c> srList) {
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 15/07/2021
+    * @description execute method
+    */
+    public void execute(Database.BatchableContext bc, List<ServiceRequest__c> srList) {
         Integer recordsProcessed = 0;
         List<ServiceRequest__c> serviceRequestsToBeSequenced = new List<ServiceRequest__c>();
         List<Order> ordersToBeUpdated = new List<Order>();
@@ -69,14 +80,19 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
                     }
                 }
             }catch(Exception ex){
-                System.debug(ex.getMessage());
+                System.debug(LoggingLevel.ERROR, ex.getMessage());
                 Database.rollback(sp);
             }
         }
-        System.debug(recordsProcessed + ' records unlocked in the sequentialization processing');
+        System.debug(LoggingLevel.DEBUG, recordsProcessed + ' records unlocked in the sequentialization processing');
     }   
      
-    public void finish(Database.BatchableContext BC) {
-        System.debug('Batch execution, for unlock records in the sequentialization processing, finished');
+    /**
+    * @author Andrea Arosio (andrea.arosio@webresults.it)
+    * @date 15/07/2021
+    * @description finish method
+    */
+    public void finish(Database.BatchableContext bc) {
+        System.debug(LoggingLevel.DEBUG, 'Batch execution, for unlock records in the sequentialization processing, finished');
     }
 }

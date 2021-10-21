@@ -62,6 +62,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     @api markingValue;
     @api categoryValue;
     disabled=false;
+    insertAddress = false;
     currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
@@ -123,7 +124,21 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             }
         });
     }
+    //HRAWRM-853 Start 12/10/2021
+    handleInsertAddressAddRes(event){
     
+        this.insertAddress=event.target.checked;;
+        console.log("this.insertAddress : " + this.insertAddress);
+        if (!this.insertAddress) {
+            console.log('this.accountAddress');
+            this.isVerified=true;
+        }
+        else{
+            this.isVerified=false;
+        }
+
+    }    //HRAWRM-853 End 12/10/2021
+
     @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
@@ -206,9 +221,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     getAllContact(){
         contactList({ accountId: this.recordId } )
         .then(result => {
-            console.log(JSON.stringify('result '+result));
-            
-            this.contacts = result;
+            this.contacts =JSON.parse(result);  //HRAWRM-500 Start 04/10/2021
             this.numberOfContacts=this.contacts.length;
         })
         .catch(error => {
@@ -314,7 +327,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             }
         }
     }
-    
+
     handleSave(){
         console.log('record id : '+ this.recordId);
         this.disabled=true;
@@ -382,9 +395,14 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         }
         if(isValidated){
             console.log('validato');
-            this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
-            this.getAccountAdress();
-            if(this.isVerified){
+            //HRAWRM-853 Start 12/10/2021
+
+            if (this.insertAddress) {
+                this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+                this.getAccountAdress();  
+            }
+            //HRAWRM-853 End 12/10/2021
+            if(this.isVerified ){
                 console.log('è verificato');
                 var isEmpty=false;
                 if(this.gender === undefined || this.gender.trim()===''){

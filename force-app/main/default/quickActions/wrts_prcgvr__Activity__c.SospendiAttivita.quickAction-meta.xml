@@ -4,6 +4,10 @@
         <field>Status__c</field>
         <literalValue>Sospesa</literalValue>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>wrts_prcgvr__Status__c</field>
+        <literalValue>Sospesa</literalValue>
+    </fieldOverrides>
     <label>Sospendi attività</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <quickActionLayout>

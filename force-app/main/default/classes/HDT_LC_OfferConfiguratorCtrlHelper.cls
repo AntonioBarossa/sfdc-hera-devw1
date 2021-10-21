@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
     public static List<sObject> getTableDataHelper(String objectApiName, String rate, String rateTypeValue, String searchByField, String searchValue){
@@ -37,7 +38,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 List<String> tariffList = new List<String>();
                 String searchValueSoql = '';
 
-                System.debug('>>> rateTypeValue ' + rateTypeValue + ' - rate: '  + rate);
+                System.debug(LoggingLevel.DEBUG, '>>> rateTypeValue ' + rateTypeValue + ' - rate: '  + rate);
 
                 infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate, rateTypeValue);
                 
@@ -75,8 +76,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     }
 
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse, String techOffObj, String idToClone, String offerJson, String technicalofferid, String productId, String rate) {
-        System.debug('# saveTechnicalOffer controller helper #');
-        System.debug('# rate -> ' + rate);
+        System.debug(LoggingLevel.DEBUG, '# saveTechnicalOffer controller helper #');
+        System.debug(LoggingLevel.DEBUG, '# rate -> ' + rate);
 
         saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
@@ -114,7 +115,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         
             if(objRes.isCreateable() && objRes.isUpdateable()){
-                upsert tecOff;
+                HDT_UTL_DatabaseService.updateSObject(tecOff);
                 tecOffId = tecOff.Id;
             } else {
                 saveResponse.success = false;
@@ -137,7 +138,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
         offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
-        System.debug('# offerList size -> ' + offerList.size());
+        System.debug(LoggingLevel.DEBUG, '# offerList size -> ' + offerList.size());
 
         List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c tecOffItem;
@@ -188,7 +189,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         if(!String.isEmpty(techOffObj)){
             //In this case we set manual configuration from UI
             technicalOffer = (TechnicalOffer__c)JSON.deserialize(techOffObj, TechnicalOffer__c.class);
-            System.debug('# newTechnicalOffer > ' + technicalOffer);
+            System.debug(LoggingLevel.DEBUG, '# newTechnicalOffer > ' + technicalOffer);
         }
 
         //if(!String.isEmpty(idToClone)){
@@ -196,7 +197,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         //    TechnicalOffer__c recToClone;
         //    recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordById(recToClone, idToClone);
         //    technicalOffer = recToClone.clone(false, true, false, false);
-        //    System.debug('# clonedTechnicalOffer > ' + technicalOffer);
+        //    System.debug(LoggingLevel.DEBUG, '# clonedTechnicalOffer > ' + technicalOffer);
         //}
 
         //Last configuration of the TechnicalOffer__c record
@@ -229,7 +230,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.rowId = itemList[n].RowId__c;
@@ -275,7 +280,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     }
 
     public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine, Boolean isUpdate, String tecOffId){
-        //System.debug('# ' + 
+        //System.debug(LoggingLevel.DEBUG, '# ' + 
         //'[id = ' + offerLine.id + '] - ' +
         //'[rowId = ' + offerLine.rowId + '] - ' + 
         //'[M = ' + offerLine.m + '] - ' +
@@ -355,14 +360,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         newTechOff.SapCode__c = null;
         newTechOff.OfferCode__c = recIdToClone;
 
-        System.debug('# clone this -> ' + newTechOff);
+        System.debug(LoggingLevel.DEBUG, '# clone this -> ' + newTechOff);
 
         try{
             SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
      
             if(objRes.isCreateable()){
-                insert newTechOff;
+                HDT_UTL_DatabaseService.insertSObject(newTechOff);
             } else {
                 saveResponse.success = false;
                 saveResponse.message = Label.HDT_OfferConfig_ErrorObj;
@@ -446,7 +451,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
                 if (!dr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
                     for(Database.Error err : dr.getErrors()) {
                         lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
@@ -470,7 +479,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     }
 
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSap(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse mulesoftResponse, String technicalOfferId){
-        System.debug('>>> sendTechOfferToSAP ');
+        System.debug(LoggingLevel.DEBUG, '>>> sendTechOfferToSAP ');
 
         mulesoftResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
@@ -523,19 +532,20 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         httpObj = setHttpObject(httpObj);
 
         String body = JSON.serialize(bodyObj.header);
-        System.debug('>>> body obj > ' + body);
+        System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
 
         HDT_WS_MulesoftCallerCpq.HDT_WRP_Response responseCtrl;
         responseCtrl = HDT_WS_MulesoftCallerCpq.retrieveDataCtrl(body, httpObj);
         //responseCtrl = new HDT_WS_MulesoftCallerCpq.HDT_WRP_Response();
         //responseCtrl.success = true;
+        //responseCtrl.body = '{"timestamp":"timestamp","status":"failed","message":"error message","keysap":"001","esito":null,"errorDetails":null,"correlationId":"id"}';
 
-        System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
+        System.debug(LoggingLevel.DEBUG, '>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
         mulesoftResponse.bodyResponse = body;
 
         if(!responseCtrl.success){
-            updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
+            updateProductAfterSap(technicalOfferId, responseCtrl.message, '', 'ko');
             mulesoftResponse.success = false;
             mulesoftResponse.message = responseCtrl.message;
             return mulesoftResponse;
@@ -557,12 +567,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 }
             }
             mulesoftResponse.message = mulesoftWsResponse.errorDetails[0].code;
-            updateProductAfterSap(technicalOfferId, errorMessage, 'ko');
+            updateProductAfterSap(technicalOfferId, errorMessage, '', 'ko');
 
             return mulesoftResponse;      
         }
 
-        updateProductAfterSap(technicalOfferId, mulesoftWsResponse.keysap, 'ok');
+        updateProductAfterSap(technicalOfferId, mulesoftWsResponse.message, mulesoftWsResponse.keysap, 'ok');
 
         mulesoftResponse.success = true;
         mulesoftResponse.message = Label.HDT_OfferConfig_WS_Success + mulesoftWsResponse.keysap;
@@ -639,7 +649,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.success = true;
 
         } catch(Exception ex){
-            System.debug('> ERROR: ' + ex.getMessage() + ', at line [' + String.valueOf(ex.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG, '> ERROR: ' + ex.getMessage() + ', at line [' + String.valueOf(ex.getLineNumber()) + ']');
             obj.success = false;
             obj.message = '> ERROR: ' + ex.getMessage() + ', at line [' + String.valueOf(ex.getLineNumber()) + ']';
         }
@@ -647,7 +657,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return obj;
     }
 
-    public static Boolean updateProductAfterSap(String technicalOfferId, String bodyResponse, String status){
+    public static Boolean updateProductAfterSap(String technicalOfferId, String responseMessage, String responseSapCode, String status){
         List<TechnicalOffer__c> tecOffList;
         tecOffList = HDT_QR_TechnicalOffer.getOfferById(tecOffList, technicalOfferId);
 
@@ -657,12 +667,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             }
             when 'ok' {
                 tecOffList[0].Status__c = 'Status OK';
-                tecOffList[0].SapCode__c = bodyResponse;
-                tecOffList[0].Message__c = '';
+                tecOffList[0].SapCode__c = responseSapCode;
+                tecOffList[0].Message__c = responseMessage;
             }
             when 'ko' {
                 tecOffList[0].Status__c = 'Status KO';
-                tecOffList[0].Message__c = bodyResponse;
+                tecOffList[0].Message__c = responseMessage;
             }
         }
 
@@ -670,7 +680,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
         if(objRes.isUpdateable()){
-            update tecOffList;
+            HDT_UTL_DatabaseService.updateSObject(tecOffList);
         }
 
         return true;
