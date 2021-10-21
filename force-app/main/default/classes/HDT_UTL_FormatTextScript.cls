@@ -87,7 +87,15 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
     protected String getBoldFieldValue(String fieldPath, SObject relation){
-        return '<b>'+getFieldValue( fieldPath,  relation)+'</b>';
+
+        String fieldValue = getFieldValue(fieldPath,  relation);
+
+        //overriding empty values with placeholder
+        if (String.isBlank(fieldValue) || fieldValue=='null') {
+            fieldValue = EMPTY_PLACEHOLDER;
+        }
+
+        return '<b>'+fieldValue+'</b>';
     }
 
 
@@ -183,11 +191,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                     fieldValue = String.format(overrideValue.Value__c, formatParams);
                 }
             }
-        }
-
-        //overriding empty values with placeholder
-        if (String.isBlank(fieldValue) || fieldValue=='null') {
-            fieldValue = EMPTY_PLACEHOLDER;
         }
 
         return fieldValue;
@@ -303,8 +306,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 tagValue='*valore mancante*';
             }
         }
-        //lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Modifica+Privacy&c__recordTypeName=HDT_RT_GestionePrivacy&c__accid={!Id}&c__flowName=HDT_FL_PostSalesMasterDispatch
-        //lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Variazione+Anagrafica+Cliente&c__recordTypeName=HDT_RT_VariazioneAnagraficaCliente&c__accid={0}&c__flowName=HDT_FL_PostSalesMasterDispatch
+        
         return ''+tagValue+'';
     }
 
