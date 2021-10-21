@@ -12191,11 +12191,11 @@
         <field>MacroActivityEasyCIM__c.idMacroActivityEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>true</editable>
         <field>MassiveLoaderRequest__c.Phase__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>true</editable>
         <field>MassiveLoaderRequest__c.Priority__c</field>
