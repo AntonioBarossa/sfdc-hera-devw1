@@ -229,14 +229,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NUM_RDO_ACQ_TEL__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NUM_RDO_GAS__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_PRIVACY__c</field>
             </layoutItems>
             <layoutItems>

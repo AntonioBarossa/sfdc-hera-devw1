@@ -3,10 +3,13 @@
     <fullName>RequestKO__c</fullName>
     <externalId>false</externalId>
     <label>Numero Pratiche Con Esito Negativo</label>
-    <precision>4</precision>
-    <required>false</required>
-    <scale>0</scale>
+    <summaryFilterItems>
+        <field>MassiveLoaderRequestItem__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Errore</value>
+    </summaryFilterItems>
+    <summaryForeignKey>MassiveLoaderRequestItem__c.MassiveLoaderRequest__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>false</unique>
+    <type>Summary</type>
 </CustomField>
