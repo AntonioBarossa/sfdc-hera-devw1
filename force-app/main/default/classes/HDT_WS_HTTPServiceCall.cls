@@ -42,7 +42,7 @@ public class HDT_WS_HTTPServiceCall {
             System.debug('************:' + e.getMessage());
             resp.exceptionMessage = e.getMessage();
         }
-		System.debug('***********:response:' + r);
+		//System.debug('***********:response:' + r);
         return resp;
         
     }
