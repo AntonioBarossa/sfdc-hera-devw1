@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.ExcessivePublicCount')
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WRP_ModificaLayoutFattura {
 
     global class HDT_WRP_Response{
