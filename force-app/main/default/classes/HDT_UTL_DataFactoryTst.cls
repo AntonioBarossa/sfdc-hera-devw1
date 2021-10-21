@@ -75,26 +75,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return leadList;
 	}
 
-	public static List<City__c> createCity(Integer amount, Boolean doInsert){
-		List<City__c> cityList=new List<City__c>();
+	public static List<City__c> createCity(){
+		
+		// A subset of real cities is created instead of generating them randomly
+		List<City__c> cities = Test.loadData(City__c.sObjectType, 'Cities_Test');
 
-		for (Integer i=0; i<amount; i++){
+		return cities;
 
-			City__c ct=new City__c();
-
-			ct.Name='Roma';
-			ct.BelfioreCode__c='Bt'+i;
-
-			cityList.add(ct);
-
-		}
-
-		if (doInsert){
-
-			insert cityList;
-		}
-
-		return cityList;
 	}
 
 	public static List<Opportunity> createOpportunity(Integer amount, Boolean doInsert){
@@ -1191,7 +1178,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return standardPricebook;
 	}
 
-	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
+	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
 
