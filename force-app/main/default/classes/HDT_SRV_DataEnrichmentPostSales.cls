@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
     private HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
@@ -7,103 +8,70 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         String result;
 
         if(fieldName == 'PhaseTypeAvailable__c'){
-
             try{   
                 Decimal phaseCondition = Decimal.valueOf(condition);
                 if(phaseCondition <= 1.0 ){
-
                     condition = 'Monofase';
-
-                }else{
-
+                } else {
                     condition = 'Trifase';
-
                 }
-            }catch(Exception e){
-
-                System.debug(e.getMessage());
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'getPicklistValue - Exception TypeName: ' + e.getTypeName());
+                System.debug(LoggingLevel.DEBUG, 'getPicklistValue - Exception Message: ' + e.getMessage());
+                System.debug(LoggingLevel.DEBUG, 'getPicklistValue - Exception StackTraceString: ' + e.getStackTraceString());
                 return null;
-
+                
             }
-
         }
 
         if(fieldName == 'Taxes__c'){
-
             if(condition == 'E_IMPOST'){
-
                 condition = 'Imposta usi domestici';
-
             }
-
         }
 
         List<PicklistEntry> entryList =
             ((SObject) (Type.forName('Schema.'+objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
 
         for(PicklistEntry entry : entryList){
-
             if(entry.getValue().containsIgnoreCase(condition)){
-
                 result = entry.getValue();
-
             }
-
-
         }
 
         return result;
-
     }
 
 
     public Boolean getBoolFromString(String value){
 
         Boolean result;
-
         if(value == 'SI' || value == 'X'){
-
             result = true;
-
-        }else{
-
+        } else {
             result = false;
-
         }
 
         return result;
-
     }
 
     public Date getDateByYear(String year){
-
         Date result;
-
         result = Date.newInstance(Integer.valueOf(year), 1, 1);
-
         return result;
-
     }
 
     public String getBillingProfileIdBySapCode(String sapCode){
-
         String result;
-
         result = depsQr.getBillingProfileIdBySapCode(sapCode).Id;
-
         return result;
-
     }
 
     public Case populateCase(Map<String, Object> transcodeMap, Case currentCase){
-
         for(String fieldName : transcodeMap.keySet()){
-
             currentCase.put(fieldName, transcodeMap.get(fieldName));
         }
-        
         return currentCase;
-
     }
 
     public String getDeliveryAddress(String recordId){
@@ -159,24 +127,16 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     public String calculateSalesCompany(String salesCompanyCode){
 
         String salesCompany;
-
         switch on salesCompanyCode {
-
             when '13V0000000'{
-
                 salesCompany = 'Hera Comm S.p.A.';
-
             }
             when '10V0000160'{
-
                 salesCompany = 'Hera Comm Marche';
-
             }
-
         }
-
+        
         return salesCompany;
-
     }
 
 
@@ -351,7 +311,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
      */
     public String writeBlockCode(String sapValue, Case currentCase) {
 
-        System.debug('writeBlockCode: ' + sapValue + ' ' + currentCase);
+        System.debug(LoggingLevel.DEBUG, 'writeBlockCode: ' + sapValue + ' ' + currentCase);
         if (currentCase.Type != null && currentCase.Type.equals('Sollecito Emissione Bolletta')) {
             return 'Codice Blocco: ' + sapValue;
         }
