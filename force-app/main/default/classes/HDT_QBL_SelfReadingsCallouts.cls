@@ -8,11 +8,17 @@ public inherited sharing class HDT_QBL_SelfReadingsCallouts implements Queueable
         this.requestType = requestType;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 20/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(QueueableContext context) {
-        System.debug('HDT_QBL_SelfReadingsCallouts: request type: ' + this.requestType);
+        System.debug(LoggingLevel.DEBUG, 'HDT_QBL_SelfReadingsCallouts: request type: ' + this.requestType);
 
         if (String.isBlank(this.requestType)) {
-            System.debug('HDT_QBL_SelfReadingsCallouts: nessuna requestType da processare');
+            System.debug(LoggingLevel.DEBUG, 'HDT_QBL_SelfReadingsCallouts: nessuna requestType da processare');
             return;
         }
 

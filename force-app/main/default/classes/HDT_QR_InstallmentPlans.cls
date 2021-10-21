@@ -1,4 +1,10 @@
 public with sharing class HDT_QR_InstallmentPlans {
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static List<RentProcessRule__c> queryRules(Case c){
 
         List<RentProcessRule__c> ruleList = new List<RentProcessRule__c>();
@@ -24,7 +30,7 @@ public with sharing class HDT_QR_InstallmentPlans {
             AND (AmountToPayInInstallmentsTo__c >= :c.AmountToPayInInstallments__c OR AmountToPayInInstallmentsTo__c= null) 
             WITH SECURITY_ENFORCED];
         } catch(Exception e){
-            System.debug('QR_InstallmentPlans exception -> ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'QR_InstallmentPlans exception -> ' + e.getMessage());
         }
 
         return ruleList;
@@ -108,7 +114,12 @@ public with sharing class HDT_QR_InstallmentPlans {
 
     }
 
-
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public List<Case> getSuspensionCaseByAccountId(String accountId){
 
         List<Case> cases = new List<Case>();
@@ -128,7 +139,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         } catch(Exception e){
 
-            System.debug('QR_InstallmentPlans Exception--> ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'QR_InstallmentPlans Exception--> ' + e.getMessage());
             
         }
 
@@ -137,6 +148,12 @@ public with sharing class HDT_QR_InstallmentPlans {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String getPaymentMethodByCaseId(String recordId){
 
         String paymentMethod;
@@ -152,7 +169,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         } catch(Exception e){
 
-            System.debug('QR_InstallmentPlans Exception--> ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'QR_InstallmentPlans Exception--> ' + e.getMessage());
         
         }
 

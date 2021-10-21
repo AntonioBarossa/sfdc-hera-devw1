@@ -1,3 +1,9 @@
+/*
+* @Author: Salvatore A. Sarà 20/10/2021
+* Risoluzione "Debug Should Use Logging Level"
+* Risoluzione "Avoid debug statements since they impact on performance"
+*/
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
     @AuraEnabled
@@ -9,14 +15,14 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.cloneEligibilityCriteriaHelper(recIdToClone, productId);
 
             if(!saveResponse.success){
-                System.debug('# on clone controller #');
+                System.debug(LoggingLevel.DEBUG,'# on clone controller #');
                 for(HDT_WRP_EligibilityCriteria.HDT_WRP_LineError le : saveResponse.errorData){
-                    System.debug('# ' + le);
+                    System.debug(LoggingLevel.DEBUG,'# ' + le);
                 }
             }
 
         } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG,'# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         } 
         return saveResponse.criteriaId;
@@ -25,7 +31,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     @AuraEnabled
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj getEligibilityCriteriaRecord(String recordId){
 
-        System.debug('# search this criteria > ' + recordId);
+        System.debug(LoggingLevel.DEBUG,'# search this criteria > ' + recordId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj;
 
@@ -39,7 +45,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     @AuraEnabled
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getCityZipCodeObj(String regionCode, String eligibilityId){
 
-        System.debug('# eligibilityId >>> ' + eligibilityId);
+        System.debug(LoggingLevel.DEBUG,'# eligibilityId >>> ' + eligibilityId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
 
@@ -87,10 +93,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 cityZipCodeObj.message = '';
             }
 
-            System.debug('# result -> ' +  cityZipCodeObj.regionList[0].provinceList);
+            System.debug(LoggingLevel.DEBUG,'# result -> ' +  cityZipCodeObj.regionList[0].provinceList);
 
         } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG,'# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         } 
         return cityZipCodeObj;
@@ -100,7 +106,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     @AuraEnabled
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion getExistingCriteria(String productId) {
 
-        System.debug('## >> ' + productId);
+        System.debug(LoggingLevel.DEBUG,'## >> ' + productId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion recObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion();
         List<Product2> prodList;
@@ -125,10 +131,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             List<EligibilityCriteria__c> eliCrit;
             eliCrit = HDT_QR_EligibilityCriteria.getEligibilityCriteriaByProductId(eliCrit, productId);
 
-            System.debug('## >> ' + eliCrit.size());
+            System.debug(LoggingLevel.DEBUG,'## >> ' + eliCrit.size());
 
             if(eliCrit != null && eliCrit.size() > 0){
-                System.debug('## >> ' + eliCrit[0].Id);
+                System.debug(LoggingLevel.DEBUG,'## >> ' + eliCrit[0].Id);
                 recObj.recIsPresent = true;
                 recObj.eligibilityId = eliCrit[0].Id;
             } else {
@@ -153,9 +159,9 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     @AuraEnabled
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteria(String productId, String record, String dataReceived) {
 
-        System.debug('### productId ' + productId);
-        System.debug('### record: ' + record);
-        //System.debug('### dataReceived: ' + dataReceived);
+        System.debug(LoggingLevel.DEBUG,'### productId ' + productId);
+        System.debug(LoggingLevel.DEBUG,'### record: ' + record);
+        //System.debug(LoggingLevel.DEBUG,'### dataReceived: ' + dataReceived);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
 
@@ -164,15 +170,15 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             //List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList = (List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>)JSON.deserialize(dataReceived, List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>.class);
             HDT_WRP_EligibilityCriteria.HDT_WRP_Region obj = (HDT_WRP_EligibilityCriteria.HDT_WRP_Region)JSON.deserialize(dataReceived, HDT_WRP_EligibilityCriteria.HDT_WRP_Region.class);
             
-            System.debug('# provinceList size -> ' + obj.provinceList.size());
+            System.debug(LoggingLevel.DEBUG,'# provinceList size -> ' + obj.provinceList.size());
 
             saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.saveEligibilityCriteriaHelper(productId, record, obj);
             //HDT_LC_EligibilityCriteriaCtrlHelper.updateEligibilityCriteria(productId, true);
 
             if(!saveResponse.success){
-                System.debug('# on controller #');
+                System.debug(LoggingLevel.DEBUG,'# on controller #');
                 for(HDT_WRP_EligibilityCriteria.HDT_WRP_LineError le : saveResponse.errorData){
-                    System.debug('# ' + le);
+                    System.debug(LoggingLevel.DEBUG,'# ' + le);
                 }
             }
 
@@ -187,7 +193,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     @AuraEnabled
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse deleteEligibilityCriteria(String productId, String eligibilityId){
         
-        System.debug('# deleteEligibilityCriteria >>> productId: ' + productId + ' - >>> eligibilityId: ' + eligibilityId);
+        System.debug(LoggingLevel.DEBUG,'# deleteEligibilityCriteria >>> productId: ' + productId + ' - >>> eligibilityId: ' + eligibilityId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse;
 

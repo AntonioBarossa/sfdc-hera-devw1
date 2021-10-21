@@ -5,7 +5,7 @@
  * @last modified on  : 29-07-2021
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
-public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+global with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0.IApexAction{
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -19,7 +19,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
     * @author costanzo.lomele@webresults.it | 2021-10-05
     * @param args 
     **/
-    public Object execute(Object args){
+    global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
         SObject action = (SObject) argsMap.get('action');
@@ -261,8 +261,6 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
                 if (String.isNotBlank(statusMapping.AssetStatus__c)) {
                     currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
                 }
-            }else{
-                throw new HDT_UTL_HeraException('Error while mapping Phase/Status to Objects');
             }
 
         } catch (Exception e) {

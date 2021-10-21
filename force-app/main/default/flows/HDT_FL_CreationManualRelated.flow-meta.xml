@@ -182,10 +182,38 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>noteToUpdate</assignToReference>
+            <assignToReference>noteAperturaToUpdate</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>noteDiAperturaOrder</elementReference>
+                <elementReference>noteAperturaOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>noteChiusuraToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteChiusuraOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numeroTentativiToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>numeroTentativiOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoAttivitaToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoAttivitaOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoContattoToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoContattoOrder</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -205,10 +233,38 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>noteToUpdate</assignToReference>
+            <assignToReference>noteAperturaToUpdate</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>noteDiAperturaPreavviso</elementReference>
+                <elementReference>noteAperturaPreavviso</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>noteChiusuraToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteChiusuraPreavviso</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numeroTentativiToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>numeroTentativiPreavviso</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoAttivitaToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoAttivitaPreavviso</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoContattoToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoContattoPreavviso</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -228,10 +284,38 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>noteToUpdate</assignToReference>
+            <assignToReference>noteAperturaToUpdate</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>noteDiAperturaGiroContatore</elementReference>
+                <elementReference>noteAperturaGiroContatore</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>noteChiusuraToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteChiusuraGiroContatore</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numeroTentativiToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>numeroTentativiGiroContatore</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoAttivitaToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoAttivitaGiroContatore</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoContattoToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoContattoGiroContatore</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -251,16 +335,52 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>noteToUpdate</assignToReference>
+            <assignToReference>noteAperturaToUpdate</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>noteDiAperturaCaseDefault</elementReference>
+                <elementReference>noteAperturaCaseDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>noteChiusuraToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>noteChiusuraCaseDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numeroTentativiToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>numeroTentativiCaseDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoAttivitaToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoAttivitaCaseDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>esitoContattoToUpdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>esitoContattoGiroContatore</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>updateActivity</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Clienteirreperibile</name>
+        <choiceText>Cliente irreperibile</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cliente irreperibile</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>ContattareilclientePostsales</name>
         <choiceText>Contattare il cliente</choiceText>
@@ -283,6 +403,30 @@
         <dataType>String</dataType>
         <value>
             <stringValue>CBS_AUT005__GIRO_CONTATORE_DA_GESTIRE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Negativo</name>
+        <choiceText>Negativo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Negativo</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Okcontattato</name>
+        <choiceText>OK contattato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Ok contattato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Positivo</name>
+        <choiceText>Positivo</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Positivo</stringValue>
         </value>
     </choices>
     <choices>
@@ -450,9 +594,33 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>ActivityOutcome__c</field>
+            <value>
+                <elementReference>esitoAttivitaToUpdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AttemptCount__c</field>
+            <value>
+                <elementReference>numeroTentativiToUpdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosingNote__c</field>
+            <value>
+                <elementReference>noteChiusuraToUpdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactResult__c</field>
+            <value>
+                <elementReference>esitoContattoToUpdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>OpeningNote__c</field>
             <value>
-                <elementReference>noteToUpdate</elementReference>
+                <elementReference>noteAperturaToUpdate</elementReference>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>
@@ -470,23 +638,102 @@
         </connector>
         <fields>
             <name>showInformation</name>
-            <fieldText>&lt;p&gt;Numero caso: &lt;b&gt;&lt;i&gt;{!getCase.CaseNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Codice cliente: &lt;b&gt;&lt;i&gt;{!getCase.Account.CustomerCode__c}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Codice pratica: &lt;b&gt;&lt;i&gt;{!getCase.CaseNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>picklistPreavviso</name>
-            <choiceReferences>ContattareilclientePostsales</choiceReferences>
-            <choiceReferences>PreavvisoCessazione</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Tipologia</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>noteDiAperturaPreavviso</name>
-            <fieldText>Note di apertura</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
+            <name>newManualAct_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>newManualAct_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>picklistPreavviso</name>
+                    <choiceReferences>ContattareilclientePostsales</choiceReferences>
+                    <choiceReferences>PreavvisoCessazione</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Tipologia</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>numeroTentativiPreavviso</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Numero tentativi</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>picklistPreavviso</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>noteAperturaPreavviso</name>
+                    <fieldText>Note di apertura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>newManualAct_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>esitoContattoPreavviso</name>
+                    <choiceReferences>Okcontattato</choiceReferences>
+                    <choiceReferences>Clienteirreperibile</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito contatto</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>picklistPreavviso</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>esitoAttivitaPreavviso</name>
+                    <choiceReferences>Positivo</choiceReferences>
+                    <choiceReferences>Negativo</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito attività</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>noteChiusuraPreavviso</name>
+                    <fieldText>Note di chiusura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -504,22 +751,81 @@
         </connector>
         <fields>
             <name>showInformation_0</name>
-            <fieldText>&lt;p&gt;Numero ordine: &lt;b&gt;&lt;i&gt;{!getOrder.OrderNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Codice cliente: &lt;b&gt;&lt;i&gt;{!getOrder.Account.CustomerCode__c}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Codice pratica: &lt;b&gt;&lt;i&gt;{!getOrder.OrderNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>picklistOrder</name>
-            <choiceReferences>contattareilclienteSales</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Tipologia</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>noteDiAperturaOrder</name>
-            <fieldText>Note di apertura</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
+            <name>newManualAct_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>newManualAct_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>picklistOrder</name>
+                    <choiceReferences>contattareilclienteSales</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Tipologia</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>numeroTentativiOrder</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Numero tentativi</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>noteAperturaOrder</name>
+                    <fieldText>Note di apertura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>newManualAct_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>esitoContattoOrder</name>
+                    <choiceReferences>Okcontattato</choiceReferences>
+                    <choiceReferences>Clienteirreperibile</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito contatto</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>esitoAttivitaOrder</name>
+                    <choiceReferences>Positivo</choiceReferences>
+                    <choiceReferences>Negativo</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito attività</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>noteChiusuraOrder</name>
+                    <fieldText>Note di chiusura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -537,23 +843,102 @@
         </connector>
         <fields>
             <name>showInformation_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Numero caso&lt;/span&gt;: &lt;b&gt;&lt;i&gt;{!getCase.CaseNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Codice cliente: &lt;b&gt;&lt;i&gt;{!getCase.Account.CustomerCode__c}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Codice pratica: &lt;b&gt;&lt;i&gt;{!getCase.CaseNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>picklistGiroContatore</name>
-            <choiceReferences>ContattareilclientePostsales</choiceReferences>
-            <choiceReferences>GiroContatoreDaGestire</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Tipologia</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>noteDiAperturaGiroContatore</name>
-            <fieldText>Note di apertura</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
+            <name>newManualAct_0_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>newManualAct_0_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>picklistGiroContatore</name>
+                    <choiceReferences>ContattareilclientePostsales</choiceReferences>
+                    <choiceReferences>GiroContatoreDaGestire</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Tipologia</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>numeroTentativiGiroContatore</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Numero tentativi</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>picklistGiroContatore</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>noteAperturaGiroContatore</name>
+                    <fieldText>Note di apertura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>newManualAct_0_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>esitoContattoGiroContatore</name>
+                    <choiceReferences>Okcontattato</choiceReferences>
+                    <choiceReferences>Clienteirreperibile</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito contatto</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>picklistGiroContatore</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>esitoAttivitaGiroContatore</name>
+                    <choiceReferences>Positivo</choiceReferences>
+                    <choiceReferences>Negativo</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito attività</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>noteChiusuraGiroContatore</name>
+                    <fieldText>Note di chiusura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -571,22 +956,81 @@
         </connector>
         <fields>
             <name>showInformation_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Numero caso&lt;/span&gt;: &lt;b&gt;&lt;i&gt;{!getCase.CaseNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Codice cliente: &lt;b&gt;&lt;i&gt;{!getCase.Account.CustomerCode__c}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Codice pratica: &lt;b&gt;&lt;i&gt;{!getCase.CaseNumber}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>picklistCaseDefault</name>
-            <choiceReferences>ContattareilclientePostsales</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Tipologia</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>noteDiAperturaCaseDefault</name>
-            <fieldText>Note di apertura</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
+            <name>newManualAct_0_0_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>newManualAct_0_0_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>picklistCaseDefault</name>
+                    <choiceReferences>ContattareilclientePostsales</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Tipologia</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>numeroTentativiCaseDefault</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Numero tentativi</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <fields>
+                    <name>noteAperturaCaseDefault</name>
+                    <fieldText>Note di apertura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>newManualAct_0_0_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>esitoContattoCaseDefault</name>
+                    <choiceReferences>Okcontattato</choiceReferences>
+                    <choiceReferences>Clienteirreperibile</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito contatto</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>esitoAttivitaCaseDefault</name>
+                    <choiceReferences>Positivo</choiceReferences>
+                    <choiceReferences>Negativo</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Esito attività</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>noteChiusuraCaseDefault</name>
+                    <fieldText>Note di chiusura</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -662,6 +1106,20 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>esitoAttivitaToUpdate</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>esitoContattoToUpdate</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>newActivityId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -672,11 +1130,26 @@
         </value>
     </variables>
     <variables>
-        <name>noteToUpdate</name>
+        <name>noteAperturaToUpdate</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>noteChiusuraToUpdate</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>numeroTentativiToUpdate</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
     </variables>
     <variables>
         <name>parentId</name>

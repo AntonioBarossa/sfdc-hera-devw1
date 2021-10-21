@@ -2,10 +2,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String validate(String fields, String recordId){
 
         Case currentCase = caseValidationQr.getCaseById(recordId);
-        System.debug('HDT_UTL_CaseValidations: validating Case ' + currentCase);
+        System.debug(LoggingLevel.DEBUG,'HDT_UTL_CaseValidations: validating Case ' + currentCase);
 
         String caseType = currentCase.Type;
         String subprocess = currentCase.Subprocess__c;
@@ -55,7 +61,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Cambio contatore non registrato'
         || caseType == 'Fiscale'){
 
-            System.debug('Inside Variazioni Validations');
+            System.debug(LoggingLevel.DEBUG,'Inside Variazioni Validations');
 
             result = validateVariazioni(fields,recordId,caseType, subprocess, currentCase);
 
@@ -100,13 +106,19 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String validatePagamenti(String fields, string caseType, Case currentCase){
 
         String result;
 
-        System.debug(caseType);
+        System.debug(LoggingLevel.DEBUG,caseType);
 
-        System.debug(getFieldValue(fields, 'Type'));
+        System.debug(LoggingLevel.DEBUG,getFieldValue(fields, 'Type'));
 
         if(caseType == 'Piano Rateizzazione'){
 
@@ -144,7 +156,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     ? Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'))
                     : null;
                 String clientCategory = getFieldValue(fields, 'ClientCategory__c');
-                String reason = getFieldValue(fields, 'Reason__c');
+                /*
+                * @Author: Salvatore A. Sarà 19/10/2021
+                * Risoluzione "Local variable is declared and-or assigned but not used"
+                */
+                // String reason = getFieldValue(fields, 'Reason__c');
                 String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
                 String sendPaperlessMode = getFieldValue(fields, 'SendPaperlessCodeMode__c');
 
@@ -251,8 +267,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
             else if(!String.isEmpty(beneficiaryType))
             {
-                System.debug('Payments_BeneficiaryType ' + beneficiaryType);
-                System.debug('Payments_ClientCategory ' + currentCase.ClientCategory__c);
+                System.debug(LoggingLevel.DEBUG,'Payments_BeneficiaryType ' + beneficiaryType);
+                System.debug(LoggingLevel.DEBUG,'Payments_ClientCategory ' + currentCase.ClientCategory__c);
                 if(beneficiaryType.equalsIgnoreCase('Rappresentante Legale') && 
                     (currentCase.ClientCategory__c.equalsIgnoreCase('Famiglie')
                     || currentCase.ClientCategory__c.equalsIgnoreCase('Parti Comuni')
@@ -306,6 +322,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     private String validateModificaDatiContatto(String fields, Case currentCase) {
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -332,7 +354,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentFiscalCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
 
-        System.debug('validateModificaDatiContatto: current ' + c);
+        System.debug(LoggingLevel.DEBUG,'validateModificaDatiContatto: current ' + c);
 
         if (String.isBlank(newMarking)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valorizzare la Marcatura del cliente.'));
@@ -540,6 +562,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     private String validateVariazioneGruppoIva(String fields, String accountId) {
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
@@ -556,8 +584,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentStartDate = String.valueOf(a.VATGroupStartDate__c) != null ? String.valueOf(a.VATGroupStartDate__c) : '';
         String currentEndDate = String.valueOf(a.VATGroupEndDate__c) != null ? String.valueOf(a.VATGroupEndDate__c) : '';
 
-        System.debug('validateVariazioneGruppoIva: current ' + currentIsJoined + ';' + currentGroup + ';' + currentStartDate + ';' + currentEndDate);
-        System.debug('validateVariazioneGruppoIva: new ' + newIsJoined + ';' + newGroup + ';' + newStartDate + ';' + newEndDate);
+        System.debug(LoggingLevel.DEBUG,'validateVariazioneGruppoIva: current ' + currentIsJoined + ';' + currentGroup + ';' + currentStartDate + ';' + currentEndDate);
+        System.debug(LoggingLevel.DEBUG,'validateVariazioneGruppoIva: new ' + newIsJoined + ';' + newGroup + ';' + newStartDate + ';' + newEndDate);
 
         if (newIsJoined == currentIsJoined && newGroup.equals(currentGroup) && newStartDate.equals(currentStartDate) && newEndDate.equals(currentEndDate)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un campo per poter proseguire.'));
@@ -619,6 +647,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String validateReclamoScritto(String fields, string recordId, Case currentCase){
 
         String result;
@@ -629,7 +663,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String sendDate = getFieldValue(fields, 'SendDate__c') == null ? String.valueOf(System.today()) : getFieldValue(fields, 'SendDate__c');
 
-        System.debug('SendDate value:' +sendDate);
+        System.debug(LoggingLevel.DEBUG,'SendDate value:' +sendDate);
 
         if((getFieldValue(fields, 'ComplaintEntryChannel__c') == 'Email' || getFieldValue(fields, 'ComplaintEntryChannel__c') == 'PEC')
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
@@ -680,13 +714,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }
 
-        System.debug('Result: '+result);
+        System.debug(LoggingLevel.DEBUG,'Result: '+result);
 
         return result;
 
     }
 
-    
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String validateMorosita(String fields, string recordId, String caseType, Case currentCase){
 
         String result;
@@ -721,8 +760,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
 
             if(disconnectable != null && disconnectable != ''){
-                System.debug('DisconnectableLWC -> ' + disconnectable);
-                System.debug('DisconnectableRecord -> ' + currentCase.Disconnectable__c);
+                System.debug(LoggingLevel.DEBUG,'DisconnectableLWC -> ' + disconnectable);
+                System.debug(LoggingLevel.DEBUG,'DisconnectableRecord -> ' + currentCase.Disconnectable__c);
                 if(disconnectable == currentCase.Disconnectable__c){
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario modificare il campo Disalimentabile'));
                 }else if(disconnectable.equalsIgnoreCase('No')
@@ -1087,6 +1126,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String validateModificaPrivacy(String fields, String recordId){
 
         String fieldq = 'Id,MarketingPrivacy__c,ProfilingPrivacy__c,HasOptedOutSoftSpam__c,HasOptedOutOfEmail__c';
@@ -1096,8 +1141,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
         Case c = (Case) sobjectRecordList[0];
 
-        System.debug('Validating case: ' + c);
-        System.debug('Fields modified: ' + fields);
+        System.debug(LoggingLevel.DEBUG,'Validating case: ' + c);
+        System.debug(LoggingLevel.DEBUG,'Fields modified: ' + fields);
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
@@ -1137,6 +1182,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     // Validazione CF, considerando anche variazioni rispetto al vecchio CF. Se il nuovo CF è vuoto lo consideriamo valido.
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String validateFiscalCodeAgainstOld(String oldFiscalCode, String newfiscalCode) {
         if (String.isBlank(newfiscalCode)) {
             return '';
@@ -1154,7 +1205,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     changedChars++;
                 }
             }
-            System.debug('Numero caratteri modificati sul nuovo CF: ' + changedChars);
+            System.debug(LoggingLevel.DEBUG,'Numero caratteri modificati sul nuovo CF: ' + changedChars);
             if (changedChars > 2) {
                 outcome = 'Per modifiche sostanziali (più di 2 caratteri) al Codice Fiscale è necessario innescare una Voltura.';
             }

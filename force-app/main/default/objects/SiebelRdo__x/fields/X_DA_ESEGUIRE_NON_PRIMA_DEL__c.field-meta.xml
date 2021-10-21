@@ -9,5 +9,5 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Da Eseguire Non Prima Del</label>
     <required>false</required>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

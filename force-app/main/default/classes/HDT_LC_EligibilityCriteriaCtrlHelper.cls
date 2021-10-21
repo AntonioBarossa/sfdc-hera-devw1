@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse setSaveResponse(HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse, String message, Boolean dataError){
@@ -129,7 +130,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         newCriteria = crtiteriaToClone.clone(false, true, false, false);
         newCriteria.Product__c = productId;
 
-        System.debug('# clone this -> ' + newCriteria);
+        System.debug(LoggingLevel.DEBUG, '# clone this -> ' + newCriteria);
 
         try{
             //insert newCriteria;
@@ -198,7 +199,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
                 if (!sr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
                     for(Database.Error err : sr.getErrors()) {
                         lineError.rowId = itemList[n].Name;
@@ -263,7 +268,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities2(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
 
-        System.debug('# getExistingEligibleMunicipalities2 > ' + eligibilityId);
+        System.debug(LoggingLevel.DEBUG, '# getExistingEligibleMunicipalities2 > ' + eligibilityId);
 
         Map<String, Set<String>> existingMuniMap = new Map<String, Set<String>>();
 
@@ -306,8 +311,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                         }
                     }
 
-                    //System.debug('>>> cityAvailable: ' + prov.cityAvailable.size());
-                    //System.debug('>>> cityRemoved: ' + prov.cityRemoved.size());
+                    //System.debug(LoggingLevel.DEBUG, '>>> cityAvailable: ' + prov.cityAvailable.size());
+                    //System.debug(LoggingLevel.DEBUG, '>>> cityRemoved: ' + prov.cityRemoved.size());
 
                 } else {
                     prov.isEnabled = false;
@@ -329,7 +334,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     /*public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
 
-        System.debug('# getExistingEligibleMunicipalities > ' + eligibilityId);
+        System.debug(LoggingLevel.DEBUG, '# getExistingEligibleMunicipalities > ' + eligibilityId);
         cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
         try{
             List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
@@ -383,7 +388,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
                 if (!dr.isSuccess()) {
                     // Operation failed
-                    String errorString = '';
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    //String errorString = '';
                     HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
                     for(Database.Error err : dr.getErrors()) {
                         lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
@@ -483,11 +492,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             }
 
         } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         }
 
-        System.debug(JSON.serialize(municipalityTreeObj));
+        System.debug(LoggingLevel.DEBUG, 'municipalityTreeObj serialized: ' + JSON.serialize(municipalityTreeObj));
 
         return municipalityTreeObj;
     }
@@ -500,7 +509,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             prod.EligibilityCriteria__c = asChild;
             update prod;
         } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
 
     }*/
@@ -549,7 +558,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             }
 
         } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         }
 
@@ -650,7 +659,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             }
 
         } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            System.debug(LoggingLevel.DEBUG, '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         }
 

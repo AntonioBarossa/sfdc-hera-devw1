@@ -1,3 +1,9 @@
+/*
+* @Author: Salvatore A. Sarà 20/10/2021
+* Risoluzione "Debug Should Use Logging Level"
+* Risoluzione "Avoid debug statements since they impact on performance"
+*/
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_DocusignQrCode {
     /*@AuraEnabled
     public static String getDocusignUrl(String recordId, String objectApiName){
@@ -46,7 +52,7 @@ public with sharing class HDT_LC_DocusignQrCode {
             }
         }
         queryString += fieldsString + ' FROM ' + fromString + ' WHERE ' + whereString;
-        System.debug('query ' + queryString);
+        System.debug(LoggingLevel.DEBUG, 'query ' + queryString);
 
         List<SObject> objects = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
 

@@ -72,6 +72,12 @@ public inherited sharing class HDT_QR_Knowledge {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 20/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public List<NewsNotificationCenter__c> getRolesToNotificate(){
 
         List<NewsNotificationCenter__c> newsList = new List<NewsNotificationCenter__c>();
@@ -86,13 +92,19 @@ public inherited sharing class HDT_QR_Knowledge {
             WITH SECURITY_ENFORCED
             ];
         } catch(Exception e){
-            System.debug('No rules found: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'No rules found: ' + e.getMessage());
         }
 
         return newsList;
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 20/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public NewsNotificationCenter__c getDuplicateNews(NewsNotificationCenter__c news){
 
         NewsNotificationCenter__c newsDup = new NewsNotificationCenter__c();
@@ -109,7 +121,7 @@ public inherited sharing class HDT_QR_Knowledge {
         }
         catch(Exception e)
         {
-            System.debug('Exception: ' + e.getMessage() + '. At line' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line' + e.getLineNumber());
         }
 
 

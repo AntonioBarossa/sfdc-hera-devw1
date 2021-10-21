@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
     public static HDT_WRP_AccountStatement.HDT_WRP_Tabs getTabsMetaDataHelper(){
@@ -28,8 +29,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
     }
 
     public static HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj getTabConfigurationHelper(HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj columnsObj, String tabValue, String recordId) {
-        System.debug('# GET COLUMNS #');
-        System.debug('# Current tab -> ' + tabValue);
+        System.debug(LoggingLevel.DEBUG, '# GET COLUMNS #');
+        System.debug(LoggingLevel.DEBUG, '# Current tab -> ' + tabValue);
 
         columnsObj = new HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj();
 
@@ -133,14 +134,14 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.columnObj = new List<HDT_WRP_AccountStatement.HDT_WRP_SingleSecCol>();
 
         HDT_WRP_AccountStatement.HDT_WRP_SingleSecCol colObj;
-        for(HDT_ColumnsSecondLevel__mdt colSec_mdt : colSecList){
+        for(HDT_ColumnsSecondLevel__mdt colSecMdt : colSecList){
             colObj = new HDT_WRP_AccountStatement.HDT_WRP_SingleSecCol();
-            colObj.isFilter = colSec_mdt.IsFilter__c;
-            colObj.label = colSec_mdt.MasterLabel;
-            colObj.fieldName = colSec_mdt.FieldName__c;
-            colObj.sortable = colSec_mdt.Sortable__c;
-            colObj.initialWidth = colSec_mdt.InitialWidth__c;
-            colObj.type = colSec_mdt.FieldType__c;
+            colObj.isFilter = colSecMdt.IsFilter__c;
+            colObj.label = colSecMdt.MasterLabel;
+            colObj.fieldName = colSecMdt.FieldName__c;
+            colObj.sortable = colSecMdt.Sortable__c;
+            colObj.initialWidth = colSecMdt.InitialWidth__c;
+            colObj.type = colSecMdt.FieldType__c;
             obj.columnObj.add(colObj);
         }
 
@@ -155,8 +156,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
-        for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, button_mdt.Parameters__c,button_mdt.Accesskey__c));
+        for(HDT_ButtonDetails__mdt buttonMdt : mdtButtonList){
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(buttonMdt.MasterLabel, buttonMdt.ButtonCode__c, buttonMdt.IsVisible__c, buttonMdt.ButtonType__c, buttonMdt.Parameters__c,buttonMdt.Accesskey__c));
         }
 
         obj.success = true;
@@ -169,8 +170,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         HDT_WRP_AccountStatement.HDT_WRP_ReponseWrapper wrapObj = new HDT_WRP_AccountStatement.HDT_WRP_ReponseWrapper();
 
         HDT_WRP_AccountStatement.HDT_WRP_TechObj tObj = (HDT_WRP_AccountStatement.HDT_WRP_TechObj)JSON.deserialize(techObj, HDT_WRP_AccountStatement.HDT_WRP_TechObj.class);
-        System.debug('# Technical Object: -> ' + tObj);
-        System.debug('# RequestObj -> ' + requestObj);
+        System.debug(LoggingLevel.DEBUG, '# Technical Object: -> ' + tObj);
+        System.debug(LoggingLevel.DEBUG, '# RequestObj -> ' + requestObj);
 
         /* >>> Technical Object contains
                - requestType
@@ -200,17 +201,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow dbr;
         if(String.isBlank(requestObj)){
-            System.debug('# requestObj is null');
+            System.debug(LoggingLevel.DEBUG, '# requestObj is null');
             dbr = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
         } else {
-            System.debug('# requestObj is NOT null');
+            System.debug(LoggingLevel.DEBUG, '# requestObj is NOT null');
             dbr = (HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow)JSON.deserialize(requestObj, HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow.class);
         }
         
         dbr = HDT_LC_AccountStatementCtrlUtility.setHttpDataBodyRow(tObj, dbr);
 
         if(dbr == null){
-            System.debug('# data body row is null #');
+            System.debug(LoggingLevel.DEBUG, '# data body row is null #');
             wrapObj.success = false;
             wrapObj.message = '> Error during data body row creation';
             return wrapObj;
@@ -225,7 +226,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         String body = JSON.serialize(dbr, true);
-        System.debug('>>> body obj > ' + body);
+        System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
 
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
@@ -319,10 +320,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         try{
 
-            System.debug('> TabValue > ' + tabValue);
-            System.debug('> RecordId > ' + recordId);
-            System.debug('> Records > ' + records);
-            System.debug('> level > ' + level);
+            System.debug(LoggingLevel.DEBUG, '> TabValue > ' + tabValue);
+            System.debug(LoggingLevel.DEBUG, '> RecordId > ' + recordId);
+            System.debug(LoggingLevel.DEBUG, '> Records > ' + records);
+            System.debug(LoggingLevel.DEBUG, '> level > ' + level);
 
             Id currentUserId = UserInfo.getUserId();
             AccountStatementFilter__c serviceCatalog = new AccountStatementFilter__c();
@@ -337,7 +338,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             /*Map<String, Object> seconLevelMap = (Map<String, Object>)JSON.deserializeUntyped(records);
             List<Object> seconLevelList = (List<Object>)seconLevelMap.get(mdtTabConfList[0].SecondLevelAPI_Name__c);
 
-            System.debug('>>> secondLevelList ' + String.valueOf(seconLevelList));*/
+            System.debug(LoggingLevel.DEBUG, '>>> secondLevelList ' + String.valueOf(seconLevelList));*/
 
             //set context field
             if(level.equalsIgnoreCase('1')){
@@ -377,7 +378,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                             = IsRaiFee__c
             */
 
-            System.debug('>>> first level size: ' + String.valueOf(recordsList.size()));
+            System.debug(LoggingLevel.DEBUG, '>>> first level size: ' + String.valueOf(recordsList.size()));
 
             Integer firstLevelSize = recordsList.size();
             Integer secondLevelSize = 0;
@@ -388,10 +389,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
             //if(recordsList.size() > 1){
             if(firstLevelSize > 1 || secondLevelSize > 1){
-                System.debug('>>> Multiple Records');
+                System.debug(LoggingLevel.DEBUG, '>>> Multiple Records');
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForMultipleRecords(recordsList, serviceCatalog, tabValue);
             } else {
-                System.debug('>>> Single Records');
+                System.debug(LoggingLevel.DEBUG, '>>> Single Records');
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog, tabValue);
             }
 

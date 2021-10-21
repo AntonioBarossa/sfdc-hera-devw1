@@ -23,8 +23,6 @@ public inherited sharing class HDT_TRH_IndividualEmailResult extends HDT_TRH_Tri
         HDT_QR_Order orderQr = new HDT_QR_Order();
         HDT_QR_Lead leadQr = new HDT_QR_Lead();
         HDT_QR_Contact contactQr = new HDT_QR_Contact();
-
-        List<String> owners=new List<String>();
         String objectApiName='';
 
         List<String> accountIds= new List<String>();
