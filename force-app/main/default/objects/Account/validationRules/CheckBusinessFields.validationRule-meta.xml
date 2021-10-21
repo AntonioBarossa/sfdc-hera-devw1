@@ -2,17 +2,28 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckBusinessFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)) , false,
+    <errorConditionFormula>IF(OR
+	(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)), 
+					RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)) ,
+					false,
 		
-			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, OR( Not(BillingIsAddressVerified__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true ,
+						IF(
+							AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, 
+								OR( Not(BillingIsAddressVerified__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
+								true ,
 
-				IF(AND( 
-						OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;)),ISBLANK(FiscalCode__c)
-					),true,
-					ISBLANK(VATNumber__c)
-				)
+									IF(
+										AND( NOT(ISBLANK(FiscalCode__c)),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,
+											OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
+											false,
+												IF(
+													AND(ISBLANK(VATNumber__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;),
+													true,false
+														
+												)
+									)
 
-			)
+						)
 		)</errorConditionFormula>
     <errorMessage>Campi obbligatori: Marcatura , Categoria ,Indirizzo ,Silos.
 		La PIVA è obbligatoria solo se Marcatura è DIVERSA da Condominio o Associazione.

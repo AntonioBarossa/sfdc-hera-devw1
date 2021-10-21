@@ -163,6 +163,7 @@ public inherited sharing class HDT_QR_SearchPlug {
             SELECT count()
             FROM LoginGroupItem__c
             WHERE LoginGroup__c = :loginGroupId AND Login__c = :currentUserId
+            WITH SECURITY_ENFORCED
         ];
     }
 

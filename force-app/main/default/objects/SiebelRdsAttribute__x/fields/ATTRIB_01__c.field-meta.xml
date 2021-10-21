@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Commenti</label>
+    <label>Valore precedente/Commenti</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>

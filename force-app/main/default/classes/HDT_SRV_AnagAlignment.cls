@@ -72,7 +72,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return anagAlignCase;
         }
 
-        String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
         String codiceServizio = herokuWrapper.requestMap.get('COD_SERVIZIO');
         String codicePrestazione = herokuWrapper.requestMap.get('COD_PRESTAZIONE');
@@ -194,7 +198,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 returnCases.add(anagAlignCase);
             }
             when VARIAZIONE_ANAGRAFICA_CLIENTE {
-                Case varAnagCase = (Case) triggerObj;
+                /*
+                    @Author: Davide Viola - 19/10/2021
+                    Description: PMD -> Commentata variabile non utilizzata.
+                */
+                //Case varAnagCase = (Case) triggerObj;
                 List<Case> anagAlignCases = createAnagAlignmentCasesModAnagCliente(triggerObj);
                 returnCases.addAll(anagAlignCases);
             }

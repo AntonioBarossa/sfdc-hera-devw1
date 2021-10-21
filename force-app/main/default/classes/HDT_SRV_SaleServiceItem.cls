@@ -255,7 +255,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = newOpportunity.Id,
                 Quote__c = newQuote.Id,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name = servicePoint.ServicePointCode__c
             );
         }
 

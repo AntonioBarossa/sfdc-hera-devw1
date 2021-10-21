@@ -5,7 +5,7 @@
  * @last modified on  : 29-07-2021
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
-public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+global with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0.IApexAction{
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -19,7 +19,7 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
     * @author costanzo.lomele@webresults.it | 2021-10-05
     * @param args 
     **/
-    public Object execute(Object args){
+    global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         SObject transition = (SObject) argsMap.get('transition');
         SObject action = (SObject) argsMap.get('action');
@@ -106,8 +106,9 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
         HDT_StatoMotoreVas__mdt statusMapping = getStatusMapping(requestMap);
 
         Case currentCase = (Case)sObjMap.get('Case');
-        populateFieldsFromRequest(requestMap, currentCase);
-        
+        if(currentCase!=null){
+            populateFieldsFromRequest(requestMap, currentCase);
+        }
         if (sObjMap.containsKey('Order')) {
             Order currentOrder = (Order)sObjMap.get('Order');
             populateFieldsFromRequest(requestMap, sObjMap.get('Order'));
@@ -181,16 +182,16 @@ public with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
 
                     List<Case> cases = [SELECT Asset.Id, Subscription__r.Id FROM Case
                         WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
-                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId)
+                        AND (Asset.SBQQ__OrderProduct__r.OrderId=:orderId OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__c=:orderId) AND Status NOT IN ('Closed', 'Bozza')
                         WITH SECURITY_ENFORCED LIMIT 1];
 
                     if (!cases.isEmpty()) {
                         sObjMap.put('Case', cases.get(0));
 
-                        if (cases.get(0).Asset!=null) {
+                        if (cases.get(0).getSobject('Asset')!=null) {
                             sObjMap.put('Asset', cases.get(0).Asset);
                         }
-                        if (cases.get(0).Subscription__r!=null) {
+                        if (cases.get(0).getSobject('Subscription__r')!=null) {
                             sObjMap.put('SBQQ__Subscription__c', cases.get(0).Subscription__r);
                         }
                     }

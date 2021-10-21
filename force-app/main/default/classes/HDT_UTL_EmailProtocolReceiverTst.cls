@@ -18,6 +18,7 @@ public with sharing class HDT_UTL_EmailProtocolReceiverTst {
         HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_PROTOCOLMANUALACTIVITIES, true);
 
         System.runAs(internalUser) {
+          HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
         Messaging.InboundEmail email = new Messaging.InboundEmail() ;
         Messaging.InboundEnvelope env    = new Messaging.InboundEnvelope();

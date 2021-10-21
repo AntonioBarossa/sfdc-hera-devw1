@@ -12,6 +12,7 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 	static void makeData(){
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
+		HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 	}
 
 	@isTest
@@ -73,6 +74,34 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 	}
 
 	@isTest
+	public static void testTriggerActivityCustBeforeUpdate(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			List<wrts_prcgvr__Activity__c> activityCustom=HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accounts[0].Id);
+			activityCustom[0].DiscardCategory__c='Manuale';
+
+			update activityCustom;
+
+			test.stopTest();
+
+			List<wrts_prcgvr__Activity__c> tActCustomUpdate=[SELECT Id, DiscardCategory__c
+			                                                 FROM wrts_prcgvr__Activity__c
+			                                                 WHERE Id=:activityCustom[0].Id];
+
+			System.assertEquals('Manuale', tActCustomUpdate[0].DiscardCategory__c, 'Activity Custom not Updated');
+			System.assertNotEquals('', tActCustomUpdate[0].DiscardCategory__c);
+		}
+	}
+	/*@isTest
 	public static void testTriggerActivityCustUnusedContext(){
 
 		User tUser=[SELECT Id
@@ -84,13 +113,13 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 
 			test.startTest();
 
-			actCustTrigger.afterDelete();
-			actCustTrigger.beforeDelete();
+		//	actCustTrigger.afterDelete();
+		//	actCustTrigger.beforeDelete();
 			actCustTrigger.beforeUpdate();
-			actCustTrigger.afterUndelete();
+		//	actCustTrigger.afterUndelete();
 
 			// System.assertEquals();
 			// System.assertNotEquals();
 		}
-	}
+	}*/
 }

@@ -108,7 +108,7 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
                         ServicePoint__c = availableServicePoints[i]
                     ));
                     for(id childId : podToChilds.get(quoteLinesWithoutServicePoint[i].Id)){
-                        if(childId==null) break;
+                        if(childId==null){ break; }
                         quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(
                             Id = childId,
                             ServicePoint__c = availableServicePoints[i]

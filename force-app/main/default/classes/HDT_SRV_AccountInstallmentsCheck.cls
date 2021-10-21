@@ -28,8 +28,12 @@ public with sharing class HDT_SRV_AccountInstallmentsCheck {
             return null;
         }
 
-        Boolean isLetturaStimata = false;
-        Boolean isMultiContratto = false;
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Boolean isLetturaStimata = false;
+        Boolean isMultiContratto = false;*/
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
         System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
 

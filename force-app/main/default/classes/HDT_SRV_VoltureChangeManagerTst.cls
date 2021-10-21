@@ -93,4 +93,219 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
 
     }
 
+    @IsTest
+    static void handleResponseTst()
+    {
+        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
+
+        List<Order> orderList = [SELECT Id, 
+        ParentOrder__c,
+        Name,
+        EffectiveDate,
+        EffectiveDate__c,
+        RecessNotice__c,
+        AccountId,
+        EstimateAmount__c,
+        PowerQuote__c,
+        AdministrativeBurden__c,
+        EstimatedVAT__c,
+        ValidityDateEstimate__c,
+        CIAccoutn__c,
+        QuickQuote__c,
+        ChamberCommerceRegistration__c,
+        Instance326__c,
+        DocumentLow80__c,
+        ContractSigned__c,
+        SignedDate__c,
+        SignatureMethod__c,
+        DocSendingMethod__c,
+        Sale__c,
+        Pricebook2Id,
+        Contact__c 
+        FROM Order WHERE ParentOrder__c != null];
+
+        wrts_prcgvr.MRR_1_0.MultiResponse responseMrr= new wrts_prcgvr.MRR_1_0.MultiResponse();
+        List<wrts_prcgvr.MRR_1_0.Response> responses = new List<wrts_prcgvr.MRR_1_0.Response>();
+        wrts_prcgvr.MRR_1_0.Response singleResponse = new wrts_prcgvr.MRR_1_0.Response();
+        wrts_prcgvr.MRR_1_0.Header header = new wrts_prcgvr.MRR_1_0.Header();
+        List<wrts_prcgvr.MRR_1_0.WObject> objects = new List<wrts_prcgvr.MRR_1_0.WObject>();
+        List<wrts_prcgvr.MRR_1_0.WObject> otherObjects = new List<wrts_prcgvr.MRR_1_0.WObject>();
+        wrts_prcgvr.MRR_1_0.WObject singleObject = new wrts_prcgvr.MRR_1_0.WObject();
+        List<wrts_prcgvr.MRR_1_0.Field> headerFields = new List<wrts_prcgvr.MRR_1_0.Field>();
+        wrts_prcgvr.MRR_1_0.Field headerField = new wrts_prcgvr.MRR_1_0.Field();
+        List<wrts_prcgvr.MRR_1_0.Field> bodyFields = new List<wrts_prcgvr.MRR_1_0.Field>();
+        wrts_prcgvr.MRR_1_0.Field bodyField = new wrts_prcgvr.MRR_1_0.Field();    
+        
+        headerField.fieldType = 'TEXT';
+        headerField.name = 'requestType';
+        headerField.value = 'CREA_RIC';
+        headerFields.add(headerField);
+
+        header.fields = headerFields;
+        header.requestId = 'asiojadisdj';
+        header.requestTimestamp = '120-39123';
+        header.requestType = 'asjdioajsdoi';
+
+        bodyField.fieldType = 'TEXT';
+        bodyField.name = 'FASE';
+        bodyField.value = 'Comunicazione verso Heroku';
+
+        bodyFields.add(bodyField);
+
+        singleObject.fields = bodyFields;
+        singleObject.id = 'ajsidj';
+        singleObject.name = 'objName';
+        singleObject.objects = otherObjects;
+        singleObject.objectType = 'objType';
+
+        objects.add(singleObject);
+
+        singleResponse.code = 'code';
+        singleResponse.description = 'description';
+        singleResponse.header = header;
+        singleResponse.objects = objects;
+
+        responses.add(singleResponse);
+
+        responseMrr.responses = responses;
+
+        Test.startTest();
+        voltureManager.handleResponse(responseMrr, orderList[0]);
+        Test.stopTest();
+
+        List<Order> orderListUpdate = [SELECT Id, TecnicalPhase__c FROM Order WHERE Id = :orderList[0].Id];
+
+        System.assertEquals('Comunicazione verso Heroku', orderListUpdate[0].TecnicalPhase__c, 'Fase non aggiornata correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckTst()
+    {
+        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
+
+        List<Order> orderList = [SELECT Id, 
+        ParentOrder__c,
+        Name,
+        EffectiveDate,
+        EffectiveDate__c,
+        RecessNotice__c,
+        AccountId,
+        EstimateAmount__c,
+        PowerQuote__c,
+        AdministrativeBurden__c,
+        EstimatedVAT__c,
+        ValidityDateEstimate__c,
+        CIAccoutn__c,
+        QuickQuote__c,
+        ChamberCommerceRegistration__c,
+        Instance326__c,
+        DocumentLow80__c,
+        ContractSigned__c,
+        SignedDate__c,
+        SignatureMethod__c,
+        DocSendingMethod__c,
+        Sale__c,
+        Pricebook2Id,
+        Contact__c,
+        VoltageLevel__c,
+        PowerAvailable__c,
+        PowerCommitted__c
+        FROM Order WHERE ParentOrder__c != null];
+
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        
+
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+        };
+
+        Test.startTest();
+        voltureManager.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Order__c = :orderList[0].Id];
+
+        System.assertEquals(0, activities.size(),'Activity create incorrettamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckActivityCreationTst()
+    {
+        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
+
+        List<Order> orderList = [SELECT Id, 
+        ParentOrder__c,
+        Name,
+        EffectiveDate,
+        EffectiveDate__c,
+        RecessNotice__c,
+        AccountId,
+        EstimateAmount__c,
+        PowerQuote__c,
+        AdministrativeBurden__c,
+        EstimatedVAT__c,
+        ValidityDateEstimate__c,
+        CIAccoutn__c,
+        QuickQuote__c,
+        ChamberCommerceRegistration__c,
+        Instance326__c,
+        DocumentLow80__c,
+        ContractSigned__c,
+        SignedDate__c,
+        SignatureMethod__c,
+        DocSendingMethod__c,
+        Sale__c,
+        Pricebook2Id,
+        Contact__c,
+        VoltageLevel__c,
+        PowerAvailable__c,
+        PowerCommitted__c
+        FROM Order WHERE ParentOrder__c != null];
+
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        
+
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold
+        };
+
+        Test.startTest();
+        voltureManager.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Order__c = :orderList[0].Id];
+
+        System.assertEquals(1, activities.size(),'Activity non create incorrettamente');
+    }
+
+    @IsTest
+    static void handlePublishUpdateTst()
+    {
+        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
+
+        List<Order> orderList = [SELECT Id, Phase__c FROM Order WHERE ParentOrder__c != null];
+        String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
+        String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
+        orderList[0].RecordTypeId = recordTypeIdVolturaConSwitch;
+        update orderList;
+        
+        Test.startTest();
+        voltureManager.handlePublishUpdate(orderList[0]);
+        Test.stopTest();
+
+        List<Order> orderListUpdated = [Select Id,Phase__c FROM Order WHERE Id = :orderList[0].Id];
+
+        System.assertEquals(HDT_SRV_VoltureChangeManager.publishUpdatePhase, orderListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
+    }
+
 }
