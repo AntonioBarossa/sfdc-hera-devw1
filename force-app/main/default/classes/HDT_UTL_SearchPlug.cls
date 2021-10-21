@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin{
     //Costruttore -- può essere null
     global HDT_UTL_SearchPlug(){
