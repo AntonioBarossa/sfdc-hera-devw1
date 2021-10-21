@@ -80,8 +80,6 @@ public with sharing class HDT_LC_CtToolbar {
         }else{
             return null;
         }
-        return 
- 
     }
     @AuraEnabled
     public static wrts_prcgvr__Activity__c createActivity(/*String startCall, */String clientNumber, String registrationLink, String ecid, String campaignMemberId, String agent){
