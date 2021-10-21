@@ -26,5 +26,6 @@ public class HDT_BA_DeactivateCampaignTst {
         Test.stopTest();
         System.debug('JSON.serialize(thisCampaign) '+JSON.serialize(thisCampaign));
         System.assertEquals(true,JSON.serialize(thisCampaign).contains(campaignList[0].id),'HDT_BA_DeactivateCampaign has been well instantiated will the value passed');
+        System.assertNotEquals(false,JSON.serialize(thisCampaign).contains(campaignList[0].id),'The instantiation has been made with campains ids');
     }
 }
