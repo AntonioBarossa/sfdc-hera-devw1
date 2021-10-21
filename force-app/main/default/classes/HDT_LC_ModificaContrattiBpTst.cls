@@ -1,8 +1,8 @@
 /**
  * @author Valere (valere@noeli-it.net)
- * @date 19/10/2021
+ * @date 21/10/2021
  * @description HDT_LC_ModificaContrattiBp Test Classes
- * @history valere - 19/10/2021– Created Class
+ * @history valere - 21/10/2021– Created Class
  */
 @istest
 public class HDT_LC_ModificaContrattiBpTst {
