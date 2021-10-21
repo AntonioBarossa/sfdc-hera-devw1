@@ -36,6 +36,9 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
     @track orderSiblings = [];
     @track orderColumns;
     @track orderList = [];
+
+    showTooltip = false;
+
     heralogo = heralogoimg;
 
     columnsList = [{
@@ -282,5 +285,7 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         });
     }
 
-
+    toggleTooltip() {
+        this.showTooltip = !this.showTooltip;
+    }
 }
