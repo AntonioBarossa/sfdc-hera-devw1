@@ -9,6 +9,7 @@ import getCurrentUser from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.get
 
 export default class HdtActivityReassignToMe extends LightningElement {
     @api recordId;
+    @api idList;
     currentUser;
     showSearchBar = false;
     workGroups;
@@ -18,11 +19,15 @@ export default class HdtActivityReassignToMe extends LightningElement {
     
     async connectedCallback() {
         try {
+            if(this.recordId) {
+                this.idList = [this.recordId];
+            }
+
             this.currentUser = await getCurrentUser();
             if(await isDynamicWorkGroup({loginChannel: this.currentUser.LoginChannel__c})) {
                 this.showSearchBar = true;
             } else {
-                this.handleReassignResult(await assignToMe({recordId: this.recordId}));
+                this.handleReassignResult(await assignToMe({idList: this.idList}));
             }
         } catch (error) {
             console.error(error);
@@ -40,7 +45,7 @@ export default class HdtActivityReassignToMe extends LightningElement {
 
     async selectWorkGroup(event) {
         this.handleReassignResult(await reassignActivity({
-            recordId: this.recordId,
+            idList: this.idList,
             assigneeId: this.currentUser.Id,
             wrapperId: null,
             workGroup: event.currentTarget.dataset.workgroup,
