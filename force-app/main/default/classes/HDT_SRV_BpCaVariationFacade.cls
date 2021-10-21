@@ -48,9 +48,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             }
 
         } catch (Exception ex) {
-            System.debug('execute - Exception TypeName: ' + ex.getTypeName());
-            System.debug('execute - Exception Message: ' + ex.getMessage());
-            System.debug('execute - Exception StackTraceString: ' + ex.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception StackTraceString: ' + ex.getStackTraceString());
         }
 
         Case caseToUpdate = new Case();
@@ -79,9 +79,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             sapIntegration.requestType = requestType;
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug('submitRequest - Exception TypeName: ' + ex.getTypeName());
-            System.debug('submitRequest - Exception Message: ' + ex.getMessage());
-            System.debug('submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
         }
         return sapIntegration;
         
