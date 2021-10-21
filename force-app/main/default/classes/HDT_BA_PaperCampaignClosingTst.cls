@@ -6,7 +6,9 @@
  */
 @isTest
 public with sharing class HDT_BA_PaperCampaignClosingTst{
+
 	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+	
 	@TestSetup
 	static void setup(){
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
@@ -30,7 +32,7 @@ public with sharing class HDT_BA_PaperCampaignClosingTst{
 			paperProcessingList[0].Status__c='Bozza';
 			insert paperProcessingList;
 
-			List<CampaignMember> campaignMemberList=HDT_UTL_DataFactoryTst.createCampaignMember(1, false, campaignList[0].Id, leadList[0].Id, contactList[0].Id);
+			List<CampaignMember> campaignMemberList=HDT_UTL_DataFactoryTst.createCampaignMember(false, campaignList[0].Id, leadList, contactList);
 			campaignMemberList[0].PaperProcess__c=paperProcessingList[0].Id;
 			insert campaignMemberList;
 		}
