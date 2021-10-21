@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public inherited sharing class HDT_WRP_EligibilityCriteria {
 
     public class HDT_WRP_Criterion {

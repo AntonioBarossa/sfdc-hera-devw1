@@ -200,7 +200,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order','DocumentazioneAnticipata' {
-				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,ShippingMail__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
 				whereString = ' OrderNumber = \''+requestId + '\'';
 			}

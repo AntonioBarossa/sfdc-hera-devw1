@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>RecordTypeDevName__c</fullName>
+    <defaultValue>$RecordType.DeveloperName</defaultValue>
     <description>Campo tecnico per indicare il nome del RT che sarà valorizzato alla creazione dell&apos;attività tramite ricerca su tabella RT</description>
     <externalId>false</externalId>
     <label>Nome Record Type</label>
