@@ -1251,17 +1251,24 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	//** [START MOD 2021-08-13] @Author Andrei Necsulescu  - WR (andrei.necsulescu@webresults.it) @Description: Added Method to Create a record of CampaignMember
-	public static List<CampaignMember> createCampaignMember(Integer amount, Boolean doInsert, String campaignId, String leadId, String contactId) {
+	public static List<CampaignMember> createCampaignMember( Boolean doInsert, String campaignId, List<lead> leads, List<Contact> contacts) {
 
 		List<CampaignMember> campaignMembers = new List<CampaignMember>();
+		integer amount = leads.size();
 
 		for (Integer i = 0; i < amount; i++) {
 			
-			campaignMembers.add(new CampaignMember(
+			CampaignMember camp = new CampaignMember(
 				CampaignId = campaignId,
-				LeadId = leadId,
-				ContactId = contactId
-			));
+				LeadId = leads[i].id
+			); 
+
+			if (i<contacts.size()) {
+
+				camp.contactId = contacts[i].id;  
+			}
+
+			campaignMembers.add(camp);
 
 		}
 
