@@ -53,7 +53,7 @@ public with sharing class HDT_BA_PaperCampaignClosingTst{
 			                                     WHERE Status__c='Bozza'
 			                                     LIMIT 1];
 
-			HDT_BA_PaperCampaignClosing bc=new HDT_BA_PaperCampaignClosing(tPaperProcessing.Id);
+			HDT_BA_PaperCampaignClosing bc=new HDT_BA_PaperCampaignClosing(new List<Id>{tPaperProcessing.Id});
 
 			DataBase.executeBatch(bc);
 
