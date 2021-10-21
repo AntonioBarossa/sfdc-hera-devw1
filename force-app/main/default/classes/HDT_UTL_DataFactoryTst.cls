@@ -1251,17 +1251,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	//** [START MOD 2021-08-13] @Author Andrei Necsulescu  - WR (andrei.necsulescu@webresults.it) @Description: Added Method to Create a record of CampaignMember
-	public static List<CampaignMember> createCampaignMember(Integer amount, Boolean doInsert, String campaignId, String leadId, String contactId) {
+	public static List<CampaignMember> createCampaignMember( Boolean doInsert, String campaignId, List<Lead> leads, List<Contact> contacts) {
 
+		//** Andrei Necsulescu - Changed logic because there can not be more than one Campaign member with the same Contact associated with a Campaign
 		List<CampaignMember> campaignMembers = new List<CampaignMember>();
+		integer amount = contacts.size();
 
 		for (Integer i = 0; i < amount; i++) {
 			
-			campaignMembers.add(new CampaignMember(
+			CampaignMember camp = new CampaignMember(
 				CampaignId = campaignId,
-				LeadId = leadId,
-				ContactId = contactId
-			));
+				ContactId = contacts[i].id
+			); 
+
+			if (i < leads.size()) {
+
+				camp.LeadId = leads[i].id;
+			}
+
+			campaignMembers.add(camp);
 
 		}
 
@@ -2448,7 +2456,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
 
 			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
-			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.Status__c = utlConstants.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
 			//massiveLoaderRequest.TotalRequest__c = 2;
 			//massiveLoaderRequest.RequestOK__c = 2;
 			//massiveLoaderRequest.RequestKO__c = 0;
