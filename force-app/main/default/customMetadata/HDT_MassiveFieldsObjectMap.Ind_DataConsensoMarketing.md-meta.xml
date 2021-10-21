@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>objectType__c</field>
-        <value xsi:type="xsd:string">Lead</value>
+        <value xsi:type="xsd:string">Individual</value>
     </values>
     <values>
         <field>processType__c</field>
