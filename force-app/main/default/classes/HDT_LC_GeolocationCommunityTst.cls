@@ -36,7 +36,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
             campaignList[0].Category__c = 'Campagna Outbound';
             //** [START MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             //campaignList[0].Channel__c = 'Door to Door';
-            campaignList[0].Channel__c = 'Bolletta';
+            campaignList[0].Channel__c = 'Bolletta;Door to Door';
             //** [END MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             campaignList[0].IsActive = true;
             campaignList[0].StartDate = Date.today();

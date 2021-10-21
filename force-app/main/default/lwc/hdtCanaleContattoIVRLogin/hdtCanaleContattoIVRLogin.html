@@ -3,7 +3,7 @@
         <lightning-card class="slds-card slds-size--2-of-3 loginCard">
                 <div class="slds-p-around--medium">
                     <img src={heralogo} class="slds-p-bottom--large" style="width: 35%;">
-                    <div class="loginHeaderBox slds-card__header-title slds-align--absolute-center slds-p-around--xx-large slds-m-bottom--large slds-text-heading_large">Servizio di conferma ricezione documentazione contrattuale</div>
+                    <div class="loginHeaderBox slds-card__header-title slds-align--absolute-center slds-p-around--xx-large slds-m-bottom--large slds-text-heading_large slds-text-align_center">Servizio di conferma ricezione documentazione contrattuale</div>
                     <div class="loginTitle slds-card__header-title slds-align--absolute-center slds-size--11-of-12 slds-text-align--center slds-text-heading_medium">Accedi con le tue credenziali personali per confermare la ricezione della documentazione contrattuale che ti abbiamo inviato.</div>
                     <hr>
                 </div>
@@ -16,8 +16,12 @@
                         <lightning-input class="slds-align_absolute-center slds-box_small" type="password" placeholder="Password"
                             name="password" data-id="passwordField" variant="label-hidden"></lightning-input>
                         <lightning-input type="checkbox" class="slds-box--small" label="Visualizza password" name="showPassword" onchange={toggleShowPassword}></lightning-input>
-                        <lightning-formatted-url class="slds-box--small slds-float--right" value="https://salesforce.com" label="Dove trovo le credenziali?" target="_blank" ></lightning-formatted-url>
-                        
+
+                        <div class="slds-box_small slds-float_right slds-m-right_medium slds-m-bottom_large slds-m-top_medium slds-text-link tooltip" onclick={toggleTooltip}>Dove trovo le credenziali?
+                            <template if:true={showTooltip}>
+                                <span class="tooltiptext">Le credenziali di accesso sono state inviate tramite email o lettera inviata al tuo domicilio.</span>
+                            </template>
+                        </div>
                     </div>
                     <lightning-button class="slds-p-top--medium loginButton slds-box--small slds-p-bottom--large" type="button" label="ACCEDI" onclick={handleLogin} style="display: grid;width: 100%;">
                     </lightning-button>

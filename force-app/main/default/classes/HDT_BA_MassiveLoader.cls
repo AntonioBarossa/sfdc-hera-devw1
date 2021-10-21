@@ -47,7 +47,7 @@ public with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sOb
     public void execute(Database.BatchableContext bc, List<SObject> scope) {
 
         massiveLoaderRequest.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
-        massiveLoaderRequest.Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILEINELABORAZIONE;
+       // massiveLoaderRequest.Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILEINELABORAZIONE;
         Database.update(massiveLoaderRequest);
 
         List<String> contentFileLines = ((ContentVersion) scope.get(0)).VersionData.toString().replaceAll('\r','').split('\n');
@@ -97,8 +97,8 @@ public with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sOb
             }
         }
 
-        System.debug('HDT_BA_MassiveLoader.execute jsonMapForDml: ' + jsonMapForDml);
-        System.debug('HDT_BA_MassiveLoader.execute importErrors: ' + importErrors);
+        // System.debug('HDT_BA_MassiveLoader.execute jsonMapForDml: ' + jsonMapForDml);
+        // System.debug('HDT_BA_MassiveLoader.execute importErrors: ' + importErrors);
 
         // Create actual List of sObjects to final upsert operation
 
@@ -135,7 +135,7 @@ public with sharing class HDT_BA_MassiveLoader implements Database.Batchable<sOb
         Map<Integer, HDT_WRP_FileHeader> result = new Map<Integer, HDT_WRP_FileHeader> ();
 
         Map<String, SObject> templateColumnsMap = utils.createMapFromSobjectList(fileColumnsList, Schema.FileTemplateColumn__c.HeaderName__c);
-        System.debug('HDT_BA_MassiveLoader.createHeaderMap templateColumnsMap ' + templateColumnsMap);
+        // System.debug('HDT_BA_MassiveLoader.createHeaderMap templateColumnsMap ' + templateColumnsMap);
         
         List<String> headerColumnsList = headerLine.split(fieldDelimiter);
         
