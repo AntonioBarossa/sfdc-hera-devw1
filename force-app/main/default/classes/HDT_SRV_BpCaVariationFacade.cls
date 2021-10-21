@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     global Object execute(Object args) {
@@ -23,31 +24,33 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             sapIntegration = submitRequest(recordId,parameters.get('requestType'));
 
             Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
-            System.debug('responseBody deserialized: ' + body);
+            System.debug(LoggingLevel.DEBUG, 'responseBody deserialized: ' + body);
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
                     String tipoAttivita = (String) data.get('tipoAttivita');
                     if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
-                        System.debug('Creazione activity Errore Lavorazione SAP');
+                        System.debug(LoggingLevel.DEBUG, 'Creazione activity Errore Lavorazione SAP');
                         HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
 
                         response.success = false;
                         response.message = 'KO';
                     } else {
-                        System.debug('Response OK: commento da SAP: ' + (String)data.get('commenti'));
+                        System.debug(LoggingLevel.DEBUG, 'Response OK: commento da SAP: ' + (String)data.get('commenti'));
                         response.success = true;
                         response.message = 'OK';
                     }
                 }
-            }else {
-                System.debug('Response OK');
+            } else {
+                System.debug(LoggingLevel.DEBUG, 'Response OK');
                 response.success = true;
                 response.message = 'OK';
             }
 
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
+        } catch (Exception ex) {
+            System.debug('execute - Exception TypeName: ' + ex.getTypeName());
+            System.debug('execute - Exception Message: ' + ex.getMessage());
+            System.debug('execute - Exception StackTraceString: ' + ex.getStackTraceString());
         }
 
         Case caseToUpdate = new Case();
@@ -76,7 +79,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             sapIntegration.requestType = requestType;
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug(ex.getMessage()); 
+            System.debug('submitRequest - Exception TypeName: ' + ex.getTypeName());
+            System.debug('submitRequest - Exception Message: ' + ex.getMessage());
+            System.debug('submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
         }
         return sapIntegration;
         
@@ -95,7 +100,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
                     HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
                 }
                 output.outcome = false;
-            }else {
+            } else {
                 output.outcome = true;
             }    
         } catch (Exception ex) {
@@ -107,22 +112,18 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
 
     @Future
     private static void updateFuture(String inputString) {
-
         Case c = (Case) JSON.deserialize(inputString, Case.class);
-
         HDT_UTL_DatabaseService.updateSObject(c);
-
     }
 
     public class HDT_WRP_InputBpCaFlow{
         @InvocableVariable
         public String recordId;
-
     }
+    
     public class HDT_WRP_OutputBpCaFlow{
         @InvocableVariable
         public Boolean outcome;
-
     }
 
 }
