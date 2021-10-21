@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessivePublicCount')
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDataHelper(){
@@ -105,7 +106,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             bodyWrp.letturaReale = '';
 
             String body = JSON.serialize(bodyWrp, true);
-            System.debug('>>> body obj > ' + body);
+            System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
      
             if(!responseCtrl.success){

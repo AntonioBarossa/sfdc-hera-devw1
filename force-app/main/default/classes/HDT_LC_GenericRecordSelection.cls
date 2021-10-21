@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_GenericRecordSelection {
 
     private static HDT_QR_GenericRecordSelection getterMethods = new HDT_QR_GenericRecordSelection();
@@ -5,14 +6,16 @@ public with sharing class HDT_LC_GenericRecordSelection {
     @AuraEnabled(cacheable = true)
     public static String getConfiguration(String search){
         String result;
-        System.debug('Search ' + search);
+        System.debug(LoggingLevel.DEBUG, 'Search ' + search);
         try{
             List<HDT_Generic_Record_Selection__mdt> configList = getterMethods.getConfigurationByName(search);
             if(configList != null && configList.size()>0){
                 result = JSON.serialize(configList);
             }
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'getConfiguration - Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'getConfiguration - Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'getConfiguration - Exception StackTraceString: ' + e.getStackTraceString());
         }
         return result;
     }
@@ -21,9 +24,9 @@ public with sharing class HDT_LC_GenericRecordSelection {
     public static String getListRecords(String params){
         String recordListString;
         try{
-            System.debug('params ' + params);
+            System.debug(LoggingLevel.DEBUG, 'params ' + params);
             HDT_WRP_GenericRecordSelection parameters = (HDT_WRP_GenericRecordSelection) JSON.deserialize(params, HDT_WRP_GenericRecordSelection.class);
-            System.debug(parameters.filters);
+            System.debug(LoggingLevel.DEBUG, 'parameters.filters: ' + parameters.filters);
 
             List<List<sObject>> recordList = null;
             if (parameters.queryType == 'SOSL') {
@@ -42,8 +45,10 @@ public with sharing class HDT_LC_GenericRecordSelection {
 
                 recordListString = JSON.serialize(recordList);
             }
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'getListRecords - Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'getListRecords - Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'getListRecords - Exception StackTraceString: ' + e.getStackTraceString());
         }
         return recordListString;
     }
@@ -54,7 +59,7 @@ public with sharing class HDT_LC_GenericRecordSelection {
 
         try {
             List<String> fieldsList = fields.trim().split(',');
-            System.debug(fieldsList);
+            System.debug(LoggingLevel.DEBUG, 'fieldsList' + fieldsList);
 
             List<SObject> firstObjectList = recordList[0];
 
@@ -83,8 +88,10 @@ public with sharing class HDT_LC_GenericRecordSelection {
 
             results.add(outputRecords);
 
-        } catch(Exception e){
-            System.debug(e.getMessage());
+        } catch (Exception e){
+            System.debug(LoggingLevel.DEBUG, 'getDistinctRecords - Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'getDistinctRecords - Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'getDistinctRecords - Exception StackTraceString: ' + e.getStackTraceString());
         }
         return results;
 

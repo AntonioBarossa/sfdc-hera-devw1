@@ -516,7 +516,8 @@ public inherited sharing class HDT_QR_Order {
             OutgoingCreditCheckResult__c,
             OrderReference__c,
             ProcessType__c,
-            SBQQ__Quote__c
+            SBQQ__Quote__c,
+            CommercialProductCode__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -866,6 +867,9 @@ public inherited sharing class HDT_QR_Order {
     */
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getOrdersByOrderNumber(List<String> orderNumbers){
+        return [SELECT id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,AccountId FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
     /**

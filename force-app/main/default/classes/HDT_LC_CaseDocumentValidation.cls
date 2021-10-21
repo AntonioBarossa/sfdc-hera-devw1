@@ -5,7 +5,11 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
     
     @AuraEnabled
     public static Boolean isValidPhase(String recordId){
-        Case currentCase = caseQr.getRecordById(recordId);
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Case currentCase = caseQr.getRecordById(recordId);
         return true;
         //return ('In Attesa Validazione'.equalsIgnoreCase(currentCase.Phase__c));
     }

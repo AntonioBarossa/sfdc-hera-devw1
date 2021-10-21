@@ -8,7 +8,7 @@
  * HISTORY:
  */
 
-public inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
+global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
     
     private static final String VAS_SERVICE_TYPE = 'VAS Servizio';
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
@@ -25,7 +25,7 @@ public inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     * @param args  
     * @return Object 
     **/
-    public Object execute(Object args){
+    global Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
         //SObject transition = (SObject) argsMap.get('transition');
         //SObject action = (SObject) argsMap.get('action');
@@ -36,9 +36,10 @@ public inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
 
         switch on method{
             when 'activation', 'deactivation', 'service26' {
-                if(system.isQueueable() || system.isBatch()){
+                Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+                if(system.isQueueable()){// && !limitQueueablesOk){//removed so i won't burn a queable if this is a queueable job
                     asyncCalloutFuture(objectId, method);
-                }else{
+                }else if((!system.isBatch()) || limitQueueablesOk){
                     system.enqueueJob(new HDT_QBL_AsycnronousCallout(
                         objectId, method
                         )
