@@ -280,6 +280,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 System.debug(LoggingLevel.DEBUG, 'NoteAnn: '  + noteAnn);
                 currentCase.CancellationNote__c = nowDateFormat + ': ' + reqWrp.requestMap.get('NOTE_ANN') + '\n' + noteAnn;
             }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('NOTE_ERR'))){
+                currentCase.DiscardDescription__c=reqWrp.requestMap.get('NOTE_ERR');
+            }
             if(currentPhase.indexOf('Annull') > -1 && reqWrp.requestMap.get('COD_PRAT_UTENTE') != null && reqWrp.requestMap.get('COD_PRAT_UTENTE')!= ''){
                 if(String.isBlank(recordCase.CancellationHerokuPracticeCode__c)){
                     currentCase.CancellationHerokuPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_UTENTE');
