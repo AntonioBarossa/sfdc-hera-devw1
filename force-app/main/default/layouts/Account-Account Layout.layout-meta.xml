@@ -24,7 +24,7 @@
                 <field>VirtualSAPIban__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>

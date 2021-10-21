@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_ContactSelection {
 
     @AuraEnabled(cacheable = false)
