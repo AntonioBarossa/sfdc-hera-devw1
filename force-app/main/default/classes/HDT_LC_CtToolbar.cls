@@ -61,6 +61,29 @@ public with sharing class HDT_LC_CtToolbar {
     }
 
     @AuraEnabled
+    public static String createActivityInbound(String reiteklink, String username, String password){
+        
+        Order ord = HDT_LC_CanaleContattoIVRLogin.checkLogin(username,password);
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        Datetime sdt = Datetime.now();
+        activity.CallStartTime__c = sdt;
+        System.debug('*******:TRYMETHOD3');
+        activity.StartDate__c = Date.newInstance(sdt.year(),sdt.month(),sdt.day()); 
+        activity.Type__c = 'Chiamata outbound';
+        activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
+        activity.RecordingLink__c = reiteklink;
+        activity.order__c = ord.id;
+        activitySrv.createRecord(activity);
+
+        if(ord != null){
+            return ord.id;
+        }else{
+            return null;
+        }
+        return 
+ 
+    }
+    @AuraEnabled
     public static wrts_prcgvr__Activity__c createActivity(/*String startCall, */String clientNumber, String registrationLink, String ecid, String campaignMemberId, String agent){
         HDT_QR_CampaignMember cmQr = new HDT_QR_CampaignMember();
         System.debug('*******:TRYMETHOD');

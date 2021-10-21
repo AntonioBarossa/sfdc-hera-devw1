@@ -207,7 +207,7 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                 let token = res.token
                 if(res.errorMessage == null || res.errorMessage == undefined){
 
-                    let searchparams2 = 'token=' + encodeURIComponent(token) +'&ecid=' + encodeURIComponent(ecid); 
+                    let searchparams2 = 'token=' + token +'&ecid=' + ecid; 
                     let reiteklink = 'https://herapresfdc.cloudando.com/HeraSfdc/rec/download?' + searchparams2;
                     const link = document.createElement("a");
                     link.href = reiteklink;
