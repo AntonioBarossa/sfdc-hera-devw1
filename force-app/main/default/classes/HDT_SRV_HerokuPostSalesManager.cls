@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
