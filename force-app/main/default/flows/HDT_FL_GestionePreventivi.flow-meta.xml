@@ -403,13 +403,36 @@
     <assignments>
         <name>AssegnaPotenzaRichiesta</name>
         <label>AssegnaPotenzaRichiesta</label>
-        <locationX>500</locationX>
-        <locationY>1231</locationY>
+        <locationX>357</locationX>
+        <locationY>1235</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Input_Case.PowerCommitted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaPredefaultSpostamentoContatoreVarPortata</name>
+        <label>AssegnaPredefaultSpostamentoContatoreVarPortata</label>
+        <locationX>565</locationX>
+        <locationY>1117</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.PowerCommitted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DistributorNoteFormulaType</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -463,8 +486,8 @@
     <assignments>
         <name>AssegnaRipristoFornInterr</name>
         <label>AssegnaRipristoFornInterr</label>
-        <locationX>669</locationX>
-        <locationY>1099</locationY>
+        <locationX>671</locationX>
+        <locationY>1022</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.TaxRate__c</assignToReference>
             <operator>Assign</operator>
@@ -477,6 +500,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Input_Case.PowerCommitted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DistributorNoteFormulaType</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1758,6 +1788,35 @@
             </connector>
             <label>Ripristino Fornitura Gas</label>
         </rules>
+        <rules>
+            <name>Spostamento_Contatore</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione Portata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Spostamento Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaPredefaultSpostamentoContatoreVarPortata</targetReference>
+            </connector>
+            <label>Spostamento Contatore/Variazione Portata Gas</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Variazione_Portata</name>
@@ -1870,6 +1929,13 @@
         <dataType>Number</dataType>
         <expression>{!QuotaDistribuzioneVar} + {!QuotaVenditaVar}</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>DistributorNoteFormulaType</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Get_Input_Case.DistributorNote__c}),
+TEXT({!Get_Input_Case.Type}),
+{!Get_Input_Case.DistributorNote__c} &amp; &quot;;&quot; &amp; TEXT({!Get_Input_Case.Type}))</expression>
     </formulas>
     <formulas>
         <name>FormulaCodicePrestazione</name>

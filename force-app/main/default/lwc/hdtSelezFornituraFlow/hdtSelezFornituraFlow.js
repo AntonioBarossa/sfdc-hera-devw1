@@ -21,6 +21,23 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'CONTRACT_BONUS_COMM':{
+        label: 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono Contratti',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Codice Contratto Sap', fieldName: 'SapContractCode__c', type: 'text'},
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     'ORDERS_ELE':{
         label: 'Ordini Energia Elettrica',
         sObjectName: 'Order',
@@ -57,24 +74,6 @@ const DATA_ACCESS_MAP = {
             {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
         ]
     },
-    'ASSETS_ACTIVATED_VAS':{
-        label : 'Asset attivati VAS',
-        sObjectName: 'Asset',
-        emptyMessage: 'Non ci sono asset attivi',
-        dataProcessFunction: (data) => {
-            data.forEach((item) => {
-                item.ContactName = item.Contact !== undefined ? item.Contact.Name : '';
-                item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
-            });
-        },
-        columns: [
-            {label: 'Nome', fieldName: 'Name', type: 'text'},
-            {label: 'Numero serial', fieldName: 'SerialNumber', type: 'text'},
-            {label: 'Data installazione', fieldName: 'InstallDate', type: 'date'},
-            {label: 'Referente', fieldName: 'ContactName', type: 'text'},
-            {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
-        ]
-    },
     'SUBS_ANALISI_CONSUMI':{
         label : 'Subscriptions Analisi Consumi',
         sObjectName: 'SBQQ__Subscription__c',
@@ -94,7 +93,8 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
-    'SUBS_VAS':{
+    //Segnalazioni VAS - START
+    'CONTRACTS_VAS':{
         label : 'Contratti',
         sObjectName: 'Contract',
         emptyMessage: 'Non ci sono contratti',
@@ -110,6 +110,30 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'SUBS_FROM_CONTRACT':{
+        label : 'Subscriptions VAS',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions',
+        columns: [
+            {label: 'Subscription #', fieldName: 'Name', type: 'text'},
+            {label: 'VAS', fieldName: 'SBQQ__ProductName__c', type: 'text'}
+        ]
+    },
+    'ASSETS_FROM_CONTRACT':{
+        label : 'Asset VAS',
+        sObjectName: 'Asset',
+        emptyMessage: 'Non ci sono asset attivi',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ProductName = item.Product2 !== undefined ? item.Product2.Name : '';
+            });
+        },
+        columns: [
+            {label: 'Nome asset', fieldName: 'Name', type: 'text'},
+            {label: 'VAS', fieldName: 'ProductName', type: 'text'}
+        ]
+    },
+    //Segnalazioni VAS - END
     'CONTRACT_ELE_ACTIVE':{
         label : 'Contratti Attivi (Energia Elettrica)',
         sObjectName: 'Contract',
@@ -175,7 +199,7 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     loadRecords(){
         this.isLoading = true;
-        getFornitura({accountId:this.accountId, key: this.selectedOption}).then(data =>{
+        getFornitura({searchString: this.accountId, key: this.selectedOption}).then(data =>{
             this.isLoading = false;
             
             if(data.length > 0){

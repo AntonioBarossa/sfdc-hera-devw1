@@ -24,6 +24,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
     ];
 
     @api isHide = false;
+    @track reiteklink;
 
     iconName = '';
     agentStatus = '';
@@ -52,6 +53,10 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
 
     }
 
+    handleGetReitekLink(event){
+        this.reiteklink = event.detail.reiteklink;
+    }
+
     closeModal(){
         console.log('****BEFORESAVE');
         this.showModal = false;
@@ -73,7 +78,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
         switch (eventType) {
             case 'POPUP':
                 //if (count == 0) {
-                    console.log('*******INSIDEPOPUP');
+                   /* console.log('*******INSIDEPOPUP');
                     this.toolbarAttributes = event.detail.eventObj;
                     this.uuid = this.toolbarAttributes.id;
                     callData = event.detail.CallData;
@@ -84,7 +89,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
                             this.ecid = elem.value;
                         }
                     });*/
-
+/*
 
                     if (this.ecid != '' && this.objectApiName == 'CampaignMember') {
                         this.showRecallMe = true;
@@ -115,7 +120,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
                         }
                     });*/
 
-                    if (checkMemberId == true) {
+                  /*  if (checkMemberId == true) {
                         //1st call - get available timeslots and fill the datatable
 
                         //redirect to campaignMember record page
@@ -128,7 +133,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
                             },
                         });
                     }
-                    count++;
+                    count++;*/
                // }
                 break;
 

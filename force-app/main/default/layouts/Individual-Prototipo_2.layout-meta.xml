@@ -15,7 +15,7 @@
                 <field>PrivacyMarketingChoiceDate__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>PrivacyMarketingChoiceSource__c</field>
             </layoutItems>
             <layoutItems>
@@ -73,10 +73,6 @@
                 <behavior>Readonly</behavior>
                 <field>PrivacySoftSpamChoiceDate__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -123,6 +119,7 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewContact</excludeButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>CONTACT.EMAIL</fields>
@@ -130,6 +127,7 @@
         <relatedList>RelatedContactListIndividual</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>FULL_NAME</fields>
         <fields>LEAD.TITLE</fields>
         <fields>LEAD.EMAIL</fields>
@@ -154,7 +152,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002TFlg</masterLabel>
+        <masterLabel>00h1l000000Ppne</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

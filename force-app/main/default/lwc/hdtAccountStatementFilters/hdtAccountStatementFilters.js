@@ -6,6 +6,7 @@ const timeLimit = 63072000000;//2years
 
 export default class HdtAccountStatementFilters extends LightningElement {
 
+    @api tabCode;
     @track filterObject = filterObject;
     @track spinnerObj = {
         spinner: false,
@@ -13,6 +14,7 @@ export default class HdtAccountStatementFilters extends LightningElement {
     };
     enableDateControll;
     joinFilterObj = {};
+    showField = true;
 
     connectedCallback(){
         this.enableDateControll = true;
@@ -23,6 +25,11 @@ export default class HdtAccountStatementFilters extends LightningElement {
             obj3: {type: 'date', name: 'dataFine', label: 'Data valuta a', empty: true}
     
         };
+
+        if(this.tabCode==='EC6'){
+            this.showField = false;
+        }
+
     }
 
     setFilterParam(event){

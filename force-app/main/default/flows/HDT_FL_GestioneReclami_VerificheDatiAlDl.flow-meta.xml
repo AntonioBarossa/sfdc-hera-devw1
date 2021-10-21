@@ -69,7 +69,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>4358</locationY>
+        <locationY>4598</locationY>
         <assignmentItems>
             <assignToReference>GetCaseFinale.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -185,6 +185,59 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_1_0_0</name>
+        <label>AssegnaValori</label>
+        <locationX>974</locationX>
+        <locationY>1670</locationY>
+        <assignmentItems>
+            <assignToReference>FlowCase.EndCustomerRequestType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EndCustomerFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriLetture</name>
+        <label>AssegnaValoriLetture</label>
+        <locationX>842</locationX>
+        <locationY>3662</locationY>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedMeterValue__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LetturaContestataGas</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedReadingValue1__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContestataF1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedReadingValue2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContestataF2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetLetture.DisputedReadingValue3__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContestataF3</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaLettura</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -371,7 +424,7 @@
         <name>Dati_Tecnici_M03_0</name>
         <label>Dati Tecnici M03?</label>
         <locationX>710</locationX>
-        <locationY>3998</locationY>
+        <locationY>4238</locationY>
         <defaultConnector>
             <targetReference>GetCaseFinale</targetReference>
         </defaultConnector>
@@ -510,7 +563,7 @@
         <locationX>842</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
-            <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+            <targetReference>AssegnaValori_1_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -558,7 +611,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1040</locationX>
-        <locationY>3878</locationY>
+        <locationY>4118</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -652,7 +705,7 @@
     <formulas>
         <name>DisputedDateFormula</name>
         <dataType>Date</dataType>
-        <expression>DATEVALUE({!hdtMeterReadingTable.selectedReadingDateString})</expression>
+        <expression>DATEVALUE({!DataLetturaStringa})</expression>
     </formulas>
     <formulas>
         <name>EndCustomerFormula</name>
@@ -777,7 +830,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>4238</locationY>
+        <locationY>4478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -931,7 +984,7 @@
         <name>GetCaseFinale</name>
         <label>GetCaseFinale</label>
         <locationX>842</locationX>
-        <locationY>4118</locationY>
+        <locationY>4358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -955,7 +1008,7 @@
         <locationY>3542</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>aggiornaCase_0_0</targetReference>
+            <targetReference>AssegnaValoriLetture</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
         <filters>
@@ -1041,17 +1094,27 @@
         <name>aggiornaCase_0_0</name>
         <label>aggiornaCase</label>
         <locationX>1040</locationX>
-        <locationY>3758</locationY>
+        <locationY>3998</locationY>
         <connector>
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
         </connector>
         <inputReference>Get_Flow_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>AggiornaLettura</name>
+        <label>AggiornaLettura</label>
+        <locationX>842</locationX>
+        <locationY>3782</locationY>
+        <connector>
+            <targetReference>aggiornaCase_0_0</targetReference>
+        </connector>
+        <inputReference>GetLetture</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>4478</locationY>
+        <locationY>4718</locationY>
         <inputReference>GetCaseFinale</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1306,7 +1369,26 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>ContestataF1</assignToReference>
+                <name>disputedReadingOne</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>ContestataF2</assignToReference>
+                <name>disputedReadingTwo</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>ContestataF3</assignToReference>
+                <name>disputedReadingThree</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>DataLetturaStringa</assignToReference>
+                <name>selectedReadingDateString</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>LetturaContestataGas</assignToReference>
+                <name>disputedReading</name>
+            </outputParameters>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -1652,7 +1734,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>3998</locationY>
+        <locationY>4238</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1702,6 +1784,37 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>ContestataF1</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>ContestataF2</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>ContestataF3</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>DataLetturaStringa</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>FlowCase</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1724,6 +1837,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>LetturaContestataGas</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
     <variables>
         <name>ParentRecordId</name>

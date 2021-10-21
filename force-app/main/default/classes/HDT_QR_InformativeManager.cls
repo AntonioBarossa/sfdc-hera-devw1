@@ -1,14 +1,14 @@
 public with sharing class HDT_QR_InformativeManager {
 
     //modificare prendendo i cluster dall'oggetto HDT_Informative_Configuration__mdt in base al punto d'innesco.
-    public static List<HDT_ClusterProcess__mdt> getClusterProcess(String context)
+    public static List<HDT_Informative_Configuration__mdt> getClusterProcess(String context)
     {
 
         context = context == 'ServicePoint__c' || context == 'BillingProfile__c' ? context : context + '__c';
 
         String query = 'SELECT Id, Cluster__c FROM HDT_Informative_Configuration__mdt WHERE ' +context+ '=true WITH SECURITY_ENFORCED';
 
-        return Database.query(query);
+        return Database.query(String.escapeSingleQuotes(query));
 
     }
     public static String getProcessByCluster(String cluster){
@@ -22,7 +22,7 @@ public with sharing class HDT_QR_InformativeManager {
         String query = 'SELECT Id, Cluster__c, MacroTopic__c FROM HDT_Informative_Configuration__mdt '+
         'WHERE Cluster__c =:cluster AND ' +context+ '=true WITH SECURITY_ENFORCED';
 
-        return Database.query(query);
+        return Database.query(String.escapeSingleQuotes(query));
 
     }
     public static List<HDT_Informative_Configuration__mdt> getInfoByTopicCluster(String topic, String cluster, String context){
@@ -32,7 +32,7 @@ public with sharing class HDT_QR_InformativeManager {
         String query = 'SELECT Id, Cluster__c, MacroTopic__c, InformationDetail__c FROM HDT_Informative_Configuration__mdt '+
         'WHERE Cluster__c =:cluster AND MacroTopic__c =:topic AND ' +context+ '=true WITH SECURITY_ENFORCED';
 
-        return Database.query(query);
+        return Database.query(String.escapeSingleQuotes(query));
     }
 
     public static Case getFieldToPrePopulate(String recordId){
@@ -48,6 +48,12 @@ public with sharing class HDT_QR_InformativeManager {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 18/10/2021
+    * Risoluzione "Avoid Empty Block Statements"
+    * Inserito SuppressWarnings, gli statements vuoti sono stati creati per possibili implementazioni future
+    */
+    @SuppressWarnings('PMD.EmptyStatementBlock')
     public static SObject getPrePopulationInfo(String recordId,String sObjName){
 
         SObject contextSobj;

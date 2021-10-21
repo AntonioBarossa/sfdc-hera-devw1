@@ -10,6 +10,8 @@ public with sharing class HDT_WS_DocumentalIntegration {
             req.setTimeout(120000);
             Http http = new Http();
             HTTPResponse res = http.send(req);
+            // da scommentare solo per debug temporanei, la response può essere molto grande e causare un heap size exception.
+            //System.debug('Engage1 response: ' + res.getBody());
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
                 System.debug(JSON.serialize(responseBodyMap.get('data')));
@@ -71,6 +73,59 @@ public with sharing class HDT_WS_DocumentalIntegration {
             System.debug('ex StackTraceString: ' + ex.getStackTraceString());
         }
         return postelResponse;
+    }
+
+    public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetIntesaZipRequest(String body){
+        HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
+        try{
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('Callout:MulesoftBasePath/zip-files');
+            req.setMethod('POST');
+            req.setBody(body);
+            req.setHeader('Content-Type','application/json');
+            req.setTimeout(120000);
+            Http http = new Http();
+            HTTPResponse res = http.send(req);
+            responseWrap.responseCode = res.getStatusCode();
+            responseWrap.responseStatus =  res.getStatus();
+
+            Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            if (responseBodyMap.containsKey('data')) {
+                Map<String, Object> responseData = (Map<String, Object>) responseBodyMap.get('data');
+                String status = (String) responseData.get('status');
+                switch on status {
+                    when 'ERROR' {
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
+                    }
+                    when 'PROGRESS' {
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non ancora completata)');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
+                    }
+                    when 'TERMINATE' {
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Impossibile visualizzare il plico (Busta Docusign non disponibile o non completata)');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
+                    }
+                }
+            }
+
+        }catch(Exception ex){
+            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            throw ex;
+        }
+        return responseWrap;
     }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse submitResendDocusignEnvelopeRequest(String body){

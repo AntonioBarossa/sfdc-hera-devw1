@@ -652,7 +652,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>Commodity__c</picklist>
         <values>
             <fullName>Ele</fullName>
@@ -662,7 +662,7 @@
             <fullName>Gas</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
         <values>

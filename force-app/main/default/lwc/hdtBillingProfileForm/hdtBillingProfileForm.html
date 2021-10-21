@@ -39,7 +39,7 @@
                                     name="SignatoryType__c"
                                     required
                                     label="Tipo Sottoscrittore"
-                                    value=""
+                                    value={cloneObject.SignatoryType__c}
                                     placeholder=""
                                     options={signatoryTypeOptions}
                                     onchange={handleCollectFieldsData} ></lightning-combobox>
@@ -53,7 +53,7 @@
                                     <div class="slds-text-heading_small slds-m-top_small">Fatturazione elettronica</div>
                                     <div class="slds-grid slds-wrap slds-m-top_small">
                                         <template for:each={fatturazioneElettronicaFields} for:item="fatturazioneElettronicaField">
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} required={fatturazioneElettronicaField.required} data-name={fatturazioneElettronicaField.fieldName} key={fatturazioneElettronicaField.fieldName} data-id={fatturazioneElettronicaField.fieldName} field-name={fatturazioneElettronicaField.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} required={fatturazioneElettronicaField.required} data-name={fatturazioneElettronicaField.fieldName} key={fatturazioneElettronicaField.fieldName} data-id={fatturazioneElettronicaField.fieldName} field-name={fatturazioneElettronicaField.fieldName} value={fatturazioneElettronicaField.value} disabled={fatturazioneElettronicaField.disabled} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </div>
                                 </template>

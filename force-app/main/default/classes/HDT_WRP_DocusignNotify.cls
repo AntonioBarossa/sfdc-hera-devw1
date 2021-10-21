@@ -7,7 +7,7 @@ public with sharing class HDT_WRP_DocusignNotify {
         public String status;
         public Datetime sentDateTime;
         public Datetime completedDateTime;
-        public List<HDT_WRP_DocusignNotifyData> listOfData;
+        public List<HDT_WRP_DocusignNotifyData> listOfDataText;
         public List<HDT_WRP_DocusignNotifyRadio> listOfRadioGroup;
     }
 

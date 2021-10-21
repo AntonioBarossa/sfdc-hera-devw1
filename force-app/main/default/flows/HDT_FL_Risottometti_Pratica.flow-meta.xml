@@ -2,10 +2,120 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>activityToUpdate_0</name>
+        <label>activityToUpdate</label>
+        <locationX>1911</locationX>
+        <locationY>472</locationY>
+        <assignmentItems>
+            <assignToReference>toUpdateActivity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getActivity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateActivity_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>activityToUpdate_0_0</name>
+        <label>activityToUpdate</label>
+        <locationX>1930</locationX>
+        <locationY>692</locationY>
+        <assignmentItems>
+            <assignToReference>toUpdateActivity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getActivity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateActivity_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>caseToUpdate</name>
+        <label>caseToUpdate</label>
+        <locationX>1602</locationX>
+        <locationY>688</locationY>
+        <assignmentItems>
+            <assignToReference>caseRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>closeActivity_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>closeActivity_0</name>
+        <label>closeActivity</label>
+        <locationX>1790</locationX>
+        <locationY>478</locationY>
+        <assignmentItems>
+            <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.DiscardResubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>activityToUpdate_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>closeActivity_0_0</name>
+        <label>closeActivity</label>
+        <locationX>1784</locationX>
+        <locationY>694</locationY>
+        <assignmentItems>
+            <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.DiscardResubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>activityToUpdate_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>orderToUpdate</name>
+        <label>orderToUpdate</label>
+        <locationX>1518</locationX>
+        <locationY>482</locationY>
+        <assignmentItems>
+            <assignToReference>orderRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOrder</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>closeActivity_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>phaseAssignCase</name>
         <label>phaseAssignCase</label>
-        <locationX>1085</locationX>
-        <locationY>176</locationY>
+        <locationX>773</locationX>
+        <locationY>346</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -14,30 +124,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateCase</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>phaseAssignCase_1</name>
-        <label>phaseAssignCase_1</label>
-        <locationX>809</locationX>
-        <locationY>310</locationY>
-        <assignmentItems>
-            <assignToReference>getCase.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Completata</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>updateCase</targetReference>
+            <targetReference>caseToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignCase_4</name>
         <label>phaseAssignCase_4</label>
         <locationX>814</locationX>
-        <locationY>643</locationY>
+        <locationY>740</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -46,14 +140,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateCase</targetReference>
+            <targetReference>caseToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignCase_5</name>
         <label>phaseAssignCase_5</label>
-        <locationX>985</locationX>
-        <locationY>1113</locationY>
+        <locationX>1879</locationX>
+        <locationY>1271</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -62,14 +156,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateCase</targetReference>
+            <targetReference>caseToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignCase_6</name>
         <label>phaseAssignCase_6</label>
         <locationX>1245</locationX>
-        <locationY>1318</locationY>
+        <locationY>1415</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -78,14 +172,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateCase</targetReference>
+            <targetReference>caseToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignOrder</name>
         <label>phaseAssignOrder</label>
-        <locationX>1205</locationX>
-        <locationY>180</locationY>
+        <locationX>762</locationX>
+        <locationY>486</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -94,30 +188,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>phaseAssignOrder_1</name>
-        <label>phaseAssignOrder_1</label>
-        <locationX>805</locationX>
-        <locationY>439</locationY>
-        <assignmentItems>
-            <assignToReference>getOrder.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Completata</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignOrder_4</name>
         <label>phaseAssignOrder_4</label>
         <locationX>818</locationX>
-        <locationY>791</locationY>
+        <locationY>888</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -126,14 +204,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignOrder_5</name>
         <label>phaseAssignOrder_5</label>
-        <locationX>1119</locationX>
-        <locationY>1109</locationY>
+        <locationX>1426</locationX>
+        <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -142,14 +220,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignOrder_5_0</name>
         <label>phaseAssignOrder_5</label>
-        <locationX>520</locationX>
-        <locationY>1202</locationY>
+        <locationX>439</locationX>
+        <locationY>1137</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -158,14 +236,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>phaseAssignOrder_6</name>
         <label>phaseAssignOrder_6</label>
         <locationX>1355</locationX>
-        <locationY>1319</locationY>
+        <locationY>1416</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -174,199 +252,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>orderToUpdate</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>parentDecision_1</name>
-        <label>parentDecision_1</label>
-        <locationX>1139</locationX>
-        <locationY>50</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Case_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignCase</targetReference>
-            </connector>
-            <label>Case</label>
-        </rules>
-        <rules>
-            <name>Order_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignOrder</targetReference>
-            </connector>
-            <label>Order</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>parentDecision_2</name>
-        <label>parentDecision_2</label>
-        <locationX>679</locationX>
-        <locationY>380</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>case_2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignCase_1</targetReference>
-            </connector>
-            <label>case</label>
-        </rules>
-        <rules>
-            <name>order_2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignOrder_1</targetReference>
-            </connector>
-            <label>order</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>parentDecision_3</name>
-        <label>parentDecision_3</label>
-        <locationX>635</locationX>
-        <locationY>716</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>case_3</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignCase_4</targetReference>
-            </connector>
-            <label>case</label>
-        </rules>
-        <rules>
-            <name>order_3</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignOrder_4</targetReference>
-            </connector>
-            <label>order</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>parentDecision_4</name>
-        <label>parentDecision_4</label>
-        <locationX>1022</locationX>
-        <locationY>1258</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>case_4</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignCase_5</targetReference>
-            </connector>
-            <label>case</label>
-        </rules>
-        <rules>
-            <name>order_4</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignOrder_5</targetReference>
-            </connector>
-            <label>order</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>parentDecision_5</name>
-        <label>parentDecision_5</label>
-        <locationX>1302</locationX>
-        <locationY>1479</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>case_5</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Case__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignCase_6</targetReference>
-            </connector>
-            <label>case</label>
-        </rules>
-        <rules>
-            <name>order_5</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.Order__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>phaseAssignOrder_6</targetReference>
-            </connector>
-            <label>order</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>parentObjectDecision</name>
         <label>parentObjectDecision</label>
         <locationX>211</locationX>
-        <locationY>460</locationY>
+        <locationY>557</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Order</name>
@@ -400,10 +293,158 @@
         </rules>
     </decisions>
     <decisions>
+        <name>parentObjectDecision_0</name>
+        <label>parentObjectDecision</label>
+        <locationX>646</locationX>
+        <locationY>424</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Case__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignOrder</targetReference>
+            </connector>
+            <label>Order</label>
+        </rules>
+        <rules>
+            <name>Case_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignCase</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>parentObjectDecision_0_0_0</name>
+        <label>parentObjectDecision</label>
+        <locationX>639</locationX>
+        <locationY>817</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Case__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignOrder_4</targetReference>
+            </connector>
+            <label>Order</label>
+        </rules>
+        <rules>
+            <name>Case_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignCase_4</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>parentObjectDecision_0_0_0_0</name>
+        <label>parentObjectDecision</label>
+        <locationX>1569</locationX>
+        <locationY>1151</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Case__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignOrder_5</targetReference>
+            </connector>
+            <label>Order</label>
+        </rules>
+        <rules>
+            <name>Case_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignCase_5</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>parentObjectDecision_0_0_0_0_0</name>
+        <label>parentObjectDecision</label>
+        <locationX>1286</locationX>
+        <locationY>1602</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Case__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignOrder_6</targetReference>
+            </connector>
+            <label>Order</label>
+        </rules>
+        <rules>
+            <name>Case_4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivity.Order__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>phaseAssignCase_6</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>phaseChoise</name>
         <label>phaseChoise</label>
-        <locationX>540</locationX>
-        <locationY>511</locationY>
+        <locationX>517</locationX>
+        <locationY>612</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>casoHeroku</name>
@@ -433,35 +474,27 @@
                 <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>CBS_PRE010_AMMISSIBILITA_KO</stringValue>
+                    <stringValue>CBS_PRE010__AMMISSIBILITA_KO</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>CBS_VER004_AMMISSIBILITA_KO</stringValue>
+                    <stringValue>CBS_VER004__AMMISSIBILITA_KO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CBS_ATT010__GESTIONE_DATI_DISCORDANTI</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>parentDecision_1</targetReference>
+                <targetReference>parentObjectDecision_0</targetReference>
             </connector>
             <label>casoHeroku</label>
-        </rules>
-        <rules>
-            <name>casoCompletata</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>CBS_ATT010_GESTIONE_DATI_DISCORDANTI</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>parentDecision_2</targetReference>
-            </connector>
-            <label>casoCompletata</label>
         </rules>
         <rules>
             <name>casoMotoreVas</name>
@@ -474,7 +507,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>parentDecision_4</targetReference>
+                <targetReference>parentObjectDecision_0_0_0_0</targetReference>
             </connector>
             <label>casoMotoreVas</label>
         </rules>
@@ -485,18 +518,18 @@
                 <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>CBS_REC009_AMMISSIBILITA_KO</stringValue>
+                    <stringValue>CBS_REC009__AMMISSIBILITA_KO</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>CBS_VAR009_AMMISSIBILITA_KO</stringValue>
+                    <stringValue>CBS_VAR009__AMMISSIBILITA_KO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>parentDecision_3</targetReference>
+                <targetReference>parentObjectDecision_0_0_0</targetReference>
             </connector>
             <label>casoDaInviare</label>
         </rules>
@@ -507,7 +540,7 @@
                 <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>CBS_VEN001_SCARTO_TRANSITORIO</stringValue>
+                    <stringValue>CBS_VEN001__SCARTO_TRANSITORIO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -522,11 +555,11 @@
                 <leftValueReference>getActivity.wrts_prcgvr__ActivityTemplate__r.Name</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>CBS_VOL005_AMMISSIBILITA_KO</stringValue>
+                    <stringValue>CBS_VOL005__AMMISSIBILITA_KO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>parentDecision_5</targetReference>
+                <targetReference>parentObjectDecision_0_0_0_0_0</targetReference>
             </connector>
             <label>casoVoltura</label>
         </rules>
@@ -556,7 +589,7 @@
         <name>getActivity</name>
         <label>getActivity</label>
         <locationX>81</locationX>
-        <locationY>458</locationY>
+        <locationY>555</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>parentObjectDecision</targetReference>
@@ -577,7 +610,7 @@
         <name>getCase</name>
         <label>getCase</label>
         <locationX>379</locationX>
-        <locationY>573</locationY>
+        <locationY>670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>phaseChoise</targetReference>
@@ -597,8 +630,8 @@
     <recordLookups>
         <name>getOrder</name>
         <label>getOrder</label>
-        <locationX>379</locationX>
-        <locationY>377</locationY>
+        <locationX>374</locationX>
+        <locationY>502</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>phaseChoise</targetReference>
@@ -616,22 +649,80 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>updateActivity_0</name>
+        <label>updateActivity</label>
+        <locationX>2059</locationX>
+        <locationY>472</locationY>
+        <connector>
+            <targetReference>updeteOrder</targetReference>
+        </connector>
+        <inputReference>toUpdateActivity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateActivity_0_0</name>
+        <label>updateActivity</label>
+        <locationX>2058</locationX>
+        <locationY>702</locationY>
+        <connector>
+            <targetReference>updateCase</targetReference>
+        </connector>
+        <inputReference>toUpdateActivity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateCase</name>
         <label>updateCase</label>
-        <locationX>1383</locationX>
-        <locationY>708</locationY>
+        <locationX>2193</locationX>
+        <locationY>700</locationY>
+        <connector>
+            <targetReference>endTextFlow_0_0</targetReference>
+        </connector>
         <inputReference>getCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updeteOrder</name>
         <label>updeteOrder</label>
-        <locationX>1393</locationX>
-        <locationY>853</locationY>
-        <inputReference>getOrder</inputReference>
+        <locationX>2197</locationX>
+        <locationY>472</locationY>
+        <connector>
+            <targetReference>endTextFlow_0_0_0</targetReference>
+        </connector>
+        <inputReference>orderRecord</inputReference>
     </recordUpdates>
+    <screens>
+        <name>endTextFlow_0_0</name>
+        <label>endTextFlow</label>
+        <locationX>2344</locationX>
+        <locationY>695</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getCase.CaseNumber} risottomesso correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>endTextFlow_0_0_0</name>
+        <label>endTextFlow</label>
+        <locationX>2343</locationX>
+        <locationY>473</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getOrder.OrderNumber} risottomesso correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>280</locationY>
+        <locationY>377</locationY>
         <connector>
             <targetReference>getActivity</targetReference>
         </connector>
@@ -645,10 +736,34 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>caseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>orderRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order</objectType>
+    </variables>
+    <variables>
         <name>parentObject</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>toUpdateActivity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
     </variables>
 </Flow>

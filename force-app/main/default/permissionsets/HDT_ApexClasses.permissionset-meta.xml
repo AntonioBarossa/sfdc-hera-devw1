@@ -9,6 +9,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_VocalOrderPublicConfirm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_VocalOrderPublicConfirm</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_AppoitmentManagmentActivity</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -141,6 +149,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_VasSupplierTable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_HDT_BA_ConsentContactTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -194,6 +206,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_AccountStatementPicker</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_AccountVasOrdersView</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -293,6 +309,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_CloneCanceledOrder</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_CodiceAteco</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -342,6 +362,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_CustomLookupControllerTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_DecisionalScriptController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -582,6 +606,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_ReletedListAccount</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_ReportNavigatorController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1501,6 +1529,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_ScriptManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_SelfReadings</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1514,6 +1546,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_ServiceRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_ServiceTwentySix</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1853,6 +1889,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_ElegibilityCriteriaCheck</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1957,6 +1997,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_OrderTriggerVas</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_PaperProcessing</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1974,6 +2018,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_PostSalesManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_PrClickDoubleTransaction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2034,6 +2082,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SelfReadings</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ServiceCatalogOrFilter</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ServiceCatalogOrFilterProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2142,10 +2198,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_HerokuPostSalesManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WRP_HerokuPostSalesProva</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2281,10 +2333,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_WS_InstallmentPlans</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_WS_InvioNumerazioni</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2406,6 +2454,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_TransitionWinBack</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_InboundSol</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

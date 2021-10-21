@@ -33,8 +33,12 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato', 'Bozza', rt, 'HDT_RT_Morosita');
 			HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', rt, 'HDT_RT_Morosita');
 			HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'In Lavorazione', rt, 'HDT_RT_Morosita');
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', rt, 'HDT_RT_Morosita');
+            
 
-			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+            accounts[0].FiscalCode__c='SXSRLA45H28H501K';
+            insert accounts;
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
 			List<ServicePoint__c> servpoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].id);
@@ -46,6 +50,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			List<wrts_prcgvr__Activity__c> activities=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accounts[0].id);
 			activities[0].Case__c=cases[0].Id;
 			activities[0].wrts_prcgvr__status__c='Completed';
+            activities[0].approved__c = 'Si';
 
 			insert activities;
 
@@ -86,7 +91,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			                  WHERE Id=:tCase.Id];
 
 			System.assertEquals('Annullato', tCancelCase.Phase__c, 'Case not cancelled');
-			System.assertNotEquals('Bozza', tCancelCase.Phase__c);
+			System.assertNotEquals('Bozza', tCancelCase.Phase__c, 'value of parameter is not matching');
 			Test.stopTest();
 		}
 	}
@@ -101,12 +106,10 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 		            WHERE HerokuPracticeCode__c='21313232132132'];
 
 
-		wrts_prcgvr__Activity__c tCustActivity=HDT_LC_RecordEditFormSales.getActivity(tCase.Id);
+		HDT_LC_RecordEditFormSales.wrapReturn wrapp = HDT_LC_RecordEditFormSales.getActivity(tCase.Id);
 
-		System.debug('tCustActivity = '+tCustActivity);
-
-		System.assertEquals(true, String.isNotEmpty(tCustActivity.Id), ' wrong Custom Activity returned');
-		System.assertNotEquals(false, String.isNotEmpty(tCustActivity.Id));
+		System.assertEquals(tCase.id, wrapp.c.id, 'value of parameter is matching');
+		System.assertNotEquals(null, wrapp, 'value of parameter is not matching');
 		Test.stopTest();
 	}
 
@@ -129,7 +132,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 		System.debug('confirm = '+confirm);
 
 		System.assertEquals(false, confirm, 'Custom Activity not returned');
-		System.assertNotEquals(true, confirm);
+		System.assertNotEquals(true, confirm, 'value of parameter is not matching');
 		Test.stopTest();
 	}
 
@@ -169,17 +172,22 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			caseobj.put('OperationSubType__c', 'Prezzo energia negoziato');
 			caseobj.put('ReassignmentReason__c', 'Attesa approvazione');
 			caseobj.put('OperationType__c', 'Unificazione CA');
+            caseobj.put('Note__c', 'Nota');
 
-			HDT_LC_RecordEditFormSales.savePractice(tCase.Id, tAccount.Id, caseobj);
-			HDT_LC_RecordEditFormSales.savePractice(tCase2.Id, tAccount.Id, caseobj);
+
+			String result = HDT_LC_RecordEditFormSales.savePractice(tCase2.Id, tAccount.Id, caseobj);
+            
+            String result2 = HDT_LC_RecordEditFormSales.savePractice(tCase.Id, tAccount.Id, caseobj);
 
 
 			Case tCaseUpdt=[SELECT Id, Phase__c
 			                FROM Case
 			                WHERE Id=:tCase.Id];
 
-			System.assertEquals('In Lavorazione', tCaseUpdt.Phase__c, 'Case not updated');
-			System.assertNotEquals('Bozza', tCaseUpdt.Phase__c);
+			System.assertEquals('success', result, 'value of parameter is matching');
+			System.assertNotEquals(null, result, 'value of parameter is not matching');
+            System.assertEquals('success2', result2, 'value of parameter is matching');
+			System.assertNotEquals(null, result2, 'value of parameter is not matching');
 			Test.stopTest();
 		}
 	}
@@ -224,7 +232,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			                WHERE Id=:tCase.Id];
 
 			System.assertEquals('Attesa approvazione', tCaseUpdt.ReassignmentReason__c, 'Case not updated');
-			System.assertNotEquals('', tCaseUpdt.ReassignmentReason__c);
+			System.assertNotEquals('', tCaseUpdt.ReassignmentReason__c, 'value of parameter is not matching');
 
 			Test.stopTest();
 		}

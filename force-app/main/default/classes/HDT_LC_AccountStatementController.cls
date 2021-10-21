@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_AccountStatementController {
 
     @AuraEnabled(cacheable=true)
@@ -19,7 +20,7 @@ public inherited sharing class HDT_LC_AccountStatementController {
 
     @AuraEnabled//Sync caller method
     public static Object callMulesoft(String techObj, String requestObj){
-        System.debug('# Sync callMulesoft #');
+        System.debug(LoggingLevel.DEBUG, '# Sync callMulesoft #');
         return HDT_LC_AccountStatementCtrlHelper.createMulesoftCall(techObj, requestObj);
     }
     
@@ -45,7 +46,7 @@ public inherited sharing class HDT_LC_AccountStatementController {
     //@AuraEnabled
     //public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj operationBackend(String operation, List<String> idlist){
 
-    //    System.debug('>>> Operation -> ' + operation + ' >>> idlist -> ' + idlist);
+    //    System.debug(LoggingLevel.DEBUG, '>>> Operation -> ' + operation + ' >>> idlist -> ' + idlist);
 
     //    HDT_WRP_AccountStatement.HDT_WRP_ResponseObj respObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
     //    respObj.success = true;
@@ -56,11 +57,11 @@ public inherited sharing class HDT_LC_AccountStatementController {
     //------------------------------------------------------------------------------------------------------------------
     /*@AuraEnabled(continuation=true)//Async caller method
     public static Object callMulesoftAsync(String techObj, String requestObj){
-        System.debug('# Async callMulesoft #');
+        System.debug(LoggingLevel.DEBUG, '# Async callMulesoft #');
         HDT_WS_MakeMulesoftCall.ResponseCtrl respObj = HDT_WS_MulesoftCallerAsync.createMulesoftCall(techObj, requestObj);
 
         if(respObj.success){
-            System.debug('# continuation true #');
+            System.debug(LoggingLevel.DEBUG, '# continuation true #');
             // Create continuation. Argument is timeout in seconds.
             Continuation con = new Continuation(120);
             // Set callback method
@@ -72,7 +73,7 @@ public inherited sharing class HDT_LC_AccountStatementController {
             // Return the continuation
             return con;
         } else {
-            System.debug('# continuation false #');
+            System.debug(LoggingLevel.DEBUG, '# continuation false #');
             return respObj;
         }
 
@@ -81,7 +82,7 @@ public inherited sharing class HDT_LC_AccountStatementController {
     @AuraEnabled
     public static Object processResponse(List<String> labels, Object state) {
         
-        System.debug('#### processResponse ####');
+        System.debug(LoggingLevel.DEBUG, '#### processResponse ####');
         // Get the response by using the unique label
         HttpResponse response = Continuation.getResponse(labels[0]);
 
@@ -89,8 +90,8 @@ public inherited sharing class HDT_LC_AccountStatementController {
         String responseStatus = response.getStatus();
         Integer statusCode = response.getStatusCode();
 
-        System.debug('## Response status -> ' + responseStatus + ' - ' + statusCode);
-        System.debug('## Continuation state -> ' + state);
+        System.debug(LoggingLevel.DEBUG, '## Response status -> ' + responseStatus + ' - ' + statusCode);
+        System.debug(LoggingLevel.DEBUG, '## Continuation state -> ' + state);
 
         return HDT_WS_MulesoftCallerAsync.processResponse(String.valueOf(state), statusCode, response.getBody());
 

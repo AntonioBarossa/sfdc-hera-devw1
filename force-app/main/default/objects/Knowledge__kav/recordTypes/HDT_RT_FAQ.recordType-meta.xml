@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_FAQ</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Knowledge_Compact_Layout</compactLayoutAssignment>
     <label>FAQ</label>
     <picklistValues>
         <picklist>CommercialDocumentationType__c</picklist>
@@ -165,7 +166,7 @@
     <picklistValues>
         <picklist>ValidationStatus</picklist>
         <values>
-            <fullName>Not Validated</fullName>
+            <fullName>Non Validato</fullName>
             <default>false</default>
         </values>
         <values>

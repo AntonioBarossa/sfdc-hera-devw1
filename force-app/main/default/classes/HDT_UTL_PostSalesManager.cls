@@ -373,6 +373,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
         activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+        activity.Type__c = templateName;
         return activity;
     }
 
@@ -382,5 +383,23 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         formParams.put('mode', 'Print');
         formParams.put('Archiviato', 'Y');
         HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
+    }
+
+    public void closeRiattivazione(SObject inputCase)
+    {
+        Case currentCase = (Case)inputCase;
+        if(currentCase.Type.equalsIgnoreCase('Riattivazione Fornitura') && (currentCase.HerokuPracticeCode__c == null || currentCase.HerokuPracticeCode__c == ''))
+        {
+            currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+        }
+        updateFuture(JSON.serialize(currentCase));
+    }
+
+    @Future
+    private static void updateFuture(String serializedCase)
+    {
+        Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
+        HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
 }

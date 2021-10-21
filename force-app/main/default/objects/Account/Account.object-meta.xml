@@ -248,12 +248,10 @@
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.TYPE</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <!--Start HRAWRM-366 31-08-2021 -->
-        <searchResultsAdditionalFields>BusinessNameRcuFormula__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>FiscalCode__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>BusinessNameRcuFormula__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>VATNumber__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>BillingAddressFormula__c</searchResultsAdditionalFields>
-          <!--End HRAWRM-366 31-08-2021 -->
     </searchLayouts>
     <sharingModel>Private</sharingModel>
 </CustomObject>

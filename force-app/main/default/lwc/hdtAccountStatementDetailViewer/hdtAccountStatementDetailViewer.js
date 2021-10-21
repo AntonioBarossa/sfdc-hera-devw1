@@ -676,8 +676,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
                         break;
                     case 'text':
-                        filterValue = currentFilter[key].value;
-                        tableValueToFilter = item[key];
+                        filterValue = currentFilter[key].value.toLowerCase();
+                        tableValueToFilter = item[key].toLowerCase();
                 }
 
                 switch (currentFilter[key].operator) {

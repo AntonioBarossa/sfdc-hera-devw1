@@ -4,7 +4,8 @@
 
         <div class="slds-card__body slds-card__body_inner">
             <article class="slds-card slds-card_boundary">
-                <div class="slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header-no-border">
+                <div
+                    class="slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header-no-border">
                     <header class="slds-media slds-media_center slds-has-flexi-truncate">
                         <div class="slds-media__figure">
                             <span class="slds-icon_container slds-icon-standard-account" title="account">
@@ -32,50 +33,43 @@
                         <span class="slds-assistive-text"></span>
                     </a>
                 </footer>
-
-                <lightning-layout multiple-rows="true" pull-to-boundary="small">
-
-
-
-                    <template for:each={contacts} for:item="c">
-                        <lightning-layout-item  padding="around-small" key={c.Id} size="5">
-    
-    
+                <!-- HRAWRM-500 Start 04/10/2021
+                <lightning-layout multiple-rows="true" pull-to-boundary="small"> -->
+                <!-- <template for:each={contacts} for:item="c">
+                        <lightning-layout-item  padding="around-small" key={c.Id} size="5">    
                             <c-hdt-contact-tab accountcontactrel={c}></c-hdt-contact-tab>
                         </lightning-layout-item>
-    
-    
-                    </template>
-                </lightning-layout>
+                    </template> -->
+                <!-- </lightning-layout> -->
+                <c-hdt-custom-table mydata={contacts}></c-hdt-custom-table>
+                <!--HRAWRM-500 End 04/10/2021-->
 
             </article>
         </div>
-
     </article>
-    
     <template if:true={showModal}>
         <!-- <c-hdt-form-referente accountid={recordId} ></c-hdt-form-referente> -->
 
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large"
+            aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
             <div class="slds-modal__container">
                 <template if:true={spinner}>
                     <lightning-spinner alternative-text="Loading" variant="brand" size="large">
                     </lightning-spinner>
-               </template>
+                </template>
                 <!-- Modal/Popup Box LWC header here -->
                 <header class="slds-modal__header">
                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
                         title="Close" onclick={closeModal}>
                         <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
                             size="small"></lightning-icon>
-                        <span class="slds-assistive-text">Close</span>
+                        <span class="slds-assistive-text">Chiudi</span>
                     </button>
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Referente </h2>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Referente</h2>
                 </header>
                 <!-- Modal/Popup Box LWC body starts here -->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                   
+
                     <p><b>Referente</b></p>
 
                     <lightning-card title="Informazioni Anagrafiche">
@@ -115,7 +109,8 @@
                             <div class="slds-col slds-grid">
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required  max-length="16"	>
+                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required
+                                        max-length="16">
                                     </lightning-input>
                                 </div>
                                 <div
@@ -144,13 +139,20 @@
                         </div>
                     </lightning-card>
 
-                    <lightning-card title="Indirizzi">
-                        <div class="slds-p-left_x-large slds-p-right_x-large">
-                            <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}>
-                            </c-hdt-target-object-address-fields>
-                        </div>
 
+                    <lightning-card title="Indirizzi">
+                        <lightning-input type="toggle" label="Inserisci Indirizzo" name="insertAddress"
+                            data-id="insertAddress" value={insertAddress} onchange={handleInsertAddressAddRes}>
+                        </lightning-input>
+                        <template if:true={insertAddress}>
+                            <div class="slds-p-left_x-large slds-p-right_x-large">
+                                <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}>
+                                </c-hdt-target-object-address-fields>
+                            </div>
+                        </template>
                     </lightning-card>
+
+
 
                     <lightning-card title="Contatti">
 
@@ -227,12 +229,10 @@
                 </div>
                 <!-- Modal/Popup Box LWC footer starts here -->
                 <footer class="slds-modal__footer">
-                    <lightning-button label="Annulla" title="Non-primary action" onclick={closeModal} ></lightning-button>
-                   
-                      
-           
-                    <lightning-button label="Salva" title="Non-primary action" onclick={handleSave} ></lightning-button>
-     
+                    <lightning-button label="Annulla" title="Annulla" onclick={closeModal}>
+                    </lightning-button>
+                    <lightning-button label="Salva" title="Salva" onclick={handleSave}></lightning-button>
+
                 </footer>
             </div>
         </section>
@@ -240,7 +240,7 @@
 
 
     </template>
-   
+
 
 
 

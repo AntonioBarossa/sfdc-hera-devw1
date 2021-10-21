@@ -126,7 +126,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         save({order: orderToSave, lastStepData: this.lastStepData}).then(data =>{
             this.loading = false;
 
-            if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+            if(this.order.ProcessType__c === 'Switch in Ripristinatorio' || this.order.IsCloned__c===true){
                 console.log('redirect_attivazione_mod');
                 this.dispatchEvent(new CustomEvent('redirect_attivazione_mod'));
             } else {

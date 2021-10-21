@@ -7,9 +7,9 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     }
 
- 	public override void beforeDelete(){}
- 	public override void afterDelete(){}
-  	public override void afterUndelete(){}
+ 	//public override void beforeDelete(){}
+ 	//public override void afterDelete(){}
+  //	public override void afterUndelete(){}
     
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
@@ -67,43 +67,14 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //***INIZIO SVILUPPO CAMPAGNE */
         HDT_UTL_CaseProcess.updateMemberStatusforClosedCases(trigger.new, trigger.old); 
         //**FINE SVILUPPO */
+
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+
     }
 
-    //Andrei Necsulescu - 02/07/2021: Commented as it created an exception when importing more than a certain number of Cases at a time.
-    /*
-    public override void afterInsert(){   
-        wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt ObjectCompatibility =
-            (wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt) wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
-
-        for(Case c : (Case[])trigger.New){
-            //call the check for the candidate SObject
-            wrts_prcgvr.ObjectCompatibility_1_0.CheckResult result =
-                (wrts_prcgvr.ObjectCompatibility_1_0.CheckResult) ObjectCompatibility.check(new Map<String,Object>{'sObject' => c});
-
-            if(result.incompatibilities.size() > 0) {
-                String msg = (result.incompatibilities.size() == 1) ? 'Incompatibility found on Case: ' : 'Incompatibilities found on Cases: ';
-                c.addError(msg + getIncompatibilityMessage((Case[])result.incompatibilities));
-            }
-        }
-    }   
-    
-    private static String getIncompatibilityMessage(Case[] incomps){
-        Set<Id> conflictIds = new Set<Id>();
-        for(Case c : incomps){
-            conflictIds.add(c.Id);
-        }
-
-        Set<String> conflicts = new Set<String>();
-        
-        for(Case c : [SELECT Id, CaseNumber, RecordType.Name FROM Case WHERE Id IN :conflictIds]) {
-            conflicts.add(c.CaseNumber + ' (' + c.RecordType.Name + ')');
-        }
-        System.debug('conflicts: '+ conflicts);
-
-        String[] conflictsString = new List<String>(conflicts);
-        return String.join(conflictsString, ', ');
+    public override void afterInsert(){
+        HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
     }
-    */
 
     /**
      * Ribalta i campi Canale/Gruppo/Postazione dall'utenza in contesto al Case.

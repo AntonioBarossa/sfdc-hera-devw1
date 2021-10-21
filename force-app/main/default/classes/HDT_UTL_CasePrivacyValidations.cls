@@ -1,7 +1,7 @@
 // CLASSE DEPRECATA
-public inherited sharing class HDT_UTL_CasePrivacyValidations implements HDT_UTL_CaseValidationInterface {
+public inherited sharing class HDT_UTL_CasePrivacyValidations {
 
-    HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
+    /*HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
 
     public String validate(String fields, String recordId){
 
@@ -43,6 +43,6 @@ public inherited sharing class HDT_UTL_CasePrivacyValidations implements HDT_UTL
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
         return String.valueOf(fieldsMap.get(fieldToGet));
-    }
+    }*/
 
 }

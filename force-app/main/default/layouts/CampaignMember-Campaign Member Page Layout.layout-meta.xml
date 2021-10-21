@@ -15,14 +15,18 @@
                 <field>ContactId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Status</field>
+                <behavior>Edit</behavior>
+                <field>PhoneNumber__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior> <!--HRAWRM-475 08/09/2021  -->
+                <behavior>Readonly</behavior>
                 <field>RelatedActivity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Status</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -34,22 +38,49 @@
         <label>Informazioni utili</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
+                <behavior>Readonly</behavior>
                 <field>GenericField2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
+                <behavior>Readonly</behavior>
                 <field>GenericField3__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GenericField4__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GenericField5__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
-                <field>GenericField4__c</field>
+                <behavior>Edit</behavior>
+                <field>Agency__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Esiti FUB</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OutcomeFub__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior><!--HRAWRM-475 08/09/2021  -->
-                <field>GenericField5__c</field>
+                <behavior>Edit</behavior>
+                <field>ExcludeFub__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OutcomeDateFub__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -71,11 +102,6 @@
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
-        <!-- <platformActionListItems>
-            <actionName>ConvertLead</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems> --><!--HRAWRM-475 08/09/2021  -->
     </platformActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>

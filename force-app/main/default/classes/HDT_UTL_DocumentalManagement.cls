@@ -1,6 +1,6 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
 public inherited sharing class HDT_UTL_DocumentalManagement {
-	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList,String context){
-		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
 		switch on context {
 			when 'Context1' {
 				return getRecordObjectsListContext1(recordsList);
@@ -29,10 +29,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cv.PathOnClient = filename + '.pdf';
 		cv.ContentLocation = 'S';
 		try {
-			insert cv;
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
+			HDT_UTL_DatabaseService.insertSObject(cv);
 			return cv;
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 	}
@@ -50,10 +51,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// V = Viewer, C = Collaborator, I = Inferred
 		cdl.ShareType = 'V';
 		try {
-			insert cdl;
+			HDT_UTL_DatabaseService.insertSObject(cdl);
 			return cdl;
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 	}
@@ -65,7 +66,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			ContentDistribution cd = (ContentDistribution)recordList[0];
 			return cd.DistributionPublicUrl;
 		} catch (Exception e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 		
@@ -82,23 +83,43 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cd.PreferencesPasswordRequired=false;
 		cd.PreferencesAllowOriginalDownload= true;
 		try {
-			insert cd;
+			HDT_UTL_DatabaseService.insertSObject(cd);
 			return getSharedLink(cd.Id);
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 	}
+	
 	public static void createDocumentEnvelopeAttachment(HDT_WRP_DocumentalResponse response, String context){
+		
+		//DEBUG
+		String debugString = 'HDT_UTL_DocumentalManagement - createDocumentEnvelopeAttachment';
+		System.debug(LoggingLevel.DEBUG, debugString);
+		
 		try {
 			String recordId;
 			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem> serviceItemList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>();
 			serviceItemList.addAll(response.deliverPackageResponse.serviceList);
+			
 			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
 			List<Order> orderList = new List<Order>();
+			Set<String> serviceItemSet = new Set<String>();
+			Map<String,Id> processNumberIdMap = new Map<String,Id>();
 			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
-				recordId = (Id) serviceItem.serviceId;
+				serviceItemSet.add(serviceItem.serviceId);
+			}
+			List<SObject> processRecods = HDT_QR_DocumentalConfiguration.getRecordFromServiceItems(context, serviceItemSet);
+			for(SObject singleRecord : processRecods){
+				if(context.equalsIgnoreCase('Case')){
+					processNumberIdMap.put((String)singleRecord.get('CaseNumber'), (Id)singleRecord.get('Id'));
+				}else{
+					processNumberIdMap.put((String)singleRecord.get('OrderNumber'), (Id)singleRecord.get('Id'));
+				}
+			}
+			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
+				recordId = (Id) processNumberIdMap.get(serviceItem.serviceId);
 				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
 					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
 					envelope.AttachmentCode__c = singleAttachment.code;
@@ -118,15 +139,18 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					envelopeList.add(envelope);
 				}
 			}
+			
 			if(envelopeList.size()>0){
 				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
+				System.debug(LoggingLevel.DEBUG, debugString + ' - result: '+ result);
 			}
 			if(orderList.size()>0){
 				Boolean resultOrder = HDT_UTL_DatabaseService.updateSObject(orderList);
+				System.debug(LoggingLevel.DEBUG, debugString + ' - resultOrder: '+ resultOrder);
 			}
 			
 		} catch (Exception ex) {
-			System.debug('Error in class HDT_UTL_DocumentalManagement method createDocumentEnvelopeAttachment at line' + ex.getLineNumber() + '. Error: '+ ex.getMessage());
+			System.debug(LoggingLevel.DEBUG, 'Error in class HDT_UTL_DocumentalManagement method createDocumentEnvelopeAttachment at line' + ex.getLineNumber() + '. Error: '+ ex.getMessage());
 		}
 	}
 
@@ -134,12 +158,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.mandatory == '1')
+			if(singleAttachment.mandatory == '1'){
 				return true;
+			}
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
@@ -166,8 +191,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return HDT_UTL_DatabaseService.updateSObject(processRecord);
 	}
-
-	public static sObject getProcessRecord(String requestId, String context){
+	
+	//SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
+	public static SObject getProcessRecord(String requestId, String context){
 		String fieldString = '';
 		String fromString = '';
 		String whereString = '';
@@ -179,87 +205,113 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
 			when 'Case'{
-				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
+				fieldString = 'Id, AccountId,SendMode__c, Email__c,SignMode__c,DocumentalPhase__c,Cluster__c,QuotationType__c';
 				fromString = 'Case';
 				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
-				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c,LastUsedPostelEmail__c';
 				fromString = 'Account';
 				whereString = 'Id = \''+requestId + '\'';
 			}
 		}
 		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
+		System.debug(LoggingLevel.DEBUG, 'Query: ' + queryString);
 		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
 		return toReturnList[0];
 	}
-	public static void createDocumentSendTracking(String message, Id requestId, String envelopeId,sObject processRecord){
+	
+	public static void createDocumentSendTracking(String message, Id requestId, String envelopeId, SObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentSendTracking__c documentalSendTracking = new DocumentSendTracking__c ();
+			
 			switch on sObjName {
 				when 'Case' {
 					documentalSendTracking.Case__c = (Id) requestId;
-					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Type__c = 'Plico';
 				}
 				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
-					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('ShippingMail__c');
+					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('LastUsedPostelEmail__c');
+					documentalSendTracking.Type__c = 'Estratto Conto';
 				}
 			}
+			
 			documentalSendTracking.SendDate__c = Date.today();
 			documentalSendTracking.EnvelopeId__c = envelopeId;
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
+			
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,sObject processRecord){
+	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,SObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
 			switch on sObjName {
 				when 'Case' {
 					documentalActivity.CaseId__c = (Id) requestId;
-					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					//System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
 				}
 				when 'Order' {
 					documentalActivity.OrderId__c = (Id) requestId;
 				}
-				when else {
-
-				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
-			documentalActivity.ErrorDescription__c = errorMessage;
+			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
 
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
+	
+	public static DocumentalActivity__c initDocumentalActivity(sObject parentRecord,String envelopeId){
+		DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
+		try {
+			Id requestId = (Id) parentRecord.get('Id');
+			String sObjName = requestId.getSObjectType().getDescribe().getName();
+			switch on sObjName {
+				when 'Case' {
+					documentalActivity.CaseId__c =  requestId;
+				}
+				when 'Order' {
+					documentalActivity.OrderId__c = requestId;
+				}
+			}
+			documentalActivity.EnvelopeId__c = envelopeId;
+		} catch (Exception ex) {
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivity ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+		}
+		return documentalActivity;
+	}
+	
 	public static void createLandRegistryData(Id requestId,sObject processRecord){
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			if (sObjName != 'Order'){
-				System.debug('Necessario passare un Order per procedere con la creazione dei dati catastali.');
+				System.debug(LoggingLevel.DEBUG, 'Necessario passare un Order per procedere con la creazione dei dati catastali.');
 				return;
 			}
 
 			// TODO DLM
 
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createLandRegistryData ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createLandRegistryData ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
@@ -269,7 +321,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<DocumentSelected__c> documentSelectedObjectList = (List<DocumentSelected__c> ) caseObject.documenti_selezionati__r;
 		List<sObject> listCase = new List<sObject>();
 		listCase.add(caseObject);
-		System.debug('listCase ' + listCase);
+		System.debug(LoggingLevel.DEBUG, 'listCase ' + listCase);
 		List<sObject> listAccount = new List<sObject>();
 		listAccount.add(accountObject);
 		List<sObject> listContact = new List<sObject>();
@@ -319,73 +371,84 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	}
 
 	
+	//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){
+		
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>();
+		
 		for(Order singleOrder : (List<Order>) recordsList){
 			mapStringObjectRecords = new Map<String,List<sObject>>();
 			
 			List<OrderItem> orderItemList = new List<OrderItem>();
 			List<OrderItem> orderItemVasList = new List<OrderItem>();
+			
 			//USER
 			User seller = (User) singleOrder.SaleBy__r;
 			List<User> userList = new List<User>();
 			userList.add(seller);
-			mapStringObjectRecords.put('Seller' ,userList);
+			mapStringObjectRecords.put('Seller', userList);
+			
 			//ACCOUNT
 			Account account = (Account) singleOrder.Account;
 			List<Account> accountList = new List<Account>();
 			accountList.add(account);
-			mapStringObjectRecords.put('Account' ,accountList);
+			mapStringObjectRecords.put('Account', accountList);
+			
 			//CONTACT
 			Contact contact = (Contact) singleOrder.Contact__r;
 			List<Contact> contactList = new List<Contact>();
 			contactList.add(contact);
-			mapStringObjectRecords.put('PrimaryContact' ,contactList);
+			mapStringObjectRecords.put('PrimaryContact', contactList);
+			
 			//PARENT ORDER
 			Order parentOrder = (Order) singleOrder.ParentOrder__r;
 			List<sObject> parentOrderList = new List<sObject>();
 			parentOrderList.add(parentOrder);
-			mapStringObjectRecords.put('ParentOrder' , parentOrderList);
+			mapStringObjectRecords.put('ParentOrder', parentOrderList);
+			
 			//SINGLE ORDER
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
-			mapStringObjectRecords.put('Order' , orderList);
+			mapStringObjectRecords.put('Order', orderList);
 			
-			
-			mapStringObjectRecords.put('Account' ,accountList);
-			for(OrderItem singleOrderItem : (List<OrderItem>)  singleOrder.OrderItems){
+			//PROCESSING ORDER ITEMS
+			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){
 				orderItemList = new List<OrderItem>();
 				String family = singleOrderItem.ProductFamily__c;
 				if(family == 'Offerta commerciale'){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemCommercialOffer' ,orderItemList);
+					mapStringObjectRecords.put('ItemCommercialOffer', orderItemList);
 				}else if(family == 'VAS Prodotto' || family == 'VAS Servizio'){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ParentItemVAS' ,orderItemList);
+					mapStringObjectRecords.put('ParentItemVAS', orderItemList);
 				}else if(family.equalsIgnoreCase('VAS Opzione servizio') || family.equalsIgnoreCase('VAS Opzione prodotto') || family.equalsIgnoreCase('VAS Fatturabili')){
 					orderItemVasList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemVAS' ,orderItemVasList);
+					mapStringObjectRecords.put('ItemVAS', orderItemVasList);
 				}else if(family.indexOf('Bonus') > -1){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemBonus' ,orderItemList);
+					mapStringObjectRecords.put('ItemBonus', orderItemList);
 				}else if(family.indexOf('Promozione') > -1){
 					orderItemList.add(singleOrderItem);
-					mapStringObjectRecords.put('ItemPromotion' ,orderItemList);
+					mapStringObjectRecords.put('ItemPromotion', orderItemList);
 				}
 			}
+			
 			toReturn.add(new Map<String,List<sObject>>(mapStringObjectRecords));
 		}
+		
 		return toReturn;
 	}
-
+	
+	//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 	public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure getDocumentalConfiguration(String context){
 		List<Document> documentList = HDT_QR_DocumentalConfiguration.getDocumentByContext(context);
-		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(documentList[0].body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
+		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure configuration;
+		configuration = (HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure) JSON.deserialize(documentList[0].body.toString(), HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure.class);
 		return configuration;
 	}
 
-    public static String manageAmountDot(String valString){
+  public static String manageAmountDot(String valString){
 		String res = valString;
 		Integer df = valString.indexOf('.');
 		String intero = '';
@@ -395,7 +458,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}else{
 				intero=valString.substring(0,df);
 			}
-			String  dec=valString.substring(df+1,valString.length());
+			String dec=valString.substring(df+1,valString.length());
 			if(dec.length()==1){
 				dec=dec+'0';
 			}
@@ -411,7 +474,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return res;
 	}
 
-    
+  
 	public static String removeSpecialChar (String text){
 		text = text.replaceAll('[à]','a\'');
 		text = text.replaceAll('[èé]','e\'');
@@ -433,8 +496,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		text = text.replaceAll('Í','I\'');
 		text = text.replaceAll('[’‘“”]','\'');
 		text = text.replaceAll('·', '-');
-		text = text.replaceAll('\u00A0', ' ');  // 00A0 = carattere unicode "No-Break Space"
-		text = text.replaceAll('\u2026', '...');  // 2026 = carattere unicode "horizontal ellipsis"
+		text = text.replaceAll('\u00A0', ' '); // 00A0 = carattere unicode "No-Break Space"
+		text = text.replaceAll('\u2026', '...'); // 2026 = carattere unicode "horizontal ellipsis"
 
 		return text;
 	}
@@ -452,8 +515,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static Integer getChildCount(String objectString, Map<String,List<sObject>> inputs){
 		return inputs.get(objectString)?.size();
 	}
-	public static String getValue(String objectString, String fieldString, Integer index,Map<String,List<sObject>> inputs,Map<String,Object> formParams){
-        String retVal = '';
+	public static String getValue(String objectString, String fieldString, Integer index, Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+    String retVal = '';
 		try {
 			if(inputs.get(objectString) != null && inputs.get(objectString).size()>0 && inputs.get(objectString)[0] != null){
 				if(inputs.get(objectString)[index].get(fieldString) != null){
@@ -463,25 +526,25 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				retVal = String.valueOf(formParams.get(fieldString));
 			}
 		} catch (Exception ex) {
-			System.debug(objectString + ' ' + fieldString +' '+ index+ ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, objectString + ' ' + fieldString +' '+ index + ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
 		}
-        return retVal;
-    }
-	public static String getValueFromObject(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord, Integer index,Map<String,Object> formParams){
+    return retVal;
+  }
+	public static String getValueFromObject(Map<String,List<sObject>> inputs, HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord, Integer index,Map<String,Object> formParams){
 		String result = '';
 		if(singleRecord.object1 != null && singleRecord.object1 != '' && singleRecord.field1 != null){
-            result = getValue(singleRecord.object1,singleRecord.field1,index,inputs,formParams);
+      result = getValue(singleRecord.object1, singleRecord.field1, index, inputs, formParams);
 		}
 
 		if(result == '' && singleRecord.object2 != null && singleRecord.object2 != '' && singleRecord.field2 != null){
-			result = getValue(singleRecord.object2,singleRecord.field2,index,inputs,formParams);
+			result = getValue(singleRecord.object2, singleRecord.field2, index, inputs, formParams);
 		}
 
 		if(result == '' && singleRecord.object3 != null && singleRecord.object3 != '' && singleRecord.field3 != null){
-            result = getValue(singleRecord.object3,singleRecord.field3,index,inputs,formParams);
+      result = getValue(singleRecord.object3, singleRecord.field3, index, inputs, formParams);
 		}
 		if(result == '' && singleRecord.object4 != null && singleRecord.object4 != '' && singleRecord.field4 != null){
-            result = getValue(singleRecord.object4,singleRecord.field4,index,inputs,formParams);
+      result = getValue(singleRecord.object4, singleRecord.field4, index, inputs, formParams);
 		}
 
 		if(result != null && result != ''){
@@ -490,7 +553,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					Date dateObj = Date.valueOf(result);
 					result = transformDate(dateObj);
 				} catch (Exception ex) {
-					System.debug('Attenzione! Rimuovere flag is data nella sezione' + singleRecord.recordType);
+					System.debug(LoggingLevel.DEBUG, 'Attenzione! Rimuovere flag is data nella sezione' + singleRecord.recordType);
 				}
 			}else if(singleRecord.manageAmount != null && singleRecord.manageAmount == 'Y'){
 				result = manageAmountDot(result);
@@ -508,10 +571,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if(resultOne != null && resultOne != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
 			resultTwo += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
 		}
-		if(singleRecord.separetor == 'space')
+		if(singleRecord.separetor == 'space'){
 			return resultOne + ' ' + resultTwo;
-		else
+		} else {
 			return resultOne + singleRecord.separetor + resultTwo;
+		}
 	}
 
 	public static String calculateExpression(Map<String,List<sObject>> inputs,String expression, Map<String,Object> formParams){
@@ -529,9 +593,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String resultToReturn = '';
 		String jolly = '';
 		Integer i = 0;
-		//System.debug('expression ' + expression);
-        expressionArray = expression.split('\\|');
-		//System.debug('expressionArray ' + expressionArray);
+		
+		//System.debug(LoggingLevel.DEBUG, 'expression ' + expression);
+    	expressionArray = expression.split('\\|');
+		
+		//System.debug(LoggingLevel.DEBUG, 'expressionArray ' + expressionArray);
 		try{
 			if(expressionArray.size()>0){
 				while(i<expressionArray.size()){
@@ -616,10 +682,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 		}catch(Exception ex){
-			System.debug('for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
 		}
-        return resultToReturn;
+		
+    	return resultToReturn;
 	}
+	
 	public static String getDocumentalContext(String context){
 		switch on context {
 			when 'Order' {
@@ -645,6 +713,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 		}
 	}
+	
 	// Calcola lo Stato Documento da mandare a EngageOne per le stampe della vista Gestione Credito.
 	public static String calculateDocumentStatusGc(String ufficioIncassi, Double residuo, Boolean ordineDiPagamento){
 		String statoDocumento = '';
@@ -683,7 +752,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 		} catch (Exception ex) {
-			System.debug('Errore calcolo stato documento GC ' + ex.getMessage());
+			System.debug(LoggingLevel.DEBUG, 'Errore calcolo stato documento GC ' + ex.getMessage());
 		}
 		return statoDocumento;
 	}
@@ -709,6 +778,6 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			return 'Da accreditare';
 		}
 		
-		return '';  // Non dovrebbe mai accadere.
+		return ''; // Non dovrebbe mai accadere.
 	}
 }

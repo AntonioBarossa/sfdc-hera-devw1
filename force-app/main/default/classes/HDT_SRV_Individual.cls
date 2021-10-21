@@ -1,3 +1,9 @@
+ /**
+* @author Sabina Levonja (sabina.levonja@dunegroup.it)
+* @date 21/04/21
+* @description HDT_SRV_Individual
+* @history Sabina Levonja – 21/04/21 – created class
+*/
 public with sharing class HDT_SRV_Individual {
     private static final String CREATEPERMISSION = 'create';
     private static final String UPDATEPERMISSION = 'update';

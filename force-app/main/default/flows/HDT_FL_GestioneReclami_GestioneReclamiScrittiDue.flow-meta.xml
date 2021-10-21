@@ -175,7 +175,7 @@
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -198,7 +198,7 @@
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -605,6 +605,12 @@
             <field>Case__c</field>
             <value>
                 <elementReference>GetCaseAggiornatoSecondaClassificazione.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityBloccoSollecito.Name</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

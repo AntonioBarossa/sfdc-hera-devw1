@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_DocumentalPhaseHistory {
     @AuraEnabled
     public static List<SObject> getDocumentalPhaseHistory(String recordId, String objectApiName){
@@ -18,7 +19,7 @@ public with sharing class HDT_LC_DocumentalPhaseHistory {
         }
         whereString += ' AND Field =\'DocumentalPhase__c\'';
         queryString += fieldsString + ' FROM ' + fromString + ' WHERE ' + whereString + ' ORDER BY ' + orderString;
-        System.debug('query ' + queryString);
+        System.debug(LoggingLevel.DEBUG, 'query ' + queryString);
         return HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
     }
 
@@ -27,7 +28,7 @@ public with sharing class HDT_LC_DocumentalPhaseHistory {
         
         Order parentOrder = HDT_QR_DocumentalConfiguration.getParentOrder(orderId);
         if (parentOrder != null) {
-            return parentOrder.Id;
+            return parentOrder.ParentOrder__c;
         }
 
         return null;

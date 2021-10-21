@@ -56,41 +56,75 @@
                     toastEvent.fire();
                     return;
                 }*/else{
-                    
-                        workspaceAPI.getFocusedTabInfo().then(function(response2) {
+                        if(results.case.Type == 'Documentale/Copia Contratto'){
+                            workspaceAPI.getFocusedTabInfo().then(function(response2) {
 
-                            var focusedTabId = response2.tabId;
-                            console.log('focusedTabId=='+focusedTabId);
-                            workspaceAPI.openSubtab({
-                                parentTabId: focusedTabId,
-                                pageReference: {
-                                    type: 'standard__component',
-                                    
-                                    attributes: {
-                                    componentName: 'c:HDT_LCP_RecordEditFormFlowSales',
-                            
+                                var focusedTabId = response2.tabId;
+                                console.log('focusedTabId=='+focusedTabId);
+                                workspaceAPI.openSubtab({
+                                    parentTabId: focusedTabId,
+                                    pageReference: {
+                                        type: 'standard__component',
+                                        
+                                        attributes: {
+                                        componentName: 'c:HDT_LCP_CopiaContratto',
+                                
+                                        },
+                                        state: {
+                                            "c__caseId": caseId
+                                        }
                                     },
-                                    state: {
-                                        "c__caseId": caseId
-                                    }
-                                },
-                                focus: true
-                            }).then(function(response3) {
-                                workspaceAPI.setTabLabel({
-                                tabId: response3,
-                                label: "Contratti Bonus Commerciale"
-                            });
-                    
+                                    focus: true
+                                }).then(function(response3) {
+                                    workspaceAPI.setTabLabel({
+                                    tabId: response3,
+                                    label: "Copia Contratto"
+                                });
+                        
+                                })
+                                .catch(function(error) {
+                                    console.log(error);
+                                });
+    
                             })
                             .catch(function(error) {
                                 console.log(error);
                             });
+                        }else{
+                            workspaceAPI.getFocusedTabInfo().then(function(response2) {
 
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-
+                                var focusedTabId = response2.tabId;
+                                console.log('focusedTabId=='+focusedTabId);
+                                workspaceAPI.openSubtab({
+                                    parentTabId: focusedTabId,
+                                    pageReference: {
+                                        type: 'standard__component',
+                                        
+                                        attributes: {
+                                        componentName: 'c:HDT_LCP_RecordEditFormFlowSales',
+                                
+                                        },
+                                        state: {
+                                            "c__caseId": caseId
+                                        }
+                                    },
+                                    focus: true
+                                }).then(function(response3) {
+                                    workspaceAPI.setTabLabel({
+                                    tabId: response3,
+                                    label: "Contratti Bonus Commerciale"
+                                });
+                        
+                                })
+                                .catch(function(error) {
+                                    console.log(error);
+                                });
+    
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                        }
                 }
                
             }

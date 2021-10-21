@@ -25,6 +25,8 @@
         <property name="accountId" type="String" label="accountId" description="accountId" role="inputOnly" required="true"/>
             
         <property name="selectionType" type="String" label="selectionType" description="selectionType" role="inputOnly" required="true"/>
+
+        <property name="nonReqSelection" type="Boolean" label="Non Required Selection" description="Allow to not select any records" role="inputOnly"/>
             
         <property name="results" type="String" label="results" description="results" role="outputOnly"/>
 

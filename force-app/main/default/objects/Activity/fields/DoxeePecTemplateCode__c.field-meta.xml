@@ -4,9 +4,8 @@
     <description>Codice univoco del template PEC definito lato Doxee.</description>
     <externalId>false</externalId>
     <label>Codice Template PEC Doxee</label>
-    <precision>3</precision>
+    <length>255</length>
     <required>false</required>
-    <scale>0</scale>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

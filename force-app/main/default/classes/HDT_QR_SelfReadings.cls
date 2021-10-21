@@ -11,6 +11,32 @@ public inherited sharing class HDT_QR_SelfReadings {
         }
     }
 
+    /*public List<HDT_SelfReadingError__mdt> getDiscardConfiguration(String errorType, String errorCode) {
+        List<HDT_SelfReadingError__mdt> config = [SELECT Id, IsAutomaticDiscard__c FROM HDT_SelfReadingError__mdt WHERE Type__c = :errorType AND ErrorCode__c = :errorCode WITH SECURITY_ENFORCED];
+        return config;
+    }*/
+
+    public List<HDT_SelfReadingError__mdt> getDiscardConfigurations(Set<String> errorCodes) {
+        List<String> errorTypes = new List<String>();
+        errorTypes.add('Esito KO pre-MDM');
+        errorTypes.add('Esito KO da SAP');
+        Map<Id, HDT_SelfReadingError__mdt> firstQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND ErrorCode__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        Map<Id, HDT_SelfReadingError__mdt> secondQuery = new Map<Id, HDT_SelfReadingError__mdt>([SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND Description__c IN :errorCodes  WITH SECURITY_ENFORCED]);
+        //List<HDT_SelfReadingError__mdt> configs = [SELECT Id, ErrorCode__c, IsAutomaticDiscard__c,Description__c FROM HDT_SelfReadingError__mdt WHERE Type__c IN :errorTypes AND (ErrorCode__c IN :errorCodes OR Description__c IN:errorCodes) WITH SECURITY_ENFORCED];
+        firstQuery.putAll(secondQuery);
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //List<HDT_SelfReadingError__mdt> recordList = new List<HDT_SelfReadingError__mdt>();
+        /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
+            recordList.add(singleRecord);
+        }*/
+        System.debug('firstQuery.values() size:' + firstQuery.values().size());
+        
+        return firstQuery.values();
+    }
+
     public Id getReadingId(String objectName, Id objectId, String commodity) {
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -24,7 +50,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             System.debug('Query: ' + query);
             List<SObject> objects = Database.query(query);
-
+            
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
             Id readingId = (Id) objReadings[0].get('Id');
 
@@ -37,7 +63,7 @@ public inherited sharing class HDT_QR_SelfReadings {
     public Reading__c getReading(String objectName, Id objectId, String commodity, String readingFields) {
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-
+        
         if(objRes.isAccessible()) {
             
             String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r';
@@ -46,7 +72,11 @@ public inherited sharing class HDT_QR_SelfReadings {
             String query = String.format(queryTemplate, queryParameters);
 
             List<SObject> objects = Database.query(query);
+            System.debug('getReading - objects found: ' + objects.size());
+            
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
+            System.debug('getReading - objects ' + commodity + ' found: ' + objReadings.size());
+            
             return objReadings[0];
         }
 
@@ -82,12 +112,12 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             String query = 'SELECT Id, EffectiveDate__c, CreatedDate, RecordType.DeveloperName FROM Order';
 
-            if (String.isNotBlank(accountId)) {
+           /* if (String.isNotBlank(accountId)) {
                 query += ' WHERE AccountId = :accountId';
-            }
+            }*/
 
             if (String.isNotBlank(servicePointId)) {
-                query += ' AND ServicePoint__c = :servicePointId';
+                query += ' WHERE ServicePoint__c = :servicePointId';
             }
 
             if (!recordTypeIds.isEmpty()) {
@@ -103,6 +133,14 @@ public inherited sharing class HDT_QR_SelfReadings {
             }
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
+            
+            /*
+            System.debug('utl_isProcessReadingTest: accountId => ' + accountId);
+            System.debug('utl_isProcessReadingTest: servicePointId => ' + servicePointId);
+            System.debug('utl_isProcessReadingTest: recordTypeIds => ' + recordTypeIds);
+            System.debug('utl_isProcessReadingTest: badPhases => ' + badPhases);
+            System.debug('utl_isProcessReadingTest: badStates => ' + badStates);
+            */
             orders = Database.query(query);
 
             //System.debug('HDT_QR_SelfReadings: orders => ' + orders);

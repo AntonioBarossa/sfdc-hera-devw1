@@ -1,3 +1,7 @@
+/**@frpanico 15/10/2021
+ * Per implementare interfaccia di PClick il modifier deve essere global
+ */
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     global Object execute(Object args) {
@@ -75,8 +79,9 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
 
         }
     }
-
-    @Future
+    
+    @Future 
+    @TestVisible
     private static void updateFuture(String inputString) {
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);

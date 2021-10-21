@@ -69,10 +69,10 @@
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
-            <layoutItems>
+            <!-- <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Amount</field>
-            </layoutItems>
+            </layoutItems> HRAWRM-249 -->
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -260,9 +260,12 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
-    <relatedLists>
+    <!-- <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
+    </relatedLists> -->
+    <relatedLists> <!--review Richiesta da Hera_OptimizerIssues_Analysis_v1.0-->
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists><!--review Richiesta da Hera_OptimizerIssues_Analysis_v1.0-->
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>

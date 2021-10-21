@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>ChangeRecordType</excludeButtons>
+    <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>Edit</excludeButtons>
+    <excludeButtons>PrintableView</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
@@ -411,65 +415,64 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <quickActionList>
-        <quickActionListItems>
-            <quickActionName>FeedItem.TextPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.ContentPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.MobileSmartActions</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.RypplePost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.LinkPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.PollPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems>
-    </quickActionList>
+    <quickActionList/>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
-        <fields>Rds_SR_NUM__c</fields>
+        <fields>SR_NUM__c</fields>
+        <fields>CREATED__c</fields>
         <fields>INS_PRODUCT__c</fields>
         <fields>SR_AREA__c</fields>
-        <fields>Rds_CREATED__c</fields>
         <fields>SR_STAT_ID__c</fields>
         <relatedList>SiebelRds__x.CST_OU_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>ExternalId</fields>
-        <fields>FILE_NAME__c</fields>
-        <fields>FILE_DATE__c</fields>
-        <fields>X_TIPO_ALLEGATO__c</fields>
-        <relatedList>SiebelDocumentLink__x.PAR_ROW_ID_ACCNT__c</relatedList>
-    </relatedLists>
-    <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>ASSET_NUM__c</fields>
-        <fields>END_DT__c</fields>
+        <fields>STATUS_CD__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
+        <fields>START_DT__c</fields>
+        <fields>END_DT__c</fields>
+        <fields>X_SHIP_ADDR__c</fields>
         <relatedList>SiebelContract__x.SERV_ACCT_ID__c</relatedList>
+        <sortField>START_DT__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>LAST_NAME__c</fields>
+        <fields>FST_NAME__c</fields>
+        <fields>REFERENCE_TYPE_CD__c</fields>
         <fields>SOC_SECURITY_NUM__c</fields>
+        <fields>X_COMP_ADDR__c</fields>
         <fields>EMAIL_ADDR__c</fields>
+        <fields>COUNTRY__c</fields>
+        <fields>X_RAG_SOCIALE__c</fields>
         <relatedList>SiebelContact__x.PARTY_ID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>CREATED__c</fields>
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
+        <fields>SRA_SR_ID__c</fields>
+        <fields>ORDER_ITEM_ID__c</fields>
         <relatedList>SiebelActivity__x.TARGET_OU_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>ExternalId</fields>
+        <fields>FILE_NAME__c</fields>
+        <fields>FILE_EXT__c</fields>
+        <fields>CREATED__c</fields>
+        <relatedList>SiebelDocumentLink__x.PAR_ROW_ID_ACCNT__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -477,7 +480,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002UzQx</masterLabel>
+        <masterLabel>00h3N000002YL2f</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

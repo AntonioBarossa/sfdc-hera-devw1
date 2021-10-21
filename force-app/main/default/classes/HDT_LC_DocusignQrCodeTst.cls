@@ -28,13 +28,13 @@ public with sharing class HDT_LC_DocusignQrCodeTst {
         System.debug(debugString);
         
         //SETUP
-        Case myCase = [SELECT Id, DocusignURL__c FROM Case];
+        Case myCase = [SELECT Id, DocusignURL__c,SendMode__c,SignMode__c,Email__c,PhoneNumber__c FROM Case];
         
         //TESTING
-        String result = HDT_LC_DocusignQrCode.getDocusignUrl(myCase.Id, 'Case');
+        String result = HDT_LC_DocusignQrCode.getObject(myCase.Id, 'Case');
         
         //ASSERTS
-        System.assertEquals(myCase.DocusignURL__c, result);
+        System.assertEquals(JSON.serialize(myCase), result, 'value of parameter is matching');
         
     }
     
@@ -47,13 +47,13 @@ public with sharing class HDT_LC_DocusignQrCodeTst {
         System.debug(debugString);
         
         //SETUP
-        Order myOrder = [SELECT Id, DocusignURL__c FROM Order];
+        Order myOrder = [SELECT Id, DocusignURL__c ,DocSendingMethod__c,SignatureMethod__c,ShippingMail__c,PhoneNumber__c FROM Order];
         
         //TESTING
-        String result = HDT_LC_DocusignQrCode.getDocusignUrl(myOrder.Id, 'Order');
+        String result = HDT_LC_DocusignQrCode.getObject(myOrder.Id, 'Order');
         
         //ASSERTS
-        System.assertEquals(myOrder.DocusignURL__c, result);
+        System.assertEquals(JSON.serialize(myOrder), result, 'value of parameter is matching');
         
     }
     
@@ -68,10 +68,10 @@ public with sharing class HDT_LC_DocusignQrCodeTst {
         ServicePoint__c myServPoint = [SELECT Id FROM ServicePoint__c];
         
         //TESTING
-        String result = HDT_LC_DocusignQrCode.getDocusignUrl(myServPoint.Id, 'Test');
+        String result = HDT_LC_DocusignQrCode.getObject(myServPoint.Id, 'Test');
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, 'value of parameter is matching');
         
     }
     

@@ -16,20 +16,33 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
         //fake code
 
-        HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = new HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse();
+        //Deprecato
+        // HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = new HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse();
 
         //fake code
 
         List<HDT_WRP_HerokuPostSalesManager> wrpResponses = new List<HDT_WRP_HerokuPostSalesManager>();
-        String outputResult;
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String outputResult;
 
 
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        SObject transition = (SObject) argsMap.get('transition'); //phase transition
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*SObject transition = (SObject) argsMap.get('transition'); //phase transition
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
-        String method = (String) argsMap.get('method');
+        String method = (String) argsMap.get('method');*/
         SObject obj = (SObject) argsMap.get('sender');
-        Object templateMap = argsMap.get('templateMap');
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Object templateMap = argsMap.get('templateMap');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
        
 
@@ -91,10 +104,14 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     System.debug('WRPResponse --> '+wrpResponses);
     caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
     
-    if(caseToUpdate != null && caseToUpdate.size() > 0){
+    /*
+        @Author: Davide Viola - 19/10/2021
+        Description: PMD -> Commentata variabile non utilizzata.
+    */
+    /*if(caseToUpdate != null && caseToUpdate.size() > 0){
         String serializedCase = JSON.serialize(caseToUpdate[0]);
         //updateFuture(serializedCase);
-    }
+    }*/
     
 
     response.success = true;
@@ -179,7 +196,11 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         HDT_WRP_MrrResponse.HDT_WRP_Field rifRich = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field recordId = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field rds = new HDT_WRP_MrrResponse.HDT_WRP_Field();
-        HDT_WRP_MrrResponse.HDT_WRP_Field rdo = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //HDT_WRP_MrrResponse.HDT_WRP_Field rdo = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         rifRich.fieldType = 'TEXT';
         rifRich.name = 'RIF_RICH';
         rifRich.value =caseInsert.CaseNumber;

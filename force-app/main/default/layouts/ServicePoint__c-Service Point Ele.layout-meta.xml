@@ -15,11 +15,11 @@
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Distributor__c</field>
+                <behavior>Readonly</behavior>
+                <field>DistributorNameFormula__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ServicePointCode__c</field>
             </layoutItems>
         </layoutColumns>
@@ -76,6 +76,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>VoltageLevel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RequestPhase__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ActivationEleExternalDistributor__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -156,15 +164,34 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SupplySAPCityCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SupplySAPStreetCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>SupplyIsAddressVerified__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Consumo Annuo</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ElectricConsumptionZone1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ElectricConsumptionZone3__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ElectricConsumptionZone2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AnnualConsumptionStandardM3__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -210,7 +237,6 @@
     <miniLayout>
         <fields>Name</fields>
         <fields>Account__c</fields>
-        <fields>Distributor__c</fields>
         <fields>PowerContractual__c</fields>
         <fields>VoltageLevel__c</fields>
         <fields>SupplyType__c</fields>
@@ -306,14 +332,25 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>BillingProfile__c</fields>
+        <fields>CommercialProduct__c</fields>
+        <fields>SAPContractCode__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>Contract.ServicePoint__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>CASES.STATUS</fields>
         <relatedList>Case.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Opportunity__c</fields>
+        <fields>Quote__c</fields>
         <relatedList>SaleServiceItem__c.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -334,7 +371,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002T62X</masterLabel>
+        <masterLabel>00h3N000002SmKE</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -97,7 +97,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 		                                WHERE Id=:tSales[0].Id];
 
 		System.assertEquals('testVendor', tSalesSavedDraft[0].VendorFirstName__c, 'Sale Draft not saved');
-		System.assertNotEquals('', tSalesSavedDraft[0].VendorFirstName__c);
+		System.assertNotEquals('', tSalesSavedDraft[0].VendorFirstName__c, 'saveDraft did not work correctly');
 
 		Test.stopTest();
 	}
@@ -147,10 +147,10 @@ public with sharing class HDT_LC_SaleActionsTst{
 			System.assertEquals('Chiusa', tQuoteSaved[0].SBQQ__Status__c, 'Quote not saved');
 			System.assertEquals('RID', tQuoteLineSaved[0].PaymentMode__c, 'QuoteLine not saved');
 
-			System.assertNotEquals('Negotiation', tOppSaved[0].StageName);
-			System.assertNotEquals('', tSaleSaved[0].Status__c);
-			System.assertNotEquals('', tQuoteSaved[0].SBQQ__Status__c);
-			System.assertNotEquals('', tQuoteLineSaved[0].PaymentMode__c);
+			System.assertNotEquals('Negotiation', tOppSaved[0].StageName, 'save did not work correctly');
+			System.assertNotEquals('', tSaleSaved[0].Status__c, 'save did not work correctly');
+			System.assertNotEquals('', tQuoteSaved[0].SBQQ__Status__c, 'save did not work correctly');
+			System.assertNotEquals('', tQuoteLineSaved[0].PaymentMode__c, 'save did not work correctly');
 
 			Test.stopTest();
 		}
@@ -194,9 +194,9 @@ public with sharing class HDT_LC_SaleActionsTst{
 		System.assertEquals(true, tQuoteLineSavedBckUp[0].SBQQ__Group__c!=null, 'QuoteLine Backup not saved');
 
 		// System.assertNotEquals('Negotiation', tOppSavedBckUp[0].StageName);
-		System.assertNotEquals('', tSaleSavedBckUp[0].Status__c);
-		System.assertNotEquals('Chiusa', tQuoteSavedBckUp[0].SBQQ__Status__c);
-		System.assertNotEquals(false, tQuoteLineSavedBckUp[0].SBQQ__Group__c!=null);
+		System.assertNotEquals('', tSaleSavedBckUp[0].Status__c, 'saveBackup did not work correctly');
+		System.assertNotEquals('Chiusa', tQuoteSavedBckUp[0].SBQQ__Status__c, 'saveBackup did not work correctly');
+		System.assertNotEquals(false, tQuoteLineSavedBckUp[0].SBQQ__Group__c!=null, 'saveBackup did not work correctly');
 
 		Test.stopTest();
 	}
@@ -218,7 +218,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 		                           WHERE Id=:tSales[0].Id];
 
 		System.assertEquals('Annullata', tSalesSaved[0].Status__c, 'Sale not cancelled');
-		System.assertNotEquals('Negotiation', tSalesSaved[0].Status__c);
+		System.assertNotEquals('Negotiation', tSalesSaved[0].Status__c, 'cancel did not work correctly');
 
 		Test.stopTest();
 	}

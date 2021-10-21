@@ -1,11 +1,14 @@
 <template>
+    <template if:false={loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
     <template if:false={isSuspend}>
         <template if:true={showAccise}>
         <div class="slds-grid slds-grid_vertical">
             <div class="slds-col slds-grid">
         <lightning-combobox name="TipoCopia" label="Tipologia Accise"
                                     placeholder="Seleziona tipologia Accise..." options={acciseOptions}
-                                    onchange={changeAccise}
+                                    onchange={changeAccise} value={predefaultv} disabled
                                     required>
                                 </lightning-combobox>
                                 
@@ -18,13 +21,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="PersonalData__c" label="Dati Anagrafici(Ragione Sociale,SedeLegale,Intestatario)"
-                                    checked={act.PersonalData__c} onchange={onchangeCheck}
+                                    checked={act.PersonalData__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseSupply__c" label="Dati Fornitura"
-                                    checked={act.isAcciseSupply__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseSupply__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -32,13 +35,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseContractualPower__c" label="Potenza Contrattuale Contratto"
-                                    checked={act.isAcciseContractualPower__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseContractualPower__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAccisePdrPod__c" label="N. POD"
-                                    checked={act.isAccisePdrPod__c} onchange={onchangeCheck}
+                                    checked={act.isAccisePdrPod__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -46,13 +49,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseExclusionType__c" label="Contrassegnare Casella Relativa a Tipologia Esclusione Accise"
-                                    checked={act.isAcciseExclusionType__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseExclusionType__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseCopyTechnicalRelation__c" label="Copia Eventuali Schemi/Relazioni Tecniche - Copia Verbali E/O Licenze di Officina"
-                                    checked={act.isAcciseCopyTechnicalRelation__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseCopyTechnicalRelation__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -60,13 +63,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="AtecoCode__c" label="Codice Ateco e Relativa Attività Svolta nell'Indirizzo Fornitura"
-                                    checked={act.AtecoCode__c} onchange={onchangeCheck}
+                                    checked={act.AtecoCode__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="IdentityDocument__c" label="Documento di Identità"
-                                    checked={act.IdentityDocument__c} onchange={onchangeCheck}
+                                    checked={act.IdentityDocument__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
     
@@ -75,13 +78,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseExclusionModuleAccise__c" label="Compilazione Modulo di Richiesta Esclusione Accise EE"
-                                    checked={act.isAcciseExclusionModuleAccise__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseExclusionModuleAccise__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="checkbox" name="isAcciseFirm__c" label="Data e Firma Legale Rappresentante"
-                                    checked={act.isAcciseFirm__c} onchange={onchangeCheck}
+                                    <lightning-input type="checkbox" name="Signature__c" label="Data e Firma Legale Rappresentante"
+                                    checked={act.Signature__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -95,13 +98,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="PersonalData__c" label="Dati Anagrafici(Ragione Sociale,SedeLegale,Intestatario)"
-                                    checked={act.PersonalData__c} onchange={onchangeCheck}
+                                    checked={act.PersonalData__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseSupply__c" label="Dati Fornitura"
-                                    checked={act.isAcciseSupply__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseSupply__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -109,13 +112,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAccisePdrPod__c" label="Matricola/PDR"
-                                    checked={act.isAccisePdrPod__c} onchange={onchangeCheck}
+                                    checked={act.isAccisePdrPod__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="CraftsmenRegisterNumber__c" label="n. Iscrizione Albo Artigiani"
-                                    checked={act.CraftsmenRegisterNumber__c} onchange={onchangeCheck}
+                                    checked={act.CraftsmenRegisterNumber__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -123,13 +126,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="CheckActivityBox__c" label="Contrassegnare Casella Attività"
-                                    checked={act.CheckActivityBox__c} onchange={onchangeCheck}
+                                    checked={act.CheckActivityBox__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="AssociationStatute__c" label="Statuto Dell'Associazione/Atto Costitutivo"
-                                    checked={act.AssociationStatute__c} onchange={onchangeCheck}
+                                    checked={act.AssociationStatute__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -137,13 +140,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="Signature__c" label="Firma"
-                                    checked={act.Signature__c} onchange={onchangeCheck}
+                                    checked={act.Signature__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="CciaaData__c" label="Dati CCIAA"
-                                    checked={act.CciaaData__c} onchange={onchangeCheck}
+                                    checked={act.CciaaData__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -151,13 +154,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="RequiredOfficeActivity__c" label="Attivita Sede Richiesta"
-                                    checked={act.RequiredOfficeActivity__c} onchange={onchangeCheck}
+                                    checked={act.RequiredOfficeActivity__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="IdentityDocument__c" label="Documento di Identità"
-                                    checked={act.IdentityDocument__c} onchange={onchangeCheck}
+                                    checked={act.IdentityDocument__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -165,13 +168,13 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="isAcciseModuleRequest__c" label="Compilazione Modulo di Richiesta Aliquota Accise Usi Industriali"
-                                    checked={act.isAcciseModuleRequest__c} onchange={onchangeCheck}
+                                    checked={act.isAcciseModuleRequest__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
                                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="CciaaSelfCertModule__c" label="Modulo AutoCertificazione CCIAA"
-                                    checked={act.CciaaSelfCertModule__c} onchange={onchangeCheck}
+                                    checked={act.CciaaSelfCertModule__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                                 </div>
@@ -179,7 +182,7 @@
                         <div class="slds-col slds-grid">
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-input type="checkbox" name="AtecoCode__c" label="Codice Ateco"
-                                    checked={act.AtecoCode__c} onchange={onchangeCheck}
+                                    checked={act.AtecoCode__c} onchange={onchangeCheck} disabled={isDisabledField}
                                     >
                                     </lightning-input>
                             </div>
@@ -194,13 +197,13 @@
                     <div class="slds-col slds-grid">
                         <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaAnagrafici__c" label="Dati Anagrafici del Legale Rappresentante"
-                                checked={act.isIvaAnagrafici__c} onchange={onchangeCheck}
+                                checked={act.isIvaAnagrafici__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                         </div>
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaActivityCode__c" label="Codice Attività Economica"
-                                checked={act.isIvaActivityCode__c} onchange={onchangeCheck}
+                                checked={act.isIvaActivityCode__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                             </div>
@@ -208,13 +211,13 @@
                     <div class="slds-col slds-grid">
                         <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaSupplyAddress__c" label="Indirizzo Fornitura"
-                                checked={act.isIvaSupplyAddress__c} onchange={onchangeCheck}
+                                checked={act.isIvaSupplyAddress__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                         </div>
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaMatricola__c" label="Matricola Contatore"
-                                checked={act.isIvaMatricola__c} onchange={onchangeCheck}
+                                checked={act.isIvaMatricola__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                             </div>
@@ -222,13 +225,13 @@
                     <div class="slds-col slds-grid">
                         <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaFirmLegalOwner__c" label="Luogo, Data e Firma del Legale Rappresentante"
-                                checked={act.isIvaFirmLegalOwner__c} onchange={onchangeCheck}
+                                checked={act.isIvaFirmLegalOwner__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                         </div>
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaCopyDocument__c" label="Copia di un Documento di Identità del Legale Rappresentante"
-                                checked={act.isIvaCopyDocument__c} onchange={onchangeCheck}
+                                checked={act.isIvaCopyDocument__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                             </div>
@@ -236,13 +239,13 @@
                     <div class="slds-col slds-grid">
                         <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isSchoolCategory__c" label="Categoria Scuola/Parrocchie"
-                                checked={act.isSchoolCategory__c} onchange={onchangeCheck}
+                                checked={act.isSchoolCategory__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                         </div>
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isDenominazioneIncongruente__c" label="Denominazione Incongruente"
-                                checked={act.isDenominazioneIncongruente__c} onchange={onchangeCheck}
+                                checked={act.isDenominazioneIncongruente__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                             </div>
@@ -250,13 +253,13 @@
                     <div class="slds-col slds-grid">
                         <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIva10Module__c" label="Compilazione Modulo Iva 10%"
-                                checked={act.isIva10Module__c} onchange={onchangeCheck}
+                                checked={act.isIva10Module__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                         </div>
                             <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                 <lightning-input type="checkbox" name="isIvaAtecoCode__c" label="Codice Ateco"
-                                checked={act.isIvaAtecoCode__c} onchange={onchangeCheck}
+                                checked={act.isIvaAtecoCode__c} onchange={onchangeCheck} disabled={isDisabledField}
                                 >
                                 </lightning-input>
                             </div>
@@ -279,8 +282,8 @@
         <div class="slds-grid slds-grid_vertical">
             <div class="slds-col slds-grid">
                 <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                        <lightning-input type="Number" name="NumeroContatti" label="Numero Contatti"
-                        value={act.NumberOfAttempt__c} 
+                        <lightning-input type="Number" onchange={getValuePhone} name="NumeroContatti" label="Numero Contatti"
+                        value={act.NumberOfAttempt__c} disabled={isDisabledField}
                         >
                         </lightning-input>
                 </div>
@@ -291,15 +294,15 @@
   
     <footer class="slds-modal__footer">
         <template if:true={isSuspend}>
-            <lightning-button variant="brand" name="" type="submit" label="Riprendi" onclick={handleRiprendi}>
+            <lightning-button variant="brand" name="" type="submit" label="Riprendi" onclick={handleRiprendi} disabled={isDisabledField}>
             </lightning-button>
-            <lightning-button variant="brand" name="" type="submit" label="Salva Tentativi" onclick={handleSaveAttempt}>
+            <lightning-button variant="brand" name="" type="submit" label="Salva Tentativi" onclick={handleSaveAttempt} disabled={isDisabledField}>
             </lightning-button>
         </template>
         <template if:false={isSuspend}>
-            <lightning-button variant="brand" name="" type="submit" label="Sospendi" onclick={sospend}>
+            <lightning-button variant="brand" name="" type="submit" label="Sospendi" onclick={sospend} disabled={isDisabledField}>
             </lightning-button>
-            <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
+            <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave} disabled={isDisabledField}>
             </lightning-button>
         </template>
     </footer>

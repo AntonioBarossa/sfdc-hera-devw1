@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>CA con/senza SEPA</description>
     <externalId>false</externalId>
-    <label>CA con/senza SEPA</label>
+    <label>Domiciliato</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration sapIntegrationWrapper){
         String body = '';
@@ -24,11 +25,11 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         String body = '';
         try {
             HDT_WRP_SetupParameter setupParameters  = getSetup((String) configSetting.get('JSON__c'));
-            system.debug('setupParameters ' + setupParameters);
+            System.debug(LoggingLevel.DEBUG, 'setupParameters ' + setupParameters);
             HDT_WRP_QueryParameter queryParameters = getQuery(setupParameters, recordId);
-            system.debug('queryParameters ' + queryParameters);
+            System.debug(LoggingLevel.DEBUG, 'queryParameters ' + queryParameters);
             Map<String,List<SObject>> records = getGenericRecords(queryParameters);
-            system.debug('records ' + records);
+            System.debug(LoggingLevel.DEBUG, 'records ' + records);
             body = mapBodyValue(records, (String) configSetting.get('JSON__c'));
         } catch (Exception ex) {
             throw ex;
@@ -72,7 +73,7 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
                 setupParameters.childs = childParametersList;
                 
             }
-            system.debug('setupParameters ' + setupParameters);
+            System.debug(LoggingLevel.DEBUG, 'setupParameters ' + setupParameters);
         }catch(Exception ex){
             throw ex;
         }
@@ -84,8 +85,12 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         List<HDT_WRP_QueryParameter> childs = new List<HDT_WRP_QueryParameter>();
         String conditions;
         try {
-            String[] nestedQueryArray = new List<String>();
-            String nestedQuery = '';
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentate variabili non utilizzate.
+            */
+            /*String[] nestedQueryArray = new List<String>();
+            String nestedQuery = '';*/
             for(HDT_WRP_SetupParameter singleElement : setupParameters.childs) {
                 HDT_WRP_QueryParameter child = new HDT_WRP_QueryParameter();
                 child.fields = singleElement.fields;
@@ -124,7 +129,11 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         return recordMap;
     }
     private static String mapBodyValue(Map<String,List<SObject>> records, String stringStructure){
-        String body = '';
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String body = '';
         Map<String,Object> bodyMap = new Map<String,Object>();
         try {
             if(stringStructure != null && String.isNotBlank(stringStructure)){
@@ -152,17 +161,18 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         } catch (Exception ex) {
             throw ex;
         }
-        System.debug(JSON.serialize(bodyMap));
+        System.debug(LoggingLevel.DEBUG, JSON.serialize(bodyMap));
         return JSON.serialize(bodyMap);
     }
 
     private class HDT_WRP_SetupParameter{
+        
+        public List<HDT_WRP_SetupParameter> childs;
         public String objectName{get;set;}
         public String fields{get;set;}
         public String staticConditions{get;set;}
         public String relationName{get;set;}
         public String controllingField{get;set;}
-        public List<HDT_WRP_SetupParameter> childs;
 
         public HDT_WRP_SetupParameter(HDT_WRP_SetupParameter item){
             this.objectName = item.objectName;
@@ -172,7 +182,16 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
             this.controllingField = item.controllingField;
             this.childs = item.childs;
         }
-        public HDT_WRP_SetupParameter(){}
+        
+        //EMPTY CONSTRUCTOR
+        public HDT_WRP_SetupParameter(){
+            this.objectName = '';
+            this.fields = '';
+            this.staticConditions = '';
+            this.relationName = '';
+            this.controllingField = '';
+            this.childs = new List<HDT_WRP_SetupParameter>();
+        }
 
     }
 
@@ -183,14 +202,21 @@ public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
         public String relationName;
         public List<HDT_WRP_QueryParameter> childs;
 
-        public HDT_WRP_QueryParameter(){}
         public HDT_WRP_QueryParameter(HDT_WRP_QueryParameter item){
             this.fields = item.fields;
             this.objectName = item.objectName;
             this.conditions = item.conditions;
             this.relationName = item.relationName;
             this.childs = item.childs;
-
+        }
+        
+        //EMPTY CONSTRUCTOR
+        public HDT_WRP_QueryParameter(){
+            this.fields = '';
+            this.objectName = '';
+            this.conditions = '';
+            this.relationName = '';
+            this.childs = new List<HDT_WRP_QueryParameter>();
         }
     }
 }

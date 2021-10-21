@@ -14,6 +14,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
+    private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+
+    @AuraEnabled
+    public static Map<String,Object> init(String Id){
+        Map<String,Object> result = new Map<String,Object>();
+
+        User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
+
+        result.put('loginChannel', user.LoginChannel__c);
+
+        return result;
+    }
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update order process step
@@ -31,7 +45,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         o.VATfacilitationFlag__c = flagVat; 
         orderSrv.updateRecord(o);
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-        String res = '';
+        // String res = '';
         ID recTypeId;
         if(rc !=null){
             recTypeId= rc.Id;
@@ -56,53 +70,67 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
-            Order oldOrder = orderQr.getRecordById(order.Id);
-            //Commentato finche non viene creato campo a DM
-            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true){
-                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
+            // Order oldOrder = orderQr.getRecordById(order.Id);
+            //@frpanico check "Cambio contatore non registrato"
+            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
+            {
+                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0)
+                {                
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 }
-            } else if(order.EffectiveDate__c != null){
-
-                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
-
-                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva'))){
-
+            }
+            //@frpanico check "Tipo Voltura"
+            if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
+            {
+                throw new AuraHandledException('Valorizzare campi obbligatori');
+            }
+            //@frpanico check "Data Decorrenza"
+            if(order.EffectiveDate__c != null)
+            {
+                if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
+                {
+                    if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
+                    {
                         throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-
-                    } else{
-                        
+                    }
+                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 10, 31))
+                    {
+                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/10/2015');
+                    }
+                    else
+                    {    
                         order.RetroactiveDate__c = order.EffectiveDate__c;
                         order.Subprocess__c = 'Retroattiva';
-
                     }
-                } else {
-
+                } 
+                else 
+                {
                     order.RetroactiveDate__c = null;
                     order.Subprocess__c = 'Standard';
-
                 }
-
-            } else if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false){
-
+            } 
+            //@frpanico check "Voltura con Autolettura"
+            if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false)
+            {
                 order.Subprocess__c = 'Con Autolettura';
-
-            } else if(order.VoltureType__c != null && (order.VoltureType__c.containsIgnoreCase('In Continuità') || order.VoltureType__c.containsIgnoreCase('Recupero'))
-                && oldOrder.ServicePoint__r.CommoditySector__c.containsIgnoreCase('Energia Elettrica')){
-                    throw new AuraHandledException('Impossibile selezionare il valore \"' + order.VoltureType__c + '\"');
-            } //else if((order.VoltureType__c == null || order.VoltureType__c == '') && (order.Step__c == 4 || order.Step__c == 8)){
-            //         throw new AuraHandledException('Valorizzare Campi Obbligatori');
-            // }
-
-            if(readingDate != null && (isReading != null && isReading == true)){
-
+            }
+            //@frpanico valorizzazione "Data Lettura"
+            if(readingDate != null && (isReading != null && isReading == true))
+            {
                 order.ReadingCustomerDate__c = readingDate;
-
-            }if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c)){
-                throw new AuraHandledException('Valorizzare campi obbligatori');
             }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
+
+        // Date tempStart = order.TemporaryConnectionStartDate__c;
+        // Date tempEnd = order.TemporaryConnectionEndDate__c;
+        // Boolean tempDate = tempEnd < tempStart;
+
+        if(order.TemporaryConnectionStartDate__c != null 
+        && order.TemporaryConnectionEndDate__c != null
+        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
+            throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
+        }
 
         exeChecks(order);
 
@@ -111,7 +139,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     private static void exeChecks(Order order){
         //Check RequestOption__c (Opzione di Distribuzione) START
-        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+        if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.ImplantType__c != null && order.PowerCommitted__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -120,7 +148,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if (calculatedRequestOption != oldOrder.RequestOption__c) {
                 throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
             }
-        } else if(order.RequestOption__c != null){
+        } else if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.RequestOption__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -129,6 +157,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
         }
         //Check RequestOption__c (Opzione di Distribuzione) END
+
+        //Check iva e accise docs START
+        if (order.VATfacilitationFlag__c || order.FacilitationExcise__c) {
+            List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+            if (docsIvaAccise.isEmpty()) {
+                throw new AuraHandledException('Caricare documento per iva e accise');
+            }
+        }
+        //Check iva e accise docs END
     }
 
 
@@ -202,7 +240,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug(metas);
             if(!metas?.isEmpty()){
                 wrp.quoteType= metas[0].QuotationType__c;  
-                Integer code = Integer.valueOf(metas[0].OperationCode__c);
+                // Integer code = Integer.valueOf(metas[0].OperationCode__c);
                 wrp.quoteCode=formatCode(metas[0].OperationCode__c);        
             }
         } catch (Exception e) {

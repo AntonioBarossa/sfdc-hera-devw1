@@ -4,9 +4,9 @@
     <description>Prezzo</description>
     <externalId>false</externalId>
     <label>Prezzo</label>
-    <precision>8</precision>
+    <precision>10</precision>
     <required>false</required>
-    <scale>3</scale>
+    <scale>5</scale>
     <trackHistory>false</trackHistory>
     <type>Currency</type>
 </CustomField>

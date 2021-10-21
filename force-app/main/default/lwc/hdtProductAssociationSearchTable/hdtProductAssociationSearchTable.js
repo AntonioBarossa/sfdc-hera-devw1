@@ -1,44 +1,63 @@
 import { LightningElement, api, track } from 'lwc';
 import getProductList from '@salesforce/apex/HDT_LC_ProductAssociation.getProductList';
 import runProductOptionAssociation from '@salesforce/apex/HDT_LC_ProductAssociation.runProductOptionAssociation';
-import { deleteRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const columns = [
-    { label: 'Decrsizione prodotto', fieldName: 'DescriptionSAP__c' },
-    { label: 'Versione', fieldName: 'Version__c' },
-    { label: 'Codice prodotto', fieldName: 'ProductCode' },
     { label: 'Nome Prodotto', fieldName: 'Name' },
-    { label: 'Famiglia', fieldName: 'Family'}
+    { label: 'Codice prodotto', fieldName: 'ProductCode' },
+    { label: 'Versione', fieldName: 'Version__c' },
+    { label: 'Servizio', fieldName: 'Service__c' },
+    { label: 'Descrizione prodotto', fieldName: 'DescriptionSAP__c' },
+    //{ label: 'Famiglia di prodotti', fieldName: 'Family'},
+    { label: 'Categoria Famiglia', fieldName: 'CategoryFamily__c'},
+    { label: 'Stato', fieldName: 'Status__c'}
 ];
 
-const recordIdList = [];
+const fieldsList = [
+    'ProductCode',
+    'Version__c',
+    //'Name',
+    'DescriptionSAP__c',
+    'CategoryFamily__c',
+    'Status__c',
+    'TypeOffer__c',
+    'Service__c'
+];
 
 export default class HdtProductAssociationSearchTable extends LightningElement {
 
-    @api productOptionId;
-    @api optionalSkuId;
+    @api labels;
+    @api objType;
+    @api childRecordId;
+    @api junctionObj;
+    @api dmlContext;
+    columns;
+    counterText;
     counter;
+    filterString;
+    mainTitle;
+    sectionTitle;
+    checkboxCounter = 0;
+
+    @track selectedIdList = [];
 
     label = {
-        confirmSelectedTitle: 'Conferma i prodotti selezionati',
-        confirmSelectedBody: 'Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.',
-        closeTitle: 'Chiudi la ricerca',
-        closeBody: 'Attenzione! Vuoi annullare l\'associazione dell\'opzione prodotto?',
-        confirmAllTitle: 'Conferma tutti prodotti a sistema',
-        confirmAllBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti a catalogo, vuoi procedere?',
-        confirmFilterTitle: 'Conferma tutti prodotti ottenuti dal filtro',
-        confirmFilterBody: 'Attenzione! In questo modo l\'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?'
+        confirmSelectedTitle: '',
+        confirmSelectedBody: '',
+        closeTitle: '',
+        closeBody: '',
+        confirmFilterTitle:  '',
+        confirmFilterBody: ''
     };
-    illustrationMessage = 'I risultati verranno mostrati qui';
+    illustrationMessage;
     
-    productId = '';
+    currentSelectedRows;
+    recId = '';
+    objectApiName = 'Product2';
     data = [];
     columns = columns;
-    fieldsList = [
-        'Name',       'TypeOffer__c',   'ProductCode',       'Family',
-        'Version__c', 'Status__c',      'DescriptionSAP__c', 'CategoryFamily__c'
-    ];
+    fieldsList = fieldsList;
     showResultTable = false;
     
     @track modalObj = {
@@ -48,48 +67,170 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         operation: ''
     }
     spinner = false;
+    
+    showPagination = false;
+    @track page = 1;//pagination
+    @track pages = [];//pagination
+    @track pagesList;//pagination
+    perpage = 200;//pagination
+    set_size = 5;//pagination
+    totRecs;//pagination
+    fromRec;//pagination
+    toRec;//pagination
+    criteriaObj = {};
+    enforceConfirmation = false;
+    //value = 'In Sviluppo';
+
+    //get options() {
+    //    return [
+    //        //{ label: 'Annullata', value: 'Annullata'},
+    //        { label: 'Confermata', value: 'Confermata'},
+    //        { label: 'In Sviluppo', value: 'In Sviluppo'},
+    //        { label: 'Vendibile', value: 'Vendibile'},
+    //        { label: 'Scaduta', value: 'Scaduta'}
+    //    ];
+    //}
 
     connectedCallback(){
-        console.log('>>> ON SEARCH TABLE: ' + this.productOptionId);
+        console.log('>>> PRODUCT OPTION OBJ: ' + this.junctionObj);
+        console.log('>>> OBJ TYPE: ' + this.objType);
+        //console.log('>>> LABELS: ' + JSON.stringify(this.labels));
+
+        this.illustrationMessage = this.labels.cl_ResultText;
+        this.page = 1;
+
+        this.label.confirmSelectedTitle = this.labels.cl_ConfirmSelection;
+        this.label.closeTitle = this.labels.cl_Close;
+        this.label.confirmFilterTitle = this.labels.cl_ConfirmFilterTitle;
+
+
+        switch (this.dmlContext) {
+            case 'delete':
+                this.mainTitle = this.labels.cl_DeleteTitle;
+                this.sectionTitle = this.labels.cl_DeleteSection;
+                this.label.confirmSelectedBody = this.labels.cl_ConfimSelectBodyDelete;
+                this.label.closeBody = this.labels.cl_CloseDeleteBody;
+                this.label.confirmFilterBody = this.labels.cl_ConfirmFilterDeleteBody;
+                break;
+            case 'insert':
+                this.mainTitle = this.labels.cl_CreateTitle;
+                this.sectionTitle = this.labels.cl_CreateSection;
+                this.label.confirmSelectedBody = this.labels.cl_ConfimSelectBody;
+                this.label.closeBody = this.labels.cl_CloseCreateBody;
+                this.label.confirmFilterBody = this.labels.cl_ConfirmFilterCreateBody;
+        }
+
+    }
+
+    renderedCallback() {
+
+        this.template.querySelectorAll('[data-name="pagination"]').forEach((but) => {
+            if(this.page == but.dataset.id){
+                but.variant = 'brand';
+            } else {
+                but.variant = 'neutral';
+            }
+        });
+
+    }
+
+    onChangeHandler(event){
+        this.criteriaObj[event.currentTarget.name] = event.detail.value;
     }
 
     applyFilter(event){
-        console.log('>>>> handleSubmitButtonClick > ');
-        this.spinner = true;
-        var criteriaObj = {};
+        console.log('>>>> APPLY FILTER');
+        
+        //var criteriaObj = {};
+        var nullValue = 0;
+        var objLength = 0;
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
-          criteriaObj[field.fieldName] = field.value;
+          this.criteriaObj[field.fieldName] = field.value;
         });
 
-        var jsonRecord = JSON.stringify(criteriaObj);
+        for(var key in this.criteriaObj){
+            objLength++;
+            if(this.criteriaObj[key] === null || this.criteriaObj[key] === ''){
+                nullValue++;
+            }
+        }
+
+        console.log('>>> null value ' + nullValue);
+        console.log('>>> obj lenght ' + objLength);
+
+        if(nullValue === objLength){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Devi inserire almeno un filtro',
+                    variant: 'warning',
+                }),
+            );
+            return;           
+        }
+
+        if(this.criteriaObj.Status__c != undefined && this.criteriaObj.Status__c === 'Annullata'){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non puoi filtrare per questo stato',
+                    variant: 'warning',
+                }),
+            );
+            return;
+        }
+
+        this.spinner = true;
+
+        var jsonRecord = JSON.stringify(this.criteriaObj);
         console.log(jsonRecord);
-        this.getData(jsonRecord);
+        this.filterString = jsonRecord;
+        console.log('>>>> FILTER STRING: ' + this.filterString);
+        this.showPagination = false;
+        this.getData(jsonRecord, false, '1');
+
+        //this.disableButton('confirmFilter', false);
         
-        //const saverecord = new CustomEvent("saverecord", {
-        //  detail: {record: jsonRecord}
-        //});
-    //
-        //// Dispatches the event.
-        //this.dispatchEvent(saverecord);
+    }
+
+    checkValues(){
 
     }
 
-    getData(filter){
+    getData(filter, usePagination, pageNumber){
         
-        getProductList({filterString: filter, optionalSkuId: this.optionalSkuId})
+        getProductList({objType: this.objType, filterString: filter, childRecordId: this.childRecordId, dmlContext: this.dmlContext, usePagination: usePagination, pageNumber: pageNumber})
         .then(result => {
-            console.log('# response #');
+            console.log('>>> GET PRODUCT LIST');
 
             if(result.success){
 
+                console.log('>>> RESULT SUCCESS');
+
                 if(result.prodList.length===0){
-                    this.illustrationMessage = 'Non è stato trovato nessun prodotto';
+                    console.log('>>> NO DATA');
+                    this.data = [];
+                    this.showResultTable = false;
+                    this.illustrationMessage = this.labels.cl_NoResultText;
                 } else {
-                    console.log('>>> recordCounter: ' + result.recordCounter);
+                    console.log('>>> RECORD RETRIEVED: ' + result.prodList.length);
                     this.data = result.prodList;
                     this.showResultTable = true;
-                    this.counter = 'Risultati trovati: ' + result.recordCounter;
+
+                    if(!usePagination){
+                        console.log('>>> RECORD COUNTER: ' + result.recordCounter);
+                        this.counterText = 'Risultati trovati: ';
+                        this.counter = result.recordCounter;
+                        this.setPages(this.counter);
+
+                        if(this.counter > this.perpage){
+                            this.showPagination = true;
+                        }
+                    }
+
                 }
+
+                this.disableButton('confirmFilter', !this.showResultTable);
 
             } else {
                 this.illustrationMessage = result.message;
@@ -138,11 +279,8 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     this.modalObj.header = this.label.closeTitle;
                     this.modalObj.body = this.label.closeBody;
                     break;
-                case 'confirmAll':
-                    this.modalObj.header = this.label.confirmAllTitle;
-                    this.modalObj.body = this.label.confirmAllBody;
-                    break;
                 case 'confirmFilter':
+                    this.enforceConfirmation = true;
                     this.modalObj.header = this.label.confirmFilterTitle;
                     this.modalObj.body = this.label.confirmFilterBody;
             }
@@ -163,6 +301,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 this[event.detail.operation](event);
             }
             this.modalObj.isVisible = false;
+            this.enforceConfirmation = false;
         } catch(e){
             console.error('# Name => ' + e.name );
             console.error('# Message => ' + e.message );
@@ -170,18 +309,22 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         }
     }
 
-    //getSelectedRow(event) {
-    //    const selectedRows = event.detail.selectedRows;
+    getSelectedRow(event) {
+        const selectedRows = event.detail.selectedRows;
 
-    //    for (let i = 0; i < selectedRows.length; i++){
-    //        console.log("You selected: " + JSON.stringify(selectedRows[i]));
-    //    }
+        if(selectedRows.length > 0){
+            this.disableButton('confirmSelected', false);
+            this.disableButton('confirmFilter', true);
+        } else {
+            this.disableButton('confirmSelected', true);
+            this.disableButton('confirmFilter', false);
+        }
 
-    //    console.log('>>> selectedRows ' + selectedRows.length);
+        //this.checkboxCounter = this.selectedIdList.length.toString();
 
-    //}
+    }
 
-    confirmSelected(event){
+    updateSelectedRows(){
         console.log('>>>> confirmSelected ');
         this.spinner = true;
         var el = this.template.querySelector('lightning-datatable');
@@ -190,18 +333,23 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         console.log('>>> selectedRows ' + selected.length);
 
         for (let i = 0; i < selected.length; i++){
-            console.log("You selected: " + JSON.stringify(selected[i]));
-            recordIdList.push(selected[i].Id);
+            //if(!this.selectedIdList.contains(selected[i].Id)){
+                console.log("You selected: " + JSON.stringify(selected[i]));
+                this.selectedIdList.push(selected[i].Id);
+            //}
         }
+        console.log('>>>> selectedIdList ' + JSON.stringify(this.selectedIdList));
+    }
 
-        console.log('>>>> recordIdList ' + JSON.stringify(recordIdList));
+    confirmSelected(event){
+        this.updateSelectedRows();
         this.runProductOptionAssociation('select');
     }
 
-    confirmAll(event){
-        console.log('>>>> confirmAll ');
-        this.runProductOptionAssociation('all');
-    }
+    //confirmAll(event){
+    //    console.log('>>>> confirmAll ');
+    //    this.runProductOptionAssociation('all');
+    //}
 
     confirmFilter(event){
         console.log('>>>> confirmFiltered ');
@@ -209,9 +357,9 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
     }
 
     runProductOptionAssociation(executionType){
-        console.log('>>>> runProductOptionAssociation ');
-
-        runProductOptionAssociation({productOptionId: this.productOptionId, recordList: recordIdList, executionType: executionType})
+        console.log('>>>> RUN PRODUCT OPTION ASSOCIATION');
+ 
+        runProductOptionAssociation({objType: this.objType, childRecordId: this.childRecordId, junctionObj: this.junctionObj, recordList: this.selectedIdList, executionType: executionType, filterString: this.filterString, dmlContext: this.dmlContext})
         .then(result => {
             console.log('# response #');
             console.log('# resp -> ' + result.success);
@@ -232,7 +380,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                 toastObj.variant = 'warning';
             }
 
-            recordIdList.splice(0, recordIdList.length);
+            this.selectedIdList.splice(0, this.selectedIdList.length);
             this.closeModal();
             this.spinner = false;
 
@@ -243,18 +391,6 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
                     variant: toastObj.variant
                 }),
             );
-
-            //setTimeout(() => {
-            //    this.dispatchEvent(
-            //        new ShowToastEvent({
-            //            title: toastObj.title,
-            //            message: toastObj.message,
-            //            variant: toastObj.variant
-            //        }),
-            //    );
-            //    this.spinnerObj.spinner = false;
-            //    this.goBackToRecord();
-            //}, 2000);
 
         })
         .catch(error => {
@@ -274,7 +410,7 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
 
     closeModal(event){
         console.log('### closeModal ###');
-        this.delete();
+
         const closeEvent = new CustomEvent("closemodal", {
             detail:  ''
         });
@@ -283,20 +419,133 @@ export default class HdtProductAssociationSearchTable extends LightningElement {
         this.dispatchEvent(closeEvent);
     }
 
-    delete(event) {
-        deleteRecord(this.productOptionId)
-            .then(() => {
-                console.log('>>>> RECORD DELETED');
-            })
-            .catch(error => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error deleting record',
-                        message: error.body.message,
-                        variant: 'error'
-                    })
-                );
-            });
+    disableButton(buttonName, disable){
+        this.template.querySelectorAll('lightning-button').forEach(c => {
+            if(c.name===buttonName){
+                c.disabled = disable;
+            }
+        });
     }
+    
+    //Pagination --- START ---
+    setPages(dataLength){
+        this.pages = [];
+        let numberOfPages = Math.ceil(dataLength / this.perpage);
+        console.log('>> tot recs: ' + dataLength + ', numberOfPages: ' + numberOfPages);
+
+        for (let index = 1; index <= numberOfPages; index++) {
+            this.pages.push(index);
+        }
+
+        if(this.pages.length == 1){
+            this.showPagination = false;
+            return;
+        }
+
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+
+    }
+
+    onPageClick(event){
+        this.page = parseInt(event.target.dataset.id, 10);
+        this.pageData();
+    }
+
+    get hasPrev() {
+        this.template.querySelectorAll('[data-id="leftArrow"]').forEach((but) => {
+            if(this.page > 1){
+                but.disabled = false; 
+            } else {
+                but.disabled = true; 
+            }
+        });        
+        //return this.page > 1;
+        return true;
+    }
+
+    get hasNext() {
+        this.template.querySelectorAll('[data-id="rightArrow"]').forEach((but) => {
+            if(this.page < this.pages.length){
+                but.disabled = false; 
+            } else {
+                but.disabled = true; 
+            }
+        });
+               
+        return true;
+        //return this.page < this.pages.length
+    }
+
+    onNext(){
+        this.page++;
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    onLast(){
+        this.page = this.pages[this.pages.length-1];
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    onFirst(){
+        this.page = this.pages[0];
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    onPrev(){
+        this.page--;
+        let mid = Math.floor(this.set_size / 2) + 1;
+
+        if (this.page > mid) {
+            this.pagesList = this.pages.slice(this.page - mid, this.page + mid - 1);
+        } else {
+            this.pagesList = this.pages.slice(0, this.set_size);
+        }
+        this.pageData();
+    }
+
+    pageData(){
+        let page = this.page;
+        let perpage = this.perpage;
+        let startIndex = (page * perpage) - perpage;
+        let endIndex = (page * perpage);
+
+        this.fromRec = (startIndex == 0) ? 1 : startIndex+1;
+        this.toRec = (this.fromRec + perpage)-1;
+
+        console.log('>>> TOT: ' + this.counter + ' - FROM: ' + this.fromRec + ' - TO: ' + this.toRec + ' # pageNumber: ' + this.page);
+        this.spinner = true;
+        this.updateSelectedRows();
+        this.data = [];
+        this.getData(this.filterString, true, this.page.toString());
+
+    }
+    //Pagination --- END ---
 
 }

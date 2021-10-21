@@ -17,7 +17,7 @@
                                 <div class="slds-col slds-size_1-of-8 slds-grow-none">
                                 </div>
                                 <div class="slds-col slds-size_1-of-3">
-                                    <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} disabled={enableEdit} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></lightning-input>
+                                    <lightning-input type="email" data-id="email" required={emailRequired} label="Email invio documentazione" value={email} disabled={enableEdit} pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" message-when-pattern-mismatch="Inserire un indirizzo e-mail valido."></lightning-input>
                                 </div>
                             </div>
                         </lightning-card>
@@ -26,7 +26,7 @@
                         <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Annulla</button>
                         <button class="slds-button slds-button_brand" onclick={handlePreview} title="OK">Preview</button>
                         <template if:true={showSendButton}>
-                            <button class="slds-button slds-button_brand" onclick={checkForm} title="OK">Invia Documento</button>
+                            <button class="slds-button slds-button_brand" onclick={checkForm} title="OK">Invia e Archivia</button>
                         </template>
                     </footer>
                 </div>

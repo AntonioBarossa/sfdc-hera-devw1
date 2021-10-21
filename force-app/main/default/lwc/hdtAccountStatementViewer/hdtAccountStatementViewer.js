@@ -68,9 +68,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     contractAccount;
     company;
 
-    totRecs;
-    fromRec;
-    toRec;
+    totRecs = 0;
+    fromRec = 0;
+    toRec = 0;
     avoidSort;
     //blob;
     //url;
@@ -468,6 +468,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             //selectedRecord.forEach(r => {
             //    r[this.detailTable] = [];
             //});
+
+            if(this.errorCheck(parameters, selectedRecord[0])){
+                return;
+            }
+
             var recordsString = JSON.stringify(selectedRecord);
             this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
         } else {
@@ -480,6 +485,32 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             );
         }
  
+    }
+
+    errorCheck(parameters, record){
+        console.log('>>> parameters: ' + parameters);
+
+        if(parameters === null || parameters === undefined || parameters === ''){
+            return false;
+        }
+
+        var obj = JSON.parse(parameters);
+        console.log('>>> contract: ' + record.contratto);
+        console.log('>>> processType: ' + obj.processType);
+
+        if(obj.processType === 'Errore di Fatturazione' && (record.contratto === undefined || record.contratto.charAt(0) != '3')){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non è presente il contratto',
+                    variant: 'warning'
+                })
+            );
+            return true;
+        }
+
+        return false;
+
     }
 
     serviceCatalogBackendOperation(recordsString, serviceOperation, parameters){
@@ -1083,8 +1114,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
                             break;
                         case 'text':
-                            filterValue = currentFilter[key].value;
-                            tableValueToFilter = item[key];
+                            filterValue = currentFilter[key].value.toLowerCase();
+                            tableValueToFilter = item[key].toLowerCase();
                     }
 
                     switch (currentFilter[key].operator) {
@@ -1431,35 +1462,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     showSingleBill(event){
         console.log('>>> visualbolletta - showSingleBill');
-
-        //this.dispatchEvent(
-        //    new ShowToastEvent({
-        //        title: 'Visualizza bolletta',
-        //        message: 'Questo servizio non è ancora disponibile',
-        //        variant: 'info',
-        //        mode: 'sticky'
-        //    })
-        //);
+        this.openMainSpinner();
 
         var selectedId = this.getSingleSelectedId();
 
         if(selectedId==undefined){
+            this.closeMainSpinner();
             return;
         }
 
         var selected = this.allData.filter(c => { return c[this.uniqueId] == selectedId })[0];
-        console.log('>>> società: ' + selected.societa);
-        console.log('>>> contoContrattuale: ' + selected.contoContrattuale);
-        console.log('>>> dataEmissione: ' + selected.dataEmissione);
-
         const date = selected.dataEmissione.split("/");
 
         var docInvoiceObj = {
-            billNumber: selected.contoContrattuale,
+            billNumber: selected.numeroFattura.replace(/^0+/, ''),
             channel: 'CRM',
-            //date: selected.dataEmissione,
             date: date[2] + '-' + date[1] + '-' + date[0],
-            documentType: 'Bolletta',
+            documentType: 'Bollette',
             company: selected.societa
         }
 

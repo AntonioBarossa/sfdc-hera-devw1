@@ -22,7 +22,7 @@ public with sharing class HDT_QR_MassiveLoaderRequest {
                        (SELECT Id, LinkedEntityId, ContentDocumentId, IsDeleted, SystemModstamp, ShareType, Visibility FROM contentdocumentlinks  ORDER BY SystemModstamp DESC  LIMIT 1) 
                 FROM MassiveLoaderRequest__c 
                 WHERE Status__c =: constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE 
-            //  AND Phase__c =: constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
-            WITH SECURITY_ENFORCED ORDER BY Priority__c LIMIT 1];
+                //  AND Phase__c =: constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
+                WITH SECURITY_ENFORCED ORDER BY Priority__c LIMIT 1];
     }
 }

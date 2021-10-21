@@ -273,6 +273,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if (element == 'Distributor__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: null,
+                            disabled: false
+                        }
+                    )
+                }
                 else {
                     console.log('entra in else ++++' + JSON.stringify(element));
                     fieldsDataObject.push(
@@ -301,15 +312,27 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     )
                 }
                 else {
+                    if (location.href.includes('HDT_FL_PostSalesMasterDispatch')) {
+                        fieldsDataObject.push(
+                            {
+                                fieldname: element,
+                                required: mapFieldReq.get(element),
+                                value: this.servicePointRetrievedData[element],
+                                disabled: !(this.servicePointRetrievedData[element] == null && mapFieldReq.get(element))
+                            } 
+                        )
+                    } else {
+                        var readonlyfields = ['CommoditySector__c','ServicePointCode__c','SAPImplantCode__c','MeterStatus__c'];
+                        fieldsDataObject.push(
+                            {
+                                fieldname: element,
+                                required: mapFieldReq.get(element),
+                                value: this.servicePointRetrievedData[element],
+                                disabled: readonlyfields.includes(element) ? true : false
+                            }
+                        )
+                    }
 
-                    fieldsDataObject.push(
-                        {
-                            fieldname: element,
-                            required: mapFieldReq.get(element),
-                            value: this.servicePointRetrievedData[element],
-                            disabled: true
-                        }
-                    )
                 }
 
             }
@@ -376,7 +399,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
                 else if (element === 'Resident__c') {
                     console.log('entra in resident');
-                    if(this.recordTypeAccount == 'Residente'){
+                    if(this.recordTypeAccount == 'Residenziale'){
                         this.allSubmitedFields.Resident__c = true;
                         fieldsDataObject.push(
                             {
@@ -824,9 +847,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         console.log('enter in FOREACH --- ELEMENT : ' + JSON.stringify(element.Account__r.Id));
                         this.recordDistributorPointCode = element.Account__r.Id;
                     });
-
                     this.isDistributor = true;
-
                     this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
                     this.servicePointRetrievedData.Distributor__c = this.recordDistributorPointCode;
                     this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
@@ -852,6 +873,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
 
+        }
+        if (event.target.fieldName == 'Distributor__c') {
+            this.recordDistributorPointCode = event.target.value;
+            this.fieldsData['Distributor__c'] = event.target.value;
         }
         if (event.target.fieldName == 'Disconnectable__c' && event.target.value == 'NO') {
             console.log(' if event target = disconnectable NO');
@@ -1109,6 +1134,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['VoltageLevel__c'] === undefined || this.allSubmitedFields['VoltageLevel__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
             }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
         }
         else {
 
@@ -1129,6 +1157,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
+            if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
         }
         if (concatPointErrorFields !== '') {
@@ -1183,6 +1217,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.allSubmitedFields['VoltageLevel__c'] === undefined || this.allSubmitedFields['VoltageLevel__c'] === '') {
                 concatPointErrorFields = concatPointErrorFields.concat('Tensione di Consegna, ');
             }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
         }
         else {
 
@@ -1209,6 +1246,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if (this.allSubmitedFields['Disconnectable__c'] === 'No' && (this.allSubmitedFields['DisconnectibilityType__c'] === undefined || this.allSubmitedFields['DisconnectibilityType__c'] === '')) {
                 concatPointErrorFields = concatPointErrorFields.concat('Tipologia Disalimentabilita, ');
+            }
+            if (this.allSubmitedFields['AnnualConsumption__c'] === undefined || this.allSubmitedFields['AnnualConsumption__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Consumo Annuo, ');
+            }
+            if (this.allSubmitedFields['MaxRequiredPotential__c'] === undefined || this.allSubmitedFields['MaxRequiredPotential__c'] === '') {
+                concatPointErrorFields = concatPointErrorFields.concat('Potenzialità Massima Richiesta, ');
             }
         }
         if (concatPointErrorFields !== '') {
@@ -1530,7 +1573,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         }
         confirmServicePoint({ servicePoint: this.allSubmitedFields, sap: this.isSap, sale: this.sale }).then(data => {
-
+            console.log('*********:PROVA');
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;

@@ -1,3 +1,9 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 24/06/2021
+* @description HDT_BA_PraxidiaReclami
+* @history Lorenzo – 24/06/2021 – created class
+*/
 public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Database.Stateful,Database.AllowsCallouts{
 
     HDT_QR_Case caseQr = new HDT_QR_Case();
@@ -9,8 +15,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
     String generateFile = header;
     public Iterable<Case> start(Database.BatchableContext context) {
 
-        List<Case> listCase = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
-
+        dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
         return this.dtos;
     }
 
@@ -72,8 +77,8 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
 
     }
     public void finish(Database.BatchableContext context) {
-        System.debug('BeforeEnter');
-        For(HDT_WRP_CampaignPraxidia.reclami fr : wrapReclamiList){
+        System.debug('BeforeEnter:' + wrapReclamiList);
+        for(HDT_WRP_CampaignPraxidia.reclami fr : wrapReclamiList){
             String rowFile = '';
             rowFile = fr.idJob = ';';
             rowFile = rowFile + fr.rdsRiga + ';' ;

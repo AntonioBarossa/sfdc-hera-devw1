@@ -39,6 +39,8 @@ public class HDT_SRV_OrderItemTst{
 	@isTest
 	static void testcheckAccessInit(){
 
+		Boolean finished = false;
+
 		Test.startTest();
 
 		List<OrderItem> tOrdItemList=[SELECT Id, UnitPrice, Quantity
@@ -57,11 +59,17 @@ public class HDT_SRV_OrderItemTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
 	static void testcheckReadAccess(){
+
+		Boolean finished = false;
 
 		Test.startTest();
 
@@ -81,11 +89,17 @@ public class HDT_SRV_OrderItemTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
 	static void testccheckCreateAccess(){
+
+		Boolean finished = false;
 
 		Test.startTest();
 
@@ -105,11 +119,17 @@ public class HDT_SRV_OrderItemTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
 	static void testccheckcheckUpdateAccess(){
+
+		Boolean finished = false;
 
 		Test.startTest();
 
@@ -129,6 +149,10 @@ public class HDT_SRV_OrderItemTst{
 
 		// System.assertNotEquals('', '');
 
+		finished = true;
+
 		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 }

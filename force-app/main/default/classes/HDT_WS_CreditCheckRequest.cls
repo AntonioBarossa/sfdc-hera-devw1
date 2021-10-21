@@ -62,8 +62,8 @@ public class HDT_WS_CreditCheckRequest  extends HDT_WS_Request {
         this.companyGroup = wrpVals.companyGroup;
         this.market = wrpVals.market;
         this.offerType = wrpVals.offerType;     
-        this.offerType = bpAlternative;  
-        this.offerType = alternativeCustomerId;    
+        this.bpAlternative = wrpVals.bpAlternative;  
+        this.alternativeCustomerId = wrpVals.alternativeCustomerId;    
         this.details = wrpVals.details;        
     }
 

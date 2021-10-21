@@ -24,7 +24,7 @@
         <name>AggiornaFasi</name>
         <label>AggiornaFasi</label>
         <locationX>50</locationX>
-        <locationY>3782</locationY>
+        <locationY>4022</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -61,7 +61,7 @@
         <name>AggiornaFasi_0</name>
         <label>AggiornaFasi</label>
         <locationX>314</locationX>
-        <locationY>3662</locationY>
+        <locationY>3902</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -131,6 +131,36 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Intestatario_0</name>
+        <label>Assegna Intestatario</label>
+        <locationX>611</locationX>
+        <locationY>2966</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseCFSott</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryFirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseNameSott</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseSottoscrittore.BankAccountSignatoryLastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpperCaseCognomeSott</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseSottoscrittore</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -458,7 +488,7 @@
         <name>AvanzamentoDocumentale</name>
         <label>AvanzamentoDocumentale</label>
         <locationX>380</locationX>
-        <locationY>3302</locationY>
+        <locationY>3542</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0_0</targetReference>
         </defaultConnector>
@@ -515,7 +545,7 @@
         <name>Iban_Italiano_0</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>3542</locationY>
+        <locationY>3782</locationY>
         <defaultConnector>
             <targetReference>AggiornaFasi_0</targetReference>
         </defaultConnector>
@@ -662,7 +692,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>743</locationX>
-        <locationY>3062</locationY>
+        <locationY>3302</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -882,6 +912,21 @@
         <expression>IF({!IbanIsForeign} = false, &quot;Richiesta Domiciliazione - Italiano&quot;,&quot;Richiesta Domiciliazione - Estero&quot;)</expression>
     </formulas>
     <formulas>
+        <name>UpperCaseCFSott</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseSottoscrittore.BankAccountSignatoryFiscalCode__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCaseCognomeSott</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseSottoscrittore.BankAccountSignatoryLastName__c})</expression>
+    </formulas>
+    <formulas>
+        <name>UpperCaseNameSott</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!GetCaseSottoscrittore.BankAccountSignatoryFirstName__c})</expression>
+    </formulas>
+    <formulas>
         <name>UpperCINFormula</name>
         <dataType>String</dataType>
         <expression>UPPER({!GetCaseAggiornato.IbanCIN__c})</expression>
@@ -916,7 +961,7 @@
         <name>CalcolaCodiceCausale</name>
         <label>CalcolaCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>3662</locationY>
+        <locationY>3902</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AggiornaFasi</targetReference>
@@ -1056,7 +1101,7 @@
         <name>GetCaseAggiornato2</name>
         <label>GetCaseAggiornato2</label>
         <locationX>182</locationX>
-        <locationY>3422</locationY>
+        <locationY>3662</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Iban_Italiano_0</targetReference>
@@ -1081,6 +1126,27 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseSottoscrittore</name>
+        <label>GetCaseSottoscrittore</label>
+        <locationX>611</locationX>
+        <locationY>2846</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Intestatario_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1125,10 +1191,20 @@
         <inputReference>GetCaseNonBozza</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>AggiornaCaseSottoscrittore</name>
+        <label>AggiornaCaseSottoscrittore</label>
+        <locationX>611</locationX>
+        <locationY>3086</locationY>
+        <connector>
+            <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
+        </connector>
+        <inputReference>GetCaseSottoscrittore</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>50</locationX>
-        <locationY>3902</locationY>
+        <locationY>4142</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -1138,14 +1214,14 @@
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>314</locationX>
-        <locationY>3782</locationY>
+        <locationY>4022</locationY>
         <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <screens>
         <name>Document_Signature_Screen</name>
         <label>Document Signature Screen</label>
         <locationX>380</locationX>
-        <locationY>3182</locationY>
+        <locationY>3422</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1195,7 +1271,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
+            <targetReference>GetCaseSottoscrittore</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_6_0_0</name>
@@ -1289,7 +1365,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>4022</locationY>
+        <locationY>4262</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1955,7 +2031,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>842</locationX>
-        <locationY>3182</locationY>
+        <locationY>3422</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2030,7 +2106,7 @@
         <name>Annulla_Prestazione_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>578</locationX>
-        <locationY>3422</locationY>
+        <locationY>3662</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

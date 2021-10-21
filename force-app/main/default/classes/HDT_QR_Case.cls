@@ -4,7 +4,7 @@
 * @description HDT_QR_Case– Contains queries for Case
 * @history Fatjola Memishaj – 10/03/2021 – Created class
 */
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_Case {
 
     public List<Case> getRecordByPracticeNumber(String caseNumber){
@@ -12,6 +12,8 @@ public inherited sharing class HDT_QR_Case {
         WHERE CaseNumber = :caseNumber WITH SECURITY_ENFORCED LIMIT 1];
     }
     
+    
+    @SuppressWarnings('PMD.FormalParameterNamingConventions')
     public Case getRecordById(String Id) {
         return [
             SELECT 
@@ -25,20 +27,60 @@ public inherited sharing class HDT_QR_Case {
             /*** Sviluppo Gest Appuntamento */
             ServicePoint__r.distributor__r.name,
             ServicePoint__r.distributor__c,
+            ServicePoint__r.CommoditySector__c, //@Elfrida Kora,06/10/2021
+            ServicePoint__r.Account__c, //@Elfrida Kora,06/10/2021
             /*** FINE */
             ContactId,
             ServicePoint__c,
             Contract__c,
             ContractCode__c,
             CommodityFormula__c,
-            PODPDRFormula__c
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
     }
+    /*******
+     *  Cambio uso TEcnico
+     */
     
+    @SuppressWarnings('PMD.FormalParameterNamingConventions')
+    public Case getRecordByIdCambioUso(String Id) {
+        return [
+            SELECT 
+            Id,
+            Status,
+            Subject,
+            Subprocess__c,
+            AccountId,
+            CaseNumber,
+            ServicePoint__r.Distributor__r.Code__c,
+            HerokuPracticeCode__c,
+            /*** Sviluppo Gest Appuntamento */
+            ServicePoint__r.distributor__r.name,
+            ServicePoint__r.distributor__c,
+            /*** FINE */
+            ContactId,
+            ServicePoint__c,
+            Contract__c,
+            ContractCode__c,
+            CommodityFormula__c,
+            PODPDRFormula__c,
+            Phase__c,
+            Type,
+            RecordType.DeveloperName
+            FROM Case
+            where Id = :Id
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+    }
+
     public List<Case> getChageNonRegMeterByOrder(String orderId){
 
         return [SELECT Id
@@ -76,10 +118,10 @@ public inherited sharing class HDT_QR_Case {
                                                            WHERE CaseNumber IN :caseNumbers WITH SECURITY_ENFORCED];
     }
 
+    @SuppressWarnings('PMD.FormalParameterNamingConventions')
     public List<Case> getRecordsById(List<String> Ids, String fields) {
-        String query = 'SELECT '+ fields +
-                ' From Case where id IN :Ids';
-        List<Case> cases = Database.query(query);
+        String query = 'SELECT '+ String.escapeSingleQuotes(fields) + ' FROM Case where Id IN :Ids';
+        List<Case> cases = Database.query(query); 
 
         return cases;
     }
@@ -109,9 +151,10 @@ public inherited sharing class HDT_QR_Case {
             Phase__c
             FROM Case
             WHERE ParentId = :parentId
+            AND RecordType.DeveloperName = 'HDT_RT_RichiestaParere'
             WITH SECURITY_ENFORCED];
         }catch(Exception e){
-            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return childCases;
     }
@@ -132,7 +175,7 @@ public inherited sharing class HDT_QR_Case {
             WITH SECURITY_ENFORCED
             ];
         }catch(Exception e){
-            System.debug('ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'ChildCaseCancellation: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return activities;
     }
@@ -163,7 +206,7 @@ public inherited sharing class HDT_QR_Case {
             WITH SECURITY_ENFORCED
             LIMIT 1];
         } catch(Exception e){
-            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return nonReqContr;
     }
@@ -180,7 +223,7 @@ public inherited sharing class HDT_QR_Case {
             WITH SECURITY_ENFORCED
             LIMIT 1];
         } catch(Exception e){
-            System.debug('Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Non Required Contract: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
         }
         return nonReqContr;
     }
@@ -207,9 +250,13 @@ public inherited sharing class HDT_QR_Case {
         }
         catch(Exception e)
         {
-            System.Debug('Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Errore: ' + e.getMessage() + '. Alla riga: ' + e.getLineNumber());
         }
         return childCases;
+    }
+    public List<Case> getCaseByAccountid(String accountid, string type)
+    {
+        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type = :type AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
 }

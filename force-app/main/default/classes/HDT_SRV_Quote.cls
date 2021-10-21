@@ -16,8 +16,8 @@ public inherited sharing class HDT_SRV_Quote {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Initialize security access instance
-    * @param String fields - Fields to check for access
-    * @param String crud - crud operation passed as a string (create, read, update, delete)
+    * @param fields - Fields to check for access
+    * @param crud - crud operation passed as a string (create, read, update, delete)
     */
     public void checkAccessInit(String fields, String crud){
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__Quote__c', fields, crud);
@@ -27,7 +27,7 @@ public inherited sharing class HDT_SRV_Quote {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
-     * @param String fields
+     * @param fields
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
@@ -37,7 +37,7 @@ public inherited sharing class HDT_SRV_Quote {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Check if current user has create permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkCreateAccess(String fields){
         checkAccessInit(fields, CREATEPERMISSION);
@@ -47,7 +47,7 @@ public inherited sharing class HDT_SRV_Quote {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Check if current user has update permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
@@ -66,7 +66,7 @@ public inherited sharing class HDT_SRV_Quote {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create SBQQ__Quote__c record
-     * @param SBQQ__Quote__c quote
+     * @param quote
      * @return SBQQ__Quote__c
      */
     public SBQQ__Quote__c createRecord(SBQQ__Quote__c quote){
@@ -82,13 +82,18 @@ public inherited sharing class HDT_SRV_Quote {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Delete single record
-     * @param SBQQ__Quote__c.Id
+     * @param quoteId
      */
     public void deleteRecord(String quoteId){
         // checkDeleteAccess();
         HDT_UTL_DatabaseService.deleteSObject(quoteId);
     }
 
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Delete multiple records
+     * @param quotes
+     */
     public void deleteRecords(List<String> quotes){
         // checkDeleteAccess();
         HDT_UTL_DatabaseService.deleteSObject(quotes);
@@ -98,7 +103,7 @@ public inherited sharing class HDT_SRV_Quote {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Update SBQQ__Quote__c record based on SBQQ__Quote__c.Id
-    * @param SBQQ__Quote__c quote - Quote record with fields to update
+    * @param quote - Quote record with fields to update
     */
     public void updateRecord(SBQQ__Quote__c quote){
         List<String> fields = helperMethods.getObjAttrList(quote);
@@ -111,7 +116,7 @@ public inherited sharing class HDT_SRV_Quote {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 15/12/2020
     * @description Update SBQQ__Quote__c records based on SBQQ__Quote__c.Id
-    * @param List<SBQQ__Quote__c>
+    * @param quotes
     */
     public void updateRecords(List<SBQQ__Quote__c> quotes){
 
