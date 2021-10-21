@@ -1,4 +1,3 @@
-
 @SuppressWarnings('PMD.ExcessivePublicCount')
 public class HDT_WRP_BpCaVariation {
 	
