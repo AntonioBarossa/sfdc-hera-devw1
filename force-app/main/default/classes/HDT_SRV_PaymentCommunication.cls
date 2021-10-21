@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_PaymentCommunication {
 
     HDT_QR_Payments paymentsQr = new HDT_QR_Payments();
@@ -17,8 +18,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         currentCase = paymentsQr.getCaseById(recordId);
         documents = paymentsQr.getDocumentSelectedByCase(recordId);
 
-        System.debug('SRV_PaymenCommunication Case--> '+currentCase);
-        System.debug('SRV_PaymentCommunication Documetns--> '+documents);
+        System.debug(LoggingLevel.DEBUG, 'SRV_PaymenCommunication Case--> '+currentCase);
+        System.debug(LoggingLevel.DEBUG, 'SRV_PaymentCommunication Documetns--> '+documents);
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'rds' => currentCase.CaseNumber,
@@ -63,7 +64,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
 
         pretty = paymentsUtl.createBodyRequest(inputList);
 
-        System.debug('SRV_PaymentCommunication -->' +pretty);
+        System.debug(LoggingLevel.DEBUG, 'SRV_PaymentCommunication -->' +pretty);
 
         return pretty;
     }

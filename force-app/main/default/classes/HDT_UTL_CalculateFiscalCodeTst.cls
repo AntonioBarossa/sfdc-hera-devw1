@@ -9,7 +9,7 @@
 public class HDT_UTL_CalculateFiscalCodeTst {
     @testSetup 
     static void setup() {
-        HDT_UTL_DataFactoryTst.createCity(5,true);
+        HDT_UTL_DataFactoryTst.createCity();
     }
 
     @isTest 

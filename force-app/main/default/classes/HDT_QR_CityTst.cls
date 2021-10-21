@@ -21,11 +21,11 @@ public with sharing class HDT_QR_CityTst {
 
         System.runAs(internalUser) {
 
-            List<City__c> cities = HDT_UTL_DataFactoryTst.createCity(1, false);
+            List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
             cities[0].ServiceEle__c = true;
             cities[0].ServiceGas__c = true;
             cities[0].SDV__c = 'sdvTest';
-            insert cities;
+            update cities;
         }
     }
 
@@ -38,7 +38,7 @@ public with sharing class HDT_QR_CityTst {
 
             Test.startTest();
 
-            City__c ct = [SELECT Id, Name, BelfioreCode__c FROM City__c WHERE Name = 'Roma'];
+            City__c ct = [SELECT Id, Name, BelfioreCode__c FROM City__c WHERE SDV__c = 'sdvTest'];
 
             String testCity = HDT_QR_City.getCityCode(ct.Name);
 
@@ -63,7 +63,7 @@ public with sharing class HDT_QR_CityTst {
 
             Test.startTest();
 
-            City__c ct = [SELECT Id, Name, BelfioreCode__c, SDV__c FROM City__c WHERE Name = 'Roma'];
+            City__c ct = [SELECT Id, Name, BelfioreCode__c, SDV__c FROM City__c WHERE SDV__c = 'sdvTest'];
 
             String testCity = HDT_QR_City.getCitySDVEle(ct.Name);
 
@@ -88,7 +88,7 @@ public with sharing class HDT_QR_CityTst {
 
             Test.startTest();
 
-            List<City__c> ct = [SELECT Id, Name, BelfioreCode__c, SDV__c FROM City__c WHERE Name = 'Roma'];
+            List<City__c> ct = [SELECT Id, Name, BelfioreCode__c, SDV__c FROM City__c WHERE SDV__c = 'sdvTest'];
 
             List<String> cityName = new List<String>();
 
@@ -123,7 +123,7 @@ public with sharing class HDT_QR_CityTst {
 
             Test.startTest();
 
-            City__c ct = [SELECT Id, Name, SDV__c FROM City__c WHERE Name = 'Roma'];
+            City__c ct = [SELECT Id, Name, SDV__c FROM City__c WHERE SDV__c = 'sdvTest'];
 
             String testCity = HDT_QR_City.getCitySDVGas(ct.Name);
 
@@ -148,7 +148,7 @@ public with sharing class HDT_QR_CityTst {
 
             Test.startTest();
 
-            List<City__c> ct = [SELECT Id, Name, BelfioreCode__c, SDV__c FROM City__c WHERE Name = 'Roma'];
+            List<City__c> ct = [SELECT Id, Name, BelfioreCode__c, SDV__c FROM City__c WHERE SDV__c = 'sdvTest'];
 
             List<String> cityCode = new List<String>();
 

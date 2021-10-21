@@ -63,6 +63,7 @@ export default class HdtMassiveLoader extends LightningElement {
     contentVersionId;
     reqName;
     navigateDisabled;
+    spinner=false;
 
     get importFileFormat() {
         return ['.csv'];
@@ -225,7 +226,7 @@ export default class HdtMassiveLoader extends LightningElement {
     }
 
     handleCSVConfirm(event) {
-
+        this.spinner=true;
         checkCSV({
             fileName: this.fileName,
             contentVersionId: this.contentVersionId,
@@ -244,6 +245,7 @@ export default class HdtMassiveLoader extends LightningElement {
                 this.importDisabled = true;
                 
                 this.navigateDisabled = false;
+              
 
             } else {
 
@@ -257,9 +259,10 @@ export default class HdtMassiveLoader extends LightningElement {
                 this.handleToastEvent(error + '!', this.labels.massiveLoaderFileCheckError, 'error', null);
 
             }
+            this.spinner=false;
         })
         .catch(error => {
-
+            this.spinner=false;
             console.log('hdtMassiveLoader.checkCSV - Error: ', error);
 
         })

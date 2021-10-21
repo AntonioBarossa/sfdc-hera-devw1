@@ -418,6 +418,8 @@
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
         <fields>DistributorNameFormula__c</fields>
+        <fields>Resident__c</fields>
+        <fields>FlowComputerSN__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

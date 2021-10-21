@@ -147,6 +147,41 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         return null;
     }
 
+    
+    public AccountContactRelation getLegalRepresentativeRelation(Id accountId) {
+    
+        List<AccountContactRelation> relations = [
+            SELECT 
+            AccountId,
+            ContactId,
+            Contact.MobilePhone,
+            Contact.Email,
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId = :accountId
+            AND Roles  = 'Legale rappresentante'
+            AND IsActive = True
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (relations.size() > 0) {
+            return relations[0];
+        }
+
+        return null;
+    }
+
+    // Restituisce l'ACR del Legale Rappresentante se presente, altrimenti restituisce quella del Titolare.
+    public AccountContactRelation getPrimaryContactRelationBusiness(Id accountId) {
+    
+        AccountContactRelation legalAcr = getLegalRepresentativeRelation(accountId);
+        if (legalAcr != null ) {
+            return legalAcr;
+        }
+
+        return getPrimaryContactRelation(accountId);
+    }
+
     public List<AccountContactRelation> getAdministratorRelations() {
     
         return [

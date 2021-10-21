@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
     public static String getCompanyCodeHelper(String companyName){
@@ -16,7 +17,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
     public static Object getWsData(String wrapperObj) {
 
-        System.debug('>>> wrapperObj ' + wrapperObj);
+        System.debug(LoggingLevel.DEBUG, '>>> wrapperObj ' + wrapperObj);
 
         HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj wsObj = new HDT_WRP_ComunicationsSearchList.HDT_WRP_WebServiceObj();
         
@@ -24,7 +25,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
 
             Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped(wrapperObj);
             Object documentCategory = (Object)jsonMap.get('documentCategory');
-            System.debug('>>> CURRENT TYPE: ' + String.valueOf(documentCategory));
+            System.debug(LoggingLevel.DEBUG, '>>> CURRENT TYPE: ' + String.valueOf(documentCategory));
 
             //if(String.valueOf(documentCategory) == 'solleciti'){
             HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
@@ -50,7 +51,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
             }
     
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(wrapperObj, httpObj);
-            System.debug('>>>> RETRIEVE FROM WS ' + responseCtrl);
+            System.debug(LoggingLevel.DEBUG, '>>>> RETRIEVE FROM WS ' + responseCtrl);
 
             if(!responseCtrl.success){
                 wsObj.success = false;
@@ -78,8 +79,8 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
     }
 
     public static HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj sendFileToPrint(String body){
-        System.debug('# saveNewOfferConfigured #');
-        System.debug('>>> body: ' + body);
+        System.debug(LoggingLevel.DEBUG, '# saveNewOfferConfigured #');
+        System.debug(LoggingLevel.DEBUG, '>>> body: ' + body);
 
         HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj responseObj = new HDT_WRP_ComunicationsSearchList.HDT_WRP_ResponseObj();
 
@@ -110,7 +111,7 @@ public inherited sharing class HDT_SRV_ComunicationsSearchList {
     }
 
     public static String getFakeData(){
-        System.debug('>>> getFakeData');
+        System.debug(LoggingLevel.DEBUG, '>>> getFakeData');
         String s = '{"status": "success", "data":[';
 
         Integer max = 50;
