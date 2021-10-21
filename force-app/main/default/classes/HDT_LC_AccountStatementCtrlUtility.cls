@@ -311,6 +311,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCaSet = new Set<String>();
         Set<String> raiFeeSet = new Set<String>();
+        /**@frpanico 21/10/2021
+         * Added Social bonus Map
+         */
+        Map<String,String> socialBonusMap = new Map<String,String>();
         Decimal tot = 0;
 
         for(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj : recordsList){
@@ -327,6 +331,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
             if(!String.isEmpty(obj.rateizzato)){
                 isInstallmentSet.add(obj.rateizzato);
+            }
+
+            /**@frpanico 21/10/2021
+             * Added logic for "Bonus Sociale"
+             * If the field is not empty add to the Map<String,String>
+             * bonusSociale as key
+             * dataScadenza as value
+             */
+            if(!String.isEmpty(obj.bonusSociale))
+            {
+                socialBonusMap.put(obj.bonusSociale,obj.dataScadenza);
             }
 
             if(!String.isEmpty(obj.contoContrattuale)){
@@ -370,6 +385,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;
         serviceCatalog.Multiselect__c = true;
         serviceCatalog.IsRaiFee__c = (serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && raiFeeSet.size() > 0);
+        /**@frpanico 21/10/2021
+         * Calculate the new field SocialBonus__c
+         * it calls the method checkSocialBonus which takes in input the map previously feeded
+         */
+        serviceCatalog.SocialBonus__c = checkSocialBonus(socialBonusMap);
 
         return serviceCatalog;
     }
@@ -386,4 +406,26 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     }
 
+    /**@frpanico 21/10/2021
+     * Added a method that runs through the map given as input (if null it returns true)
+     * if the "dataScadenza" field of one entryis more than 10 days before today it returns false
+     */
+    private static Boolean checkSocialBonus(Map<String,String> socialBonusMap)
+    {
+        Boolean result = true;
+        for(String bonusSociale : socialBonusMap.keyset())
+        {
+            if(bonusSociale.equalsIgnoreCase('SI'))
+            {
+                List<String> splittedDate = socialBonusMap.get(bonusSociale).split('/');
+                Date dataScadenza = Date.newInstance(Integer.valueOf(splittedDate[2]), Integer.valueOf(splittedDate[1]), Integer.valueOf(splittedDate[0]));
+                if(dataScadenza < System.Today().addDays(-10))
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }
