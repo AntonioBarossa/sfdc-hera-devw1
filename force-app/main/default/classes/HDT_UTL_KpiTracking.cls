@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_KpiTracking {
     public static void createKpiTracking(List<Account> accountList, Map<Id,Sobject> accountOldMap){
         List<KpiTracking__c> kpiList = new List<KpiTracking__c>();
@@ -27,7 +28,7 @@ public with sharing class HDT_UTL_KpiTracking {
                 }
             }
         } catch (DmlException ex) {
-            System.debug('Non è stato possibile creare il KPI');
+            System.debug(LoggingLevel.DEBUG, 'Non è stato possibile creare il KPI');
         }
     }
 
@@ -55,7 +56,7 @@ public with sharing class HDT_UTL_KpiTracking {
             try {
                 HDT_UTL_DatabaseService.deleteSObject(kpiList);
             } catch (DmlException ex) {
-                System.debug('Non è stato possibile cancellare i KPI');
+                System.debug(LoggingLevel.DEBUG, 'Non è stato possibile cancellare i KPI');
             }
         }
     }
@@ -65,7 +66,7 @@ public with sharing class HDT_UTL_KpiTracking {
                 HDT_UTL_DatabaseService.updateSObject(record);
             }
         } catch (DmlException ex) {
-            System.debug('Error updating kpi');
+            System.debug(LoggingLevel.DEBUG, 'Error updating kpi');
         }
     }
     public static List<KpiTracking__c> getKpiRecord(String params){
