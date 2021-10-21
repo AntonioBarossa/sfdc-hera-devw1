@@ -2448,7 +2448,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
 
 			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
-			massiveLoaderRequest.Status__c = 'In Lavorazione';
+			massiveLoaderRequest.Status__c = utlConstants.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
 			//massiveLoaderRequest.TotalRequest__c = 2;
 			//massiveLoaderRequest.RequestOK__c = 2;
 			//massiveLoaderRequest.RequestKO__c = 0;

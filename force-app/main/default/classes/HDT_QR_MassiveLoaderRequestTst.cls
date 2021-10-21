@@ -31,8 +31,7 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
 
         }
 
-        u.ProfileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
-        update u;       
+         
 
     }
     
