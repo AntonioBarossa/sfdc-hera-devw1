@@ -140,7 +140,7 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         }
         // Fine controllo Service Point
         System.debug('*******currentProcess.currentServicePoint '+currentProcess.currentServicePoint);
-        arricchimentoDati();
+       //arricchimentoDati();
     }
 
     public override void registryCreation(){
