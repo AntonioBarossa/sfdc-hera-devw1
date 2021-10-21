@@ -273,6 +273,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if (element == 'Distributor__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: null,
+                            disabled: false
+                        }
+                    )
+                }
                 else {
                     console.log('entra in else ++++' + JSON.stringify(element));
                     fieldsDataObject.push(

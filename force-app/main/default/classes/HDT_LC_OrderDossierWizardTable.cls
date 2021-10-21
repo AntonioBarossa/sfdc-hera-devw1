@@ -26,30 +26,24 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         List<Order> childOrders = orderQr.getChildOrdersByParentIdAllStatus(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.DeveloperName, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
 
         System.debug('ChildOrders '+childOrders);
-      
-        // for(Order o : ordList){
-        //     listaOrderId.add(o.id);
-        // }
-
-        List<String> quoteList = new List<String>();
-        Map<String,String> quoteToOrderMap = new Map<String,String>();
 
         for (Order o : childOrders) {
             listChildOrderId.add(o.Id);
-            quoteList.add(o.SBQQ__Quote__c);
-            if(!quoteToOrderMap.containsKey(o.SBQQ__Quote__c)){//bug evita di scrivere l'offerta sull'order del bonus e toglierlo da quello dell'offerta
-                quoteToOrderMap.put(o.SBQQ__Quote__c, o.Id);
-            }
         }
         
         orderItemSrv.checkReadAccess('ServicePoint__c,Service_Point__r.Name,OrderId,Product2.Name');
         List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listChildOrderId); // List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId IN :listaOrderId];
+        List<OrderItem> orderProducts = [Select OrderId, Product2.Name, Order.RecordType.DeveloperName, SBQQ__QuoteLine__r.SBQQ__RequiredBy__r.SBQQ__Product__r.Name from OrderItem Where SBQQ__RequiredBy__c =null AND OrderId IN :childOrders WITH Security_Enforced];
 
-        List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecords(quoteList);
         Map<String,String> orderToQuoteLinePrime = new Map<String,String>();
-        for (SBQQ__QuoteLine__c ql : quoteLineList) {
-            orderToQuoteLinePrime.put(quoteToOrderMap.get(ql.SBQQ__Quote__c), ql.SBQQ__Product__r.Name);
+
+        for(OrderItem itm : orderProducts){
+            String productName = itm.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__r?.SBQQ__Product__r?.Name ;
+            productName=itm.Order.RecordType.DeveloperName!='HDT_RT_ScontiBonus'? itm.Product2.Name : productName;
+            orderToQuoteLinePrime.put(itm.orderId, productName);
         }
+
+
 
         mapResponse.put('childOrdersList',childOrders); // mapResponse.put('orderList',ordList);
         mapResponse.put('orderItemList',orderItemList); // mapResponse.put('orderItemList',orderItemList);

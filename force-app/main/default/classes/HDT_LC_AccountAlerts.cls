@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_AccountAlerts {
 
     @AuraEnabled
@@ -16,14 +17,14 @@ public with sharing class HDT_LC_AccountAlerts {
         HDT_QR_AlertConfiguration queryHandler = new HDT_QR_AlertConfiguration();
         
         List<AlertConfiguration__c> availableAlerts = queryHandler.getRecordsForAccount(accountId, accountCategory);
-        System.debug('@Davide - HDT_LC_AccountAlerts - getAvailableRulesFor()');
+        System.debug(LoggingLevel.DEBUG, '@Davide - HDT_LC_AccountAlerts - getAvailableRulesFor()');
 
         return JSON.serialize(availableAlerts);
     }
 
     @AuraEnabled
     public static Boolean addAlertToAccount(String alertRule, Id accountId) {
-        System.debug('Going to add alert rule ' + alertRule + ' to Account with Id: ' + accountId);
+        System.debug(LoggingLevel.DEBUG, 'Going to add alert rule ' + alertRule + ' to Account with Id: ' + accountId);
         AlertConfiguration__c alertRuleObj = (AlertConfiguration__c) JSON.deserialize(alertRule, AlertConfiguration__c.class);
         
         AlertAccountConfiguration__c accountAlert = new AlertAccountConfiguration__c();
@@ -36,7 +37,7 @@ public with sharing class HDT_LC_AccountAlerts {
 
     @AuraEnabled
     public static Boolean updateAlert(String alert) {
-        System.debug('Going to update alert ' + alert);
+        System.debug(LoggingLevel.DEBUG, 'Going to update alert ' + alert);
         AlertAccountConfiguration__c alertObj = (AlertAccountConfiguration__c) JSON.deserialize(alert, AlertAccountConfiguration__c.class);
         return HDT_UTL_DatabaseService.updateSObject(alertObj);
     }
@@ -46,7 +47,7 @@ public with sharing class HDT_LC_AccountAlerts {
         HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
         
         AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
-        System.debug('AccountContactRelation: ' + acr);
+        System.debug(LoggingLevel.DEBUG, 'AccountContactRelation: ' + acr);
         if (acr != null) {
             return new HDT_WRP_AccountContactDetails(acr.Contact.Email, acr.Contact.MobilePhone);
         }

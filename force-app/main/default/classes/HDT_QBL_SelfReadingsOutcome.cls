@@ -15,6 +15,11 @@ public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable,
         this.isAutomaticDiscardMap = isAutomaticDiscardMap;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 20/10/2021
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(QueueableContext context) {
         System.debug(LoggingLevel.DEBUG, '# cases in input: ' + this.casesToUpdate.size());
         System.debug(LoggingLevel.DEBUG,'# activities in input: ' + this.activitiesToCreate.size());

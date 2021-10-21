@@ -49,12 +49,12 @@ public with sharing class HDT_BA_PaperCampaignTargetingTst{
 			                    WHERE Channel__c INCLUDES('Bolletta')
 			                    LIMIT 1];
 
-			PaperProcessing__c tPaperProcessing=[SELECT Id
+			PaperProcessing__c tPaperProcessing=[SELECT Id,campaign__c,TriggerCustomerReport__c
 			                                     FROM PaperProcessing__c
 			                                     WHERE Status__c='Bozza'
 			                                     LIMIT 1];
 
-			HDT_BA_PaperCampaignTargeting bc=new HDT_BA_PaperCampaignTargeting(tPaperProcessing.Id, tCampaign.Id);
+			HDT_BA_PaperCampaignTargeting bc=new HDT_BA_PaperCampaignTargeting(new List<PaperProcessing__c>{tPaperProcessing});
 
 			DataBase.executeBatch(bc);
 

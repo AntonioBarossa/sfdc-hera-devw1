@@ -111,11 +111,14 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             fieldOrRelation = relationshipNames[indexParentField];
 
             if(indexParentField!=relationshipNames.size()-1){
-                relation=relation.getSobject(fieldOrRelation);
-            }else{
-                if(relation==null){
-                    return fieldValue;
+                SObject parent = relation.getSobject(fieldOrRelation);
+                if (parent==null) {
+                    break;
                 }
+                else {
+                    relation = parent;
+                }
+            }else{
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
                                             .get(fieldOrRelation)
                                             .getDescribe()
