@@ -149,10 +149,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
-        System.assertEquals('Check preliminari KO', myUpdatedCase.TecnicalPhase__c);
+        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c);
         
     }
     
@@ -199,10 +199,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
-        System.assertEquals('Inviata a SAP', myUpdatedCase.TecnicalPhase__c);
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
         
     }
     
@@ -246,10 +246,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
         
         //ASSERTS
-        System.assertEquals('Inviata a SAP', myUpdatedCase.TecnicalPhase__c);
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
         
     }
     
