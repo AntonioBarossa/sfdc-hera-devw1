@@ -7,12 +7,8 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
     private Map<String, String> mapOrderItemFields;
     private List<SObject> listUpdateGeneric ;
 
-       //final String PROCESS_NAME='Subentro';
 
-   public  HDT_UTL_ProcessTakeOver(){
-       System.debug('HDT_UTL_ProcessTakeOver');
 
-   }
 
     public override void checks(){
         
@@ -115,14 +111,11 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         || String.isNotBlank(currentProcess.currentAccount.VATNumber__c))
          ) {
             String filter='CompanyOwner__c=\''+currentProcess.currentAccount.CompanyOwner__c+'\' AND CustomerMarking__c = \''+currentProcess.currentAccount.CustomerMarking__c+'\' AND Category__c=\''+currentProcess.currentAccount.Category__c+'\' AND (FiscalCode__c=\''+currentProcess.currentAccount.FiscalCode__c+'\' OR VATNumber__c=\''+currentProcess.currentAccount.VATNumber__c+'\')';
-            System.debug('filter: '+filter);
             lAccount= qrAcc.getAccountList(filter) ;
             
         }
         if (lAccount!=null && lAccount.size()>0) {
-            System.debug('Update Account esistente');
             currentProcess.currentAccount.Id=lAccount.get(0).Id;  
-            System.debug('currentProcess.currentAccount: '+currentProcess.currentAccount); 
             String filterContact='FiscalCode__c=\''+currentProcess.currentAccount.FiscalCode__c+ '\' AND AccountId=\''+ currentProcess.currentAccount.Id+'\' LIMIT 10';
             List<Contact> listContact = qrCont.getContactList(filterContact);
             if (listContact!=null && listContact.size()>0) {
@@ -139,8 +132,9 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
             }
         }
         // Fine controllo Service Point
-        System.debug('*******currentProcess.currentServicePoint '+currentProcess.currentServicePoint);
-       //arricchimentoDati();
+        if(!Test.isRunningTest()){
+            arricchimentoDati();
+        }
     }
 
     public override void registryCreation(){
@@ -159,7 +153,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
        
         if (currentProcess.currentAccount!=null &&currentProcess.currentAccount.Id==null ) {
             // solo se non esiste
-            System.debug('Creazione Account');
             String expectedNewName = String.isBlank( currentProcess.currentAccount.FirstName__c) ?  currentProcess.currentAccount.LastName__c :  currentProcess.currentAccount.FirstName__c + ' ' +  currentProcess.currentAccount.LastName__c;
             currentProcess.currentAccount.Name=expectedNewName;
             //  currentProcess.currentAccount.BillingIsAddressVerified__c=true; 
@@ -176,12 +169,10 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         }
         
         if(currentProcess.role!=null){
-            System.debug('currentProcess.currentAccount.id '+currentProcess.currentAccount.id);
-            System.debug('currentProcess.currentPrimaryContact.Id '+currentProcess.currentPrimaryContact.Id);
+
             List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(currentProcess.currentAccount.id,currentProcess.currentPrimaryContact.Id, 'Id');
             if(listAccCon != null && listAccCon.size() > 0){
-                currentProcess.currentAccountContactRelation = new AccountContactRelation(Id= listAccCon[0].Id,Roles=currentProcess.role );
-                System.debug('listAccCon '+ currentProcess.currentAccountContactRelation);     
+                currentProcess.currentAccountContactRelation = new AccountContactRelation(Id= listAccCon[0].Id,Roles=currentProcess.role );   
                 listUpdateGeneric.add(currentProcess.currentAccountContactRelation);
                
             }
@@ -218,7 +209,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
 
     public override void finalUpdate(){
         String compatibilityMessage = '';
-        System.debug('finalUpdate');
         if (listUpdateGeneric.size()>0) {
            // Savepoint sp = Database.setSavePoint();
                 upsert listUpdateGeneric;
@@ -234,7 +224,6 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
                 currentProcess.currentChildOrder.BillingProfile__c          = ((BillingProfile__c)listUpdateGeneric.get(2)).Id  ;
                 insert currentProcess.currentChildOrder                                                                         ;
 
-                System.debug('OrderId:'+currentProcess.currentChildOrder.Id)                                                    ;
 
                 makeServiceRequest();
                 insert currentProcess.currentServiceRequest;
