@@ -5,23 +5,21 @@ public with sharing class HDT_UTL_ReworkingScraps extends  HDT_UTL_ProcessExecut
     public override void checks(){
         Integer count=0;
         for (String tempField : currentProcess.currentRequestItem.Data__c.split(',')) {
-            // Se devo essere aggiunti altri campi req
+            // Se devono essere aggiunti altri campi req
             if ('null'.equalsIgnoreCase(tempField)) {
                 tempField='';
             }
             if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField)) {
                 throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field '+mapHeaderByPosition.get(count));
             }
-            // Se devo essere aggiunti altri campi req
+            // Se devono essere aggiunti altri campi req
             if ('OrderNumber/CaseNumber'.equalsIgnoreCase(mapHeaderByPosition.get(count))&&tempField.startsWith('O-')) {
                 listIdOrder.add(tempField);
             }
             else if('OrderNumber/CaseNumber'.equalsIgnoreCase(mapHeaderByPosition.get(count))&&tempField.startsWith('C-')) {
                 listIdCase.add(tempField);
             }
-            else if('OrderNumber/CaseNumber'.equalsIgnoreCase(mapHeaderByPosition.get(count))) {
-                throw new HDT_WRP_ProcessEntitiesException( 'Number Not Recognized','Number Not Recognized OrderNumber/CaseNumber');
-            }
+
             count++;
         }
     }
@@ -42,6 +40,9 @@ public with sharing class HDT_UTL_ReworkingScraps extends  HDT_UTL_ProcessExecut
         else if (listCase!=null && listCase.size()>0) {
             currentProcess.currentCase                      = listCase.get(0);
             currentProcess.currentRequestItem.Account__c    = currentProcess.currentCase.AccountId;
+        }
+        if ((listOrd==null ||listOrd.isEmpty())  &&(listCase==null ||listCase.isEmpty()) ) {
+            throw new HDT_WRP_ProcessEntitiesException( 'Number Not Recognized','Number Not Recognized OrderNumber/CaseNumber');
         }
     }
     public override void finalUpdate(){
