@@ -25,7 +25,7 @@ public with sharing class HDT_BA_PaperCampaignTargetingTst{
 			List<Lead> leadList=HDT_UTL_DataFactoryTst.createLead(1, true);
 			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-			List<CampaignMember> campaignMemberList=HDT_UTL_DataFactoryTst.createCampaignMember(1, true, campaignList[0].Id, leadList[0].Id, contactList[0].Id);
+			HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignList[0].Id, leadList, contactList);
 			List<PaperProcessing__c> paperProcessingList=HDT_UTL_DataFactoryTst.createPaperProcessing(1, true, 'TestPaperProc', campaignList[0].Id);
 			paperProcessingList[0].Status__c='Bozza';
 			update paperProcessingList;
@@ -44,11 +44,6 @@ public with sharing class HDT_BA_PaperCampaignTargetingTst{
 
 			Test.startTest();
 
-			Campaign tCampaign=[SELECT Id, Name, Description, StaticTextMessageBill__c, Channel__c
-			                    FROM Campaign
-			                    WHERE Channel__c INCLUDES('Bolletta')
-			                    LIMIT 1];
-
 			PaperProcessing__c tPaperProcessing=[SELECT Id,campaign__c,TriggerCustomerReport__c
 			                                     FROM PaperProcessing__c
 			                                     WHERE Status__c='Bozza'
@@ -60,7 +55,7 @@ public with sharing class HDT_BA_PaperCampaignTargetingTst{
 
 			Test.stopTest();
 
-			System.assert(bc != null);
+			System.assertEquals(true, bc != null, 'HDT_BA_PaperCampaignTargeting is null');
 			System.assertNotEquals(null, bc, 'HDT_BA_PaperCampaignTargeting is null');
 		}
 	}

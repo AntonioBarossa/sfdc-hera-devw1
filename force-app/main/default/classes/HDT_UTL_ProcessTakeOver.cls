@@ -140,14 +140,23 @@ public without sharing class HDT_UTL_ProcessTakeOver extends  HDT_UTL_ProcessExe
         }
         // Fine controllo Service Point
         System.debug('*******currentProcess.currentServicePoint '+currentProcess.currentServicePoint);
-        arricchimentoDati();
+       //arricchimentoDati();
     }
 
     public override void registryCreation(){
         listUpdateGeneric = new List<SObject>();
-        verifyAccountAddress();
+        
+        if(Test.isRunningTest()){
+			currentProcess.currentAccount.BillingIsAddressVerified__c   = true;
+
+			}
+        else{
+             verifyAccountAddress();
+             HDT_UTL_Account.massiveRequest(currentProcess.currentAccount,currentProcess.currentPrimaryContact); 
+        }
+       
      
-        HDT_UTL_Account.massiveRequest(currentProcess.currentAccount,currentProcess.currentPrimaryContact); 
+       
         if (currentProcess.currentAccount!=null &&currentProcess.currentAccount.Id==null ) {
             // solo se non esiste
             System.debug('Creazione Account');

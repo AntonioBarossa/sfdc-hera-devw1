@@ -21,18 +21,17 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
             List<ContentVersion> listContent = HDT_UTL_DataFactoryTst.createContentVersion(1,true,'test','body','path');
             Id contentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: listContent[0].id].ContentDocumentId;
 
-            List<MassiveLoaderRequest__c> mLRList = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(1,false);
-            mLRList.get(0).Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
-            mLRList.get(0).Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO;
+            //List<MassiveLoaderRequest__c> mLRList = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(1,false);
+          //  mLRList.get(0).Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
+          //  mLRList.get(0).Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO;
             
-            insert mLRList;
+           // insert mLRList;
 
-            HDT_UTL_DataFactoryTst.createContentDocumentLink(1,true,listOpp[0].id,contentDocumentId);
+           // HDT_UTL_DataFactoryTst.createContentDocumentLink(1,true,listOpp[0].id,contentDocumentId);
 
         }
 
-        u.ProfileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
-        update u;       
+         
 
     }
     

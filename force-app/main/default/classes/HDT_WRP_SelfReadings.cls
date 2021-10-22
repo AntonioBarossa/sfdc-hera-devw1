@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount, PMD.TooManyFields')
 public with sharing class HDT_WRP_SelfReadings {
 
     public class HDT_WRP_SelfReadingsRequest {
