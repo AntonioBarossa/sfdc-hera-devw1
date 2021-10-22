@@ -1,34 +1,46 @@
 @isTest
 public with sharing class HDT_LC_ActivityReassignmentToolTst {
+
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
+
     @TestSetup
     private static void makeData() {
-        HDT_UTL_DataFactoryTst.pClickInstance();
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        User currentUser = [SELECT UserCompany__c FROM User WHERE Id =: UserInfo.getUserId()];
 
-        List<Order> order = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
-        order[0].Agency__c = 'MATCH SRL';
-        insert order;
+        System.runAs(currentUser) {
 
-        List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accList[0].Id);
-        activity[0].wrts_prcgvr__Status__c = 'Not Started';
-        activity[0].Type__c = 'Sportello';
-        activity[0].Order__c = order[0].Id;
-        insert activity[0];
-        activity[1].wrts_prcgvr__Status__c = 'Not Started';
-        activity[1].Type__c = 'Gestione Agenzia';
-        activity[1].ParentActivity__c = activity[0].Id;
-        insert activity[1];
+            HDT_UTL_DataFactoryTst.pClickInstance();
+            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 
-        Queue__c queue = new Queue__c(
-            Name = 'coda1',
-            Group__c = 'gruppo1',
-            Agency__c = 'agenzia1'
-        );
-        insert queue;
+            List<Order> order = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
+            order[0].Agency__c = 'MATCH SRL';
+            insert order;
 
-        Profile profile = [SELECT Id FROM Profile WHERE Name = 'Hera Standard User'];
-        User user = HDT_UTL_DataFactoryTst.createInternalUser(profile.Id, false);
+            List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(2, false, accList[0].Id);
+            activity[0].wrts_prcgvr__Status__c = 'Not Started';
+            activity[0].Type__c = 'Sportello';
+            activity[0].Order__c = order[0].Id;
+            insert activity[0];
+            activity[1].wrts_prcgvr__Status__c = 'Not Started';
+            activity[1].Type__c = 'Gestione Agenzia';
+            activity[1].ParentActivity__c = activity[0].Id;
+            insert activity[1];
+
+            Queue__c queue = new Queue__c(
+                Name = 'coda1',
+                Group__c = 'gruppo1',
+                Agency__c = 'agenzia1'
+            );
+            insert queue;
+
+        }
+
+        HDT_UTL_DataFactoryTst.assignPermissionSet(currentUser, 'HDT_OmniSupervisorPermissionSet', true);
+
+        Id profileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
+        User user = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
         user.LastName = '1';
+        user.UserCompany__c = currentUser.UserCompany__c;
         insert user;
     }
 
@@ -47,7 +59,7 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         }
         List<Map<String,String>> returnedValue = HDT_LC_ActivityReassignmentTool.getAssignees('coda1');
         System.assertEquals('coda1', returnedValue[0].get('name'), 'CODA NON TROVATA');
-        returnedValue = HDT_LC_ActivityReassignmentTool.getAssignees('FirstName');
+        returnedValue = HDT_LC_ActivityReassignmentTool.getAssignees('FirstName 1');
         System.assertEquals('FirstName 1', returnedValue[0].get('name'), 'USER NON TROVATO');
 
         Test.stopTest();
@@ -79,7 +91,9 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
     private static void isDynamicWorkGroup() {
         Test.startTest();
 
-        Boolean returnedValue = HDT_LC_ActivityReassignmentTool.isDynamicWorkGroup('loginChannel');
+        Boolean returnedValue = HDT_LC_ActivityReassignmentTool.isDynamicWorkGroup('Protocollo');
+
+        System.assertEquals(true, returnedValue, 'Workgroup is Dynamic');
 
         Test.stopTest();
     }
@@ -91,9 +105,14 @@ public with sharing class HDT_LC_ActivityReassignmentToolTst {
         Queue__c queue = [SELECT Id FROM Queue__c];
         User user = [SELECT Id FROM User WHERE Name = 'FirstName 1'];
         wrts_prcgvr__Activity__c activity = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ParentActivity__c != null LIMIT 1];
-        HDT_LC_ActivityReassignmentTool.reassignActivity(activity.Id, user.Id, queue.Id, 'workGroup', 'agency');
         
-        HDT_LC_ActivityReassignmentTool.reassignActivity(activity.Id, user.Id, queue.Id, 'workGroup', 'MATCH SRL');
+        String result1 = HDT_LC_ActivityReassignmentTool.reassignActivity(activity.Id, user.Id, queue.Id, 'workGroup', 'agency');
+
+        System.assertEquals(true, String.isNotBlank(result1), 'String was not supposed to be empty');
+        
+        String result2 = HDT_LC_ActivityReassignmentTool.reassignActivity(activity.Id, user.Id, queue.Id, 'workGroup', 'MATCH SRL');
+
+        System.assertEquals(true, String.isBlank(result2), 'String was supposed to be empty');
 
         Test.stopTest();
     }
