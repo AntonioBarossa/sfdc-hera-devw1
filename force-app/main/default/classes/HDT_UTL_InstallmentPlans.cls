@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_InstallmentPlans {
 
     @InvocableMethod(label = 'checkRateizzazione')
@@ -27,7 +28,7 @@ public inherited sharing class HDT_UTL_InstallmentPlans {
         }
 
         output = installmetnsSrv.evaluateRuleList(ruleList, criteriaMap);
-        System.debug('Here');
+        System.debug(LoggingLevel.DEBUG, 'Here');
         if(!String.isBlank(output.errorMessage)){
             output.errorMessage = (String) (errorMessge + output.errorMessage);
         }
