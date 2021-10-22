@@ -22,8 +22,8 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
             Id contentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: listContent[0].id].ContentDocumentId;
 
             List<MassiveLoaderRequest__c> mLRList = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(1,false);
-            mLRList.get(0).Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
-            mLRList.get(0).Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO;
+          //  mLRList.get(0).Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
+          //  mLRList.get(0).Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO;
             
             insert mLRList;
 
@@ -31,8 +31,7 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
 
         }
 
-        u.ProfileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
-        update u;       
+         
 
     }
     

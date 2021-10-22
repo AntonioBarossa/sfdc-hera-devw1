@@ -7,6 +7,7 @@
 */
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
 
+
     public override void afterInsert() {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
     }

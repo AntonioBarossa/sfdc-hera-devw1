@@ -1,3 +1,9 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    21/10/2021
+    Reason: Avoid Using Global Modifier
+*/
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     HDT_SRV_Payments paymentsSrv = new HDT_SRV_Payments();

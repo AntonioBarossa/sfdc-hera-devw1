@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SCH_PostSalesMasterBatch implements Schedulable, Database.AllowsCallouts{
 
     global void execute(SchedulableContext ctx){

@@ -26,7 +26,7 @@
             section.Name ='sec2';
             section.SectionOrder__c=2;
             section.isChildLoopEvaluated__c=false;
-            section.checkVisibility__c='ParentSection__c==null;Name!=null';
+            section.checkVisibility__c='ParentSection__c==null AND Name!=null';
             section.TextScript__c='Testo';
             sections.add(section);
         }
@@ -39,13 +39,12 @@
             section.Name ='sec3';
             section.SectionOrder__c=3;
             section.isChildLoopEvaluated__c=true;
-            section.checkVisibility__c='ParentSection__r.ParentSection__c==null;name!=null;TextScript__c!=null;SectionOrder__c!=2';
+            section.checkVisibility__c='ParentSection__r.ParentSection__c==null AND name!=null AND TextScript__c!=null AND SectionOrder__c!=2';
             section.TextScript__c='';
             sections.add(section);
         }
         // end section
         insert sections;
-        system.debug(sections[2].TextScript__c);
 
         
     }

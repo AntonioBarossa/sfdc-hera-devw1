@@ -74,7 +74,7 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
     }
 
     handleSubmit(event){
-        
+        this.showSpinner = true; //HRAWRM-915 21/10/2021
         let zipCode= this.template.querySelector('[data-id = "zipCodeField"]').value;
         let category = this.template.querySelector('[data-id = "categoryField"]').value;
         let consumption = this.template.querySelector('[data-id = "consumptionField"]').value;
@@ -84,7 +84,7 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
        console.log('mobile'+consumption);
         if(zipCode != undefined && category != undefined && consumption != undefined){
 
-
+       
             createActivityFromLead({
                 contactId : this.recordId,
                 zipCode: zipCode,
@@ -97,6 +97,8 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
                     message: 'Visita D2D creata con successo!',
                     variant: 'success'
                 }));
+                this.closeQuickAction();//HRAWRM-915 21/10/2021
+                this.showSpinner = false;//HRAWRM-915 21/10/2021
                 dispatchEvent(new CustomEvent('afterSubmit')); 
                 console.log(JSON.stringify(result));
                 this.dispatchEvent(new CloseActionScreenEvent());
@@ -125,8 +127,14 @@ export default class HdtRequestVisitD2DLead extends LightningElement {
         }).catch(err => {
             console.log(JSON.stringify(err));
         });
- */
-        this.showSpinner = false;
+ */              
+
     }
+    //HRAWRM-915 21/10/2021
+    closeQuickAction() {
+        const closeQA = new CustomEvent('close');
+        // Dispatches the event.
+        this.dispatchEvent(closeQA);
+    }//HRAWRM-915 21/10/2021
 
 }
