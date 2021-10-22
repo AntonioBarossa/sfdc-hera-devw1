@@ -3080,6 +3080,28 @@ public with sharing class HDT_UTL_DataFactoryTst{
         return rules;
     }
 
+	public static List<PaperCommunication__c> createPaperCommunication(Integer amount, Boolean doInsert){
+
+		List<PaperCommunication__c> paperCommunicationList=new List<PaperCommunication__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			PaperCommunication__c tPaperCommTest = new PaperCommunication__c();
+        	tPaperCommTest.Name='test'+i;
+
+			paperCommunicationList.add(tPaperCommTest);
+		}
+
+		if (doInsert){
+
+			insert paperCommunicationList;
+		}
+
+		return paperCommunicationList;
+
+	}
+
+		
 	/**
      * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
      * @date 12/10/2021
@@ -3101,7 +3123,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		if (doInsert){
-
+		
 			insert vocalOrders;
 		}
 
