@@ -8,11 +8,13 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         String dataLead='HERA COMM,HCM,084588559,3485555555,test@mail.com,null,Rossi,Mario,Laurea,Studente,Benedetto Brin,1,80100,80100,Napoli,NA,null,null,null,,25,null,Maschio,null,SI,null,,null,,null,NO,null,,null,,null,sito standard,null,,null,,2020-10-11,null,,null,,null,,null,,null,test';
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead});
         test.startTest();
-        HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id); 
-        Database.executeBatch(processReq,1);
+            HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id); 
+            Database.executeBatch(processReq,1);
+                
         test.stopTest();
-
-
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+  
+        System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
     }
     
     @isTest
@@ -30,6 +32,9 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id); 
         Database.executeBatch(processReq,1);
         test.stopTest();
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+        
+        System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
 
 
     }
@@ -42,6 +47,9 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                          ; 
         Database.executeBatch(processReq,1)                                                                                   ;
         test.stopTest()                                                                                                       ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+       
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
 
 
     }
@@ -56,6 +64,9 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+      
+        System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
     }
     @isTest
     public static void testRilavorazioneScartiKO(){
@@ -67,28 +78,37 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+       
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
     }
     @isTest
     public static void testRilavorazioneScartiKO2(){
         String processName='RilavorazioneScarti';
 
-        String dataLead = 'C-'                                                                                                      ;
+        String dataLead = 'C-'                                                                                                        ;
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead})        ;
         test.startTest()                                                                                                              ;
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+       
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
     }
     @isTest
     public static void testRilavorazioneScartiKO3(){
         String processName='RilavorazioneScarti';
 
-        String dataLead = 'O-'                                                                                                      ;
+        String dataLead = 'O-'                                                                                                        ;
         MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead})        ;
         test.startTest()                                                                                                              ;
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+      
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
     }
     @isTest
     public static void testSubentroKO(){
@@ -100,6 +120,9 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+      
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
     }
     @isTest
     public static void testSubentroOK1(){
@@ -111,6 +134,10 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+      
+        //System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
+
     }
     @isTest
     public static void testSubentroOK2(){
@@ -124,5 +151,8 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(req.Id)                                                  ; 
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
+        MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
+      
+        //System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
     }
 }
