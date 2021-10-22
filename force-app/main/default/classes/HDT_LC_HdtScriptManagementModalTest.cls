@@ -51,7 +51,7 @@
     @isTest public static void testScriptPagesWithoutChildIdentifier(){
         ScriptConfig__c process = [select Name from ScriptConfig__c where ScriptType__c='Processo'];
         HDT_LC_HdtScriptManagementModal.getScriptSections(process.name, process.id, '');
-        List<HDT_LC_HdtScriptManagementModal.HDT_WRP_ScriptOutput>
+        List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput>
             output=HDT_LC_HdtScriptManagementModal.getScriptSections(process.name, process.id, 'name');
         system.assertEquals(3, output.size(), 'childs objects were not filtered as expected');
     } 
