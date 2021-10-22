@@ -96,8 +96,6 @@
     },
 
     handleSubmit: function(component, event, helper) {
-        let button = event.getSource();
-        button.set('v.disabled',true);
         //component.find("editForm").submit();
         let order = {};
         // let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
@@ -134,11 +132,10 @@
             action.setCallback(this,function(response){
                 var state = response.getState();
                 if (state === "SUCCESS") {
-                    console.log("HOLA");
-                    $A.get("e.force:closeQuickAction").fire();
-                    $A.get('e.force:refreshView').fire();  
+                console.log("HOLA");
+                $A.get("e.force:closeQuickAction").fire();
+                $A.get('e.force:refreshView').fire();  
                 }
-                button.set('v.disabled',false); 
             });
             $A.enqueueAction(action);          
             //$A.get("e.force:closeQuickAction").fire();

@@ -3,7 +3,7 @@
     <fullName>DiscardCount__c</fullName>
     <externalId>false</externalId>
     <label>Counter Scarto</label>
-    <precision>18</precision>
+    <precision>3</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
