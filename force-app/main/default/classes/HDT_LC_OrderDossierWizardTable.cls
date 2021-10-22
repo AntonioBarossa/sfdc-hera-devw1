@@ -39,7 +39,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
 
         for(OrderItem itm : orderProducts){
             String productName = itm.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__r?.SBQQ__Product__r?.Name ;
-            productName=familySconto.contains(Product2.Family)? productName :itm.Product2.Name;
+            productName=familySconto.contains(itm.Product2.Family)? productName :itm.Product2.Name;
             orderToQuoteLinePrime.put(itm.orderId, productName);
         }
 
