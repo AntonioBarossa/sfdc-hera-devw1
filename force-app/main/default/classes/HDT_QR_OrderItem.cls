@@ -160,7 +160,8 @@ public inherited sharing class HDT_QR_OrderItem {
     public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id qlOrServPointId){
         return [
             SELECT
-            OrderId
+            OrderId,
+            Order.ServicePoint__r.ServicePointCode__c
             FROM
             OrderItem
             WHERE
