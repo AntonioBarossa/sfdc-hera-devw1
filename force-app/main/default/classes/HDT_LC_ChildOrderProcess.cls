@@ -105,14 +105,14 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         
         //Reference: Order ord = [SELECT AccountId,Account.Name, Id,Name, Status FROM Order Where id = :orderId];
         orderSrv.checkReadAccess('AccountId,Account.Name,Name,Status');
-        Order ord = orderQr.getRecordById(orderId);
+        orderQr.getRecordById(orderId);
 
         System.debug('****** :' + processo);
         //Reference: List<Recordtype> rList = [Select id from Recordtype where sObjectType='Order' AND Developername = :processo];
-        String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(processo);
+        orderSrv.getRecordTypeIdByDeveloperName(processo);
 
         //Reference: List<Ordine_di_Vendita__c> ordvenLis = [Select id,stato__c from Ordine_di_Vendita__c Where id = :ordineVendita and (stato__c = 'Bozza' OR stato__c = 'Sospeso')];
-        List<Order> ordvenLis = orderQr.getRecordByIdFilterStatus(parentOrderId, 'Draft');
+        orderQr.getRecordByIdFilterStatus(parentOrderId, 'Draft');
         
         // ord.Status = 'In Lavorazione' ;
 
