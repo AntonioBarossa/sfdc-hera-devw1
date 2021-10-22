@@ -24,7 +24,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     }
 
     public override void beforeInsert(){
-        List<Lead> listlead = Trigger.New;
         Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
         List<Lead> listNew = trigger.new;
        // List<Lead> leadToCheck = new List<Lead>();
@@ -89,8 +88,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
             List<Lead> listslead = trigger.New;
             HDT_QR_Account accPerson = new HDT_QR_Account();
             HDT_QR_RecordType recordtypeQr= new HDT_QR_RecordType();
-            HDT_SRV_AccountContactRelation accoContRelSrv = new HDT_SRV_AccountContactRelation();
-
             HDT_UTL_GestionePrivacy.updateContactPointFromObjectLead(trigger.new,trigger.old);
             List<Account> accounts=new List<Account>();
             List<String> accountIdList = new List<String>();
