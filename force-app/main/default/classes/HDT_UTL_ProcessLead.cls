@@ -28,6 +28,7 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
         if (String.isBlank( currentProcess.currentLead.Company)) {
             currentProcess.currentLead.Company=currentProcess.currentLead.FirstName+currentProcess.currentLead.LastName;
         }
+        currentProcess.currentLead.LeadSource='Lead freddo';
     }
 
     public override void getRecords(){
