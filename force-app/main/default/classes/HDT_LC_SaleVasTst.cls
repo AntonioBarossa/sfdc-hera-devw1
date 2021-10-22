@@ -44,6 +44,9 @@ public with sharing class HDT_LC_SaleVasTst {
             cttList[0].SBQQ__Order__c = orderList[0].Id;
             insert cttList;
 
+            orderList[0].ContractReference__c = cttList[0].Id;
+            update orderList;
+
             List<Campaign> cmpList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
 
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Bozza');
@@ -58,9 +61,9 @@ public with sharing class HDT_LC_SaleVasTst {
             pbList[0].Name = 'VAS ELE';
             insert pbList;
 
-            List<City__c> cityList = HDT_UTL_DataFactoryTst.createCity(1, false);
+            List<City__c> cityList = HDT_UTL_DataFactoryTst.createCity();
             cityList[0].Province__c = 'AQ';
-            insert cityList;
+            update cityList;
 
             List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
             List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, true, orderList[0].Id, oppList[0].Id, saleList[0].Id, 'Quote');

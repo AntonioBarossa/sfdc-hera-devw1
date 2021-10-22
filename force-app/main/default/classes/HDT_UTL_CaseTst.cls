@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    17/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_CaseTst {
 
@@ -142,7 +147,7 @@ public with sharing class HDT_UTL_CaseTst {
         Test.startTest();
         Try{
 
-            HDT_UTL_Case.createActivity(idCase, 'my Test', 'myPClickTestTemplate');            
+            HDT_UTL_Case.createActivity(idCase, 'my Test', 'myPClickTestTemplate', '');
             
             
         }catch(DmlException e) {

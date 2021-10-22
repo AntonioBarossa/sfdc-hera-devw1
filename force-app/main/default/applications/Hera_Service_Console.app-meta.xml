@@ -315,6 +315,24 @@
         <pageOrSobjectType>Lead</pageOrSobjectType>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
         <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
         <profile>Hera System Integrator</profile>
     </profileActionOverrides>
     <profileActionOverrides>

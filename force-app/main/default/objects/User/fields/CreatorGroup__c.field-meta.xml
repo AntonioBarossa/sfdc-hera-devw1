@@ -146,6 +146,11 @@
             <valueName>HC_CVMBO_SREG_EBT_CALL_OUT</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Teleselling</controllingFieldValue>
+            <controllingFieldValue>Vendita MM</controllingFieldValue>
+            <valueName>HC_VenditaMM</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Vendita Business</controllingFieldValue>
             <valueName>HC_VenditaBusiness</valueName>
         </valueSettings>
@@ -156,10 +161,6 @@
         <valueSettings>
             <controllingFieldValue>Vendita Condomini</controllingFieldValue>
             <valueName>HC_Vendita Condomini</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Vendita MM</controllingFieldValue>
-            <valueName>HC_VenditaMM</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Vendita TopBusiness</controllingFieldValue>

@@ -1,13 +1,15 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_DocumentSelectedManager {
     
     @InvocableMethod(label='Manage Document Selected')
     public static List<HDT_WRP_DocumentSelectedResponse> execute(List<HDT_WRP_DocumentSelectedRequest> inputs){
         
-        System.debug('HDT_SRV_DocumentSelectedManager - execute - inputs: ' + inputs);
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_DocumentSelectedManager - execute - inputs: ' + inputs);
         
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)) 
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)){
             return null;
-        
+        }
+                
         String method = inputs[0].method;
         String context = '';
         String queryString = 'SELECT Id,Context__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
@@ -27,7 +29,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                         return null;
                     }
                 }
-            }when 'manageDocumentsInformative'{
+            }
+            when 'manageDocumentsInformative'{
                 context = inputs[0].contesto;
                 switch on context {
                     when 'EC1Level','NoteVarIva' {
@@ -37,7 +40,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                         return manageDocumentsCreditViews(inputs);
                     }
                 }
-            }when 'manageDocumentsPaperless'{
+            }
+            when 'manageDocumentsPaperless'{
                 return manageDocumentsPaperless(inputs);
             }
             when else {
@@ -48,8 +52,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
     private static List<HDT_WRP_DocumentSelectedResponse> manageDocuments(List<HDT_WRP_DocumentSelectedRequest> inputs){
         
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId))
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)){
             return null;
+        }
         
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
@@ -60,7 +65,11 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             String queryObject = 'AccountStatementFilter__c';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, queryObject);
             String documentJson = (String) recordList[0].get('DocumentSelected__c');
-            String context = (String) recordList[0].get('Context__c');
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            //String context = (String) recordList[0].get('Context__c');
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
@@ -93,7 +102,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
             
-            System.debug('società ' + (String) primolivello.get('societa'));
+            System.debug(LoggingLevel.DEBUG, 'società ' + (String) primolivello.get('societa'));
             caseRecord.SalesCompany__c = (String) primolivello.get('societa');
             
             caseRecord.Id = inputs[0].caseId;
@@ -143,12 +152,20 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
-            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
         }
         responseList.add(response);
@@ -157,8 +174,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
     private static List<HDT_WRP_DocumentSelectedResponse> manageDocumentsCreditViews(List<HDT_WRP_DocumentSelectedRequest> inputs){
         
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) 
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)){
             return null;
+        }
         
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
@@ -240,12 +258,20 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
-            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
         }
         responseList.add(response);
@@ -254,8 +280,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
     private static List<HDT_WRP_DocumentSelectedResponse> manageDocumentsPaperless(List<HDT_WRP_DocumentSelectedRequest> inputs){
         
-        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) 
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)){
             return null;
+        }
         
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
@@ -316,12 +343,20 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
-                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                    /*
+                        @Author: Davide Viola - 19/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*Boolean insertDoc = */HDT_UTL_DatabaseService.insertSObject(documentList);
                 }
             }
-            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            /*Boolean updateCase = */HDT_UTL_DatabaseService.updateSObject(caseRecord);
         } catch (Exception ex) {
-            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             return null;
         }
         responseList.add(response);
@@ -330,7 +365,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     
     @TestVisible
     private static Date formatDate(String inputDate){
-        if(inputDate==null || String.isBlank(inputDate)) return null;
+        if(inputDate==null || String.isBlank(inputDate)) {
+            return null;
+        }
         List<String> listString = inputDate.split('/');
         String gg = listString[0];
         String mm = listString[1];
@@ -340,7 +377,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     
     @TestVisible
     private static Double calculateRaiFee(List<Object> secondoLivelloList){
-        if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
+        if(secondoLivelloList==null || secondoLivelloList.size()<=0) {
+            return null;
+        }
+        
         try {
             Double raiFee = 0;
             for(Object singleRecord : secondoLivelloList){
@@ -354,14 +394,17 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             }
             return raiFee;
         } catch (Exception ex) {
-            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
             return null;
         }
     }
     
     @TestVisible
     private static String getRiferimentoFattura(List<Object> secondoLivelloList){
-        if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
+        if(secondoLivelloList == null || secondoLivelloList.size() <= 0) {
+            return null;
+        }
+        
         try {
             String riferimentoFattura = '';
             for(Object singleRecord : secondoLivelloList){
@@ -373,7 +416,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             }
             return riferimentoFattura;
         } catch (Exception ex) {
-            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
             return null;
         }
     }

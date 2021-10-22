@@ -34,7 +34,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -52,7 +52,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
     
     @isTest
@@ -70,7 +70,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest

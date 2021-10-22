@@ -1,43 +1,52 @@
 <template>
-    <lightning-card>
-        <div class="slds-p-around--medium">
-            <h2 class="slds-align_absolute-center slds-card__header-title slds-p-bottom--small" slot="title">
-                Canale Contato IVR
-            </h2>
-        </div>
-        <div if:true={firstSectionVisible}>
-            <div>
-                <lightning-input class="slds-align_absolute-center slds-box_small" type="type" label="Username"
-                    name="username" data-id="usernameField"></lightning-input>
-                <lightning-input class="slds-align_absolute-center slds-box_small" type="password" label="Password"
-                    name="password" data-id="passwordField"></lightning-input>
-            </div>
-            <lightning-button class="slds-p-top--medium slds-align_absolute-center" type="button" label="Log in"
-                onclick={handleLogin}>
-            </lightning-button>
+    <div class="slds-align--absolute-center">
+        <lightning-card class="slds-card slds-size--2-of-3 loginCard">
+                <div class="slds-p-around--medium">
+                    <img src={heralogo} class="slds-p-bottom--large" style="width: 35%;">
+                    <div class="loginHeaderBox slds-card__header-title slds-align--absolute-center slds-p-around--xx-large slds-m-bottom--large slds-text-heading_large slds-text-align_center">Servizio di conferma ricezione documentazione contrattuale</div>
+                    <div class="loginTitle slds-card__header-title slds-align--absolute-center slds-size--11-of-12 slds-text-align--center slds-text-heading_medium">Accedi con le tue credenziali personali per confermare la ricezione della documentazione contrattuale che ti abbiamo inviato.</div>
+                    <hr>
+                </div>
+                <div if:true={firstSectionVisible} class="halfwidth">
+                    <div>
+                        <h2 class="slds-align_absolute-center slds-card__header-title loginTitle" slot="title">
+                            Autenticazione
+                        </h2>
+                        <lightning-input class="slds-align_absolute-center slds-box_small" placeholder="Username" type="text"     name="username" data-id="usernameField" variant="label-hidden"></lightning-input>
+                        <lightning-input class="slds-align_absolute-center slds-box_small" type="password" placeholder="Password"
+                            name="password" data-id="passwordField" variant="label-hidden"></lightning-input>
+                        <lightning-input type="checkbox" class="slds-box--small" label="Visualizza password" name="showPassword" onchange={toggleShowPassword}></lightning-input>
 
-        </div>
-
-        <template if:true={secondSectionVisible}>
-            <lightning-button-group class="slds-align_absolute-center slds-p-bottom--small">
-                <lightning-button type="button" label="Plico Contrattuale" onclick={handleContractualEnvelope}>
-                </lightning-button>
-
-                <lightning-button type="button" label="Ascolta VO" onclick={handleListenVO}></lightning-button>
-
-                <lightning-button type="button" label="Conferma finale Contratto"
-                    onclick={handleFinalConfirmationOfTheContract}></lightning-button>
-            </lightning-button-group>
-
-        </template>
-
-        <template if:true={thirdSectionVisible}>
-            <div class="slds-m-around--large">
-                <lightning-datatable hide-checkbox-column key-field="Id" data={orderList} columns={columnsList}>
-                </lightning-datatable>
-            </div>
-        </template>
-
-
-    </lightning-card>
+                        <div class="slds-box_small slds-float_right slds-m-right_medium slds-m-bottom_large slds-m-top_medium slds-text-link tooltip" onclick={toggleTooltip}>Dove trovo le credenziali?
+                            <template if:true={showTooltip}>
+                                <span class="tooltiptext">Le credenziali di accesso sono state inviate tramite email o lettera inviata al tuo domicilio.</span>
+                            </template>
+                        </div>
+                    </div>
+                    <lightning-button class="slds-p-top--medium loginButton slds-box--small slds-p-bottom--large" type="button" label="ACCEDI" onclick={handleLogin} style="display: grid;width: 100%;">
+                    </lightning-button>
+                </div>
+    
+                <template if:true={secondSectionVisible}>
+                    <div class="halfwidth">
+                        <lightning-button-group class="slds-align_absolute-center slds-p-bottom--small">
+                            <lightning-button type="button" class="loginButton" label="Plico Contrattuale" onclick={handleContractualEnvelope}>
+                            </lightning-button>
+        
+                            <lightning-button type="button" class="loginButton" label="Ascolta VO" onclick={handleListenVO}></lightning-button>
+        
+                            <lightning-button type="button" class="loginButton" label="Conferma finale Contratto"
+                                onclick={handleFinalConfirmationOfTheContract}></lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </template>
+    
+                <template if:true={thirdSectionVisible}>
+                    <div class="slds-m-around--large halfwidth">
+                        <lightning-datatable hide-checkbox-column key-field="Id" data={orderList} columns={columnsList}>
+                        </lightning-datatable>
+                    </div>
+                </template>
+        </lightning-card>
+    </div>
 </template>

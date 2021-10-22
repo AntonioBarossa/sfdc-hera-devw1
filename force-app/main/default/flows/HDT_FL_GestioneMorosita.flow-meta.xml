@@ -937,7 +937,7 @@
         <connector>
             <targetReference>CaseTrovato</targetReference>
         </connector>
-        <filterLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6 OR 7)</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>ParentId</field>
             <operator>EqualTo</operator>
@@ -957,34 +957,6 @@
             <operator>NotEqualTo</operator>
             <value>
                 <elementReference>GetCreatedCase.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Phase__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Comunicazione verso Heroku OK</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Phase__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Inviato al DL</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Phase__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Ammissibilità OK</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

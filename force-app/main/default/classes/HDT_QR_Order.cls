@@ -110,6 +110,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.CompanyOwner__c,
             Sale__r.SalesContact__c,
+            Sale__r.Ecid__c,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -185,8 +186,10 @@ public inherited sharing class HDT_QR_Order {
 			ConnectionType__c,
 			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
+            ContractReference__r.ServicePoint__r.ServicePointCode__c,
             OrderReference__c,
             OrderReference__r.SBQQ__Quote__c,
+            OrderReference__r.ServicePoint__r.ServicePointCode__c,
             SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
@@ -513,7 +516,10 @@ public inherited sharing class HDT_QR_Order {
             CreditCheckDescription__c,
             IncomingCreditCheckResult__c,
             OutgoingCreditCheckResult__c,
-            OrderReference__c
+            OrderReference__c,
+            ProcessType__c,
+            SBQQ__Quote__c,
+            CommercialProductCode__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -548,7 +554,9 @@ public inherited sharing class HDT_QR_Order {
             DistributorFormula__c,
             VASType__c,
             DateComfortCall__c,
-            DocumentPackage__c
+            DocumentPackage__c,
+            ProcessType__c,
+            ParentOrder__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -712,7 +720,8 @@ public inherited sharing class HDT_QR_Order {
             Channel__c,
             FriendCode__c,
             CampaignCode__c,
-            CreatedBy__c
+            CreatedBy__c,
+            CreatedDate
             FROM
             Order
             WHERE AccountId = :accountId
@@ -860,6 +869,9 @@ public inherited sharing class HDT_QR_Order {
     */
     public List<Order> getRecordByOrderNumber(String orderNumber){
         return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getOrdersByOrderNumber(List<String> orderNumbers){
+        return [SELECT id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,AccountId FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
     /**

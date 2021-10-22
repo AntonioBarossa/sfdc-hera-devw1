@@ -3,6 +3,12 @@ public inherited sharing class HDT_SRV_ReminderBlock {
     HDT_QR_ReminderBlock reminderQr = new HDT_QR_ReminderBlock();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public String createRequestBody(String recordId){
 
         List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput> inputList = new List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput>();
@@ -19,8 +25,8 @@ public inherited sharing class HDT_SRV_ReminderBlock {
         currentCase = reminderQr.getCaseById(recordId);
         documents = reminderQr.getDocumentSelectedByCaseId(recordId);
 
-        System.debug('SRV_ReminderBlock Case--> '+currentCase);
-        System.debug('SRV_ReminderBlock Documetns--> '+documents);
+        System.debug(LoggingLevel.DEBUG, 'SRV_ReminderBlock Case--> '+currentCase);
+        System.debug(LoggingLevel.DEBUG, 'SRV_ReminderBlock Documetns--> '+documents);
 
         if(currentCase.BlockType__c.containsIgnoreCase('1')){
 
@@ -68,7 +74,7 @@ public inherited sharing class HDT_SRV_ReminderBlock {
 
         pretty = paymentsUtl.createBodyRequest(inputList);
 
-        System.debug('SRV_ReminderBlock -->' +pretty);
+        System.debug(LoggingLevel.DEBUG, 'SRV_ReminderBlock -->' +pretty);
 
         return pretty;
     }

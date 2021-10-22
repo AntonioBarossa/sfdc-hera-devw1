@@ -18,7 +18,12 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
     } 
 
-
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
         for(SObject sobj : scope){
@@ -56,10 +61,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         event.SerializedCase__c = JSON.serialize(currentCase);
                         Database.SaveResult sr = EventBus.publish(event);
                         if (sr.isSuccess()) {
-                            System.debug('Successfully published event.');
+                            System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
                         } else {
                             for (Database.Error err : sr.getErrors()) {
-                                System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                                System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                             }
                         }
                     }else if(currentCase.Type.equalsIgnoreCase('Contratto Non Richiesto')){
@@ -74,10 +79,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 event.SerializedCase__c = JSON.serialize(currentCase);
                                 Database.SaveResult sr = EventBus.publish(event);
                                 if (sr.isSuccess()) {
-                                    System.debug('Successfully published event.');
+                                    System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
                                 } else {
                                     for (Database.Error err : sr.getErrors()) {
-                                        System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                                        System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                                     }
                                 }
                             }
@@ -88,8 +93,17 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         }
     }
 
-
-    public void finish(Database.BatchableContext bc){}
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public void finish(Database.BatchableContext bc){
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_PostSalesMasterBatch - finished job: ' + a);
+        
+    }
 
 
 }

@@ -9,61 +9,11 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>Bozza</fullName>
+                <fullName>Accettato Motore Vas</fullName>
                 <default>false</default>
-                <label>Bozza</label>
-            </value>
-            <value>
-                <fullName>Annullato</fullName>
-                <default>false</default>
-                <label>Annullato</label>
-            </value>
-            <value>
-                <fullName>Da Inviare</fullName>
-                <default>false</default>
-                <label>Da Inviare</label>
-            </value>
-            <value>
-                <fullName>In sequenzializzazione</fullName>
-                <default>false</default>
-                <label>In sequenzializzazione</label>
-            </value>
-            <value>
-                <fullName>In attesa validazione</fullName>
-                <default>false</default>
-                <label>In attesa validazione</label>
-            </value>
-            <value>
-                <fullName>Documentazione Validata</fullName>
-                <default>false</default>
-                <label>Documentazione Validata</label>
-            </value>
-            <value>
-                <fullName>Comunicazione verso Heroku KO</fullName>
-                <default>false</default>
-                <label>Comunicazione verso Heroku KO</label>
-            </value>
-            <value>
-                <fullName>Comunicazione verso Heroku OK</fullName>
-                <default>false</default>
-                <label>Comunicazione verso Heroku OK</label>
-            </value>
-            <value>
-                <fullName>Inviato al DL</fullName>
-                <default>false</default>
-                <label>Inviato al DL</label>
-            </value>
-            <value>
-                <fullName>Esito OK da DL</fullName>
-                <default>false</default>
-                <label>Esito OK da DL</label>
-            </value>
-            <value>
-                <fullName>Esito KO da DL</fullName>
-                <default>false</default>
-                <label>Esito KO da DL</label>
+                <label>Accettato Motore Vas</label>
             </value>
             <value>
                 <fullName>Accettazione pagamento a DL</fullName>
@@ -71,44 +21,29 @@
                 <label>Accettazione pagamento a DL</label>
             </value>
             <value>
-                <fullName>Invio allegato a DL</fullName>
+                <fullName>Accettazione Voltura</fullName>
                 <default>false</default>
-                <label>Invio allegato a DL</label>
+                <label>Accettazione Voltura</label>
             </value>
             <value>
-                <fullName>DL Documentazione completa</fullName>
+                <fullName>Amm. Precheck KO SII</fullName>
                 <default>false</default>
-                <label>DL Documentazione completa</label>
+                <label>Amm. Precheck KO SII</label>
             </value>
             <value>
-                <fullName>DL documentazione incompleta</fullName>
+                <fullName>Amm. Precheck OK SII</fullName>
                 <default>false</default>
-                <label>DL documentazione incompleta</label>
+                <label>Amm. Precheck OK SII</label>
             </value>
             <value>
-                <fullName>DL accertamento OK</fullName>
+                <fullName>Ammissibilità conformità KO</fullName>
                 <default>false</default>
-                <label>DL accertamento OK</label>
+                <label>Ammissibilità conformità KO</label>
             </value>
             <value>
-                <fullName>Attesa conferma preventivo cliente</fullName>
+                <fullName>Ammissibilità conformità OK</fullName>
                 <default>false</default>
-                <label>Attesa conferma preventivo cliente</label>
-            </value>
-            <value>
-                <fullName>Richiesta preventivo</fullName>
-                <default>false</default>
-                <label>Richiesta preventivo</label>
-            </value>
-            <value>
-                <fullName>Preventivo rifiutato</fullName>
-                <default>false</default>
-                <label>Preventivo rifiutato</label>
-            </value>
-            <value>
-                <fullName>Preventivo Accettato</fullName>
-                <default>false</default>
-                <label>Preventivo Accettato</label>
+                <label>Ammissibilità conformità OK</label>
             </value>
             <value>
                 <fullName>Ammissibilità KO</fullName>
@@ -121,114 +56,95 @@
                 <label>Ammissibilità OK</label>
             </value>
             <value>
-                <fullName>Ammissibilità conformità OK</fullName>
+                <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
-                <label>Ammissibilità conformità OK</label>
+                <label>Annullamento - Ammissibilità KO</label>
             </value>
             <value>
-                <fullName>Ammissibilità conformità KO</fullName>
+                <fullName>Annullamento - Ammissibilità OK</fullName>
                 <default>false</default>
-                <label>Ammissibilità conformità KO</label>
+                <label>Annullamento - Ammissibilità OK</label>
             </value>
             <value>
-                <fullName>In attesa conferma cliente</fullName>
+                <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
                 <default>false</default>
-                <label>In attesa conferma cliente</label>
+                <label>Annullamento - Comunicazione verso Heroku KO</label>
             </value>
             <value>
-                <fullName>Ripensato</fullName>
+                <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
                 <default>false</default>
-                <label>Ripensato</label>
+                <label>Annullamento - Comunicazione verso Heroku OK</label>
             </value>
             <value>
-                <fullName>In attesa tempi di ripensamento</fullName>
+                <fullName>Annullamento - Da inviare</fullName>
                 <default>false</default>
-                <label>In attesa tempi di ripensamento</label>
+                <label>Annullamento - Da inviare</label>
             </value>
             <value>
-                <fullName>In Lavorazione SAP</fullName>
+                <fullName>Annullamento dal SII</fullName>
                 <default>false</default>
-                <label>In Lavorazione SAP</label>
+                <label>Annullamento dal SII</label>
             </value>
             <value>
-                <fullName>Errore lavorazione SAP</fullName>
+                <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
-                <label>Errore lavorazione SAP</label>
+                <label>Annullamento - Esito KO da DL/SII</label>
             </value>
             <value>
-                <fullName>OK SAP</fullName>
+                <fullName>Annullamento - Esito OK da DL/SII</fullName>
                 <default>false</default>
-                <label>OK SAP</label>
+                <label>Annullamento - Esito OK da DL/SII</label>
             </value>
             <value>
-                <fullName>Gestione appuntamento su portale DL</fullName>
+                <fullName>Annullamento - Inviato al DL/SII</fullName>
                 <default>false</default>
-                <label>Gestione appuntamento su portale DL</label>
+                <label>Annullamento - Inviato al DL/SII</label>
             </value>
             <value>
-                <fullName>In attesa esecuzione appuntamento</fullName>
+                <fullName>Annullamento per Switch-out</fullName>
                 <default>false</default>
-                <label>In attesa esecuzione appuntamento</label>
+                <label>Annullamento per Switch-out</label>
             </value>
             <value>
-                <fullName>In attesa appuntamento DL</fullName>
+                <fullName>Annullamento - Revocato</fullName>
                 <default>false</default>
-                <label>In attesa appuntamento DL</label>
+                <label>Annullamento - Revocato</label>
             </value>
             <value>
-                <fullName>Conferma Appuntamento KO</fullName>
+                <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
                 <default>false</default>
-                <label>Conferma Appuntamento KO</label>
+                <label>Annullamento SII - Errore Lavorazione SAP</label>
             </value>
             <value>
-                <fullName>Esecuzione Appuntamento OK</fullName>
+                <fullName>Annullamento SII - Ricezione</fullName>
                 <default>false</default>
-                <label>Esecuzione Appuntamento OK</label>
+                <label>Annullamento SII - Ricezione</label>
             </value>
             <value>
-                <fullName>Esecuzione Appuntamento KO</fullName>
+                <fullName>Annullato</fullName>
                 <default>false</default>
-                <label>Esecuzione Appuntamento KO</label>
+                <label>Annullato</label>
             </value>
             <value>
-                <fullName>Completata</fullName>
+                <fullName>Annullato SII</fullName>
                 <default>false</default>
-                <label>Completata</label>
+                <label>Annullato SII</label>
             </value>
             <value>
-                <fullName>In Lavorazione</fullName>
+                <fullName>Attesa conferma preventivo cliente</fullName>
                 <default>false</default>
-                <label>In Lavorazione</label>
+                <label>Attesa conferma preventivo cliente</label>
             </value>
             <value>
-                <fullName>Registrazione  da validare</fullName>
+                <fullName>BL010</fullName>
                 <default>false</default>
-                <label>Registrazione  da validare</label>
+                <isActive>false</isActive>
+                <label>BL010</label>
             </value>
             <value>
-                <fullName>Comunicazione verso Motore VAS OK</fullName>
+                <fullName>Bozza</fullName>
                 <default>false</default>
-                <label>Comunicazione verso Motore VAS OK</label>
-            </value>
-            <value>
-                <fullName>Comunicazione verso Motore VAS KO</fullName>
-                <default>false</default>
-                <label>Comunicazione verso Motore VAS KO</label>
-            </value>
-            <value>
-                <fullName>Accettato Motore Vas</fullName>
-                <default>false</default>
-                <label>Accettato Motore Vas</label>
-            </value>
-            <value>
-                <fullName>Ko prodotto vas</fullName>
-                <default>false</default>
-                <label>Ko prodotto vas</label>
-            </value>
-            <value>
-                <fullName>Motore vas ko</fullName>
-                <default>false</default>
-                <label>Motore vas ko</label>
+                <label>Bozza</label>
             </value>
             <value>
                 <fullName>Bozza Annullata</fullName>
@@ -236,39 +152,26 @@
                 <label>Bozza Annullata</label>
             </value>
             <value>
-                <fullName>Voltura Accettata</fullName>
+                <fullName>Caricamento KO</fullName>
                 <default>false</default>
-                <label>Voltura Accettata</label>
+                <label>Caricamento KO</label>
             </value>
             <value>
-                <fullName>Voltura Rifiutata</fullName>
+                <fullName>Caricamento OK</fullName>
                 <default>false</default>
-                <label>Voltura Rifiutata</label>
+                <label>Caricamento OK</label>
             </value>
             <value>
-                <fullName>Comunicazone verso Heroku OK</fullName>
+                <fullName>Caricamento Siebel KO</fullName>
                 <default>false</default>
-                <label>Comunicazone verso Heroku OK</label>
+                <isActive>false</isActive>
+                <label>Caricamento Siebel KO</label>
             </value>
             <value>
-                <fullName>Esito OK da SII</fullName>
+                <fullName>Caricamento Siebel OK</fullName>
                 <default>false</default>
-                <label>Esito OK da SII</label>
-            </value>
-            <value>
-                <fullName>Esito KO da SII</fullName>
-                <default>false</default>
-                <label>Esito KO da SII</label>
-            </value>
-            <value>
-                <fullName>KO Rilavorato</fullName>
-                <default>false</default>
-                <label>KO Rilavorato</label>
-            </value>
-            <value>
-                <fullName>KO Definitivo</fullName>
-                <default>false</default>
-                <label>KO Definitivo</label>
+                <isActive>false</isActive>
+                <label>Caricamento Siebel OK</label>
             </value>
             <value>
                 <fullName>Chiuso</fullName>
@@ -276,19 +179,9 @@
                 <label>Chiuso</label>
             </value>
             <value>
-                <fullName>Accettazione Voltura</fullName>
+                <fullName>Completata</fullName>
                 <default>false</default>
-                <label>Accettazione Voltura</label>
-            </value>
-            <value>
-                <fullName>Inviato al SII</fullName>
-                <default>false</default>
-                <label>Inviato al SII</label>
-            </value>
-            <value>
-                <fullName>Comunicazione verso Heroku</fullName>
-                <default>false</default>
-                <label>Comunicazione verso Heroku</label>
+                <label>Completata</label>
             </value>
             <value>
                 <fullName>Comunicazione Motore VAS</fullName>
@@ -296,49 +189,69 @@
                 <label>Comunicazione Motore VAS</label>
             </value>
             <value>
-                <fullName>Ripensamento - Da inviare</fullName>
+                <fullName>Comunicazione verso Heroku</fullName>
                 <default>false</default>
-                <label>Ripensamento - Da inviare</label>
+                <label>Comunicazione verso Heroku</label>
             </value>
             <value>
-                <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+                <fullName>Comunicazione verso Heroku KO</fullName>
                 <default>false</default>
-                <label>Ripensamento - Comunicazione verso Heroku OK</label>
+                <label>Comunicazione verso Heroku KO</label>
             </value>
             <value>
-                <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+                <fullName>Comunicazione verso Heroku OK</fullName>
                 <default>false</default>
-                <label>Ripensamento - Comunicazione verso Heroku KO</label>
+                <label>Comunicazione verso Heroku OK</label>
             </value>
             <value>
-                <fullName>Ripensamento - Inviato al SII</fullName>
+                <fullName>Comunicazione verso Motore VAS KO</fullName>
                 <default>false</default>
-                <label>Ripensamento - Inviato al SII</label>
+                <label>Comunicazione verso Motore VAS KO</label>
             </value>
             <value>
-                <fullName>Ripensamento - Ammissibilità OK</fullName>
+                <fullName>Comunicazione verso Motore VAS OK</fullName>
                 <default>false</default>
-                <label>Ripensamento - Ammissibilità OK</label>
+                <label>Comunicazione verso Motore VAS OK</label>
             </value>
             <value>
-                <fullName>Ripensamento - Ammissibilità KO</fullName>
+                <fullName>Comunicazone verso Heroku OK</fullName>
                 <default>false</default>
-                <label>Ripensamento - Ammissibilità KO</label>
+                <label>Comunicazone verso Heroku OK</label>
             </value>
             <value>
-                <fullName>Ripensamento - Esito OK da SII</fullName>
+                <fullName>Conferma Appuntamento KO</fullName>
                 <default>false</default>
-                <label>Ripensamento - Esito OK da SII</label>
+                <label>Conferma Appuntamento KO</label>
             </value>
             <value>
-                <fullName>Ripensamento - Esito KO da SII</fullName>
+                <fullName>Da Inviare</fullName>
                 <default>false</default>
-                <label>Ripensamento - Esito KO da SII</label>
+                <label>Da Inviare</label>
             </value>
             <value>
-                <fullName>Ripensamento - Revocato</fullName>
+                <fullName>Dati discordanti</fullName>
                 <default>false</default>
-                <label>Ripensamento - Revocato</label>
+                <label>Dati discordanti</label>
+            </value>
+            <value>
+                <fullName>Dati Tecnici Ricevuti</fullName>
+                <default>false</default>
+                <label>Dati Tecnici Ricevuti</label>
+            </value>
+            <value>
+                <fullName>DL accertamento OK</fullName>
+                <default>false</default>
+                <label>DL accertamento OK</label>
+            </value>
+            <value>
+                <fullName>DL Documentazione completa</fullName>
+                <default>false</default>
+                <label>DL Documentazione completa</label>
+            </value>
+            <value>
+                <fullName>DL documentazione incompleta</fullName>
+                <default>false</default>
+                <label>DL documentazione incompleta</label>
             </value>
             <value>
                 <fullName>Documentazione da firmare</fullName>
@@ -361,134 +274,56 @@
                 <label>Documentazione Gestita</label>
             </value>
             <value>
-                <fullName>Voltura c/o VT</fullName>
+                <fullName>Documentazione Validata</fullName>
                 <default>false</default>
-                <label>Voltura c/o VT</label>
+                <label>Documentazione Validata</label>
             </value>
             <value>
-                <fullName>Inviato Precheck al SII</fullName>
+                <fullName>Errore lavorazione SAP</fullName>
                 <default>false</default>
-                <label>Inviato Precheck al SII</label>
+                <label>Errore lavorazione SAP</label>
             </value>
             <value>
-                <fullName>Amm. Precheck KO SII</fullName>
+                <fullName>Esecuzione Appuntamento KO</fullName>
                 <default>false</default>
-                <label>Amm. Precheck KO SII</label>
+                <label>Esecuzione Appuntamento KO</label>
             </value>
             <value>
-                <fullName>Dati discordanti</fullName>
+                <fullName>Esecuzione Appuntamento OK</fullName>
                 <default>false</default>
-                <label>Dati discordanti</label>
+                <label>Esecuzione Appuntamento OK</label>
             </value>
             <value>
-                <fullName>In attesa di quality call</fullName>
+                <fullName>Esito DL KO</fullName>
                 <default>false</default>
-                <label>In attesa di quality call</label>
+                <isActive>false</isActive>
+                <label>Esito DL KO</label>
             </value>
             <value>
-                <fullName>Quality Call OK</fullName>
+                <fullName>Esito DL OK</fullName>
                 <default>false</default>
-                <label>Quality Call OK</label>
+                <isActive>false</isActive>
+                <label>Esito DL OK</label>
             </value>
             <value>
-                <fullName>Quality Call KO</fullName>
+                <fullName>Esito KO da DL</fullName>
                 <default>false</default>
-                <label>Quality Call KO</label>
+                <label>Esito KO da DL</label>
             </value>
             <value>
-                <fullName>Annullamento dal SII</fullName>
+                <fullName>Esito KO da SII</fullName>
                 <default>false</default>
-                <label>Annullamento dal SII</label>
+                <label>Esito KO da SII</label>
             </value>
             <value>
-                <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+                <fullName>Esito OK da DL</fullName>
                 <default>false</default>
-                <label>Annullamento - Comunicazione verso Heroku KO</label>
+                <label>Esito OK da DL</label>
             </value>
             <value>
-                <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+                <fullName>Esito OK da SII</fullName>
                 <default>false</default>
-                <label>Annullamento - Comunicazione verso Heroku OK</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Ammissibilità KO</fullName>
-                <default>false</default>
-                <label>Annullamento - Ammissibilità KO</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Ammissibilità OK</fullName>
-                <default>false</default>
-                <label>Annullamento - Ammissibilità OK</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Da inviare</fullName>
-                <default>false</default>
-                <label>Annullamento - Da inviare</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Esito OK da DL/SII</fullName>
-                <default>false</default>
-                <label>Annullamento - Esito OK da DL/SII</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Esito KO da DL/SII</fullName>
-                <default>false</default>
-                <label>Annullamento - Esito KO da DL/SII</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Inviato al DL/SII</fullName>
-                <default>false</default>
-                <label>Annullamento - Inviato al DL/SII</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Revocato</fullName>
-                <default>false</default>
-                <label>Annullamento - Revocato</label>
-            </value>
-            <value>
-                <fullName>Annullato SII</fullName>
-                <default>false</default>
-                <label>Annullato SII</label>
-            </value>
-            <value>
-                <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
-                <default>false</default>
-                <label>Annullamento SII - Errore Lavorazione SAP</label>
-            </value>
-            <value>
-                <fullName>Annullamento SII - Ricezione</fullName>
-                <default>false</default>
-                <label>Annullamento SII - Ricezione</label>
-            </value>
-            <value>
-                <fullName>Amm. Precheck OK SII</fullName>
-                <default>false</default>
-                <label>Amm. Precheck OK SII</label>
-            </value>
-            <value>
-                <fullName>Preventivo scaduto</fullName>
-                <default>false</default>
-                <label>Preventivo scaduto</label>
-            </value>
-            <value>
-                <fullName>Inviare preventivo</fullName>
-                <default>false</default>
-                <label>Inviare preventivo</label>
-            </value>
-            <value>
-                <fullName>Dati Tecnici Ricevuti</fullName>
-                <default>false</default>
-                <label>Dati Tecnici Ricevuti</label>
-            </value>
-            <value>
-                <fullName>Richiesta Preventivo extra sistema</fullName>
-                <default>false</default>
-                <label>Richiesta Preventivo extra sistema</label>
-            </value>
-            <value>
-                <fullName>Pratica non gestita per il DL</fullName>
-                <default>false</default>
-                <label>Pratica non gestita per il DL</label>
+                <label>Esito OK da SII</label>
             </value>
             <value>
                 <fullName>Esportazione VS Siebel</fullName>
@@ -496,39 +331,127 @@
                 <label>Esportazione VS Siebel</label>
             </value>
             <value>
-                <fullName>Caricamento OK</fullName>
+                <fullName>Gestione appuntamento su portale DL</fullName>
                 <default>false</default>
-                <label>Caricamento OK</label>
+                <label>Gestione appuntamento su portale DL</label>
             </value>
             <value>
-                <fullName>Caricamento KO</fullName>
+                <fullName>In attesa appuntamento DL</fullName>
                 <default>false</default>
-                <label>Caricamento KO</label>
+                <label>In attesa appuntamento DL</label>
             </value>
             <value>
-                <fullName>Sequenzializzato</fullName>
+                <fullName>In attesa conferma cliente</fullName>
                 <default>false</default>
-                <label>Sequenzializzato</label>
+                <label>In attesa conferma cliente</label>
             </value>
             <value>
-                <fullName>Preventivo rifiutato – Amm KO</fullName>
+                <fullName>In attesa di quality call</fullName>
                 <default>false</default>
-                <label>Preventivo rifiutato – Amm KO</label>
+                <label>In attesa di quality call</label>
             </value>
             <value>
-                <fullName>Preventivo rifiutato – Amm OK</fullName>
+                <fullName>In attesa esecuzione appuntamento</fullName>
                 <default>false</default>
-                <label>Preventivo rifiutato – Amm OK</label>
+                <label>In attesa esecuzione appuntamento</label>
             </value>
             <value>
-                <fullName>Annullamento per Switch-out</fullName>
+                <fullName>In attesa tempi di ripensamento</fullName>
                 <default>false</default>
-                <label>Annullamento per Switch-out</label>
+                <label>In attesa tempi di ripensamento</label>
             </value>
             <value>
-                <fullName>Sospeso</fullName>
+                <fullName>In attesa validazione</fullName>
                 <default>false</default>
-                <label>Sospeso</label>
+                <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione</fullName>
+                <default>false</default>
+                <label>In Lavorazione</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione SAP</fullName>
+                <default>false</default>
+                <label>In Lavorazione SAP</label>
+            </value>
+            <value>
+                <fullName>In registrazione</fullName>
+                <default>false</default>
+                <label>In registrazione</label>
+            </value>
+            <value>
+                <fullName>In sequenzializzazione</fullName>
+                <default>false</default>
+                <label>In sequenzializzazione</label>
+            </value>
+            <value>
+                <fullName>Inviare preventivo</fullName>
+                <default>false</default>
+                <label>Inviare preventivo</label>
+            </value>
+            <value>
+                <fullName>Inviato a DL</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Inviato a DL</label>
+            </value>
+            <value>
+                <fullName>Inviato al DL</fullName>
+                <default>false</default>
+                <label>Inviato al DL</label>
+            </value>
+            <value>
+                <fullName>Inviato al SII</fullName>
+                <default>false</default>
+                <label>Inviato al SII</label>
+            </value>
+            <value>
+                <fullName>Inviato Precheck al SII</fullName>
+                <default>false</default>
+                <label>Inviato Precheck al SII</label>
+            </value>
+            <value>
+                <fullName>Invio allegato a DL</fullName>
+                <default>false</default>
+                <label>Invio allegato a DL</label>
+            </value>
+            <value>
+                <fullName>IR010</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IR010</label>
+            </value>
+            <value>
+                <fullName>IR020</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IR020</label>
+            </value>
+            <value>
+                <fullName>KO Definitivo</fullName>
+                <default>false</default>
+                <label>KO Definitivo</label>
+            </value>
+            <value>
+                <fullName>Ko prodotto vas</fullName>
+                <default>false</default>
+                <label>Ko prodotto vas</label>
+            </value>
+            <value>
+                <fullName>KO Rilavorato</fullName>
+                <default>false</default>
+                <label>KO Rilavorato</label>
+            </value>
+            <value>
+                <fullName>Motore vas ko</fullName>
+                <default>false</default>
+                <label>Motore vas ko</label>
+            </value>
+            <value>
+                <fullName>OK SAP</fullName>
+                <default>false</default>
+                <label>OK SAP</label>
             </value>
             <value>
                 <fullName>Plico da inviare</fullName>
@@ -536,9 +459,14 @@
                 <label>Plico da inviare</label>
             </value>
             <value>
-                <fullName>In registrazione</fullName>
+                <fullName>Plico  Firmato/Inviato</fullName>
                 <default>false</default>
-                <label>In registrazione</label>
+                <label>Plico  Firmato/Inviato</label>
+            </value>
+            <value>
+                <fullName>Plico Firmato da inviare</fullName>
+                <default>false</default>
+                <label>Plico Firmato da inviare</label>
             </value>
             <value>
                 <fullName>Plico Firmato da validare</fullName>
@@ -561,67 +489,44 @@
                 <label>Plico validato Firmato</label>
             </value>
             <value>
-                <fullName>Registrazione validata  Firmato/Inviato</fullName>
+                <fullName>Pratica non gestita per il DL</fullName>
                 <default>false</default>
-                <label>Registrazione validata  Firmato/Inviato</label>
+                <label>Pratica non gestita per il DL</label>
             </value>
             <value>
-                <fullName>Plico  Firmato/Inviato</fullName>
+                <fullName>Preventivo Accettato</fullName>
                 <default>false</default>
-                <label>Plico  Firmato/Inviato</label>
+                <label>Preventivo Accettato</label>
             </value>
             <value>
-                <fullName>Plico Firmato da inviare</fullName>
+                <fullName>Preventivo rifiutato</fullName>
                 <default>false</default>
-                <label>Plico Firmato da inviare</label>
+                <label>Preventivo rifiutato</label>
             </value>
             <value>
-                <fullName>BL010</fullName>
+                <fullName>Preventivo rifiutato – Amm KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>BL010</label>
+                <label>Preventivo rifiutato – Amm KO</label>
             </value>
             <value>
-                <fullName>Caricamento Siebel KO</fullName>
+                <fullName>Preventivo rifiutato – Amm OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Caricamento Siebel KO</label>
+                <label>Preventivo rifiutato – Amm OK</label>
             </value>
             <value>
-                <fullName>Caricamento Siebel OK</fullName>
+                <fullName>Preventivo scaduto</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Caricamento Siebel OK</label>
+                <label>Preventivo scaduto</label>
             </value>
             <value>
-                <fullName>Esito DL KO</fullName>
+                <fullName>Quality Call KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Esito DL KO</label>
+                <label>Quality Call KO</label>
             </value>
             <value>
-                <fullName>Esito DL OK</fullName>
+                <fullName>Quality Call OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Esito DL OK</label>
-            </value>
-            <value>
-                <fullName>IR010</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>IR010</label>
-            </value>
-            <value>
-                <fullName>IR020</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>IR020</label>
-            </value>
-            <value>
-                <fullName>Inviato a DL</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Inviato a DL</label>
+                <label>Quality Call OK</label>
             </value>
             <value>
                 <fullName>RC010</fullName>
@@ -636,16 +541,111 @@
                 <label>Registrazione da validare</label>
             </value>
             <value>
+                <fullName>Registrazione  da validare</fullName>
+                <default>false</default>
+                <label>Registrazione  da validare</label>
+            </value>
+            <value>
+                <fullName>Registrazione validata  Firmato/Inviato</fullName>
+                <default>false</default>
+                <label>Registrazione validata  Firmato/Inviato</label>
+            </value>
+            <value>
+                <fullName>Richiesta preventivo</fullName>
+                <default>false</default>
+                <label>Richiesta preventivo</label>
+            </value>
+            <value>
+                <fullName>Richiesta Preventivo extra sistema</fullName>
+                <default>false</default>
+                <label>Richiesta Preventivo extra sistema</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Ammissibilità KO</fullName>
+                <default>false</default>
+                <label>Ripensamento - Ammissibilità KO</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Ammissibilità OK</fullName>
+                <default>false</default>
+                <label>Ripensamento - Ammissibilità OK</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <label>Ripensamento - Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
                 <fullName>Ripensamento -  Comunicazione verso Heroku KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Ripensamento -  Comunicazione verso Heroku KO</label>
             </value>
             <value>
+                <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+                <default>false</default>
+                <label>Ripensamento - Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
                 <fullName>Ripensamento -  Comunicazione verso Heroku OK</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Ripensamento -  Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Da inviare</fullName>
+                <default>false</default>
+                <label>Ripensamento - Da inviare</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Esito KO da SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Esito KO da SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Esito OK da SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Esito OK da SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Inviato al SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Inviato al SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Revocato</fullName>
+                <default>false</default>
+                <label>Ripensamento - Revocato</label>
+            </value>
+            <value>
+                <fullName>Ripensato</fullName>
+                <default>false</default>
+                <label>Ripensato</label>
+            </value>
+            <value>
+                <fullName>Sequenzializzato</fullName>
+                <default>false</default>
+                <label>Sequenzializzato</label>
+            </value>
+            <value>
+                <fullName>Sospeso</fullName>
+                <default>false</default>
+                <label>Sospeso</label>
+            </value>
+            <value>
+                <fullName>Voltura Accettata</fullName>
+                <default>false</default>
+                <label>Voltura Accettata</label>
+            </value>
+            <value>
+                <fullName>Voltura c/o VT</fullName>
+                <default>false</default>
+                <label>Voltura c/o VT</label>
+            </value>
+            <value>
+                <fullName>Voltura Rifiutata</fullName>
+                <default>false</default>
+                <label>Voltura Rifiutata</label>
             </value>
         </valueSetDefinition>
     </valueSet>

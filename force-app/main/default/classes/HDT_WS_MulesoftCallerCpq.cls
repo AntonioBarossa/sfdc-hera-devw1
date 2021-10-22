@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public without sharing class HDT_WS_MulesoftCallerCpq {
 
     public static HDT_WRP_Response retrieveDataCtrl(String body, HDT_WRP_HttpObj httpObj) {
@@ -28,7 +29,7 @@ public without sharing class HDT_WS_MulesoftCallerCpq {
 
             String responseStatus = res.getStatus();
             Integer statusCode = res.getStatusCode();
-            System.debug('## Response status -> ' + responseStatus + ' - ' + statusCode);
+            System.debug(LoggingLevel.DEBUG, '## Response status -> ' + responseStatus + ' - ' + statusCode);
 
             //if(statusCode != 200){
             //    switch on res.getStatusCode() {
@@ -53,7 +54,7 @@ public without sharing class HDT_WS_MulesoftCallerCpq {
             //}
 
         } catch (Exception ex){
-            System.debug('HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
             respObj.success = false;
             respObj.message = 'HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage();       
         }

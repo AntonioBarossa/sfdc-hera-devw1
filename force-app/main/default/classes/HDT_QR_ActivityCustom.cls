@@ -474,6 +474,16 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     WITH SECURITY_ENFORCED 
             ];
         }
+
+    
+        public static List<wrts_prcgvr__Activity__c> getActivityTelesellingOutbound(string ecid){
+            return [select id,createddate from wrts_prcgvr__Activity__c where ecid__c = :ecid and Type__c = 'Chiamata outbound' and wrts_prcgvr__Status__c = 'Aperta' WITH SECURITY_ENFORCED order by createddate desc  ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getActivityTelesellingOutboundByUser(){
+            return [select id,createddate,Ecid__c from wrts_prcgvr__Activity__c where CreatedbyId =:userinfo.getUserId() AND Type__c = 'Chiamata outbound' and wrts_prcgvr__Status__c = 'Aperta' WITH SECURITY_ENFORCED order by createddate desc  ];
+        }
+
         public static List<wrts_prcgvr__Activity__c> getRecordByEcid(String ecid){
             return [SELECT 
                     Id

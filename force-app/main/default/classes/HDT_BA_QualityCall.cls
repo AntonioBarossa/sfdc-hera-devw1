@@ -6,7 +6,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -53,9 +53,27 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
 
+        List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
+
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
+            system.debug('>>>startDate before: ' + ord.Id + ' <:> ' + startDate);
+
+            for (ComfortQualityCall__c cqc : docValidList) {
+                if (
+                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c)
+                    && cqc.Process__c == ord.RecordType.DeveloperName
+                    && cqc.Channel__c == ord.Channel__c
+                    && cqc.CustomerType__c == ord.CustomerCategory__c
+                    && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
+                ) {
+                    startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
+                    break;
+                }
+            }
+
+            system.debug('>>>startDate after: ' + ord.Id + ' <:> ' + startDate);
 
             if (startDate.daysBetween(dueDate) > 50) { //check number of days passed after being signed as quality
                 
@@ -84,7 +102,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                                 RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                                Account__c = ord.AccountId,
+                                // Account__c = ord.AccountId, //should not be shown on Account related activities
                                 Type__c = 'Quality Call',
                                 Status__c = 'Creata',
                                 OwnerId = comfortQualityQueId,

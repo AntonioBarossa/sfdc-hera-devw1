@@ -224,6 +224,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
         return sts;
     }
 
+    
     /**
     * @author Sabina Levonja (sabina.levonja@dunegroup.it)
     * @date 12/07/2021
@@ -232,7 +233,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
     * @param String type - type is Case or Order 
     * @param String commoditySector  
     */
-    private static String getProcessType(String pType, String type, String commoditySector){
+    public static String getProcessType(String pType, String type, String commoditySector){
         String processType='';
         List<HDT_MatrixCompatibilityMap__mdt> mdtList= HDT_QR_MatrixCompatibilityMap.getProcessTypeMap(pType.trim(),type);
         if(mdtList.size()==1){

@@ -39,7 +39,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getAccountServicePointsWithFilter(String accountid,String additionalFilter) {
 		system.debug('getAccountServicePointsWithFilter START');
 		contractSrv.checkReadAccess(fieldSp);
-		String query;
+		// String query;
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
 		if(additionalFilter.contains('Commodity')){
 			listSp = Database.query('SELECT '+String.escapeSingleQuotes(fieldSp)+' FROM ServicePoint__c WHERE Account__c =: accountid '+ additionalFilter);
@@ -129,7 +129,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getRecordFromCodeWithFilter(String code, String fields, string additionalFilter) {
 		system.debug('getRecordFromCodeWithFilter HDT_QR_ServicePoint START');
 		contractSrv.checkReadAccess(fields);
-		string queryContract;
+		// string queryContract;
 		List<Contract> contracts = new List<Contract>();
 
 		if(additionalFilter.contains('status')){
@@ -150,7 +150,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		system.debug('spCode ******** :' + spCode);
 		if(spCode != null){
-			String query ;
+			// String query ;
 			if(additionalFilter.contains('Commodity')){
 				servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE Id = :spCode '+additionalFilter+' LIMIT 1');
 			}
@@ -190,7 +190,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		system.debug('getServicePointsByMeterSerialNumberWithFilter START');
 		contractSrv.checkReadAccess(fields);
 		String stringSerialNumber = '%' + serialNumber + '%';
-		String query;
+		// String query;
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(!additionalFilter.contains('status')){
 			servicePoints =	Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber '+ additionalFilter);
@@ -227,7 +227,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getServicePointsByCodeWithFilter(String code, String fields,String additionalFilter) {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
-		String query;
+		// String query;
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(!additionalFilter.contains('status')){
 			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode '+ additionalFilter);

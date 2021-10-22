@@ -21,8 +21,8 @@ public class HDT_SRV_CampaignMemberTst{
 			HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
-			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			HDT_UTL_DataFactoryTst.createLead(1, true);
+			HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 			List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(1, false);
 			campaigns[0].Category__c='Campagna Outbound';
 			campaigns[0].Description='testDesc';
@@ -151,7 +151,7 @@ public class HDT_SRV_CampaignMemberTst{
 			                         LIMIT 1];
 
 
-			List<Campaignmember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(1, false, tCampaigns[0].Id, tLeads[0].Id, tContacts[0].Id);
+			List<Campaignmember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(false, tCampaigns[0].Id, tLeads, tContacts);
 			campMembers[0].GenericField1__c='testGenField';
 			campMembers[0].ContractReference__c='testConRef';
 
@@ -175,7 +175,7 @@ public class HDT_SRV_CampaignMemberTst{
 			Test.stopTest();
 
 			System.assertEquals('tstUpdatedFenField', updtCampMember.GenericField1__c, 'Campaign Member not Updated');
-			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c);
+			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c, 'Value of parameter is not matching');
 		}
 	}
 
@@ -209,7 +209,7 @@ public class HDT_SRV_CampaignMemberTst{
 			                         LIMIT 1];
 
 
-			List<Campaignmember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(1, false, tCampaigns[0].Id, tLeads[0].Id, tContacts[0].Id);
+			List<Campaignmember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(false, tCampaigns[0].Id, tLeads, tContacts);
 			campMembers[0].GenericField1__c='testGenField';
 			campMembers[0].ContractReference__c='testConRef';
 
@@ -230,7 +230,7 @@ public class HDT_SRV_CampaignMemberTst{
 			Test.stopTest();
 
 			System.assertEquals(true, newCampMember.Id!=null, 'Campaign Member not Created');
-			System.assertNotEquals(false, newCampMember.Id!=null);
+			System.assertNotEquals(false, newCampMember.Id!=null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -264,7 +264,7 @@ public class HDT_SRV_CampaignMemberTst{
 			                         LIMIT 1];
 
 
-			List<Campaignmember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(1, false, tCampaigns[0].Id, tLeads[0].Id, tContacts[0].Id);
+			List<Campaignmember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(false, tCampaigns[0].Id, tLeads, tContacts);
 			campMembers[0].GenericField1__c='testGenField';
 			campMembers[0].ContractReference__c='testConRef';
 
@@ -288,7 +288,7 @@ public class HDT_SRV_CampaignMemberTst{
 			Test.stopTest();
 
 			System.assertEquals('tstUpdatedFenField', updtCampMember.GenericField1__c, 'Campaign Members not Updated');
-			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c);
+			System.assertNotEquals('testGenField', updtCampMember.GenericField1__c, 'Value of parameter is not matching');
 		}
 	}
 }
