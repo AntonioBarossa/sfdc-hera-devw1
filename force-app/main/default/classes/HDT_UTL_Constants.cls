@@ -239,6 +239,8 @@ public with sharing class HDT_UTL_Constants {
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
+    @AuraEnabled
+    public final String PERMISSIONSET_HDT_SUPER_USER_CPQ = 'HDT_SuperUserCPQ';
 
     //APEX Classes Permission Set
     @AuraEnabled
