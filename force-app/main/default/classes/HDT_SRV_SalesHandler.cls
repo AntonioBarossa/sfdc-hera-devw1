@@ -109,7 +109,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                 } else {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
-                                ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+                                String workExecutionTime =mapRequestFields.get('TEMP_ES_PREV');
+                                if(String.isNotBlank(mapRequestFields.get('TEMP_ES_PREV')) && mapRequestFields.get('TEMP_ES_PREV').isNumeric()){
+                                    ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+                                }
 
                                 if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
@@ -636,7 +639,6 @@ public with sharing class HDT_SRV_SalesHandler {
 
             }
         }
-
         return mrrResponseItem;
     }
     

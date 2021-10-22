@@ -1251,17 +1251,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	//** [START MOD 2021-08-13] @Author Andrei Necsulescu  - WR (andrei.necsulescu@webresults.it) @Description: Added Method to Create a record of CampaignMember
-	public static List<CampaignMember> createCampaignMember(Integer amount, Boolean doInsert, String campaignId, String leadId, String contactId) {
+	public static List<CampaignMember> createCampaignMember( Boolean doInsert, String campaignId, List<Lead> leads, List<Contact> contacts) {
 
+		//** Andrei Necsulescu - Changed logic because there can not be more than one Campaign member with the same Contact associated with a Campaign
 		List<CampaignMember> campaignMembers = new List<CampaignMember>();
+		integer amount = contacts.size();
 
 		for (Integer i = 0; i < amount; i++) {
 			
-			campaignMembers.add(new CampaignMember(
+			CampaignMember camp = new CampaignMember(
 				CampaignId = campaignId,
-				LeadId = leadId,
-				ContactId = contactId
-			));
+				ContactId = contacts[i].id
+			); 
+
+			if (i < leads.size()) {
+
+				camp.LeadId = leads[i].id;
+			}
+
+			campaignMembers.add(camp);
 
 		}
 
@@ -2439,32 +2447,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return visitAssigRulesList;
 	}
 
-	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
 
-		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> Rows ){
+		HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess()						;
+        HDT_MassiveLoaderProcess__mdt selectedProcess 	   = massiveLoaderProcessQr.getRecordByName(processName)	;
+		MassiveLoaderRequest__c massiveLoaderRequest 	   = new MassiveLoaderRequest__c()							;
 
-		for(Integer i=0; i<amount; i++){
-
-			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
-
-			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
-			massiveLoaderRequest.Status__c = 'In Lavorazione';
-			//massiveLoaderRequest.TotalRequest__c = 2;
-			//massiveLoaderRequest.RequestOK__c = 2;
-			//massiveLoaderRequest.RequestKO__c = 0;
-			//massiveLoaderRequest.Phase__c = 'File in elaborazione';
-			massiveLoaderRequest.Priority__c = 1;
-
-
-			massiveLoaderRequestList.add(massiveLoaderRequest);
+		massiveLoaderRequest.ProcessType__c = processName											;
+		massiveLoaderRequest.Status__c 		= utlConstants.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE	;
+		massiveLoaderRequest.Priority__c 	= selectedProcess.Priority__c							;
+		insert massiveLoaderRequest;
+		List<MassiveLoaderRequestItem__c> listMassiveLoaderRequestItem = new List<MassiveLoaderRequestItem__c>();
+		for (String tempData : Rows) {
+			MassiveLoaderRequestItem__c massiveLoaderRequestItem    = new MassiveLoaderRequestItem__c()						;
+			massiveLoaderRequestItem.Data__c				 		= tempData												;
+			massiveLoaderRequestItem.Status__c				 		= utlConstants.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE	;
+			massiveLoaderRequestItem.MassiveLoaderRequest__c 		= massiveLoaderRequest.Id								;
+			listMassiveLoaderRequestItem.add(massiveLoaderRequestItem);
 		}
-
-		if (doInsert){
-
-			insert massiveLoaderRequestList;
-		}
-
-		return massiveLoaderRequestList;
+		insert listMassiveLoaderRequestItem																					;
+	
+		return massiveLoaderRequest;
 
 	}
 
