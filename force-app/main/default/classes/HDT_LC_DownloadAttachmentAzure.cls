@@ -17,7 +17,7 @@ public with sharing class HDT_LC_DownloadAttachmentAzure {
             //    // Update contact phone number
             //    return '';
             // }
-            return [SELECT NOME_FILE_DOWNLOAD__c FROM SiebelDocumentLink__x WHERE ID =:rId LIMIT 1].NOME_FILE_DOWNLOAD__c;
+            return [SELECT NOME_FILE_DOWNLOAD__c FROM SiebelDocumentLink__x WHERE ID =:rId WITH SECURITY_ENFORCED LIMIT 1].NOME_FILE_DOWNLOAD__c;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
