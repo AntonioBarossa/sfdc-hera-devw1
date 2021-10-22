@@ -434,7 +434,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'Distributor__c' && this.isDistributor == true) {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'Distributor__c'){//} && this.isDistributor == true) {
                     console.log('entra in Distributor__c');
                     console.log('entra in Distributor__c + recordDistributorPointCode  ' + JSON.stringify(this.recordDistributorPointCode));
                     this.allSubmitedFields.Distributor__c = this.recordDistributorPointCode;
