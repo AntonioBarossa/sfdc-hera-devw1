@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>City__c</field>
-        <value xsi:type="xsd:string">PRATA D'ANSIDONIA</value>
+        <value xsi:type="xsd:string">PRATA D&apos;ANSIDONIA</value>
     </values>
     <values>
         <field>Commodity__c</field>

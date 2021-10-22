@@ -24,6 +24,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 		System.runAs(internalUser){
 			HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
 			HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
+			HDT_UTL_DataFactoryTst.createCity();
 		}
 	}
 
@@ -39,11 +40,6 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 
 			Test.setMock(HttpCalloutMock.class, mock);
 			Test.startTest();
-
-			List<City__c> city=HDT_UTL_DataFactoryTst.createCity(1, false);
-			city[0].Name='ROMA';
-			city[0].BelfioreCode__c='H501';
-			insert city;
 
 			Id rtIdBusiness=constants.ACCOUNT_RECORDTYPEID_BUSINESS;
 
@@ -105,11 +101,6 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			Test.setMock(HttpCalloutMock.class, mock);
 			Test.startTest();
 
-			List<City__c> city=HDT_UTL_DataFactoryTst.createCity(1, false);
-			city[0].Name='ROMA';
-			city[0].BelfioreCode__c='H501';
-			insert city;
-
 			Id rtIdResidenziale=constants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 			// AccountAddress Map
@@ -167,11 +158,6 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 
 			Test.setMock(HttpCalloutMock.class, mock);
 			Test.startTest();
-
-			List<City__c> city=HDT_UTL_DataFactoryTst.createCity(1, false);
-			city[0].Name='ROMA';
-			city[0].BelfioreCode__c='H501';
-			insert city;
 
 			Id rtIdBusiness=constants.ACCOUNT_RECORDTYPEID_BUSINESS;
 

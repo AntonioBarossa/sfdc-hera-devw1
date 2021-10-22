@@ -118,7 +118,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
                 accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c,MobilePhone__c' );
-                
+                List<SObject> listToUpdate = new List<SObject>();
                 for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
@@ -152,11 +152,13 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }     
                 }
                 if (accToUpdate.size()>0) {
-                    accountSRV.updateRecordsWithCheck(accToUpdate);
+                    //accountSRV.updateRecordsWithCheck(accToUpdate);
+                    listToUpdate.addAll(accToUpdate);// HRAWRM-802 21/10/2021
+                   // update accToUpdate;
                 }
                 if (conList.size()>0) {
-                    contactSrv.createRecords(conList);
-
+                    //contactSrv.createRecords(conList);
+                    insert conList;// HRAWRM-802 21/10/2021
                     for(Contact c : conList){
                         contId.add(c.id);
                     }
@@ -182,13 +184,19 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         //Start #HRAWRM-387 01/09/2021
                         List< ContactPointEmail> listToDeleteEm = HDT_QR_ContactPoint.getIndividualContactEmailList(setInd);
                         List<ContactPointPhone> listToDeletePh  = HDT_QR_ContactPoint.getIndividualContactsPhoneList(setInd);
+                        List<sObject> listDelete = new List<sObject>();// HRAWRM-802 21/10/2021
                         if(!listToDeleteEm.isEmpty() && listToDeleteEm.size()>0){
                           //  HDT_SRV_ContactPointEmail.deleteRecord(listToDeleteEm);
-                            delete listToDeleteEm;
+                          //  delete listToDeleteEm;
+                          listDelete.addAll(listToDeleteEm);// HRAWRM-802 21/10/2021
                         }
                         if(!listToDeletePh.isEmpty() && listToDeletePh.size()>0){
+                            listDelete.addAll(listToDeletePh);// HRAWRM-802 21/10/2021
                            // HDT_SRV_ContactPointPhone.deleteRecord(listToDeletePh);
-                            delete listToDeletePh;
+                           // delete listToDeletePh;
+                        }
+                        if(listDelete!=null && listDelete.size()>0){
+                            delete listDelete;// HRAWRM-802 21/10/2021
                         }
                         // List<sObject> listToDelete = new List<sObject>();
                         // listToDelete.addAll(listToDeleteEm);
@@ -196,12 +204,16 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         // if (listToDelete.size()>0) {
                         //   delete listToDelete;
                         // }
-                        contactSrv.updateRecord(listContactToClean);
+                        //contactSrv.updateRecord(listContactToClean);
+                        listToUpdate.addAll(listContactToClean);
                         //End #HRAWRM-387 01/09/2021
-
-                        accoContRelSrv.upsertRecord(listAccCon);
+                        listToUpdate.addAll(listAccCon);
+                       // accoContRelSrv.upsertRecord(listAccCon);
+                      
                     }
-                   
+                   if (listToUpdate!=null && listToUpdate.size()>0) {
+                       update listToUpdate; // HRAWRM-802 21/10/2021
+                   }
                 }
             System.debug('before Call Batch ');
         // Start HRAWRM-450 07/09/2021 

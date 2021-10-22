@@ -25,9 +25,9 @@ public with sharing class HDT_TRH_LeadTst{
             leads[0].IsAddressVerified__c = true;
 
 			insert leads;
-			List<City__c> cities = HDT_UTL_DataFactoryTst.createCity(1,false);
+			List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
         	cities[0].BelfioreCode__c='Bt00';
-        	insert cities;
+        	update cities;
 
 			List<User> ownerUser = new List<User>();
 			ownerUser.add(internalUser);
@@ -101,14 +101,16 @@ public with sharing class HDT_TRH_LeadTst{
             lead.Birthdate__c= Date.parse('2/10/1990') ;
             lead.Birthcity__c='Roma';
             lead.Gender__c='Maschio';
-            lead.FiscalCode__c= 'SMTGRG90R02Bt00Q';
             update lead;
 
+			HDT_LC_LeadCalculateFiscalCode.calculateLeadFiscalCode(lead.Id);
+			
 			test.stopTest();
 
 			List<Lead> leads = [SELECT Id,FiscalCode__c,Birthcity__c, FirstName,LastName FROM Lead Where LastName='Smith'];
 
 			System.assertEquals(true, leads[0].FiscalCode__c!=null, 'Lead has not been updated');
-			System.assertNotEquals('', leads[0].Birthcity__c,'The Birthcity__c has not been updated');		}
+			System.assertNotEquals('', leads[0].Birthcity__c,'The Birthcity__c has not been updated');		
+		}
 	}
 }

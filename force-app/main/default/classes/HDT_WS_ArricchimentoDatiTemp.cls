@@ -1,4 +1,6 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_WS_ArricchimentoDatiTemp {
+    
     // Wrapper per i flow.
     @InvocableMethod(label='Invoke Data Enrichment')
     public static List<String> submitRequestFlow(List<HDT_WRP_ArricchimentoFlowInputs> request) {
@@ -31,7 +33,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         gen.writeStringField('contratto', contractCode != null ? contractCode : '');
         gen.writeEndObject();
         String pretty = gen.getAsString();
-        System.debug(LoggingLevel.DEBUG,pretty);
+        System.debug(LoggingLevel.DEBUG, pretty);
         HttpRequest req = new HttpRequest();
         HDT_WRP_ArricchimentoResponse arricchimentoResponse = new HDT_WRP_ArricchimentoResponse();
         try {

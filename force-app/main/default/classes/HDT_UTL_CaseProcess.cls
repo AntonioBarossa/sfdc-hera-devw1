@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_CaseProcess {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -91,7 +92,7 @@ public with sharing class HDT_UTL_CaseProcess {
 				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                 //Variazione Indirizzzo di Fornitura
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
-                    System.debug('Inside Condition');
+                    System.debug(LoggingLevel.DEBUG, 'Inside Condition');
                     HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
                 }
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
@@ -137,13 +138,13 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
                                             }
                                         } catch(Exception e){
-                                            System.debug('Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                            System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
                                         }
                                     }
                                     updateList.addAll(activities);
                                 }
                             }catch(Exception e){
-                                System.Debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                                System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                             }
                         }
                         updateList.addAll(childCases);
@@ -154,8 +155,8 @@ public with sharing class HDT_UTL_CaseProcess {
                 if(newPhase.equalsIgnoreCase('Annullato')){
                     Case nonReqContr = new Case();
                     nonReqContr = caseQr.getNonReqContrCase(caseNew.Id);
-                    System.debug('Id ' + nonReqContr.Id);
-                    System.debug('Id Cond ' + String.isBlank(nonReqContr.Id));
+                    System.debug(LoggingLevel.DEBUG, 'Id ' + nonReqContr.Id);
+                    System.debug(LoggingLevel.DEBUG, 'Id Cond ' + String.isBlank(nonReqContr.Id));
                     if(!(String.isBlank(nonReqContr.Id))){
                         nonReqContr.Phase__c = 'Completata';
                         HDT_UTL_DatabaseService.updateSObject(nonReqContr);
@@ -222,7 +223,7 @@ public with sharing class HDT_UTL_CaseProcess {
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
-            System.debug('*******Error:' + e);
+            System.debug(LoggingLevel.DEBUG, '*******Error:' + e);
 		}
     }
 
