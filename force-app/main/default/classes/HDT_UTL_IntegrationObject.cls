@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public class HDT_UTL_IntegrationObject{
 
 	public static Map<String,String> generateQueryString(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject jsonStructure, String recordId){
@@ -39,7 +40,7 @@ public class HDT_UTL_IntegrationObject{
 			queryString  = queryString + fromString + whereString; 
 		}
 		
-		System.debug('query ' + queryString);
+		System.debug(LoggingLevel.DEBUG, 'query ' + queryString);
 		return new Map<String,String>{'queryString' => queryString, 'parentObject' => jsonStructure.objectName};
 	}
 	

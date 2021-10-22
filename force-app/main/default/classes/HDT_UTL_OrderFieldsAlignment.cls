@@ -391,7 +391,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, idToFilter);
                 if(!orderItemsPod.isEmpty()){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                    orderToUpdate.ServicePointCode__c=orderItemsPod[0].Order?.ServicePoint__r?.ServicePointCode__c;
                 }
+            }else if(originalOrder.OrderReference__c!=null || originalOrder.ContractReference__c!=null){
+                Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
+                orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
             }
         }
     }
@@ -483,8 +487,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             if(mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo')){
                 //only for Amend Bonus
                 orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
-                orderToUpdate.BillingProfile__c=mixedData.billProf;
-                if(orderToUpdate.BillingProfile__c!=null){
+                if(orderToUpdate.BillingProfile__c==null && mixedData.billProf!=null){
+                    orderToUpdate.BillingProfile__c=mixedData.billProf;
                     alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
                 }
             }

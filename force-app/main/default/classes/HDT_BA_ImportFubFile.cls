@@ -81,6 +81,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
         Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c FROM FUBProcessing__c WHERE Id = :FUBProcessingId');
         Database.QueryLocatorIterator itFub =  queryFub.iterator();
         FUBProcessing__c fubProcessing = new FUBProcessing__c();
+        fubProcessing.Id = FUBProcessingId;
         while (itFub.hasNext()) {
             fubProcessing = (FUBProcessing__c)itFub.next();
             fubProcessing.Status__c = 'Archivio FUB importato';

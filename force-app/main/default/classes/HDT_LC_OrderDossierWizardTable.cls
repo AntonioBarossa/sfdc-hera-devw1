@@ -20,7 +20,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         List<id> listChildOrderId = new List<Id>(); //List<id> listaOrderId = new List<ID>();
 
         orderSrv.checkReadAccess('AccountId,Account.Name,Account.VATNumber__c,Account.FiscalCode__c,Name');
-        //Order orderParent = orderQr.getRecordById(orderParentId); // Ordine_di_Vendita__c ordVen = [Select id,account__c,account__r.name,Account__r.VAT_Number__c ,Account__r.Fiscal_Code__c,Name from Ordine_di_vendita__c where id=:ordineVendita];
+        // Order orderParent = orderQr.getRecordById(orderParentId); //!Unused variable // Ordine_di_Vendita__c ordVen = [Select id,account__c,account__r.name,Account__r.VAT_Number__c ,Account__r.Fiscal_Code__c,Name from Ordine_di_vendita__c where id=:ordineVendita];
 
         orderSrv.checkReadAccess('AccountId,Account.Name,Recordtypeid,Recordtype.Name,Recordtype.DeveloperName,Status,OrderNumber');
         List<Order> childOrders = orderQr.getChildOrdersByParentIdAllStatus(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.DeveloperName, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
@@ -33,13 +33,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         
         orderItemSrv.checkReadAccess('ServicePoint__c,Service_Point__r.Name,OrderId,Product2.Name');
         List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listChildOrderId); // List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId IN :listaOrderId];
-        List<OrderItem> orderProducts = [Select OrderId, Product2.Name, Order.RecordType.DeveloperName, SBQQ__QuoteLine__r.SBQQ__RequiredBy__r.SBQQ__Product__r.Name from OrderItem Where SBQQ__RequiredBy__c =null AND OrderId IN :childOrders WITH Security_Enforced];
-
+        List<OrderItem> orderProducts = [Select OrderId, Product2.Family, Product2.Name, Order.RecordType.DeveloperName, SBQQ__QuoteLine__r.SBQQ__RequiredBy__r.SBQQ__Product__r.Name from OrderItem Where SBQQ__RequiredBy__c =null AND OrderId IN :childOrders WITH Security_Enforced];
+        Set<String> familySconto = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         Map<String,String> orderToQuoteLinePrime = new Map<String,String>();
 
         for(OrderItem itm : orderProducts){
             String productName = itm.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__r?.SBQQ__Product__r?.Name ;
-            productName=itm.Order.RecordType.DeveloperName!='HDT_RT_ScontiBonus'? itm.Product2.Name : productName;
+            productName=familySconto.contains(itm.Product2.Family)? productName :itm.Product2.Name;
             orderToQuoteLinePrime.put(itm.orderId, productName);
         }
 

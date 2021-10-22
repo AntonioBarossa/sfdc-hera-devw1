@@ -1,3 +1,5 @@
+
+@SuppressWarnings('PMD.ExcessivePublicCount, PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     public String createBodyRequest(List<HDT_UTL_WrapperInput> inputs){
@@ -86,7 +88,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     * Risoluzione "Debug Should Use Logging Level"
     * Risoluzione "Avoid debug statements since they impact on performance"
     */
-    @SuppressWarnings('PMD.AvoidDebugStatements')
+    @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
     public void handleResponse(String recordId, String process, String depositMode, HttpResponse response){
 
         Case caseToUpdate = new Case();
@@ -165,7 +167,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         updateFuture(JSON.serialize(caseToUpdate));
 
     }
-
+    
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process, String depositMode){
 
         String phase = null;
@@ -192,7 +196,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         return phase;
 
     }
-
+    
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;

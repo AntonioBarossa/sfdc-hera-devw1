@@ -6,6 +6,43 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
 
     private final static String PHASE_OK = 'Comunicazione verso Heroku OK';
     private final static String PHASE_KO = 'Comunicazione verso Heroku KO';
+
+    private Map<String,String> mapRequestFields = new Map<String,String>();
+    
+    global HDT_SRV_BillableVasDeactivation(){
+        return;
+    }
+
+    public HDT_SRV_BillableVasDeactivation(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+        if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
+            for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
+                if(this.mapRequestFields.get(field.name) == null){
+                    this.mapRequestFields.put(field.name,field.value);
+                }
+            }
+        }
+    }
+
+    public static void testHandler(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldId;
+        if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
+            for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
+                if(field.name == 'RECORD_ID'){
+                    fieldId=field;
+                }
+            }
+        }
+        List<Case> cases;
+        if(STRING.isNotBlank(fieldId?.value) && fieldId.value.startsWithIgnoreCase('O-')){
+            cases = [SELECT Id FROM Case
+                        WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
+                        AND (Asset.SBQQ__OrderProduct__r.Order.OrderNumber=:fieldId.value OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__r.OrderNumber=:fieldId.value) AND Status NOT IN ('Closed', 'Bozza')
+                        WITH SECURITY_ENFORCED LIMIT 1];
+        }
+        if(cases?.size()>0){
+            fieldId.value=cases[0].Id;
+        }
+    }
     
 
     
@@ -183,4 +220,14 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         Case c = (Case) JSON.deserialize(inputString, Case.class);
         HDT_UTL_DatabaseService.updateSObject(c);
     }
+
+    public Boolean isPostSalesOrder(){
+        return this.mapRequestFields.get('RECORD_ID').startsWithIgnoreCase('O-');
+    }
+
+
+    
+
+
+
 }
