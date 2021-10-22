@@ -8,14 +8,15 @@
 public class HDT_LC_ReletedListAccountTst {
     @TestSetup
     static void myData(){
-    HDT_UTL_DataFactoryTst.createCity(5,true);
+    HDT_UTL_DataFactoryTst.createCity();
     List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-    List<Contact> conList = HDT_UTL_DataFactoryTst.CreateContact(1, true, accList[0].Id);
+    HDT_UTL_DataFactoryTst.CreateContact(1, true, accList[0].Id);
     }
     @isTest
     public static void insertContactTst(){
     Account acc = [SELECT Id,FiscalCode__c, BillingCity, BillingCityCode__c, BillingCountry, BillingPostalCode, BillingState, BillingStreet, BillingStreetName__c, BillingStreetCode__c, BillingStreetNumber__c, BillingStreetNumberExtension__c, BillingStreetToponym__c, BillingRegion__c, BillingPlace__c, BillingPlaceCode__c, BillingIsAddressVerified__c FROM Account LIMIT 1];
     Map<String,String> dataContact = new Map<String,String>();
+    dataContact.put('birthPlace', 'Roma');
     dataContact.put('birthplace', 'Roma');
     dataContact.put('birthDate','1978-08-02');
     dataContact.put('lastName', 'Neri');
@@ -23,7 +24,7 @@ public class HDT_LC_ReletedListAccountTst {
     dataContact.put('gender', 'Maschio');
     dataContact.put('accountId', acc.Id);
     dataContact.put('role', 'Titolare');
-    dataContact.put('fiscalCode', 'NRENGL78M02Bt0E');
+    // dataContact.put('fiscalCode', 'NRENGL78M02Bt0E');
     Map<String,String> contactAddress = new Map<String,String>();
     contactAddress.put('BillingCity', acc.BillingCity);
     contactAddress.put('BillingCityCode__c', acc.BillingCityCode__c);
@@ -40,18 +41,22 @@ public class HDT_LC_ReletedListAccountTst {
     contactAddress.put('BillingPlace__c', acc.BillingPlace__c);
     contactAddress.put('BillingPlaceCode__c', acc.BillingPlaceCode__c);
     contactAddress.put('BillingIsAddressVerified__c', String.ValueOf(acc.BillingIsAddressVerified__c));
+
+    dataContact.put('fiscalCode', HDT_UTL_CalculateFiscalCode.calculateFiscalCode(dataContact));
+
     Test.startTest();
     Contact response = HDT_LC_ReletedListAccount.insertContact(dataContact, contactAddress);
     Test.stopTest();
-    Contact ActualResponse = [SELECT Id FROM Contact WHERE FiscalCode__c='NRENGL78M02Bt0E' LIMIT 1];
-    System.assertEquals(response.Id, ActualResponse.Id, 'There is no contact inserted that matches the given data!');
-    System.assertNotEquals(null, ActualResponse.Id, 'There is no contact inserted that matches the given data!');
+    Contact actualResponse = [SELECT Id FROM Contact WHERE FiscalCode__c = :dataContact.get('fiscalCode') LIMIT 1];
+    System.assertEquals(response.Id, actualResponse.Id, 'There is no contact inserted that matches the given data!');
+    System.assertNotEquals(null, actualResponse.Id, 'There is no contact inserted that matches the given data!');
     }
      @isTest
     public static void insertContactNegativeTst(){
         try{
     Account acc = [SELECT Id,FiscalCode__c, BillingCity, BillingCityCode__c, BillingCountry, BillingPostalCode, BillingState, BillingStreet, BillingStreetName__c, BillingStreetCode__c, BillingStreetNumber__c, BillingStreetNumberExtension__c, BillingStreetToponym__c, BillingRegion__c, BillingPlace__c, BillingPlaceCode__c, BillingIsAddressVerified__c FROM Account LIMIT 1];
     Map<String,String> dataContact = new Map<String,String>();
+    dataContact.put('birthPlace', 'Roma');
     dataContact.put('birthplace', 'Roma');
     dataContact.put('birthDate','1978-08-02');
     dataContact.put('lastName', 'Neri');
@@ -59,7 +64,7 @@ public class HDT_LC_ReletedListAccountTst {
     dataContact.put('gender', 'Maschio');
     dataContact.put('accountId', acc.Id);
     dataContact.put('role', 'Titolare');
-    dataContact.put('fiscalCode', 'NRENGL78M02Bt0X');
+    // dataContact.put('fiscalCode', 'NRENGL78M02Bt0X');
     Map<String,String> contactAddress = new Map<String,String>();
     contactAddress.put('BillingCity', acc.BillingCity);
     contactAddress.put('BillingCityCode__c', acc.BillingCityCode__c);
@@ -76,8 +81,11 @@ public class HDT_LC_ReletedListAccountTst {
     contactAddress.put('BillingPlace__c', acc.BillingPlace__c);
     contactAddress.put('BillingPlaceCode__c', acc.BillingPlaceCode__c);
     contactAddress.put('BillingIsAddressVerified__c', String.ValueOf(acc.BillingIsAddressVerified__c));
+
+    dataContact.put('fiscalCode', HDT_UTL_CalculateFiscalCode.calculateFiscalCode(dataContact));
+
     Test.startTest();
-    Contact response = HDT_LC_ReletedListAccount.insertContact(dataContact, contactAddress);
+    HDT_LC_ReletedListAccount.insertContact(dataContact, contactAddress);
     Test.stopTest();   
         } catch(Exception e){
           System.assertEquals('Script-thrown exception', e.getMessage(), 'This method can\'t insert a contact, should throw an error since the fiscal code is not valid!');

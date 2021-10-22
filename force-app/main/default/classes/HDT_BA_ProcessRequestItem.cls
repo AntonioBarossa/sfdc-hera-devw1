@@ -38,8 +38,8 @@ public with sharing class HDT_BA_ProcessRequestItem implements Database.Batchabl
             update massiveItem;
         }
         catch (Exception e) {
-            massiveItem.Status__c               = 'Errore'          ;
-            massiveItem.StatusDescription__c    = e.getMessage()    ;
+            massiveItem.Status__c               = 'Errore'                           ;
+            massiveItem.StatusDescription__c    = e.getMessage()+' '+e.getCause()    ;
             update massiveItem;
 
         }
