@@ -517,7 +517,8 @@ public inherited sharing class HDT_QR_Order {
             OrderReference__c,
             ProcessType__c,
             SBQQ__Quote__c,
-            CommercialProductCode__c
+            CommercialProductCode__c,
+            DocumentPackage__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
