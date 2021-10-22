@@ -56,7 +56,7 @@ export default class HdtActivityReassignmentTool extends LightningElement {
         this.assignees = undefined;
         this.assigneesSearched = false;
         this.assigneeId = agentId;
-        this.template.querySelector('[data-id="button1"]').classList.toggle('slds-hidden');
+        // this.template.querySelector('[data-id="button1"]').classList.toggle('slds-hidden');
     }
 
     async selectWorkGroup(event) {
@@ -116,9 +116,13 @@ export default class HdtActivityReassignmentTool extends LightningElement {
                 this.showToast("error", "Errore", errorMessage);
             }
         } else {
-            this.refreshPage();
-            this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
-            this.closeModal();
+            if(this.recordId) {
+                this.refreshPage();
+                this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
+                this.closeModal();
+            } else {
+                window.history.back();
+            }
         }
     }
 

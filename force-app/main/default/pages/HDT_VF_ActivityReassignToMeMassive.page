@@ -1,0 +1,28 @@
+<apex:page standardController="wrts_prcgvr__Activity__c" recordSetVar="activities" tabStyle="wrts_prcgvr__Activity__c" extensions="HDT_VFC_ActivityReassignmentMassive">
+    <apex:includeLightning />
+
+    <div id="reassignToMeCmpId"/>
+
+    <script>
+        var jsonList = "{!activities}".replaceAll("[","[\"").replaceAll("]","\"]").replaceAll(", ","\",\"");
+        var list = JSON.parse(jsonList);
+        console.log("### SELECTED IDs:");
+        console.log(list);
+
+        $Lightning.use(
+            "c:HDT_LAP_ActivityReassignmentMassive",
+            function() {
+                $Lightning.createComponent(
+                    "c:hdtActivityReassignToMe",
+                    {
+                        idList: list
+                    },
+                    "reassignToMeCmpId",
+                    function(cmp) {
+                        console.log("### COMPONENT CREATED");
+                    }
+                );
+            }
+        );
+    </script>
+</apex:page>
