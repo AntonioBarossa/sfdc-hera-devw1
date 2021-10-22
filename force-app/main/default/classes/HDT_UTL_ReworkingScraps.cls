@@ -19,9 +19,9 @@ public with sharing class HDT_UTL_ReworkingScraps extends  HDT_UTL_ProcessExecut
             else if('OrderNumber/CaseNumber'.equalsIgnoreCase(mapHeaderByPosition.get(count))&&tempField.startsWith('C-')) {
                 listIdCase.add(tempField);
             }
-            else if('OrderNumber/CaseNumber'.equalsIgnoreCase(mapHeaderByPosition.get(count))) {
+           /* else if('OrderNumber/CaseNumber'.equalsIgnoreCase(mapHeaderByPosition.get(count))) {
                 throw new HDT_WRP_ProcessEntitiesException( 'Number Not Recognized','Number Not Recognized OrderNumber/CaseNumber');
-            }
+            }*/
             count++;
         }
     }
