@@ -74,6 +74,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
         }
           
         public override void afterUpdate(){
+            List<SObject> listToUpdate = new List<SObject>();
             System.debug('afterUpdate');
             Map<Id, Lead> mapOld =(Map<Id, Lead>)Trigger.oldMap;
             for (Lead tempLead :   (List<Lead> ) Trigger.New) {
@@ -118,7 +119,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                 List<String> contId = new List<String>();
                 Recordtype r = recordtypeQr.getRecordType('HDT_RT_Business', 'Account');  
                 accounts = accPerson.getRecordsById(accountIdList,'id,Name, firstname__c,LastName__c,PrimaryEmail__c,Description,FiscalCode__c,recordtypeid,Phone,FAX__c,MobilePhone__c' );
-                List<SObject> listToUpdate = new List<SObject>();
+               
                 for(Account a : accounts){
                     accId.add(a.id);
                     if(mapAccountLead.get(a.id) != null){
@@ -211,9 +212,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                        // accoContRelSrv.upsertRecord(listAccCon);
                       
                     }
-                   if (listToUpdate!=null && listToUpdate.size()>0) {
-                       update listToUpdate; // HRAWRM-802 21/10/2021
-                   }
+                  
+                }
+                if (listToUpdate!=null && listToUpdate.size()>0) {
+                    update listToUpdate; // HRAWRM-802 21/10/2021
                 }
             System.debug('before Call Batch ');
         // Start HRAWRM-450 07/09/2021 
@@ -226,8 +228,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
 
         // End HRAWRM-450 07/09/2021
     
-            }
-            
+            }        
         }
         public override void   beforeUpdate(){
             System.debug('HDT_TRH_Lead.beforeUpdate');

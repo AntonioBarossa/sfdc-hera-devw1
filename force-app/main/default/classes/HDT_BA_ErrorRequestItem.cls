@@ -4,7 +4,6 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
 	public Integer fileNumber;
 
     public HDT_BA_ErrorRequestItem(Id varIdLoaderRequest) {
-        System.debug('HDT_BA_ErrorRequestItem : '+varIdLoaderRequest);
         this.idLoaderRequest=varIdLoaderRequest;
         this.fileNumber=0;
     }
@@ -14,10 +13,9 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
         qrObj.setNestedFields(new list<String>{'MassiveLoaderRequest__r.ProcessType__c,MassiveLoaderRequest__r.Name'});
         qrObj.setFilter('MassiveLoaderRequest__c =\''+this.idLoaderRequest+'\' AND Status__c =\'Errore\' Order by CreatedDate DESC');
         String query =  qrObj.getQeryString();
-        System.debug('query:  '+query);
         return Database.getQueryLocator(query);
     }
-    public void execute(Database.BatchableContext BC, List<MassiveLoaderRequestItem__c> scope) {
+    public void execute(Database.BatchableContext bc, List<MassiveLoaderRequestItem__c> scope) {
         String reqName;
         String processName;
         String row;
@@ -42,14 +40,14 @@ public with sharing class HDT_BA_ErrorRequestItem implements Database.Batchable<
             ContentVersion cv = new ContentVersion();
             cv.ContentLocation = 'S';
             cv.VersionData = generateFileBlob;
-            Date runDate= Date.today();
+           // Date runDate= Date.today();
            
             cv.Title = 'Errore_'+processName+'_'+reqName+String.valueOf(fileNumber);
             cv.PathOnClient = 'Errore_'+processName+'_'+reqName+String.valueOf(fileNumber)+'.csv';
             insert cv;
             
            // HDT_SRV_Attachment.insertContentVersion(cv);
-            ContentVersion cv2 = [SELECT id,contentDocumentId FROM ContentVersion WHERE id = :cv.id LIMIT 1][0];
+            ContentVersion cv2 = [SELECT id,contentDocumentId FROM ContentVersion WHERE id = :cv.id  LIMIT 1][0];
             ContentDocumentLink cnt = new ContentDocumentLink();
             cnt.ContentDocumentId = cv2.ContentDocumentId;
             cnt.LinkedEntityId = this.idLoaderRequest;
