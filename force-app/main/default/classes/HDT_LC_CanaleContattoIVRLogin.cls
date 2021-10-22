@@ -175,7 +175,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLogin {
       Order newOrder = new Order();
       newOrder.Id = childOrder.parentOrder__c;
       newOrder.UniqueCredentials__c = username + '_' + password;
-      newOrder.UniqueAutentication__c = ecid + '_' + encodedCipherText;
+      newOrder.UniqueAutentication__c = EncodingUtil.urlEncode(ecid,'UTF-8') + '_' + EncodingUtil.urlEncode(encodedCipherText,'UTF-8');
       newOrder.Username__c = username;
       newOrder.Password__c = password;
       orderSrv.updateRecord(newOrder);

@@ -1,6 +1,7 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_BpCaVariation {
     public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration inputParams){
-        System.debug('Generating JSON for request type: ' + inputParams.requestType);
+        System.debug(LoggingLevel.DEBUG, 'Generating JSON for request type: ' + inputParams.requestType);
         switch on inputParams.requestType {
             when 'MA3Disattivazioni' {
                 return manageMA3Disattivazioni(inputParams);
@@ -98,7 +99,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.fattura.modello = modello;
         requestBody.ordine.fattura.fatturaXml = fatturaXml;
         inputParams.requestBody = JSON.serialize(requestBody);
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
@@ -174,7 +175,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.emailPec = (String) caseRecord.get('ReminderCertifiedEmailAddress__c');
         requestBody.ordine.flagAttivazPec = String.valueOf(caseRecord.get('ReminderFlag__c'));
 
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
@@ -204,9 +205,9 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.gruppoIva.dataInizio = getFormattedDate((Date) caseRecord.get('VATGroupStartDate__c'));
         requestBody.account.gruppoIva.dataFine = getFormattedDate((Date) caseRecord.get('VATGroupEndDate__c'));
 
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
-        System.debug('serialized requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'serialized requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
@@ -242,10 +243,10 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
         requestBody.account.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.account.indirizzo.piano = '';
-        System.debug('requestBody indirizzo ' + requestBody.account.indirizzo);
+        System.debug(LoggingLevel.DEBUG, 'requestBody indirizzo ' + requestBody.account.indirizzo);
 
         inputParams.requestBody = JSON.serialize(requestBody);
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
@@ -274,7 +275,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.emailCont = (String) caseRecord.get('Email__c') != null ? (String) caseRecord.get('Email__c') : '';
 
         inputParams.requestBody = JSON.serialize(requestBody);
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
@@ -301,7 +302,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.destinatarioDivergente.cognome = (String) c.get('LastName');
         requestBody.ordine.destinatarioDivergente.idIntegrazione = (String) c.get('ContactCode__c');
         inputParams.requestBody = JSON.serialize(requestBody);
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
@@ -345,7 +346,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.piano = '';
 
         inputParams.requestBody = JSON.serialize(requestBody);
-        System.debug('requestBody ' + requestBody);
+        System.debug(LoggingLevel.DEBUG, 'requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
