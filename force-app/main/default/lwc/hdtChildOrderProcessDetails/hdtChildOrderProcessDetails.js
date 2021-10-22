@@ -1657,7 +1657,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility)
-                    new fieldData('Ordine di riferimento','OrderReference__c', true, false, true, ''),
+                    new fieldData('Ordine di riferimento','OrderReferenceNumber', true, false, true, ''),
                     new fieldData('Società di vendita','SalesCompany__c', true, false, true, ''),
                     new fieldData('Campagna','Campaign__c', true, false, true, ''),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
