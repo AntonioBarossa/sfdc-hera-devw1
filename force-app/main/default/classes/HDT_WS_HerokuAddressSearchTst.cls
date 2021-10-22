@@ -22,6 +22,7 @@ public class HDT_WS_HerokuAddressSearchTst {
         HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res1 = HDT_WS_HerokuAddressSearch.callServiceCom('city');
         HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res2 = HDT_WS_HerokuAddressSearch.callServiceInd('street','citycode');
         HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res3 = HDT_WS_HerokuAddressSearch.callServiceVer('modality','cityCode','streetCode','houseNumCode');
+        HDT_WS_HerokuAddressSearch.HDT_WS_HerokuAddressSearchResponse res4 = HDT_WS_HerokuAddressSearch.callServiceMass('city1' , 'street', 'houseNum1');
 
         HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj hPrestazione = new HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj();
         List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> hPrestazioneList = new List<HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj>();
