@@ -231,6 +231,13 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
     apply(event){
         
+        const openMainSpinner = new CustomEvent("openmainspinner", {
+            detail: ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(openMainSpinner);
+
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         console.log('>>> I WANT PDF ABOUT > ' + JSON.stringify(selected));
@@ -270,8 +277,6 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         //this.sendToApex('{"billNumber":"431900888769","channel":"CRM","date":"2019-12-04","documentType":"Bollette","company":"2060"}');
         //this.sendToApex('{"billNumber":"431900888769","channel":"CRM","date":"2019-12-04","documentType":"Comunicazioni"}');
-        //this.spinner = true;
-
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
     }
 
@@ -292,6 +297,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         // Dispatches the event.
         this.dispatchEvent(sendToApex);
+        this.closeModal();
     }
 
     closeModal(event){
