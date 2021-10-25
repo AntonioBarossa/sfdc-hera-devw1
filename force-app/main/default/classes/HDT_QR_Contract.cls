@@ -30,16 +30,14 @@ public inherited sharing class HDT_QR_Contract {
 
     public Contract getSapContractCode(String code,Boolean isSuperUser) {
         contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        system.debug('code ******************** : ' + code);
-        system.debug('isSuperUser ******************** : ' + isSuperUser);
         String filter = 'Activated';
         List<Contract> con= new List<Contract>();
         Contract c = new Contract();
         if(isSuperUser==true){
-            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code LIMIT 1';
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1';      
             con = Database.query(query);
         }else{
-            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c =: code AND Status=: filter WITH SECURITY_ENFORCED';
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + filter + '\'' + 'WITH SECURITY_ENFORCED';
             con = Database.query(query);
         }
 
@@ -52,10 +50,10 @@ public inherited sharing class HDT_QR_Contract {
 
     public List<Contract> getSapContractCode(List<String> codes) {
         contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        system.debug('code ******************** : ' + codes);
         String filter = 'Activated';
         Contract c = new Contract();
-        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN :codes AND Status=: filter WITH SECURITY_ENFORCED';
+        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED';
+
         List<Contract> con = Database.query(query);
 
         return con;
@@ -156,10 +154,10 @@ public inherited sharing class HDT_QR_Contract {
    
     @AuraEnabled(cacheable=true)
     public static Contract getContractFromRow(string cNumber,string accountId){
-    system.debug('getContractFromRow START '+ cNumber);
+    system.debug('getContractFromRow START ');
     contractSrv.checkReadAccess(fields); 
     Contract c = new Contract() ;
-    List<Contract> con = Database.query('SELECT '+fields +' FROM Contract WHERE ContractNumber =: cNumber WITH SECURITY_ENFORCED');
+    List<Contract> con = Database.query('SELECT '+ String.escapeSingleQuotes(fields) +' FROM Contract WHERE ContractNumber =: cNumber WITH SECURITY_ENFORCED');
 
     if(con != null && con.size()> 0){
         c= con[0];
@@ -174,7 +172,7 @@ public inherited sharing class HDT_QR_Contract {
 	public List<Contract> getAccountContractsWithFilter(String accountid,String additionalFilter) {
         system.debug('getAccountContractsWithFilter START');
         contractSrv.checkReadAccess('ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c');
-        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c FROM Contract WHERE AccountId =: accountid '+additionalFilter+' WITH SECURITY_ENFORCED';
+        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c FROM Contract WHERE AccountId = ' + '\'' + String.escapeSingleQuotes(accountid) + '\'' + ' ' + additionalFilter + ' WITH SECURITY_ENFORCED';
 		List<Contract> listCon = Database.query(query);
         system.debug('getAccountContractsWithFilter END' + listCon);
 		return listCon;
@@ -190,9 +188,9 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
     public List<Contract> getAccountContractsWithFilter(String fields, String accountid,String additionalFilter) {
-        system.debug('getAccountContractsWithFilter START :' + fields);
+        system.debug('getAccountContractsWithFilter START');
         contractSrv.checkReadAccess(fields);
-        String query = 'SELECT ' + fields + ' FROM Contract WHERE AccountId =: accountid '+additionalFilter+' WITH SECURITY_ENFORCED';
+        String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Contract WHERE AccountId =: accountid '+ additionalFilter +' WITH SECURITY_ENFORCED';
 		List<Contract> listCon = Database.query(query);
         system.debug('getAccountContractsWithFilter END' + listCon);
 		return listCon;
@@ -204,7 +202,7 @@ public inherited sharing class HDT_QR_Contract {
 	 */
 	public List<Contract> getAccountContracts(String fields , String accountid) {
         contractSrv.checkReadAccess(fields);
-		String query = 'SELECT ' + fields + ' FROM Contract WHERE AccountId =: accountid WITH SECURITY_ENFORCED';
+		String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Contract WHERE AccountId =: accountid WITH SECURITY_ENFORCED';
 		List<Contract> listCon = Database.query(query);
         return listCon;
     }

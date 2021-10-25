@@ -1,14 +1,20 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     global Object execute(Object args) {
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
-        //List<Case> caseToUpdate = new List<Case>();
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,Object> arg = new Map<String,Object>();
         Case currentCase = new Case();
+        String method = (String) argsMap.get('method');
+        */
+        //List<Case> caseToUpdate = new List<Case>();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
@@ -18,31 +24,33 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             sapIntegration = submitRequest(recordId,parameters.get('requestType'));
 
             Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
-            System.debug('responseBody deserialized: ' + body);
+            System.debug(LoggingLevel.DEBUG, 'responseBody deserialized: ' + body);
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
                     String tipoAttivita = (String) data.get('tipoAttivita');
                     if (tipoAttivita != null && !tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
-                        System.debug('Creazione activity Errore Lavorazione SAP');
-                        HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP');
+                        System.debug(LoggingLevel.DEBUG, 'Creazione activity Errore Lavorazione SAP');
+                        HDT_UTL_Case.createActivity(recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
 
                         response.success = false;
                         response.message = 'KO';
                     } else {
-                        System.debug('Response OK: commento da SAP: ' + (String)data.get('commenti'));
+                        System.debug(LoggingLevel.DEBUG, 'Response OK: commento da SAP: ' + (String)data.get('commenti'));
                         response.success = true;
                         response.message = 'OK';
                     }
                 }
-            }else {
-                System.debug('Response OK');
+            } else {
+                System.debug(LoggingLevel.DEBUG, 'Response OK');
                 response.success = true;
                 response.message = 'OK';
             }
 
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception StackTraceString: ' + ex.getStackTraceString());
         }
 
         Case caseToUpdate = new Case();
@@ -71,7 +79,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             sapIntegration.requestType = requestType;
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug(ex.getMessage()); 
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
         }
         return sapIntegration;
         
@@ -87,10 +97,10 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
                 if (data != null) {
-                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP');
+                    HDT_UTL_Case.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Esito KO da SAP','Esito KO da SAP');
                 }
                 output.outcome = false;
-            }else {
+            } else {
                 output.outcome = true;
             }    
         } catch (Exception ex) {
@@ -102,22 +112,18 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
 
     @Future
     private static void updateFuture(String inputString) {
-
         Case c = (Case) JSON.deserialize(inputString, Case.class);
-
         HDT_UTL_DatabaseService.updateSObject(c);
-
     }
 
     public class HDT_WRP_InputBpCaFlow{
         @InvocableVariable
         public String recordId;
-
     }
+    
     public class HDT_WRP_OutputBpCaFlow{
         @InvocableVariable
         public Boolean outcome;
-
     }
 
 }

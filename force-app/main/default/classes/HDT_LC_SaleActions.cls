@@ -209,7 +209,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //update campaignMember Status
         if (campaignMemberId != null) {
-            CampaignMember memberToUpdate = HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
+            HDT_LC_CampaignsController.updateCampaignMemberStatus(campaignMemberId, 'Positivo');
         }
 
         //update campaignMember siblings Status a 'Non Proposto Auto'
@@ -218,7 +218,7 @@ public inherited sharing class HDT_LC_SaleActions {
         List<CampaignMember> siblingMembers = HDT_QR_CampaignMember.getSiblingMembersByAccountId(accountIds, campaignChannel);
         List<String> campaignMembersIdList = new List<String>(new Map<String, CampaignMember>(siblingMembers).keySet());
         if (campaignMembersIdList.size()>0) {
-            List<CampaignMember> siblingsToUpdate = HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
+            HDT_LC_CampaignsController.updateCampaignMembersStatus(campaignMembersIdList, 'Non Proposto Auto');
         }
     }
 

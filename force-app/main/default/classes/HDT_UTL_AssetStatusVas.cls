@@ -18,7 +18,7 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
     * @author gabriele.rota@webresults.it | 2021-09-27 
     * @param assets  
     **/
-    public static void processAssets(List<Asset> assets) {
+    public static void processAssets(List<Asset> assets, Map<Id, sobject> oldMap) {
         Set<Id> orderItemsIds = new Set<Id>();
         for (Asset asset:assets) {
             if (String.isNotBlank(asset.SBQQ__OrderProduct__c)) {
@@ -26,20 +26,36 @@ public inherited sharing class HDT_UTL_AssetStatusVas {
             }
         }
 
+        system.debug('list ordItems'+orderItemsIds);
+
         Map<Id,Order> orderPerItem = new Map<Id,Order>();
-        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c FROM OrderItem
+        Set<id> orderReferenceIds = new Set<id>();
+        for (OrderItem ordItem:[SELECT Order.RecordType.DeveloperName, Order.VasPracticeCode__c, Order.ContractReference__c, Order.OrderReference__c FROM OrderItem
                                 WHERE Id IN :orderItemsIds WITH SECURITY_ENFORCED]) {
             orderPerItem.put( ordItem.Id, ordItem.Order );
+            if(ordItem.Order.OrderReference__c!=null){
+                orderReferenceIds.add(ordItem.Order.OrderReference__c);
+            }
         }
 
+        Map<Id, Contract> referenceToContract = new Map<Id, Contract>();
+        if(!orderReferenceIds.isEmpty()){
+            for(Contract c : [Select SBQQ__Order__c from Contract where SBQQ__Order__c IN :orderReferenceIds WITH SECURITY_ENFORCED]){
+                referenceToContract.put(c.SBQQ__Order__c, c);
+            }
+        }
+
+        system.debug('list map '+orderPerItem);
         for (Asset asset:assets) {
             if (String.isNotBlank(asset.SBQQ__OrderProduct__c)) {
                 Order currentOrder = orderPerItem.get(asset.SBQQ__OrderProduct__c);
                 Boolean isParentAsset = (asset.SBQQ__RootAsset__c==null);
                 Boolean isVasOrder = (currentOrder.RecordType.DeveloperName==ORDER_VAS_RT);
+                system.debug('inside '+isVasOrder+' '+isParentAsset);
 
-                if (isVasOrder && isParentAsset) {
-                    asset.DigitalAssetStatus = ASSET_ACTIVE_STATUS;//setting status to active
+                if (isVasOrder && isParentAsset) {//dont set status if was already setted
+                    asset.DigitalAssetStatus =  String.isBlank((String) oldMap?.get(asset.Id)?.get('DigitalAssetStatus'))? ASSET_ACTIVE_STATUS : asset.DigitalAssetStatus;//setting status to active
+                    asset.Contract__c = currentOrder.ContractReference__c!=null? currentOrder.ContractReference__c : referenceToContract.get(currentOrder.OrderReference__c)?.Id;
                     asset.VasPracticeCode__c = String.isNotBlank(asset.VasPracticeCode__c)? asset.VasPracticeCode__c : currentOrder.VasPracticeCode__c;//copying Vas fields from order
                 }
             }

@@ -66,6 +66,12 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
 
+            //Activity Custom RecordType comfort quality call
+            @AuraEnabled
+            public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL = 'HDT_RT_ComfortQualityCall';
+            @AuraEnabled
+            public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
+            Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
@@ -149,6 +155,13 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String CASE_RECORDTYPEID_AUTOLETTURA =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA).getRecordTypeId();
+    
+    //@anbuzzi 12/09 Case RecordType PAGAMENTI - PIANO RATEIZZAZIONE
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_PAG_PIANORATEIZZAZIONE = 'HDT_RT_PianoRateizzazione';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_PAG_PIANORATEIZZAZIONE =
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_PAG_PIANORATEIZZAZIONE).getRecordTypeId();
 
     //Case RecordType Generiche Attivazioni
     @AuraEnabled
@@ -226,6 +239,8 @@ public with sharing class HDT_UTL_Constants {
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
+    @AuraEnabled
+    public final String PERMISSIONSET_HDT_SUPER_USER_CPQ = 'HDT_SuperUserCPQ';
 
     //APEX Classes Permission Set
     @AuraEnabled
@@ -235,6 +250,15 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final string PERMISSIONSET_HDT_VOLTURARETROATTIVA = 'HDT_VolturaRetroattiva';
 
+    // Enable Credit Check Permission set
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_ENABLECREDITCHECK = 'HDT_EnableCreditCheck';
+
+    
+    //ProtocolManualActivities
+    @AuraEnabled
+    public final string PERMISSIONSET_HDT_PROTOCOLMANUALACTIVITIES = 'HDT_ProtocolManualActivities';
+    
     //Contact Point picklist domains
     @AuraEnabled
     public final String CONTACTPOINT_STATUS_VERIFICATO = 'Verificato';

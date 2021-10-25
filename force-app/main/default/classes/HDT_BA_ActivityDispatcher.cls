@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.OperationWithLimitsInLoop')
 public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchable<sObject> {
     private static final String PLACEHOLDER = '###';
     private static final Map<String,String> MAPPINGS = new Map<String,String> {
@@ -29,7 +30,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Order__r.CommodityFormula__c IN (###))'
     };
 
-    public List<AssignmentRule__c> start(Database.BatchableContext BC) {
+    public List<AssignmentRule__c> start(Database.BatchableContext bc) {
         return [
             SELECT
                 Id,
@@ -71,8 +72,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
             ORDER BY RulePriority__c ASC
         ];
     }
-
-    public void execute(Database.BatchableContext BC, List<sObject> scope) {
+    
+    //NOTA: For loop query autorizzata.
+    public void execute(Database.BatchableContext bc, List<sObject> scope) {
         List<AssignmentRule__c> rules = (List<AssignmentRule__c>) scope;
 
         Map<String,Queue__c> queuesMap = getQueuesMap();
@@ -86,7 +88,11 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
         for(AssignmentRule__c rule : rules) {
             for(wrts_prcgvr__Activity__c activity : Database.query(getQuery(rule))) {
-                if(processedActivitiesMap.containsKey(activity.Id)) continue; // IF ACTIVITY ALREADY ASSIGNED BY ANOTHER, HIGHER PRIORITY RULE IN THE SAME BATCH DO NOT RE-PROCESS
+                
+                //IF ACTIVITY ALREADY ASSIGNED BY ANOTHER, HIGHER PRIORITY RULE IN THE SAME BATCH DO NOT RE-PROCESS
+                if(processedActivitiesMap.containsKey(activity.Id)){
+                    continue;
+                }
 
                 assignataryQueue = null;
                 switch on String.valueOf(activity.wrts_prcgvr__Priority__c) {
@@ -103,7 +109,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
                 queue = queuesMap.get((String) rule.get(assignataryQueue));
                 queueUsage = queueUsageMap.get(queue.QueueId__c);
-                if(queueUsage == null) queueUsage = 0;
+                if(queueUsage == null){
+                    queueUsage = 0;
+                }
 
                 if(queue.DailyCapacity__c == null || queue.DailyCapacity__c > queueUsage) {
                     processedActivity = new wrts_prcgvr__Activity__c(
@@ -117,10 +125,16 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         RuleChosenQueue__c = queue.Id,
                         OwnerId = (Id) queue.QueueId__c
                     );
-                    if(queue.DailyCapacity__c != null) queueUsageMap.put(queue.QueueId__c, ++queueUsage);
+                    if(queue.DailyCapacity__c != null) {
+                        queueUsageMap.put(queue.QueueId__c, ++queueUsage);
+                    }
                     processedActivitiesMap.put(processedActivity.Id, processedActivity);
                 }
-                if(processedActivitiesMap.size() == 10000) break; // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
+                
+                // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
+                if(processedActivitiesMap.size() == 10000){
+                    break;
+                }
             }
         }
 
@@ -129,14 +143,18 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
             for(Database.SaveResult result : results) {
                 if(!result.isSuccess()) {
-                    System.debug(result.getId() + ' | ' + result.getErrors());
+                    System.debug(LoggingLevel.DEBUG, result.getId() + ' | ' + result.getErrors());
                 }
             }
         }
     }
 
-    public void finish(Database.BatchableContext BC) {
+    //NB: risolto merge conflict durante cleanup PMD
+    public void finish(Database.BatchableContext bc) {
         //RESCHEDULE
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_ActivityDispatcher - finished job: ' + a);
+        
     }
 
     private Map<String,Queue__c> getQueuesMap() {

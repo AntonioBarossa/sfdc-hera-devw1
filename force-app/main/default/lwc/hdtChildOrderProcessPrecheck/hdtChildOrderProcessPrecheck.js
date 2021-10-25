@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
+import checkVasAndCommodity from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 
@@ -46,7 +47,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
-                || (this.isNotBillable && !this.order.OrderReferenceNumber && !this.order.ContractReference__c)
+                || (this.isNotBillable && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c)
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
         );
@@ -362,8 +363,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          * HDT_RT_VAS (Solo Se: OrderReference__c <> null & ContractReference <> null)
          */
          console.log('****12');
-        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
-            this.callCreditCheckSAP();
+        //if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+        if((this.selectedProcessObject.recordType === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.recordType) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
+                this.callCreditCheckSAP();
         }
         console.log('****13');
         
@@ -514,51 +516,70 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     // START @Picchiri 07/06/21 Credit Check
-    callCreditCheckSAP(){
+    async callCreditCheckSAP(){
         this.loading = true;
         var wrp = this.getRequest();
         
         console.log('connectedCallback wrp ---> ');
         console.log(JSON.parse(JSON.stringify(wrp)));
-                
-        callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
-        .then(result => {
-            console.log('result callServiceCreditCheck ---> : ');
-            console.log(JSON.parse(JSON.stringify(result)));
 
-            if(result.status == 'failed'){
-                let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
-                    return `${testoFinale}\n${elem}`;
-                }, result.errorDetails[0].code);
-                console.log(message);
-                /*let toastErrorMessage = new ShowToastEvent({
-                    title: 'CreditCheck KO',
-                    message: message,
-                    variant: 'warning', 
-                    mode:'sticky'
-                });
-                this.dispatchEvent(toastErrorMessage);*/
-                //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
-            }
-            
+        let isVasAndCommodity = false;
 
-            //this.restryEsitiCreditCheck();
-            this.loading = false;
-        })
-        .catch(error => {
-            debugger;
-            console.log('error callServiceCreditCheck error ---> : ');
+        try {
+            isVasAndCommodity = await checkVasAndCommodity({parentOrdId: this.order.ParentOrder__c});
+            console.log('isVasAndCommodity: ' + isVasAndCommodity);
+        } catch (error) {
             console.log(JSON.parse(JSON.stringify(error)));
             let toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: error,
                 variant: 'error', 
                 mode:'sticky'
             });
-            
             this.dispatchEvent(toastErrorMessage);
-            this.loading = false;
-        })        
+            return;
+        }
+
+        if(!isVasAndCommodity){
+            callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
+            .then(result => {
+                console.log('result callServiceCreditCheck ---> : ');
+                console.log(JSON.parse(JSON.stringify(result)));
+
+                if(result.status == 'failed'){
+                    let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
+                        return `${testoFinale}\n${elem}`;
+                    }, result.errorDetails[0].code);
+                    console.log(message);
+                    /*let toastErrorMessage = new ShowToastEvent({
+                        title: 'CreditCheck KO',
+                        message: message,
+                        variant: 'warning', 
+                        mode:'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);*/
+                    //throw {body:{message:result.errorDetails[0].code + ' ' + result.errorDetails[0].message}}
+                }
+                
+
+                //this.restryEsitiCreditCheck();
+                this.loading = false;
+            })
+            .catch(error => {
+                debugger;
+                console.log('error callServiceCreditCheck error ---> : ');
+                console.log(JSON.parse(JSON.stringify(error)));
+                let toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error', 
+                    mode:'sticky'
+                });
+                
+                this.dispatchEvent(toastErrorMessage);
+                this.loading = false;
+            });
+        }
     }
 
     getRequest(){ 

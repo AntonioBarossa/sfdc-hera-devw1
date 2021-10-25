@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_SelfReadings {
 
     private static HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
@@ -61,7 +62,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
 
         List<HDT_SelfReadings__mdt> configs = queryHandler.getConfigurationByName(metadataRecordName);
         if (configs.isEmpty()) {
-            System.debug('HDT_UTL_SelfReadings: Nessun custom metadata trovato.');
+            System.debug(LoggingLevel.DEBUG, 'HDT_UTL_SelfReadings: Nessun custom metadata trovato.');
             result.isProcessReading = false;
             results.add(result);
             return results; 
@@ -82,7 +83,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         List<Order> activeOrders = queryHandler.accountOrders(accountId, servicePointId, recordTypeIds, badPhases, badStates);
-        System.debug('activeOrders size: ' + activeOrders.size());
+        System.debug(LoggingLevel.DEBUG, 'activeOrders size: ' + activeOrders.size());
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {
@@ -95,7 +96,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             Date maximumDate = contractStartDate.addDays(Integer.valueOf(configs[0].ReadingDateIncrease__c));
 
             if (caseCreatedDate > minimumDate && caseCreatedDate < maximumDate) {
-                System.debug('Trovato processo elegibile per innesco autolettura da processo.');
+                System.debug(LoggingLevel.DEBUG, 'Trovato processo elegibile per innesco autolettura da processo.');
                 result.isProcessReading = true;
                 result.orderId = activeOrder.Id;
                 result.orderRecordType = activeOrder.RecordType.DeveloperName;
@@ -104,7 +105,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             }
         }
         
-        System.debug('Nessun processo trovato per innescare una autolettura da processo.');
+        System.debug(LoggingLevel.DEBUG, 'Nessun processo trovato per innescare una autolettura da processo.');
         result.isProcessReading = false;
         results.add(result);
         return results; 

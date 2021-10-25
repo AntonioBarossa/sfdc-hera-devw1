@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_CaseValidations {
 
 
@@ -38,16 +39,14 @@ public inherited sharing class HDT_QR_CaseValidations {
         List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();
 
         try{
-
             attachedDocument = [SELECT Id, ContentDocument.Title
             FROM ContentDocumentLink 
             WHERE LinkedEntityId = :recordId 
             WITH SECURITY_ENFORCED];
             
         } catch(Exception e){
-
-            System.debug('QR_CaseValidations Exception--> '+e.getMessage());
-
+            System.debug(LoggingLevel.DEBUG, 'QR_CaseValidations Exception--> '+e.getMessage());
+            
         }
 
         return attachedDocument;

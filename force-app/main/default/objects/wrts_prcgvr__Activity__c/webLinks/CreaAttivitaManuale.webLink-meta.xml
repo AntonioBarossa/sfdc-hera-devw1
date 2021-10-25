@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreaAttivitaManuale</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Crea attività manuale</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>/flow/HDT_FL_CreationManualRelated?parentId={!IF( NOT(ISNULL(Order.Id)) , Order.Id ,  
+		IF( NOT(ISNULL(Case.Id)) , Case.Id , null) )}&amp;retURL=/{!IF( NOT(ISNULL(Order.Id)) , Order.Id ,  
+		IF( NOT(ISNULL(Case.Id)) , Case.Id , null) )}</url>
+</WebLink>

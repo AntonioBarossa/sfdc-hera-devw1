@@ -1,16 +1,16 @@
 public with sharing class HDT_QBL_SIE34_2SME implements Queueable  {
     private String runId                   ;   
-    private Date filterDate                ;
+    private Datetime filterDate            ;
     private String fileType                ;
     private List<String> contentVersionIds ;
 
  
  
-    public HDT_QBL_SIE34_2SME(String varRunId,Date varDate,String varFileType) {
-       this.runId             = varRunId            ;
-       this.filterDate        = varDate             ;
-       this.fileType          = varFileType         ;
-       this.contentVersionIds = new List<String>()  ;
+    public HDT_QBL_SIE34_2SME(String varRunId,String varDate,String varFileType) {
+       this.runId             = varRunId                                           ;
+       this.filterDate        = HDT_UTL_LeadProcess.getDateTimeFromString(varDate) ;
+       this.fileType          = varFileType                                        ;
+       this.contentVersionIds = new List<String>()                                 ;
     }
  
  
@@ -44,7 +44,7 @@ public with sharing class HDT_QBL_SIE34_2SME implements Queueable  {
        'ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumberExtension__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,'+
        'BillingProfile__r.DivergentSubject__r.ContactCode__c,BillingProfile__r.DivergentSubject__r.FirstName,BillingProfile__r.DivergentSubject__r.FiscalCode__c,BillingProfile__r.DivergentSubject__r.LastName,BillingProfile__r.DivergentSubject__r.MailingCity,BillingProfile__r.DivergentSubject__r.MailingPostalCode,BillingProfile__r.DivergentSubject__r.MailingState,BillingProfile__r.DivergentSubject__r.MailingStreetName__c,BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c,Contact.Email'+    
        ' FROM Case ';
-       String separator  = ';';
+      // String separator  = ';';
     
        try {
           
@@ -58,12 +58,12 @@ public with sharing class HDT_QBL_SIE34_2SME implements Queueable  {
          if (String.isNotBlank(body)) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_SME.txt','PP_OUT_PREVENTIVI_SME'));
          }
-         Id jobId2 = System.enqueueJob(new HDT_QBL_SIE34_2MM(runId,filterDate, fileType,contentVersionIds));
+         System.enqueueJob(new HDT_QBL_SIE34_2MM(runId,filterDate, fileType,contentVersionIds));
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          Id jobId = System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+         System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
        }
       
     }

@@ -8,11 +8,15 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
     // protected override void beforeUpdate() {
     // }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     protected override void afterInsert() {
+        Boolean hasAfterInsert = true;
+        System.debug(LoggingLevel.DEBUG, 'hasAfterInsert' + hasAfterInsert);
         // Il campo WhoId non può essere sbiancato in before insert, quindi dobbiamo farlo in after.
         // removeWhoId();  // NOT WORKING
     }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     private void doValidation() {
 
         Set<Id> contactIds = new Set<Id>();
@@ -63,7 +67,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 }
             }
 
-            System.debug('Task after validation: ' + t);
+            System.debug(LoggingLevel.DEBUG, 'Task after validation: ' + t);
         }
 
         List<Contact> contacts = new List<Contact>();
@@ -133,6 +137,10 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                     } else {
                         t.PecAddress__c = leadsPecMap.get(t.WhoId);
                     }
+
+                    if (String.isBlank(t.PecAddress__c)) {
+                        t.addError('Il destinatario selezionato non ha nessun indirizzo PEC in anagrafica.');
+                    }
                 }
             }
         }
@@ -186,7 +194,8 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         }
 
     }*/
-
+    
+    @testVisible
     private String doxeeTemplateCode(String doxeeTemplate) {
 
         switch on doxeeTemplate {

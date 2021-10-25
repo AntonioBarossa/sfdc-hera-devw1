@@ -37,15 +37,23 @@ public with sharing class HDT_SRV_RecordShareTst {
     @isTest
     public static void testCheckAccessInit() {
 
+        Boolean finished = false;
+
         Test.startTest();
 
         HDT_SRV_RecordShare.checkAccessInit('AccountAccessLevel', 'update');
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
 
         Test.startTest();
 
@@ -55,7 +63,11 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         HDT_SRV_RecordShare.checkCreateAccess(accShare);
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -133,6 +145,8 @@ public with sharing class HDT_SRV_RecordShareTst {
     @isTest
     public static void testCheckUpdateAccess() {
 
+        Boolean finished = false;
+
         Test.startTest();
 
         Id testUser = [SELECT Id FROM User WHERE UserPermissionsMarketingUser = false 
@@ -142,7 +156,11 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         HDT_SRV_RecordShare.checkUpdateAccess(accShare);
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest

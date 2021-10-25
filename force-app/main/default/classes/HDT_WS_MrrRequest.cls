@@ -9,13 +9,6 @@
 global with sharing class HDT_WS_MrrRequest {
 
     private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
-    
-    private Static final Set<String> TRACCIATURATYPES = new Set<String>{'Richiesta non identificata',
-                                                                                 'Esito ricevuto su richiesta chiusa',
-                                                                                 'Esito non elaborato',
-                                                                                 'Errore invio a SAP',
-                                                                                 'Eliminato esito in scarto',
-                                                                                 'Errore determinazione variante SAP'};
 
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
@@ -54,24 +47,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
             
-            //START>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività anonime
-            List<Map<String,String>> dataForAttivitaTracciaturaCreation = new List<Map<String,String>>();
-            for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
-                HDT_WRP_MrrResponse.HDT_WRP_Response parsedResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                for(HDT_WRP_MrrResponse.HDT_WRP_Object curObj : parsedResponseItem.objects){
-                    for(HDT_WRP_MrrResponse.HDT_WRP_Field curField : curObj.fields){
-                        if('ATTIVITA'.equalsIgnoreCase(curField.name) && TRACCIATURATYPES.contains(curField.value)){
-                            Map<String,String> newData = new Map<String,String>();
-                            for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields) newData.put(curField2.name, curField2.value);
-                            for(HDT_WRP_MrrRequest.HDT_WRP_Field curField3 : request.header.fields) newData.put(curField3.name, curField3.value);
-                            dataForAttivitaTracciaturaCreation.add(newData);
-                        }
-                    }
-                }
-            }
-            System.debug('MRREQUEST dataForAttivitaTracciaturaCreation' + dataForAttivitaTracciaturaCreation);
-            if(dataForAttivitaTracciaturaCreation.size() > 0) HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(dataForAttivitaTracciaturaCreation);
-            //END>> 26/07/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
+            HDT_UTL_Scarti.handleMRRInboundRequest(requestBody.requests);//>> 08/10/2021 costanzo.lomele@webresults.it - nuovi sviluppi cb scarti, attività di tracciamento
 
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
                 mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
@@ -84,9 +60,13 @@ global with sharing class HDT_WS_MrrRequest {
             }
 
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
+                HDT_SRV_BillableVasDeactivation.testHandler(requestBody.requests[0]);
+                //HDT_SRV_BillableVasDeactivation billableVasHndlr = new HDT_SRV_BillableVasDeactivation(requestBody.requests[0]);
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
-                }
+                }//else if(billableVasHndlr.isPostSalesOrder()){
+                    //mrrResponseItem = billableVasHndlr.manageBillableVasDeactivation(requestBody.requests[0], mrrResponseItem);
+                //}
                 else {
                     //INIZIO SVILUPPI EVERIS
                     mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);

@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    21/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_CaseCancellationTst {
 
@@ -33,28 +38,54 @@ public with sharing class HDT_UTL_CaseCancellationTst {
 
         //TESTING
         Test.startTest();
-        Try{
-
+        try{
+            
+            //TESTING - getCancellationReason
             myInput.method = 'getCancellationReason';
-            HDT_UTL_CaseCancellation.dispatchMethod(inputs);
-
+            myInput.causalCode = 'SE1';
+            myInput.processCancellationReason = '';
+            
+            HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result1 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
+            
+            //ASSERTS
+            System.assertEquals('AN1', result1.causalCode, 'Result 1 causalCode errato.');
+            
+            
+            //TESTING - getListCancellationReason
+            myInput = new HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason();
             myInput.method = 'getListCancellationReason';
+            myInput.recordType = 'HDT_RT_ComportamentoVenditori';
+            myInput.commodity = 'Energia Elettrica';
             myInput.processType = 'Annullamento prestazione';
-            HDT_UTL_CaseCancellation.dispatchMethod(inputs);
-
+            myInput.processTypeToCancell = '';
+            inputs = new List<HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason>{myInput};
+            
+            HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result2 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
+            
+            //ASSERTS
+            System.assertEquals(null, result2.causalCode, 'Result 2 causalCode errato.');
+            System.assertEquals('OK', result2.outcome, 'Result 2 Outcome errato.');
+            
+            
+            //TESTING - else
+            myInput = new HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason();
             myInput.method = 'myMethod';
-            HDT_UTL_CaseCancellation.dispatchMethod(inputs);
+            inputs = new List<HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason>{myInput};
+            
+            HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason result3 = HDT_UTL_CaseCancellation.dispatchMethod(inputs)[0];
+            
+            //ASSERTS
+            System.assertEquals('KO', result3.outcome, 'Result 3 Outcome errato.');
+            
 
             HDT_UTL_CaseCancellation.HDT_UTL_Option myClass = new HDT_UTL_CaseCancellation.HDT_UTL_Option('myLabel');
 
 
-        }catch(DmlException e) {
+        } catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
-        }        
+        }
         Test.stopTest();
         
-        //ASSERTS
-        System.assert(inputs != null, 'Attenzione, inputs non può essere null!');
         
     }
 

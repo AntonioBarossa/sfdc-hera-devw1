@@ -95,6 +95,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 //@frpanico check on processCode
                 when 'HDT_RT_VolturaConSwitch'
                 {
+                    HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
                     List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
                     processType = 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
@@ -108,6 +109,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         : '';
                     newOrder.SapContractCode__c = sapCode;
                     newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
+                    String tax = order.CommodityFormula__c == 'Energia Elettrica' ? newOrder.ExciseEle__c : newOrder.ExciseGAS__c;
+                    String city = order.SupplyCity__c;
+                    String region = '';
+                    newOrder.RegionalAdditional__c = regionalAdditionalQr.findRegionalAdditional(tax, city, region);
                 }
                 when 'HDT_RT_AttivazioneConModifica' {
                     newOrder.RequestOption__c = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(order.ImplantType__c, order.PowerRequested__c);
@@ -148,7 +153,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         return compatibility;
 
     }
-
+    
+    @TestVisible
     private static String getServicePointTypeFromOrder(String orderId) {
         orderSrv.checkReadAccess('ContractReference__r.ServicePoint__c');
         Order order = orderQr.getRecordById(orderId);
@@ -158,7 +164,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
         return servicePointList[0].RecordType.DeveloperName;
     }
-
+	
+    @TestVisible
     private static Order callDataEnrichment(String servicePointCode, String contractCode, Order newOrder)
     {
         try{
@@ -235,5 +242,36 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         } 
 
         return newOrder;
+    }
+
+    @AuraEnabled
+    public static Boolean checkVasAndCommodity(String parentOrdId){
+        try {
+            List<Order> childOrders = orderQr.getChildOrdersByParentId(parentOrdId);
+
+            Order ordCommodity = new Order();
+            Order vasOrd = new Order();
+
+            if (childOrders.size() > 1) {
+                for (Order ord : childOrders) {
+                    if (ord.RecordType.DeveloperName != 'HDT_RT_VAS') {
+                        ordCommodity = ord;
+                    } else {
+                        vasOrd.Id = ord.Id;
+                    }
+                }
+
+                if (vasord.Id != null) {
+                    vasOrd.IncomingCreditCheckResult__c = ordCommodity.IncomingCreditCheckResult__c;
+                    vasOrd.OutgoingCreditCheckResult__c = ordCommodity.OutgoingCreditCheckResult__c;
+                    vasOrd.CreditCheckDescription__c = ordCommodity.CreditCheckDescription__c;
+                    orderSrv.updateRecord(vasOrd);
+                }
+            }
+
+            return childOrders.size() > 1 ? true : false;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }

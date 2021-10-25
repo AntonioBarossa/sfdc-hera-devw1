@@ -84,10 +84,30 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         updateRecords(recordsPerCode, vasRecordsMap);
         
         saveVasRecords(vasRecords);
+
+        Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+        if(caseToProcess.size()>400 && limitQueueablesOk){
+            system.debug('test1');
+            system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(extractNumRecordsFromMap(2000)));
+        }
     }
 
     public void finish(Database.BatchableContext bc) {
-        system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(caseToProcess));
+        if(!caseToProcess.isEmpty()){
+            system.debug('test2');
+            system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(caseToProcess));
+        }
+    }
+
+
+    private Map<Id, String> extractNumRecordsFromMap(Integer num){
+        Map<Id, String> reducedMap = new Map<Id, String>();
+        for(Id caseIdKey : caseToProcess.keySet()){
+            if(num-- > 0){
+                reducedMap.put(caseIdKey, caseToProcess.remove(caseIdKey));
+            }
+        }
+        return reducedMap;
     }
 
 
@@ -202,10 +222,10 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
             if (record.getSObjectType() == Schema.Asset.getSObjectType()) {
                 assetsToUpdate.add((Asset)record);
                 switch on String.valueOf(record.get('VasSupplierStatus__c')){
-                    when 'TEL - CLT NON TROVATO', 'CLIENTE NON TROVATO', 'DA RICHIAMARE'{
+                    when 'TEL - CLT NON TROVATO', 'CLIENTE NON TROVATO', 'DA RICHIAMARE', 'KO FORNITORE', 'IN RIASSORTIMENTO', 'USCITA A VUOTO' {
                         assetToAccount.put((Id) record.get('id'), (ID) record.get('AccountId'));
                     }
-                    when 'CONSEGNA/Installazione RIFIUTATA', 'INSTALLAZIONE FALLITA', 'RESO (PRODOTTO)' {
+                    when 'CONSEGNA/Installazione RIFIUTATA', 'INSTALLAZIONE FALLITA', 'RESO (PRODOTTO)', 'RIFIUTATO preventivamente' {
                         Case disattCase = new Case(AssetId=(Id) record.get('id'), RecordTypeId=rtCaseDisattVas);
                         disattCase.CancellationReason__c='Ripensamento da cliente';
                         disattCase.VasStatus__c='ANNUL PER RIPENS';

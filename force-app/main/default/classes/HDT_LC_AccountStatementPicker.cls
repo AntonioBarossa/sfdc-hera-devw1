@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_AccountStatementPicker {
     @AuraEnabled
     public static String getStatements(String params)
@@ -10,7 +11,7 @@ public with sharing class HDT_LC_AccountStatementPicker {
     @AuraEnabled
     public static String getDocumentSelected(String caseId)
     {  
-        System.debug('### CASE ' + caseId);
+        System.debug(LoggingLevel.DEBUG, '### CASE ' + caseId);
         List<SObject> documentSelected = HDT_SRV_DocumentSelectedManager.getDocumentsSelected(caseId);
         if(documentSelected.size()>0){
             return JSON.serialize(documentSelected);
@@ -21,7 +22,9 @@ public with sharing class HDT_LC_AccountStatementPicker {
 
 
     private static String manageResponse(String response){
-        if(response == null)return null;
+        if(response == null){
+            return null;
+        }
         //Map<String,String> toReturn = new Map<String,String>();
         Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(response);
         Map<String,Object> prestazione = (Map<String,Object>) body.get('prestazione');
@@ -47,7 +50,7 @@ public with sharing class HDT_LC_AccountStatementPicker {
         }else{
             return null;
         }
-        System.debug('Posizioni ' + JSON.serialize(posizioni));
+        System.debug(LoggingLevel.DEBUG, 'Posizioni ' + JSON.serialize(posizioni));
         return JSON.serialize(posizioni);
     }
 
@@ -91,7 +94,7 @@ public with sharing class HDT_LC_AccountStatementPicker {
     private static String submitRequest(String params){
         HttpRequest req = new HttpRequest();
         try {
-            System.debug('body: ' + params);
+            System.debug(LoggingLevel.DEBUG, 'body: ' + params);
             req.setEndpoint('Callout:MulesoftEqualStatements');
             req.setMethod('POST');
             req.setBody(params);
@@ -101,7 +104,9 @@ public with sharing class HDT_LC_AccountStatementPicker {
             HTTPResponse res = http.send(req);
             return res.getBody();
         } catch (Exception ex) {
-            System.debug(ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
         }
         return null;
     }

@@ -178,7 +178,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = existingSaleServiceItems[0].Opportunity__c,
                 Quote__c = existingSaleServiceItems[0].Quote__c,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name=servicePoint.ServicePointCode__c
             );
         } else {
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
@@ -254,7 +255,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = newOpportunity.Id,
                 Quote__c = newQuote.Id,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name = servicePoint.ServicePointCode__c
             );
         }
 

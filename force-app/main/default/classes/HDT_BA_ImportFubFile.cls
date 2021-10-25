@@ -13,7 +13,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
 
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id,Name,PhoneNumber__c,ExcludeFub__c,Contact.IndividualId FROM CampaignMember WHERE ExcludeFub__c != \'Si\' AND CampaignId  IN ( SELECT Campaign__c  FROM FUBProcessingItem__c WHERE FUBProcessing__c = :FUBProcessingId) AND Contact.IndividualId != null';
+        String query = 'SELECT Id,Name,PhoneNumber__c,ExcludeFub__c,Contact.IndividualId FROM CampaignMember WHERE ExcludeFub__c != \'Si\' AND Agency__c != null AND CampaignId  IN ( SELECT Campaign__c  FROM FUBProcessingItem__c WHERE FUBProcessing__c = :FUBProcessingId) AND Contact.IndividualId != null';
         return Database.getQueryLocator(query);
     }
 
@@ -81,6 +81,7 @@ public with sharing class HDT_BA_ImportFubFile implements Database.Batchable<SOb
         Database.QueryLocator queryFub = Database.getQueryLocator('SELECT Status__c FROM FUBProcessing__c WHERE Id = :FUBProcessingId');
         Database.QueryLocatorIterator itFub =  queryFub.iterator();
         FUBProcessing__c fubProcessing = new FUBProcessing__c();
+        fubProcessing.Id = FUBProcessingId;
         while (itFub.hasNext()) {
             fubProcessing = (FUBProcessing__c)itFub.next();
             fubProcessing.Status__c = 'Archivio FUB importato';

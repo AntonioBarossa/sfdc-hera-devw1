@@ -30,7 +30,7 @@ public with sharing class HDT_BA_PaperProcessingTst{
 			paperProcessingList[0].Status__c='Bozza';
 			insert paperProcessingList;
 
-			List<CampaignMember> campaignMemberList=HDT_UTL_DataFactoryTst.createCampaignMember(1, false, campaignList[0].Id, leadList[0].Id, contactList[0].Id);
+			List<CampaignMember> campaignMemberList=HDT_UTL_DataFactoryTst.createCampaignMember(false, campaignList[0].Id, leadList, contactList);
 			campaignMemberList[0].PaperProcess__c=paperProcessingList[0].Id;
 			insert campaignMemberList;
 		}
@@ -53,7 +53,7 @@ public with sharing class HDT_BA_PaperProcessingTst{
 			                                     WHERE Status__c='Bozza'
 			                                     LIMIT 1];
 
-			HDT_BA_PaperProcessing bc=new HDT_BA_PaperProcessing(tPaperProcessing.Id);
+			HDT_BA_PaperProcessing bc=new HDT_BA_PaperProcessing(new list<String>{tPaperProcessing.Id});
 
 			DataBase.executeBatch(bc);
 
@@ -64,7 +64,7 @@ public with sharing class HDT_BA_PaperProcessingTst{
 			                              WHERE LinkedEntityId=:tPaperProcessing.Id];
 
 			System.assertEquals(true, tDocLink.Id!=null, 'ContentDocumentLink not created');
-			System.assertNotEquals(false, tDocLink.Id!=null);
+			//System.assertNotEquals(false, tDocLink.Id!=null);
 		}
 	}
 }

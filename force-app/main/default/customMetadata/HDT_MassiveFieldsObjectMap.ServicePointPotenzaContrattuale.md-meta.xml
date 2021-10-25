@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>ServicePointPotenzaContrattuale</label>
+    <protected>false</protected>
+    <values>
+        <field>labelField__c</field>
+        <value xsi:type="xsd:string">Potenza contrattuale</value>
+    </values>
+    <values>
+        <field>nameField__c</field>
+        <value xsi:type="xsd:string">PowerContractual__c</value>
+    </values>
+    <values>
+        <field>objectType__c</field>
+        <value xsi:type="xsd:string">ServicePoint</value>
+    </values>
+    <values>
+        <field>processType__c</field>
+        <value xsi:type="xsd:string">Subentro</value>
+    </values>
+</CustomMetadata>

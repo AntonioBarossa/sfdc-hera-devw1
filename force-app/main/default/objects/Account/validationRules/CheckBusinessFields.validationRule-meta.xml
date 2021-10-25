@@ -2,11 +2,30 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckBusinessFields</fullName>
     <active>true</active>
-      <!--HRAWRM-146 aggiunto il controllo sul Prospect-->
-
-    <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)) , false,
+    <errorConditionFormula>IF(OR
+	(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)), 
+					RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)) ,
+					false,
 		
-			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, OR( Not(BillingIsAddressVerified__c),AND(ISBLANK(VATNumber__c),NOT(IsWrongFiscalData__c)), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true , false)
+						IF(
+							AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;, 
+								OR( Not(BillingIsAddressVerified__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
+								true ,
+
+									IF(
+										AND( NOT(ISBLANK(FiscalCode__c)),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,
+											OR( CONTAINS(TEXT(CustomerMarking__c), &apos;Condominio&apos;) , CONTAINS(TEXT(CustomerMarking__c), &apos;Associazione&apos;))),
+											false,
+												IF(
+													AND(ISBLANK(VATNumber__c),RecordType.DeveloperName = &quot;HDT_RT_Business&quot;),
+													true,false
+														
+												)
+									)
+
+						)
 		)</errorConditionFormula>
-    <errorMessage>I Seguenti campi devono essere popolati :  Marcatura , Categoria , Partita IVA ,Indirizzo ,Silos</errorMessage>
+    <errorMessage>Campi obbligatori: Marcatura , Categoria ,Indirizzo ,Silos.
+		La PIVA è obbligatoria solo se Marcatura è DIVERSA da Condominio o Associazione.
+		Il CF è obbligatorio solo se Marcatura è UGUALE a Condominio o Associazione.</errorMessage>
 </ValidationRule>

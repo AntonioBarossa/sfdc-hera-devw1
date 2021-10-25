@@ -44,7 +44,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
                 wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                     RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
                     Order__c = ord.Id,
-                    Account__c = ord.AccountId,
+                    // Account__c = ord.AccountId, //should not be shown on Account related activities
                     IsClientInResolution153__c = true,
                     Type__c = 'Comfort Call',
                     Status__c = 'Creata',

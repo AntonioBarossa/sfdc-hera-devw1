@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data decorrenza</label>
+    <label>Data creazione Contratto</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>

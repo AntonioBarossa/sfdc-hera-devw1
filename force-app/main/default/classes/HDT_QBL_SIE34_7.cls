@@ -4,7 +4,7 @@
 **/
 public with sharing class HDT_QBL_SIE34_7 implements Queueable  {
     private String runId                   ;   
-    private Date filterDate                ;
+    private Datetime filterDate                ;
     private String fileType                ;
     private List<String> contentVersionIds ;
     private final String NOTMAPPED='';
@@ -17,11 +17,11 @@ public with sharing class HDT_QBL_SIE34_7 implements Queueable  {
     * @param varDate 
     * @param varFileType 
     **/
-    public HDT_QBL_SIE34_7(String varRunId,Date varDate,String varFileType) {
-       this.runId             = varRunId            ;
-       this.filterDate        = varDate             ;
-       this.fileType          = varFileType         ;
-       this.contentVersionIds = new List<String>()  ;
+    public HDT_QBL_SIE34_7(String varRunId,String varDate,String varFileType) {
+       this.runId             = varRunId                                             ;
+       this.filterDate        = HDT_UTL_LeadProcess.getDateTimeFromString(varDate)   ;
+       this.fileType          = varFileType                                          ;
+       this.contentVersionIds = new List<String>()                                   ;
     }
  
  
@@ -115,12 +115,16 @@ public with sharing class HDT_QBL_SIE34_7 implements Queueable  {
           if (listOrderItem!=null && listOrderItem.size()>0 ) {
                contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_VAS.txt','OUT_VAS'));
           }
-         System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
+          if(!Test.isRunningTest()){
+            System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
+          }
        } 
        catch (Exception e) {
             errorMessage=e.getMessage();
             status='failed';
-            System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+            if(!Test.isRunningTest()){
+               System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+            }
        }
       
     }

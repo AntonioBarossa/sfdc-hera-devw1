@@ -1,10 +1,12 @@
 public with sharing class HDT_LC_CtToolbar {
     public static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     public static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+    //public static HDT_QR_ActivityCustom actQr = new HDT_QR_ActivityCustom();
     @auraEnabled
     public static boolean updateCampaignMember(String ecid,string campaignMember,string agent){
         HDT_SRV_CampaignMember cmSrv = new HDT_SRV_CampaignMember();
         CampaignMember cm = new CampaignMember();
+        System.debug('********TRY12');
         cm.ecid__c = ecid;
         if(agent != null){
             cm.reitekAgentUserId__c = agent.split('@')[0];
@@ -59,12 +61,36 @@ public with sharing class HDT_LC_CtToolbar {
     }
 
     @AuraEnabled
-    public static wrts_prcgvr__Activity__c createActivity(String startCall, String clientNumber, String registrationLink, String ecid, String campaignMemberId){
-        HDT_QR_CampaignMember cmQr = new HDT_QR_CampaignMember();
-        CampaignMember cm = cmQr.getRecordById(campaignMemberId);
+    public static String createActivityInbound(String reiteklink, String username, String password){
+        
+        Order ord = HDT_LC_CanaleContattoIVRLogin.checkLogin(username,password);
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        Datetime sdt = Datetime.newInstance(Long.valueOf(startCall));
+        Datetime sdt = Datetime.now();
         activity.CallStartTime__c = sdt;
+        System.debug('*******:TRYMETHOD3');
+        activity.StartDate__c = Date.newInstance(sdt.year(),sdt.month(),sdt.day()); 
+        activity.Type__c = 'Chiamata outbound';
+        activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
+        activity.RecordingLink__c = reiteklink;
+        activity.order__c = ord.id;
+        activitySrv.createRecord(activity);
+
+        if(ord != null){
+            return ord.id;
+        }else{
+            return null;
+        }
+    }
+    @AuraEnabled
+    public static wrts_prcgvr__Activity__c createActivity(/*String startCall, */String clientNumber, String registrationLink, String ecid, String campaignMemberId, String agent){
+        HDT_QR_CampaignMember cmQr = new HDT_QR_CampaignMember();
+        System.debug('*******:TRYMETHOD');
+        CampaignMember cm = cmQr.getRecordById(campaignMemberId);
+        System.debug('*******:TRYMETHOD2');
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        Datetime sdt = Datetime.now();
+        activity.CallStartTime__c = sdt;
+        System.debug('*******:TRYMETHOD3');
         activity.StartDate__c = Date.newInstance(sdt.year(),sdt.month(),sdt.day()); 
         activity.Type__c = 'Chiamata outbound';
         activity.wrts_prcgvr__Status__c = 'Aperta'; //Chiusa
@@ -78,6 +104,9 @@ public with sharing class HDT_LC_CtToolbar {
         }
         try {
             System.debug('###### activity #### ' +activity);
+            System.debug('*******:TRYMETHOD4');
+            boolean cmRes = updateCampaignMember(ecid, campaignMemberId, agent);
+            System.debug('*******:TRYMETHOD5');
             return activitySrv.createRecord(activity);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -85,22 +114,27 @@ public with sharing class HDT_LC_CtToolbar {
     }
 
     @AuraEnabled
-    public static Boolean updateActivity(String activityId, String endCall, Decimal callDuration, Decimal waitingTime){
+    public static Boolean updateActivity(String ecid, String endCall, Decimal callDuration, Decimal waitingTime){
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        Datetime edt = Datetime.newInstance(Long.valueOf(endCall));
-        activity.Id = activityId;
-        activity.CallEndTime__c = edt;
-        activity.EndDate__c = Date.newInstance(edt.year(),edt.month(),edt.day());
-        activity.CallDuration__c = callDuration;
-        activity.WaitingTime__c = waitingTime;
-        activity.wrts_prcgvr__Status__c = 'Chiusa';
-        try {
-            System.debug('###### activity #### ' +activity);
-            activitySrv.updateRecord(activity);
-            return true;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        List<wrts_prcgvr__Activity__c> actList = HDT_QR_ActivityCustom.getActivityTelesellingOutbound(ecid);
+        if(actList != null && !actList.isEmpty()){
+            wrts_prcgvr__Activity__c activityQ = actList[0];
+            Datetime edt = Datetime.newInstance(Long.valueOf(endCall));
+            activity.Id = activityQ.id;
+            activity.CallEndTime__c = edt;
+            activity.EndDate__c = Date.newInstance(edt.year(),edt.month(),edt.day());
+            activity.CallDuration__c = callDuration;
+            activity.WaitingTime__c = waitingTime;
+            activity.wrts_prcgvr__Status__c = 'Chiusa';
+            try {
+                System.debug('###### activity #### ' +activity);
+                activitySrv.updateRecord(activity);
+                return true;
+            } catch (Exception e) {
+                throw new AuraHandledException(e.getMessage());
+            }
         }
+        return false;
     }
 
     @AuraEnabled

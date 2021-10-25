@@ -27,7 +27,7 @@ public with sharing class HDT_TRH_CampaignMemberTst{
 			campaigns[0].Channel__c='Bolletta';
 			insert campaigns;
 
-			List<CampaignMember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(1, true, campaigns[0].Id, leads[0].Id, contacts[0].Id);
+			List<CampaignMember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(true, campaigns[0].Id, leads, contacts);
 
 			test.stopTest();
 
@@ -36,7 +36,7 @@ public with sharing class HDT_TRH_CampaignMemberTst{
 			                                 WHERE Id=:campMembers[0].Id];
 
 			System.assertEquals(true, tCampMembs[0].Id!=null, 'Campaign Member not Inserted');
-			System.assertNotEquals(false, tCampMembs[0].Id!=null);
+			System.assertNotEquals(false, tCampMembs[0].Id!=null, 'Campaign Member not Inserted');
 		}
 	}
 }

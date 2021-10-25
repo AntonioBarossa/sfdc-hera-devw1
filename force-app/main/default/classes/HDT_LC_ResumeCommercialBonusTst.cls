@@ -36,7 +36,7 @@ public static void testLoadCase(){
     
     System.assertEquals(tCase, tCaseMap.get('case'), 'Method return is not correct!');
 
-    System.assertNotEquals(null, tCaseMap.get('case'));
+    System.assertNotEquals(null, tCaseMap.get('case'), 'loadCase did not work correctly');
 
     Test.stopTest();
 }

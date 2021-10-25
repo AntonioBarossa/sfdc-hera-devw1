@@ -7729,23 +7729,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Esito KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Esito OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7854,22 +7842,6 @@
         </values>
         <values>
             <fullName>Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9622,6 +9594,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>In Continuità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recupero</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accise - Agevolazione cliente</fullName>
             <default>false</default>

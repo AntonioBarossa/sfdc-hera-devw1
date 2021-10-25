@@ -1,9 +1,15 @@
+
+@SuppressWarnings('PMD.ExcessivePublicCount, PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     public String createBodyRequest(List<HDT_UTL_WrapperInput> inputs){
-
+        
         JSONGenerator gen = JSON.createGenerator(true);
-        String pretty;
+        /*
+        * @Author: Salvatore A. Sarà 19/10/2021
+        * Risoluzione "Local variable is declared and-or assigned but not used"
+        */
+        // String pretty;
 
         gen.writeStartObject();
 
@@ -77,7 +83,12 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
-
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
     public void handleResponse(String recordId, String process, String depositMode, HttpResponse response){
 
         Case caseToUpdate = new Case();
@@ -96,7 +107,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     HDT_WRP_SuccessResponse successResponse = 
                         (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
 
-                    System.debug('WS_Payments successResponse--> ' + successResponse);
+                    System.debug(LoggingLevel.DEBUG, 'WS_Payments successResponse--> ' + successResponse);
 
                     phase = handleSuccessResponse(successResponse, recordId, process, depositMode);
 
@@ -125,7 +136,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     HDT_WRP_ErrorResponse errorResponse = 
                         (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
 
-                    System.debug('WS_Payments errorResponse--> ' + errorResponse);
+                    System.debug(LoggingLevel.DEBUG, 'WS_Payments errorResponse--> ' + errorResponse);
                     if(process == 'Comunicazione Pagamento'
                     || process == 'Piano Rateizzazione'
                     || process == 'Paperless'
@@ -156,7 +167,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         updateFuture(JSON.serialize(caseToUpdate));
 
     }
-
+    
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process, String depositMode){
 
         String phase = null;
@@ -183,7 +196,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         return phase;
 
     }
-
+    
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition, String depositMode){
         
         String phase = null;

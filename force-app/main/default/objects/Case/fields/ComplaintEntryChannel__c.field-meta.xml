@@ -42,6 +42,11 @@
                 <default>false</default>
                 <label>Raccomandata</label>
             </value>
+            <value>
+                <fullName>SOL-APP</fullName>
+                <default>false</default>
+                <label>SOL-APP</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

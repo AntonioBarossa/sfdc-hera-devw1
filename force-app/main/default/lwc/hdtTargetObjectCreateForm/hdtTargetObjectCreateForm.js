@@ -273,6 +273,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
+                else if (element == 'Distributor__c') {
+
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required: mapFieldReq.get(element),
+                            value: null,
+                            disabled: false
+                        }
+                    )
+                }
                 else {
                     console.log('entra in else ++++' + JSON.stringify(element));
                     fieldsDataObject.push(
@@ -423,7 +434,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'Distributor__c' && this.isDistributor == true) {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'Distributor__c'){//} && this.isDistributor == true) {
                     console.log('entra in Distributor__c');
                     console.log('entra in Distributor__c + recordDistributorPointCode  ' + JSON.stringify(this.recordDistributorPointCode));
                     this.allSubmitedFields.Distributor__c = this.recordDistributorPointCode;
@@ -865,6 +876,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         if (event.target.fieldName == 'Distributor__c') {
             this.recordDistributorPointCode = event.target.value;
+            this.fieldsData['Distributor__c'] = event.target.value;
         }
         if (event.target.fieldName == 'Disconnectable__c' && event.target.value == 'NO') {
             console.log(' if event target = disconnectable NO');
@@ -1561,7 +1573,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         }
         confirmServicePoint({ servicePoint: this.allSubmitedFields, sap: this.isSap, sale: this.sale }).then(data => {
-
+            console.log('*********:PROVA');
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;

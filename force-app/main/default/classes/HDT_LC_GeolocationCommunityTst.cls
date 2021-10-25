@@ -36,7 +36,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
             campaignList[0].Category__c = 'Campagna Outbound';
             //** [START MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             //campaignList[0].Channel__c = 'Door to Door';
-            campaignList[0].Channel__c = 'Bolletta';
+            campaignList[0].Channel__c = 'Bolletta;Door to Door';
             //** [END MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             campaignList[0].IsActive = true;
             campaignList[0].StartDate = Date.today();
@@ -129,9 +129,9 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         List<CampaignMember> cmList = HDT_LC_GeolocationCommunity.getContactsWithinDistance(latitude, longitude, distanceKm);
 
-        System.assertEquals(ctt.Id, cmList[0].ContactId);
+        System.assertEquals(ctt.Id, cmList[0].ContactId, 'getContactsWithinDistance did not work correctly');
 
-        System.assertNotEquals(ctt.Id, '');
+        System.assertNotEquals(ctt.Id, 'getContactsWithinDistance did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
@@ -158,9 +158,9 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         List<CampaignMember> cmList = HDT_LC_GeolocationCommunity.getLeadsWithinDistance(latitude, longitude, distanceKm);
 
-        System.assertEquals(ld.Id, cmList[0].LeadId);
+        System.assertEquals(ld.Id, cmList[0].LeadId, 'getLeadsWithinDistance did not work correctly');
 
-        System.assertNotEquals(ld.Id, '');
+        System.assertNotEquals(ld.Id, 'getLeadsWithinDistance did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
@@ -188,7 +188,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         System.assertEquals(-34.387, cttTest.LastGeolocationLatitude__c, 'Latitude Matches');
 
-        System.assertNotEquals(cttTest.LastGeolocationLatitude__c, null);
+        System.assertNotEquals(cttTest.LastGeolocationLatitude__c, null, 'updateContactLastLocation did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
