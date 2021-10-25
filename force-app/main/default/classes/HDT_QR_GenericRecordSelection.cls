@@ -53,7 +53,7 @@ public with sharing class HDT_QR_GenericRecordSelection {
         return sObjectsList;
     }
     /**@frpanico 25/10/2021
-     * Inserita Annotazione @SuppressWarnign
+     * Inserita Annotazione @SuppressWarning
      * Alla query viene fatto l'escape lato client
      * Eseguirlo nuovamente lato server comporta il fallimento della query
      */
