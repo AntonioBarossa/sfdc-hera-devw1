@@ -194,6 +194,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
         return securityDecision.getRecords();
     }
     
+    /* Get Acitivty Template */
     public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplateByName(String templateName)
     {
         SObjectAccessDecision securityDecision = 
@@ -207,6 +208,19 @@ public with sharing class HDT_QR_VoltureChangeManager {
 
         return securityDecision.getRecords();
     }
-        
+
+    /* Get Excise Rate */
+    public List<HDT_ExciseTranscode__mdt> getExciseTranscode(String exciseString)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT Excise__c 
+            FROM HDT_ExciseTranscode__mdt 
+            WHERE Active__c = true 
+            AND ExciseString__c = :exciseString 
+            ]);
+
+        return securityDecision.getRecords();
+    }
 
 }
