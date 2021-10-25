@@ -189,7 +189,7 @@ public inherited sharing class HDT_QR_OrderItem {
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
-            AND Product2.Name = 'Analisi Consumi'
+            AND Product2.Family = 'VAS Fatturabili'
             WITH SECURITY_ENFORCED
         ];
     }
