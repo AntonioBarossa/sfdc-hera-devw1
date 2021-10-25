@@ -30,29 +30,7 @@ public with sharing class HDT_SRV_ScriptManagerTst {
         actList[0].Status__c = 'Sospesa'; 
         actList[0].Type__c = 'Quality Call'; 
         actList[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';
-        insert actList;  
-        
-        // HDT_ScriptPerCommOffer__mdt scriptPerCommOffer0 = new HDT_ScriptPerCommOffer__mdt();
-        // scriptPerCommOffer0.DeveloperName = 'QualityCall';
-        // scriptPerCommOffer0.MasterLabel = 'QualityCall';
-        // scriptPerCommOffer0.Language = 'it';
-        // scriptPerCommOffer0.Label = 'QualityCall';
-        // scriptPerCommOffer0.QualifiedApiName = 'QualityCall';
-        // scriptPerCommOffer0.ScriptName__c = 'QualityCall';
-        // scriptPerCommOffer0.Object__c = 'Activity';
-        // scriptPerCommOffer0.ActivityType__c = 'QualityCall';
-
-        // HDT_ScriptPerCommOffer__mdt scriptPerCommOffer1 = new HDT_ScriptPerCommOffer__mdt();
-        // scriptPerCommOffer1.DeveloperName = 'OTPCoopresenza-MiniVocalOrder';
-        // scriptPerCommOffer1.MasterLabel = 'OTPCoopresenza-MiniVocalOrder';
-        // scriptPerCommOffer1.Language = 'it';
-        // scriptPerCommOffer1.Label = 'OTPCoopresenza-MiniVocalOrder';
-        // scriptPerCommOffer1.QualifiedApiName = 'OTPCoopresenza_MiniVocalOrder';
-        // scriptPerCommOffer1.ScriptName__c = 'Mini Vocal Order';
-        // scriptPerCommOffer1.Object__c = 'Order';
-        // scriptPerCommOffer1.SignatureMethod__c = 'OTP Coopresenza';
-
-        //List<HDT_ScriptPerCommOffer__mdt> test = HDT_SRV_ScriptManager.scriptPerCommOffers;
+        insert actList;
 
     }
 
