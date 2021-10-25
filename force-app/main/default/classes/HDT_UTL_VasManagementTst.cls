@@ -110,7 +110,7 @@ public class HDT_UTL_VasManagementTst {
         HDT_UTL_VasManagement.HDT_WRP_VASReq vasReq2 = new HDT_UTL_VasManagement.HDT_WRP_VASReq(orderList[1],caseList[0]);
         String vasReq2String = JSON.serialize(vasReq2);
         System.debug('vasReq2String:'+vasReq2String);
-        System.assertEquals(true,vasReq2String.contains('O-00100300'),'The value of the field keyServizio');
+        System.assertEquals(true,vasReq2String.contains(orderList[1].OrderNumber),'The value of the field keyServizio');
         System.assertNotEquals(false,vasReq2String.contains('Version'),'The value of versione field is TestVersion');
                        
 
