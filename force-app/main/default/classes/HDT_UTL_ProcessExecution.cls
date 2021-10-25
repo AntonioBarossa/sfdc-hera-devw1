@@ -31,20 +31,16 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     
         this.processName= this.currentProcess.currentRequestItem.MassiveLoaderRequest__r.ProcessType__c;
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
-        System.debug('selectedProcess.DeveloperName :'+selectedProcess.DeveloperName);
         List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName);
-        System.debug('staticResources :'+staticResources.size());
+ 
 
         mapHeaderByPosition = new Map<Integer, String>();
         Integer count=0;
         for (String temp : staticResources.get(0).Body.toString().remove('\r').remove('\n').split(',')) {
            if (temp.containsIgnoreCase('*')) {
                 temp=temp.remove('*');
-                System.debug('@@@@@@@req'+temp) ;
-                System.debug('@@@@@@@count'+count); 
                 mapRequiredByPosition.put(count,temp);
             }
-            System.debug('temp: '+temp);
             mapHeaderByPosition.put(count,temp);
             count++;
         }
@@ -82,9 +78,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     }
 
     public void mapTypeField(SObject sObj,Map<String, String> mapSobjField,Integer position,String value){
-        System.debug('position : '+position);
-        System.debug('label : '+mapHeaderByPosition.get(position));
-        System.debug('value : '+value);
+
 
         String typeField=getTypeField(String.valueOf(sObj.getSObjectType()),mapSobjField.get(mapHeaderByPosition.get(position)));
         switch on typeField.toUpperCase() {

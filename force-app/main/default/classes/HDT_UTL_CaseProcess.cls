@@ -88,8 +88,12 @@ public with sharing class HDT_UTL_CaseProcess {
 		String oldPhase = caseOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+            /**@frpanico
+             * Added comment:
+             * Se la fase di arrivo e' di annullamento o Annullato
+             * si entra nell'if per tutte le gestioni ad hoc dei processi
+             */
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                 //Variazione Indirizzzo di Fornitura
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
                     System.debug(LoggingLevel.DEBUG, 'Inside Condition');
@@ -172,7 +176,24 @@ public with sharing class HDT_UTL_CaseProcess {
                         HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP','Gestione Manuale SAP');
                     }
                 }
-                return true;
+                /**@frpanico 22/10/2021
+                 * Reintrodotto PhaseManager per annullamento
+                 * viene skippato solo in entrata e in uscita dall'annullamento dove non sono previste activity
+                 * Viene mantenuto per gli annullamenti passivi dove la fase é Annullamento SII
+                 * L'if in questione skippa il phase manager solo se la fase di partenza non e' di annullamento.
+                 * Nelle fasi di annullamento si fase di partenza che fase di arrivo sono Annullamento - o Annullato.
+                 */
+                if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
+                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                {
+                    caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
+                    return true;
+                }
+                return false;
+            /**@frpanico 22/10/2021
+             * Add Comment:
+             * Si entra in questo blocco quando la fase di partenza e' di annullamento e la nuova non lo e'  
+             */    
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
 

@@ -1,6 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_ComposeBodyResponse{
-
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     @AuraEnabled(Cacheable = false)
     public static void buildResponse(List<String> templates, List<String> currentTemplates, String recordId, Boolean deleteAll){
 
