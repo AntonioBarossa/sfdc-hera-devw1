@@ -1,3 +1,14 @@
+/**
+
+Header of the class "HDT_DocumentSendTrackingTst"
+@author Pooyan Ghadiri Abkenar, pooyan.ghadiriabkenar@webresults.it
+@Version 1.0
+@description: Apex Test Class of the relative Apex Class "HDT_DocumentSendTracking"
+@history
+@created 12/10/2021
+Modified By:
+**/
+
 @isTest
 public with sharing class HDT_DocumentSendTrackingTst {
     @isTest
