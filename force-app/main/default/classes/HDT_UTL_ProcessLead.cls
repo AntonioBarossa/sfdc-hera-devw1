@@ -10,7 +10,6 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
              if ('null'.equalsIgnoreCase(tempField)) {
                 tempField='';
              }
-             System.debug('required :' +mapRequiredByPosition.get(count));
              if (mapRequiredByPosition.get(count)!=null && String.isBlank(tempField)) {
                 throw new HDT_WRP_ProcessEntitiesException( 'Missing Required Field','Missing Required Field '+mapHeaderByPosition.get(count));
             }
@@ -28,11 +27,12 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
         if (String.isBlank( currentProcess.currentLead.Company)) {
             currentProcess.currentLead.Company=currentProcess.currentLead.FirstName+currentProcess.currentLead.LastName;
         }
+        currentProcess.currentLead.LeadSource='Lead freddo';
     }
 
     public override void getRecords(){
         if (String.isNotBlank(currentProcess.currentLead.FirstName)&&String.isNotBlank(currentProcess.currentLead.LastName)&& String.isNotBlank(currentProcess.currentLead.CompanyOwner__c) ) {
-            listLead =HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead.FirstName, currentProcess.currentLead.LastName, currentProcess.currentLead.CompanyOwner__c);
+            listLead =HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
         }
        
     }
@@ -57,10 +57,9 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
             insert currentProcess.currentLead;
         }
 
-        List<Lead> listAfterInsert              = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead.FirstName, currentProcess.currentLead.LastName, currentProcess.currentLead.CompanyOwner__c);
+        List<Lead> listAfterInsert              = HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
         currentProcess.currentLead              = listAfterInsert.get(0);
         currentProcess.currentIndividual.id     = currentProcess.currentLead.IndividualId;
-        system.debug('currentProcess.currentIndividual: '+currentProcess.currentIndividual);
         update currentProcess.currentIndividual;
 
     }
@@ -78,7 +77,6 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
         List<HDT_MassiveFieldsObjectMap__mdt> listLeadFields = getMapFieldsObject('Lead', this.processName);
         mapLeadFields = new Map<String, String>();
         for(HDT_MassiveFieldsObjectMap__mdt temp : listLeadFields){
-            system.debug('temp Map '+temp.labelField__c);
             mapLeadFields.put(temp.labelField__c, temp.nameField__c);
         }
         List<HDT_MassiveFieldsObjectMap__mdt> listIndividualFields = getMapFieldsObject('Individual', this.processName);

@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount')
 public class HDT_SRV_DocumentalManagement{
 	
 	public static String generateRequest(String recordId, String context, String formParams){

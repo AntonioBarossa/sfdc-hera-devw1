@@ -1113,14 +1113,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public string validatePreventivi(string fields, Case currentCase)
     {
         String result;
-        if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco')) 
-        if(currentCase.ShipmentAddressAssign__c == null)
-        {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
-        }
-        else 
-        {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco')){
+            if(currentCase.ShipmentAddressAssign__c == null){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
+            } else {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            }
         }
 
         return result;

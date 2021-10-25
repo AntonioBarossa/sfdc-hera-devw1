@@ -1,12 +1,12 @@
 /**@frpanico 15/10/2021
  * Per implementare interfaccia di PClick il modifier deve essere global
  */
-@SuppressWarnings('PMD.AvoidGlobalModifier')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
 global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     global Object execute(Object args) {
 
-        System.debug('HDT_SRV_PrescrizioneFattura callout action');
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_PrescrizioneFattura callout action');
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         /*
             @Author: Davide Viola - 20/10/2021
@@ -26,8 +26,11 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
             HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
             sapIntegration = submitRequest(recordId);
             manageResponse(sapIntegration);
-        }catch(Exception ex){
-            System.debug(ex.getMessage());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception StackTraceString: ' + ex.getStackTraceString());
+            
         }
 
         response.success = true;
@@ -46,7 +49,10 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
         try {
             sapIntegration = support.submitRequest(sapIntegration);
         } catch (Exception ex) {
-            System.debug(ex.getMessage()); 
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'submitRequest - Exception StackTraceString: ' + ex.getStackTraceString());
+            
         }
         return sapIntegration;
     }
@@ -58,7 +64,7 @@ global with sharing class HDT_SRV_PrescrizioneFattura implements wrts_prcgvr.Int
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
             if (responseBodyMap != null) {
                 String responseOutcome = (String) responseBodyMap.get('note');
-                System.debug('Esito blocco al sollecito da SAP per WS PrescrizioneFattura: ' + responseOutcome);
+                System.debug(LoggingLevel.DEBUG, 'Esito blocco al sollecito da SAP per WS PrescrizioneFattura: ' + responseOutcome);
 
                 if (responseOutcome != 'KO') {
                     Case caseToUpdate = new Case();

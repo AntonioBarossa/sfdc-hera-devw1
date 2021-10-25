@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_SelfReadings {
 
     public List<HDT_SelfReadings__mdt> getConfigurationByName(String name) {
@@ -5,9 +6,13 @@ public inherited sharing class HDT_QR_SelfReadings {
             List<HDT_SelfReadings__mdt> config = [SELECT Id, ReadingDateIncrease__c, ReadingDateDecrease__c, OrderRecordTypes__c, OrderBadPhases__c, OrderBadStates__c
                 FROM HDT_SelfReadings__mdt WHERE DeveloperName =:name WITH SECURITY_ENFORCED];
             return config;
+            
         } catch (Exception ex) {
-            System.debug(ex);
+            System.debug(LoggingLevel.DEBUG, 'getConfigurationByName - Exception TypeName: ' + ex.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'getConfigurationByName - Exception Message: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'getConfigurationByName - Exception StackTraceString: ' + ex.getStackTraceString());
             throw ex;
+            
         }
     }
 
@@ -32,7 +37,7 @@ public inherited sharing class HDT_QR_SelfReadings {
         /*for(HDT_SelfReadingError__mdt singleRecord : firstQuery){
             recordList.add(singleRecord);
         }*/
-        System.debug('firstQuery.values() size:' + firstQuery.values().size());
+        System.debug(LoggingLevel.DEBUG, 'firstQuery.values() size:' + firstQuery.values().size());
         
         return firstQuery.values();
     }
@@ -48,7 +53,7 @@ public inherited sharing class HDT_QR_SelfReadings {
             List<String> queryParameters = new List<String> { relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);
 
-            System.debug('Query: ' + query);
+            System.debug(LoggingLevel.DEBUG, 'Query: ' + query);
             List<SObject> objects = Database.query(query);
             
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
@@ -59,7 +64,8 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         return null;
     }
-
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     public Reading__c getReading(String objectName, Id objectId, String commodity, String readingFields) {
         SObjectType objtype = Schema.getGlobalDescribe().get(objectName);
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -72,10 +78,10 @@ public inherited sharing class HDT_QR_SelfReadings {
             String query = String.format(queryTemplate, queryParameters);
 
             List<SObject> objects = Database.query(query);
-            System.debug('getReading - objects found: ' + objects.size());
+            System.debug(LoggingLevel.DEBUG, 'getReading - objects found: ' + objects.size());
             
             List<Reading__c> objReadings = objects[0].getSObjects(relationshipName);
-            System.debug('getReading - objects ' + commodity + ' found: ' + objReadings.size());
+            System.debug(LoggingLevel.DEBUG, 'getReading - objects ' + commodity + ' found: ' + objReadings.size());
             
             return objReadings[0];
         }
@@ -100,7 +106,8 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         return null;
     }
-
+    
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     public List<Order> accountOrders(String accountId, String servicePointId, List<Id> recordTypeIds, List<String> badPhases, List<String> badStates) {
 
         List<Order> orders = new List<Order>();
@@ -132,18 +139,18 @@ public inherited sharing class HDT_QR_SelfReadings {
                 query += ' AND Status NOT IN :badStates';
             }
 
-            System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
+            System.debug(LoggingLevel.DEBUG, 'HDT_QR_SelfReadings: accountOrders query => ' + query);
             
             /*
-            System.debug('utl_isProcessReadingTest: accountId => ' + accountId);
-            System.debug('utl_isProcessReadingTest: servicePointId => ' + servicePointId);
-            System.debug('utl_isProcessReadingTest: recordTypeIds => ' + recordTypeIds);
-            System.debug('utl_isProcessReadingTest: badPhases => ' + badPhases);
-            System.debug('utl_isProcessReadingTest: badStates => ' + badStates);
+            System.debug(LoggingLevel.DEBUG, 'utl_isProcessReadingTest: accountId => ' + accountId);
+            System.debug(LoggingLevel.DEBUG, 'utl_isProcessReadingTest: servicePointId => ' + servicePointId);
+            System.debug(LoggingLevel.DEBUG, 'utl_isProcessReadingTest: recordTypeIds => ' + recordTypeIds);
+            System.debug(LoggingLevel.DEBUG, 'utl_isProcessReadingTest: badPhases => ' + badPhases);
+            System.debug(LoggingLevel.DEBUG, 'utl_isProcessReadingTest: badStates => ' + badStates);
             */
             orders = Database.query(query);
 
-            //System.debug('HDT_QR_SelfReadings: orders => ' + orders);
+            //System.debug(LoggingLevel.DEBUG, 'HDT_QR_SelfReadings: orders => ' + orders);
 
         }
 

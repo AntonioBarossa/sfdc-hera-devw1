@@ -34,7 +34,7 @@ public class HDT_BA_CommercialCodeTst {
             insert camps;
             
             
-            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1,true); 
+            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(50,true); 
             
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
@@ -51,13 +51,8 @@ public class HDT_BA_CommercialCodeTst {
             insert contacts;
             
             
-            List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(50,false,camps[0].id,leads[0].id,contacts[0].id);
-            i=0;
-            for(CampaignMember c : campMembers){
-                c.contactId = contacts[i].id;
-                i++;
-            }
-            insert campMembers;
+            HDT_UTL_DataFactoryTst.createCampaignMember(true,camps[0].id,leads,contacts);
+
         }
     }
     

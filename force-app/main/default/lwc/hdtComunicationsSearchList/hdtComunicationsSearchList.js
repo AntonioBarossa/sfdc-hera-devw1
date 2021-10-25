@@ -48,8 +48,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         billNumber: '',
         channel: '',
         date: '',
-        documentType: '',
-        company: ''
+        documentType: ''
     };
     recordValue;
     url;
@@ -61,8 +60,6 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         console.log('>>> parameters ' + JSON.stringify(this.parameters));
         console.log('>>> otherParams ' + JSON.stringify(this.otherParams));
         console.log('>>> startDateString ' + JSON.stringify(this.startDateString));
-
-        this.getCompanyCodeService();
 
         var objParameters = JSON.parse(this.parameters);
         this.modalHeader = objParameters.header;
@@ -76,7 +73,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
                 this.muleRequest.documentCategory = 'Bollette';
                 this.muleRequest.businessPartner = this.businessPartner;
                 this.muleRequest.contractAccount = this.contractAccount;
-
+                this.getCompanyCodeService();
                 this.columns = billsColumns;
                 break;
 
@@ -143,7 +140,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         getWsData({wrapperObj: muleRequestString})
         .then(result => {
-            //console.log(result);
+            console.log(result);
             var resultObj = JSON.parse(result);
             if(resultObj.success){
                 var dataObj = JSON.parse(resultObj.body);
@@ -234,6 +231,13 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
     apply(event){
         
+        const openMainSpinner = new CustomEvent("openmainspinner", {
+            detail: ''
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(openMainSpinner);
+
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         console.log('>>> I WANT PDF ABOUT > ' + JSON.stringify(selected));
@@ -249,6 +253,20 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
             return;
         }
 
+        if(this.checkIfNull(selected[0].envelopeId) ||
+           this.checkIfNull(selected[0].issueDate) ||
+           this.checkIfNull(this.muleRequest.documentCategory)
+          ){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Mancano alcuni dati per richiedere il pdf',
+                    variant: 'warning'
+                }),
+            );
+            return;
+        }
+
         this.docInvoiceObj.billNumber = selected[0].envelopeId.replace(/^0+/, '');
         this.docInvoiceObj.channel = 'CRM';
 
@@ -257,7 +275,17 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
         this.docInvoiceObj.date = date[0];
         this.docInvoiceObj.documentType = this.muleRequest.documentCategory;
 
+        //this.sendToApex('{"billNumber":"431900888769","channel":"CRM","date":"2019-12-04","documentType":"Bollette","company":"2060"}');
+        //this.sendToApex('{"billNumber":"431900888769","channel":"CRM","date":"2019-12-04","documentType":"Comunicazioni"}');
         this.sendToApex(JSON.stringify(this.docInvoiceObj));
+    }
+
+    checkIfNull(value){
+        if(value === undefined || value === null || value === ''){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     sendToApex(bodyString){
@@ -269,6 +297,7 @@ export default class HdtComunicationsSearchList extends NavigationMixin(Lightnin
 
         // Dispatches the event.
         this.dispatchEvent(sendToApex);
+        this.closeModal();
     }
 
     closeModal(event){

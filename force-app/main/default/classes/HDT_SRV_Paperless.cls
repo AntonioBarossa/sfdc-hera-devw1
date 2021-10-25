@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_Paperless {
 
     HDT_QR_Paperless paperlessQr = new HDT_QR_Paperless();
@@ -17,8 +18,8 @@ public with sharing class HDT_SRV_Paperless {
         currentCase = paperlessQr.getCaseById(recordId);
         documents = paperlessQr.getDocumentSelectedByCase(recordId);
 
-        System.debug('SRV_Paperless Case--> '+currentCase);
-        System.debug('SRV_Paperless Documetns--> '+documents);
+        System.debug(LoggingLevel.DEBUG, 'SRV_Paperless Case--> '+currentCase);
+        System.debug(LoggingLevel.DEBUG, 'SRV_Paperless Documetns--> '+documents);
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'codiceCliente' => currentCase.AccountCode__c,
@@ -51,15 +52,11 @@ public with sharing class HDT_SRV_Paperless {
         documentInput.isChild = true;
         documentInput.childObjName = 'bollettini';
         documentInput.configMapList = documentsListMap;
-
         inputList.add(documentInput);
-    
-
         pretty = paymentsUtl.createBodyRequest(inputList);
 
-        System.debug('SRV_Paperless -->' +pretty);
-
+        System.debug(LoggingLevel.DEBUG, 'SRV_Paperless -->' +pretty);
         return pretty;
-    
     }
+    
 }

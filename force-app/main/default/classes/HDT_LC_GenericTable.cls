@@ -3,6 +3,7 @@ public inherited sharing class HDT_LC_GenericTable {
 
     public static List<List<SObject>> rowData { get; set; }
     
+    @SuppressWarnings('PMD.CyclomaticComplexity')
     @AuraEnabled
     public static String getData(String tableName, String searchKey, String searchTerm){
         

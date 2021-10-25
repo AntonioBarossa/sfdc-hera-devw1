@@ -68,7 +68,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 			List<Campaign> campaigns=HDT_UTL_DataFactoryTst.createCampaign(1, true);
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
-			List<CampaignMember> campMembers=HDT_UTL_DataFactoryTst.createCampaignMember(1, true, campaigns[0].Id, leads[0].Id, contacts[0].Id);
+			HDT_UTL_DataFactoryTst.createCampaignMember(true, campaigns[0].Id, leads, contacts);
 
 			//QuoteProcess__c not yet on DataFactory
 			List<SBQQ__QuoteProcess__c> quoteProcs=new List<SBQQ__QuoteProcess__c>();

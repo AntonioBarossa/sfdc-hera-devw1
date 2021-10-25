@@ -24,3 +24,44 @@
     color: #fff;
     border-radius: 0.5rem;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+  
+.tooltip .tooltiptext {
+    visibility: visible;
+    width: 235px;
+    border: 1px solid black;
+    color: black;
+    text-align: left;
+    border-radius: 6px;
+    padding: 9px 14px;
+    position: absolute;
+    z-index: 1;
+    top: -17px;
+    left: 108%;
+    background: white;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+}
+  
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 65%;
+    right: 98%;
+    margin-top: -17px;
+    border-width: 1px;
+    border-style: solid;
+    width: 10px;
+    height: 10px;
+    border-color: transparent transparent black black;
+    transform: rotate(45deg);
+    background: white;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
