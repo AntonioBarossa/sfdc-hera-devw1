@@ -72,6 +72,10 @@ public class HDT_BA_ComfortCallTst {
             orders2[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
             orders2[0].Phase__c = 'In attesa conferma cliente';
             update orders2;
+            
+            List<Lead> leads =  HDT_UTL_DataFactoryTst.createLead(1, true);
+            
+            List<CampaignMember> members = HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignId, leads, contacts);
   
         }
     }
