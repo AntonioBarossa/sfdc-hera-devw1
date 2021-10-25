@@ -128,7 +128,7 @@ public class HDT_SRV_SalesManagerTst {
 
         List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
         system.debug('order-------------------'+ order);
-        Test.setMock(HttpCalloutMock.class, new HDT_SRV_SalesManagerTstMock());
+
         argsMap.put('method', 'activation');
         argsMap.put('sender', order[0]);
         argsMap2.put('method', 'updatePhase');
