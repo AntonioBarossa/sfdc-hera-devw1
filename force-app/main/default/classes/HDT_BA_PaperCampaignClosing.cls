@@ -20,7 +20,7 @@ public with sharing class HDT_BA_PaperCampaignClosing implements Database.Batcha
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
-        String query = 'SELECT campaignId,Status,contactId FROM CampaignMember WHERE PaperProcess__c IN :paperProcessingIds AND status != \'Gestito da CRM\' AND contactId != null WITH SECURITY_ENFORCED';
+        String query = 'SELECT campaignId,Status,contactId, PaperProcess__c FROM CampaignMember WHERE PaperProcess__c IN :paperProcessingIds AND status != \'Gestito da CRM\' AND contactId != null WITH SECURITY_ENFORCED';
         return Database.getQueryLocator(query);
     }
 

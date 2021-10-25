@@ -1,5 +1,6 @@
 public inherited sharing class HDT_TRH_Knowledge {
-
+    
+    @SuppressWarnings('PMD.CyclomaticComplexity')
     public void handleUpdate() {
 
         if(Trigger.new != null && Trigger.new.size() > 0)

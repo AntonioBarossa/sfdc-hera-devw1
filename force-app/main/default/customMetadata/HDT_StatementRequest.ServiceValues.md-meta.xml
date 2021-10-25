@@ -3,6 +3,14 @@
     <label>ServiceValues</label>
     <protected>false</protected>
     <values>
+        <field>Aggregation__c</field>
+        <value xsi:type="xsd:string">01</value>
+    </values>
+    <values>
+        <field>LoginId__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>PicklistValues__c</field>
         <value xsi:type="xsd:string">[
   {
@@ -14,5 +22,13 @@
     &quot;value&quot;: &quot;10&quot;
   }
 ]</value>
+    </values>
+    <values>
+        <field>StatementType__c</field>
+        <value xsi:type="xsd:string">ORDINARIO</value>
+    </values>
+    <values>
+        <field>TransactionType__c</field>
+        <value xsi:type="xsd:string">EC1</value>
     </values>
 </CustomMetadata>

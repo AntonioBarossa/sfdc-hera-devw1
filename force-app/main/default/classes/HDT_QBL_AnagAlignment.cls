@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Database.AllowsCallouts {
     
     private List<Case> anagAlignCases;
@@ -7,20 +8,20 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
     }
 
     public void execute(QueueableContext context) {
-        System.debug('HDT_QBL_AnagAlignment: # case da processare: ' + this.anagAlignCases.size());
+        System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: # case da processare: ' + this.anagAlignCases.size());
 
         if (this.anagAlignCases.isEmpty()) {
-            System.debug('HDT_QBL_AnagAlignment: nessun Case da processare');
+            System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: nessun Case da processare');
             return;
         }
 
         Case anagAlignCase = anagAlignCases[0];
-        System.debug('HDT_QBL_AnagAlignment: arricchimento dati...');
+        System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: arricchimento dati...');
         try {
             String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(anagAlignCase.PODPDRFormula__c, anagAlignCase.ContractCode__c);
             HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
         } catch (Exception ex){
-            System.debug('HDT_QBL_AnagAlignment: arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
         }
 
         List<Case> nextJobCases = new List<Case>();
@@ -30,22 +31,24 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
 
         if (!nextJobCases.isEmpty()) {
             // Chain this job to next job by submitting the next job
-            System.debug('HDT_QBL_AnagAlignment: chaining next job...');
-            if(!Test.isRunningTest()) System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
+            System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: chaining next job...');
+            if(!Test.isRunningTest()) {
+                System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
+            }
         }
 
         // ProcessClick non fa partire i job per le callout da contesto trigger o batch,
         // quindi demandiamo la callout heroku ad un platform event.
-        System.debug('HDT_QBL_AnagAlignment: predisposizione platform event...');
+        System.debug(LoggingLevel.DEBUG, 'HDT_QBL_AnagAlignment: predisposizione platform event...');
         HDT_PEV_AnagAlignment__e event = new HDT_PEV_AnagAlignment__e();
         event.SerializedCase__c = JSON.serialize(anagAlignCase);
 
         Database.SaveResult sr = EventBus.publish(event);
         if (sr.isSuccess()) {
-            System.debug('Successfully published event.');
+            System.debug(LoggingLevel.DEBUG, 'Successfully published event.');
         } else {
             for (Database.Error err : sr.getErrors()) {
-                System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
             }
         }
     }

@@ -15,11 +15,11 @@ public with sharing class HDT_LC_CampaignsControllerTst {
     List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
     System.debug('acc: ' + accounts);
     List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Attiva');
-    List<Contact> contact=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
-    List<ServicePoint__c> servicePoint= HDT_UTL_DataFactoryTst.createServicePoint(1,true);
-    List<Contract> contract=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-    List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id,sales);
-    List<Lead> lead=HDT_UTL_DataFactoryTst.createLead(1, true);
+    HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+    HDT_UTL_DataFactoryTst.createServicePoint(1,true);
+    HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
+    HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id,sales);
+    HDT_UTL_DataFactoryTst.createLead(1, true);
     //public static List<Case> createCase(, Boolean doInsert, Id accId, Id contactId, servicePoint[0].ID, contract[0].Id,orders[0].Id){
     List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1, false);
     products[0].Family = 'VAS Opzione prodotto';
@@ -42,16 +42,13 @@ static void testGetCampaigns(){
 
     List<Account> accList = [SELECT Id FROM Account LIMIT 1];
     List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-    List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
-    List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
-    List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
     List<Lead> leadList = [SELECT Id FROM Lead LIMIT 1];
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
 
     Test.startTest();
     List<CampaignMember> resultTest = HDT_LC_CampaignsController.getCampaigns(contactList[0].Id,'Contact','Test','2');
-    List<CampaignMember> resultTest1 = HDT_LC_CampaignsController.getCampaigns(leadList[0].Id,'Lead','Test','2');
-    List<CampaignMember> resultTest2 = HDT_LC_CampaignsController.getCampaigns(accList[0].Id,'Account','Test','2');
+    HDT_LC_CampaignsController.getCampaigns(leadList[0].Id,'Lead','Test','2');
+    HDT_LC_CampaignsController.getCampaigns(accList[0].Id,'Account','Test','2');
 
     System.assertEquals(resultTest.size()!=null, true, 'Same Ids of Campaign');
     System.assertNotEquals(resultTest.size() !=null , false, 'Ids of Campaigns are not null');
@@ -63,12 +60,6 @@ static void testGetCampaigns(){
 @isTest
 static void testGetOutboundCampaigns(){
 
-    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
-    List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-    List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
-    List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
-    List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
-    List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
 
     Test.startTest();
@@ -83,11 +74,7 @@ static void testGetOutboundCampaigns(){
 @isTest
 static void testUpdateCampaignMemberStatus(){
 
-    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
     List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
-    List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
-    List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
-    List<Order> orderList = [SELECT Id FROM ORder LIMIT 1];
     List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
     List<CampaignMember> members = new List<CampaignMember>();
 CampaignMember member = new CampaignMember(
@@ -129,7 +116,6 @@ CampaignMember member = new CampaignMember(
 
     List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
-    List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
 
     Test.startTest();
     Case returnedCase = HDT_LC_CampaignsController.createNewCase(caseList[0]);
@@ -163,7 +149,6 @@ CampaignMember member = new CampaignMember(
 
     List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
-    List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
 
     Test.startTest();
     String returnedString = HDT_LC_CampaignsController.getServiceCatalogUrlByCaseType(caseList[0]);
@@ -192,7 +177,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
 
@@ -208,7 +193,10 @@ CampaignMember member = new CampaignMember(
 @isTest
 static void testGetAccountsforCampaignMembers(){
 
-    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
+    List<Account> accList = [SELECT Id, RecordTypeId FROM Account LIMIT 1];
+    accList[0].RecordTypeId = (new HDT_UTL_Constants()).ACCOUNT_RECORDTYPEID_PARTNER;
+    update accList;
+
     List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
     List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
     List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
@@ -223,14 +211,13 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
-    List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
 
     Test.startTest();
     List<Account> returnedListAccount = HDT_LC_CampaignsController.getAccountsforCampaignMembers();
     //System.assertEquals(returnedListAccount[0].Id, accList[0].Id, 'Returned Same Id of Account');
-    System.assertNotEquals(null, accList[0].Id, 'Returned Id of Account is not Null');
+    System.assertNotEquals(null, returnedListAccount[0].Id, 'Returned Id of Account is not Null');
     Test.stopTest();
 
 }
@@ -255,7 +242,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
 
@@ -287,7 +274,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -320,7 +307,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -355,7 +342,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -397,7 +384,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -439,7 +426,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -480,7 +467,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -521,7 +508,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -573,7 +560,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
     List<Id> listaId = new List<Id>();
@@ -626,7 +613,6 @@ static void testCancelAssignmentsOrder(){
 
     List<ServicePoint__c> servicePointList = [SELECT Id FROM ServicePoint__c LIMIT 1];
     List<Contract> contractList = [SELECT Id FROM Contract LIMIT 1];
-    List<Order> orderList = [SELECT Id FROM Order WHERE FriendCode__C != '' LIMIT 1];
     List<Campaign> listCampaign = [SELECT Id FROM Campaign LIMIT 1];
     List<CampaignMember> members = new List<CampaignMember>();
 CampaignMember member = new CampaignMember(
@@ -693,7 +679,7 @@ CampaignMember member = new CampaignMember(
 
             insert ord;
 
-            List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, ord.Id);
+            HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, ord.Id);
 
     Map<String,Integer> mappTest = new Map<String,Integer>();
     mappTest.put('gas', 1);
@@ -725,7 +711,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<Product2> listProduct2 = [SELECT Id FROM Product2 LIMIT 1];
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
@@ -775,7 +761,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<Product2> listProduct2 = [SELECT Id FROM Product2 LIMIT 1];
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
@@ -836,7 +822,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<Product2> listProduct2 = [SELECT Id FROM Product2 LIMIT 1];
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
@@ -897,7 +883,7 @@ CampaignMember member = new CampaignMember(
     members.add(member); 
     insert members;
 
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
+    HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contractList[0].Id, orderList[0].Id);
     // List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, servicePointList[0].Id, contactList[0].Id, orderList[0].Id);
     List<Product2> listProduct2 = [SELECT Id FROM Product2 LIMIT 1];
     List<CampaignMember> testMembers = [SELECT Id FROM CampaignMember LIMIT 1];
@@ -931,7 +917,6 @@ CampaignMember member = new CampaignMember(
         listaIdProdotti.add(idsFound.Id);
     }
 
-    Id userID = [SELECT Id FROM User LIMIT 1].Id;
     Test.startTest();
     Boolean returnedBoolean = HDT_LC_CampaignsController.methodClosedTab(testMembers[0].Id,'CampaignMember','Campagna Outbound','Bolletta');
     System.assertEquals(false, returnedBoolean, 'campMemUp !=null and size > 0');

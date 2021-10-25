@@ -18,12 +18,11 @@ public with sharing class HDT_QR_MassiveLoaderRequest {
 
     public List<MassiveLoaderRequest__c> getRecordForImport() {
 
-        return [SELECT Id, ProcessType__c, Status__c, TotalRequest__c, RequestOK__c, RequestKO__c, Phase__c, Priority__c,
-                       (SELECT Id, LinkedEntityId, ContentDocumentId, IsDeleted, SystemModstamp, ShareType, Visibility FROM contentdocumentlinks ORDER BY SystemModstamp DESC LIMIT 1) 
+        return [SELECT Id, ProcessType__c, Status__c, TotalRequest__c, RequestOK__c, RequestKO__c, Priority__c,
+                       (SELECT Id, LinkedEntityId, ContentDocumentId, IsDeleted, SystemModstamp, ShareType, Visibility FROM contentdocumentlinks  ORDER BY SystemModstamp DESC  LIMIT 1) 
                 FROM MassiveLoaderRequest__c 
                 WHERE Status__c =: constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE 
-                AND Phase__c =: constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
-                WITH SECURITY_ENFORCED
-                ORDER BY Priority__c LIMIT 1];
+                //  AND Phase__c =: constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
+                WITH SECURITY_ENFORCED ORDER BY Priority__c LIMIT 1];
     }
 }

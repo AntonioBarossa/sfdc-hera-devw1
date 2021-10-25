@@ -893,9 +893,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             {
                 orderNew.Status = 'Annullato';
             }
+            /**@frpanico 22/10/2021
+             * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
+             * Dunque non sono previste activity
+             */
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-                return true;
+                if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
+                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                {
+				    orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                    return true;
+                }
+                return false;
+            /**@frpanico 22/10/2021
+             * Si entra nello skip soltanto se la fase di arrivo non e' di annullamento
+             * Dunque non sono previste activity
+             */
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;

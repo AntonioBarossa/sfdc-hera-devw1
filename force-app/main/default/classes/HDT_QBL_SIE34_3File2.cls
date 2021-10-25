@@ -86,13 +86,16 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
                if (listCase!=null && listCase.size()>0 ) {
                   contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_FUORI_RETE.txt','OUT_CESSAZIONE_FUORI_RETE'));
                }
-               System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+               if(!Test.isRunningTest()){
+                  System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+               }
          } 
          catch (Exception e) {
             errorMessage=e.getMessage();
             status='failed';
-            System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
-
+            if(!Test.isRunningTest()){
+               System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+            }
        }
     }
   

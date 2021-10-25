@@ -1,8 +1,11 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_AccountStatementReadingCheck {
     
     @InvocableMethod(label='Check Lettura Stimata')
     public static List<HDT_WRP_AccountStatementReadingCheckOutput> execute(List<HDT_WRP_AccountStatementReadingCheckInput> inputs){
-        if(inputs==null || inputs.size()<=0) return null;
+        if(inputs==null || inputs.size()<=0) {
+            return null;
+        }
       
         HDT_WRP_AccountStatementReadingCheckInput input = inputs[0];
 
@@ -20,10 +23,10 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
         bodyWrapper.numeroFattura = input.numeroFattura;
 
         String body = JSON.serialize(bodyWrapper, true);
-        System.debug('HDT_SRV_AccountStatementReadingCheck: request body = ' + body);
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountStatementReadingCheck: request body = ' + body);
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
-        //System.debug('HDT_SRV_AccountStatementReadingCheck: response body = ' + responseCtrl.body);
+        //System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountStatementReadingCheck: response body = ' + responseCtrl.body);
 
         if (responseCtrl.body == null) {
             return null;
@@ -32,23 +35,23 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
         Boolean isLetturaStimata = false;
         Boolean isMultiContratto = false;
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
-        //System.debug('HDT_SRV_AccountStatementReadingCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
+        //System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountStatementReadingCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
 
         if (responseBodyMap.containsKey('data')) {
             List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
-            //System.debug('HDT_SRV_AccountStatementReadingCheck: parsed response data = ' + dataObj);
+            //System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountStatementReadingCheck: parsed response data = ' + dataObj);
             Map<String, Object> primoLivelloMap = (Map<String, Object>) dataObj[0];
-            //System.debug('HDT_SRV_AccountStatementReadingCheck: primo livello = ' + primoLivelloMap);
+            //System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountStatementReadingCheck: primo livello = ' + primoLivelloMap);
             List<Object> secondoLivelloList = (List<Object>) primoLivelloMap.get('secondoLivelloInformativo');
-            //System.debug('HDT_SRV_AccountStatementReadingCheck: secondo livello = ' + secondoLivelloList);
+            //System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountStatementReadingCheck: secondo livello = ' + secondoLivelloList);
 
             String previousContract = '';
             String currentContract = '';
             for (Object secondoLivello : secondoLivelloList) {
-                //System.debug('record secondo livello: ' + secondoLivello);
+                //System.debug(LoggingLevel.DEBUG, 'record secondo livello: ' + secondoLivello);
                 Map<String, Object> secondoLivelloMap = (Map<String, Object>) secondoLivello;
                 String letturaStimata = (String) secondoLivelloMap.get('letturaStimata');
-                System.debug('lettura stimata?: ' + letturaStimata);
+                System.debug(LoggingLevel.DEBUG, 'lettura stimata?: ' + letturaStimata);
                 if (letturaStimata != null && letturaStimata.equals('X')) {
                     isLetturaStimata = true;
                     break;
