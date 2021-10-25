@@ -223,6 +223,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
         return securityDecision.getRecords();
     }
 
+    /* Get Account Infos */
     public List<AccountContactRelation> getContactInfosByAccountId(String accountId)
     {
         SObjectAccessDecision securityDecision = 
@@ -235,17 +236,36 @@ public with sharing class HDT_QR_VoltureChangeManager {
         return securityDecision.getRecords(); 
     }
 
+    /* Get Order Infos */
     public List<Order> getOrderInfosById(String orderId)
     {
         SObjectAccessDecision securityDecision = 
-        Security.stripInaccessible(AccessType.READABLE,
-        [SELECT PreviousCustomer__r.Account.CustomerMarking__c,
-        PreviousCustomer__r.Account.RecordType.DeveloperName,
-        Account.CustomerMarking__c,
-        Account.RecordType.DeveloperName
-        FROM Order
-        WHERE Id = :orderId]);
+            Security.stripInaccessible(AccessType.READABLE,
+            [SELECT PreviousCustomer__r.Account.CustomerMarking__c,
+            PreviousCustomer__r.Account.RecordType.DeveloperName,
+            Account.CustomerMarking__c,
+            Account.RecordType.DeveloperName
+            FROM Order
+            WHERE Id = :orderId]);
     
+        return securityDecision.getRecords();
+    }
+
+    /* Get Generic Data Enrichment Configs */
+    public List<HDT_GenericDataEnrichmentTranscode__mdt> getDataEnrichmentTranscodeByObjectName(List<String> objectNameList)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT SapField__c,
+            SfdcField__c,
+            Method__c,
+            IsNumber__c,
+            Precision__c,
+            Commodity__c,
+            CommodityField__c
+            FROM HDT_GenericDataEnrichmentTranscode__mdt
+            WHERE ObjectName__c IN :objectNameList]);
+        
         return securityDecision.getRecords();
     }
 

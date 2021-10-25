@@ -154,4 +154,29 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
         }
         return resultMap;
     }
+
+    /**@frpanico 25/10/2021
+     * return the picklist value given a condition, an objectName and a fieldName
+     * Check for the exception case of the "E_IMPOST" value
+     */
+    public String getPicklistValue(String condition, String objectName, String fieldName)
+    {
+        String result = '';
+
+        if(condition.equalsIgnoreCase('E_IMPOST'))
+        {
+            condition = 'Imposta usi domestici';
+        }
+        List<PicklistEntry> entryListEle =
+        ((SObject) (Type.forName('Schema.' + objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
+        for(PicklistEntry entry : entryListEle){
+
+            if(entry.getValue().containsIgnoreCase(condition)){
+
+                result = entry.getValue();                    
+            }
+        }
+        
+        return result;
+    }
 }
