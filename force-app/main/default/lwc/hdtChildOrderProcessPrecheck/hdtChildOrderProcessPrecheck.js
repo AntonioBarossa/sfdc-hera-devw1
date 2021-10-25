@@ -547,10 +547,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 console.log(JSON.parse(JSON.stringify(result)));
 
                 if(result.status == 'failed'){
-                    let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
+                    /*let message = Object.values(result.errorDetails[0].message).reduce((testoFinale, elem ,index, array)=>{
                         return `${testoFinale}\n${elem}`;
                     }, result.errorDetails[0].code);
-                    console.log(message);
+                    console.log(message);*/ //to log decomment HDT_WS_CreditCheckResponse map string string
                     /*let toastErrorMessage = new ShowToastEvent({
                         title: 'CreditCheck KO',
                         message: message,

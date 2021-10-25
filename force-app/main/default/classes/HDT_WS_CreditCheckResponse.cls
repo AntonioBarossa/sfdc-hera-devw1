@@ -33,7 +33,7 @@ public class HDT_WS_CreditCheckResponse extends HDT_WS_Response {
     }
     public class HDT_WRP_ErrorResponseObject{
         @AuraEnabled public String code{get;set;}
-        @AuraEnabled public Map<String, String> message{get;set;}
+        //@AuraEnabled public Map<String, String> message{get;set;}
         @AuraEnabled public String additionalInfo{get;set;}
     }
 
