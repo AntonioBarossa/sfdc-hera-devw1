@@ -16,8 +16,8 @@ private class HDT_WS_CreditCheckTst {
     static void testCallService() {
 
 
-        Test.startTest();
         Test.setMock(HttpCalloutMock.class, new HDT_WS_CreditCheckHttpCalloutMock()); 
+        Test.startTest();
 
         String wrpVals = '{\n' +
         ' "sistema" :"sistema",\n' +
