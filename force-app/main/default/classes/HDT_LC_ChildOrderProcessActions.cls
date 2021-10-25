@@ -14,6 +14,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
+    private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -257,25 +258,34 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
+                if(currentOrder.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica'))
+                {
                 /* If "Voltura Con Switch" and ExitingAccount "Reseller" the process goes to the phase "Esportazione VS Siebel" */
-                if(currentOrder.ContractReference__c != null && currentOrder.ProcessType__c == 'Voltura Con Switch' && currentOrder.CommodityFormula__c == 'Energia Elettrica')
-                {
-                    contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
-                }
-                if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
-                {
-                    orderToUpdate.Phase__c = 'Esportazione VS Siebel';
-                }
+                    if(currentOrder.ContractReference__c != null && currentOrder.ProcessType__c == 'Voltura Con Switch')
+                    {
+                        contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                    }
+                    if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                    {
+                        orderToUpdate.Phase__c = 'Esportazione VS Siebel';
+                    }
                 /* Rates Check*/
-                Map<String,Object> rates = 
-                    voltureChangeUtils.checkRates(
-                        (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)),
-                        (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
-                    );
-                for(String field : rates.keySet())
-                {
-                    orderToUpdate.put(field, rates.get(field));
+                    Map<String,Object> rates = 
+                        voltureChangeUtils.checkRates(
+                            (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)),
+                            (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
+                        );
+                    for(String field : rates.keySet())
+                    {
+                        orderToUpdate.put(field, rates.get(field));
+                    }
+                /* Email Check */
+                    if(currentOrder.Email__c != null && String.isEmpty(currentOrder.Email__c))
+                    {
+                        orderToUpdate.Email__c = emptyEmailDefault;
+                    }    
                 }
+                
             }
             when 'HDT_RT_ConnessioneConAttivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {

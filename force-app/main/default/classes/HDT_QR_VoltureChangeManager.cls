@@ -188,7 +188,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
     {
         SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(AccessType.READABLE, 
-            [SELECT RecordType.DeveloperName FROM Account WHERE Id = :accountId]
+            [SELECT RecordType.DeveloperName, CustomerMarking__c FROM Account WHERE Id = :accountId]
             );
 
         return securityDecision.getRecords();
@@ -220,6 +220,32 @@ public with sharing class HDT_QR_VoltureChangeManager {
             AND ExciseString__c = :exciseString 
             ]);
 
+        return securityDecision.getRecords();
+    }
+
+    public List<AccountContactRelation> getContactInfosByAccountId(String accountId)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE,
+            [SELECT ContactId
+            FROM AccountContactRelation
+            WHERE Roles = 'Titolare'
+            AND AccountId = :accountId]);
+        
+        return securityDecision.getRecords(); 
+    }
+
+    public List<Order> getOrderInfosById(String orderId)
+    {
+        SObjectAccessDecision securityDecision = 
+        Security.stripInaccessible(AccessType.READABLE,
+        [SELECT PreviousCustomer__r.Account.CustomerMarking__c,
+        PreviousCustomer__r.Account.RecordType.DeveloperName,
+        Account.CustomerMarking__c,
+        Account.RecordType.DeveloperName
+        FROM Order
+        WHERE Id = :orderId]);
+    
         return securityDecision.getRecords();
     }
 
