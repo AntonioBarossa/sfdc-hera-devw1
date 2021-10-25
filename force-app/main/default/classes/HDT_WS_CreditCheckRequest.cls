@@ -4,37 +4,37 @@
 */
 public class HDT_WS_CreditCheckRequest extends HDT_WS_Request {
 
-    @AuraEnabled public String sistema;
-    @AuraEnabled public String caso;
-    @AuraEnabled public String crmEntity;
-    @AuraEnabled public String crmId;    
-    @AuraEnabled public String userId;
-    @AuraEnabled public String activationUser;
-    @AuraEnabled public String account;
-    @AuraEnabled public String jobTitle;
-    @AuraEnabled public String internalCustomerId;
-    @AuraEnabled public String companyName;
-    @AuraEnabled public String externalCustomerId;
-    @AuraEnabled public String secondaryCustomerId;
-    @AuraEnabled public String bpClass;
-    @AuraEnabled public String bpCategory;
-    @AuraEnabled public String bpType;
-    @AuraEnabled public String customerType;
-    @AuraEnabled public String address;
-    @AuraEnabled public String municipality;
-    @AuraEnabled public String district;
-    @AuraEnabled public String postCode;
-    @AuraEnabled public String operation;
-    @AuraEnabled public String companyGroup;
-    @AuraEnabled public String market;
-    @AuraEnabled public String offerType;    
-    @AuraEnabled public String bpAlternative;  
-    @AuraEnabled public String alternativeCustomerId; 
-    @AuraEnabled public List<HDT_WRP_InputWrapperDetail> details;
+    @AuraEnabled public String sistema { get; set; }
+    @AuraEnabled public String caso { get; set; }
+    @AuraEnabled public String crmEntity { get; set; }
+    @AuraEnabled public String crmId { get; set; }    
+    @AuraEnabled public String userId { get; set; }
+    @AuraEnabled public String activationUser { get; set; }
+    @AuraEnabled public String account { get; set; }
+    @AuraEnabled public String jobTitle { get; set; }
+    @AuraEnabled public String internalCustomerId { get; set; }
+    @AuraEnabled public String companyName { get; set; }
+    @AuraEnabled public String externalCustomerId { get; set; }
+    @AuraEnabled public String secondaryCustomerId { get; set; }
+    @AuraEnabled public String bpClass { get; set; }
+    @AuraEnabled public String bpCategory { get; set; }
+    @AuraEnabled public String bpType { get; set; }
+    @AuraEnabled public String customerType { get; set; }
+    @AuraEnabled public String address { get; set; }
+    @AuraEnabled public String municipality { get; set; }
+    @AuraEnabled public String district { get; set; }
+    @AuraEnabled public String postCode { get; set; }
+    @AuraEnabled public String operation { get; set; }
+    @AuraEnabled public String companyGroup { get; set; }
+    @AuraEnabled public String market { get; set; }
+    @AuraEnabled public String offerType { get; set; }    
+    @AuraEnabled public String bpAlternative { get; set; }  
+    @AuraEnabled public String alternativeCustomerId { get; set; } 
+    @AuraEnabled public List<HDT_WRP_InputWrapperDetail> details { get; set; } 
     
     public class HDT_WRP_InputWrapperDetail {        
-        @AuraEnabled public String annualConsumption;
-        @AuraEnabled public String commodity;
-        @AuraEnabled public String totalConsumption;
+        @AuraEnabled public String annualConsumption { get; set; } 
+        @AuraEnabled public String commodity { get; set; } 
+        @AuraEnabled public String totalConsumption { get; set; } 
     }
 }

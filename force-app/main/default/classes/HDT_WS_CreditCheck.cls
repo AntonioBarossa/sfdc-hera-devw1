@@ -8,9 +8,9 @@
 public class HDT_WS_CreditCheck {
 
     @AuraEnabled
-    public static HDT_WS_CreditCheckResponse callService(String wrpVals){
+    public static HDT_WS_CreditCheckResponse callService(HDT_WS_CreditCheckRequest req){
         
-        HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
+        //HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
         
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
         System.debug(LoggingLevel.DEBUG, JSON.serializepretty(req));

@@ -296,7 +296,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 iw.alternativeCustomerId = fiscalData;            
             }
             system.debug('act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
-            HDT_WS_CreditCheck.callService(json.serialize(iw));
+            HDT_WS_CreditCheck.callService(iw);
         }
     }
     // END @Picchiri 15.06.21 

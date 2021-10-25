@@ -2,7 +2,7 @@
  * @author alessandro.picchiri@eng.it
  * @date 24/05/2021 
 */
-public class HDT_VFC_ForzaturaChiusuraCreditCheck implements Database.Batchable<sObject>{
+public inherited sharing class HDT_VFC_ForzaturaChiusuraCreditCheck implements Database.Batchable<sObject>{
     
     public final String QUERY;
     public HDT_VFC_ForzaturaChiusuraCreditCheck(String q){
