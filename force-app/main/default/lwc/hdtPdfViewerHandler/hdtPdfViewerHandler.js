@@ -81,7 +81,7 @@ export default class HdtPdfViewerHandler extends NavigationMixin(LightningElemen
             } else {
                 toastObj.title = 'Errore!';
                 //toastObj.message = result.message;
-                toastObj.message = 'Bolletta non disponibile';
+                toastObj.message = 'Documento non disponibile';
                 toastObj.variant = 'warning';
             }
         
