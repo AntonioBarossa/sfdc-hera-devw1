@@ -26,15 +26,15 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         List<OrderItem> orderItemList = new List<OrderItem>();
         List<Order> childOrderList = HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, saleList, orderList[0].Id, contactList[0].Id);
         List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
-        List<Pricebook2> priceBookList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
+        //List<Pricebook2> priceBookList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
         Id priceBookId = Test.getStandardPriceBookId();
         PricebookEntry pbEntry = new PriceBookEntry(Pricebook2Id = priceBookId, Product2Id = productList[0].Id, UnitPrice = 10000, IsActive = true);
         insert pbEntry;
-        List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookList[0].Id);
-        childOrderList[0].Pricebook2Id = priceBookList[0].Id;
+        //List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookList[0].Id);
+        childOrderList[0].Pricebook2Id = priceBookId;
         childOrderList[0].ProcessType__c = 'Switch in Ele';
         update childOrderList;
-        orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,priceBookEntryList[0].Id);
+        orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,pbEntry.Id);
         
         String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
         String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();

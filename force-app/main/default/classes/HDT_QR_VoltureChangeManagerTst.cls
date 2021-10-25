@@ -117,4 +117,41 @@ public with sharing class HDT_QR_VoltureChangeManagerTst {
         Test.stopTest();
         System.assertEquals(1, activityTemplates.size(),'Activity Template non trovato');
     }
+
+    @IsTest
+    static void getExciseTranscodeTst()
+    {
+        Test.startTest();
+        List<HDT_ExciseTranscode__mdt> results = voltureChangeQr.getExciseTranscode('Imposta usi domestici');
+        Test.stopTest();
+
+        System.assert(results.size() > 0, 'Record non trovati');
+    }
+
+    @IsTest
+    static void getContactInfosByAccountIdTst()
+    {
+        List<Account> accList = [SELECT Id FROM Account];
+        List<AccountContactRelation> acrList = [SELECT Roles FROM AccountContactRelation WHERE AccountId = :accList[0].Id];
+        acrList[0].Roles = 'Titolare';
+        update acrList;
+
+        Test.startTest();
+        List<AccountContactRelation> acrTestList = voltureChangeQr.getContactInfosByAccountId(accList[0].Id);
+        Test.stopTest();
+
+        System.assertEquals(1, acrTestList.size(),'Record non trovati');
+    }
+
+    @IsTest
+    static void getOrderInfosByIdTst()
+    {
+        List<Order> orderList = [SELECT Id FROM Order];
+
+        Test.startTest();
+        List<Order> orderTestList = voltureChangeQr.getOrderInfosById(orderList[0].Id);
+        Test.stopTest();
+
+        System.assertEquals(1, orderTestList.size(), 'Record non trovati');
+    }
 }
