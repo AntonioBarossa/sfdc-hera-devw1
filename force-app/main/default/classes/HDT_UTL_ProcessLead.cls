@@ -32,7 +32,7 @@ public with sharing class HDT_UTL_ProcessLead extends  HDT_UTL_ProcessExecution 
 
     public override void getRecords(){
         if (String.isNotBlank(currentProcess.currentLead.FirstName)&&String.isNotBlank(currentProcess.currentLead.LastName)&& String.isNotBlank(currentProcess.currentLead.CompanyOwner__c) ) {
-            listLead =HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead.FirstName, currentProcess.currentLead.LastName, currentProcess.currentLead.CompanyOwner__c);
+            listLead =HDT_QR_Lead.getCurrentRecords(currentProcess.currentLead);
         }
        
     }
