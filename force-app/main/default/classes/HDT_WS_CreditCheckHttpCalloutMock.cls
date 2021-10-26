@@ -11,8 +11,8 @@ public class HDT_WS_CreditCheckHttpCalloutMock implements HttpCalloutMock {
         // Create a fake response
         HttpResponse response = new HttpResponse();
         response.setHeader('Content-Type', 'application/json');
-        response.setBody('{ "errorDetails": [{"code": "code", "message": {"key":"value"}, "additionalInfo": "additionalInfo" },'+
-                        ' {"code": "code2", "message": {"key":"value"}, "additionalInfo": "additionalInfo2" }] }');
+        response.setBody('{ "errorDetails": [{"code": "code", "message": "message", "additionalInfo": "additionalInfo" },'+
+                        ' {"code": "code2", "message": "message", "additionalInfo": "additionalInfo2" }] }');
         response.setStatusCode(200);
         return response; 
     }
