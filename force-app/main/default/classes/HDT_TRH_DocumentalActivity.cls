@@ -4,10 +4,11 @@
 * @description HDT_TRH_DocumentalActivity
 * @history Sabina Levonja – 04/06/21 – created class
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_TRH_DocumentalActivity extends HDT_TRH_TriggerHandler{
 
     public override void beforeInsert(){
-
+        
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         // Valorizza le lookup OrderId__c e CaseId__c, se vuote, a partire dai campi ParentProcessId__c e ProcessId__c che valorizza il MOGA.
         try{
@@ -57,10 +58,11 @@ public inherited sharing class HDT_TRH_DocumentalActivity extends HDT_TRH_Trigge
                 }/*else if(String.isNotBlank(parentRecordId) && parentObjectName.equalsIgnoreCase('Case')){
                     single.CaseId__c = parentRecordId;
                 }*/
-                
             }
-        }catch(Exception ex){
-            System.debug('Error ' + ex.getMessage() + ' at line '+ex.getLineNumber());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Error ' + ex.getMessage() + ' at line '+ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'StackTraceString: ' + ex.getStackTraceString());
+            
         }
     }
 }

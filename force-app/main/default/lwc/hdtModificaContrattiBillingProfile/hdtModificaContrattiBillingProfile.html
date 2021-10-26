@@ -1,0 +1,54 @@
+<template>
+    <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+    <lightning-record-edit-form record-id={recordId} object-api-name="BillingProfile__c">
+                            
+        <lightning-input-field required onchange={handlePaymentMethodSelect} data-id="PaymentMethod__c" field-name="PaymentMethod__c" variant="label-stacked"></lightning-input-field>
+        <template if:true={fields}>    
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                    <template for:each={fields} for:item="field">
+                        <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} required={field.required} if:true={field.visibility} value={field.value} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} data-id={field.fieldName} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                    </template>
+            </div>
+            <template if:true={tipologiaIntestatarioFields}>
+                <lightning-combobox
+                if:true={signatoryTypeIsVisible}
+                class="slds-size_1-of-3 fieldsData"
+                data-id="SignatoryType__c"
+                field-name="SignatoryType__c"
+                name="SignatoryType__c"
+                required
+                label="Tipo Sottoscrittore"
+                value={cloneObject.SignatoryType__c}
+                placeholder=""
+                options={signatoryTypeOptions}
+                onchange={handleCollectFieldsData} ></lightning-combobox>
+                <div class="slds-grid slds-wrap slds-m-top_small">
+                    <template for:each={tipologiaIntestatarioFields} for:item="tipologiaIntestatarioField">
+                        <lightning-input-field if:true={tipologiaIntestatarioField.visibility} required={tipologiaIntestatarioField.required} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
+                    </template>
+                </div>
+            </template>
+            <template if:true={isfatturazioneElettronicaVisible}>
+                <div class="slds-text-heading_small slds-m-top_small">Fatturazione elettronica</div>
+                <div class="slds-grid slds-wrap slds-m-top_small">
+                    <template for:each={fatturazioneElettronicaFields} for:item="fatturazioneElettronicaField">
+                        <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} required={fatturazioneElettronicaField.required} data-name={fatturazioneElettronicaField.fieldName} key={fatturazioneElettronicaField.fieldName} data-id={fatturazioneElettronicaField.fieldName} field-name={fatturazioneElettronicaField.fieldName} value={fatturazioneElettronicaField.value} variant="label-stacked"></lightning-input-field>
+                    </template>
+                </div>
+            </template>
+        </template>
+
+    </lightning-record-edit-form>
+    <c-hdt-target-object-address-for-flow the-case={theCase} hide-navigation-buttons=true></c-hdt-target-object-address-for-flow>
+    <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+        <lightning-button onclick={handleAnnull} class="slds-m-left_x-small" icon-name="utility:save"
+            variant="brand" label="Annulla" title="Annulla"></lightning-button>
+        <lightning-button onclick={handleConfirmDraft} class="slds-m-left_x-small" icon-name="utility:save"
+            variant="brand" label="Salva in Bozza" title="Salva in Bozza"></lightning-button>
+        <lightning-button onclick={handleSaveEvent} class="slds-m-left_x-small" icon-name="utility:save"
+            variant="brand" label="Conferma" title="Conferma"></lightning-button>
+    </div>
+<!--     <c-hdt-target-object-address-fields objectapiname="BillingProfile__c" wrapaddressobject={wrapAddressObject}  accountid={accountId}></c-hdt-target-object-address-fields>
+ --><!--     <lightning-button onclick={handleCancelEvent} label="Annulla" variant="neutral"></lightning-button>
+    <lightning-button onclick={handleSaveEvent} label="Salva" variant="brand" class="slds-m-left_x-small"></lightning-button> -->
+</template>

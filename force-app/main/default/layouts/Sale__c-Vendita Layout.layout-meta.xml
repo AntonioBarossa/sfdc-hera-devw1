@@ -210,9 +210,14 @@
         <fields>OwnedByUser__c</fields>
         <relatedList>wrts_prcgvr__Activity__c.Sale__c</relatedList>
     </relatedLists><!-- HRDTR-00_HRAWRM-249  27/09/2021   -->
-    <relatedLists>
+    <!-- <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
+    </relatedLists> -->
+    <!--review Richiesta da Hera_OptimizerIssues_Analysis_v1.0-->
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
     </relatedLists>
+     <!--review Richiesta da Hera_OptimizerIssues_Analysis_v1.0-->
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

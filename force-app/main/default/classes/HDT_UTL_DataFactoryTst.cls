@@ -18,6 +18,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
 	}
 
+	public static void pClickInstanceActivityIntegration(){
+
+		wrts_prcgvr.InstallIntegration.install();
+		wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+	}
+
 	//Metho to avoid PClick for OrderPhase Errors
 	public static void pClickOrderPhase(){
 
@@ -69,26 +75,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return leadList;
 	}
 
-	public static List<City__c> createCity(Integer amount, Boolean doInsert){
-		List<City__c> cityList=new List<City__c>();
+	public static List<City__c> createCity(){
+		
+		// A subset of real cities is created instead of generating them randomly
+		List<City__c> cities = Test.loadData(City__c.sObjectType, 'Cities_Test');
 
-		for (Integer i=0; i<amount; i++){
+		return cities;
 
-			City__c ct=new City__c();
-
-			ct.Name='Roma';
-			ct.BelfioreCode__c='Bt'+i;
-
-			cityList.add(ct);
-
-		}
-
-		if (doInsert){
-
-			insert cityList;
-		}
-
-		return cityList;
 	}
 
 	public static List<Opportunity> createOpportunity(Integer amount, Boolean doInsert){
@@ -136,13 +129,18 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
-			acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
 			acc.LastName__c='test account'+i;
-			acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
 			acc.BillingIsAddressVerified__c=true;
+			
+			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
+				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
+			} else {
+				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
+			}
+
 			//@frpanico 06/08 added Customer Code
 			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
@@ -152,6 +150,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
+			System.debug('Business account created in Data Factory ' + acc);
 			accList.add(acc);
 
 		}
@@ -966,10 +965,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installPhaseManagerSObjectSetting() {
+	public static void installPhaseManagerSObjectSetting(String targetObject) {
         try{
-            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = 'Order',
-			wrts_prcgvr__ObjectType__c = 'Order',
+            wrts_prcgvr__PhaseManagerSObjectSetting__c setting = new wrts_prcgvr__PhaseManagerSObjectSetting__c(Name = targetObject,
+			wrts_prcgvr__ObjectType__c = targetObject,
 			wrts_prcgvr__PivotField__c = 'Phase__c');
             upsert setting Name;
         }catch (Exception ex){
@@ -982,10 +981,10 @@ public with sharing class HDT_UTL_DataFactoryTst{
     * @date 22/07/2021
     * @return void
     */
-	public static void installCsDependecyPhaseCheckSetting() {
+	public static void installCsDependecyPhaseCheckSetting(String phase) {
         try{
-            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = 'Comunicazione verso Heroku',
-			Phase__c = 'Comunicazione verso Heroku');
+            CS_DependecyPhaseCheck__c setting = new CS_DependecyPhaseCheck__c(Name = phase,
+			Phase__c = phase);
             upsert setting Name;
         }catch (Exception ex){
             
@@ -1179,7 +1178,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return standardPricebook;
 	}
 
-	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id Account){
+	public static List<Attachment> createAttachment(Integer amount, Boolean doInsert, Id account){
 
 		List<Attachment> tstAttachmentList=new List<Attachment>();
 
@@ -1252,17 +1251,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 	//** [START MOD 2021-08-13] @Author Andrei Necsulescu  - WR (andrei.necsulescu@webresults.it) @Description: Added Method to Create a record of CampaignMember
-	public static List<CampaignMember> createCampaignMember(Integer amount, Boolean doInsert, String campaignId, String leadId, String contactId) {
+	public static List<CampaignMember> createCampaignMember( Boolean doInsert, String campaignId, List<Lead> leads, List<Contact> contacts) {
 
+		//** Andrei Necsulescu - Changed logic because there can not be more than one Campaign member with the same Contact associated with a Campaign
 		List<CampaignMember> campaignMembers = new List<CampaignMember>();
+		integer amount = contacts.size();
 
 		for (Integer i = 0; i < amount; i++) {
 			
-			campaignMembers.add(new CampaignMember(
+			CampaignMember camp = new CampaignMember(
 				CampaignId = campaignId,
-				LeadId = leadId,
-				ContactId = contactId
-			));
+				ContactId = contacts[i].id
+			); 
+
+			if (i < leads.size()) {
+
+				camp.LeadId = leads[i].id;
+			}
+
+			campaignMembers.add(camp);
 
 		}
 
@@ -2440,32 +2447,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return visitAssigRulesList;
 	}
 
-	public static List<MassiveLoaderRequest__c> createMassiveLoaderRequest (Integer amount, Boolean doInsert){
 
-		List<MassiveLoaderRequest__c> massiveLoaderRequestList = new List<MassiveLoaderRequest__c>();
+	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> Rows ){
+		HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess()						;
+        HDT_MassiveLoaderProcess__mdt selectedProcess 	   = massiveLoaderProcessQr.getRecordByName(processName)	;
+		MassiveLoaderRequest__c massiveLoaderRequest 	   = new MassiveLoaderRequest__c()							;
 
-		for(Integer i=0; i<amount; i++){
-
-			MassiveLoaderRequest__c massiveLoaderRequest = new MassiveLoaderRequest__c();
-
-			massiveLoaderRequest.ProcessType__c = 'SwitchIn';
-			massiveLoaderRequest.Status__c = 'In Lavorazione';
-			massiveLoaderRequest.TotalRequest__c = 2;
-			massiveLoaderRequest.RequestOK__c = 2;
-			massiveLoaderRequest.RequestKO__c = 0;
-			massiveLoaderRequest.Phase__c = 'File in elaborazione';
-			massiveLoaderRequest.Priority__c = 1;
-
-
-			massiveLoaderRequestList.add(massiveLoaderRequest);
+		massiveLoaderRequest.ProcessType__c = processName											;
+		massiveLoaderRequest.Status__c 		= utlConstants.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE	;
+		massiveLoaderRequest.Priority__c 	= selectedProcess.Priority__c							;
+		insert massiveLoaderRequest;
+		List<MassiveLoaderRequestItem__c> listMassiveLoaderRequestItem = new List<MassiveLoaderRequestItem__c>();
+		for (String tempData : Rows) {
+			MassiveLoaderRequestItem__c massiveLoaderRequestItem    = new MassiveLoaderRequestItem__c()						;
+			massiveLoaderRequestItem.Data__c				 		= tempData												;
+			massiveLoaderRequestItem.Status__c				 		= utlConstants.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE	;
+			massiveLoaderRequestItem.MassiveLoaderRequest__c 		= massiveLoaderRequest.Id								;
+			listMassiveLoaderRequestItem.add(massiveLoaderRequestItem);
 		}
-
-		if (doInsert){
-
-			insert massiveLoaderRequestList;
-		}
-
-		return massiveLoaderRequestList;
+		insert listMassiveLoaderRequestItem																					;
+	
+		return massiveLoaderRequest;
 
 	}
 
@@ -3078,6 +3080,28 @@ public with sharing class HDT_UTL_DataFactoryTst{
         return rules;
     }
 
+	public static List<PaperCommunication__c> createPaperCommunication(Integer amount, Boolean doInsert){
+
+		List<PaperCommunication__c> paperCommunicationList=new List<PaperCommunication__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			PaperCommunication__c tPaperCommTest = new PaperCommunication__c();
+        	tPaperCommTest.Name='test'+i;
+
+			paperCommunicationList.add(tPaperCommTest);
+		}
+
+		if (doInsert){
+
+			insert paperCommunicationList;
+		}
+
+		return paperCommunicationList;
+
+	}
+
+		
 	/**
      * @author Sabina Levonja ((sabina.levonja@dunegroup.it))
      * @date 12/10/2021
@@ -3099,7 +3123,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		if (doInsert){
-
+		
 			insert vocalOrders;
 		}
 

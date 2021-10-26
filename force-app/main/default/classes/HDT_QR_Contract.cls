@@ -16,50 +16,45 @@ public inherited sharing class HDT_QR_Contract {
             SELECT 
             Id, Status,AccountId,ServicePoint__c 
             FROM Contract 
-            WHERE AccountId =: accountId AND ServicePoint__c=: servicePointId AND Status='Attivo' WITH SECURITY_ENFORCED
+            WHERE AccountId =: accountId AND ServicePoint__c=: servicePointId AND Status='Attivo'
         ];
     }
 
     public List<BillingProfile__c> getInd(String accountId) {
         contractSrv.checkReadAccess('Status__c,Account__c,InvoicingAddressFormula__c');
-       //System.debug('accountId ***********' + accountId);
-       //System.debug('LISTA BILLINGPROFILE ***********' +[SELECT Status__c,Account__c,InvoicingAddressFormula__c FROM BillingProfile__c WHERE Account__c =: accountId  WITH SECURITY_ENFORCED] );
+        System.debug('accountId ***********' + accountId);
+        System.debug('LISTA BILLINGPROFILE ***********' +[SELECT Status__c,Account__c,InvoicingAddressFormula__c FROM BillingProfile__c WHERE Account__c =: accountId  WITH SECURITY_ENFORCED] );
 		return [SELECT Status__c,Account__c,InvoicingAddressFormula__c FROM BillingProfile__c WHERE Account__c =: accountId WITH SECURITY_ENFORCED];							  
 		  
 	}
 
     public Contract getSapContractCode(String code,Boolean isSuperUser) {
         contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        //system.debug('code ******************** : ' + code);
-        //system.debug('isSuperUser ******************** : ' + isSuperUser);
-        String filter = ' WHERE  ';
-        
-        String query ='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract';
-       
+        String filter = 'Activated';
+        List<Contract> con= new List<Contract>();
         Contract c = new Contract();
         if(isSuperUser==true){
-            filter =' Where ServicePoint__r.ServicePointCode__c = \''+String.escapeSingleQuotes(code)+'\' LIMIT 1  WITH SECURITY_ENFORCED';
-           //con = Database.query(query);
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1';      
+            con = Database.query(query);
+        }else{
+            String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + filter + '\'' + 'WITH SECURITY_ENFORCED';
+            con = Database.query(query);
         }
-        else{
-            filter=' WHERE ServicePoint__r.ServicePointCode__c = \''+String.escapeSingleQuotes(code)+'\' AND Status=\'Activated\' WITH SECURITY_ENFORCED';
-           // con = Database.query(query);
-        }
-        List<Contract> con= Database.query(String.escapeSingleQuotes(query)+filter);
+
         if(con != null && con.size()> 0){
             c= con[0];
         }
-        //system.debug('contract ******************** : ' + c);
+        system.debug('contract ******************** : ' + c);
         return c;
 	}
 
     public List<Contract> getSapContractCode(List<String> codes) {
         contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        //system.debug('code ******************** : ' + codes);
-        //String filter = 'Activated';
-        //Contract c = new Contract();
-        //String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status=\''+String.escapeSingleQuotes(filter)+'\'  WITH SECURITY_ENFORCED';
-        List<Contract> con = [SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status='Activated' WITH SECURITY_ENFORCED];
+        String filter = 'Activated';
+        Contract c = new Contract();
+        String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED';
+
+        List<Contract> con = Database.query(query);
 
         return con;
 	}
@@ -159,7 +154,7 @@ public inherited sharing class HDT_QR_Contract {
    
     @AuraEnabled(cacheable=true)
     public static Contract getContractFromRow(string cNumber,string accountId){
-    //system.debug('getContractFromRow START '+ cNumber);
+    system.debug('getContractFromRow START ');
     contractSrv.checkReadAccess(fields); 
     Contract c = new Contract() ;
     List<Contract> con = Database.query('SELECT '+ String.escapeSingleQuotes(fields) +' FROM Contract WHERE ContractNumber =: cNumber WITH SECURITY_ENFORCED');
@@ -167,7 +162,7 @@ public inherited sharing class HDT_QR_Contract {
     if(con != null && con.size()> 0){
         c= con[0];
     }
-    //system.debug('getContractFromRow END ' );
+    system.debug('getContractFromRow END ' );
     return c ;
  }
 
@@ -175,11 +170,11 @@ public inherited sharing class HDT_QR_Contract {
 	 * Query for Getting All Account Contracts
 	 */
 	public List<Contract> getAccountContractsWithFilter(String accountid,String additionalFilter) {
-        //system.debug('getAccountContractsWithFilter START');
+        system.debug('getAccountContractsWithFilter START');
         contractSrv.checkReadAccess('ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c');
-        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c FROM Contract WHERE AccountId = \''+String.escapeSingleQuotes(accountid)+'\' '+ additionalFilter+' WITH SECURITY_ENFORCED';
-		List<Contract> listCon = Database.query(String.escapeSingleQuotes(query));
-        //system.debug('getAccountContractsWithFilter END' + listCon);
+        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId,SAPContractCode__c FROM Contract WHERE AccountId = ' + '\'' + String.escapeSingleQuotes(accountid) + '\'' + ' ' + additionalFilter + ' WITH SECURITY_ENFORCED';
+		List<Contract> listCon = Database.query(query);
+        system.debug('getAccountContractsWithFilter END' + listCon);
 		return listCon;
 	}
 
@@ -193,11 +188,11 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
     public List<Contract> getAccountContractsWithFilter(String fields, String accountid,String additionalFilter) {
-        //system.debug('getAccountContractsWithFilter START :' + fields);
+        system.debug('getAccountContractsWithFilter START');
         contractSrv.checkReadAccess(fields);
-        String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Contract WHERE AccountId = \''+ accountid +'\' '+additionalFilter +' WITH SECURITY_ENFORCED';
-		List<Contract> listCon = Database.query(String.escapeSingleQuotes(query));
-        //system.debug('getAccountContractsWithFilter END' + listCon);
+        String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Contract WHERE AccountId =: accountid '+ additionalFilter +' WITH SECURITY_ENFORCED';
+		List<Contract> listCon = Database.query(query);
+        system.debug('getAccountContractsWithFilter END' + listCon);
 		return listCon;
 	}
 
@@ -207,8 +202,8 @@ public inherited sharing class HDT_QR_Contract {
 	 */
 	public List<Contract> getAccountContracts(String fields , String accountid) {
         contractSrv.checkReadAccess(fields);
-		String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Contract WHERE AccountId =\''+ accountid + 'WITH SECURITY_ENFORCED';
-		List<Contract> listCon = Database.query(String.escapeSingleQuotes(query));
+		String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Contract WHERE AccountId =: accountid WITH SECURITY_ENFORCED';
+		List<Contract> listCon = Database.query(query);
         return listCon;
     }
 

@@ -9,9 +9,17 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     private static String waitingPhase = '';
     @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
+    @TestVisible
     private static Integer btLimit = 10;
+    @TestVisible
     private static Integer mtLimit = 20;
+    @TestVisible
     private static Integer atLimit = 30;
+    @TestVisible
+    private static Decimal lowerThreshold = 10.0;
+    @TestVisible
+    private static Decimal higherThreshold = 30.0;
+
 
     /**
      * @frpanico 06/10/2021
@@ -73,6 +81,32 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
                 ? 'MT' /* If tension value between btLimit and mtLimit : MT */
                 : tensionNumberValue > mtLimit 
                     ? 'AT' : ''; /* If thension value greater than mtLimit: AT */
+    }
+
+    public String getPowerBand(Decimal power)
+    {
+        return power <= lowerThreshold ? 'Fascia 1' : power > lowerThreshold && power <= higherThreshold ? 'Fascia 2' : 'Fascia 3';
+    }
+
+    public Boolean powerCheck(Decimal powerExpected, Decimal powerActual)
+    {
+        return getPowerBand(powerExpected) == getPowerBand(powerActual);
+    }
+
+    public wrts_prcgvr__Activity__c createActivity(String templateName)
+    {
+        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = voltureChangeQr.getActivityTemplateByName(templateName);
+        if(activityTemplates.size() > 0)
+        {
+            activity.wrts_prcgvr__ActivityTemplate__c = activityTemplates[0].Id;
+            activity.CausalError__c = templateName;
+            activity.wrts_prcgvr__Description__c = templateName;
+            activity.Type__c = templateName;
+            activity.wrts_prcgvr__IsRequired__c = true;
+
+        }
+        return activity;
     }
 
 }

@@ -31,6 +31,12 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse changeStatusHandler(HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse statusResponse, String productId, Product2 oldProduct, Product2 newProduct, Integer prodOpt, Integer techOff){
 
         String oldStatus = oldProduct.Status__c;
@@ -76,7 +82,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
                 List<String> resp;
                 resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
-                System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
+                System.debug(LoggingLevel.DEBUG,'>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
                     statusResponse.message = resp[1];
@@ -207,7 +213,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
                 List<String> resp;
                 resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
-                System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
+                System.debug(LoggingLevel.DEBUG,'>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
                     statusResponse.message = resp[1];
@@ -238,14 +244,14 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 try{
                     fieldChanged = checkIfRecordIsChanged(oldProduct, newProduct, fieldSetToSkip);
                     if(!String.isEmpty(fieldChanged)){
-                        System.debug('>>>> RECORD CHANGE -> FIELD: ' + fieldChanged);
+                        System.debug(LoggingLevel.DEBUG,'>>>> RECORD CHANGE -> FIELD: ' + fieldChanged);
                         statusResponse.success = false;
                         statusResponse.message = 'Puoi modificare solo Data inizio e Data fine';
                     }
 
                     List<String> resp;
                     resp = checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
-                    System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
+                    System.debug(LoggingLevel.DEBUG,'>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                     if(resp[0]=='KO'){
                         statusResponse.success = false;
                         statusResponse.message = resp[1];
@@ -267,8 +273,12 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
     private static String checkIfRecordIsChanged(Product2 oldProduct, Product2 newProduct, Set<String> fieldSetToSkip){
 
-        Product2 prodObject = new Product2();
-        Schema.SObjectType objType = prodObject.getSObjectType();
+        /*
+        * @Author: Salvatore A. Sarà 19/10/2021
+        * Risoluzione "Local variable is declared and-or assigned but not used"
+        */
+        // Product2 prodObject = new Product2();
+        // Schema.SObjectType objType = prodObject.getSObjectType();
         Map<String, Schema.SObjectField> objMap = Schema.SObjectType.Product2.fields.getMap();
 
         for (String currentField : objMap.keyset()) {
@@ -356,6 +366,12 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
         return technicalOfferList;
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static Map<Id, Integer> generateProductOptionMap(Map<Id, Integer> productOptionMap, Set<Id> product2IdList){
         productOptionMap = new Map<Id, Integer>();
 
@@ -365,7 +381,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         List<SBQQ__ProductOption__c> productOptionList;
         productOptionList = getProductOption(productOptionList, product2IdList, Label.HDT_InDevelopment);//
-        System.debug('>>> productOptionList ' + productOptionList.size());
+        System.debug(LoggingLevel.DEBUG,'>>> productOptionList ' + productOptionList.size());
 
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(productOptionMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){

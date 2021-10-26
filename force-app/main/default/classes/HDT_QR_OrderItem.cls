@@ -138,7 +138,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.Name,
             Product2.DescriptionSAP__c,
             VASBillingMode__c,
-            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c
+            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
+            SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
@@ -156,15 +157,16 @@ public inherited sharing class HDT_QR_OrderItem {
     * @param quoteLineId 
     * @return List<Order> 
     **/
-    public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id quoteLineId){
+    public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id qlOrServPointId){
         return [
             SELECT
-            OrderId
+            OrderId,
+            Order.ServicePoint__r.ServicePointCode__c
             FROM
             OrderItem
             WHERE
             Order.SBQQ__Quote__c =:quoteId
-            AND SBQQ__QuoteLine__c =:quoteLineId
+            AND (SBQQ__QuoteLine__c =:qlOrServPointId OR Order.ServicePoint__c=:qlOrServPointId)
             AND Order.ServicePoint__c!=null
             WITH SECURITY_ENFORCED
         ];

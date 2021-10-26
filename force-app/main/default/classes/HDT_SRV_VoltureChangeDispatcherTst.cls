@@ -5,6 +5,8 @@
 @IsTest
 public with sharing class HDT_SRV_VoltureChangeDispatcherTst 
 {
+    private static HDT_SRV_VoltureChangeDispatcher voltureManager = new HDT_SRV_VoltureChangeDispatcher();
+
     @TestSetup
     static void setup()
     {
@@ -96,6 +98,26 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         System.assert(newOrderList[0].Phase__c == 'Annullato' || newOrderList[0].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
         System.assert(newOrderList[1].Phase__c == 'Annullato' || newOrderList[1].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
 
+    }
+
+    @IsTest
+    static void executePublishTst()
+    {
+        List<Order> orderList = [SELECT Id, Phase__c FROM Order WHERE ParentOrder__c != null];
+        String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
+        String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
+        orderList[0].RecordTypeId = recordTypeIdVolturaConSwitch;
+        update orderList; 
+        Map<String,Object> argsMap = new Map<String,Object>{'method' => 'publishUpdate', 'sender' => orderList[0]};
+        Object obj;
+        
+        Test.startTest();
+        obj = voltureManager.execute(argsMap);
+        Test.stopTest();
+
+        List<Order> orderListUpdated = [Select Id,Phase__c FROM Order WHERE Id = :orderList[0].Id];
+
+        System.assertEquals(HDT_SRV_VoltureChangeManager.publishUpdatePhase, orderListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
     }
 
 

@@ -1017,6 +1017,9 @@ handleAddressValues(servicepointretrieveddata){
                 this.theRecord['Flag Verificato'] = this.flagVerificato;
 
             break;
+            case 'AbilitaVerifica':
+                this.disableVerifIndiButton = servicepointretrieveddata[key];
+            break;
             case 'Localita':
 
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));

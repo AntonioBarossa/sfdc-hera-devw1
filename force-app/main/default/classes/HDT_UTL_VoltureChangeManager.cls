@@ -136,6 +136,32 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             ? voltureChangeUtils.getTension(Integer.valueOf((String)fieldsMap.get('TENSIONE')))
             : null;
         return orderToUpdate;
-    }   
+    }
+    
+    public Boolean handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
+    {
+        Boolean flagResult = false;
+
+        /**
+         * Address check stand by
+         */
+        String tension = String.valueOf(paramsMap.get('TENSIONE'));
+        String powerAvailable = String.valueOf(paramsMap.get('POTDISP'));
+        String powerCommitted = String.valueOf(paramsMap.get('POTCONTRIMP'));
+        //String address = '';
+
+        if(voltureChangeUtils.getTension(Integer.valueOf(tension)) == currentOrder.VoltageLevel__c)
+        {
+            if(String.isNotEmpty(powerAvailable) && String.isNotEmpty(powerCommitted))
+            {
+                flagResult = voltureChangeUtils.powerCheck(Decimal.valueOf(powerAvailable), currentOrder.PowerAvailable__c) 
+                    && voltureChangeUtils.powerCheck(Decimal.valueOf(powerCommitted), currentOrder.PowerCommitted__c);
+            }
+        }
+
+        return flagResult;
+    
+    }
+
 
 }

@@ -60,6 +60,13 @@
                 <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__r.Commodity__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.TerminationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TerminationDateFormula</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_Causale_Disattivazione</name>
@@ -171,6 +178,11 @@
             <label>Asset</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>TerminationDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>IF(TODAY() &gt; {!Get_Subscription.SBQQ__StartDate__c}, TODAY(),  {!Get_Subscription.SBQQ__StartDate__c}+1)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_PostSalesVAS {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_PostSalesVAS</label>
     <processMetadataValues>

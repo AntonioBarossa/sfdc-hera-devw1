@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_QR_GenericRecordSelection {
 
     public List<HDT_Generic_Record_Selection__mdt>  getConfigurationByName(String searchKey) {
@@ -51,7 +52,12 @@ public with sharing class HDT_QR_GenericRecordSelection {
 
         return sObjectsList;
     }
-
+    /**@frpanico 25/10/2021
+     * Inserita Annotazione @SuppressWarning
+     * Alla query viene fatto l'escape lato client
+     * Eseguirlo nuovamente lato server comporta il fallimento della query
+     */
+    @suppressWarnings('PMD.ApexSOQLInjection')
     public List<sObject> executeSoqlQuery(String fields, String filters, String limitStr, String objectName) {
         String query;
 
@@ -71,8 +77,8 @@ public with sharing class HDT_QR_GenericRecordSelection {
             if(String.isNotBlank(limitStr)) {
                 query += ' LIMIT ' + limitStr;
             }
-
-            system.debug(LoggingLevel.DEBUG, 'query => '+ query);
+            
+            System.debug(LoggingLevel.DEBUG, 'query => '+ query);
             sObjectList = Database.query(query);
 
             //system.debug('sObjectList => '+sObjectList);
