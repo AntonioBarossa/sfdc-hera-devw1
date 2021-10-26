@@ -60,7 +60,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 
 //NON TOCCARE
     public void handleE154Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso E154');
+        System.debug(LoggingLevel.DEBUG, 'flusso E154');
         if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
             ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
             ord.QuotationType__c = 'Analitico';
@@ -82,7 +82,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 //NON TOCCARE
 
     public void handleE150Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso E150');
+        System.debug(LoggingLevel.DEBUG, 'flusso E150');
 
         mapServicePointData(mapRequestFields, E150_SERVICEPOINT_MAP);
         
@@ -99,7 +99,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
     }
 
     public void handlE351Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso 351');
+        System.debug(LoggingLevel.DEBUG, 'flusso 351');
 
         mapServicePointData(mapRequestFields, E351_SERVICEPOINT_MAP);
         
@@ -116,7 +116,7 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
     }
 
     public void handlE300Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso 300');
+        System.debug(LoggingLevel.DEBUG, 'flusso 300');
 
         mapServicePointData(mapRequestFields, E300_SERVICEPOINT_MAP);
 
@@ -220,7 +220,6 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         try{
             ServicePointSrv.updateRecord(sp);
         }catch(Exception e){
-            system.debug('Exception Update ServicePoint');
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
