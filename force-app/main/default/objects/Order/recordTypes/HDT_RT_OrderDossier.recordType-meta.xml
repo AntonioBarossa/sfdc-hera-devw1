@@ -260,6 +260,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Registrazione non conforme</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consegna%2FInstallazione Rifiutata</fullName>
             <default>false</default>
         </values>

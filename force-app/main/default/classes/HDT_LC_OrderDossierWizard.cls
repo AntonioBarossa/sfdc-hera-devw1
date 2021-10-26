@@ -12,6 +12,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_OrderItem orderItemSrv = new HDT_SRV_OrderItem();
+    // EVERIS_NTTDATA START
+    private static HDT_QR_AccountContactRelation acrQr = new HDT_QR_AccountContactRelation();
+    // EVERIS_NTTDATA END
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -49,6 +52,11 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         //Check for parent orders
         List<Order> listOrderParent = orderQr.getRecordBySaleFilterRecordTypeId(saleId, recordTypeIdOrderDossier);
 
+        // EVERIS_NTTDATA START
+        AccountContactRelation acr = acrQr.getPrimaryContactRelationBusiness(sale.Account__c);
+        Id contactId = acr != null ? acr.ContactId : null;
+        // EVERIS_NTTDATA END
+
         //Init parent order
         Order parentOrder = new Order();
 
@@ -60,6 +68,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                 Order parentOrderNew = new Order(
                     Name = 'Ordine ' + sale.Name,
                     AccountId = sale.Account__c,
+                    // EVERIS_NTTDATA START
+                    Contact__c = contactId,
+                    // EVERIS_NTTDATA END
                     Sale__c = sale.Id,
                     Status = 'Draft',
                     RecordTypeId = recordTypeIdOrderDossier,
@@ -85,13 +96,13 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                 if(listOrder != null && !listOrder.isEmpty()){
 
                     System.debug('Entrato nel Loop');
+                    system.debug(listOrdersId);
 
                     Map<String, Order> ordersToUpdateMap = new Map<String, Order>();
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
                     orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
-
 
 
                     System.debug('Lista Ordini '+orderItemsList);
@@ -137,7 +148,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                         system.debug('ordersToUpdate after: ' + ordersToUpdate);
 
                         for (Order ord : ordersToUpdate) {
-                            if (ord.Id == orderToUpdate.Id) {
+                            if (ord?.Id == orderToUpdate?.Id) {
                                 isDuplicated = true;
                                 break;
                             }

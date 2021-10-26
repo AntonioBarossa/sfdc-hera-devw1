@@ -279,7 +279,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: mapFieldReq.get(element),
-                            value: null,
+                            value: this.servicePointRetrievedData[element],
                             disabled: false
                         }
                     )
@@ -434,7 +434,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         }
                     )
                 }
-                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'Distributor__c' && this.isDistributor == true) {
+                else if ((this.recordtype.label === 'Punto Elettrico' || this.recordtype.label === 'Punto Gas') && element === 'Distributor__c'){//} && this.isDistributor == true) {
                     console.log('entra in Distributor__c');
                     console.log('entra in Distributor__c + recordDistributorPointCode  ' + JSON.stringify(this.recordDistributorPointCode));
                     this.allSubmitedFields.Distributor__c = this.recordDistributorPointCode;
@@ -585,6 +585,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
 
                         this.getInstanceWrapObject(this.servicePointRetrievedData);
+
                     });
                 } else {
                     console.log('entra in else **********************');
