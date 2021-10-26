@@ -31,7 +31,7 @@ public with sharing class HDT_LC_CampaignSurveyTst {
             campaignList[0].SurveyCRM__c = surveyCrmList[0].Id;
             insert campaignList;
             List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
-			List<CampaignMember> campaignMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(1, true, campaignList[0].Id, leadList[0].Id, contactList[0].Id);  
+			HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignList[0].Id, leadList, contactList);  
         }
     }   
 

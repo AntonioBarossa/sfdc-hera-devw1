@@ -261,8 +261,6 @@ global with sharing class HDT_UTL_NotifVas implements wrts_prcgvr.Interfaces_1_0
                 if (String.isNotBlank(statusMapping.AssetStatus__c)) {
                     currentAsset.DigitalAssetStatus = statusMapping.AssetStatus__c;
                 }
-            }else{
-                throw new HDT_UTL_HeraException('Error while mapping Phase/Status to Objects');
             }
 
         } catch (Exception e) {

@@ -863,6 +863,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK'); // HRAWRM-919 25/10/2021
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');

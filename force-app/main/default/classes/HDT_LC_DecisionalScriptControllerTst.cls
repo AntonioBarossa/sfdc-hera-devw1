@@ -28,22 +28,6 @@ public class HDT_LC_DecisionalScriptControllerTst {
 
 
     }
-    @isTest
-    public static void testDecisionalScript(){
-                Test.startTest();
-
-       List<ScriptConfig__c> confList = new List<ScriptConfig__c>();
-       confList = [SELECT Id,Name,ScriptType__c,CheckVisibility__c,ContextObject__c from ScriptConfig__c];
-
-        HDT_LC_DecisionalScriptController.isDecisionalScript('test');
-        
-         System.assertEquals(false,confList.isEmpty(), 'The confList is empty since the parameter was null');
-         System.assertNotEquals(true,confList.isEmpty(),'The confList is not empty');
-
-        Test.stopTest();
-        
-
-    }
     
     @isTest
     public static void testGetScriptPage(){

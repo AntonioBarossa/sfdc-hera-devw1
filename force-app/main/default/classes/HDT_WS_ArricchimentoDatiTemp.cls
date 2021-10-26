@@ -1,4 +1,6 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_WS_ArricchimentoDatiTemp {
+    
     // Wrapper per i flow.
     @InvocableMethod(label='Invoke Data Enrichment')
     public static List<String> submitRequestFlow(List<HDT_WRP_ArricchimentoFlowInputs> request) {
@@ -16,6 +18,12 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
     // Richiama il WS di Arricchimento Dati
     // pod = codice pod/pdr del Service Point
     // contractCode = codice contratto sap afferente al service point.
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    22/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static String submitRequest(String pod, String contractCode) {
         //List<String> serializedResponse = new List<String>();
         //Map<String,String> bodyMap = new Map<String,String>{'pod' => request[0].pod,'contratto'=>request[0].contractCode};
@@ -25,7 +33,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         gen.writeStringField('contratto', contractCode != null ? contractCode : '');
         gen.writeEndObject();
         String pretty = gen.getAsString();
-        System.debug(LoggingLevel.DEBUG,pretty);
+        System.debug(LoggingLevel.DEBUG, pretty);
         HttpRequest req = new HttpRequest();
         HDT_WRP_ArricchimentoResponse arricchimentoResponse = new HDT_WRP_ArricchimentoResponse();
         try {

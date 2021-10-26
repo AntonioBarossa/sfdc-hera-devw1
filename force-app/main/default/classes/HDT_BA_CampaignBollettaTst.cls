@@ -30,7 +30,7 @@ public class HDT_BA_CampaignBollettaTst {
             insert camps;
             
             
-            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1,true); 
+            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(50,true); 
                 
                 
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
@@ -46,13 +46,10 @@ public class HDT_BA_CampaignBollettaTst {
             insert contacts;
             
             
-            List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(50,false,camps[0].id,leads[0].id,contacts[0].id);
-            i=0;
+            List<CampaignMember> campMembers = HDT_UTL_DataFactoryTst.createCampaignMember(false,camps[0].id,leads,contacts);
             for(CampaignMember c : campMembers){
-                c.contactId = contacts[i].id;
                 c.ContractReference__c = 'testContractReference';
                 c.isWsBollettaInvoked__c = false;
-                i++;
             }
             insert campMembers;
 
@@ -71,7 +68,7 @@ public class HDT_BA_CampaignBollettaTst {
         update listaCMpreBatch;
         
         Test.startTest();
-        HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(campaignId);        
+        HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(new List<String>{campaignId}); //Updated method signature
         Id batchId = Database.executeBatch(cb,200);
         Test.stopTest();
         

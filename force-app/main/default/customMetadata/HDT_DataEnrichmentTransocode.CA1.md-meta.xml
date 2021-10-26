@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Method__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Precision__c</field>

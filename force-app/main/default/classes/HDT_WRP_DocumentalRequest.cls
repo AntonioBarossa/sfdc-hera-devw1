@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public class HDT_WRP_DocumentalRequest{
     public HDT_WRP_DocumentalDeliverPackageRequest deliverPackageRequest;
 	

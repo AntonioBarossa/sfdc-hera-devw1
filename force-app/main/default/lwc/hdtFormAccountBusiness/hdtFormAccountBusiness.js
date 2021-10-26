@@ -395,9 +395,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
     handleSave(){
 
-        let isValidated= true;
-        let businessName =this.template.querySelector('[data-id="businessName"]');
-        let vatNumber =this.template.querySelector('[data-id="vatNumber"]');
+        var isValidated= true;
+        var businessName =this.template.querySelector('[data-id="businessName"]');
+        var vatNumber =this.template.querySelector('[data-id="vatNumber"]');
         this.personFiscalCode= this.template.querySelector('[data-id="personFiscalCode"]');
         let prefixPhoneNumber = this.template.querySelector('[data-id="phonePrefix2"]');
         let phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
@@ -439,9 +439,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
         this.birthPlace= this.template.querySelector('[data-id="birthPlace"]').value;
         this.spinner= true;
-        let messageError= "Completare tutti i campi obbligatori !";
+        var messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
-        let dataAccount;
+        var dataAccount;
+        console.log('@@@@ fiscalCode'+fiscalCode.value);
+        if ((this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')) && (fiscalCode.value== undefined||fiscalCode.value.trim()=='')) {
+          
+          
+           console.log('@@@@ Marcatura'+this.markingValue);
+            if(!fiscalCode.reportValidity()){
+                isValidated=false;
+            }
+           
+        }
         if(this.markingValue === undefined || !this.markingValue=='Ditta individuale'){
             if(!businessName.reportValidity()){
                 isValidated=false;
@@ -603,7 +613,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             isValidated=false;
         }
         console.log("LOG7");
-        if(isValidated){
+       if(isValidated){
             console.log("LOG8");
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             this.getAccountAdress();

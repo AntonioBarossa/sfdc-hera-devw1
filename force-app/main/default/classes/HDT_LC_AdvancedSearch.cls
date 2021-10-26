@@ -154,24 +154,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 			ac = qr.getBillingAddressAccount(accountId);
 		}
 		
-		// List<Map<String,Object>> customBp = new List<Map<String,Object>>(); // !Unused Variables
 		if(ac!= null){
-		/*for (BillingProfile__c BillingProfile : listBp) {
-          
-			
-				String value = BillingProfile.InvoicingAddressFormula__c;
-				String label = '';
-
-				row.put(label,value);
-			
-            customBp.add(row);
-		}*/
-
-	
-		// Map<String,Object> row = new Map<String, Object>(); // !Unused Variables
-
-		// String value ; // !Unused Variables
-		// String label = ' '; // !Unused Variables
 
 		if(ac.BillingCity != null){
 			
@@ -439,16 +422,13 @@ public with sharing class HDT_LC_AdvancedSearch {
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
 
-		// List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid); // !Unused Variables
 		List<Contract> contracts  = new List<Contract>();
-		//if additionalFilter vuoto chiami getAccountContracts
 		
 		if(additionalFilter== null ||additionalFilter== ''){
 			contracts = contractQr.getAccountContracts(fieldContract,accountid);
 		}else{
 			
 			contracts = contractQr.getAccountContractsWithFilter(fieldContract,accountId,additionalFilter); 
-			//else chiami getAccountContractWithFilter(accountId,additionalFilter) 
 		}
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		if(!contracts.isEmpty()){
@@ -488,28 +468,16 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 		return customSp;
 		
-        /*List<Map<String,String>> customContracts = new List<Map<String,String>>();
-		for (Contract contract : contracts) {
-            Map<String,String> row = new Map<String, String>();
-            row.put('Contract Number',contract.SAPContractCode__c );
-            row.put('Account Name',contract.Account.Name);
-            row.put('Service Point',mapSubscriptions.get(contract.Id));
-            row.put('Status',contract.Status);
-			customContracts.add(row);
-		}
-		return customContracts;*/
 	}
 
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String,String>> getContractsBackup(String accountid,String additionalFilter) {
 		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 		List<Contract> contracts  = new List<Contract>();
-		//if additionalFilter vuoto chiami getAccountContracts
 		if(additionalFilter== null ||additionalFilter== ''){
 			contracts = contractQr.getAccountContracts(accountid);
 		}else{
 			contracts = contractQr.getAccountContractsWithFilter(accountId,additionalFilter); 
-			//else chiami getAccountContractWithFilter(accountId,additionalFilter) 
 		}
 		
 		
@@ -579,7 +547,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
-		// List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid); // !Unused Variables
 
 		if(additionalFilter == null || additionalFilter== ''){
 			system.debug('entra in additionalFilter == null');
@@ -596,7 +563,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 			servicePointsCodes.add(s.ServicePointCode__c);
 		}
 		List<Contract> c = contractQr.getSapContractCode(servicePointsCodes);
-		// Integer i = 0; // !Unused Variables
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
@@ -656,7 +622,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 		system.debug('getForniture START');
 		system.debug('additionalFilter' + additionalFilter);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
-		// List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid); // !Unused Variables
 
 		if(additionalFilter == null || additionalFilter== ''){
 			system.debug('entra in additionalFilter == null');
@@ -704,36 +669,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 			}
 
 		
-		/*	
-		if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			spNew.MeterClass__c = mapRes.get('CALIBRO1');
-		}
-		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
-			spNew.RemiCode__c = mapRes.get('CODICEREMI');
-		}
-
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
-		}
-
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
-		}
-
-		if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
-			spNew.RequestPhase__c  = mapRes.get('FASE');
-		}
-
-		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
-			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
-		}
-
-		*/
-
-				//campi fornitura
-				// if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){ // !Empty block
-				// 	//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
-				// }
 		if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
 			spNew.ServicePointCode__c   = mapRes.get('POD');
 			spNew.Name   = mapRes.get('POD');
@@ -794,9 +729,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
 			spNew.SupplyStreet__c  = mapRes.get('VIA');
 		}
-	/*	if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
-			spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-		}*/
+
 		if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
 			spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
 		}
@@ -846,8 +779,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	
 
-//creare metodo per riempimento lista posizioni (response) e upsert punto di fornitura
-//CREARE OGGETTO WRAP
+
 public class HDT_WRP_FieldsObject {
 	@AuraEnabled public String statusCode{get;set;}
 	@AuraEnabled public String message{get;set;}
