@@ -101,8 +101,8 @@ public with sharing class HDT_LC_CambioUso {
            // c.DisconnectibilityType__c = srv[0].DisconnectibilityType__c;
             c.Note__c = note;
             System.debug('*****4:');
-           // c.phase__c = 'Da Inviare';
-           // c.status = 'In Lavorazione';
+            c.phase__c = 'Da Inviare';
+            c.status = 'In Lavorazione';
             caseSrv.updateRecord(c);
             
         }
