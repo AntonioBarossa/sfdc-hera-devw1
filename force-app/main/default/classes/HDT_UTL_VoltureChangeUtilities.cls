@@ -74,32 +74,87 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
      * Method that takes in input the tension number returned from the response
      * Returns the string value for the VoltageLevel__c field
      */
-    public String getTension(Integer tensionNumberValue)
+    @TestVisible
+    private String getTension(Integer tensionNumberValue)
     {
-        return tensionNumberValue <= btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
+        return tensionNumberValue > 0 && tensionNumberValue <= btLimit ? 'BT' /* If Tension value lower than bt limit : BT */ 
             : (btLimit < tensionNumberValue && tensionNumberValue <= mtLimit)
                 ? 'MT' /* If tension value between btLimit and mtLimit : MT */
                 : tensionNumberValue > mtLimit 
                     ? 'AT' : ''; /* If thension value greater than mtLimit: AT */
     }
 
+    /**@frpanico 26/10/2021
+     * Helper method for the get tension to make the Integer.valueOf fails in case of empty string
+     */
+    public String getTension(String tensionString)
+    {
+        Integer tensionNumberValue;
+        try
+        {
+            tensionNumberValue = Integer.valueOf(tensionString);
+        }
+        catch(Exception e)
+        {
+            tensionNumberValue = -1;
+        }
+        return getTension(tensionNumberValue);
+    } 
+
     /**@frpanico 21/10/2021
      * Added method to check for the power band
      * takes in input the power in decimal
      * return a string with the power band
      */
-    public String getPowerBand(Decimal power)
+    private String getPowerBand(Decimal power)
     {
-        return power <= lowerThreshold ? 'Fascia 1' : power > lowerThreshold && power <= higherThreshold ? 'Fascia 2' : 'Fascia 3';
+        return power < 0 ? '' : power <= lowerThreshold ? 'Fascia 1' : power > lowerThreshold && power <= higherThreshold ? 'Fascia 2' : 'Fascia 3';
     }
+    /**@frpanico 26/10/2021
+     * Helper method for the getPowerBand to make the Decimal.valueOf fails in case of empty string
+    */
+    public String getPowerBand(String powerString)
+    {
+        Decimal power;
+        try
+        {
+            power = Decimal.valueOf(powerString);
+        }
+        catch(Exception e)
+        {
+            power = -1;
+        }
+        return getPowerBand(power);
+    } 
 
     /**@frpanico 21/10/2021
-     * Method that takes in input the "expected" and "actual" power in decimal
+     * Method that takes in input the "expected" and "actual" power as strings
      * Returns true if the two power bands are equals
      */
-    public Boolean powerCheck(Decimal powerExpected, Decimal powerActual)
+    public Boolean powerCheck(String powerExpected, String powerActual)
     {
         return getPowerBand(powerExpected) == getPowerBand(powerActual);
+    }
+
+    /**#@frpanico 25/10/2021
+     * Method that performs the Address check
+     * Takes in input a Map<String,String>
+     * if a key differs from its value 
+     * the loop ends and false is returned
+     * true is returned otherwise
+     */
+    public Boolean addressCheck(Map<String,String> checkMap)
+    {
+        Boolean result = true;
+        for(String field : checkMap.keySet())
+        {
+            if(field != checkMap.get(field))
+            {   
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 
     /**@frpanico 21/10/2021

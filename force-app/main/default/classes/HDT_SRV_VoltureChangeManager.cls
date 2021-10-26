@@ -91,12 +91,14 @@ public with sharing class HDT_SRV_VoltureChangeManager
      */
     public void handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
     {
+        Map<String,Object> ammissibilityCheckMap = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, currentOrder);
         /**Execute the check and if its false creates the activity*/
-        if(!voltureChangeUtl.handleAmmissibilityCheck(paramsMap, currentOrder))
+        if(!(Boolean)ammissibilityCheckMap.get('result'))
         {
             wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
             if(activity != null)
             {
+                activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }

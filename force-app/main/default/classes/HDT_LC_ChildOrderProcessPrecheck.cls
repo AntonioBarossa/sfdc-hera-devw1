@@ -150,84 +150,36 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
         return servicePointList[0].RecordType.DeveloperName;
     }
-	
+	/**@frpanico 26/10/2021
+     * Modified method
+     * Instead of hardcoding and handling each single field of the response  
+     * An handler method is called
+     */
     @TestVisible
     private static Order callDataEnrichment(String servicePointCode, String contractCode, Order newOrder)
     {
-        try{
+        HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+        List<Order> orderList = new List<Order>();
+        try
+        {
             String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(servicePointCode, contractCode);
             List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
             positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
                     JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
             
-            for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
-                //@frpanico Accise
-                if(position.campo.equalsIgnoreCase('IMPOSTE')){
-                    String condition = position.valore;
-                    if(position.valore.equalsIgnoreCase('E_IMPOST')){
-                        condition = 'Imposta usi domestici';
-                    } 
-                    List<PicklistEntry> entryListEle =
-                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseEle__c').getDescribe().getPicklistValues();
-                    for(PicklistEntry entry : entryListEle){
+            Map<String,List<Object>> inputMap = new Map<String, List<Object>>
+            {
+                'posizioni' => positions,
+                'sobjList' => new List<Order>{newOrder}
+            };
 
-                        if(entry.getValue().containsIgnoreCase(condition)){
-            
-                            newOrder.ExciseEle__c = entry.getValue();                    
-                        }
-                    }
-                    List<PicklistEntry> entryListGas =
-                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('ExciseGAS__c').getDescribe().getPicklistValues();
-                    for(PicklistEntry entry : entryListGas){
+             orderList = voltureChangeSrv.handleResponseDataEnrichment(inputMap);
 
-                        if(entry.getValue().containsIgnoreCase(condition)){
-            
-                            newOrder.ExciseGAS__c = entry.getValue();                    
-                        }
-                    }
-                }
-                //@frpanico RateCategory
-                if(position.campo.equalsIgnoreCase('CATEGORIATARIFFA'))
-                {
-                    newOrder.RateCategory__c = position.valore;
-                }
-                //@frpanico Iva
-                if(position.campo.equalsIgnoreCase('ALIQUOTAIVA'))
-                {
-                    String condition = position.valore;
-                    List<PicklistEntry> entryList =
-                    ((SObject) (Type.forName('Schema.Order').newInstance())).getSobjectType().getDescribe().fields.getMap().get('VAT__c').getDescribe().getPicklistValues();
-                    for(PicklistEntry entry : entryList){
-
-                        if(entry.getValue().containsIgnoreCase(condition)){
-            
-                            newOrder.VAT__c = entry.getValue();                    
-                        }
-                    }
-                }
-                //@frpanico CodiceAteco
-                if(position.campo.equalsIgnoreCase('CODICE_ATECO'))
-                {
-                    newOrder.AtecoCode__c = position.valore;
-                }
-                //@frpanico AddizionaleRegionale
-                if(position.campo.equalsIgnoreCase('ADDIZIONALEREGIONALE'))
-                {
-                    try
-                    {
-                        newOrder.RegionalAdditional__c = Decimal.valueOf(position.valore);
-                    }
-                    catch(Exception e)
-                    {
-                        System.debug('Exception : ' + e.getMessage() + ' at line: ' + e.getLineNumber());
-                    }
-                }
-            }
         } catch(Exception e){
-            System.debug('Arricchimento Dati fallito -> ' +e.getMessage());
+            return newOrder;
         } 
 
-        return newOrder;
+        return orderList[0];
     }
 
     @AuraEnabled
