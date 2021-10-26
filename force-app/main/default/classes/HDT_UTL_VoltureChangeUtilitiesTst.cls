@@ -252,4 +252,12 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         System.assert( (Decimal)resultMap.get('RegionalAdditional__c') > 0,'Mappa non calcolata correttamente');
     }
 
+    @IsTest
+    static void getPicklistValueTst()
+    {
+        Test.startTest();
+        String result = voltureChangeUtilities.getPicklistValue('E_IMPOST', 'Order', 'ExciseEle__c');
+        Test.stopTest();
+        System.assertEquals('Imposta usi domestici', result, 'Valore picklist errato');
+    }
 }

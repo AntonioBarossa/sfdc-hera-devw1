@@ -8,6 +8,9 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
      * Covers only one test case to achieve target coverage
      */
 
+    private static HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
+    private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
+
     @TestSetup
     static void setup()
     {
@@ -33,6 +36,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         //List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, priceBookList[0].Id);
         childOrderList[0].Pricebook2Id = priceBookId;
         childOrderList[0].ProcessType__c = 'Switch in Ele';
+        childOrderList[0].ServicePoint__c = spList[0].Id;
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,pbEntry.Id);
         
@@ -45,9 +49,6 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
     @IsTest
     static void cloneOrderAndUpdateTst()
     {
-        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
-        HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
-
         List<Order> orderList = [SELECT Id, 
         ParentOrder__c,
         Name,
@@ -96,8 +97,6 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
     @IsTest
     static void handleResponseTst()
     {
-        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
-
         List<Order> orderList = [SELECT Id, 
         ParentOrder__c,
         Name,
@@ -236,8 +235,6 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
     @IsTest
     static void handleAmmissibilityCheckActivityCreationTst()
     {
-        HDT_SRV_VoltureChangeManager voltureManager = new HDT_SRV_VoltureChangeManager();
-
         List<Order> orderList = [SELECT Id, 
         ParentOrder__c,
         Name,
@@ -303,9 +300,77 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         voltureManager.handlePublishUpdate(orderList[0]);
         Test.stopTest();
 
-        List<Order> orderListUpdated = [Select Id,Phase__c FROM Order WHERE Id = :orderList[0].Id];
+        List<Order> orderListUpdated = [SELECT Id,Phase__c FROM Order WHERE Id = :orderList[0].Id];
 
         System.assertEquals(HDT_SRV_VoltureChangeManager.publishUpdatePhase, orderListUpdated[0].Phase__c,'Fase non correttamente aggiornata');
+    }
+
+    @IsTest
+    static void handleResponseDataEnrichmentTst()
+    {
+        List<Order> orderList = [SELECT Id, 
+        ParentOrder__c,
+        Name,
+        EffectiveDate,
+        EffectiveDate__c,
+        RecessNotice__c,
+        AccountId,
+        EstimateAmount__c,
+        PowerQuote__c,
+        AdministrativeBurden__c,
+        EstimatedVAT__c,
+        ValidityDateEstimate__c,
+        CIAccoutn__c,
+        QuickQuote__c,
+        ChamberCommerceRegistration__c,
+        Instance326__c,
+        DocumentLow80__c,
+        ContractSigned__c,
+        SignedDate__c,
+        SignatureMethod__c,
+        DocSendingMethod__c,
+        Sale__c,
+        Pricebook2Id,
+        Contact__c,
+        VoltageLevel__c,
+        PowerAvailable__c,
+        PowerCommitted__c,
+        CommodityFormula__c
+        FROM Order WHERE ParentOrder__c != null];
+
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = new  List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posImposte = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni();
+        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posAteco = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni();
+        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posAddReg = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni();
+        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posAnnCons = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni();
+        posImposte.campo = 'IMPOSTE';
+        posImposte.valore = 'E_IMPOST';
+        posAteco.campo = 'CODICE_ATECO';
+        posAteco.valore = '9999';
+        posAddReg.campo = 'ADDIZIONALEREGIONALE';
+        posAddReg.valore = '0.34';
+        posAnnCons.campo = 'CONSUMOANNUOEE';
+        posAnnCons.valore = '1000';
+        posizioni.add(posImposte);
+        posizioni.add(posAteco);
+        posizioni.add(posAddReg);
+        posizioni.add(posAnnCons);
+
+
+        Map<String,List<Object>> inputMap = new Map<String,List<Object>>
+        {
+            'posizioni' => posizioni,
+            'sobjList' => orderList
+        };
+
+        Test.startTest();
+        orderList = voltureManager.handleResponseDataEnrichment(inputMap);
+        Test.stopTest();
+
+        System.assertEquals(0.34, orderList[0].RegionalAdditional__c, 'Arricchimento fallito');
+        System.assertEquals('9999', orderList[0].AtecoCode__c, 'Arricchimento fallito');
+        System.assertEquals('Imposta usi domestici', orderList[0].ExciseEle__c, 'Arricchimento fallito');
+        System.assertEquals(1000, orderList[0].AnnualConsumption__c, 'Arricchimento fallito');
     }
 
 }

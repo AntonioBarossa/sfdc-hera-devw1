@@ -200,6 +200,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
      * Handle single field of the Data Enrichment Response
      * Takes as input the current "config" and the current "posizione"
      */
+    @TestVisible
     private Object handleDataEnrichmentConfig(HDT_GenericDataEnrichmentTranscode__mdt config, HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione)
     {
         Object result;
@@ -217,12 +218,13 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             result = posizione.valore;
         }
 
-        return null;
+        return result;
     }
 
     /**@frpanico 25/10/2021
      * Dispatch the Method__c field of the Generic Data Enrichment Configurations
      */
+    @TestVisible
     private String methodDispatcher(HDT_GenericDataEnrichmentTranscode__mdt config, HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione)
     {
         String result = '';
@@ -240,6 +242,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
     /**@frpanico 25/10/2021
      * Handle number fields from the data enrichment response
      */
+    @TestVisible
     private Object numberDispatcher(Integer precision, HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione)
     {
         if(precision > 0)

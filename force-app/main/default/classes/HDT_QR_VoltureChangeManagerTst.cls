@@ -154,4 +154,16 @@ public with sharing class HDT_QR_VoltureChangeManagerTst {
 
         System.assertEquals(1, orderTestList.size(), 'Record non trovati');
     }
+
+    @IsTest
+    static void getDataEnrichmentTranscodeByObjectNameTst()
+    {
+        Test.startTest();
+        List<HDT_GenericDataEnrichmentTranscode__mdt> results = voltureChangeQr.getDataEnrichmentTranscodeByObjectName(new List<String>{'Order'});
+        Test.stopTest();
+
+        System.assert(results.size() > 0, 'Record non trovati');
+    }
+
+
 }

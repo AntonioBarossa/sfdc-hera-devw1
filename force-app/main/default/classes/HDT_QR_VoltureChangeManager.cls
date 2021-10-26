@@ -262,7 +262,8 @@ public with sharing class HDT_QR_VoltureChangeManager {
             IsNumber__c,
             Precision__c,
             Commodity__c,
-            CommodityField__c
+            CommodityField__c,
+            ObjectName__c
             FROM HDT_GenericDataEnrichmentTranscode__mdt
             WHERE ObjectName__c IN :objectNameList]);
         
