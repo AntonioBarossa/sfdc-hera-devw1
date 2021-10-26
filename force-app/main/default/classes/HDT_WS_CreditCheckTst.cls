@@ -16,8 +16,8 @@ private class HDT_WS_CreditCheckTst {
     static void testCallService() {
 
 
-        Test.startTest();
         Test.setMock(HttpCalloutMock.class, new HDT_WS_CreditCheckHttpCalloutMock()); 
+        Test.startTest();
 
         String wrpVals = '{\n' +
         ' "sistema" :"sistema",\n' +
@@ -56,9 +56,8 @@ private class HDT_WS_CreditCheckTst {
 
         '}';
 
-
-
-        HDT_WS_CreditCheckResponse creditCheckResponse= HDT_WS_CreditCheck.callService(wrpVals);
+        HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
+        HDT_WS_CreditCheckResponse creditCheckResponse = HDT_WS_CreditCheck.callService(req);
         
         Test.stopTest();
     

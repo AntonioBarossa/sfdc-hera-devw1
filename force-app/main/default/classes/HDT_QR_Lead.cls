@@ -38,7 +38,7 @@ public  inherited sharing class HDT_QR_Lead {
         return Database.query(String.escapeSingleQuotes(query));
 
     }
-    public static List<Lead> getCurrentRecords(String name,String lastname,String owner ){
+    public static List<Lead> getCurrentRecords(Lead CurrentLead ){
         return [SELECT Id, IsDeleted, MasterRecordId, LastName, FirstName, Salutation, Name, RecordTypeId, Title, Company, 
         Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Address, Phone, MobilePhone, Fax, 
         Email, Website, PhotoUrl, Description, LeadSource, Status, Industry, Rating, AnnualRevenue, NumberOfEmployees,
@@ -64,8 +64,7 @@ public  inherited sharing class HDT_QR_Lead {
         individual.MarketingPrivacyVersion__c,individual.PrivacyMarketingChoiceDate__c,individual.PrivacyMarketingChoiceSource__c,individual.MarketingCompanyConsent__c,
         individual.PrivacyMarketingConsentInitiative__c,individual.ProfilingPrivacy__c,individual.ProfilingPrivacyVersion__c,individual.PrivacyProfilingChoiceDate__c,
         individual.PrivacyProfilingChoiceSource__c,individual.ProfilingCompanyConsent__c,individual.PrivacyProfilingConsentInitiative__c  FROM Lead 
-        WHERE FirstName=:name AND LastName=:lastname AND CompanyOwner__c=:owner
-        
+        WHERE FirstName=:CurrentLead.FirstName AND LastName=:CurrentLead.LastName AND CompanyOwner__c=:CurrentLead.CompanyOwner__c AND (MobilePhone=:CurrentLead.MobilePhone OR Phone =: CurrentLead.Phone OR Email=:CurrentLead.Email )
         WITH SECURITY_ENFORCED];
     }
 

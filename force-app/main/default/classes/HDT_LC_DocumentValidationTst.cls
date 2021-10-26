@@ -34,7 +34,7 @@ public with sharing class HDT_LC_DocumentValidationTst {
 
     @isTest
     static void testSaveValidationSucess(){
-        Order ord = [SELECT id, Instance326__c, DocumentLow80__c, ChamberCommerceRegistration__c, AutorizationVolturaThirdTrader__c, CIAccoutn__c, QuickQuote__c,Phase__c From Order LIMIT 1];
+        Order ord = [SELECT id, Instance326__c, DocumentLow80__c, ChamberCommerceRegistration__c, AutorizationVolturaThirdTrader__c, CIAccoutn__c, QuickQuote__c,Phase__c,DocumentPackage__c From Order LIMIT 1];
         
         Test.startTest();   
             HDT_LC_DocumentValidation.saveValidation(ord);
