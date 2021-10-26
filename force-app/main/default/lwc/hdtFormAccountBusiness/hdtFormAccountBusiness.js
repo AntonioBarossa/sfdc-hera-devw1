@@ -399,9 +399,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let businessName =this.template.querySelector('[data-id="businessName"]');
         let vatNumber =this.template.querySelector('[data-id="vatNumber"]');
         this.personFiscalCode= this.template.querySelector('[data-id="personFiscalCode"]');
-        let prefixPhoneNumber = this.phonePrefixValue2;
+        let prefixPhoneNumber = this.template.querySelector('[data-id="phonePrefix2"]');
         let phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
-        let prefixMobilePhoneNumber = this.mobilephonePrefix2;
+        let prefixMobilePhoneNumber = this.template.querySelector('[data-id="mobilephonePrefix2"]');
         let mobilephoneNumber= this.template.querySelector('[data-id="mobilePhoneNumber"]');
         let contactPhoneNumber =this.template.querySelector('[data-id="contactPhoneNumber"]');
         let customerMarking =this.template.querySelector('[data-id="customerMarking"]');
@@ -656,8 +656,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "category" : category.value,
                             "firstIndividualName" : firstIndividualName.value,
                             "lastIndividualName" : lastIndividualName.value,
-                            "prefixPhoneNumber" : prefixPhoneNumber,
-                            "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+                            "prefixPhoneNumber" : prefixPhoneNumber.value,
+                            "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                             "mobilephoneNumber" : mobilephoneNumber.value,
                             "phoneNumber" : phoneNumber.value,
                             "email" : email.value,
@@ -745,8 +745,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "email" : email.value,
                         "electronicMail" : electronicMail.value,
                         "numberFax" : numberFax.value,
-                        "prefixPhoneNumber" : prefixPhoneNumber,
-                        "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+                        "prefixPhoneNumber" : prefixPhoneNumber.value,
+                        "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                         "mobilephoneNumber" : mobilephoneNumber.value,
                         "firstName" : firstName.value,
                         "gender" : this.gender,
