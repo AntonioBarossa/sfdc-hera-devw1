@@ -1825,6 +1825,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountStatementFilter__c.SocialBonus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountStatementFilter__c.UpsertKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
