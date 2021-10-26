@@ -35049,7 +35049,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ComfortQualityCall__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>

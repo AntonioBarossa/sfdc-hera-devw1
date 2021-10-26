@@ -96,8 +96,4 @@
         <object>ComfortQualityCall__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabVisibilities>
-        <tab>ComfortQualityCall__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
 </PermissionSet>
