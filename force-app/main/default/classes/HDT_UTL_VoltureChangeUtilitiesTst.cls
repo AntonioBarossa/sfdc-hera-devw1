@@ -206,4 +206,58 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         System.assert(activity != null, 'Activity non creata correttamente');
     }
 
+    @IsTest
+    static void checkRatesEmptyTst()
+    {
+        Map<String, Object> currentRates = new Map<String,Object>
+        {
+            'VAT__c' => '',
+            'ExciseEle__c' => ''
+        };
+        Map<String, Object> toUpdateRates = new Map<String, Object>
+        {
+            'VAT__c' => 'Iva 22% (Cod. 02)',
+            'ExciseEle__c' => 'Imposta usi domestici'
+        };
+
+        Test.startTest();
+        Map<String,Object> resultMap = voltureChangeUtilities.checkRates(currentRates, toUpdateRates);
+        Test.stopTest();
+
+        System.assertequals(0, resultMap.get('ExciseRate__c'),'Mappa non calcolata correttamente');
+    }
+
+    
+    @IsTest
+    static void checkRatesTst()
+    {
+        Map<String, Object> currentRates = new Map<String,Object>
+        {
+            'VAT__c' => 'Iva 22% (Cod. 02)',
+            'ExciseEle__c' => 'Imposta usi domestici',
+            'RegionalAdditional__c' => 12.0
+        };
+        Map<String, Object> toUpdateRates = new Map<String, Object>
+        {
+            'VAT__c' => '',
+            'ExciseEle__c' => ''
+            
+        };
+
+        
+        Test.startTest();
+        Map<String,Object> resultMap = voltureChangeUtilities.checkRates(currentRates, toUpdateRates);
+        Test.stopTest();
+
+        System.assert( (Decimal)resultMap.get('RegionalAdditional__c') > 0,'Mappa non calcolata correttamente');
+    }
+
+    @IsTest
+    static void getPicklistValueTst()
+    {
+        Test.startTest();
+        String result = voltureChangeUtilities.getPicklistValue('E_IMPOST', 'Order', 'ExciseEle__c');
+        Test.stopTest();
+        System.assertEquals('Imposta usi domestici', result, 'Valore picklist errato');
+    }
 }

@@ -123,4 +123,41 @@ public with sharing class HDT_SRV_VoltureChangeManager
         }
     }
 
+    /**@frpanico 25/10/2021
+     * Metodo che gestisce la risposta dell'arricchimento dati
+     * esegue la query sul metadato di configurazione
+     * richiama poi i metodi da utilizzare
+     * Prende in input una mappa Map<String,List<Object>> dove gli argomenti sono:
+     * List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> risposta dell'arricchimento
+     * List<SObject> dove vengono passati gli SObject da arricchire
+     * Ritorna in output gli SObject arricchiti
+     */
+    public List<SObject> handleResponseDataEnrichment(Map<String,List<Object>> inputMap)
+    {
+        /* Variable declaration */
+        List<String> objectNameList = new List<String>();
+        Map<String,Object> inputMapSingleSobj = new Map<String,Object>();
+        List<HDT_GenericDataEnrichmentTranscode__mdt> transcodeConfigs = new List<HDT_GenericDataEnrichmentTranscode__mdt>();
+        /* Get input variable */
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = 
+            (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)inputMap.get('posizioni');
+        List<SObject> sobjList = (List<SObject>)inputMap.get('sobjList');
+        /* Enrich SobjName List */
+        for(SObject sobj : sobjList)
+        {
+            objectNameList.add(sobj.getSObjectType().getDescribe().getName());
+        }
+        /* Retrieve Configs */
+        transcodeConfigs = voltureChangeQr.getDataEnrichmentTranscodeByObjectName(objectNameList);
+        /* Populate input map for single sobj enrichment */
+        inputMapSingleSobj.put('posizioni', JSON.serialize(posizioni));
+        inputMapSingleSobj.put('configs', JSON.serialize(transcodeConfigs));
+        /* Enrich Data */
+        for(SObject sobj : sobjList)
+        {   
+            inputMapSingleSobj.put('sobj', sobj);
+            sobj = voltureChangeUtl.enrichSobj(inputMapSingleSobj);
+        }
+        return sobjList;
+    }
 }
