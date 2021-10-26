@@ -197,7 +197,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             return returnMap;
         }
         returnMap.put('message', '');
-        returnMap.put('result','');
+        returnMap.put('result',true);
         return returnMap;
     
     }
