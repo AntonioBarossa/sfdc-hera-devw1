@@ -472,7 +472,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @return List<SBQQ__QuoteLine__c>
     */
     public List<SBQQ__QuoteLine__c> getRecordsByContractAndProductPod(String contractId, String saleId){
-
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         return [
             SELECT
             Id,
@@ -485,7 +485,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.ContractReference__c = :contractId
             AND SBQQ__Quote__r.Sale__c = :saleId
-            AND (SBQQ__Product__r.Name IN ('PDR','POD') OR SBQQ__Product__r.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto'))
+            AND (SBQQ__Product__r.Name IN ('PDR','POD') OR SBQQ__Product__r.Family IN :famils)
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];

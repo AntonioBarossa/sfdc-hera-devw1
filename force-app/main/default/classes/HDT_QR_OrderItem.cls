@@ -107,8 +107,8 @@ public inherited sharing class HDT_QR_OrderItem {
     */
     public List<OrderItem> getRecordsWithAmend(List<Id> listOrderId){
         Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
-        famils.add('VAS Prodotto');
-        famils.add('VAS Servizio');
+        //famils.add('VAS Prodotto');
+        //famils.add('VAS Servizio');
         return [
             SELECT 
             OrderId,
