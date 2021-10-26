@@ -541,7 +541,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
 
         if(!isVasAndCommodity){
-            callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
+            callServiceCreditCheck({req: wrp})
             .then(result => {
                 console.log('result callServiceCreditCheck ---> : ');
                 console.log(JSON.parse(JSON.stringify(result)));

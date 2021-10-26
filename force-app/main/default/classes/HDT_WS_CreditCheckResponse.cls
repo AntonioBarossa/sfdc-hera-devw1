@@ -13,9 +13,7 @@ public class HDT_WS_CreditCheckResponse extends HDT_WS_Response {
 
     public HDT_WS_CreditCheckResponse(){
         this.data =  new HDT_WRP_dataResponseObject();
-        this.errorDetails = new List<HDT_WRP_errorResponseObject>();  
-        system.debug('HDT_WS_CreditCheckResponse - HDT_WS_CreditCheckResponse: data ----> ' + JSON.serialize(this.data));   
-        system.debug('HDT_WS_CreditCheckResponse - HDT_WS_CreditCheckResponse: errorDetails ----> ' + JSON.serialize(this.errorDetails));   
+        this.errorDetails = new List<HDT_WRP_errorResponseObject>();
      }
 
      public class HDT_WRP_DataResponseObject{
