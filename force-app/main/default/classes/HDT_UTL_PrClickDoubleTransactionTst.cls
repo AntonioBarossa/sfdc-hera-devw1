@@ -29,10 +29,7 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
-            List<Order> orders  = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
-          
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();          
-
+            HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
         }
     }
     
@@ -52,6 +49,7 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
         
         HDT_UTL_PrClickDoubleTransaction pdt = new HDT_UTL_PrClickDoubleTransaction();
         Object result = pdt.execute(args);
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
                
         Test.stopTest();
         

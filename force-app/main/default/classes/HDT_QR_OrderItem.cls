@@ -106,16 +106,20 @@ public inherited sharing class HDT_QR_OrderItem {
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsWithAmend(List<Id> listOrderId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        famils.add('VAS Prodotto');
+        famils.add('VAS Servizio');
         return [
             SELECT 
             OrderId,
-            BillingProfile__c
+            BillingProfile__c,
+            ServicePoint__c
             FROM 
             OrderItem 
             WHERE
             OrderId IN :listOrderId  
             AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
-            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto', 'VAS Servizio'))
+            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN :famils)
             WITH SECURITY_ENFORCED
         ];
     }
@@ -189,7 +193,7 @@ public inherited sharing class HDT_QR_OrderItem {
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
-            AND Product2.Name = 'Analisi Consumi'
+            AND Product2.Family = 'VAS Fatturabili'
             WITH SECURITY_ENFORCED
         ];
     }
