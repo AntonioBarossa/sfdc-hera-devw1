@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_PostSalesManager {
 
     public Integer checkLocalDispatcher(String dispatcherName){
@@ -35,7 +36,7 @@ public inherited sharing class HDT_QR_PostSalesManager {
             WITH SECURITY_ENFORCED
             LIMIT 1];
         } catch(Exception e){
-            System.debug('HDT_QR_PostSalesManage Exception -> ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'HDT_QR_PostSalesManage Exception -> ' + e.getMessage());
         }
         return c;
     }

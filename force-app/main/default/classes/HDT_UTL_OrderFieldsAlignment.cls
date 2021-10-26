@@ -254,8 +254,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             changeCustomerMarking(account);
         }
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
-        String customerName = null;
-        String customerLastName = null;
+        // String customerName = null;
+        // String customerLastName = null;
         // if(toCheck.vat__c == null || toCheck.vat__c == ''){
             if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
                 orderToUpdate.CustomerCompanyName__c = account.LastName__c;
@@ -374,6 +374,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
 
         if (!mainItems.isEmpty()) {
+            system.debug('ivaste 1');
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
@@ -381,12 +382,20 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.VASSubtype__c=mainItems[0].Product2.Name.abbreviate(30);
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
             orderToUpdate.VASBillingMode__c= mainItems[0].VASBillingMode__c;
-            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
+            Id idToFilter = mainItems[0]?.SBQQ__QuoteLine__r?.ServicePointLinkItem__r?.ServicePoint__c;
+            system.debug('ivaste 2 '+idToFilter);
+            idToFilter= idToFilter!=null? idToFilter : mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c;
+            system.debug('ivaste 3'+idToFilter);
+            if(orderToUpdate.isVas__c && originalOrder.OrderReference__c==null && idToFilter!=null){
                 //fai il match con l'orderItem di tipo pod che ha lo stesso quote
-                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0].SBQQ__QuoteLine__r.SBQQ__RequiredBy__c);
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, idToFilter);
                 if(!orderItemsPod.isEmpty()){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                    orderToUpdate.ServicePointCode__c=orderItemsPod[0].Order?.ServicePoint__r?.ServicePointCode__c;
                 }
+            }else if(originalOrder.OrderReference__c!=null || originalOrder.ContractReference__c!=null){
+                Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
+                orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
             }
         }
     }
@@ -478,8 +487,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             if(mixedData.quoteAmendmentAllow && mixedData.servicePointStatus.equals('Attivo')){
                 //only for Amend Bonus
                 orderToUpdate.ConfirmCustomerContract__c=mixedData.contrNumb;
-                orderToUpdate.BillingProfile__c=mixedData.billProf;
-                if(orderToUpdate.BillingProfile__c!=null){
+                if(orderToUpdate.BillingProfile__c==null && mixedData.billProf!=null){
+                    orderToUpdate.BillingProfile__c=mixedData.billProf;
                     alignBillingProfileFields(orderToUpdate, orderToUpdate.BillingProfile__c);
                 }
             }

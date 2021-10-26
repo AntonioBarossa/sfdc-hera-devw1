@@ -45,7 +45,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         o.VATfacilitationFlag__c = flagVat; 
         orderSrv.updateRecord(o);
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-        String res = '';
+        // String res = '';
         ID recTypeId;
         if(rc !=null){
             recTypeId= rc.Id;
@@ -70,7 +70,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
-            Order oldOrder = orderQr.getRecordById(order.Id);
+            // Order oldOrder = orderQr.getRecordById(order.Id);
             //@frpanico check "Cambio contatore non registrato"
             if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
             {
@@ -122,9 +122,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
-        Date tempStart = order.TemporaryConnectionStartDate__c;
-        Date tempEnd = order.TemporaryConnectionEndDate__c;
-        Boolean tempDate = tempEnd < tempStart;
+        // Date tempStart = order.TemporaryConnectionStartDate__c;
+        // Date tempEnd = order.TemporaryConnectionEndDate__c;
+        // Boolean tempDate = tempEnd < tempStart;
 
         if(order.TemporaryConnectionStartDate__c != null 
         && order.TemporaryConnectionEndDate__c != null
@@ -240,7 +240,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug(metas);
             if(!metas?.isEmpty()){
                 wrp.quoteType= metas[0].QuotationType__c;  
-                Integer code = Integer.valueOf(metas[0].OperationCode__c);
+                // Integer code = Integer.valueOf(metas[0].OperationCode__c);
                 wrp.quoteCode=formatCode(metas[0].OperationCode__c);        
             }
         } catch (Exception e) {

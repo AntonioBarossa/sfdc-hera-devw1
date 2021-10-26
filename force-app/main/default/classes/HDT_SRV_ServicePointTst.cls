@@ -161,7 +161,7 @@ public with sharing class HDT_SRV_ServicePointTst {
                 System.debug(e);
             }
 
-            List<ServicePoint__c> spCheckList = [SELECT Id FROM ServicePoint__c WHERE Name = 'testServicePoint0'];
+            List<ServicePoint__c> spCheckList = [SELECT Id FROM ServicePoint__c WHERE Name = 'ServicePointTest'];
  
             Test.stopTest();
 

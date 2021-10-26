@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public class HDT_WRP_AccountStatement {
 
     public class HDT_WRP_ConfTabObjDetail {
@@ -18,6 +19,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String parameters;
         @AuraEnabled public String accesskey;
         
+        @SuppressWarnings('PMD.ExcessiveParameterList')
         public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp){
             label = labelTemp;
             name = nameTemp;
@@ -25,6 +27,8 @@ public class HDT_WRP_AccountStatement {
             type = typeTemp;
             parameters = parametersTemp;
         }
+        
+        @SuppressWarnings('PMD.ExcessiveParameterList')
         public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp, String accesskeyTemp){
             label = labelTemp;
             name = nameTemp;

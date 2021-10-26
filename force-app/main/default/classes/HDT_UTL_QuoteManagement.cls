@@ -1,5 +1,10 @@
 public inherited sharing class HDT_UTL_QuoteManagement {
 
+	//DATA
+	private static String check;
+	
+	
+	//METODI
     @InvocableMethod
     public static List<QuoteManagement__c> addRequiredInformation(List<HDT_UTL_FlowInputs> inputs){
 		//System.debug('dentro classe' + inputs);
@@ -29,6 +34,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType);
 	}
 	
+	@SuppressWarnings('PMD.CyclomaticComplexity')
 	private static QuoteManagement__c menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
 
 		//@frpanico unused variables seller, supplyType fix
@@ -168,8 +174,6 @@ public inherited sharing class HDT_UTL_QuoteManagement {
         return result;
 
 	}
-	
-	private static String check;
 	
     public class HDT_UTL_FlowInputs{
 

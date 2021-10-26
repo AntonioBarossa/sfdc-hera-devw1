@@ -21,6 +21,7 @@ public with sharing class HDT_UTL_CampaignMemberTst {
 
         User internalUser2 = HDT_UTL_DataFactoryTst.createInternalUser(profileId, false);
         internalUser2.Alias = 'standard';
+        internalUser2.Username = internalUser2.Username + '2';
 
         insert new List<User>{internalUser, internalUser2};
 
@@ -36,10 +37,10 @@ public with sharing class HDT_UTL_CampaignMemberTst {
             List<Lead> lead = HDT_UTL_DataFactoryTst.createLead(2, true);
             List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
             List<Contact> ctt = HDT_UTL_DataFactoryTst.createContact(2, true, acc[0].Id);
-            List<CampaignMemberAssigmentItem__c> cmai = HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, acc.get(0).Id, cma.Id, 'Preview', 50.0);
+            HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true, acc.get(0).Id, cma.Id, 'Preview', 50.0);
 
-            List<CampaignMember> cmb = HDT_UTL_DataFactoryTst.createCampaignMember(1, false, cp.get(0).Id, lead.get(0).Id, ctt.get(0).Id);
-            cmb.addAll(HDT_UTL_DataFactoryTst.createCampaignMember(1, false, cp.get(0).Id, lead.get(1).Id, ctt.get(1).Id));
+            List<CampaignMember> cmb = HDT_UTL_DataFactoryTst.createCampaignMember(false, cp.get(0).Id, new List<Lead>{lead.get(0)}, new List<Contact>{ctt.get(0)});
+            cmb.addAll(HDT_UTL_DataFactoryTst.createCampaignMember(false, cp.get(0).Id, new List<Lead>{lead.get(1)}, new List<Contact>{ctt.get(1)}));
 
             cmb.get(0).Agency__c = acc.get(0).Id;
             cmb.get(1).Agency__c = acc.get(0).Id;
@@ -184,11 +185,21 @@ public with sharing class HDT_UTL_CampaignMemberTst {
         system.runAs(u) {
 
             Campaign cmp = [SELECT Id  FROM Campaign LIMIT 1];
-            Lead ld = [SELECT Id  FROM Lead LIMIT 1];
-            Contact con = [SELECT Id  FROM Contact LIMIT 1];
             Account acc = [SELECT Id FROM Account LIMIT 1];
             
-            List<CampaignMember> testMembers = HDT_UTL_DataFactoryTst.createCampaignMember(5, false, cmp.Id, ld.Id, con.Id);
+            List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(5, true, acc.Id);
+            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(5, false);
+            leads.get(0).LastName = 'ln';
+            leads.get(0).FirstName = 'fn';
+            leads.get(0).Email = 'em@lead.com';
+            leads.get(1).LastName = 'ln2';
+            leads.get(1).FirstName = 'fn2';
+            leads.get(1).Email = 'em2@lead.com';
+
+            insert leads;
+
+
+            List<CampaignMember> testMembers = HDT_UTL_DataFactoryTst.createCampaignMember(false, cmp.Id, leads, contacts);
 
             // for (CampaignMember cmb : testMembers) {
             //     cmb.Agency__c = acc.Id;

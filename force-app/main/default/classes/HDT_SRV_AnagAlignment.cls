@@ -1,6 +1,7 @@
 /*
  * Classe che centralizza l'innesco del processo di Allineamento Anagrafica.
  */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_SRV_AnagAlignment {
     
     // I possibili contesti di innesco di un Allineamento Anagrafica.
@@ -63,25 +64,29 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         Case anagAlignCase = new Case();
 
         if (herokuWrapper == null) {
-            System.debug('HDT_WRP_HerokuPostSalesManager null in input.');
+            System.debug(LoggingLevel.DEBUG, 'HDT_WRP_HerokuPostSalesManager null in input.');
             return anagAlignCase;
         }
 
         if (herokuWrapper.responseMap == null) {
-            System.debug('HDT_WRP_HerokuPostSalesManager null responseMap.');
+            System.debug(LoggingLevel.DEBUG, 'HDT_WRP_HerokuPostSalesManager null responseMap.');
             return anagAlignCase;
         }
 
-        String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
         String codiceServizio = herokuWrapper.requestMap.get('COD_SERVIZIO');
         String codicePrestazione = herokuWrapper.requestMap.get('COD_PRESTAZIONE');
         if (codicePrestazione == null || codiceServizio == null) {
-            System.debug('codicePrestazione o codiceServizio non valorizzato');
+            System.debug(LoggingLevel.DEBUG, 'codicePrestazione o codiceServizio non valorizzato');
             return anagAlignCase;
         }
 
-        System.debug('Gestione Allineamento Anagrafica da richiesta passiva Heroku');
+        System.debug(LoggingLevel.DEBUG, 'Gestione Allineamento Anagrafica da richiesta passiva Heroku');
 
         // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
         String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
@@ -107,7 +112,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
                     anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
-                    System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
@@ -119,7 +124,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
                     HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
-                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                    System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
 
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
@@ -131,7 +136,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.put(field, tempCase.get(field));
                 }
 
-                System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                 anagAlignCase.Phase__c = 'Da Inviare';
                 HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
             }
@@ -142,7 +147,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(codicePresa, null);
                     HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, tempCase, dataEnrichmentFields);
                 } catch (Exception ex){
-                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+                    System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
 
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
@@ -154,7 +159,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase.put(field, tempCase.get(field));
                 }
 
-                System.debug('Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                 anagAlignCase.Phase__c = 'Da Inviare';
                 HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
 
@@ -194,7 +199,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 returnCases.add(anagAlignCase);
             }
             when VARIAZIONE_ANAGRAFICA_CLIENTE {
-                Case varAnagCase = (Case) triggerObj;
+                /*
+                    @Author: Davide Viola - 19/10/2021
+                    Description: PMD -> Commentata variabile non utilizzata.
+                */
+                //Case varAnagCase = (Case) triggerObj;
                 List<Case> anagAlignCases = createAnagAlignmentCasesModAnagCliente(triggerObj);
                 returnCases.addAll(anagAlignCases);
             }
@@ -276,14 +285,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
         ServicePoint__c servicePoint = queryHandler.findServicePointByCode(servicePointCode);
         if (servicePoint == null) {
-            System.debug('Service Point non trovato a sistema: ' + servicePointCode);
+            System.debug(LoggingLevel.DEBUG, 'Service Point non trovato a sistema: ' + servicePointCode);
             return null;
         }
 
         String accountId = servicePoint.Account__c;
         AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
         if (acr == null) {
-            System.debug('Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
+            System.debug(LoggingLevel.DEBUG, 'Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
             return null;
         }
 
@@ -301,10 +310,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         if (anagAlignCase != null) {
             try {
-                System.debug('Going to insert case: ' + anagAlignCase);
+                System.debug(LoggingLevel.DEBUG, 'Going to insert case: ' + anagAlignCase);
                 HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
             } catch (Exception e) {
-                System.debug('Expection: ' + e.getMessage());
+                System.debug(LoggingLevel.DEBUG, 'Expection: ' + e.getMessage());
                 throw e;
             }
 
@@ -330,14 +339,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
         ServicePoint__c servicePoint = queryHandler.findServicePointByCode(servicePointCode);
         if (servicePoint == null) {
-            System.debug('Service Point non trovato a sistema: ' + servicePointCode);
+            System.debug(LoggingLevel.DEBUG, 'Service Point non trovato a sistema: ' + servicePointCode);
             return null;
         }
 
         String accountId = servicePoint.Account__c;
         AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
         if (acr == null) {
-            System.debug('Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
+            System.debug(LoggingLevel.DEBUG, 'Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
             return null;
         }
 
@@ -464,14 +473,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
      */
     private static List<Case> createAnagAlignmentCasesModAnagCliente(SObject triggerObj) {
         if (triggerObj == null) {
-            System.debug('createAnagAlignmentCasesModAnagCliente: null object in input');
+            System.debug(LoggingLevel.DEBUG, 'createAnagAlignmentCasesModAnagCliente: null object in input');
             return null;
         }
 
         Case triggerCase = (Case) triggerObj;
         HDT_QR_Contract contractQueryHandler = new HDT_QR_Contract();
         List<Contract> activeContracts = contractQueryHandler.getActiveRecordsByAccountId(triggerCase.AccountId);
-        System.debug('createAnagAlignmentCasesModAnagCliente: # contratti attivi: ' + activeContracts.size());
+        System.debug(LoggingLevel.DEBUG, 'createAnagAlignmentCasesModAnagCliente: # contratti attivi: ' + activeContracts.size());
 
         Map<String, Object> inputMap = new Map<String, Object>();
         HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
@@ -647,7 +656,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 return 'MARCHE';
             }
             when else {
-                System.debug('Provincia non in ambito wave 1: ' + province);
+                System.debug(LoggingLevel.DEBUG, 'Provincia non in ambito wave 1: ' + province);
             }
         }
 
