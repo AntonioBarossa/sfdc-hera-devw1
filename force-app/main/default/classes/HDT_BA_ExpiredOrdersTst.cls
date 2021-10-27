@@ -7,7 +7,7 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
     
     //DATA
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
-    
+    //TODO: VERIFICARE CHE NON VENGANO PRESI BLANK DocusignExpirationDate__c
     
     //TEST SETUP
     private static void mySetup(){
