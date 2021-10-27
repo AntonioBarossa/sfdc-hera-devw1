@@ -6,13 +6,14 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
     
     
     //DATA
-    
+	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
     
     
     //TEST SETUP
     private static void mySetup(){
-        pClickInstance();
-        pClickOrderPhase();
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        
         Id recTypeId = utlConstants.ORDER_RECORDTYPEID_DEFAULT;
         Id recTypeName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza', recTypeId, recTypeName);
