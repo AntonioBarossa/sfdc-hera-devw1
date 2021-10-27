@@ -11,6 +11,12 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
     
     //TEST SETUP
     private static void mySetup(){
+        pClickInstance();
+        pClickOrderPhase();
+        Id recTypeId = utlConstants.ORDER_RECORDTYPEID_DEFAULT;
+        Id recTypeName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT;
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza', recTypeId, recTypeName);
+        
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         for(Order o : ordList){
