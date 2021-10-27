@@ -46,13 +46,13 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         String queryStringKoMdm = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'CBS_AUT004__ESITO_KO_PRE-MDM\'';
         String queryStringKoSap = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'CBS_AUT002__ESITO_KO_DA_SAP\'';
-        String queryStringKoGestioneManualeSAP = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'Gestione Manuale SAP\'';
+        String queryStringKoGestioneManualeSap = 'Select Id from wrts_prcgvr__ActivityTemplate__c  where Name = \'Gestione Manuale SAP\'';
         List<SObject> templatesKoMdm = HDT_QR_GenericQuery.getGenericRecords(queryStringKoMdm, objectName);
         List<SObject> templatesKoSap = HDT_QR_GenericQuery.getGenericRecords(queryStringKoSap, objectName);
-        List<SObject> templatesGestioneManualeSAP = HDT_QR_GenericQuery.getGenericRecords(queryStringKoGestioneManualeSAP, objectName);
+        List<SObject> templatesGestioneManualeSap = HDT_QR_GenericQuery.getGenericRecords(queryStringKoGestioneManualeSap, objectName);
         wrts_prcgvr__ActivityTemplate__c templateKoMdm = new wrts_prcgvr__ActivityTemplate__c();
         wrts_prcgvr__ActivityTemplate__c templateKoSap = new wrts_prcgvr__ActivityTemplate__c();
-        wrts_prcgvr__ActivityTemplate__c templateGestioneManualeSAP = new wrts_prcgvr__ActivityTemplate__c();
+        wrts_prcgvr__ActivityTemplate__c templateGestioneManualeSap = new wrts_prcgvr__ActivityTemplate__c();
 
         if(templatesKoMdm.size() > 0) {
             templateKoMdm = (wrts_prcgvr__ActivityTemplate__c) templatesKoMdm[0];
@@ -61,8 +61,8 @@ global with sharing class HDT_WS_SelfReadingsOutcome {
         if(templatesKoSap.size() > 0) {
             templateKoSap = (wrts_prcgvr__ActivityTemplate__c) templatesKoSap[0];
         }
-        if(templatesGestioneManualeSAP.size() > 0) {
-            templateGestioneManualeSAP = (wrts_prcgvr__ActivityTemplate__c) templatesGestioneManualeSAP[0];
+        if(templatesGestioneManualeSap.size() > 0) {
+            templateGestioneManualeSap = (wrts_prcgvr__ActivityTemplate__c) templatesGestioneManualeSap[0];
         }
 
         List<Case> casesToUpdate = new List<Case>();
