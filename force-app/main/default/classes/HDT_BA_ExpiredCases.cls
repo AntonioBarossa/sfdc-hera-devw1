@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObject> {
     
     
@@ -14,8 +15,15 @@ public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObj
     }
     
     //BATCH EXECUTE
-    public void execute(Database.BatchableContext bc, List<ServiceRequest__c> srList){
+    public void execute(Database.BatchableContext bc, List<Case> casesToNullify){
         
+        for(Case myCase : casesToNullify){
+            myCase.Phase__c = 'Annullato';
+            myCase.CancellationReason__c = 'Annullato per no conferma cliente';
+        }
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_ExpiredCases - Aggiorno Case Record: ' + casesToNullify.size());
+        
+        update casesToNullify;
     }
     
     //BATCH FINISH
