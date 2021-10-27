@@ -375,10 +375,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullato per no conferma cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
