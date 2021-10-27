@@ -210,11 +210,11 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     * @param postalCode 
     **/
     public  HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> rs,String city,String street,String myNumber,String postalCode){
-        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj addressWinner;
+        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj addressWinner=rs.get(0);
         Integer matchingPoints = 0;
-      
         for (HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj tempRes : rs) {
            Integer tempMatchingPoints=0;
+           
            if(tempRes.city1.equalsIgnoreCase(city)){
                 tempMatchingPoints=tempMatchingPoints+1;
             }
@@ -231,6 +231,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 matchingPoints=tempMatchingPoints;
                 addressWinner=tempRes;
             }
+
+          
         }
         return addressWinner;
     }
