@@ -31,8 +31,10 @@ public class HDT_BA_ComfortCallTst {
             Id accId = accs[0].id;
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(2,false,accId);
-            for(Contact c : contacts)
+            for(Contact c : contacts) {
                 c.Company__c='MMS';
+            }
+
             insert contacts;
 			Id contactId = contacts[0].id;
             Id anotherContactId = contacts[1].id;
@@ -55,7 +57,7 @@ public class HDT_BA_ComfortCallTst {
             orders[0].Phase__c = 'In attesa conferma cliente';
             update orders;
             
-            Group g = new Group(Name = 'test', DeveloperName = 'HDT_QUE_ComfortQuality');
+            // Group g = new Group(Name = 'test', DeveloperName = 'HDT_QUE_ComfortQuality');
             
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaigns[0].Name = 'Comfort Campaign';
@@ -75,7 +77,7 @@ public class HDT_BA_ComfortCallTst {
             
             List<Lead> leads =  HDT_UTL_DataFactoryTst.createLead(1, true);
             
-            List<CampaignMember> members = HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignId, leads, contacts);
+            HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignId, leads, contacts);
   
         }
     }
@@ -86,7 +88,7 @@ public class HDT_BA_ComfortCallTst {
         Test.startTest();
         
         HDT_BA_ComfortCall cc = new HDT_BA_ComfortCall();        
-        Id batchId = Database.executeBatch(cc,200);
+        Database.executeBatch(cc,200);
         
         Test.stopTest();
         
