@@ -71,6 +71,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
+    /**
+    * @description :
+    * @param objName 
+    * @param fieldApiName 
+    * @return String 
+    **/
     public String getTypeField(String objName,String fieldApiName){
 
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
