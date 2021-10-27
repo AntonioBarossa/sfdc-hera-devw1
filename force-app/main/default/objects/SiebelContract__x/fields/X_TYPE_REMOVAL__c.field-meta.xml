@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Numero unità di tempo per disdetta</label>
+    <label>Unità di tempo per disdetta</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>
