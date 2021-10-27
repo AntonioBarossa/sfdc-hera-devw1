@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Numero unità di tempo per proroga</label>
+    <label>Unità di tempo per proroga</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

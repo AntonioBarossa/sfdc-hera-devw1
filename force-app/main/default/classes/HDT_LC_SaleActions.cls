@@ -142,7 +142,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         quoteProcessSrv.checkReadAccess('SBQQ__Default__c,SBQQ__GuidedOnly__c,SBQQ__ProductAutoSelected__c,SBQQ__ProductConfigurationInitializer__c,SBQQ__ProductSearchExecutor__c,SBQQ__SortOrder__c,Name');
         List<SBQQ__QuoteProcess__c> quoteProcessList = quoteProcessQr.getProcessForGroupAssoc();
-
+        system.debug('quoteProcessList '+quoteProcessList.size());
         for (SBQQ__QuoteLine__c quoteLine : quoteLinePrimary) {
             SBQQ__QuoteLineGroup__c quoteLineGroup = new SBQQ__QuoteLineGroup__c(
                 SBQQ__Account__c = sale.Account__c,

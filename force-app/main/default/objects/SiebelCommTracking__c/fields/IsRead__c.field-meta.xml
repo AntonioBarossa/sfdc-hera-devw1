@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsRead__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indica se la notifica è stata letta dal front-end.</description>
+    <externalId>false</externalId>
+    <label>Notifica Letta</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
