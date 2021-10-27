@@ -15,7 +15,7 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         
         Id recTypeId = utlConstants.ORDER_RECORDTYPEID_DEFAULT;
-        Id recTypeName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT;
+        String recTypeName = utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza', recTypeId, recTypeName);
         
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
