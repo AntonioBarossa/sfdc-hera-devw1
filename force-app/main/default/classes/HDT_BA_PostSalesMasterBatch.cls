@@ -26,6 +26,16 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
+        //Get Data for source Custom Setting
+        String whereConditionFieldValue1 = 'Autolettura';
+        Sobject mySobj2 = database.query('select id, Type__c , NumberOfDays__c from  CS_DaysToExpiration__c  where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue1)+ '\'');
+        
+        String whereConditionFieldValue2 = 'PostSales';
+        Sobject mySobj3 = database.query('select id, Type__c , NumberOfDays__c from  CS_DaysToExpiration__c  where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2)+ '\'');
+
+        List<Case> myCurrentCaseList = new List<Case>();
+
+
         for(SObject sobj : scope){
 
             switch on sobj{
@@ -87,10 +97,46 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }
                         }
+                    /*
+                    @Author:        Francesco Vitiello
+                    CreatedDate:    27/10/2021
+                    Reason: Add Managing Cancel Draft Case
+                    */
+                    }else if(currentCase.Phase__c.equalsIgnoreCase('Bozza')){
+
+
+                        if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
+
+                            //Get data from Days to Expiration Custom Setting
+                            CS_DaysToExpiration__c myCS1 = (CS_DaysToExpiration__c)mySobj2;
+                            Integer strNumberOfDays = integer.valueof(myCS1.NumberOfDays__c);
+
+                            if(currentCase.CreatedDate < system.today() - strNumberOfDays){
+                                
+                                currentCase.Phase__c = 'Bozza Annullata';
+                                myCurrentCaseList.add(currentCase);
+                            }
+
+                        }else{
+
+                            //Get data from Days to Expiration Custom Setting
+                            CS_DaysToExpiration__c myCS2 = (CS_DaysToExpiration__c)mySobj3;
+                            Integer strNumberOfDays = integer.valueof(myCS2.NumberOfDays__c);
+
+                            if(currentCase.CreatedDate < system.today() - strNumberOfDays){
+                                
+                                currentCase.Phase__c = 'Bozza Annullata';
+                                myCurrentCaseList.add(currentCase);
+                            }
+                        }
                     }
                 }
             }
         }
+        if(!myCurrentCaseList.isEmpty()){
+            update myCurrentCaseList;
+        }
+
     }
 
     /*
