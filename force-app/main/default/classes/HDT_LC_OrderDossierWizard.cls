@@ -145,7 +145,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     for (OrderItem orderItem : orderItemsAmend) {
                         Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
                         system.debug('orderToUpdate: ' + orderToUpdate);
-                        system.debug('ordersToUpdate after: ' + ordersToUpdate);
+                        //system.debug('ordersToUpdate after: ' + ordersToUpdate);
                         if(orderToUpdate!=null){
                             for (Order ord : ordersToUpdate) {
                                 if (ord?.Id == orderToUpdate?.Id) {
