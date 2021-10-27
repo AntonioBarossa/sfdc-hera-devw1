@@ -127,7 +127,7 @@ public with sharing class HDT_WS_RicCreBpCaRequestTst {
             req.numeroSR='test';
 
             system.assertEquals(req.cancellaBPAlternativo,'test','the field cancellaBPAlternativo is not valorized');
-            system.assertNotEquals(req.cancellaBPAlternativo,'test','the field cancellaBPAlternativo is valorized');
+            system.assertNotEquals(null,req.cancellaBPAlternativo,'the field cancellaBPAlternativo is valorized');
 
             Test.stopTest();
         } 

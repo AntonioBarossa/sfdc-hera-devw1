@@ -10,7 +10,7 @@
     <label>Reference Contratto Archivio</label>
     <length>15</length>
     <referenceTo>SiebelContract__x</referenceTo>
-    <relationshipLabel>Attributi Contratti</relationshipLabel>
+    <relationshipLabel>Attributi</relationshipLabel>
     <relationshipName>SiebelContractAttribute</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

@@ -5,7 +5,7 @@
     <externalDeveloperName>SR_NUM</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>false</isNameField>
+    <isNameField>true</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Numero Richiesta</label>
     <length>64</length>
