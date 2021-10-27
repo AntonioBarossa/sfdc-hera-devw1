@@ -14,6 +14,7 @@ public inherited sharing class HDT_QR_OrderItem {
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         return [
             SELECT
             ServicePoint__c,
@@ -25,7 +26,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto', 'VAS Servizio') AND (NOT Product2.Description LIKE '%Sconto%')))
+            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  :famils AND (NOT Product2.Description LIKE '%Sconto%')))
             WITH SECURITY_ENFORCED
         ];
     }
