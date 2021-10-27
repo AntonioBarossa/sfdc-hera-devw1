@@ -17,7 +17,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
 
     @AuraEnabled
-    public static Map<String,Object> init(String Id){
+    public static Map<String,Object> init(String id){
         Map<String,Object> result = new Map<String,Object>();
 
         User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
@@ -57,6 +57,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     }
 
     @AuraEnabled
+    @SuppressWarnings('PMD.AvoidDeeplyNestedIfStmts')
     public static void updateProcessStep(Order order,
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
