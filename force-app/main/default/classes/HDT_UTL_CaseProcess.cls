@@ -1,9 +1,10 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_CaseProcess {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
     private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
-
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
 
@@ -16,9 +17,10 @@ public with sharing class HDT_UTL_CaseProcess {
                     SatisfactionIndexCtrl__c = newCase.PraxidiaOverrallSatisfaction__c,
                     PraxidiaUpdateDate__c = newCase.PraxidiaDateOutcome__c  
                 ));
-            }
+            } 
         }
-        update accountsToUpdate;
+        accountSrv.updateRecordsWithCheck(accountsToUpdate);
+        //update accountsToUpdate; 
     }
 
     public static void casePhaseManagementAfterUpdate(List<Case> newCasesList, List<Case> oldCasesList) {
@@ -86,12 +88,16 @@ public with sharing class HDT_UTL_CaseProcess {
 		String oldPhase = caseOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
 		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+            /**@frpanico
+             * Added comment:
+             * Se la fase di arrivo e' di annullamento o Annullato
+             * si entra nell'if per tutte le gestioni ad hoc dei processi
+             */
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
                 //Variazione Indirizzzo di Fornitura
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
-                    System.debug('Inside Condition');
-                    createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento');
+                    System.debug(LoggingLevel.DEBUG, 'Inside Condition');
+                    HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
                 }
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
                 //Annullamento activities legate al case di Richiesta Parere
@@ -136,13 +142,13 @@ public with sharing class HDT_UTL_CaseProcess {
                                                 HDT_UTL_NewsNotificationCenter.fireNotification(title,body,activity.Id,activitiesOwnerId);
                                             }
                                         } catch(Exception e){
-                                            System.debug('Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
+                                            System.debug(LoggingLevel.DEBUG, 'Impossibile inviare notifica: ' + e.getMessage() + '. Error at line: ' + e.getLineNumber());
                                         }
                                     }
                                     updateList.addAll(activities);
                                 }
                             }catch(Exception e){
-                                System.Debug('Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
+                                System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At Line: ' + e.getLineNumber());
                             }
                         }
                         updateList.addAll(childCases);
@@ -153,14 +159,41 @@ public with sharing class HDT_UTL_CaseProcess {
                 if(newPhase.equalsIgnoreCase('Annullato')){
                     Case nonReqContr = new Case();
                     nonReqContr = caseQr.getNonReqContrCase(caseNew.Id);
-                    System.debug('Id ' + nonReqContr.Id);
-                    System.debug('Id Cond ' + String.isBlank(nonReqContr.Id));
+                    System.debug(LoggingLevel.DEBUG, 'Id ' + nonReqContr.Id);
+                    System.debug(LoggingLevel.DEBUG, 'Id Cond ' + String.isBlank(nonReqContr.Id));
                     if(!(String.isBlank(nonReqContr.Id))){
                         nonReqContr.Phase__c = 'Completata';
                         HDT_UTL_DatabaseService.updateSObject(nonReqContr);
                     }
                 }
-                return true;
+                if(caseNew.Cluster__c == 'Autolettura'){
+                    // Annullamento dopo l'invio al DL
+                    if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
+                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione M01/M02','Gestione M01/M02','Gestione M01/M02');
+                    }
+                    // Annullamento dopo la validazione da MDM ma prima dell'invio al DL
+                    else if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Esito OK da SAP') && !caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
+                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP','Gestione Manuale SAP');
+                    }
+                }
+                /**@frpanico 22/10/2021
+                 * Reintrodotto PhaseManager per annullamento
+                 * viene skippato solo in entrata e in uscita dall'annullamento dove non sono previste activity
+                 * Viene mantenuto per gli annullamenti passivi dove la fase é Annullamento SII
+                 * L'if in questione skippa il phase manager solo se la fase di partenza non e' di annullamento.
+                 * Nelle fasi di annullamento si fase di partenza che fase di arrivo sono Annullamento - o Annullato.
+                 */
+                if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
+                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                {
+                    caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
+                    return true;
+                }
+                return false;
+            /**@frpanico 22/10/2021
+             * Add Comment:
+             * Si entra in questo blocco quando la fase di partenza e' di annullamento e la nuova non lo e'  
+             */    
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
 
@@ -169,22 +202,7 @@ public with sharing class HDT_UTL_CaseProcess {
 		}
 		return false;
 	}
-
-    private static void createActivity(String recordId, String description, String type){
-        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
-        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
-        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
-        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
-        if(listRecord.size()>0){
-            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
-            activity.Case__c = recordId;
-            activity.CausalError__c = description;
-            activity.wrts_prcgvr__Description__c = description;
-            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
-        }
-    }
+    
     public static void updateMemberStatusforClosedCases(List<Case> newCasesList, List<Case> oldCasesList) {
         try{
             List<Id> closedCaseIds = new List<Id>();
@@ -226,7 +244,7 @@ public with sharing class HDT_UTL_CaseProcess {
 			campaignMemberSrv.updateRecords(membersToUpdate);
 		}catch(Exception e)
 		{
-		
+            System.debug(LoggingLevel.DEBUG, '*******Error:' + e);
 		}
     }
 

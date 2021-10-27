@@ -32,8 +32,8 @@ public with sharing class HDT_SRV_MassiveLoaderRequestTst {
             Test.startTest();    
 
             MassiveLoaderRequest__c mlr = new HDT_SRV_MassiveLoaderRequest().createNewRequestRecord('Subentro', 1);
-            System.assertEquals('Subentro', mlr.ProcessType__c);
-            System.assertNotEquals('', mlr.ProcessType__c);
+            System.assertEquals('Subentro', mlr.ProcessType__c,'Subentro');
+            System.assertNotEquals('', mlr.ProcessType__c,'');
             Test.stopTest();
         }
     }
@@ -46,7 +46,7 @@ public with sharing class HDT_SRV_MassiveLoaderRequestTst {
 
             List<MassiveLoaderRequest__c> newLstMassive = new HDT_SRV_MassiveLoaderRequest().updateRequestRecord(lstMassiveLoaderReq);
             System.assertEquals(true, lstMassiveLoaderReq != null, 'Lead not updated');
-			System.assertNotEquals(true, lstMassiveLoaderReq == null);
+			System.assertNotEquals(true, lstMassiveLoaderReq == null, 'Lead not updated');
             Test.stopTest();
         }
     }

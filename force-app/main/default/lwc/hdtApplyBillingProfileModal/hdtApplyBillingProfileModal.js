@@ -90,6 +90,16 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                     });
                 });
 
+                data.listBonus?.forEach(el => {
+                    quoteBundleArray.push({
+                        "Id"                   :el.Id,
+                        "Name"                 :el.Name,
+                        "BillingProfile"       :el.BillingProfile__c !== undefined ? el.BillingProfile__r.Name : '',
+                        "ProductName"          :el.SBQQ__Product__r.Name !== undefined ? el.SBQQ__Product__r.Name : '',
+                        "ServicePointCode"     :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : ''
+                    });
+                });
+
                 this.quoteBundleData = quoteBundleArray;
             }
 

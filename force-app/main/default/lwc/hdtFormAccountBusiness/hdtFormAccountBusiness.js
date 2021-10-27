@@ -41,6 +41,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
+    requiredVat=true;
+    requiredFiscalCode=false;
     customerType='Organizzazione';
     gender;
     birthDate;
@@ -236,7 +238,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
     }
-
     handleChange(event){
         this.markingValue= event.detail.value;
         let key = this.categoryData.controllerValues[event.target.value];
@@ -255,7 +256,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-show');
             this.customerType='Persona fisica';
             this.makerequired= true;
-        }else{
+            this.requiredVat=true; //HRAWRM-776 07/10/2021
+        }
+        else if(this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')  ){
+            this.requiredVat= false;
+            this.makerequired=true;
+
+        }//HRAWRM-776 07/10/2021
+        else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
@@ -266,10 +274,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
             this.makerequired= false;
+            this.requiredVat=true;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
         }
+       
    }
 
     handleCalculation(){
@@ -385,53 +395,54 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
     handleSave(){
 
-        let isValidated= true;
-        let businessName =this.template.querySelector('[data-id="businessName"]');
-        let vatNumber =this.template.querySelector('[data-id="vatNumber"]');
+        var isValidated= true;
+        var businessName =this.template.querySelector('[data-id="businessName"]');
+        var vatNumber =this.template.querySelector('[data-id="vatNumber"]');
         this.personFiscalCode= this.template.querySelector('[data-id="personFiscalCode"]');
-        let prefixPhoneNumber = this.phonePrefixValue2;
-        let phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
-        let prefixMobilePhoneNumber = this.mobilephonePrefix2;
-        let mobilephoneNumber= this.template.querySelector('[data-id="mobilePhoneNumber"]');
-        let contactPhoneNumber =this.template.querySelector('[data-id="contactPhoneNumber"]');
-        let customerMarking =this.template.querySelector('[data-id="customerMarking"]');
-        let category= this.template.querySelector('[data-id="category"]');
-        let fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
-        let email= this.template.querySelector('[data-id="email"]');
-        let electronicMail= this.template.querySelector('[data-id="electronicMail"]');
-        let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
-        let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
-        let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
-        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
-        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
-
-
-        // let address =this.template.querySelector('[data-id="address"]');
-        // let location =this.template.querySelector('[data-id="location"]');
-        // let myAddress =this.template.querySelector('[data-id="myAddress"]');
-        let numberFax =this.template.querySelector('[data-id="numberFax"]');
-        // let houseNumber =this.template.querySelector('[data-id="houseNumber"]');
-        // let postalCode =this.template.querySelector('[data-id="postalCode"]');
-        let firstName =this.template.querySelector('[data-id="firstName"]');
-        let lastName= this.template.querySelector('[data-id="lastName"]');
-        let mobilePhone= this.template.querySelector('[data-id="mobilePhone"]');
-        let contactEmail= this.template.querySelector('[data-id="contactEmail"]');
-     //   let legalForm= this.template.querySelector('[data-id="legalForm"]');
-        let role=this.template.querySelector('[data-id="role"]');
-        let contactElectronicMail= this.template.querySelector('[data-id="contactElectronicMail"]');
-        let contactFax= this.template.querySelector('[data-id="contactFax"]');
-        //let otherPhone= this.template.querySelector('[data-id="otherPhone"]');
-        let firstIndividualName= this.template.querySelector('[data-id="firstIndividualName"]');
-        let lastIndividualName= this.template.querySelector('[data-id="lastIndividualName"]');
-        let education=this.template.querySelector('[data-id="education"]');  
-        let profession= this.template.querySelector('[data-id="profession"]'); 
+        var prefixPhoneNumber = this.phonePrefixValue2;
+        var phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
+        var prefixMobilePhoneNumber = this.mobilephonePrefix2;
+        var mobilephoneNumber= this.template.querySelector('[data-id="mobilePhoneNumber"]');
+        var contactPhoneNumber =this.template.querySelector('[data-id="contactPhoneNumber"]');
+        var customerMarking =this.template.querySelector('[data-id="customerMarking"]');
+        var category= this.template.querySelector('[data-id="category"]');
+        var fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
+        var email= this.template.querySelector('[data-id="email"]');
+        var electronicMail= this.template.querySelector('[data-id="electronicMail"]');
+        var companyOwner= this.template.querySelector('[data-id="companyOwner"]');
+        var phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
+        var mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
+        var companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        var customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+        var numberFax =this.template.querySelector('[data-id="numberFax"]');
+        var firstName =this.template.querySelector('[data-id="firstName"]');
+        var lastName= this.template.querySelector('[data-id="lastName"]');
+        var mobilePhone= this.template.querySelector('[data-id="mobilePhone"]');
+        var contactEmail= this.template.querySelector('[data-id="contactEmail"]');
+        var role=this.template.querySelector('[data-id="role"]');
+        var contactElectronicMail= this.template.querySelector('[data-id="contactElectronicMail"]');
+        var contactFax= this.template.querySelector('[data-id="contactFax"]');
+        var firstIndividualName= this.template.querySelector('[data-id="firstIndividualName"]');
+        var lastIndividualName= this.template.querySelector('[data-id="lastIndividualName"]');
+        var education=this.template.querySelector('[data-id="education"]');  
+        var profession= this.template.querySelector('[data-id="profession"]'); 
         this.gender=this.template.querySelector('[data-id="gender"]').value;
         this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
         this.birthPlace= this.template.querySelector('[data-id="birthPlace"]').value;
         this.spinner= true;
-        let messageError= "Completare tutti i campi obbligatori !";
+        var messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
-        let dataAccount;
+        var dataAccount;
+        console.log('@@@@ fiscalCode'+fiscalCode.value);
+        if ((this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')) && (fiscalCode.value== undefined||fiscalCode.value.trim()=='')) {
+          
+          
+           console.log('@@@@ Marcatura'+this.markingValue);
+            if(!fiscalCode.reportValidity()){
+                isValidated=false;
+            }
+           
+        }
         if(this.markingValue === undefined || !this.markingValue=='Ditta individuale'){
             if(!businessName.reportValidity()){
                 isValidated=false;
@@ -593,7 +604,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             isValidated=false;
         }
         console.log("LOG7");
-        if(isValidated){
+       if(isValidated){
             console.log("LOG8");
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             this.getAccountAdress();
@@ -614,19 +625,26 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     console.log("LOG11:" + this.personFiscalCode.value);
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
                     console.log("LOG12:" + prova);
+                    var keyCode= prova; //HRDTR-00_HRAWRM-761 28/09/2021
+
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
                         console.log("LOG12");
                         let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
-                            this.gender= fiscData.gender;
+                            //this.gender= fiscData.gender;
+                            this.gender=fiscData[keyCode].gender;//HRDTR-00_HRAWRM-761 28/09/2021
                         }
-                        if(this.birthDate === undefined || this.birthDate.trim()===''){
-                            this.birthDate= fiscData.birthDate;
+                        if(this.birthDate || this.birthDate.trim()==''){
+                            console.log('this.birthDate: '+this.birthDate);
+                            //this.birthDate= fiscData.birthDate;
+                            this.birthDate=fiscData[keyCode].birthDate;//HRDTR-00_HRAWRM-761 28/09/2021
                         }
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
-                            this.birthPlace= fiscData.birthPlace;
+                           // this.birthPlace= fiscData.birthPlace;
+                           this.birthPlace=fiscData[keyCode].birthPlace;//HRDTR-00_HRAWRM-761 28/09/2021
+
                         }
                         console.log("LOG13:");
                         console.log("LOG13:" + businessName.value);
@@ -838,4 +856,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         event.target.value = inputVal.toString().slice(0,-1);
     }
     }
+    
+
+    
 }

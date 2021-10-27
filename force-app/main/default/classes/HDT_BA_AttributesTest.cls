@@ -39,7 +39,7 @@ public with sharing class HDT_BA_AttributesTest {
             j++;
         }
         
-        Id accRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+     /*  Id accRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         
         Account acc = new Account();
         acc.RecordTypeId=accRecordTypeId;
@@ -60,14 +60,18 @@ public with sharing class HDT_BA_AttributesTest {
         acc.BillingStreetNumber__c='1';
         acc.Category__c='Famiglie';
         insert acc;
-        
+        */
+
+        List<Account> acc=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+
+
         List<Contact> listContact = new List<Contact>();
         for (Integer i = 0; i < 10; i++) {
             Contact tempContact=new Contact();
             tempContact.LastName='testLastName'+String.valueOf(i);
             tempContact.FirstName='FirstNameName'+String.valueOf(i);
             tempContact.Email=tempContact.LastName+'@test.it';
-            tempContact.AccountId=acc.id;
+            tempContact.AccountId=acc[0].id;
             tempContact.CompanyOwner__c='HERA COMM';
             listContact.add(tempContact);
         }
@@ -86,7 +90,7 @@ public with sharing class HDT_BA_AttributesTest {
             tempContact.FirstName='FirstNameNameCon'+String.valueOf(i);
             tempContact.Email=tempContact.LastName+'@test2.it';
             tempContact.CompanyOwner__c='HERA COMM';
-            tempContact.AccountId=acc.id;
+            tempContact.AccountId=acc[0].id;
 
             listContact.add(tempContact);
             
@@ -97,13 +101,12 @@ public with sharing class HDT_BA_AttributesTest {
         Date myDate2 = Date.newInstance(2022, 1, 1);
         Order ord=new Order();
         ord.recordTypeId=ordRecordTypeId;
-        ord.AccountId=acc.id;
+        ord.AccountId=acc[0].id;
         ord.Contact__c=listContact.get(0).id;       
         ord.status='Draft';
         ord.EffectiveDate=myDate2;
         
         // insert ord;
-
        
         Id caseRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro_EE').getRecordTypeId();
         
@@ -124,14 +127,14 @@ public with sharing class HDT_BA_AttributesTest {
             mcase.Status='New'; 
             mCase.SalesCompany__c='test';
             listCase.add(mcase);
-            ctr.AccountId=acc.id;
+            ctr.AccountId=acc[0].id;
             ctr.Contact__c=listContact.get(i).id;
             ctr.ContractTerm=12;
             ctr.Status='Draft';
             ctr.StartDate=myDate2;
             listContract.add(ctr);
             BillingProfile__c bill=new BillingProfile__c();
-            bill.Account__c=acc.Id;
+            bill.Account__c=acc[0].Id;
             bill.Contact__c=listContact.get(i).id;
             bill.BillSendingMethod__c='Fatturazione PA';
             bill.PaymentMethod__c='Bollettino postale';
@@ -173,7 +176,8 @@ public with sharing class HDT_BA_AttributesTest {
         Test.StopTest();
         
         List<ContentVersion> listContentVersion = [SELECT id FROM ContentVersion];
-        //System.assertEquals(2, listContentVersion.size());
+        System.assertEquals(2, listContentVersion.size(), 'Value of parameter is matching');
+        System.assertNotEquals(1, listContentVersion.size(), 'Value of parameter is not matching');
         
         
     }

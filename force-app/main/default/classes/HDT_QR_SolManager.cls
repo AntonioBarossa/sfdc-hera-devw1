@@ -1,9 +1,10 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_SolManager {
     
     public String getSolLogin(String solContactId) {
 
         if (solContactId == null) {
-            System.debug('HDT_QR_SolManager: null solContactId in input');
+            System.debug(LoggingLevel.DEBUG, 'HDT_QR_SolManager: null solContactId in input');
             return '';
         }
 
@@ -12,7 +13,7 @@ public inherited sharing class HDT_QR_SolManager {
         Id individualId = solContact.IndividualId;
 
         if (individualId == null) {
-            System.debug('HDT_QR_SolManager: No InvididualId set for contact with Id: ' + solContactId);
+            System.debug(LoggingLevel.DEBUG, 'HDT_QR_SolManager: No InvididualId set for contact with Id: ' + solContactId);
             return '';        
         }
 
@@ -26,7 +27,7 @@ public inherited sharing class HDT_QR_SolManager {
         ];
 
         if (emails.isEmpty()) {
-            System.debug('HDT_QR_SolManager: No SOL login email found for contact with id: ' + solContactId);
+            System.debug(LoggingLevel.DEBUG, 'HDT_QR_SolManager: No SOL login email found for contact with id: ' + solContactId);
             return '';
         }
 

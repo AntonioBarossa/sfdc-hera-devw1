@@ -20,7 +20,7 @@ public inherited sharing class HDT_LC_ResumeCommercialBonus{
 		Map<String, Object> results = new Map<String, Object>();
 
 		saleSrv.checkReadAccess('Account__c,Status__c');
-		List<Case> cs = caseQr.getRecordsById(new List<String>{id}, 'Id, Status,Phase__c');
+		List<Case> cs = caseQr.getRecordsById(new List<String>{id}, 'Id, Status,Phase__c,Type');
 		if (cs != null && !cs.isEmpty()){
 			results.put('case', cs[0]);
 		}

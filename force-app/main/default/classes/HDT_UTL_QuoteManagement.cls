@@ -1,8 +1,13 @@
 public inherited sharing class HDT_UTL_QuoteManagement {
 
+	//DATA
+	private static String check;
+	
+	
+	//METODI
     @InvocableMethod
     public static List<QuoteManagement__c> addRequiredInformation(List<HDT_UTL_FlowInputs> inputs){
-		System.debug('dentro classe' + inputs);
+		//System.debug('dentro classe' + inputs);
 		
 		List<QuoteManagement__c> toReturnQuoteManagement = new List<QuoteManagement__c>();
 		QuoteManagement__c quoteManagement = new QuoteManagement__c();
@@ -29,16 +34,22 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType);
 	}
 	
+	@SuppressWarnings('PMD.CyclomaticComplexity')
 	private static QuoteManagement__c menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
 
+		//@frpanico unused variables seller, supplyType fix
+
+		string seller;
+		string supplyType;
+
 		String localDispatcher 		= inputs[0].localDispatcher; 
-		String seller 				= inputs[0].seller;
+		seller 						= inputs[0].seller;
 		String voltage 				= inputs[0].voltage;
 		Decimal powerAvailable 		= inputs[0].powerAvailable;
 		Decimal powerCommitted 		= inputs[0].powerCommitted;
 		String connectionType 		= inputs[0].connectionType;
 		Decimal powerRequested 		= inputs[0].powerRequested;
-		String supplyType 			= inputs[0].supplyType;
+		supplyType 					= inputs[0].supplyType;
 		String phaseType 			= inputs[0].phaseType;
 		String energyUseType		= inputs[0].energyUseType;
 		String displacementDistance	= inputs[0].displacementDistance;
@@ -77,34 +88,71 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 			}
 		}
 		if(operationType.equalsIgnoreCase('Variazione Potenza') && String.isNotBlank(connectionType) && connectionType.equalsIgnoreCase('Temporanea')){
-			connectionTypeCondition = 'AND ConnectionType__c = \'' + connectionType + '\' ';
+			connectionTypeCondition = 'AND ConnectionType__c = \'' + String.escapeSingleQuotes(connectionType) + '\' ';
 		}else {
-			connectionTypeCondition = 'AND (ConnectionType__c = \'' + connectionType + '\' OR ConnectionType__c = null) ';
+			connectionTypeCondition = 'AND (ConnectionType__c = \'' + String.escapeSingleQuotes(connectionType) + '\' OR ConnectionType__c = null) ';
 		}
-		String conditions = '(AdegPotDisp__c =\'' + powerAdjustment + '\' OR AdegPotDisp__c = null) '
-		+'AND (Caliber__c = \''+ caliber + '\' OR Caliber__c = null) ' 
-		+'AND (ComparePotRi__c = \'' + checkPrPc + '\' OR ComparePotRi__c = null) '
-		+'AND (RequestedPhase__c = \''+ phaseType + '\' OR RequestedPhase__c = null) '
-		+'AND (PowerEngaged__c = \'' + rangePc + '\' OR PowerEngaged__c = null) '
-		+'AND (PowerRequired__c = \'' + rangePr + '\' OR PowerRequired__c = null) '
-		+'AND (GdmMovement__c = \'' + displacementDistance + '\' or GdmMovement__c = null) '
-		+'AND (VoltageRequired__c = \'' + voltage + '\' OR VoltageRequired__c = null) '
+
+		/*
+		 *@frpanico 05/10/2021
+		 *Refactoring due to PMD
+		 *Il metodo queryString non viene più invocato causa warning PMD su SOQL Injection
+		 *Affinchè la query funzioni correttamente e' necessario inserire singoli escapeSingleQuotes 
+		*/
+
+		/*
+		String conditions = '(AdegPotDisp__c =\'' + String.escapeSingleQuotes(powerAdjustment) + '\' OR AdegPotDisp__c = null) '
+		+'AND (Caliber__c = \''+ String.escapeSingleQuotes(caliber) + '\' OR Caliber__c = null) ' 
+		+'AND (ComparePotRi__c = \'' + String.escapeSingleQuotes(checkPrPc) + '\' OR ComparePotRi__c = null) '
+		+'AND (RequestedPhase__c = \''+ String.escapeSingleQuotes(phaseType) + '\' OR RequestedPhase__c = null) '
+		+'AND (PowerEngaged__c = \'' + String.escapeSingleQuotes(rangePc) + '\' OR PowerEngaged__c = null) '
+		+'AND (PowerRequired__c = \'' + String.escapeSingleQuotes(rangePr) + '\' OR PowerRequired__c = null) '
+		+'AND (GdmMovement__c = \'' + String.escapeSingleQuotes(displacementDistance) + '\' or GdmMovement__c = null) '
+		+'AND (VoltageRequired__c = \'' + String.escapeSingleQuotes(voltage) + '\' OR VoltageRequired__c = null) '
 		+connectionTypeCondition
-		+'AND Operation_type__c = \'' + operationType + '\' '
-		+'AND Commodity__c = \'' + commodity + '\' '
-		+'AND (EnergyUseType__c = \'' + energyUseType + '\' OR EnergyUseType__c = null) '
-		+'AND (VendDist__c = \'' + vendDist + '\' OR VendDist__c = null) '
-		+'AND (PhaseVoltage__c = \'' + voltagePhase + '\' OR PhaseVoltage__c = null)';
+		+'AND Operation_type__c = \'' + String.escapeSingleQuotes(operationType) + '\' '
+		+'AND Commodity__c = \'' + String.escapeSingleQuotes(commodity) + '\' '
+		+'AND (EnergyUseType__c = \'' + String.escapeSingleQuotes(energyUseType) + '\' OR EnergyUseType__c = null) '
+		+'AND (VendDist__c = \'' + String.escapeSingleQuotes(vendDist) + '\' OR VendDist__c = null) '
+		+'AND (PhaseVoltage__c = \'' + String.escapeSingleQuotes(voltagePhase) + '\' OR PhaseVoltage__c = null)';
 		String fields = 'Id,CausalCode__c, QuoteType__c,OperationCode__c';
+		*/
+		QuoteManagement__c returnQuote = new QuoteManagement__c();
+
+		try 
+		{
+			returnQuote = Database.query('SELECT Id, CausalCode__c, QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE' +
+			+'(AdegPotDisp__c =\'' + String.escapeSingleQuotes(powerAdjustment) + '\' OR AdegPotDisp__c = null) '
+			+'AND (Caliber__c = \''+ String.escapeSingleQuotes(caliber) + '\' OR Caliber__c = null) ' 
+			+'AND (ComparePotRi__c = \'' + String.escapeSingleQuotes(checkPrPc) + '\' OR ComparePotRi__c = null) '
+			+'AND (RequestedPhase__c = \''+ String.escapeSingleQuotes(phaseType) + '\' OR RequestedPhase__c = null) '
+			+'AND (PowerEngaged__c = \'' + String.escapeSingleQuotes(rangePc) + '\' OR PowerEngaged__c = null) '
+			+'AND (PowerRequired__c = \'' + String.escapeSingleQuotes(rangePr) + '\' OR PowerRequired__c = null) '
+			+'AND (GdmMovement__c = \'' + String.escapeSingleQuotes(displacementDistance) + '\' or GdmMovement__c = null) '
+			+'AND (VoltageRequired__c = \'' + String.escapeSingleQuotes(voltage) + '\' OR VoltageRequired__c = null) '
+			+connectionTypeCondition
+			+'AND Operation_type__c = \'' + String.escapeSingleQuotes(operationType) + '\' '
+			+'AND Commodity__c = \'' + String.escapeSingleQuotes(commodity) + '\' '
+			+'AND (EnergyUseType__c = \'' + String.escapeSingleQuotes(energyUseType) + '\' OR EnergyUseType__c = null) '
+			+'AND (VendDist__c = \'' + String.escapeSingleQuotes(vendDist) + '\' OR VendDist__c = null) '
+			+'AND (PhaseVoltage__c = \'' + String.escapeSingleQuotes(voltagePhase) + '\' OR PhaseVoltage__c = null)'
+			+ 'WITH SECURITY_ENFORCED LIMIT 1');
+			
+		} catch (Exception e) 
+		{
+			returnQuote = null;
+		}
+
+		return returnQuote;
 		
-		return HDT_QR_QuoteManagement.queryString(fields, conditions);
+		//return HDT_QR_QuoteManagement.queryString(fields, conditions);
 
 	}
 
 
 	public static boolean checkLocalDispatcher(String localDispatcher){
 		if(localDispatcher != null && String.isNotBlank(localDispatcher)){
-			Integer dispatcherList = [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: localDispatcher];
+			Integer dispatcherList = [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: localDispatcher WITH SECURITY_ENFORCED];
 			if(dispatcherList != null && dispatcherList > 0){
 				return true;
 			}else{
@@ -126,8 +174,6 @@ public inherited sharing class HDT_UTL_QuoteManagement {
         return result;
 
 	}
-	
-	private static String check;
 	
     public class HDT_UTL_FlowInputs{
 

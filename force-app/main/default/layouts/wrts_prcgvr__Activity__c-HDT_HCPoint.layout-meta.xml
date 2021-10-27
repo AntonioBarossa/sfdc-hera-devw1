@@ -146,9 +146,15 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>Cluster__c</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Subprocess__c</fields>
+        <fields>ComplaintEntryChannel__c</fields>
+        <fields>Phase__c</fields>
+        <fields>CREATEDBY_USER.ALIAS</fields>
+        <fields>CASES.CLOSED_DATE</fields>
         <relatedList>Case.Activity__c</relatedList>
     </relatedLists>
     <relatedLists>

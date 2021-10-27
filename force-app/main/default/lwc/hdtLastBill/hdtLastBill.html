@@ -1,5 +1,7 @@
 <template>
-    <c-hdt-pdf-viewer-handler ></c-hdt-pdf-viewer-handler>
+    <c-hdt-pdf-viewer-handler
+        ondownloadcomplete={downloadComplete}
+    ></c-hdt-pdf-viewer-handler>
     <article class="slds-card">
         <div class="slds-card__header slds-grid">
 <!--
@@ -16,9 +18,20 @@
             </header>
         -->
             <header class="lgc-bg slds-media slds-media_center slds-has-flexi-truncate slds-box slds-m-top_small slds-m-bottom_x-small">
-                <div onclick={openFile} style="cursor: pointer;" class="slds-m-right_medium">
-                    <lightning-icon icon-name="doctype:pdf" alternative-text="PDF" title="Apri PDF bolletta" size="medium"></lightning-icon>
-                </div>
+                <template if:true={pdfSpinner}>
+                    <div class="slds-m-right_medium">
+                        <lightning-dynamic-icon
+                            type="eq"
+                            option="play"
+                            alternative-text="Download in corso">
+                        </lightning-dynamic-icon>
+                    </div>
+                </template>
+                <template if:false={pdfSpinner}>
+                    <div onclick={openFile} style="cursor: pointer;" class="slds-m-right_medium">
+                        <lightning-icon icon-name="doctype:pdf" alternative-text="PDF" title="Apri PDF bolletta" size="medium"></lightning-icon>
+                    </div>
+                </template>
                 <div class="slds-media__body">
                     <h2 class="slds-card__header-title">
                     <div class="slds-card__header-link slds-truncate" title="Bollette">

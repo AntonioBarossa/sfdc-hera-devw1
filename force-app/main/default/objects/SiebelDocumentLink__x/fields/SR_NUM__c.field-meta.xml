@@ -7,10 +7,9 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Richiesta</label>
+    <label>Numero Richiesta</label>
     <length>64</length>
-    <referenceTo>SiebelRds__x</referenceTo>
-    <relationshipLabel>Documenti</relationshipLabel>
-    <relationshipName>SiebelDocumentLink1</relationshipName>
-    <type>ExternalLookup</type>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

@@ -14,10 +14,10 @@ manifest/package.xml
 manifest/*
 manifest/
 .gitignore
-
+scripts/*
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
-
+scripts/*
 # LWC Jest coverage reports
 coverage/
 

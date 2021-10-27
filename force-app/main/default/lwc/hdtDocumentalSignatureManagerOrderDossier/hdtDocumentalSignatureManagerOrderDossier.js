@@ -23,7 +23,6 @@ import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-import getSignatureScript from '@salesforce/apex/HDT_LC_OrderDossierWizardSignature.getSignatureScript';//gabriele.rota@webresults.it | 2021-09-13 
 
 const FIELDS = [
     'Order.Id',
@@ -49,6 +48,8 @@ const FIELDS = [
     'Order.ShippingStreetNumber__c',
     'Order.ShippingStreetNumberExtension__c',
     'Order.ShippingIsAddressVerified__c',
+    'Order.Contact__r.MobilePhone',
+    'Order.Contact__r.Email',
     'Order.Account.PrimaryEmail__c',
     'Order.Account.Id',
     'Order.Account.MobilePhone__c',
@@ -63,6 +64,7 @@ const FIELDS = [
 	'Order.Account.BillingStreetNumberExtension__c',
 	'Order.Account.BillingStreetCode__c'
 ];
+
 export default class hdtOrderDossierWizardSignature extends LightningElement {
     
     @api orderParentRecord;
@@ -86,9 +88,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     @track disabled = false;
     @api recordId;
     //FINE EVERIS DOCUMENTALE
-    
-    @api scriptMap = {};
 
+    openAfterScriptModal = false;
+    
     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
     oldPhoneValue;
     oldEmailValue;
@@ -140,32 +142,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         return result;
     }
 
-    get isScriptBtnVisible(){
-        if (this.orderRecord) {
-
-            let hiddenEdit = true;
-            if(this.orderParentRecord.Step__c <= this.currentStep || this.orderParentRecord.Status === 'Completed'){
-                hiddenEdit = true;
-            } else if(this.orderParentRecord.Step__c > this.currentStep){
-                hiddenEdit = false;
-            }
-
-            return this.orderRecord.fields.Status.value=='In Lavorazione' && !hiddenEdit && (
-                this.orderRecord.fields.SignatureMethod__c.value=='Vocal Order' || 
-                this.orderRecord.fields.SignatureMethod__c.value=='OTP Remoto' || 
-                this.orderRecord.fields.SignatureMethod__c.value=='OTP Coopresenza'
-            )
-        }
-        else return false;
-    }
-
-    loadScriptMap() {
-        getSignatureScript({orderParentId: this.recordId}).then(scriptMap => {
-            console.log('getSignatureScript: '+JSON.stringify(scriptMap));
-            this.scriptMap = scriptMap;
-        });
-    }
-
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
         wiredOrder({ error, data }) {
             if (error) {
@@ -205,10 +181,13 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 contractSigned = this.orderRecord.fields.ContractSigned__c.value;
                 var contactEmail = '';
 				var contactPhone = '';
-				if(this.orderRecord.fields.Account.value != null){
+                if(this.orderRecord.fields.Contact__r.value != null){
+					contactEmail = this.orderRecord.fields.Contact__r.value.fields.Email.value;
+					contactPhone = this.orderRecord.fields.Contact__r.value.fields.MobilePhone.value;
+				}/* else if(this.orderRecord.fields.Account.value != null){
 					contactEmail = this.orderRecord.fields.Account.value.fields.PrimaryEmail__c.value;
 					contactPhone = this.orderRecord.fields.Account.value.fields.MobilePhone__c.value;
-				}
+				} */
                 var orderEmail = this.orderRecord.fields.ShippingMail__c.value;
                 if(orderEmail != null && orderEmail != '')
                     email = orderEmail;
@@ -313,8 +292,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }
         this.handleFormInit();
         this.handleControllerInit();
-
-        this.loadScriptMap();
     }
 
     outputFormatedAddress(address){
@@ -419,7 +396,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 
-                    updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
+                    updateContactForScartoDocumentale({accountId: this.orderParentRecord.AccountId,
+                                                       oldPhone: this.oldPhoneValue,
                                                        oldEmail: this.oldEmailValue,
                                                        newPhone: resultWrapper.phone,
                                                        newMail: resultWrapper.email}).then(data=>{
@@ -489,8 +467,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
                     this.dispatchEvent(new CustomEvent('tablerefresh'));
                     getRecordNotifyChange([{recordId: this.recordId}]);
-
-                    this.loadScriptMap();
                 }).catch(error => {
                     this.loading = false;
                     console.log((error.body.message !== undefined) ? error.body.message : error.message);
@@ -524,8 +500,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dispatchEvent(new CustomEvent('tablerefresh'));
             this.dispatchEvent(new CustomEvent('documentalrefresh'));
             this.disabled = false;
-
-            this.loadScriptMap();
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
@@ -590,6 +564,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         });
     }
 
-    
+    handleScriptModalClose(){
+        console.log('keltin close script modal');
+        this.openAfterScriptModal = true;
+    }
 
 }

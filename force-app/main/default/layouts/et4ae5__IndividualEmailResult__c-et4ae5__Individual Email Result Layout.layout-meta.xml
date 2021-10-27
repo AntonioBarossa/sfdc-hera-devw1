@@ -112,15 +112,7 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Email Image</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>800</height>
-                <page>et4ae5__ierImage</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
@@ -142,6 +134,9 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+    </platformActionList>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>

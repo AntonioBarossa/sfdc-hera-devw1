@@ -3,10 +3,13 @@
     <actionCalls>
         <name>annullaContratti</name>
         <label>annullaContratti</label>
-        <locationX>484</locationX>
-        <locationY>586</locationY>
+        <locationX>485</locationX>
+        <locationY>703</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>endTextFlow</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>methodName</name>
@@ -25,10 +28,13 @@
     <actionCalls>
         <name>annullaPratica</name>
         <label>annullaPratica</label>
-        <locationX>105</locationX>
-        <locationY>585</locationY>
+        <locationX>103</locationX>
+        <locationY>729</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>endTextFlow_0</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>methodName</name>
@@ -47,10 +53,13 @@
     <actionCalls>
         <name>annullaPratica_0</name>
         <label>annullaPratica</label>
-        <locationX>275</locationX>
-        <locationY>792</locationY>
+        <locationX>272</locationX>
+        <locationY>915</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>endTextFlow</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>methodName</name>
@@ -69,8 +78,8 @@
     <actionCalls>
         <name>chiudiAttivita</name>
         <label>chiudiAttivita</label>
-        <locationX>274</locationX>
-        <locationY>436</locationY>
+        <locationX>302</locationX>
+        <locationY>550</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -94,8 +103,8 @@
     <actionCalls>
         <name>chiudiAttivita_0</name>
         <label>chiudiAttivita</label>
-        <locationX>107</locationX>
-        <locationY>437</locationY>
+        <locationX>108</locationX>
+        <locationY>595</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -120,8 +129,8 @@
     <decisions>
         <name>checkTypeDatiDiscordanti</name>
         <label>checkTypeDatiDiscordanti</label>
-        <locationX>267</locationX>
-        <locationY>584</locationY>
+        <locationX>270</locationX>
+        <locationY>724</locationY>
         <defaultConnector>
             <targetReference>annullaPratica_0</targetReference>
         </defaultConnector>
@@ -145,8 +154,8 @@
     <decisions>
         <name>parentObject</name>
         <label>parentObject</label>
-        <locationX>171</locationX>
-        <locationY>313</locationY>
+        <locationX>179</locationX>
+        <locationY>309</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Order</name>
@@ -159,7 +168,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>chiudiAttivita</targetReference>
+                <targetReference>getOrder</targetReference>
             </connector>
             <label>Order</label>
         </rules>
@@ -174,7 +183,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>chiudiAttivita_0</targetReference>
+                <targetReference>getCase</targetReference>
             </connector>
             <label>Case</label>
         </rules>
@@ -221,6 +230,80 @@
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getCase</name>
+        <label>getCase</label>
+        <locationX>108</locationX>
+        <locationY>427</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>chiudiAttivita_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getActivity.Case__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOrder</name>
+        <label>getOrder</label>
+        <locationX>299</locationX>
+        <locationY>419</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>chiudiAttivita</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getActivity.Order__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>endTextFlow</name>
+        <label>endTextFlow</label>
+        <locationX>497</locationX>
+        <locationY>923</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getOrder.OrderNumber} annullato correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>endTextFlow_0</name>
+        <label>endTextFlow</label>
+        <locationX>104</locationX>
+        <locationY>877</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getCase.CaseNumber} annullato correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>50</locationY>

@@ -314,6 +314,25 @@ public class HDT_SRV_BpCaVariationFacadeTst {
         
     }
 
+    @IsTest
+    static void getGenericRecords(){
+
+        Case cs = [SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+        
+        String fields = 'Id,Account.CustomerCode__c,CaseNumber,XMLType__c,ElectronicInvoiceCertifiedEmailAddress__c,OfficeSubjectCode__c,ElectronicInvoicingMethod__c, CareOf__c,BillSendingMethod__c,InvoiceEmail__c,InvoiceCertifiedEmailAddress__c,BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,IsInvoicingVerified__c';
+        String objectName = 'Case';
+        String conditions = 'Id = \''+cs.Id+'\'';
+
+        Test.startTest();
+
+        List<sObject> sObjectList = HDT_QR_GenericQuery.getGenericRecords(fields, objectName, conditions);
+
+        System.assert(sObjectList.size() > 0, 'sObjectList.size() == 0 or sObjectList == null');
+
+        Test.stopTest();
+        
+    }
+
     //al momento il metodo updateFuture sulla classe HDT_SRV_BpCaVariationFacade è private, capire se si può impostare public in modo da coprire anche quelle righe
     // @IsTest
     // static void testFutureUpdate(){

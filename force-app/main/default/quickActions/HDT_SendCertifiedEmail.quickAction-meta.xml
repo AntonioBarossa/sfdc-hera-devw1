@@ -8,6 +8,10 @@
         <field>SentToMulesoft__c</field>
         <formula>False</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>Subject</field>
+        <formula>&apos;PEC&apos;</formula>
+    </fieldOverrides>
     <label>Invia PEC</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>

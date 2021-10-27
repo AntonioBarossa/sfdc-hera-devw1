@@ -17,14 +17,13 @@ public class HDT_BA_CalloutBatchTst {
             'paperCampaignParameterId'=>PaperCampaignParameter.id,
             'category'=>'Campagna Outbound',
             'name'=>'Test Campaign',
-            'codeGenerationRule'=>'PrefissoProgressivo',
             'channel'=>'Bolletta'
         })[0];
         Lead lead_r = HDT_UTL_DataFactoryTst.createLead (1,true)[0];
         Account acc= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie')[0];
         Contact cont = HDT_UTL_DataFactoryTst.createContact (1,true,acc.id)[0];
         PaperProcessing__c paperProcessing = HDT_UTL_DataFactoryTst.createPaperProcessing(1, true, 'Testname', camp.id)[0];
-        HDT_UTL_DataFactoryTst.createCampaignMember(1, true, new Map<String,String>{
+        HDT_UTL_DataFactoryTst.createCampaignMemberMap(1, true, new Map<String,String>{
             'campaignId'=>camp.id,
             'leadId'=>lead_r.id,
             'contactId'=>cont.id,

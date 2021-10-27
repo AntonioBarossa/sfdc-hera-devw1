@@ -1,8 +1,10 @@
-global inherited sharing class HDT_WS_ReminderBlock implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
+public inherited sharing class HDT_WS_ReminderBlock{
     
-    HDT_SRV_ReminderBlock reminderSrv = new HDT_SRV_ReminderBlock();
+    //@frpanico CLASSE DEPRECATA
 
-    global Object execute(Object args){
+    /*HDT_SRV_ReminderBlock reminderSrv = new HDT_SRV_ReminderBlock();
+
+    public Object execute(Object args){
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
 
@@ -93,6 +95,6 @@ global inherited sharing class HDT_WS_ReminderBlock implements wrts_prcgvr.Inter
         public string message;
         public string additionalInfo;
 
-    }
+    }*/
 
 }

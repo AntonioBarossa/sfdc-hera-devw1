@@ -3,6 +3,7 @@
     <fullName>LabelOption1__c</fullName>
     <description>Negli script decisionali, in cui è richiesto a run time di effettuare una scelta che influenzerà la schermata successiva, qui si inserisce la label della prima scelta.</description>
     <externalId>false</externalId>
+    <inlineHelpText>Inserire label decisione e indice pagina di destinazione &quot;Si::4&quot;</inlineHelpText>
     <label>Label Opzione 1</label>
     <length>255</length>
     <required>false</required>

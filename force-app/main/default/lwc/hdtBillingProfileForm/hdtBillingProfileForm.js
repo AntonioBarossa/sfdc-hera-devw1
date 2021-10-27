@@ -43,6 +43,11 @@ export default class hdtBillingProfileForm extends LightningElement {
         return options;
     }
 
+    validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
     }
@@ -176,7 +181,8 @@ export default class hdtBillingProfileForm extends LightningElement {
                     this.fatturazioneElettronicaFields.push({
                         fieldName: el,
                         required: required,
-                        value: value
+                        value: value,
+                        disabled: false
                     });
                 });
 
@@ -224,20 +230,20 @@ export default class hdtBillingProfileForm extends LightningElement {
             
         }).catch(error => {
             this.loading = false;
-            let errorMessage = '';
+            // let errorMessage = '';
 
-            if (error.body.message !== undefined) {
-                errorMessage = error.body.message;
-            } else if(error.message !== undefined){
-                errorMessage = error.message;
-            } else if(error.body.pageErrors !== undefined){
-                errorMessage = error.body.pageErrors[0].message;
-            }
+            // if (error.body.message !== undefined) {
+            //     errorMessage = error.body.message;
+            // } else if(error.message !== undefined){
+            //     errorMessage = error.message;
+            // } else if(error.body.pageErrors !== undefined){
+            //     errorMessage = error.body.pageErrors[0].message;
+            // }
 
-            console.log('Error: ', errorMessage);
+            // console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: errorMessage,
+                message: 'Errore',
                 variant: 'error',
                 mode: 'sticky'
             });
@@ -325,10 +331,64 @@ export default class hdtBillingProfileForm extends LightningElement {
                 case 'Legale Rappresentante':
                     let indexLegalAgent = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'LegalAgent__c');
                     this.tipologiaIntestatarioFields[indexLegalAgent].visibility = true;
+
+                    if (this.cloneObject.LegalAgent__c !== undefined && this.cloneObject.LegalAgent__c !== '' && this.cloneObject.LegalAgent__c !== null) {
+                        this.tipologiaIntestatarioFields[indexLegalAgent].value = this.cloneObject.LegalAgent__c;
+
+                        getLegalAccount({contactId: this.cloneObject.LegalAgent__c}).then(data =>{
+                            this.loading = false;
+            
+                            this.setTipologiaIntestatario({
+                                fiscalCode: data.FiscalCode__c,
+                                firstName: data.FirstName,
+                                lastName: data.LastName
+                            });
+            
+                        }).catch(error => {
+                            this.loading = false;
+                            const toastErrorMessage = new ShowToastEvent({
+                                title: 'Errore',
+                                message: 'Error',
+                                variant: 'error',
+                                mode: 'sticky'
+                            });
+                            this.dispatchEvent(toastErrorMessage);
+                            console.log('Errore - handleCollectFieldsData: ', JSON.stringify(error));
+                        });
+                    }
+
                     break;
                 case 'Pagatore Alternativo':
                     let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'OtherPayer__c');
                     this.tipologiaIntestatarioFields[indexOtherPayer].visibility = true;
+
+                    if (this.cloneObject.OtherPayer__c !== undefined && this.cloneObject.OtherPayer__c !== null && this.cloneObject.OtherPayer__c !== '') {
+
+                        this.tipologiaIntestatarioFields[indexOtherPayer].value = this.cloneObject.OtherPayer__c;
+
+                        getAccountOwnerInfo({accountId: this.cloneObject.OtherPayer__c}).then(data =>{
+                            this.loading = false;
+            
+                            this.setTipologiaIntestatario({
+                                fiscalCode: data.FiscalCode__c,
+                                firstName: data.FirstName__c,
+                                lastName: data.LastName__c
+                            });
+            
+                        }).catch(error => {
+                            this.loading = false;
+                            const toastErrorMessage = new ShowToastEvent({
+                                title: 'Errore',
+                                // message: error.body.message,
+                                message: 'Error',
+                                variant: 'error',
+                                mode: 'sticky'
+                            });
+                            this.dispatchEvent(toastErrorMessage);
+                            // console.log('Errore: ',error.body.message);
+                        });
+                    }
+
                     break;
                 default:
                     break;
@@ -337,6 +397,15 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     handleCollectFieldsData(event){
         this.dataToSubmit[event.target.fieldName] = event.target.value;
+
+        let notApplicableFields = ['SignatoryType__c','LegalAgent__c','OtherPayer__c','BillSendingMethod__c'];
+
+        if (!notApplicableFields.includes(event.target.fieldName) && event.target.fieldName !== undefined) {
+            let elem = this.fields.find(el => el.fieldName === event.target.fieldName);
+            if(elem){
+                elem.value = event.target.value;
+            }
+        }
 
         if (event.target.name === 'SignatoryType__c') {
             this.dataToSubmit[event.target.name] = event.target.value;
@@ -362,13 +431,12 @@ export default class hdtBillingProfileForm extends LightningElement {
                     this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: error.body.message,
                         message: 'Error',
                         variant: 'error',
                         mode: 'sticky'
                     });
                     this.dispatchEvent(toastErrorMessage);
-                    console.log('Errore - handleCollectFieldsData: ', error.body.message);
+                    console.log('Errore - handleCollectFieldsData: ', JSON.stringify(error));
                 });
             } else {
                 this.setTipologiaIntestatario({
@@ -437,6 +505,16 @@ export default class hdtBillingProfileForm extends LightningElement {
             console.log('IBAN__c value on toggle: ', this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value);
         }
 
+        if (event.target.fieldName === 'ElectronicInvoicingMethod__c') {
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CUP__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CIG__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCode__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeStartDate__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeEndDate__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].disabled = event.target.value === 'Estero';
+        }
+
     }
 
     validFields() {
@@ -446,6 +524,22 @@ export default class hdtBillingProfileForm extends LightningElement {
         this.saveErrorMessage = [];
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
+
+        //check Email fields validity start
+        if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null 
+            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value !== null && this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value.trim() !== '') 
+            && !this.validateEmail(this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value)) {
+            
+            this.saveErrorMessage.push('Email Invio Bolletta non valido');
+        }
+
+        if (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null 
+            && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value !== null && this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value.trim() !== '') 
+            && !this.validateEmail(this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value)) {
+            
+            this.saveErrorMessage.push('PEC Fatturazione Elettronica non valido');
+        }
+        //check Email fields validity end
 
         //check iban fields logic start
         if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
@@ -530,7 +624,9 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         //check req fields fatturazione elettronica start
 
-        if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
+        if (this.template.querySelector("[data-id='IbanIsForeign__c']") !== null
+            && !this.template.querySelector("[data-id='IbanIsForeign__c']").value
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
             && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
@@ -544,7 +640,9 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
-        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null)
+        if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'XML + carta/email'
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value !== 'Estero')
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
             && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
             && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {

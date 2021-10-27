@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Piano Rateizzaizone</value>
+        <value xsi:type="xsd:string">Piano Rateizzazione</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>

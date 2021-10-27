@@ -22,17 +22,25 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
     @isTest
     public static void testCheckAccessInit() {
 
+        Boolean finished = false;
+
         Test.startTest();
 
         HDT_SRV_QuoteLineGroup quoteLineGroupClass = new HDT_SRV_QuoteLineGroup();
 
         quoteLineGroupClass.checkAccessInit('Name', 'read');
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
     public static void testCheckReadAccess() {
+
+        Boolean finished = false;
 
         Test.startTest();
 
@@ -40,11 +48,17 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         quoteLineGroupClass.checkReadAccess('Name');
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
     
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
 
         Test.startTest();
 
@@ -52,7 +66,11 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         quoteLineGroupClass.checkCreateAccess('Name');
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest

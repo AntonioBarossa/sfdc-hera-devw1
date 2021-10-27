@@ -20,18 +20,25 @@ export default class hdtCampaignToAccountList2 extends NavigationMixin(Lightning
     @api entityId;
     @api campaignCategory;
     @api campaignChannel;
+    @api selectedCampaignId = null;
     @track allCampaigns = [];
     @track rowdata = [];
     @track isSale = false;
-    @track selectedCampaignId = null;
+    //@track selectedCampaignId = null;
     @track campaignsNumber = 0;
     @track listResults = false;
     @track campaignsResult = [];
+    selectedCampaigns = [];
 
     @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectApiName', category: '$campaignCategory', channel: '$campaignChannel' }) campaigns(result) {
         this.campaignsResult = result;
         this.allCampaigns = [];
         this.campaignsNumber = 0;
+        //HRAWRM-319 [Start] - Logic for making it visible which campaign was already selected
+        if (this.selectedCampaignId != null) {
+            this.selectedCampaigns.push(this.selectedCampaignId);
+        }
+        //HRAWRM-319 [End]
         console.log('********');
         if (result.error) {
             console.log('*******:' + error);

@@ -56,7 +56,7 @@
                     toastEvent.fire();
                     return;
                 }*/else{
-                        if(results.case.Type = 'Documentale/Copia Contratto'){
+                        if(results.case.Type == 'Documentale/Copia Contratto'){
                             workspaceAPI.getFocusedTabInfo().then(function(response2) {
 
                                 var focusedTabId = response2.tabId;

@@ -92,41 +92,4 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             Step__c = 1
         ));
     }
-
-    
-    /**
-    * @description Get script name and target order id for vocal signing
-    * @author gabriele.rota@webresults.it | 2021-09-13 
-    * @param orderParentId 
-    * @return Map<String, String> 
-    **/
-    @AuraEnabled
-    public static Map<String,String> getSignatureScript(String orderParentId){
-
-        Map<String,String> signatureMap = new Map<String,String>();
-
-        //calculating script name
-        String script;
-
-        Order parentOrder = orderQr.getRecordById(orderParentId);
-        if (parentOrder.SignatureMethod__c=='OTP Remoto' || parentOrder.SignatureMethod__c=='OTP Coopresenza') {
-            script = 'Mini Vocal Order';
-        }
-
-        if (parentOrder.SignatureMethod__c=='Vocal Order') {
-            if (parentOrder.ServicePoint__r.SupplyType__c=='Domestico') {
-                script = 'HERA IMPRONTA ZERO GAS V9 - AZIENDE';
-            }
-            else {
-                script = 'HERA IMPRONTA ZERO GAS V9 - AZIENDE';
-            }
-        }
-        signatureMap.put('script', script);
-
-        //getting target child order
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId);
-        signatureMap.put('scriptTarget', childOrders.get(0).Id);
-
-        return signatureMap;
-    }
 }

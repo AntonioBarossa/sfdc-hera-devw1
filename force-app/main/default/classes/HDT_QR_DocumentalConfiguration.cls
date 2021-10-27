@@ -13,6 +13,17 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         ];
         return docList;
     }
+    public static List<SObject> getRecordFromServiceItems(String context,Set<String> numberSet){
+        if(numberSet.size()<= 0){
+            return new List<SObject>();
+        }
+        if(context.equalsIgnoreCase('Case')){
+            return [SELECT Id, CaseNumber FROM Case WHERE CaseNumber IN:numberSet WITH SECURITY_ENFORCED];
+        }else {
+            return [SELECT Id, OrderNumber FROM Order WHERE OrderNumber IN:numberSet WITH SECURITY_ENFORCED];
+        }
+    }
+    
     public static List<Document> getDocumentByContext(String context){
         List<Document> docList = [
             SELECT Id, Name, Body
@@ -118,6 +129,15 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
 
     public static Order getParentOrder(String orderId){
         List<Order> orders = [SELECT Id,ParentOrder__c FROM Order WHERE Id =:orderId WITH SECURITY_ENFORCED];
+        if(!orders.isEmpty()){
+            return orders[0];
+        }else {
+            return null;
+        }
+    }
+
+    public static Order getOrderPriceBook(String orderId){
+        List<Order> orders = [SELECT Id,SBQQ__Quote__r.SBQQ__PriceBook__r.Name FROM Order WHERE Id =:orderId WITH SECURITY_ENFORCED];
         if(!orders.isEmpty()){
             return orders[0];
         }else {

@@ -27,6 +27,8 @@ public class HDT_SRV_OrderTst{
 	@isTest
 	static void testCheckAccessInit(){
 
+		Boolean finished = false;
+
 		User tUser=[SELECT Id
 		            FROM User
 		            WHERE Alias='crmuser'
@@ -38,16 +40,22 @@ public class HDT_SRV_OrderTst{
 
 			orderSrv.checkAccessInit('BillingCity__c, CommercialProduct__c', 'create');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 		}
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
 	static void testCheckReadAccess(){
+
+		Boolean finished = false;
 
 		User tUser=[SELECT Id
 		            FROM User
@@ -60,16 +68,22 @@ public class HDT_SRV_OrderTst{
 
 			orderSrv.checkReadAccess('BillingCity__c, CommercialProduct__c');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 		}
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
 	static void testCheckCreateAccess(){
+
+		Boolean finished = false;
 
 		User tUser=[SELECT Id
 		            FROM User
@@ -82,16 +96,21 @@ public class HDT_SRV_OrderTst{
 
 			orderSrv.checkCreateAccess('BillingCity__c, CommercialProduct__c');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 		}
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
 	static void testCheckUpdateAccess(){
+
+		Boolean finished = false;
 
 		User tUser=[SELECT Id
 		            FROM User
@@ -104,12 +123,16 @@ public class HDT_SRV_OrderTst{
 
 			orderSrv.checkUpdateAccess('BillingCity__c, CommercialProduct__c');
 
+			finished = true;
+
 			Test.stopTest();
 
 			// Method return is VOID
 			// System.assertEquals('', '', '');
 			// System.assertNotEquals('', '');
 		}
+
+		System.assertEquals(true, finished, 'Test is not Ended');
 	}
 
 	@isTest
@@ -143,7 +166,7 @@ public class HDT_SRV_OrderTst{
 			Test.stopTest();
 
 			System.assertEquals(true, createdOrder.Id!=null, 'Order not created');
-			System.assertNotEquals(false, createdOrder.Id!=null);
+			System.assertNotEquals(false, createdOrder.Id!=null, 'Order not created');
 		}
 	}
 
@@ -183,7 +206,7 @@ public class HDT_SRV_OrderTst{
 			                          WHERE CommercialProduct__c='test'];
 
 			System.assertEquals('test', updatedOrder[0].CommercialProduct__c, 'Order not Updated');
-			System.assertNotEquals('', updatedOrder[0].CommercialProduct__c);
+			System.assertNotEquals('', updatedOrder[0].CommercialProduct__c, 'Order not Updated');
 		}
 	}
 
@@ -223,7 +246,7 @@ public class HDT_SRV_OrderTst{
 			                          WHERE CommercialProduct__c='test'];
 
 			System.assertEquals('test', updatedOrder[0].CommercialProduct__c, 'Order not Updated');
-			System.assertNotEquals('', updatedOrder[0].CommercialProduct__c);
+			System.assertNotEquals('', updatedOrder[0].CommercialProduct__c, 'Order not Updated');
 		}
 	}
 
@@ -244,7 +267,7 @@ public class HDT_SRV_OrderTst{
 			Test.stopTest();
 
 			System.assertEquals(true, dossierRecType!=null, 'Dossier Record Type not retrieved');
-			System.assertNotEquals(false, dossierRecType!=null);
+			System.assertNotEquals(false, dossierRecType!=null, 'Dossier Record Type not retrieved');
 		}
 	}
 
@@ -265,7 +288,7 @@ public class HDT_SRV_OrderTst{
 			Test.stopTest();
 
 			System.assertEquals(true, defaultRecType!=null, 'Default Record Type not retrieved');
-			System.assertNotEquals(false, defaultRecType!=null);
+			System.assertNotEquals(false, defaultRecType!=null, 'Default Record Type not retrieved');
 		}
 	}
 
@@ -286,7 +309,7 @@ public class HDT_SRV_OrderTst{
 			Test.stopTest();
 
 			System.assertEquals(true, getRecType!=null, 'Record Type not retrieved');
-			System.assertNotEquals(false, getRecType!=null);
+			System.assertNotEquals(false, getRecType!=null, 'Record Type not retrieved');
 		}
 	}
 
@@ -309,7 +332,7 @@ public class HDT_SRV_OrderTst{
 			Date tDate=Date.today().addDays(5);
 
 			System.assertEquals(true, tBusinessDay>Date.today(), 'Date not updated');
-			System.assertNotEquals(null, tBusinessDay);
+			System.assertNotEquals(null, tBusinessDay, 'Date not updated');
 		}
 	}
 }

@@ -24,6 +24,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     public static void confirmContract(String ordId, String activityId, String type){
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
+        String causalQuality = '';
 
         Order orderUpdate = new Order(
             Id = ordId,
@@ -47,14 +48,19 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                     phase = 'Comunicazione verso Heroku';
                 }
             }
-
+            
+            orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
         } else {
-            // List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
+            List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
+            List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
             
-            // if(!orderActiveMonitoring.isEmpty()){
+            if(isMonitoringList.contains(orderActiveMonitoring[0].AgencyCode__c)){
                 orderUpdate.Phase__c = 'Quality Call OK';
-            // }
+                orderUpdate.SignedDate__c = Date.today();
+            }
+
+            causalQuality = 'Quality Call OK';
 
         }
 
@@ -62,12 +68,15 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,
-            Status__c = 'Chiusa'
+            Status__c = 'Esitata',
+            ContactResult__c	 = causalQuality
         ));
     }
 
     @AuraEnabled
     public static void cancelContract(String ordId, String activityId, String causal){
+
+        String causalQuality = '';
 
         orderSrv.updateRecord(new Order(
             Id = ordId,
@@ -78,7 +87,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
             Id = activityId,
-            Status__c = 'Chiusa'
+            Status__c = 'Esitata',
+            ContactResult__c	 = 'Annullato'
         ));
     }
 }

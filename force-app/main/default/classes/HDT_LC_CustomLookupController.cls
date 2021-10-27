@@ -1,3 +1,9 @@
+/*
+* @Author: Salvatore A. Sarà 20/10/2021
+* Risoluzione "Debug Should Use Logging Level"
+* Risoluzione "Avoid debug statements since they impact on performance"
+*/
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_CustomLookupController {
 
     @AuraEnabled(cacheable=true)
@@ -8,9 +14,9 @@ public inherited sharing class HDT_LC_CustomLookupController {
         List<HDT_UTL_ObjDetail> objList = new List<HDT_UTL_ObjDetail>();
         List<String> statementList = new List<String>();
 
-        System.debug('# Filter -> ' + filter);
+        System.debug(LoggingLevel.DEBUG, '# Filter -> ' + filter);
 
-        myQuery = 'SELECT ' + setAsKey + ',' + searchBy + ' ';
+        myQuery = 'SELECT ' + String.escapeSingleQuotes(setAsKey)  + ',' + String.escapeSingleQuotes(searchBy) + ' ';
 
         if(enableDetails){
             myQuery += ',' + String.join(detailFields, ',') + ' '; 
@@ -45,7 +51,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
         }
         
         if(!String.isEmpty(searchBy) && !String.isEmpty(searchTerm)){
-            statementList.add(searchBy + ' LIKE  \'%' + searchTerm + '%\'');
+            statementList.add(String.escapeSingleQuotes(searchBy) + ' LIKE  \'%' + String.escapeSingleQuotes(searchTerm) + '%\'');
         }        
         
         if(statementList.size()>0){
@@ -56,7 +62,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
         myQuery += ' ORDER BY LastModifiedDate DESC';
         myQuery += ' LIMIT 5';
 
-        System.debug('# myQuery -> ' + myQuery);
+        System.debug(LoggingLevel.DEBUG, '# myQuery -> ' + myQuery);
 
         List<sObject> lookUpList = database.query(myQuery);
 

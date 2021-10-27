@@ -1,7 +1,8 @@
 @isTest
 public with sharing class HDT_BA_ActivityDispatcherTst {
     @TestSetup
-    private static void makeData(){
+    private static void makeData() {
+        HDT_UTL_DataFactoryTst.pClickInstance();
         insert new Group(Name = 'testnamegroup1');
     }
 
@@ -33,8 +34,16 @@ public with sharing class HDT_BA_ActivityDispatcherTst {
         );
         insert rule;
         
+        //TESTING
         Test.startTest();
         Database.executeBatch(new HDT_BA_ActivityDispatcher());
         Test.stopTest();
+        
+        //RETRIEVING DATA
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob];
+        
+        //ASSERTS
+        System.assertEquals(0, a.NumberOfErrors, 'Batch fallito.');
+        
     }
 }

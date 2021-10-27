@@ -1,5 +1,6 @@
 import { LightningElement,api,wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { updateRecord } from 'lightning/uiRecordApi';
 import valida from '@salesforce/apex/HDT_UTL_ActivityCustom.validaActivityDocument';
 
 export default class hdtDocumentActivityValidation extends LightningElement {
@@ -16,7 +17,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
 
     approve(){
         valida({
-            recordId : this.recordId,
+            recordid : this.recordId,
             validazione : 'Si'
         }).then(result => {
             if(result == ''){
@@ -26,6 +27,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                updateRecord({ fields: { Id: this.recordId } });
             }
         });
      
@@ -34,7 +36,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     reject(){
         console.log('rigettata');
         valida({
-            recordId : this.recordId,
+            recordid : this.recordId,
             validazione : 'No'
         }).then(result => {
             if(result == 'NoApprovata'){
@@ -61,6 +63,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
                 });
                 this.dispatchEvent(event);
             }
+            updateRecord({ fields: { Id: this.recordId } });
         });
      
     }

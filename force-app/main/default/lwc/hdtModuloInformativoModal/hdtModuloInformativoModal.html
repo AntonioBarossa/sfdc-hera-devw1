@@ -1,6 +1,6 @@
 <template>
     <div if:true={showModuloModal} class="modulistica-modal" style="height: 640px;">
-        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-modal_small slds-fade-in-open">
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCancel}>
@@ -14,26 +14,48 @@
                     <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
 
                     <div class="slds-grid slds-wrap slds-m-top_small">
-                        <lightning-combobox
-                            class="slds-size_1-of-2"
-                            data-id="moduloInformativoSendType"
-                            name="moduloInformativoSendType"
-                            required
-                            label="Seleziona metodo invio"
-                            placeholder=""
-                            options={moduloInformativoSendTypeOptions}
-                            onchange={handleModuloSendTypeSelection} 
-                            variant="label-stacked"
-                        ></lightning-combobox>
 
-                        <lightning-input disabled if:true={showEmail} class="slds-size_1-of-2" type="text" name="email" label="Email" value={order.SalesContact__r.Email} variant="label-stacked"></lightning-input>
-                        <lightning-input disabled if:true={showSms} class="slds-size_1-of-2" type="text" name="sms" label="SMS" value={order.SalesContact__r.MobilePhone} variant="label-stacked"></lightning-input>
+                        <div class="slds-size_1-of-2">
+                            <lightning-button class="slds-button_full-width slds-align_absolute-center" label="Stampa" variant="brand" onclick={handleStampa}></lightning-button>
+                        </div>
+
+                        <div class="slds-size_1-of-2">
+                            <lightning-button class="slds-button_full-width slds-align_absolute-center" label="Invia" variant="brand" onclick={handleInvia}></lightning-button>
+                        </div>
+
                     </div>
 
+                    <div class="slds-grid slds-wrap slds-m-top_small">
+                        <template if:true={isSendTypeSelectionVisible}>
+                            <div class="slds-size_1-of-2 slds-p-right_small">
+                                    <lightning-combobox
+                                    required
+                                    data-id="sentType"
+                                    data-name="sentType"
+                                    name="sentType"
+                                    label="Metodo Invio"
+                                    placeholder=""
+                                    options={moduloInformativoSendTypeOptions}
+                                    onchange={handleModuloSendTypeSelection}
+                                    ></lightning-combobox>
+                            </div>
+                        </template>
+
+                        <template if:true={showEmail}>
+                            <div class="slds-size_1-of-2 slds-p-left_small">
+                                <lightning-input disabled variant="label-stacked" type="text" name="email" label="Email" value={email}></lightning-input>
+                            </div>
+                        </template>
+                        <template if:true={showSms}>
+                            <div class="slds-size_1-of-2 slds-p-left_small">
+                                <lightning-input disabled variant="label-stacked" type="text" name="sms" label="SMS" value={sms}></lightning-input>
+                            </div>
+                        </template>
+                    </div>
                 </div>
-                <footer class="slds-modal__footer">
-                    <lightning-button onclick={handleCancel} label="Annulla" variant="neutral"></lightning-button>
-                    <lightning-button disabled={disabledConfirm} onclick={handleConfirm} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
+                <footer class="slds-modal__footer slds-modal__footer_directional">
+                    <button class="slds-button slds-button_neutral" data-id="close" onclick={handleClose}>Chiudi</button>
+                    <button disabled={disabledConfirm} class="slds-button slds-button_brand" data-id="conf" onclick={handleConfirm}>Conferma</button>
                 </footer>
             </div>
         </section>

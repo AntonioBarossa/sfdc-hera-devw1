@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Switch In Winback</value>
+        <value xsi:type="xsd:string">Switch in Winback</value>
     </values>
     <values>
         <field>ServiceRequestType__c</field>

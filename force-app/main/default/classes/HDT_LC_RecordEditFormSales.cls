@@ -10,6 +10,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static HDT_SRV_ActivityCustom activitySrv= new HDT_SRV_ActivityCustom();
     public static HDT_QR_RecordType rctype= new HDT_QR_RecordType();
     public static HDT_QR_Case caseQr = new HDT_QR_Case();
+  //  public static HDT_QR_Recordtype rctype = new HDT_QR_Recordtype();
     @AuraEnabled
     public static void cancelCase(String caseId){
         try {
@@ -55,7 +56,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug('LOG_ACTIVITY_MISSING2:');
                 System.debug(activity);
-                activitySrv.createRecord(activity);
+                //activitySrv.createRecord(activity);
                 System.debug('LOG_ACTIVITY_MISSING2:');
                 return false;
             }else{
@@ -97,7 +98,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
                 }
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Contratti/Bonus Commerciale');
                 System.debug(activity);
-                //activitySrv.createRecord(activity);
+                activitySrv.createRecord(activity);
                 return 'success';
             }
             else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c == 'Completed' && activities[0].approved__c == 'No'){
@@ -105,6 +106,19 @@ public with sharing class HDT_LC_RecordEditFormSales {
             }
             else if(activities != null && !activities.isEmpty() && activities[0].wrts_prcgvr__status__c != 'Completed'){
                 return 'aperta';
+            }
+            else if(activities != null && activities.isEmpty()){
+                cs.status = 'In Lavorazione';
+                cs.Phase__c = 'In Lavorazione';
+                caseSRV.updateRecord(cs);
+                Id recTypeId= null;
+                RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+                if(rc !=null){
+                    recTypeId= rc.Id;
+                }
+                wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Approvazione Bonus Commerciale');
+                activitySrv.createRecord(activity);
+                return 'success2';
             }
             else{
                 return 'errore';
@@ -118,12 +132,6 @@ public with sharing class HDT_LC_RecordEditFormSales {
     public static void saveDraft(String caseId, String accountId, Map<String,Object> caseob){
         try {
             Case cs= new Case(Id=caseId);
-            List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,Phase__c');
-            if(caseList != null && !caseList.isEmpty() && caseList[0].Phase__c == 'Bozza'){
-                cs.phase__c = 'In Lavorazione';
-                cs.status = 'In Lavorazione';
-            }
-           // Case cs= new Case(Id=caseId);
 
             if(caseob.containsKey('OperationSubType__c')){
                 cs.put('OperationSubType__c',String.valueOf(caseob.get('OperationSubType__c')));

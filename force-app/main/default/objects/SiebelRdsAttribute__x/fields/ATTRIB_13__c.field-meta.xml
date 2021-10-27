@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data Emissione / Data Reale</label>
+    <label>Data emissione</label>
     <required>false</required>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

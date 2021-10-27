@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 13/11/2020
+* @description HDT_UTL_SecurityAccess Class
+* @history Keltin Mesonjesi 13/11/2020 – Created Class
+*/
 public inherited sharing class HDT_UTL_SecurityAccess {
 
     private String objName;
@@ -5,10 +11,10 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     private String operation;
 
     /**
-     * Initialize attributes on object creation
-     * @param String objNameParam ex.'ServicePoint__c'
-     * @param String fieldNamesParam ex.'ServicePointCode__c,SupplyCity__c,SupplyProvince__c,Name'
-     * @param String operationParam options: 'read' or 'create' or 'update' or 'delete' or default: 'read'
+     * @description Initialize attributes on object creation
+     * @param objNameParam ex.'ServicePoint__c'
+     * @param fieldNamesParam ex.'ServicePointCode__c,SupplyCity__c,SupplyProvince__c,Name'
+     * @param operationParam options: 'read' or 'create' or 'update' or 'delete' or default: 'read'
      */
     public HDT_UTL_SecurityAccess(String objNameParam, String fieldNamesParam, String operationParam){
         objName = objNameParam;
@@ -17,7 +23,7 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     }
 
     /**
-     * Check if user has permissions to access the object
+     * @description Check if user has permissions to access the object
      * @return Boolean
      */
     private boolean isSafeObject(){
@@ -49,8 +55,8 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     }
 
     /**
-     * Check if user has permission to access the object's field
-     * @param String fieldName ex.'Name'
+     * @description Check if user has permission to access the object's field
+     * @param fieldName ex.'Name'
      * @return Boolean
      */
     private boolean isSafeField(String fieldName){
@@ -83,7 +89,7 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     }
 
     /**
-     * Check if user can access object and object's fields
+     * @description Check if user can access object and object's fields
      */
     public void checkSecurityAccess(){
 
@@ -101,7 +107,9 @@ public inherited sharing class HDT_UTL_SecurityAccess {
         } 
 
         if (!fieldsWithoutAccess.isEmpty()) {
-            throw new AuraHandledException('Non hai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ','));
+            String excMessage = 'Non hai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ',');
+            system.debug(excMessage);
+            throw new AuraHandledException(excMessage);
         }
 
     }

@@ -1,3 +1,9 @@
+/**
+ * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+ * @date 04/06/2021
+ * @description HDT_UTL_CompanyOwner Classes
+ * @history Sabina Levonja 04/06/2021 – Created class
+ */
 public inherited sharing class HDT_UTL_CompanyOwner {
 
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
@@ -6,9 +12,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
 
-
     public static void feedCompanyOwner(List<SObject> objs){
-        List<String> owners=new List<String>();
         String userId= System.UserInfo.getUserId();
         User currentUser= HDT_QR_UserQueriesWithoutSharing.getRoleAndProfile(userId)[0];
         String objectApiName='';

@@ -1,0 +1,54 @@
+<template>
+
+    <div class="slds-is-relative">
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="small" variant="brand"></lightning-spinner>
+        </template>
+
+        <template if:false={scriptConfig}>
+            
+            <template if:true={scriptConfigs}>
+                <p>Sono disponibili i seguenti script:</p>
+                <div style="height: 200px;" class="slds-m-top_small">
+                    <lightning-datatable
+                        key-field="scriptName"
+                        data={scriptConfigs}
+                        hide-checkbox-column
+                        columns={columns}
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </div>
+            </template>
+
+            <template if:false={scriptConfigs}>
+                <p>Non è disponibile alcuno script.</p>
+            </template>
+        </template>
+
+        <template if:true={scriptConfig}>
+            <template if:false={scriptConfig.isScriptDecisional}>
+                <c-hdt-manage-script-card script-process-name={scriptConfig.scriptName}
+                    record-id={scriptConfig.scriptTarget}
+                    activity-id={activityId}
+                    child-additional-info={childAdditionalInfo}
+                    link-reitek={linkReitek}
+                    onclose={closeModal}
+                    onconfirm={confirmModal}>
+                </c-hdt-manage-script-card>
+            </template>
+    
+            <template if:true={scriptConfig.isScriptDecisional}>
+                <c-hdt-manage-script-decisional-card script-process-name={scriptConfig.scriptName}
+                    record-id={scriptConfig.scriptTarget}
+                    activity-id={activityId}
+                    child-additional-info={childAdditionalInfo}
+                    link-reitek={linkReitek}
+                    onclose={closeModal}
+                    onconfirm={confirmModal}>
+                </c-hdt-manage-script-decisional-card>
+            </template>
+        </template>
+    </div>
+
+</template>
