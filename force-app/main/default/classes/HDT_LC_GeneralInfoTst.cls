@@ -14,7 +14,7 @@ public with sharing class HDT_LC_GeneralInfoTst {
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         HDT_UTL_DataFactoryTst.createSale(1, true, acc[0].Id, 'Attiva');
         HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
-        HDT_UTL_DataFactoryTst.createAgentMatrix(1,true,'Test');
+        HDT_UTL_DataFactoryTst.createAgentMatrix(1,true,'Back office');
     }
 
     @isTest
