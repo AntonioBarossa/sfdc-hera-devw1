@@ -29,7 +29,7 @@ public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObj
     //BATCH FINISH
     public void finish(Database.BatchableContext bc) {
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
-        System.debug(LoggingLevel.DEBUG, 'HDT_BA_ExpiredOrders - finished job: ' + a);
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_ExpiredCases - finished job: ' + a);
     }
     
 }
