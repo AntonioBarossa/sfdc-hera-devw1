@@ -97,7 +97,7 @@
         <name>MassiveLoaderImportProcesses</name>
     </customLabels>
     <customLabels>
-        <label>Il caricamento è terminato con successo. ID:{0}</label>
+        <label>Il caricamento è terminato con successo. Nome: {0}</label>
         <name>MassiveLoaderImportSuccess</name>
     </customLabels>
     <customLabels>

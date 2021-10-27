@@ -398,12 +398,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         //FINE SVILUPPI EVERIS
         //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
         updateProcessStep(
-            {order: {Id: this.order.Id, Step__c: nextSectionStep, 
+            {order: {Id: orderId, Step__c: nextSectionStep, 
             ...this.sectionDataToSubmit,
             },
             isVolture: this.isVolture,
             isRetroactive: this.isRetroactive,
             isReading: this.isReading,
+            isUpdateStep: this.sectionDataToSubmit.length > 0,
             readingDate: this.readingCustomerDate
         }).then(data =>{
             if(this.isVolture){
@@ -1657,7 +1658,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility)
-                    new fieldData('Ordine di riferimento','OrderReferenceNumber', true, false, true, ''),
+                    new fieldData('Ordine di riferimento','OrderReference__c', true, false, true, ''),
                     new fieldData('Società di vendita','SalesCompany__c', true, false, true, ''),
                     new fieldData('Campagna','Campaign__c', true, false, true, ''),
                     new fieldData('Categoria Cliente','CustomerCategory__c', true, false, true, ''),
@@ -1854,51 +1855,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
-                    {
-                        'label': 'Flag Agevolazione IVA',
-                        'apiname': 'VATfacilitationFlag__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Flag Accise Agevolata',
-                        'apiname': 'FacilitationExcise__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'IVA',
-                        'apiname': 'VAT__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        // 'value': this.order.Vat__c,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Ele',
-                        'apiname': 'ExciseEle__c',
-                        'typeVisibility': this.typeVisibility('ele'),
-                        'required': false,
-                        'disabled': true,
-                        // 'value': this.order.ExciseEle__c,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Gas',
-                        'apiname': 'ExciseGAS__c',
-                        'typeVisibility': this.typeVisibility('gas'),
-                        'required': false,
-                        'disabled': true,
-                        // 'value': this.order.ExciseGas__c,
-                        'processVisibility': ''
-                    },
+                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',''),
+                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound',''),
+                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, true,''),
+                    new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,true,''),
+                    new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,true,''),
+                    new fieldData('Aliquota Accise','ExciseRate__c',this.typeVisibility('ele'),false,true,''),
+                    new fieldData('Addizionale Regionale', 'RegionalAdditional__c',this.typeVisibility('ele'),false,true,'')
                 ]
             },
             {

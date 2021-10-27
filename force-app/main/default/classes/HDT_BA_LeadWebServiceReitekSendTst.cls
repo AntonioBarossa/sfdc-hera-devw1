@@ -14,24 +14,23 @@ public class HDT_BA_LeadWebServiceReitekSendTst {
         
          HDT_UTL_DataFactoryTst.createWebServiceConfiguration('InvioNumerazioni', 'end', 'method', 'testUser');
          List<Account> acctList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        Id accId = acctList[0].Id;
+
         List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,acctList[0].Id);
-        Id conId = conList[0].Id;
-          List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, false);
+
+        List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, false);
         leadList[0].ContactDate__c = system.now().addHours(-2);
         leadList[0].isSendToReitek__c = false;
         insert leadList;
-        Id leadId = leadList[0].Id;
         
-         List<Campaign> campaignList = HDT_UTL_DataFactoryTst.createCampaign(1,false);
+        List<Campaign> campaignList = HDT_UTL_DataFactoryTst.createCampaign(1,false);
         campaignList[0].Name = 'LEAD CALLBACK';
         insert campaignList;
-          Id campaignId = campaignList[0].Id;
+        Id campaignId = campaignList[0].Id;
        
-         List<CampaignMember> campaignMembers = HDT_UTL_DataFactoryTst.createCampaignMember(1, true,campaignId,leadId,conId);
+         HDT_UTL_DataFactoryTst.createCampaignMember(true,campaignId,leadList,conList);
                
         
-        }
+    }
     
      @isTest
     public static void testOne(){

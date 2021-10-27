@@ -505,16 +505,14 @@ export default class hdtBillingProfileForm extends LightningElement {
             console.log('IBAN__c value on toggle: ', this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value);
         }
 
-        if (event.target.fieldName === 'ElectronicInvoicingMethod__c' && event.target.value === 'Estero') {
-            console.log('Keltin electronic invoicing method: ' + event.target.value);
-
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CUP__c')].disabled = true;
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CIG__c')].disabled = true;
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCode__c')].disabled = true;
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeStartDate__c')].disabled = true;
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeEndDate__c')].disabled = true;
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].disabled = true;
-            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].disabled = true;
+        if (event.target.fieldName === 'ElectronicInvoicingMethod__c') {
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CUP__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'CIG__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCode__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeStartDate__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'SubjectCodeEndDate__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'ElectronicInvoiceCertifiedEmailAddress__c')].disabled = event.target.value === 'Estero';
+            this.fatturazioneElettronicaFields[this.fatturazioneElettronicaFields.findIndex(el => el.fieldName === 'XMLType__c')].disabled = event.target.value === 'Estero';
         }
 
     }

@@ -24,7 +24,7 @@ public with sharing class HDT_LC_AccountAlertsTst {
         myContract.BillingProfile__c = myBilling.Id;
         insert myContract;
         
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, myContract.id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, myContract.id, ordList[0].id);
         HDT_UTL_DataFactoryTst.pClickCasePhase();
     }
     
@@ -49,9 +49,9 @@ public with sharing class HDT_LC_AccountAlertsTst {
         AlertAccountConfiguration__c result = ((List<AlertAccountConfiguration__c>) JSON.deserialize(jsonResult, List<AlertAccountConfiguration__c>.class))[0];
         
         //ASSERTS
-        System.assert(String.isNotBlank(jsonResult));
-        System.assert(result != null);
-        System.assertEquals(myAlertConfig.Id, result.Id);
+        System.assertEquals(true, String.isNotBlank(jsonResult), 'Json String was empty');
+        System.assertEquals(true, result != null, 'Result is null');
+        System.assertEquals(myAlertConfig.Id, result.Id, 'The Id from the result does not match');
     }
     
     //getAvailableRulesFor
@@ -83,8 +83,8 @@ public with sharing class HDT_LC_AccountAlertsTst {
         List<AlertConfiguration__c> result = (List<AlertConfiguration__c>) JSON.deserialize(jsonResult, List<AlertConfiguration__c>.class);
         
         //ASSERTS
-        System.assert(String.isNotBlank(jsonResult));
-        System.assert(result != null);
+        System.assertEquals(true, String.isNotBlank(jsonResult), 'Json String was empty');
+        System.assertEquals(true, result != null, 'Result is null');
         System.assertEquals(2, result.size(), 'Result inconsistente');
         
     }
@@ -112,10 +112,10 @@ public with sharing class HDT_LC_AccountAlertsTst {
         AlertAccountConfiguration__c accountAlert = [SELECT Id, Account__c, AlertConfiguration__c FROM AlertAccountConfiguration__c WHERE Account__c = :acc.Id];
         
         //ASSERTS
-        System.assert(result);
-        System.assert(accountAlert != null);
-        System.assertEquals(accountAlert.Account__c, acc.Id);
-        System.assertEquals(accountAlert.AlertConfiguration__c, myAlert.Id);
+        System.assertEquals(true, result, 'Result is not true');
+        System.assertEquals(true, accountAlert != null, 'accountAlert is null');
+        System.assertEquals(accountAlert.Account__c, acc.Id, 'The account ids do not match');
+        System.assertEquals(accountAlert.AlertConfiguration__c, myAlert.Id, 'The alert ids do not match');
         
     }
     
@@ -143,9 +143,9 @@ public with sharing class HDT_LC_AccountAlertsTst {
         AlertAccountConfiguration__c accountAlert = [SELECT Id, IsActive__c FROM AlertAccountConfiguration__c];
         
         //ASSERTS
-        System.assert(result);
-        System.assert(accountAlert != null);
-        System.assert(accountAlert.IsActive__c);
+        System.assertEquals(true, result, 'Result is not true');
+        System.assertEquals(true, accountAlert != null, 'accountAlert is null');
+        System.assertEquals(true, accountAlert.IsActive__c, 'The account alert is not active');
         
     }
     
@@ -169,11 +169,11 @@ public with sharing class HDT_LC_AccountAlertsTst {
         update con;
         
         //TESTING EMPTY RETURN
-        HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails result_empty = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
+        HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails resultempty = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
         
         //ASSERTS
-        System.assertEquals('', result_empty.email);
-        System.assertEquals('', result_empty.mobilePhone);
+        System.assertEquals('', resultempty.email, 'Email string is not empty');
+        System.assertEquals('', resultempty.mobilePhone, 'MobilePhone string is not empty');
         
         
         //REGULAR TESTING
@@ -188,8 +188,8 @@ public with sharing class HDT_LC_AccountAlertsTst {
         HDT_LC_AccountAlerts.HDT_WRP_AccountContactDetails result = HDT_LC_AccountAlerts.getContactDetails(acc.Id);
         
         //ASSERTS
-        System.assertEquals(con.email, result.email);
-        System.assertEquals(con.mobilePhone, result.mobilePhone);
+        System.assertEquals(con.email, result.email, 'The email does not match the contact email');
+        System.assertEquals(con.mobilePhone, result.mobilePhone, 'The movielPhone does not match the contact mobile phone');
         
     }
     

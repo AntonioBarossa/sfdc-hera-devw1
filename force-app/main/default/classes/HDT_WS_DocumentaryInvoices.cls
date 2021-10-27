@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_WS_DocumentaryInvoices {
 
     public static HDT_WRP_ReturnObj sendFile(HttpRequest req) {
@@ -24,14 +25,14 @@ public inherited sharing class HDT_WS_DocumentaryInvoices {
             HTTPResponse res = http.send(req);
 
             String responseStatus = res.getStatus();
-            System.debug('## Response status -> ' + responseStatus);
+            System.debug(LoggingLevel.DEBUG, '## Response status -> ' + responseStatus);
 
             HDT_WRP_ReponseObj responseObj = (HDT_WRP_ReponseObj)JSON.deserialize(res.getBody(), HDT_WRP_ReponseObj.class);
 
-            System.debug('### Response -> ' + responseObj.status);
-            System.debug('### Response -> ' + responseObj.correlationId);
-            System.debug('### Response -> ' + responseObj.timestamp);
-            System.debug('### Response -> ' + responseObj.message);
+            System.debug(LoggingLevel.DEBUG, '### Response -> ' + responseObj.status);
+            System.debug(LoggingLevel.DEBUG, '### Response -> ' + responseObj.correlationId);
+            System.debug(LoggingLevel.DEBUG, '### Response -> ' + responseObj.timestamp);
+            System.debug(LoggingLevel.DEBUG, '### Response -> ' + responseObj.message);
 
             if(responseObj.status != 'success'){
                 returnObj.success = false;
@@ -43,7 +44,7 @@ public inherited sharing class HDT_WS_DocumentaryInvoices {
             returnObj.bodyBase64 = responseObj.data.invoice;
             returnObj.message = '';
         } catch (Exception ex){
-            System.debug('ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
             returnObj.success = false;
             returnObj.message = 'ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage();       
         }

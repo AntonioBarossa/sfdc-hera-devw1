@@ -51,7 +51,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
         myCampaignList[0].Channel__c = 'Bolletta';
         update myCampaignList;
         List<Lead> myLeadList = HDT_UTL_DataFactoryTst.createLead(1, true);
-        List<CampaignMember> myCampaignMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(1, true, myCampaignList[0].Id, myLeadList[0].Id, contactList[0].Id);
+        List<CampaignMember> myCampaignMemberList = HDT_UTL_DataFactoryTst.createCampaignMember(true, myCampaignList[0].Id, myLeadList, contactList);
         update myCampaignMemberList;
 
         caseList[0].recordTypeId = rtId;
