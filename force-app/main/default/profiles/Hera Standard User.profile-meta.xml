@@ -1460,6 +1460,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountContactRelation.SolEndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.SolStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountContactRelation.StartDate</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20478,6 +20488,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.brandlogo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IntegrationId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
