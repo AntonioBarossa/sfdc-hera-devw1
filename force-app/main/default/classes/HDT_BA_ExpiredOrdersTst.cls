@@ -15,7 +15,7 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
     
     @isTest
     private static void myBatchTest() {
-
+        
     }
     
 }
