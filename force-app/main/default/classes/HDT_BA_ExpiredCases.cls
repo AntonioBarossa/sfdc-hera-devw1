@@ -21,7 +21,7 @@ public with sharing class HDT_BA_ExpiredCases implements Database.Batchable<sObj
         }
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_ExpiredCases - Aggiorno Case Record: ' + casesToNullify.size());
         
-        update casesToNullify;
+        HDT_UTL_DatabaseService.updateSObject(casesToNullify);
     }
     
     //BATCH FINISH

@@ -24,7 +24,7 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
         }
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_ExpiredOrders - Aggiorno Order Record: ' + ordersToNullify.size());
         
-        update ordersToNullify;
+        HDT_UTL_DatabaseService.updateSObject(ordersToNullify);
     }
     
     //BATCH FINISH
