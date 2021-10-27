@@ -135,33 +135,70 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             : null;
         /* Field "TENSIONE" */
         orderToUpdate.VoltageLevel__c = fieldsMap.get('TENSIONE') != null 
-            ? voltureChangeUtils.getTension(Integer.valueOf((String)fieldsMap.get('TENSIONE')))
+            ? voltureChangeUtils.getTension((String)fieldsMap.get('TENSIONE'))
             : null;
         return orderToUpdate;
     }
     
-    public Boolean handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
+    public Map<String,Object> handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
     {
-        Boolean flagResult = false;
-
-        /**
-         * Address check stand by
-         */
+        Map<String,Object> returnMap = new Map<String,Object>();
+        /* Tension fields */
         String tension = String.valueOf(paramsMap.get('TENSIONE'));
+        /* Power gfields */
         String powerAvailable = String.valueOf(paramsMap.get('POTDISP'));
         String powerCommitted = String.valueOf(paramsMap.get('POTCONTRIMP'));
-        //String address = '';
-
-        if(voltureChangeUtils.getTension(Integer.valueOf(tension)) == currentOrder.VoltageLevel__c)
+        /* Address fields */
+        String via = String.valueOf(paramsMap.get('VIA'));
+        String civico = String.valueOf(paramsMap.get('CIV'));
+        String cap = String.valueOf(paramsMap.get('CAP'));
+        String istat = String.valueOf(paramsMap.get('ISTAT'));
+        String localita = String.valueOf(paramsMap.get('LOCALITA'));
+        String provincia = String.valueOf(paramsMap.get('PROV'));
+        String nazione = String.valueOf(paramsMap.get('NAZIONE'));
+        /* Compose Address map for the address check */
+        Map<String, String> addressCheckMap = new Map<String, String>
         {
-            if(String.isNotEmpty(powerAvailable) && String.isNotEmpty(powerCommitted))
-            {
-                flagResult = voltureChangeUtils.powerCheck(Decimal.valueOf(powerAvailable), currentOrder.PowerAvailable__c) 
-                    && voltureChangeUtils.powerCheck(Decimal.valueOf(powerCommitted), currentOrder.PowerCommitted__c);
-            }
-        }
+            via => currentOrder.SupplyStreetName__c,
+            civico => currentOrder.SupplyStreetNumber__c,
+            cap => currentOrder.SupplyPostalCode__c,
+            istat => currentOrder.SupplyCityCode__c,
+            localita => currentOrder.SupplyCity__c,
+            provincia => currentOrder.SupplyState__c,
+            nazione => currentOrder.SupplyCountry__c
+        };
 
-        return flagResult;
+        /* Tension Check */
+        if(voltureChangeUtils.getTension(tension) != currentOrder.VoltageLevel__c)
+        {
+            returnMap.put('message', 'Valori tensione non corrispondenti');
+            returnMap.put('result', false);
+            return returnMap;
+        }
+        /* Power Available Check */
+        if(!voltureChangeUtils.powerCheck(powerAvailable, String.valueOf(currentOrder.PowerAvailable__c)))
+        {
+            returnMap.put('message', 'Valori Potenza Disponibile non corrispondenti');
+            returnMap.put('result', false);
+            return returnMap;
+        }
+        /* Power Committed Check */
+        if(!voltureChangeUtils.powerCheck(powerCommitted, String.valueOf(currentOrder.PowerCommitted__c)))
+        {
+            returnMap.put('message', 'Valori Potenza Impegnata non corrispondenti');
+            returnMap.put('result', false);
+            return returnMap;
+        }
+        /* Address Check */
+        if(!voltureChangeUtils.addressCheck(addressCheckMap))
+        {
+            returnMap.put('message', 'Indirizzi non corrispondenti');
+            returnMap.put('result', false);
+            return returnMap;
+        }
+        returnMap.put('message', '');
+        returnMap.put('result',true);
+        return returnMap;
     
     }
 

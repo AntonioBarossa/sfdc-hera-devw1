@@ -214,13 +214,27 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         orderList[0].VoltageLevel__c = 'MT';
         orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
         orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
         
 
         Map<String,Object> paramsMap = new Map<String,Object>
         {
             'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
-            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'VIA' => 'A',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
         };
 
         Test.startTest();
@@ -267,13 +281,26 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         orderList[0].VoltageLevel__c = 'MT';
         orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
         orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
-        
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
 
         Map<String,Object> paramsMap = new Map<String,Object>
         {
             'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
-            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'VIA' => 'A',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
         };
 
         Test.startTest();

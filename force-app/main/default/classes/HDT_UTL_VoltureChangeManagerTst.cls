@@ -193,42 +193,186 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         orderList[0].VoltageLevel__c = 'MT';
         orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
         orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.lowerThreshold;
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
     
         Map<String,Object> paramsMap = new Map<String,Object>
         {
             'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
-            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'VIA' => 'A',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
         };
 
         Test.startTest();
-        Boolean result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Map<String,Object> result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
         Test.stopTest();
 
-        System.assertEquals(true, result, 'Check True non eseguito correttamente');
+        System.assertEquals(true, (Boolean)result.get('result'), 'Check True non eseguito correttamente');
+        System.assertEquals('', (String)result.get('message'),'Check True non eseguito correttamente');
     }
 
     @IsTest
-    static void handleAmmissibilityCheckFalseTst()
+    static void handleAmmissibilityCheckTensionTst()
     {
         List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
         
         orderList[0].VoltageLevel__c = 'MT';
         orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
         orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
+    
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.btLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'VIA' => 'A',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
+        };
+
+        Test.startTest();
+        Map<String,Object> result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(false,(Boolean)result.get('result'), 'Check False non eseguito correttamente');
+        System.assert(String.isNotEmpty((String)result.get('message')), 'Check False non eseguito correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckPowerAvailableTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
     
         Map<String,Object> paramsMap = new Map<String,Object>
         {
             'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
             'POTDISP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
-            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'VIA' => 'A',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
         };
 
         Test.startTest();
-        Boolean result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Map<String,Object> result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
         Test.stopTest();
 
-        System.assertEquals(false, result, 'Check False non eseguito correttamente');
+        System.assertEquals(false,(Boolean)result.get('result'), 'Check False non eseguito correttamente');
+        System.assert(String.isNotEmpty((String)result.get('message')), 'Check False non eseguito correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckPowerCommittedTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
+        
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.lowerThreshold,
+            'VIA' => 'A',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
+        };
+
+        Test.startTest();
+        Map<String,Object> result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(false,(Boolean)result.get('result'), 'Check False non eseguito correttamente');
+        System.assert(String.isNotEmpty((String)result.get('message')), 'Check False non eseguito correttamente');
+    }
+
+    @IsTest
+    static void handleAmmissibilityCheckAddressTst()
+    {
+        List<Order> orderList = [SELECT Id, VoltageLevel__c, PowerAvailable__c, PowerCommitted__c FROM Order];
+        
+        orderList[0].VoltageLevel__c = 'MT';
+        orderList[0].PowerAvailable__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].PowerCommitted__c = HDT_UTL_VoltureChangeUtilities.higherThreshold;
+        orderList[0].SupplyStreetName__c = 'A';
+        orderList[0].SupplyStreetNumber__c = 'B';
+        orderList[0].SupplyPostalCode__c = 'C';
+        orderList[0].SupplyCityCode__c = 'D';
+        orderList[0].SupplyCity__c = 'E';
+        orderList[0].SupplyState__c = 'F';
+        orderList[0].SupplyCountry__c = 'G';
+    
+        Map<String,Object> paramsMap = new Map<String,Object>
+        {
+            'TENSIONE' => HDT_UTL_VoltureChangeUtilities.mtLimit,
+            'POTDISP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'POTCONTRIMP' => HDT_UTL_VoltureChangeUtilities.higherThreshold,
+            'VIA' => 'H',
+            'CIV' => 'B',
+            'CAP' => 'C',
+            'ISTAT' => 'D',
+            'LOCALITA' => 'E',
+            'PROV' => 'F',
+            'NAZIONE' => 'G'
+        };
+
+        Test.startTest();
+        Map<String,Object> result = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, orderList[0]);
+        Test.stopTest();
+
+        System.assertEquals(false,(Boolean)result.get('result'), 'Check False non eseguito correttamente');
+        System.assert(String.isNotEmpty((String)result.get('message')), 'Check False non eseguito correttamente');
     }
 
     @IsTest
