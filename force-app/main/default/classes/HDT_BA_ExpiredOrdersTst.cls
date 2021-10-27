@@ -22,6 +22,7 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         for(Order o : ordList){
             o.DocusignExpirationDate__c = Date.today().addDays(5);
+            o.RecordTypeId = recTypeId;
         }
         insert ordList;
     }
