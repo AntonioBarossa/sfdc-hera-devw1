@@ -19,6 +19,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+      // System.debug('pino'+dataAccount.get('fiscalCode'));
         Map<String, String> infoData = new Map<String, String>();
         infoData.put('lastName'     , dataAccount.get('lastName')   );
         infoData.put('firstName'    , dataAccount.get('firstName')  );
@@ -57,7 +58,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         }
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
-        System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
+      //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
         if (!account.CustomerMarking__c.containsIgnoreCase('Condomini')&& !account.CustomerMarking__c.containsIgnoreCase('Associazione')) { //HRAWRM-775
 
            

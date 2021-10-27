@@ -7,7 +7,21 @@
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
-        for(Contract c : ((List<Contract>) Trigger.New)){
+        list<Contract> newContracts = (List<Contract>) Trigger.New;
+        /*Set<Id> orderToContract = new Set<Id>();
+        for(Contract c : newContracts){
+            orderToContract.add(c.SBQQ__Order__c);
+        }
+
+        map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN:orderToContract with Security_Enforced]);
+        
+        for(Contract c : newContracts){
+            c.status='Attivo';
+            if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c){
+                //c.SBQQ__Quote__c=null;
+            }
+        }*/
+        for(Contract c : newContracts){
             c.status='Attivo';
         }
     }
@@ -58,9 +72,38 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 }
             }
         }
+
+
+        list<Contract> newContracts = (List<Contract>) Trigger.New;
+        Set<Id> orderToContract = new Set<Id>();
+        for(Contract c : newContracts){
+            orderToContract.add(c.SBQQ__Order__c);
+        }
+        map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
+        Set<id> contractsToBeBlanked = new Set<id>();
+        for(Contract c : newContracts){
+            if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
+                c.SBQQ__Quote__c=null;
+            }
+        }
     }
 
     public override void afterUpdate() {
        HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
+       /*list<Contract> newContracts = (List<Contract>) Trigger.New;
+       Set<Id> orderToContract = new Set<Id>();
+       for(Contract c : newContracts){
+           orderToContract.add(c.SBQQ__Order__c);
+       }
+       map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
+       Set<id> contractsToBeBlanked = new Set<id>();
+       for(Contract c : newContracts){
+           if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
+               contractsToBeBlanked.add(c.id);
+           }
+       }
+       if(!contractsToBeBlanked.isEmpty()){
+           myUpdate(contractsToBeBlanked);
+       }*/
     }
 }

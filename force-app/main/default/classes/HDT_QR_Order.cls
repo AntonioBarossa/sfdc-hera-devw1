@@ -867,11 +867,59 @@ public inherited sharing class HDT_QR_Order {
     * @param orderNumber - String
     * @return List<Order>
     */
+    /**@frpanico 26/10/2021
+     * Added Supply Address Fields
+     * Added Power Available/Committed
+     * Added VoltageLevel
+     */
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [SELECT id,
+        phase__c,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        ServicePoint__r.Distributor__r.Name, 
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c
+        FROM Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
+    /**@frpanico 26/10/2021
+     * Added Supply Address Fields
+     * Added Power Available/Committed
+     * Added VoltageLevel
+     */
     public List<Order> getOrdersByOrderNumber(List<String> orderNumbers){
-        return [SELECT id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,AccountId FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
+        return [SELECT id,
+        phase__c,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        AccountId,
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c
+        FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
     /**
