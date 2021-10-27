@@ -19,10 +19,12 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza', recTypeId, recTypeName);
         
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id); 
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         for(Order o : ordList){
             o.DocusignExpirationDate__c = Date.today().addDays(5);
             o.RecordTypeId = recTypeId;
+            o.Contact__c = conList[0].Id;
         }
         insert ordList;
     }
