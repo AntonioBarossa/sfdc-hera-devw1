@@ -1,6 +1,6 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_CausalCodeCalculation {
-
-
+    
     public HDT_CausalCodeCalculation__mdt calculateCausalCode(String cluster, String process, String subprocess, String commodity){
 
         HDT_CausalCodeCalculation__mdt cccRecord = new HDT_CausalCodeCalculation__mdt();
@@ -23,19 +23,17 @@ public inherited sharing class HDT_QR_CausalCodeCalculation {
                 WITH SECURITY_ENFORCED
                 LIMIT 1];
 
-            } catch(Exception e){
-                System.debug('calculateCausalCode Exception TypeName: ' + e.getTypeName());
-                System.debug('calculateCausalCode Exception Message: ' + e.getMessage());
-                System.debug('calculateCausalCode Exception StackTraceString: ' + e.getStackTraceString());
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'calculateCausalCode Exception TypeName: ' + e.getTypeName());
+                System.debug(LoggingLevel.DEBUG, 'calculateCausalCode Exception Message: ' + e.getMessage());
+                System.debug(LoggingLevel.DEBUG, 'calculateCausalCode Exception StackTraceString: ' + e.getStackTraceString());
                 return cccRecord;
 
             }
         }
 
         if(cccRecord!= null && cccRecord.OperationCode__c == null){
-
             cccRecord.OperationCode__c = '';
-
         }
 
         return cccRecord;

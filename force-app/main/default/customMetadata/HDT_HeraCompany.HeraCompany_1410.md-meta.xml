@@ -6,4 +6,8 @@
         <field>CompanyCode__c</field>
         <value xsi:type="xsd:string">1410</value>
     </values>
+    <values>
+        <field>SalesCompany__c</field>
+        <value xsi:nil="true"/>
+    </values>
 </CustomMetadata>

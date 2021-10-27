@@ -27,7 +27,7 @@ public with sharing class HDT_BA_PraxidiaFrontTst {
             List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
-            List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
+            HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
 
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('PraxidiaIntegration', 'end', 'method', 'testUser');
             HDT_UTL_DataFactoryTst.createWebServiceCredential('FirstName LastName', '12345', 'usernameTest');

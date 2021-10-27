@@ -28,8 +28,8 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Aggancia_Sub_e_Contract</name>
-        <label>Aggancia Sub e Contract</label>
+        <name>Aggancia_Sub_Contract_e_Order</name>
+        <label>Aggancia Sub, Contract e Order</label>
         <locationX>704</locationX>
         <locationY>758</locationY>
         <assignmentItems>
@@ -44,6 +44,27 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Subscription.SBQQ__Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Contract__r.SBQQ__Order__r.Commodity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.TerminationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TerminationDateFormula</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -157,6 +178,11 @@
             <label>Asset</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>TerminationDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>IF(TODAY() &gt; {!Get_Subscription.SBQQ__StartDate__c}, TODAY(),  {!Get_Subscription.SBQQ__StartDate__c}+1)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_PostSalesVAS {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_PostSalesVAS</label>
     <processMetadataValues>
@@ -185,7 +211,7 @@
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Aggancia_Sub_e_Contract</targetReference>
+            <targetReference>Aggancia_Sub_Contract_e_Order</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

@@ -22,12 +22,13 @@ private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
         leadList[0].ContactReason__c   = 'Info commerciali';
         leadList[0].MobilePhone        = '0123456789';
         insert leadList;
-        String sourceA = leadList[0].SourceAgency__c;
-        String intProd = leadList[0].InterestProduct__c;
-        String mobPh =  leadList[0].MobilePhone ; 
-        List<CampaignMember> campaignListMember = HDT_UTL_DataFactoryTst.createCampaignMember(1, false, campaignList[0].Id,leadList[0].Id,null);
+
+        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
+
+        List<CampaignMember> campaignListMember = HDT_UTL_DataFactoryTst.createCampaignMember(false, campaignList[0].Id,leadList, contacts);
         campaignListMember[0].Ecid__c= '3456587334';
         insert campaignListMember;
+
         HDT_UTL_DataFactoryTst.createWebServiceCredential('MulesoftSalesforceUser', 'a74b50dbaac04215bfbf89a2ee315a80','48fe5165a40c49aa9bf4b3d9bca2552f');
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postSlotRequest', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/campaigns/slots/search', 'POST' , 'MulesoftSalesforceUser');
     	HDT_WebServiceConfiguration__c wsc = [SELECT Id, Mock__c FROM HDT_WebServiceConfiguration__c WHERE Name = 'postSlotRequest' LIMIT 1];

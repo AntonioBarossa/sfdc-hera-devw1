@@ -124,6 +124,13 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			insert cases;
 		}
 	}
+    
+    @isTest static void testInit(){
+        
+        Map<String,Object> mapp = HDT_LC_ChildOrderProcessDetails.init('id');
+        System.assertEquals(1, mapp.size(), 'Init did not work correctly');
+        System.assertNotEquals(null, mapp, 'Init did not work correctly');
+    }
 
 	@isTest
 	static void testcreateActivityAccise(){
@@ -160,23 +167,23 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrder1=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c
+			List<Order> tOrder1=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test1'];
 
-			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c
+			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test2Voltura'];
 
-			List<Order> tOrder3=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c
+			List<Order> tOrder3=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test3'];
 
-			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c
+			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test5Conessione1'];
 
-			List<Order> tOrder5=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c
+			List<Order> tOrder5=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test6Temporanea'];
 
@@ -202,20 +209,20 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			tOrder2[0].EffectiveDate__c = Date.today().addDays(20);
 			update tOrder4;
 
-				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, true, true, date.today());
+		    HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, true, true, date.today());
 
 
 			Test.stopTest();
 
-			List<Order> tOrderupdated=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, ReadingCustomerDate__c
+			List<Order> tOrderupdated=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, ReadingCustomerDate__c, Subprocess__c
 			                           FROM Order
-			                           WHERE Name='testOrderName0'
+			                           WHERE Name='testOrderName1'
 			                           LIMIT 1];
 
 			System.Debug('tOrderupdated[0] = '+tOrderupdated[0]);
 
-			System.assertEquals(date.today(), tOrderupdated[0].ReadingCustomerDate__c, 'Order not found');
-			System.assertNotEquals(null, tOrderupdated[0].ReadingCustomerDate__c);
+			System.assertEquals('Standard', tOrderupdated[0].Subprocess__c, 'Order not found');
+			System.assertNotEquals(null, tOrderupdated[0], 'Order not found');
 		}
 	}
 

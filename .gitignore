@@ -14,7 +14,7 @@ manifest/package.xml
 manifest/*
 manifest/
 .gitignore
-
+scripts/*
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 scripts/*
@@ -43,3 +43,6 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 launch.json
+
+# Folder that stores test class results
+./apexTestResults

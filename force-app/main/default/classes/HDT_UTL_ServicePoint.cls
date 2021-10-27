@@ -10,13 +10,10 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
-    public HDT_UTL_ServicePoint() {
-
-    }
 
 
     @AuraEnabled
-	public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+	public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){//
 		
 			servicePoint__c spNew = new servicePoint__c();
 			if(sp!= null){
@@ -37,27 +34,7 @@ public with sharing class HDT_UTL_ServicePoint {
             system.debug('*******responseArrichh:' +  response);
             system.debug('*******responseArrichhMap:' +  mapRes);
 
-		
-					
-	/*	if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			spNew.MeterClass__c = mapRes.get('CALIBRO1');
-		}
-		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
-			spNew.RemiCode__c = mapRes.get('CODICEREMI');
-		}
 
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
-		}
-
-	/*	if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
-		}*/
-
-		/*if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
-			spNew.RequestPhase__c  = mapRes.get('FASE');
-		}
-*/
     if(mapRes.get('IMPOSTE')!=null){
         if(mapRes.get('DESCRCOMM')=='Gas'){
             spNew.ExciseGas__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';
@@ -95,7 +72,6 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RemiCode__c = mapRes.get('CODICEREMI');
 		}
         if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			//spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4' : 'G6' ;
            if(mapRes.get('CALIBRO1')=='GRT005'){
             spNew.MeterClass__c = 'G10';
 
@@ -167,7 +143,6 @@ public with sharing class HDT_UTL_ServicePoint {
 
 				//campi fornitura
 				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
-					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
                     Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
                     spNew.Distributor__c = a.id;
                     System.debug('SOLILLO');
@@ -251,7 +226,6 @@ public with sharing class HDT_UTL_ServicePoint {
 					spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
-					//spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
                     Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
                     System.debug('POTENZACONTRATTUALE****************' + mapRes.get('POTENZACONTRATTUALE'));
                     spNew.PowerContractual__c = d.setScale(0);
@@ -262,7 +236,6 @@ public with sharing class HDT_UTL_ServicePoint {
                     System.debug('POTENZATECNICA1****************' + mapRes.get('POTENZATECNICA'));
                     
                     Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
-                    //spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.'))) ;
                     spNew.PowerAvailable__c  =d.setScale(1);
 
                     System.debug('POTENZATECNICA****************' + d.setScale(1));

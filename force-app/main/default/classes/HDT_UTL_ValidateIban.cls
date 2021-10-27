@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ValidateIban {
 
     //ValidateIban Cluster
@@ -12,7 +13,7 @@ public inherited sharing class HDT_UTL_ValidateIban {
         String ending = iban.substring(4);
         String rearranged = ending + start;
         
-        System.debug('####rearranged : ' + rearranged);
+        System.debug(LoggingLevel.DEBUG, '####rearranged : ' + rearranged);
         return rearranged;
     }
     
@@ -57,7 +58,7 @@ public inherited sharing class HDT_UTL_ValidateIban {
         
         //Doing a mod 97 on the first 9-digits chunk
 		String partOne = iban.substring(0,9);
-        System.debug('####part1 : ' + partOne);
+        System.debug(LoggingLevel.DEBUG, '####part1 : ' + partOne);
         Long resultOne = Math.mod(Long.valueOf(partOne) , Long.valueOf('97') );
        
         Integer currentPosition = 9;
@@ -75,11 +76,11 @@ public inherited sharing class HDT_UTL_ValidateIban {
             
             if (digitsRemaining) {
                 partN = String.valueOf(result) + iban.substring(currentPosition,currentPosition+7);
-        		System.debug('####part ' + currentPosition + ' to ' + currentPosition+7);
+        		System.debug(LoggingLevel.DEBUG, '####part ' + currentPosition + ' to ' + currentPosition+7);
         		result = Math.mod(Long.valueOf(partn) , Long.valueOf('97') );
             } else {
                 partN = String.valueOf(result) + iban.substring(currentPosition);
-        		System.debug('####part ' + currentPosition + ' to end');
+        		System.debug(LoggingLevel.DEBUG, '####part ' + currentPosition + ' to end');
         		result = Math.mod(Long.valueOf(partn) , Long.valueOf('97') );
             }
             

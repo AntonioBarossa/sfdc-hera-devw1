@@ -120,6 +120,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_ExciseTranscode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_FiltriProcessiSelFornitura__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -423,6 +427,91 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.DeliveryChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.IdNotifySiebelRequest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.IsMigrated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.IsRead__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.PhoneMail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Portal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Rule__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.SendDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.SendEffectiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.StateLegacy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Subject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Text__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SiebelCommTracking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
      <fieldPermissions>
@@ -1717,6 +1806,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountContactRelation.SolEndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.SolStartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountContactRelation.StartDate</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1783,6 +1882,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountStatementFilter__c.SameCA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>AccountStatementFilter__c.SocialBonus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5612,6 +5716,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.DocusignExpirationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.DocusignURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8999,6 +9108,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentalActivity__c.MogaCreatedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.MogaExtId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.SignatureCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentalActivity__c.SignatureDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentalActivity__c.Method__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10153,19 +10282,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>HDT_ExciseTranscode__mdt.Active__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>HDT_ExciseTranscode__mdt.ExciseString__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>HDT_ExciseTranscode__mdt.Excise__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -12187,11 +12316,11 @@
         <field>MacroActivityEasyCIM__c.idMacroActivityEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>true</editable>
         <field>MassiveLoaderRequest__c.Phase__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>true</editable>
         <field>MassiveLoaderRequest__c.Priority__c</field>
@@ -13325,6 +13454,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.DocumentalProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocusignExpirationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22479,6 +22613,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.IntegrationId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.isTransition__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28034,7 +28173,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SolTracking__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SolTracking__c.DeliveryChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SolTracking__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SolTracking__c.IdNotifySiebelRequest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	 <fieldPermissions>
+        <editable>true</editable>
+        <field>SolTracking__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35495,6 +35654,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>SiebelCommTracking__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>ScorecardMetric</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -36861,7 +37029,15 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>MassiveLoader</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>MassiveLoaderRequestItem__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>MassiveLoaderRequest__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>BlackList__c</tab>

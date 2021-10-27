@@ -154,6 +154,13 @@ public inherited sharing class HDT_QR_Account {
             WITH SECURITY_ENFORCED
         ];
     }
+    public List<Account> getAccountList(String filter){
+        HDT_QR_Helper qrHelper=new HDT_QR_Helper();
+        qrHelper.setObj('Account');
+        qrHelper.setFilter(filter);
+        return (List<Account>)qrHelper.getListSObject();
+    }
+
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)

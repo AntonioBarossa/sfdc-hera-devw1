@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount, PMD.TooManyFields')
 public inherited sharing class HDT_WRP_TechnicalOffer {
     
     public class HDT_WRP_MatrixData {

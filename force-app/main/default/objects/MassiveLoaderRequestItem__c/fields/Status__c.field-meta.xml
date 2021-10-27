@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Stato</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In attesa di lavorazione</fullName>
+                <default>true</default>
+                <label>In attesa di lavorazione</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione</fullName>
+                <default>false</default>
+                <label>In Lavorazione</label>
+            </value>
+            <value>
+                <fullName>Chiuso</fullName>
+                <default>false</default>
+                <label>Chiuso</label>
+            </value>
+            <value>
+                <fullName>Errore</fullName>
+                <default>false</default>
+                <label>Errore</label>
+            </value>
+            <value>
+                <fullName>Done</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Done</label>
+            </value>
+            <value>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Error</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Ready To Run</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ready To Run</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
