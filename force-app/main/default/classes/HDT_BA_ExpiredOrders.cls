@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sObject> {
     
     
