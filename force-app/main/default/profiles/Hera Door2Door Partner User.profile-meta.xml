@@ -1815,6 +1815,11 @@
         <field>AccountStatementFilter__c.SameCA__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>AccountStatementFilter__c.SocialBonus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountStatementFilter__c.UpsertKey__c</field>
