@@ -6,9 +6,10 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
     
     //TODO: SOSTITUIRE SEND DATE CON DocusignExpirationDate__c
     public Database.QueryLocator start(Database.BatchableContext bc){
-        String query = 'SELECT Id, Status__c, DocusignExpirationDate__c, Phase__c, CancellationReason__c '
+        Date todayDate = Date.today();
+        String query = 'SELECT Id, Status, DocusignExpirationDate__c, Phase__c, CancellationReason__c '
                     + 'FROM Order '
-                    + 'WHERE DocusignExpirationDate__c < ' + Date.today()
+                    + 'WHERE DocusignExpirationDate__c < ' + String.valueOf(todayDate)
                     + ' WITH SECURITY_ENFORCED';
 
         return Database.getQueryLocator(query);
