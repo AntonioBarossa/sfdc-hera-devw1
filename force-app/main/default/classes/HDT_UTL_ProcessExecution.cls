@@ -71,6 +71,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
+    /**
+    * @description :
+    * @param objName 
+    * @param fieldApiName 
+    * @return String 
+    **/
     public String getTypeField(String objName,String fieldApiName){
 
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
@@ -200,7 +206,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         }  
     }
 
-    /**
+    /** 
     * @description confronta gli indirizzi che restituisce il servizio con l'indirizzo in input  
     * restituisce l'indirizzo che ha il numero matching points maggiore 
     * @param rs  lista di indirizzi HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj
