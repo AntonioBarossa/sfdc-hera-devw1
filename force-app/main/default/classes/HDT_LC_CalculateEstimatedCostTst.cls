@@ -29,7 +29,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
         
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
 
-        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c);
+        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'updateOrder did not work correctly');
 
         Test.stopTest();
     }
@@ -59,7 +59,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
         
         System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
 
-        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c);
+        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'getExtimatedCost did not work correctly');
 
         Test.stopTest();
     }
