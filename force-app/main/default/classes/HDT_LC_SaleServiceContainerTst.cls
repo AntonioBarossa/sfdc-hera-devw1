@@ -67,16 +67,16 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 
 			Test.startTest();
 
-			Sale__c tSale=[SELECT Id, Name, Account__c, Account__r.Category__c
+			Sale__c tSale=[SELECT Id, Name, Account__c, Account__r.Category__c, Account__r.CompanyOwner__c
 			               FROM Sale__c
 			               WHERE Name='testSaleName0'];
 
-			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c
+			ServicePoint__c tServPoint=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
 			                            FROM ServicePoint__c
 			                            WHERE ServicePointCode__c='testServicePointCode'];
 
 
-			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c
+			ServicePoint__c tServPoint2=[SELECT Id, ServicePointCode__c, RecordType.DeveloperName, SupplyType__c, Account__c, SupplyProvince__c, SupplyTypeTemp__c
 			                             FROM ServicePoint__c
 			                             WHERE ServicePointCode__c='testServicePointCode2'];
 
@@ -95,7 +95,7 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 
 		Test.startTest();
 
-		Sale__c tSale=[SELECT Id, Name
+		Sale__c tSale=[SELECT Id, Name, CurrentStep__c
 		               FROM Sale__c
 		               WHERE Name='testSaleName0'];
 

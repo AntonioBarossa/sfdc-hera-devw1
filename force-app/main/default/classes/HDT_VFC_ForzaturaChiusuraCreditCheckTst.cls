@@ -8,6 +8,8 @@
 private class HDT_VFC_ForzaturaChiusuraCreditCheckTst {
     @testSetup
     static void setup() {
+        
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
        
         List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
         List<wrts_prcgvr__Activity__c> activities=HDT_UTL_DataFactoryTst.createActivityCustom(1, true,accountList[0].id);

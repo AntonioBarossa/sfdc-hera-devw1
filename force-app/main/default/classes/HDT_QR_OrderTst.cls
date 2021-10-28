@@ -273,8 +273,9 @@ public class HDT_QR_OrderTst{
 		torder[0].ParentOrder__c=null;
 
 		update tOrder;
-
-		List<Order> getActiveRecordsByAccountId=orderQr.getActiveRecordsByAccountId(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		                       
+		List<Order> getActiveRecordsByAccountId=orderQr.getActiveRecordsByAccountId(acc);
 
 		Test.stopTest();
 
@@ -287,12 +288,8 @@ public class HDT_QR_OrderTst{
 
 		Test.startTest();
 
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
-		List<Order> getRecordsbyAccountId=orderQr.getRecordsByAccountId(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		List<Order> getRecordsbyAccountId=orderQr.getRecordsByAccountId(acc);
 
 		Test.stopTest();
 
@@ -304,13 +301,8 @@ public class HDT_QR_OrderTst{
 	static void testgetActiveRecordsByAccountIdNotParent(){
 
 		Test.startTest();
-
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
-		List<Order> getActiveRecByAccIdNotParent=orderQr.getActiveRecordsByAccountIdNotParent(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		List<Order> getActiveRecByAccIdNotParent=orderQr.getActiveRecordsByAccountIdNotParent(acc);
 
 		Test.stopTest();
 
@@ -337,8 +329,8 @@ public class HDT_QR_OrderTst{
 		tOrder[0].Status='In Lavorazione';
 
 		update tOrder;
-
-		List<Order> getRecsForVasSaleSelection=orderQr.getRecordsForVasSelection(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		List<Order> getRecsForVasSaleSelection=orderQr.getRecordsForVasSelection(acc);
 
 		Test.stopTest();
 
@@ -591,5 +583,57 @@ public class HDT_QR_OrderTst{
 
 		System.assertEquals(false, getOrderForComfort.isEmpty(), 'Order not found');
 		System.assertNotEquals(true, getOrderForComfort.isEmpty(), 'Value of parameter is not matching');
+	}
+    
+	@isTest static void testGetPodOrderFromQuote(){
+
+        String quote =[SELECT Id FROM SBQQ__Quote__c][0].id;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getPodOrderFromQuote(quote);
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
+	}
+    
+	@isTest static void testGetRecordsByAccountIdCopContratto(){
+
+        String acc = [SELECT Id FROM Account][0].id;
+        
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+        ord.ContractSigned__c = true;
+        ord.Status = 'In Lavorazione';
+        update ord;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getRecordsByAccountIdCopContratto(acc, true);
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
+	}
+    
+	@isTest static void testGetRecordsByAccountIdCopContrattoSignatureMethod(){
+
+        String acc = [SELECT Id FROM Account][0].id;
+        
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+        ord.Status = 'In Lavorazione';
+        ord.SignatureMethod__c = 'Cartacea';
+        update ord;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getRecordsByAccountIdCopContrattoSignatureMethod(acc, 'Cartacea');
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
 	}
 }

@@ -25,38 +25,68 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('DestinationPhase','OriginPhase',constants.ORDER_RECORDTYPEID_DEFAULT,constants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT);
-            
+            HDT_UTL_DataFactoryTst.pClickCasePhase();
+
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
-            HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
+            List<Order> orders  = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
+            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, true, accId, null, null, null, null);
+
         }
     }
     
 	@isTest
-    static void testCreateActivityFromLead(){
+    static void testCreateActivityFromLeadOrder(){
         
         Map<String, Object> args = new Map<String, Object>();
-        Wrts_prcgvr__PhaseTransition__c myTransition = [Select id from Wrts_prcgvr__PhaseTransition__c];
+
         Order myOrder = [Select id from Order];
-        args.put('transition', myTransition);
-        args.put('action', myTransition);
+
         args.put('method', 'Bozza');
-        args.put('sender', myOrder);
-        
+        args.put('sender', myOrder);        
         
         Test.startTest();
         
         HDT_UTL_PrClickDoubleTransaction pdt = new HDT_UTL_PrClickDoubleTransaction();
         Object result = pdt.execute(args);
-        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
                
         Test.stopTest();
         
-        List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
-    	System.assertNotEquals(0, jobsScheduled.size(), 'expecting one queued job');
+        System.assertEquals(null, result, 'CreateActivityFromLead did not work correctly');
         
-        System.assertEquals(null, result, 'The returned result should not be null');
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+
+		List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
+        
+    	System.assertNotEquals(0, jobsScheduled.size(), 'expecting one queued job');
+
+    }
+    
+    @isTest
+    static void testCreateActivityFromLeadCase(){
+        
+        Map<String, Object> args = new Map<String, Object>();
+
+        Case myCase = [Select id from Case];
+
+        args.put('method', 'Bozza');
+        args.put('sender', myCase);        
+        
+        Test.startTest();
+        
+        HDT_UTL_PrClickDoubleTransaction pdt = new HDT_UTL_PrClickDoubleTransaction();
+        Object result = pdt.execute(args);
+               
+        Test.stopTest();
+ 
+        System.assertEquals(null, result, 'CreateActivityFromLead did not work correctly');
+        
+        HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+        
+        List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
+        
+    	System.assertNotEquals(0, jobsScheduled.size(), 'expecting one queued job');
+
 
     }
 }
