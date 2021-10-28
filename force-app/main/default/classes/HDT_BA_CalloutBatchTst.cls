@@ -10,25 +10,24 @@ public class HDT_BA_CalloutBatchTst {
     @TestSetup
     static void makeData(){
         HDT_WS_Response rep = New HDT_WS_Response();
-        PaperCampaignParameter__c paperCampaignParameter =  HDT_UTL_DataFactoryTst.createPaperCampaignParameter(1, true,new Map<String,String>{
-            'name'=>'PaperCampaignParameterName'
+        PaperCampaignParameter__c paperCampaignParameter =  HDT_UTL_DataFactoryTst.createPaperCampaignParameter(1, true)[0];
+
+        Campaign camp = HDT_UTL_DataFactoryTst.createCampaignWithParams(1, true,new Map<String,String>{
+            'PaperCampaignParameter__c'=>PaperCampaignParameter.id,
+            'Category__c'=>'Campagna Outbound',
+            'Name'=>'Test Campaign',
+            'Channel__c'=>'Bolletta'
         })[0];
-        Campaign camp = HDT_UTL_DataFactoryTst.createCampaign(1, true,new Map<String,String>{
-            'paperCampaignParameterId'=>PaperCampaignParameter.id,
-            'category'=>'Campagna Outbound',
-            'name'=>'Test Campaign',
-            'channel'=>'Bolletta'
-        })[0];
-        Lead lead_r = HDT_UTL_DataFactoryTst.createLead (1,true)[0];
+
+        List<Lead> leads = HDT_UTL_DataFactoryTst.createLead (1,true);
         Account acc= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie')[0];
-        Contact cont = HDT_UTL_DataFactoryTst.createContact (1,true,acc.id)[0];
+        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact (1,true,acc.id);
         PaperProcessing__c paperProcessing = HDT_UTL_DataFactoryTst.createPaperProcessing(1, true, 'Testname', camp.id)[0];
-        HDT_UTL_DataFactoryTst.createCampaignMemberMap(1, true, new Map<String,String>{
-            'campaignId'=>camp.id,
-            'leadId'=>lead_r.id,
-            'contactId'=>cont.id,
-            'paperProcessingId'=>paperProcessing.Id
-        });
+        
+        List<CampaignMember> cMembers = HDT_UTL_DataFactoryTst.createCampaignMember(false, camp.id, leads, contacts);
+        cMembers[0].PaperProcess__c = paperProcessing.Id;
+        insert cMembers;
+
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('PraxidiaIntegration', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/entities', 'POST', 'HerokuUser');
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postPaperProcessing', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/entities', 'POST', 'HerokuUser');
     }

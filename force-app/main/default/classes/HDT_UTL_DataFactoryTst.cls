@@ -3165,4 +3165,55 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return caseList;
 	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 16/09/2021
+     * @description createCampaignWithParams Method
+     * @history valere - 16/09/2021– Created method
+     */
+	public static List<Campaign> createCampaignWithParams(Integer amount, Boolean doInsert,Map<String,String> params){
+
+		List<Campaign> campaignList=new List<Campaign>();
+
+		for (Integer i=0; i<amount; i++){
+			Campaign cp=new Campaign();
+
+			for(String key :params.keySet()) {
+				cp.put(key, params.get(key));
+			}
+			
+			campaignList.add(cp);
+		}
+
+		if (doInsert){
+
+			insert campaignList;
+		}
+
+		return campaignList;
+	}
+
+	/**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @date 28/10/2021
+     * @description createCampaignWithParams Method
+     * @history Name - dd/mm/yyyy– Description
+     */
+	public static List<PaperCampaignParameter__c> createPaperCampaignParameter(Integer amount, Boolean doInsert) {
+
+		List<PaperCampaignParameter__c> paperCampaignPars = new List<PaperCampaignParameter__c>();
+
+		for(Integer i = 0; i < amount; i++) {
+
+			paperCampaignPars.add(new PaperCampaignParameter__c(Name = 'PaperCampaignParameterName' + i));
+		}
+
+		if(doInsert) {
+			insert paperCampaignPars;
+		}
+
+		return paperCampaignPars;
+	}
+
 }
