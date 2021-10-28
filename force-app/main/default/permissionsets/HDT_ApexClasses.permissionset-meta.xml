@@ -84,10 +84,10 @@
         <apexClass>HDT_BA_LeadWebServiceReitekSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <!-- <classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_MassiveLoader</apexClass>
         <enabled>true</enabled>
-    </classAccesses> -->
+    </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_OldDraftSales</apexClass>
         <enabled>true</enabled>
