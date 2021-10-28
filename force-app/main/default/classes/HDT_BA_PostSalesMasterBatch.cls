@@ -12,8 +12,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getExpiredCase());
         scope.addAll(postsalesQr.getQuotationCase());
         scope.addAll(postsalesQr.getNonReqContract());
-        //scope.addAll(postsalesQr.getAutoletturaBozzaCase());
-        //scope.addAll(postsalesQr.getPostSalesBozzaCase());
+        scope.addAll(postsalesQr.getAutoletturaBozzaCase());
+        scope.addAll(postsalesQr.getPostSalesBozzaCase());
 
 
         return scope;
