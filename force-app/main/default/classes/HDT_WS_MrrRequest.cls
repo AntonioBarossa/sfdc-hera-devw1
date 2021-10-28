@@ -154,6 +154,6 @@ global with sharing class HDT_WS_MrrRequest {
     }
 
 
-    public virtual class CustomMessageException extends Exception{}
+    public virtual class CustomMessageException extends Exception{} //NOPMD
 
 }
