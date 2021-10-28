@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data scadenza contratto</label>
+    <label>Data scadenza</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>

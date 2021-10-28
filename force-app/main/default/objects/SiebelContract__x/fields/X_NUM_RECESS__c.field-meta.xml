@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Unità di tempo per recesso</label>
+    <label>Numero unità di tempo per recesso</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

@@ -76,7 +76,7 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                 console.log(result);
                 this.dispatchEvent(new ShowToastEvent({
                     title: 'Errore',
-                    message: 'Si è verificato un errore!',
+                    message: 'Username e/o Password inseriti non sono corretti',
                     variant: 'error'
                 }));
             } else {
