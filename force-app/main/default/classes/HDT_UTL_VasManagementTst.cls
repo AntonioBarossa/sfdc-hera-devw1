@@ -7,7 +7,7 @@
 @isTest
 public class HDT_UTL_VasManagementTst {
 
-    
+    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();    
 	
     @TestSetup
     static void makeData(){
@@ -22,15 +22,17 @@ public class HDT_UTL_VasManagementTst {
         Update standardPricebook;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact (1,true,accountList[0].id);
         List<ServicePoint__c> servicepointList = HDT_UTL_DataFactoryTst.createServicePoint (1,true);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContractNw (1,true,new Map<String,Object>{
-            'ServicePoint'=>servicepointList[0].id,
-            'accountId'=>accountList[0].id
-        }); 
+        
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract (1, false , accountList[0].id);
+        contractList[0].ServicePoint__c = servicepointList[0].id;
+        insert contractList;
+
         List<Order> orderListSale= HDT_UTL_DataFactoryTst.createOrder(1, true, accountList[0].id, saleslist);
-        List<Order> orderListWithPricebook= HDT_UTL_DataFactoryTst.createOrderWithPricebookNw(1, true, saleslist, new Map<String,Object>{
+
+        List<Order> orderListWithPricebook= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, saleslist, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT, new Map<String,Object>{
             'SalesCompany__c'=>'Hera Comm Marche',
             'CustomerCode__c'=>'TestCustomerCode',
-            'accountId'=>accountList[0].id,
+            'AccountId'=>accountList[0].id,
             'Pricebook2Id'=>standardPricebook.id,
             'CustomerFiscalCode__c'=>'TestFiscalCode',
             'CustomerVATNumber__c'=>'TestVATNumber',
@@ -52,43 +54,44 @@ public class HDT_UTL_VasManagementTst {
             'PhoneNumber__c'=>'3934927025',
             'ShippingMail__c'=>'Test@SM.com',
             'SignedDate__c'=>date.today()
-        } );     
-        SBQQ__Subscription__c mySubscription = HDT_UTL_DataFactoryTst.createSubscriptionNw(contractList[0].id);
+        } );
 
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseNw(1, true, new Map<String,Object>{
-            'accountId'=>accountList[0].id,
-            'ContractReference'=>contractList[0].id,
-            'contactID'=>contactList[0].id,
-            'servicepointID'=>servicepointList[0].id,
-            'orderID'=>orderListWithPricebook[0].id,
-            'VasStatus'=>'ANNUL PER CESSAZIONE'
+        HDT_UTL_DataFactoryTst.createSubscription(1, true, null, contractList[0].id, null).get(0);
+
+        HDT_UTL_DataFactoryTst.createCaseWithParams(1, true, new Map<String,Object>{
+            'AccountId'=>accountList[0].id,
+            'Contract__c'=>contractList[0].id,
+            'ContactId'=>contactList[0].id,
+            'ServicePoint__c'=>servicepointList[0].id,
+            'Order__c'=>orderListWithPricebook[0].id,
+            'VasStatus__c'=>'ANNUL PER CESSAZIONE'
             
         } );
 
         List<string> strValuesList = new List<string>();
         strValuesList.add('teststrValues');
-        List<Product2> product2List = HDT_UTL_DataFactoryTst.createProduct2Nw(3, true, new Map<String,Object>{
-            'NumberRateMonthly'=>10           
-        } );
-        // Product2List[0].NumberRateMonthly__c=10;
-        // insert Product2List;
-        SBQQ__Quote__c quote = HDT_UTL_DataFactoryTst.createEmptyQuoteNw();
-        List<SBQQ__QuoteLine__c> quoteLineList= HDT_UTL_DataFactoryTst.createQuoteLines(product2List[0].id, quote.id, 1, true);
-        List<PricebookEntry> pricebookentryList= HDT_UTL_DataFactoryTst.createPricebookEntry(product2List, true, standardPricebook.Id);
+        
+        List<Product2> product2List = HDT_UTL_DataFactoryTst.createProduct2(3, false);
+        for (Product2 prod : product2List) {
+            prod.NumberRateMonthly__c = 10;
+        }
+        insert product2List;
+        
+        SBQQ__Quote__c quote = HDT_UTL_DataFactoryTst.createEmptyQuote(1, true).get(0);
+        HDT_UTL_DataFactoryTst.createQuoteLines(product2List[0].id, quote.id, 1, true);
+        HDT_UTL_DataFactoryTst.createPricebookEntry(product2List, true, standardPricebook.Id);
     }
 
 
     @istest 
     static void methodTst() {
-        Order[] orderList =[select id,SalesCompany__c,CustomerCode__c,CustomerFiscalCode__c,CustomerVATNumber__c,ServicePointCode__c,OrderReference__c,ContractReference__c,CustomerName__c,
+        List<Order> orderList =[select id,SalesCompany__c,CustomerCode__c,CustomerFiscalCode__c,CustomerVATNumber__c,ServicePointCode__c,OrderReference__c,ContractReference__c,CustomerName__c,
         CommercialProduct__c,CommercialProductVersion__c,OrderNumber,ContractReference__r.SAPContractCode__c,ContractAccountCode__c,VasServiceActivationDate__c,
         SBQQ__Quote__r.SBQQ__ListAmount__c,SBQQ__Quote__r.ListAmountVAT__c,SBQQ__Quote__r.TotalDiscountAmountVAT__c,ShippingStreetToponym__c,
         ShippingStreetName__c,ShippingStreetNumber__c,ShippingCity__c,ShippingPlace__c,ShippingPostalCode__c,ShippingProvince__c,PhoneNumber__c,
         ShippingMail__c,SignedDate__c from order];
-        Case[] caseList =[select id, Order__c,CaseNumber,VasStatus__c,Asset.SBQQ__OrderProduct__r.OrderId,Subscription__r.SBQQ__Contract__r.SBQQ__Order__c from case ];
-        OrderItem[] orderItemList = [select id,Product2Id,VASBillingMode__c,VasActivationDate__c,DurationDay__c,PaymentMode__c,Quantity,
-        PriceNet__c,PriceNetDiscounted__c,Percentage__c from orderItem ];
-        SBQQ__Quote__c[] quoteList = [select id,SBQQ__ListAmount__c,ListAmountVAT__c,TotalDiscountAmountVAT__c from SBQQ__Quote__c ];
+        List<Case> caseList =[select id, Order__c,CaseNumber,VasStatus__c,Asset.SBQQ__OrderProduct__r.OrderId,Subscription__r.SBQQ__Contract__r.SBQQ__Order__c from case ];        
+
         System.debug('caseList[0]:'+ caseList[0]);
 
         Test.startTest();
