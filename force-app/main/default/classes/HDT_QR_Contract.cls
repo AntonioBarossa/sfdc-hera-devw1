@@ -224,7 +224,8 @@ public inherited sharing class HDT_QR_Contract {
     public List<Contract> getContractFromServicePoint(String servicePointId){
 
         return [SELECT Id,
-        SAPContractCode__c
+        SAPContractCode__c,
+        AccountId
         FROM Contract
         WHERE ServicePoint__c = :servicePointId
         AND Status = 'Attivo'

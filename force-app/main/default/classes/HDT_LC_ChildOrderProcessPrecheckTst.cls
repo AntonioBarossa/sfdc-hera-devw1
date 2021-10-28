@@ -40,7 +40,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,false,accs[0].id);
             contracts[0].ServicePoint__c = points[0].id;
-			insert contracts;            
+			insert contracts; 
+            
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].id, 'Bozza');
             
             List<Order> orders =  HDT_UTL_DataFactoryTst.createOrder(1, false, accs[0].id, 'Bozza');
             orders[0].ServicePoint__c = points[0].id;
@@ -52,6 +54,14 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             orders[0].ContractReference__c = contracts[0].id;
             orders[0].SAPImplantCode__c = '';
             insert orders;
+            
+            List<Order> childOrders =  HDT_UTL_DataFactoryTst.createChildOrder(2, false, accs[0].id, sales, orders[0].id, null);
+            childOrders[0].RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
+            childOrders[0].ProcessType__c = 'VAS';
+            childOrders[0].IncomingCreditCheckResult__c = 'test';
+            childOrders[0].OutgoingCreditCheckResult__c = 'test';
+            childOrders[0].CreditCheckDescription__c = 'test description';
+            insert childOrders;
             
             List<SBQQ__Quote__c> quotes = HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].id, null, null, 'Quote');
             quotes[0].AllowChangeUse__c = false;
@@ -93,7 +103,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SBQQ__Quote__r.AllowChangeUse__c,
                         SBQQ__Quote__r.AmendmentAllowed__c, 
                         ServicePoint__r.isReseller__c
-                        From Order];
+                        From Order
+                        WHERE Name = 'testOrderName0'];
         
         Test.startTest();
         
@@ -125,7 +136,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SBQQ__Quote__r.AllowChangeUse__c,
                         SBQQ__Quote__r.AmendmentAllowed__c, 
                         ServicePoint__r.isReseller__c
-                        From Order];
+                        From Order
+                        WHERE Name = 'testOrderName0'];
         
         ServiceRequest__c srRequest = [Select id,
                                            ServicePointCode__c,
@@ -176,7 +188,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          SBQQ__Quote__r.AllowChangeUse__c,
                          SBQQ__Quote__r.AmendmentAllowed__c, 
                          ServicePoint__r.isReseller__c
-                         From Order];
+                         From Order
+                         WHERE Name = 'testOrderName0'];
             
             ServiceRequest__c srRequest = [Select id,
                                            ServicePointCode__c,
@@ -230,7 +243,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c
-                     From Order];
+                     From Order
+                     WHERE Name = 'testOrderName0'];
             
         ServiceRequest__c srRequest = [Select id,
                                        ServicePointCode__c,
@@ -282,8 +296,11 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.RecordType.DeveloperName,
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
-                     ServicePoint__r.isReseller__c
-                     From Order];
+                     ServicePoint__r.isReseller__c,
+                     CommodityFormula__c,
+                     SupplyCity__c
+                     From Order
+                     WHERE Name = 'testOrderName0'];
             
         ServiceRequest__c srRequest = [Select id,
                                        ServicePointCode__c,
@@ -336,7 +353,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c
-                     From Order];
+                     From Order
+                     WHERE Name = 'testOrderName0'];
             
         ServiceRequest__c srRequest = [Select id,
                                        ServicePointCode__c,
@@ -398,7 +416,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      SBQQ__Quote__r.AllowChangeUse__c,
                      SBQQ__Quote__r.AmendmentAllowed__c, 
                      ServicePoint__r.isReseller__c
-                     From Order];
+                     From Order
+                     WHERE Name = 'testOrderName0'];
             
         ServiceRequest__c srRequest = [Select id,
                                        ServicePointCode__c,
@@ -434,7 +453,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     
     @isTest static void getServicePointTypeFromOrder(){
         
-        Order record = [Select id From Order];
+        Order record = [Select id From Order WHERE Name = 'testOrderName0'];
         
         Test.startTest();
         
@@ -449,7 +468,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
     
     @isTest static void callDataEnrichment(){
         
-        Order newOrder = [Select id From Order];
+        Order newOrder = [Select id From Order WHERE Name = 'testOrderName0'];
             
         Test.setMock(HttpCalloutMock.class, new HDT_WS_ArricchimentoDatiTempMock());
         Test.startTest();
@@ -461,5 +480,15 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', result.ExciseGAS__c, 'callDataEnrichment did not work correctly');
         System.assertNotEquals(null, result, 'callDataEnrichment did not work correctly');
         
+    }
+    
+    @isTest static void checkVasAndCommodity(){
+        
+        Id orderdId = [Select id From Order WHERE Name = 'testOrderName0'][0].id;
+        
+        Boolean result = HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity(orderdId);
+        
+        System.assertEquals(true, result, 'checkVasAndCommodity did not work correctly');
+        System.assertNotEquals(null, result, 'checkVasAndCommodity did not work correctly');
     }
 }
