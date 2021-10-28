@@ -9,6 +9,7 @@ public with sharing class HDT_LC_ComfortQualityCallResultTst {
 
     @isTest
     public static void initTest() {
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         List<Account> accList                       = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<wrts_prcgvr__Activity__c> activityList = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].Id);
         activityList[0].Type__c                     = 'Quality Call';
