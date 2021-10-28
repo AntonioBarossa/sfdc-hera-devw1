@@ -139,8 +139,9 @@ private class HDT_SRV_SalesHandlerTst {
 static void setup() {
 
     HDT_UTL_DataFactoryTst.pClickInstance();
-    HDT_UTL_DataFactoryTst.pClickOrderPhase();  
-    HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('CampagenDmDmpData', 'http://test.test/test', 'post', '');
+    HDT_UTL_DataFactoryTst.pClickOrderPhase(); 
+    HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('CampagenDmDmpData', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files', 'POST', 'MulesoftSalesforceUser');
+    HDT_UTL_DataFactoryTst.createWebServiceCredential ('MulesoftSalesforceUser', 'uat-heroku', 'heroku-hera-uat-2021!');
     List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
     List<BillingProfile__c> billingProfileList=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accountList[0].id);
     List<ServicePoint__c> servicePointList= HDT_UTL_DataFactoryTst.createServicePoint(3, true);
@@ -294,8 +295,14 @@ static void testHandleSalesProcessCategoryErrorCases() {
     new TestBuilderCallManageSalesProcessCategory(new Order(),null,'WSLead_SOL',new Map<String,Boolean>{'withoutObjects'=>true});
     System.assertNotEquals(200, RestContext.response.statusCode,'errors happened because of lack of Objects.fields into the request');
     System.assertEquals(400, RestContext.response.statusCode,'the processes are not well completed');
-    new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','CMPDMP_ATTR',null);
-    System.assertEquals(400, RestContext.response.statusCode,'the process return an error due to lack of runId');
+    try{
+      new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','CMPDMP_ATTR',null);
+    }
+    catch(exception e){
+        System.assertEquals('Missing Required Field runId',e.getMessage(),'the process return an error due to lack of runId');
+    } 
+    // new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','CMPDMP_ATTR',null);
+    // System.assertEquals(400, RestContext.response.statusCode,'the process return an error due to lack of runId');
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'Annullamento SII - Ricezione','SIE34_7',null);
     System.assertEquals(400, RestContext.response.statusCode,'the process return an error due to lack of runId');
     new TestBuilderCallManageSalesProcessCategory(orderAnnullamentoRicezione,'RICH_PASS','RICH_PASS',null);

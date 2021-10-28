@@ -338,6 +338,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(quoteId);
 
         if (!quoteLineList.isEmpty()) {
+            system.debug('productcode '+quoteLineList[0].SBQQ__Product__r.ProductCode);
             orderToUpdate.CommercialProductCode__c = quoteLineList[0].SBQQ__Product__r.ProductCode;
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
             orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
@@ -374,15 +375,16 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
         Set<String> sconti = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         
-
-        if (!mainItems.isEmpty()) {
-            if(originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)){
-                return;
-            }
-            system.debug('ivaste 1');
+        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
+            return;
+        }
+        system.debug('ivaste 1');
+        if(!sconti.contains(mainItems[0].Product2.Family)){
+            system.debug('ivaste 1 '+mainItems[0].Product2.ProductCode);//only for vas
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
+        
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
             orderToUpdate.VASType__c=orderToUpdate.isVas__c? mainItems[0].Product2.Family : '';
             orderToUpdate.VASSubtype__c=orderToUpdate.isVas__c? mainItems[0].Product2.Name.abbreviate(30) : '';
@@ -403,6 +405,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
             }
         }
+        
         if(sconti.contains(mainItems[0].Product2.Family)){
             //only for Amend Bonus
             List<OrderItem> billableVas = orderToUpdate.isVas__c? null : orderItemQr.getAnalisiConsumi(orderToUpdate.id);
@@ -478,6 +481,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     * @param order - Order
     */
     public static void alignFields(Order order) {
+
+        system.debug('ORDER FIELDS ALIGN');
 
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;

@@ -24,7 +24,7 @@ public with sharing class HDT_LC_ResumeCommercialBonusTst {
 public static void testLoadCase(){
     Test.startTest();
     
-    Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+    Case tCase = [SELECT Id, Status, Phase__c, type FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
 
     Map<String, Object> tCaseMap = HDT_LC_ResumeCommercialBonus.loadCase(tcase.Id);
 
