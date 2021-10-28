@@ -26,6 +26,12 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
             o.RecordTypeId = recTypeId;
             o.Contact__c = conList[0].Id;
         }
+        
+        Order mySingleOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
+        o.RecordTypeId = recTypeId;
+        o.Contact__c = conList[0].Id;
+        
+        ordList.add(mySingleOrder);
         insert ordList;
     }
     
@@ -51,7 +57,8 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         
         //RETRIEVING DATA
         Order myUpdatedOrder = [SELECT Id, Phase__c, CancellationReason__c FROM Order WHERE Id = :myOrder.Id];
-        Order myRegularOrder = [SELECT Id, Phase__c, CancellationReason__c FROM Order WHERE Id != :myOrder.Id];
+        Order myRegularOrder = [SELECT Id, Phase__c, CancellationReason__c FROM Order WHERE Id != :myOrder.Id AND DocusignExpirationDate__c != Null];
+        Order myUnaffectedOrder = [SELECT Id, Phase__c, CancellationReason__c FROM Order WHERE DocusignExpirationDate__c = Null];
         
         //ASSERTS
         System.assert('Annullato'.equalsIgnoreCase(myUpdatedOrder.Phase__c), 'Ordine NON è in Fase Annullato');
@@ -59,6 +66,9 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
         
         System.assert(!'Annullato'.equalsIgnoreCase(myRegularOrder.Phase__c), 'Ordine è in Fase Annullato, non previsto.');
         System.assert(!'Annullato per no conferma cliente'.equalsIgnoreCase(myRegularOrder.CancellationReason__c), 'Ordine risulta annullato.');
+        
+        System.assert(!'Annullato'.equalsIgnoreCase(myUnaffectedOrder.Phase__c), 'Ordine non deve essere alterato se non ha DocusignExpirationDate__c.');
+        System.assert(!'Annullato per no conferma cliente'.equalsIgnoreCase(myUnaffectedOrder.CancellationReason__c), 'Ordine senza scadenza risulta annullato.');
         
     }
     
