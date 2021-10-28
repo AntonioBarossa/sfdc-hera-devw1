@@ -1,4 +1,5 @@
 public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Database.Batchable<wrts_prcgvr__Activity__c>, Database.AllowsCallouts {
+
     List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
     Map<String, String> usersEmail = new Map<String, String>();
     Map<wrts_prcgvr__Activity__c, User> activityOwner = new Map<wrts_prcgvr__Activity__c, User> ();
@@ -56,4 +57,5 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
     }
+    
 }
