@@ -3169,53 +3169,6 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	/**
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 08/10/2021
-	 **/
-	public static List<Order> createOrderWithParams(Integer amount, Boolean doInsert, List<Sale__c> sales, Map<String,Object> params){
-
-		List<Order> orderList=new List<Order>();
-
-		for (Integer i=0; i<amount; i++){
-
-			Order ord=new Order();
-
-			ord.Name='testOrderName'+i;
-			ord.Status='Draft';
-			ord.EffectiveDate=Date.today();
-			ord.EstimateAmount__c=1000;
-			ord.PowerQuote__c=1000;
-			ord.AdministrativeBurden__c=1;
-			ord.EstimatedVAT__c=1;
-			ord.ValidityDateEstimate__c=Date.today().addDays(30);
-			ord.Phase__c='Bozza';
-			ord.CIAccoutn__c='Richiesto';
-			ord.QuickQuote__c='Richiesto';
-			ord.ChamberCommerceRegistration__c='Richiesto';
-			ord.Instance326__c='Richiesto';
-			ord.DocumentLow80__c='Richiesto';
-			ord.AutorizationVolturaThirdTrader__c='Richiesto';
-			ord.ContractSigned__c=true;
-			ord.SignedDate__c=Date.today();
-			ord.SignatureMethod__c='Vocal Order';
-			ord.DocSendingMethod__c='E-mail';
-			ord.Sale__c=sales[i].Id;
-      		for(String key :params.keySet()) {
-				ord.put(key, params.get(key));
-			}
-
-			orderList.add(ord);
-		}
-
-		if (doInsert){
-
-			insert orderList;
-		}
-
-		return orderList;
-	}
-
-	/**
-	 * @author Valere (valere@noeli-it.net)
-	 * @date 08/10/2021
 	**/
   	public static List<wrts_prcgvr__Activity__c> createActivityWithParams(Integer amount, Boolean doInsert, Id accId,Map<String,Object> params){
 

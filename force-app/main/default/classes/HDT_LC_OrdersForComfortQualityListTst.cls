@@ -23,24 +23,24 @@ private class HDT_LC_OrdersForComfortQualityListTst {
 
     List<Sale__c> salesList= HDT_UTL_DataFactoryTst.createSale(4, true, accountList[0].id, 'Bozza');
 
-    List<Order> orderList0= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList0= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Annullato'
     } ); 
-    List<Order> orderList1= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList1= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione Motore VAS',
       'RecordTypeId'=>hdtRtVasRecordTypeId
     } ); 
-    List<Order> orderList2= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList2= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione verso Heroku',
       'RecordTypeId'=>hdtRtCambioOffertaRecordTypeId
     } );
-    List<Order> orderList3= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList3= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,'HDT_RT_ConnessioneConAttivazione',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione verso Heroku',
