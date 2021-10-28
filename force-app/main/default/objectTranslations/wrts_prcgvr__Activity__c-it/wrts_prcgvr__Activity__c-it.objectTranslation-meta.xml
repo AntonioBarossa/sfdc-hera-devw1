@@ -107,7 +107,7 @@
         <label></label>
         <name>HDT_RT_VisitaD2D</name>
     </recordTypes>
-    <startsWith>Consonant</startsWith>
+    <startsWith>Vowel</startsWith>
     <validationRules>
         <errorMessage></errorMessage>
         <name>HDT_VR_CreditCheck</name>
