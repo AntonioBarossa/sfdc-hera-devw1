@@ -9,7 +9,7 @@ public class HDT_BA_CalloutBatchTst {
 
     @TestSetup
     static void makeData(){
-        HDT_WS_Response rep = New HDT_WS_Response();
+        // HDT_WS_Response rep = New HDT_WS_Response();
         PaperCampaignParameter__c paperCampaignParameter =  HDT_UTL_DataFactoryTst.createPaperCampaignParameter(1, true)[0];
 
         Campaign camp = HDT_UTL_DataFactoryTst.createCampaignWithParams(1, true,new Map<String,String>{
@@ -32,6 +32,7 @@ public class HDT_BA_CalloutBatchTst {
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('postPaperProcessing', 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/entities', 'POST', 'HerokuUser');
     }
 
+    @SuppressWarnings('PMD.ApexUnitTestClassShouldHaveAsserts') // It is impossible to put a realistic assert sinces the batch doesn't modify data or return anything
     @istest 
     static void methodTst() {
         Test.setMock(HttpCalloutMock.class, new HDT_BA_CalloutBatchMck());
@@ -48,17 +49,20 @@ public class HDT_BA_CalloutBatchTst {
         baSend1.typeCallout = 'Comunicazione Cartacea';
         baSend1.dtos = contentVersionIdList;
         baSend1.filezipName = 'Lavorazione_Cartacea_';
-        Database.executebatch(baSend1, 100); 
+        Database.executebatch(baSend1, 100);
+        
         HDT_BA_CalloutBatch baSend2 = new HDT_BA_CalloutBatch();
         baSend2.typeCallout = 'Front Office';
         baSend2.dtos = contentVersionIdList;
         baSend2.filezipName = 'Lavorazione_Cartacea_';
-        Database.executebatch(baSend2, 100); 
+        Database.executebatch(baSend2, 100);
+        
         HDT_BA_CalloutBatch baSend3 = new HDT_BA_CalloutBatch();
         baSend3.typeCallout = 'Reclami';
         baSend3.dtos = contentVersionIdList;
         baSend3.filezipName = 'Lavorazione_Cartacea_';
-        Database.executebatch(baSend3, 100); 
+        Database.executebatch(baSend3, 100);
+
         Test.stopTest();
 
         /**
