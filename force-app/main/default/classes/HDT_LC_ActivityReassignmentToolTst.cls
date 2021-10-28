@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Rollo (lorenzo.rollo@everis.com)
+ * @date 07/09/2021
+ * @description HDT_LC_ActivityReassignmentTool test class
+ * @history Name – Date – Description
+ */
+
 @isTest
 public with sharing class HDT_LC_ActivityReassignmentToolTst {
 

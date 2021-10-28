@@ -43,3 +43,6 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 launch.json
+
+# Folder that stores test class results
+./apexTestResults
