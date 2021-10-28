@@ -96,13 +96,13 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                 if(listOrder != null && !listOrder.isEmpty()){
 
                     System.debug('Entrato nel Loop');
+                    system.debug(listOrdersId);
 
                     Map<String, Order> ordersToUpdateMap = new Map<String, Order>();
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
                     orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
-
 
 
                     System.debug('Lista Ordini '+orderItemsList);
@@ -145,24 +145,27 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     for (OrderItem orderItem : orderItemsAmend) {
                         Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
                         system.debug('orderToUpdate: ' + orderToUpdate);
-                        system.debug('ordersToUpdate after: ' + ordersToUpdate);
-
-                        for (Order ord : ordersToUpdate) {
-                            if (ord.Id == orderToUpdate.Id) {
-                                isDuplicated = true;
-                                break;
+                        //system.debug('ordersToUpdate after: ' + ordersToUpdate);
+                        if(orderToUpdate!=null){
+                            for (Order ord : ordersToUpdate) {
+                                if (ord?.Id == orderToUpdate?.Id) {
+                                    isDuplicated = true;
+                                    break;
+                                }
                             }
+    
+                            if (!isDuplicated) {
+                                ordersToUpdate.add(orderToUpdate);
+                            }
+    
+                            isDuplicated = false;
                         }
-
-                        if (!isDuplicated) {
-                            ordersToUpdate.add(orderToUpdate);
-                        }
-
-                        isDuplicated = false;
                     }
 
-
-                    orderSrv.updateRecords(ordersToUpdate);
+                    if(!ordersToUpdate.isEmpty()){
+                        system.debug(ordersToUpdate);
+                        orderSrv.updateRecords(ordersToUpdate);
+                    }
                 }
 
                 parentOrder = orderQr.getRecordById(parentOrderNew.Id);

@@ -6,6 +6,7 @@
  * @history
  * @Created 05/10/2021
  * Modified By:
+ * 27/10/2021 Luca Belometti WR [luca.belometti@webresults.it] - (BugFix - 171) 
  **/
 
 @isTest
@@ -16,7 +17,7 @@ public class HDT_LC_ActivityDetailTst {
 	@TestSetup
     static void makedata(){
         
-        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
 		internalUser.UserPermissionsMarketingUser=true;
 
@@ -25,6 +26,7 @@ public class HDT_LC_ActivityDetailTst {
         System.runAs(internalUser){
 
             HDT_UTL_DataFactoryTst.pClickInstance();
+		    HDT_UTL_DataFactoryTst.pClickCasePhase();
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;

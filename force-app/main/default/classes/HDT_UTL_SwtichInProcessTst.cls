@@ -49,8 +49,8 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			fullfillDateMtx[0].Commodity__c='Energia Elettrica';
 			fullfillDateMtx[0].VoltageLevel__c='BT';
 			fullfillDateMtx[0].SupplyType__c='Non Domestico';
-			fullfillDateMtx[0].FulfillmentDateFrom__c=Date.newInstance(2021, 09, 11);
-			fullfillDateMtx[0].FulfillmentDateTo__c=Date.newInstance(2021, 10, 10);
+			fullfillDateMtx[0].FulfillmentDateFrom__c=Date.today();
+			fullfillDateMtx[0].FulfillmentDateTo__c=Date.today();
 			fullfillDateMtx[0].ActivationDate__c=Date.newInstance(2021, 11, 01);
 			insert fullfillDateMtx;
 		}

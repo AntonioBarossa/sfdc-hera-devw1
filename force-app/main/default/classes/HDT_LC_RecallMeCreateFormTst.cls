@@ -12,6 +12,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
     @TestSetup
     static void myData(){
         List<Account> accList       = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Campaign> campaignList = HDT_UTL_DataFactoryTst.createCampaign(1, false);
         campaignList[0].Category__c = 'Campagna Outbound';
         campaignList[0].Channel__c  = 'Bolletta'; 
@@ -94,4 +95,42 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
             System.assertNotEquals('', e.getMessage(), 'An exception is expected');
         }
     }
+    //** [START MOD 21/10/2021] @Author:Cesare Bagnolini WR (cesare.bagnolini@webresults.it) @Description: Added Test Methods
+    @isTest static void testCreateCampaignMemberFromContact(){
+        String acc = [Select id FROM Account][0].id;
+        String con = [Select id FROM Contact][0].id;
+        String cam = [Select id FROM Campaign][0].id;
+        
+        List<CampaignMemberLeadAssigment__c> camMemLeadAss = new List<CampaignMemberLeadAssigment__c>();
+        CampaignMemberLeadAssigment__c cmlA = new CampaignMemberLeadAssigment__c();
+        cmlA.Name               = 'prova';
+        cmlA .Agency__c         =  acc;
+        cmlA.InterestProduct__c = 'Hera Bebè Gas';
+        cmlA.SourceAgency__c    = 'Linetech';
+        insert cmlA;
+        
+        Test.startTest();
+        
+        String result = HDT_LC_RecallMeCreateForm.createCampaignMemberFromContact(con, 'Linetech', 'Hera Bebè Gas', cam, '3333453344');
+        
+        Test.stopTest();
+        
+        String member = [Select id FROM CampaignMember][0].id;
+        
+        System.assertEquals(member, result, 'CreateCampaignMemberFromContact did not work correctly');
+        System.assertNotEquals(null, result, 'CreateCampaignMemberFromContact did not work correctly');        
+    }
+
+    @isTest static void testGetActivePicklistValues(){
+
+        Test.startTest();
+        
+        List<String> result = HDT_LC_RecallMeCreateForm.getActivePicklistValues('Contact','Company__c');
+        
+        Test.stopTest();
+        
+        System.assertEquals(10, result.size(), 'GetActivePicklistValues did not work correctly');
+        System.assertNotEquals(null, result, 'GetActivePicklistValues did not work correctly');        
+    }
+    //** [END MOD 21/10/2021] @Author:Cesare Bagnolini WR (cesare.bagnolini@webresults.it) @Description: Added Test Methods
 }
