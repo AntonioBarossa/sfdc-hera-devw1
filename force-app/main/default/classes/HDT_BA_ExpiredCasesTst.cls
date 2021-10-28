@@ -60,7 +60,7 @@ public with sharing class HDT_BA_ExpiredCasesTst {
         
         //RETRIEVING DATA
         Case myUpdatedCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE Id = :myCase.Id];
-        Case myRegularCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE Id != :myCase.Id];
+        Case myRegularCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE Id != :myCase.Id AND DocusignExpirationDate__c != Null];
         Case myUnaffectedCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE DocusignExpirationDate__c = Null];
         
         //ASSERTS
