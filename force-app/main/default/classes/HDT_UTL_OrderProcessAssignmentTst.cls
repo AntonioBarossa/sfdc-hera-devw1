@@ -53,7 +53,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
 
     insert quotes;
 
-    List<SaleServiceItem__c> saleServiceList = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opp[0].id, quotes[0].id,servicePointList[0].id);
+    HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opp[0].id, quotes[0].id,servicePointList[0].id);
     
     List<Order> orderForAllTest = HDT_UTL_DataFactoryTst.createOrder(1, false, accountList[0].id, 'Bozza');
     orderForAllTest.get(0).servicePoint__c = servicePointList.get(0).Id;
@@ -62,19 +62,19 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     
     insert orderForAllTest;
 
-    List<MatriceRemiCode__c> remiList = HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompany(1,false, new Map<String,Object> {
+    List<MatriceRemiCode__c> remiList = HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithParams(1,false, new Map<String,Object> {
       'SalesCompany__c'=>'salesCompany',
       'Comune__c'=>'supplyCity'
     });
 
-    remiList.addAll(HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompany(1,false, new Map<String,Object> {
+    remiList.addAll(HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithParams(1,false, new Map<String,Object> {
       'SalesCompany__c'=>null,
       'SalesCompany__c'=>'supplyCity'
     }));
 
     insert remiList;
 
-    List<Service26Config__c> serviceList= HDT_UTL_DataFactoryTst.createService26Config(1,true);
+    HDT_UTL_DataFactoryTst.createService26Config(1,true);
     
     // create Profile and User
 	
@@ -83,7 +83,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
            
     //Create Custom setting 
 	
-    HDT_Process_Sale_Partner_Community__c csobj = HDT_UTL_DataFactoryTst.createSalePartnerCommunity(user,true);
+    HDT_UTL_DataFactoryTst.createSalePartnerCommunity(user,true);
 
   }
   
@@ -135,10 +135,10 @@ private class HDT_UTL_OrderProcessAssignmentTst {
 
   @isTest 
   static void testGetFamilySconto(){   
-    Set<String> FamilySconto=HDT_UTL_OrderProcessAssignment.getFamilySconto();
+    Set<String> familySconto = HDT_UTL_OrderProcessAssignment.getFamilySconto();
 
-    System.assertEquals(true, FamilySconto.contains('Bonus Eur/Giorno'),' there is no ServicePoint linked to a sale');
-    System.assertNotEquals(false, FamilySconto.contains('Bonus Eur/Giorno'),' there is no ServicePoint linked to a sale');
+    System.assertEquals(true, familySconto.contains('Bonus Eur/Giorno'),' there is no ServicePoint linked to a sale');
+    System.assertNotEquals(false, familySconto.contains('Bonus Eur/Giorno'),' there is no ServicePoint linked to a sale');
   
   }
 
