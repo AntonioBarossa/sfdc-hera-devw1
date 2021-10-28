@@ -21,10 +21,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <field>SalesCompany__c</field>
+                <field>PublicLink__c</field>
             </layoutItems>
             <layoutItems>
-                <field>PublicLink__c</field>
+                <field>SalesCompany__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

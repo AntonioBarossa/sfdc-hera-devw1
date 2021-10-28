@@ -21,6 +21,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     //protected String rightIncapsulatingData= '}}';
 
     private Boolean isFirstSection=true;
+    @TestVisible
     private Map<String,List<HDT_CallScriptValue__mdt>> overrideMap = new Map<String,List<HDT_CallScriptValue__mdt>>();
     private Map<String,String> constantMap = new Map<String,String>();
 
@@ -177,7 +178,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             }
         }
     }
-
+	@TestVisible
     private String overwriteValue(String fieldValue, String sobjectApiName, String fieldApiName){
 
         //reading overrides from HDT_CallScriptValue__mdt
@@ -309,7 +310,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         
         return ''+tagValue+'';
     }
-
+	@TestVisible
     private String getConstantValue(List<String> relationshipNames){
         String constantName = relationshipNames[1];
         String key = constantName.toLowerCase();
