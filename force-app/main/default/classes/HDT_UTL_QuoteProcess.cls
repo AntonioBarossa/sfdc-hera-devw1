@@ -97,6 +97,29 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         newQuote.ContractReference__c = oldQuote.ContractReference__c;
         newQuote.SalesCompanyCode__c = oldQuote.SalesCompanyCode__c;
         newQuote.SBQQ__Status__c = 'In Review';
+
+        newQuote.SBQQ__Opportunity2__c = oldQuote.SBQQ__Opportunity2__c;
+        newQuote.SBQQ__Account__c = oldQuote.SBQQ__Account__c;
+        newQuote.SBQQ__Primary__c = oldQuote.SBQQ__Primary__c;
+        newQuote.CampaignCode__c = oldQuote.CampaignCode__c;
+        newQuote.CreatedBy__c = oldQuote.CreatedBy__c;
+        newQuote.BrandLogo__c = oldQuote.BrandLogo__c;
+        newQuote.isTransition__c = oldQuote.isTransition__c;
+        newQuote.AllowChangeUse__c = oldQuote.AllowChangeUse__c;
+        newQuote.UseCategory__c = oldQuote.UseCategory__c;
+        newQuote.ConsumptionRangeEE__c = oldQuote.ConsumptionRangeEE__c;
+        newQuote.ConsumptionRangeGAS__c = oldQuote.ConsumptionRangeGAS__c;
+        newQuote.PowerFlow__c = oldQuote.PowerFlow__c;
+        newQuote.MarketOrigin__c = oldQuote.MarketOrigin__c;
+        newQuote.ResidentDeliveryAddress__c = oldQuote.ResidentDeliveryAddress__c;
+        newQuote.MeterType__c = oldQuote.MeterType__c;
+        newQuote.SupplyProvince__c = oldQuote.SupplyProvince__c;
+        newQuote.Login__c = oldQuote.Login__c;
+        newQuote.LoginGroup__c = oldQuote.LoginGroup__c;
+        newQuote.Role__c = oldQuote.Role__c;
+        newQuote.NewClient__c = oldQuote.NewClient__c;
+        newQuote.SuperUser__c = oldQuote.SuperUser__c;
+        newQuote.SBQQ__PricebookId__c = oldQuote.SBQQ__PricebookId__c;
     }
 
     private static list<SBQQ__Quote__c> getSaleAmendOldQuotes(list<SBQQ__Quote__c> newQuoteList){
