@@ -27,9 +27,9 @@ public with sharing class HDT_BA_ExpiredOrdersTst {
             o.Contact__c = conList[0].Id;
         }
         
-        Order mySingleOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
-        o.RecordTypeId = recTypeId;
-        o.Contact__c = conList[0].Id;
+        Order mySingleOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza')[0];
+        mySingleOrder.RecordTypeId = recTypeId;
+        mySingleOrder.Contact__c = conList[0].Id;
         
         ordList.add(mySingleOrder);
         insert ordList;
