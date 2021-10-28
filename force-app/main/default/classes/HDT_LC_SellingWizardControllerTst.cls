@@ -39,7 +39,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.stopTest();
 
 			System.assertEquals(true, tAccount.Id!=null, 'Account not found');
-			System.assertNotEquals(false, tAccount.Id!=null);
+			System.assertNotEquals(false, tAccount.Id!=null, 'getAccount did not work correctly');
 		}
 	}
 
@@ -66,7 +66,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.stopTest();
 
 			System.assertEquals(true, tSale.Id!=null, 'Sale not found');
-			System.assertNotEquals(false, tSale.Id!=null);
+			System.assertNotEquals(false, tSale.Id!=null, 'getSale did not work correctly');
 		}
 	}
 
@@ -87,7 +87,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.stopTest();
 
 			System.assertEquals(false, check, 'Check is wrong');
-			System.assertNotEquals(true, check);
+			System.assertNotEquals(true, check, 'checkCommunityLogin did not work correctly');
 		}
 	}
 
@@ -114,7 +114,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.stopTest();
 
 			System.assertEquals(true, tSale.Id!=null, 'Sale not created');
-			System.assertNotEquals(false, tSale.Id!=null);
+			System.assertNotEquals(false, tSale.Id!=null, 'createSale did not work correctly');
 		}
 	}
 }

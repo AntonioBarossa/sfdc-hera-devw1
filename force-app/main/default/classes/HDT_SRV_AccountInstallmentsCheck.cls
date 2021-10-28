@@ -1,8 +1,11 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_AccountInstallmentsCheck {
     
     @InvocableMethod(label='Check Piani Rata Non Pagati')
     public static List<HDT_SRV_AccountInstallmentsCheckOutput> execute(List<HDT_SRV_AccountInstallmentsCheckInput> inputs){
-        if(inputs==null || inputs.size()<=0) return null;
+        if(inputs==null || inputs.size()<=0) {
+            return null;
+        }
       
         HDT_SRV_AccountInstallmentsCheckInput input = inputs[0];
 
@@ -17,25 +20,29 @@ public with sharing class HDT_SRV_AccountInstallmentsCheck {
         bodyWrapper.codiceCliente = input.customerCode;
 
         String body = JSON.serialize(bodyWrapper, true);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: request body = ' + body);
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
         List<String> uniqueInstallmentPlans = new List<String>();
 
 
         if (responseCtrl.body == null) {
-            System.debug('HDT_SRV_AccountInstallmentsCheck: null response');
+            System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: null response');
             return null;
         }
 
-        Boolean isLetturaStimata = false;
-        Boolean isMultiContratto = false;
+        /*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Boolean isLetturaStimata = false;
+        Boolean isMultiContratto = false;*/
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
-        System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
 
         if (responseBodyMap.containsKey('data')) {
             List<Object> dataObj = (List<Object>) responseBodyMap.get('data');
-            System.debug('HDT_SRV_AccountInstallmentsCheck: parsed response data = ' + dataObj);
+            System.debug(LoggingLevel.DEBUG, 'HDT_SRV_AccountInstallmentsCheck: parsed response data = ' + dataObj);
             // TODO: parse response
             // Bisogna contare il numero di record del primo livello con campo residuo > 0 e numero piano rata differente.
             Map<String, Object> singleObjMap = new Map<String,Object>();
@@ -45,8 +52,8 @@ public with sharing class HDT_SRV_AccountInstallmentsCheck {
 
                 singleObjMap = (Map<String, Object>) singleObj;
 
-                System.debug('SRV_AccountInstallmentsCheck residuo --> ' + Decimal.valueOf((String) singleObjMap.get('residuo')));
-                System.debug('SRV_AccountInstallmentsCheck documento --> ' + (String) singleObjMap.get('documento'));
+                System.debug(LoggingLevel.DEBUG, 'SRV_AccountInstallmentsCheck residuo --> ' + Decimal.valueOf((String) singleObjMap.get('residuo')));
+                System.debug(LoggingLevel.DEBUG, 'SRV_AccountInstallmentsCheck documento --> ' + (String) singleObjMap.get('documento'));
 
                 installmentPlan = (String) singleObjMap.get('documento');
 

@@ -43,6 +43,7 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
 
     public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
         List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
+        Map<String,List<HDT_WRP_PaperProcessing>> mapLabCartListWrap = new Map<String,List<HDT_WRP_PaperProcessing>>();
         for(CampaignMember cm : scope) { 
             //cm.PaperProcess__c = paperProcessingId;
             //campaignMembers.add(cm);
@@ -117,9 +118,15 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
             ppwrap.campo40 = cm.Campaign.PaperCampaignParameter__r.Field40__c;
 
             ppWrapList.add(ppwrap);
-            String fileName = 'Report_Clienti_' + cm.PaperProcess__c + date.today().year() + date.today().month() + date.today().day();
-            contentVersionIdList.add(HDT_UTL_PaperProcessing.generateFile(ppWrapList, cm.PaperProcess__c, fileName));
+            if(mapLabCartListWrap.get(cm.PaperProcess__c) == null){
+                mapLabCartListWrap.put(cm.PaperProcess__c,new List<HDT_WRP_PaperProcessing>{ppwrap});
+            }
+            else{
+                mapLabCartListWrap.get(cm.PaperProcess__c).add(ppwrap);
+            }
+            //String fileName = 'Report_Clienti_' + cm.PaperProcess__c + date.today().year() + date.today().month() + date.today().day();
         }
+        contentVersionIdList = HDT_UTL_PaperProcessing.generateFile(mapLabCartListWrap);
         //update campaignMembers;
         System.debug('------ '+ppWrapList.size());
     }
@@ -132,7 +139,7 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
         baSend.typeCallout = 'Comunicazione Cartacea';
         baSend.dtos = contentVersionIdList;
         baSend.filezipName = 'Lavorazione_Cartacea_'+ paperProcessingIds;
-        Database.executebatch(baSend, 100);
+        Database.executebatch(baSend, 80);
 
         //String filezipName = 'Comunicazioni';
        // String type = 'Comunicazione Cartacea';

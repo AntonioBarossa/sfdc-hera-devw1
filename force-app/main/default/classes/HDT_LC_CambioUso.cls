@@ -34,7 +34,7 @@ public with sharing class HDT_LC_CambioUso {
 
 
     @AuraEnabled
-    public static boolean updateCase(String caseId,String addebito,string tipoFornitura,String recapito,string tipoImpianto,boolean residente,string note){
+    public static boolean updateCase(String caseId,String addebito,string tipoFornitura,String recapito,string tipoImpianto,boolean residente,string note,String disco,String discotype){
         boolean res = true;
         HDT_SRV_Case caseSrv = new HDT_SRV_Case();
         System.debug('*****2:');
@@ -94,12 +94,15 @@ public with sharing class HDT_LC_CambioUso {
             c.rateCategory__c = code;
             c.TaxRate__c = mapIvaIdToValue2.get(srv[0].Vat__c);
            // c.CustomerType__c = c1.account.CustomerType__c;
-            c.DisconnectibilityType__c = srv[0].DisconnectibilityType__c;
-            c.Disconnectable__c = srv[0].Disconnectable__c;
+            c.Disconnectable__c = disco;
+            if('No'.equalsIgnoreCase(disco)){
+                c.DisconnectibilityType__c = discotype;
+            }
+           // c.DisconnectibilityType__c = srv[0].DisconnectibilityType__c;
             c.Note__c = note;
             System.debug('*****4:');
-           // c.phase__c = 'Da Inviare';
-           // c.status = 'In Lavorazione';
+            c.phase__c = 'Da Inviare';
+            c.status = 'In Lavorazione';
             caseSrv.updateRecord(c);
             
         }

@@ -9,5 +9,5 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Fine Rinnovo VAS</label>
     <required>false</required>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

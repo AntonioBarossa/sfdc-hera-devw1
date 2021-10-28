@@ -12,7 +12,7 @@ public with sharing class HDT_LC_LeadCalculateFiscalCodeTst {
     static void setup(){
 
         HDT_UTL_DataFactoryTst.createLead(1, true);
-        HDT_UTL_DataFactoryTst.createCity(1, true);
+        HDT_UTL_DataFactoryTst.createCity();
 
     }
 
@@ -27,7 +27,7 @@ public with sharing class HDT_LC_LeadCalculateFiscalCodeTst {
         result =  HDT_LC_LeadCalculateFiscalCode.CalculateLeadFiscalCode(testLead.Id);
 
         System.assertEquals('', result, 'Lead is not correct!');
-        System.assertNotEquals('LastNameTest', result);
+        System.assertNotEquals('LastNameTest', result, 'CalculateLeadFiscalCode did not work correctly');
 
         Test.stopTest();
     }
@@ -46,8 +46,8 @@ public with sharing class HDT_LC_LeadCalculateFiscalCodeTst {
         String result;
         result =  HDT_LC_LeadCalculateFiscalCode.CalculateLeadFiscalCode(testLead.Id);
 
-        System.assertEquals('Birthdate Gender Birthcity must be completed!', result);
-        System.assertNotEquals('', result);
+        System.assertEquals('Birthdate Gender Birthcity must be completed!', result, 'CalculateLeadFiscalCode did not work correctly');
+        System.assertNotEquals('', result, 'CalculateLeadFiscalCode did not work correctly');
         
         Test.stopTest();
 

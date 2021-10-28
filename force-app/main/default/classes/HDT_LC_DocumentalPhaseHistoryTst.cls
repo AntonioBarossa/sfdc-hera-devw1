@@ -1,5 +1,7 @@
 @isTest
 public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
+    
+    //TEST SETUP
     @TestSetup
     private static void setup(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -10,13 +12,15 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
     }
-
+    
+    
+    //TESTS
     @isTest
     private static void getDocumentalPhaseHistoryCase() {
         Test.startTest();
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
         List<SObject> lstSobj = HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory(tCase.Id, 'Case');
-        System.assert(lstSobj.size() > -1);
+        System.assert(lstSobj.size() > -1, 'getDocumentalPhaseHistoryCase did not work correctly');
         Test.stopTest();
     }
 
@@ -25,21 +29,28 @@ public with sharing class HDT_LC_DocumentalPhaseHistoryTst {
         Test.startTest();
         Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
         List<SObject> lstSobj = HDT_LC_DocumentalPhaseHistory.getDocumentalPhaseHistory(tOrder.Id, 'Order');
-        System.assert(lstSobj.size() > -1);
+        System.assert(lstSobj.size() > -1, 'getDocumentalPhaseHistoryOrder did not work correctly');
         Test.stopTest();
     }
     
     @isTest
     private static void getParentOrderIdTest() {
         
-        //TEST WITH ID
+        //SETUP
+        Account acc = [SELECT Id FROM Account];
         Order tOrder = [SELECT Id, Status FROM Order LIMIT 1];
-        String result = HDT_LC_DocumentalPhaseHistory.getParentOrderId(tOrder.Id);
-        System.assert(String.isNotBlank(result));
+        System.debug(LoggingLevel.DEBUG, 'tOrder ' + tOrder);
+        
+        Order ord = HDT_UTL_DataFactoryTst.createOrder(1, false, acc.id, 'Bozza')[0];
+        ord.ParentOrder__c = tOrder.Id;
+        insert ord;
+        
+        String result = HDT_LC_DocumentalPhaseHistory.getParentOrderId(ord.Id);
+        System.assert(String.isNotBlank(result), 'getParentOrderId did not work correctly');
         
         //TEST EMPTY
         result = HDT_LC_DocumentalPhaseHistory.getParentOrderId('');
-        System.assert(String.isBlank(result));
+        System.assert(String.isBlank(result), 'getParentOrderId did not work correctly');
         
     }
 

@@ -244,4 +244,11 @@ public inherited sharing class HDT_QR_Contact {
         return decision.getRecords();
 
     }
+    public List<Contact> getContactList(String filter){
+        HDT_QR_Helper qrHelper=new HDT_QR_Helper();
+        qrHelper.setObj('Contact');
+        qrHelper.setFilter(filter);
+        return (List<Contact>)qrHelper.getListSObject();
+
+    }
 }

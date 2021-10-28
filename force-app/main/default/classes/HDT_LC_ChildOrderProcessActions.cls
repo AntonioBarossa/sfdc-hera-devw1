@@ -12,6 +12,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
+    private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -24,7 +27,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     public static void save(Order order, Map<String,Object> lastStepData){
         system.debug('START SAVE ORDER');
 
+        /**@frpanico 25/10/2021
+         * Get Current Order to perform cross check with the "orderToUpdate"
+         */
+        Order currentOrder = orderQr.getRecordById(order.Id);
         Order orderToUpdate = new Order();
+        Contract contractReference = new Contract();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
         //EVERIS: Aggiunto caso Voltura
@@ -32,6 +40,34 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
         
+        /**@frpanico 25/10/2021
+         * Spostato in alto la sezione di codice in cui vengono inseriti i dati dell'ultimo step
+         */
+        system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
+        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
+        if (lastStepData != null) {
+
+            for (String lastStepField : lastStepData.keySet()) {
+                system.debug('keltin - lastStepField: ' + lastStepField);
+                system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
+
+                if (lastStepField == 'EffectiveDate__c') {
+                    String dateString = String.valueOf(lastStepData.get(lastStepField));
+                    orderToUpdate.put(lastStepField, date.valueOf(dateString));
+                } else {
+                    orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                }
+            }
+
+            if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
+                List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
+
+                if (docsIvaAccise.isEmpty()) {
+                    throw new AuraHandledException('Caricare documento per iva e accise');
+                }
+            }
+        }
+
         switch on order.RecordType.DeveloperName {
             when 'HDT_RT_Subentro' { // only for HDT_RT_Residenziale
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -203,57 +239,52 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
             }
-            //EVERIS: Aggiunto caso Voltura
-            when 'HDT_RT_Voltura'{
+            //EVERIS: Aggiunto caso Voltura/Voltura Con Switch
+            when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                 System.debug('Order ' + order);
-                HDT_QR_Order orderQr = new HDT_QR_Order();
-                HDT_QR_Contract contractQr = new HDT_QR_Contract();
-                Order currentOrder = orderQr.getRecordById(order.Id);
-                Contract contractReference = new Contract();
-                if(currentOrder.ContractReference__c != null)
-                {
-                    try
-                    {
-                        contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
-                    }
-                    catch(Exception e)
-                    {
-                        System.debug('Exception: ' + e.getMessage() + ' at line: ' + e.getLineNumber());
-                    }
-                }
+                /* Document Validation */
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-                    // Carta d’identità;
+                    /* Carta d’identità */
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    // Documenti relativi alla Legge 80
+                    /* Documenti Legge 80 */
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    // Istanza 326
-                    //orderToUpdate.Instance326__c = 'Richiesto';
-                    // Accettazione Preventivo rapido.
-                    //orderToUpdate.QuickQuote__c = 'Richiesto';
-                    //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Carta identità
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Documenti relativi alla Legge 80
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    //orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
-                    // Carta identità
-                    //orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    // Accettazione preventivo rapido
-                    //orderToUpdate.QuickQuote__c = 'Richiesto';
-                    // Istanza 326
-                    //orderToUpdate.Instance326__c = 'Richiesto';
-                    //orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 }
+                /* Effective Date Check */
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || order.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
-                //@frpanico logica if reseller --> Esportazione VS Siebel
-                if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                if(currentOrder.CommodityFormula__c.equalsIgnoreCase('Energia Elettrica'))
                 {
-                    orderToUpdate.Phase__c = 'Esportazione VS Siebel';
+                /* If "Voltura Con Switch" and ExitingAccount "Reseller" the process goes to the phase "Esportazione VS Siebel" */
+                    if(currentOrder.ContractReference__c != null && currentOrder.ProcessType__c == 'Voltura Con Switch')
+                    {
+                        contractReference = contractQr.getContractAccountCompanyOwner(currentOrder.ContractReference__c);
+                    }
+                    if(!String.isEmpty(contractReference.Id) && contractReference.Account.CompanyOwner__c.equalsIgnoreCase('Reseller'))
+                    {
+                        orderToUpdate.Phase__c = 'Esportazione VS Siebel';
+                    }
+                /* Rates Check*/
+                    Map<String,Object> rates = 
+                        voltureChangeUtils.checkRates(
+                            (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)),
+                            (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(orderToUpdate))
+                        );
+                    for(String field : rates.keySet())
+                    {
+                        orderToUpdate.put(field, rates.get(field));
+                    }
+                /* Email Check */
+                    if(currentOrder.Email__c != null && String.isEmpty(currentOrder.Email__c))
+                    {
+                        orderToUpdate.Email__c = emptyEmailDefault;
+                    }    
                 }
-
                 
             }
             when 'HDT_RT_ConnessioneConAttivazione' {
@@ -302,12 +333,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.QualityCallUnique__c = true;
             }
 
-            ComfortQualityCall__c comforQualityRes = comfortQualityList[0];
+            ComfortQualityCall__c comforQualityRes = new ComfortQualityCall__c();
+
+            system.debug('DocSendingMethod__c comfort: ' + order.DocSendingMethod__c);
 
             if (comfortQualityList.size() > 1) {
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case enter');
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
+                    system.debug('quality log 4 cqc.ComfortEnabled__c: ' + cqc.ComfortEnabled__c);
+                    system.debug('quality log 4 cqc.ComfortSignatureMethod__c: ' + cqc.ComfortSignatureMethod__c);
+                    system.debug('quality log 4 cqc.ComfortDocSendingChannel__c: ' + cqc.ComfortDocSendingChannel__c);
                     if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == order.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == order.DocSendingMethod__c){
+                        system.debug('Keltin quality enter here is OK');
                         comforQualityRes = cqc;
                         break;
                     } else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == order.SignatureMethod__c) {
@@ -316,6 +353,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     }
                 }
                 system.debug('HDT_LC_ChildOrderProcessActions - Vas case end: ' + comforQualityRes);
+            } else {
+                comforQualityRes = comfortQualityList[0];
             }
 
             if (comforQualityRes.ComfortEnabled__c) {
@@ -325,35 +364,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         }
 
-        system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
-        system.debug('HDT_LC_ChildOrderProcessActions - lastStepData: ' + lastStepData);
-
-
-        if (lastStepData != null) {
-
-            for (String lastStepField : lastStepData.keySet()) {
-                system.debug('keltin - lastStepField: ' + lastStepField);
-                system.debug('keltin - lastStepData.get(lastStepField): ' + lastStepData.get(lastStepField));
-
-                if (lastStepField == 'EffectiveDate__c') {
-                    String dateString = String.valueOf(lastStepData.get(lastStepField));
-                    orderToUpdate.put(lastStepField, date.valueOf(dateString));
-                } else {
-                    orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
-                }
-            }
-
-            if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
-                List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
-
-                if (docsIvaAccise.isEmpty()) {
-                    throw new AuraHandledException('Caricare documento per iva e accise');
-                }
-            }
-        }
-
         //@frpanico 16/09/21 logic for IVA, Accise and Addiz. Regionale for Voltura and Voltura con Switch
-        if(order.RecordType.DeveloperName == 'HDT_RT_Voltura' || order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch')
+        /*if(order.RecordType.DeveloperName == 'HDT_RT_Voltura' || order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch')
         {
             //@frpanico query for currentRecord
             Order currentOrder = orderQr.getRecordById(order.Id);
@@ -414,7 +426,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.ExciseRate__c = 0.0;
                 }
             }
-        }
+        }*/
         
         system.debug('HDT_LC_ChildOrderProcessActions - lastStepData - after: ' + orderToUpdate);
 

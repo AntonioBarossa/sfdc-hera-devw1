@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_LeadProcess {
     private static HDT_SRV_CampaignMember cmSrv= new HDT_SRV_CampaignMember();
     private static HDT_QR_Individual indvQr= new HDT_QR_Individual();
     private static HDT_QR_Lead leadQr= new HDT_QR_Lead();
+    private static HDT_SRV_ContentDocumentLink cdlSrv = new HDT_SRV_ContentDocumentLink();
     
     public static HDT_WRP_MrrResponse.HDT_WRP_Response formCallback(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject){
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
@@ -42,7 +43,8 @@ public with sharing class HDT_UTL_LeadProcess {
             //System.debug('PROVA WSFORM3');
             if(isValidated){
                // System.debug('PROVA WSFORM4');
-                List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                //List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                List<Campaign> campaign= HDT_QR_Campaign.campaignByNameMacroActivityEasyCIM(mapRequestFields.get('NOMEMACROACTIVITYEASYCIM'));//HRDTR-00_HRAWRM-907 18/10/2021
                 if(campaign != null && !campaign.isEmpty()){
                    // System.debug('PROVA WSFORM5');
                     Lead newLead= new Lead();
@@ -154,8 +156,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     mrrResponseItem.objects.add(responseObject);
                     RestContext.response.statusCode = 200;
                     return mrrResponseItem;
-                }else{
-                    responseField.fieldType = 'TEXT';
+                }
+                else{
+                  /*  responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'KO';
                     responseFieldError.fieldType = 'TEXT';
@@ -163,7 +166,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     responseFieldError.value = 'Internal error';
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
                     mrrResponseItem.objects.add(responseObject);
-                    RestContext.response.statusCode = 500;
+                    RestContext.response.statusCode = 500;*/
+                    campaignNotFound( request, mrrResponseItem, responseObject,responseField,responseFieldError);//HRDTR-00_HRAWRM-907 18/10/2021
                     return mrrResponseItem;
                 }
                 
@@ -223,7 +227,8 @@ public with sharing class HDT_UTL_LeadProcess {
             }
             
             if(isValidated){
-                List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD WINBACK');
+               //List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD WINBACK');
+               List<Campaign> campaign= HDT_QR_Campaign.campaignByNameMacroActivityEasyCIM(mapRequestFields.get('NOMEMACROACTIVITYEASYCIM'));//HRDTR-00_HRAWRM-907 18/10/2021
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
                    //! newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
@@ -327,8 +332,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     mrrResponseItem.objects.add(responseObject);
                     RestContext.response.statusCode = 200;
                     return mrrResponseItem;
-                }else{
-                    responseField.fieldType = 'TEXT';
+                }
+                else{
+                    /*responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'KO';
                     responseFieldError.fieldType = 'TEXT';
@@ -336,7 +342,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     responseFieldError.value = 'Internal error';
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
                     mrrResponseItem.objects.add(responseObject);
-                    RestContext.response.statusCode = 500;
+                    RestContext.response.statusCode = 500;*/
+                    campaignNotFound( request, mrrResponseItem, responseObject,responseField,responseFieldError);//HRDTR-00_HRAWRM-907 18/10/2021
                     return mrrResponseItem;
                 }
             }else{
@@ -396,7 +403,9 @@ public with sharing class HDT_UTL_LeadProcess {
             }
             
             if(isValidated){
-                List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                //List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                List<Campaign> campaign= HDT_QR_Campaign.campaignByNameMacroActivityEasyCIM(mapRequestFields.get('NOMEMACROACTIVITYEASYCIM'));//HRDTR-00_HRAWRM-907 18/10/2021
+
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
                     //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
@@ -497,9 +506,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
-                        cdl.LinkedEntityId = l.Id;
-                        cdl.ContentDocumentId = cvdl.contentDocumentId;
-                        Insert cdl;
+                        cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
                     }              
                     
                     responseField.fieldType = 'TEXT';
@@ -509,14 +516,16 @@ public with sharing class HDT_UTL_LeadProcess {
                     mrrResponseItem.objects.add(responseObject);
                     RestContext.response.statusCode = 200;
                     return mrrResponseItem;
-                }else{
-                    responseField.fieldType = 'TEXT';
+                }
+                else{
+                   /* responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'KO';
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
                     mrrResponseItem.objects.add(responseObject);
                     RestContext.response.statusCode = 500;
-                    responseFieldError.value = 'Internal Error';
+                    responseFieldError.value = 'Internal Error';*/
+                    campaignNotFound( request, mrrResponseItem, responseObject,responseField,responseFieldError);//HRDTR-00_HRAWRM-907 18/10/2021
                     return mrrResponseItem;
                 }
             }else{
@@ -576,7 +585,9 @@ public with sharing class HDT_UTL_LeadProcess {
             }
             
             if(isValidated){
-                List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                //List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                List<Campaign> campaign= HDT_QR_Campaign.campaignByNameMacroActivityEasyCIM(mapRequestFields.get('NOMEMACROACTIVITYEASYCIM'));//HRDTR-00_HRAWRM-907 18/10/2021
+
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
                     //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
@@ -693,8 +704,9 @@ public with sharing class HDT_UTL_LeadProcess {
                     mrrResponseItem.objects.add(responseObject);
                     RestContext.response.statusCode = 200;
                     return mrrResponseItem;
-                }else{
-                    responseField.fieldType = 'TEXT';
+                }
+                else{
+                   /* responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'KO';
                     responseFieldError.fieldType = 'TEXT';
@@ -702,7 +714,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     responseFieldError.value = 'Internal error';
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
                     mrrResponseItem.objects.add(responseObject);
-                    RestContext.response.statusCode = 500;
+                    RestContext.response.statusCode = 500;*/
+                    campaignNotFound( request, mrrResponseItem, responseObject,responseField,responseFieldError);//HRDTR-00_HRAWRM-907 18/10/2021
                     return mrrResponseItem;
                 } 
                 
@@ -774,7 +787,8 @@ public with sharing class HDT_UTL_LeadProcess {
                     contactId = con != null ? con.id : '';
                 }
                 
-                List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                //List<Campaign> campaign= HDT_QR_Campaign.getCampaignIds('LEAD CALLBACK');
+                List<Campaign> campaign= HDT_QR_Campaign.campaignByNameMacroActivityEasyCIM(mapRequestFields.get('NOMEMACROACTIVITYEASYCIM'));//HRDTR-00_HRAWRM-907 18/10/2021
                 if(campaign != null && !campaign.isEmpty()){
                     Lead newLead= new Lead();
                     //!newLead.Company__c='HC'; //HRAWRM-803 01/10/2021 
@@ -849,6 +863,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK'); // HRAWRM-919 25/10/2021
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');
@@ -885,16 +900,18 @@ public with sharing class HDT_UTL_LeadProcess {
                     mrrResponseItem.objects.add(responseObject);
                     RestContext.response.statusCode = 200;
                     return mrrResponseItem;
-                }else{
-                    responseField.fieldType = 'TEXT';
+                }
+                else{
+                   /* responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
                     responseField.value = 'KO';
                     responseFieldError.fieldType = 'TEXT';
                     responseFieldError.name = 'ERROR_MESSAGE';
-                    responseFieldError.value = 'Internal error';
+                    responseFieldError.value = 'Campaign Not Found';
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
                     mrrResponseItem.objects.add(responseObject);
-                    RestContext.response.statusCode = 500;
+                    RestContext.response.statusCode = 400;*/
+                    campaignNotFound( request, mrrResponseItem, responseObject,responseField,responseFieldError);//HRDTR-00_HRAWRM-907 18/10/2021
                     return mrrResponseItem;
                 }
                 
@@ -925,6 +942,22 @@ public with sharing class HDT_UTL_LeadProcess {
         }
         
     }
+    
+    @TestVisible
+    //HRDTR-00_HRAWRM-907 18/10/2021
+    private static void campaignNotFound(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem,HDT_WRP_MrrResponse.HDT_WRP_Object responseObject, HDT_WRP_MrrResponse.HDT_WRP_Field responseField,HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError){
+
+
+        responseField.fieldType = 'TEXT';
+        responseField.name = 'ESITO';
+        responseField.value = 'KO';
+        responseFieldError.fieldType = 'TEXT';
+        responseFieldError.name = 'ERROR_MESSAGE';
+        responseFieldError.value = 'Campaign Not Found';
+        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+        mrrResponseItem.objects.add(responseObject);
+        RestContext.response.statusCode = 400;
+    }//HRDTR-00_HRAWRM-907 18/10/2021
     public static Datetime getDateTimeFromString(String stringDateTime ){
         if (String.isBlank(stringDateTime)) {
             return null;

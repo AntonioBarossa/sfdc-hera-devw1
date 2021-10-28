@@ -31,6 +31,10 @@
                 <behavior>Edit</behavior>
                 <field>DigitalAssetStatus</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VasPracticeCode__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

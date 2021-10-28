@@ -12,7 +12,8 @@ private class HDT_UTL_OrderProcessAssignmentTst {
 
 	@testSetup 
   static void setup() {
-        
+    HDT_UTL_DataFactoryTst.pClickInstance();
+    HDT_UTL_DataFactoryTst.pClickOrderPhase();      
 		List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
  
     List<ServicePoint__c> servicePointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);

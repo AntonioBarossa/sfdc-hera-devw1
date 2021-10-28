@@ -22,6 +22,7 @@ public inherited sharing class HDT_TRH_User extends HDT_TRH_TriggerHandler{
         List<AggregateResult> usConn= [SELECT AccountId, COUNT(Id) c
         FROM User
         WHERE AccountId in :accountIds AND UserType = 'PowerPartner'
+        WITH SECURITY_ENFORCED
         GROUP BY AccountId ];
 
         for(AggregateResult u: usConn){

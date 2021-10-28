@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    11/10/2021
+*/
+
 @isTest
 public with sharing class HDT_TRH_DocumentalActivityTst{
 
@@ -42,13 +47,17 @@ public with sharing class HDT_TRH_DocumentalActivityTst{
 		DocumentalActivity__c dA1 = new DocumentalActivity__c();
 		DocumentalActivity__c dA2 = new DocumentalActivity__c();
 
+		// Necessario querare gli oggetti al fine di valorizzare i campi CaseNumber/OrderNumber
+		Case caseOne = [SELECT Id, CaseNumber from Case WHERE Id = :caseList[0].Id LIMIT 1];
+		Case caseTwo = [SELECT Id, CaseNumber from Case WHERE Id = :caseList[1].Id LIMIT 1];
+		Order orderOne = [SELECT Id, OrderNumber from Order WHERE Id = :ordList[0].Id LIMIT 1];
+		Order orderTwo = [SELECT Id, OrderNumber from Order WHERE Id = :ordList[1].Id LIMIT 1];
 
+		dA1.ProcessId__c = caseOne.CaseNumber;
+		dA2.ProcessId__c = orderOne.OrderNumber;
 		
-		dA1.ProcessId__c = caseList[0].CaseNumber;
-		dA2.ProcessId__c = ordList[0].OrderNumber;
-		
-		dA1.ParentProcessId__c = caseList[1].CaseNumber;
-		dA2.ParentProcessId__c = ordList[1].OrderNumber;
+		dA1.ParentProcessId__c = caseTwo.CaseNumber;
+		dA2.ParentProcessId__c = orderTwo.OrderNumber;
 
 		docActList.add(dA1);
 		docActList.add(dA2);		
