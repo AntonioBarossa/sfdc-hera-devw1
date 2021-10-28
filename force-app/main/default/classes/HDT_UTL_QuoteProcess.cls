@@ -12,6 +12,8 @@ public inherited sharing class HDT_UTL_QuoteProcess {
     private static HDT_SRV_SaleServiceItem itemsSrv = new HDT_SRV_SaleServiceItem();
     private static HDT_SRV_Opportunity oppSrv = new HDT_SRV_Opportunity();
 
+    //private static boolean justForTest = false;
+
     private static list<SBQQ__Quote__c> filterAmendedQuote(list<SBQQ__Quote__c> quoteList){
         list<SBQQ__Quote__c> filteredList = new list<SBQQ__Quote__c>();
 
@@ -20,7 +22,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
                 filteredList.add(quote);
             }
         }
-
+        //justForTest=filteredList.size()>0;
         return filteredList;
     }
 
@@ -93,6 +95,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         newQuote.Market__c = oldQuote.Market__c;
         newQuote.SupplyCity__c = oldQuote.SupplyCity__c;
         newQuote.ContractReference__c = oldQuote.ContractReference__c;
+        newQuote.SalesCompanyCode__c = oldQuote.SalesCompanyCode__c;
         newQuote.SBQQ__Status__c = 'In Review';
     }
 
@@ -201,18 +204,21 @@ public inherited sharing class HDT_UTL_QuoteProcess {
     public static void amendProcessManagementBefore(list<SBQQ__Quote__c> newQuoteList){
 
         list<SBQQ__Quote__c> amendList = filterAmendedQuote(newQuoteList);
-        System.debug('before - amendList ' + amendList);
+        //System.debug('before - amendList ' + json.serialize(amendList));
 
         list<SBQQ__Quote__c> quoteToAssignList = getQuoteToAssign(amendList);
-        System.debug('before - quoteToAssignList ' + quoteToAssignList);
+        //System.debug('before - quoteToAssignList ' + json.serialize(quoteToAssignList));
         
         List<HDT_WRP_QuoteAmend> wrapQuote = mapQuoteAmend(amendList, quoteToAssignList);
-        System.debug('before - wrapQuote ' + wrapQuote);
+        //System.debug('before - wrapQuote ' + json.serialize(wrapQuote));
 
         for (HDT_WRP_QuoteAmend wrp : wrapQuote) {
             assignValueToNewQuote(wrp.newQuote, wrp.oldQuote);
         }
-        System.debug('before - assignValueToNewQuote ' + wrapQuote);
+        //System.debug('before - assignValueToNewQuote ' + wrapQuote);
+        /*if(justForTest){
+            throw new HDT_WS_MrrRequest.CustomMessageException('testing amendment quote');
+        }*/
         
     }
 

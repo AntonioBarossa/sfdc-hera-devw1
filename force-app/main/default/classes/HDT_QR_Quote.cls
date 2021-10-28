@@ -171,6 +171,7 @@ public inherited sharing class HDT_QR_Quote {
             FriendCode__c,
             SaleBy__c,
             SalesCompany__c,
+            SalesCompanyCode__c,
             Market__c,
             SupplyCity__c,
             ContractReference__c
