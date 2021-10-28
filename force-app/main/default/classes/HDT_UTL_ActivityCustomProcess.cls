@@ -244,7 +244,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 typeOfCommodity = 'GAS';
             }
             
-            HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail iwd = new HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail();
+            HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
             if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c != null){
                 iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumptionStandardM3__c.format());
             }            
@@ -252,7 +252,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             
             system.debug('HDT_VFC_InputWrapperDetail ---> ' + JSON.serialize(iwd)); 
 
-            List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail> l = new List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail>();
+            List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
 
             // da testare 18/6/21 @Picchiri
@@ -263,7 +263,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
             system.debug('HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
 
-            HDT_WS_CreditCheck.HDT_VFC_InputWrapper iw = new HDT_WS_CreditCheck.HDT_VFC_InputWrapper();
+            HDT_WS_CreditCheckRequest iw = new HDT_WS_CreditCheckRequest();
             iw.sistema = 'eEnergy';
             iw.caso = 'Transazionale';
             iw.crmEntity = 'Order';
@@ -296,7 +296,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 iw.alternativeCustomerId = fiscalData;            
             }
             system.debug('act.Order__r.RecordType.DeveloperName ---> ' + JSON.serialize(iw)); 
-            HDT_WS_CreditCheck.callService(json.serialize(iw));
+            HDT_WS_CreditCheck.callService(iw);
         }
     }
     // END @Picchiri 15.06.21 
