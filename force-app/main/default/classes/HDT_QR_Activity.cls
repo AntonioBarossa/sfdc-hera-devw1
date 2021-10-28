@@ -10,10 +10,10 @@ public inherited sharing class HDT_QR_Activity {
     String fields= 'Id, OwnerId, Name, RecordTypeId, CreatedDate, Type__c,Account__c,Approved__c';
     
     public HDT_QR_Activity() {
-
+        System.debug('HDT_QR_Activity empty constructor');
     }
 
-
+    @SuppressWarnings('PMD.UnusedLocalVariable') //* Andrei Necsulescu -- supressed PMD warning since it's a false positive 
     public wrts_prcgvr__Activity__c getLastActivity(String idAcc,SObject o){
         activitySrv.checkReadAccess(fields);
 

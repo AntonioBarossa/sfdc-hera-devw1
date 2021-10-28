@@ -18,7 +18,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
 
     @AuraEnabled
-    public static Map<String,Object> init(String Id){
+    public static Map<String,Object> init(String id){
         Map<String,Object> result = new Map<String,Object>();
 
         User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
@@ -58,6 +58,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     }
 
     @AuraEnabled
+    @SuppressWarnings('PMD.AvoidDeeplyNestedIfStmts')
     public static void updateProcessStep(Order order,
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
@@ -160,6 +161,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         exeChecks(order);
 
         orderSrv.updateRecord(order);
+    }
+
+    /* Wrapper Method */
+    @AuraEnabled
+    public static void updateProcessStep(Order order, 
+    Boolean isVolture,
+    Boolean isRetroactive,
+    Boolean isReading,
+    Date readingDate){
+
+        Boolean isUpdateStep = false;
+        updateProcessStep(order, isVolture, isRetroactive, isReading, isUpdateStep, readingDate);
+
     }
 
     private static void exeChecks(Order order){
