@@ -2571,9 +2571,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				CompanyOwner__c='HERA COMM',
 				ContactID__c=contactId,
 				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
-				MessageID__c=12321421,
+				MessageID__c='12321421',
 				Mobile__c='234234234',
-				MobileMessageTrackingID__c=12343143,
+				MobileMessageTrackingID__c='12343143',
 				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
 			);
 			

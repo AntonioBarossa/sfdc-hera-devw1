@@ -4,10 +4,9 @@
     <description>The subscriber ID for the affected subscriber. This number represents the unique ID for each subscriber record</description>
     <externalId>false</externalId>
     <label>SubscriberID</label>
-    <precision>18</precision>
+    <length>18</length>
     <required>false</required>
-    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

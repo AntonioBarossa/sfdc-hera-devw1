@@ -4,10 +4,9 @@
     <description>Invalidation code for the message</description>
     <externalId>false</externalId>
     <label>InvalidationCode</label>
-    <precision>18</precision>
+    <length>18</length>
     <required>false</required>
-    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>
