@@ -2952,7 +2952,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 05/10/2021
 	 */
-	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithParams(Integer amount, Boolean doInsert,Map<String,Object> params){
 
 		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
 	  

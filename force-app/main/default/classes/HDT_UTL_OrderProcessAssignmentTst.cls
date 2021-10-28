@@ -62,12 +62,12 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     
     insert orderForAllTest;
 
-    List<MatriceRemiCode__c> remiList = HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompany(1,false, new Map<String,Object> {
+    List<MatriceRemiCode__c> remiList = HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithParams(1,false, new Map<String,Object> {
       'SalesCompany__c'=>'salesCompany',
       'Comune__c'=>'supplyCity'
     });
 
-    remiList.addAll(HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithSalesCompany(1,false, new Map<String,Object> {
+    remiList.addAll(HDT_UTL_DataFactoryTst.createMatriceRemiCodeWithParams(1,false, new Map<String,Object> {
       'SalesCompany__c'=>null,
       'SalesCompany__c'=>'supplyCity'
     }));
