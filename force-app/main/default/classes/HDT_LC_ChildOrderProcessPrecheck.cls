@@ -74,21 +74,22 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 //INIZIO SVILUPPI EVERIS
                 when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'
                 {
+                    String sapCode = '';
                     //@frpanico predefault "Processo", "Sottoprocesso", "Tipo Voltura", "Codice Causale", "Data Decorrenza", "Contratto", "Codice Contratto"
                     List<Contract> contracts = contractQr.getContractFromServicePoint(order.ServicePoint__c);
-                    List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contracts[0].AccountId);
+                    System.debug('Condition ' + !contracts.isEmpty());
+                    if(!contracts.isEmpty())
+                    {
+                        List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contracts[0].AccountId);
+                        newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+                        newOrder.ContractReference__c = contracts[0]?.Id;
+						sapCode = contracts[0].SAPContractCode__c;
+                    }
                     processType = selectedProcessObject.get('recordType').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
-                    newOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
                     processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
                     newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
-                    newOrder.ContractReference__c = contracts.size() > 0 
-                        ? contracts[0].Id
-                        : null;
-                    String sapCode = contracts.size() > 0
-                        ? contracts[0].SAPContractCode__c
-                        : '';
                     newOrder.SapContractCode__c = sapCode;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
                     newOrder = callDataEnrichment(order.SAPImplantCode__c,sapCode,newOrder);
