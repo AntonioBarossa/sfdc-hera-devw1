@@ -30,7 +30,7 @@ public with sharing class HDT_BA_ExpiredCasesTst {
             //c.Contact__c = conList[0].Id;
         }
         
-        Case mySingleCase = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
+        Case mySingleCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
         mySingleCase.RecordTypeId = recTypeId;
         
         caseList.add(mySingleCase);
