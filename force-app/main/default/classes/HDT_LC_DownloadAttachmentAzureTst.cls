@@ -10,23 +10,6 @@
 
 @isTest
 public class HDT_LC_DownloadAttachmentAzureTst {
-	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
-    @TestSetup
-    static void makedata(){
-        
-        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-		internalUser.UserPermissionsMarketingUser=true;
-
-		insert internalUser;
-
-        System.runAs(internalUser){
-            
-            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('CampagenDmDmpData','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
-            
-            
-        }
-     }
 
   @isTest
 	static void testGetUrlNameDocumentLink(){
@@ -38,7 +21,43 @@ public class HDT_LC_DownloadAttachmentAzureTst {
             msg = e.getMessage();
         }
         System.assertEquals('Script-thrown exception', msg, 'DownloadAttachmentAzure did not work correctly');
-        System.assertNotEquals('', msg, 'The exception message is empty');
+        System.assertNotEquals('', msg, 'DownloadAttachmentAzure did not work correctly');
         
+    }
+    
+    @isTest static void testGetExtensionFile(){
+        
+        List<SiebelDocumentLink__x> docs = new List<SiebelDocumentLink__x>();
+        SiebelDocumentLink__x doc1 = new SiebelDocumentLink__x();
+        docs.add(doc1);
+        
+        HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(docs));
+        Test.startTest();
+
+        Boolean b = HDT_LC_DownloadAttachmentAzure.getExtensionFile('0031X00000jNwOpQAK');
+        
+        Test.stopTest();
+
+        System.assertEquals(true , b, 'GetExtensionFile did not work correctly');
+        System.assertNotEquals(null, b, 'GetExtensionFile did not work correctly');
+    }
+    @isTest static void testGetExtensionFileEx(){
+        
+        String msg;
+
+        Test.startTest();
+        
+        try{
+
+        Boolean b = HDT_LC_DownloadAttachmentAzure.getExtensionFile('0031X00000jNwOpQAK');
+            
+        }catch(Exception e){
+            msg = e.getMessage();
+        }
+        
+        Test.stopTest();
+
+        System.assertEquals('Script-thrown exception', msg, 'GetExtensionFile did not work correctly');
+        System.assertNotEquals(null, msg, 'GetExtensionFile did not work correctly');
     }
 }

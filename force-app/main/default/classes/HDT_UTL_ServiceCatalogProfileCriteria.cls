@@ -8,9 +8,9 @@
     global boolean evaluate(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
  		//Map<String,HDT_ServiceCatalogProfileFilter__mdt> listMet = HDT_ServiceCatalogProfileFilter__mdt.getAll();
-        String userId = userinfo.getUserId();
+        //String userId = userinfo.getUserId();
         String us= userinfo.getUserType();
-        SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        //SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
         boolean res = false;
         if('CommunityUser'.equalsIgnoreCase(method)){

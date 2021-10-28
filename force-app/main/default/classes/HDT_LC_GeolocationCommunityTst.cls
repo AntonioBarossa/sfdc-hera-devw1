@@ -131,7 +131,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         System.assertEquals(ctt.Id, cmList[0].ContactId, 'getContactsWithinDistance did not work correctly');
 
-        System.assertNotEquals(ctt.Id, 'getContactsWithinDistance did not work correctly');
+        System.assertNotEquals(ctt.Id, null, 'getContactsWithinDistance did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
@@ -160,7 +160,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         System.assertEquals(ld.Id, cmList[0].LeadId, 'getLeadsWithinDistance did not work correctly');
 
-        System.assertNotEquals(ld.Id, 'getLeadsWithinDistance did not work correctly');
+        System.assertNotEquals(ld.Id, null, 'getLeadsWithinDistance did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];

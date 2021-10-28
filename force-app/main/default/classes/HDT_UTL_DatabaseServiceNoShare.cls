@@ -19,6 +19,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
             return false;
         }
         List<Database.SaveResult> insertResult = Database.insert(sObjectList, true);
+        System.debug('Insert result: '+insertResult);
         return true;
     }
 
@@ -31,6 +32,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
             return false;
         }
         List<Database.SaveResult> updateResult = Database.update(sObjectList, true);
+        System.debug('Update result: '+updateResult);
         return true;
     }
 
@@ -61,6 +63,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
         }
         Schema.SobjectField theField = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName);
         List<Database.UpsertResult> upsertResult = Database.upsert(sObjectList,theField, true);
+        System.debug('Upsert result: '+upsertResult);
         return true;
     }
 
@@ -73,6 +76,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
             return false;
         }
         List<Database.DeleteResult> deleteResult = Database.delete(sObjectList, true);
+        System.debug('Delete result: '+deleteResult);
         return true;
     }
 
@@ -81,6 +85,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
             return false;
         }
         List<Database.DeleteResult> deleteResult = Database.delete(sObjectIds, true);
+        System.debug('Delete result: '+deleteResult);
         return true;
     }
 
@@ -151,7 +156,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
         return false;
     }
 
-    enum DmlOperation {
+    enum DmlOperation { //NOPMD
         DML_INSERT,
         DML_UPDATE,
         DML_UPSERT,
