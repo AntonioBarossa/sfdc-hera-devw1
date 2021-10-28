@@ -2570,9 +2570,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				CompanyOwner__c='HERA COMM',
 				ContactID__c=contactId,
 				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
-				MessageID__c=12321421,
+				MessageID__c='12321421',
 				Mobile__c='234234234',
-				MobileMessageTrackingID__c=12343143,
+				MobileMessageTrackingID__c='12343143',
 				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
 			);
 			
@@ -3130,178 +3130,39 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return vocalOrders;
 	}
 
-	
 	/**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-    public static List<Contract> createContractNw(Integer amount, Boolean doInsert, Map<String,Object> params){
-
-        List<Contract> contractList=new List<Contract>();
-    
-        for (Integer i=0; i<amount; i++){
-    
-            Contract testContract=new Contract();
-            testContract.AccountId=(String)params.get('accountId');
-            //@frpanico 06/08 Added contract code
-            testContract.SAPContractCode__c='301191347'+i;
-            testContract.ServicePoint__c=(String)params.get('ServicePoint');
-    
-            contractList.add(testContract);
-        }
-    
-        if (doInsert){
-    
-            insert contractList;
-        }
-    
-        return contractList;
-    }
-    
-    /**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-    public static List<Order> createOrderWithPricebookNw(Integer amount, Boolean doInsert, List<Sale__c> sales, Map<String,Object> params){
-
-		List<Order> orderList=new List<Order>();
-
-		//Id rt=utlConstants.ORDER_RECORDTYPEID_DEFAULT;
-
-		for (Integer i=0; i<amount; i++){
-
-			Order ord=new Order();
-
-			//ord.RecordTypeId=rt;
-			ord.Name='testOrderName'+i;
-			ord.Status='Draft';
-			ord.EffectiveDate=Date.today();
-			ord.AccountId=(String)params.get('accountId');
-			ord.EstimateAmount__c=1000;
-			ord.PowerQuote__c=1000;
-			ord.AdministrativeBurden__c=1;
-			ord.EstimatedVAT__c=1;
-			ord.ValidityDateEstimate__c=Date.today().addDays(30);
-			ord.Phase__c='Bozza';
-			ord.CIAccoutn__c='Richiesto';
-			ord.QuickQuote__c='Richiesto';
-			ord.ChamberCommerceRegistration__c='Richiesto';
-			ord.Instance326__c='Richiesto';
-			ord.DocumentLow80__c='Richiesto';
-			ord.AutorizationVolturaThirdTrader__c='Richiesto';
-			ord.ContractSigned__c=true;
-			ord.SignedDate__c=Date.today();
-			ord.SignatureMethod__c='Vocal Order';
-			ord.DocSendingMethod__c='E-mail';
-			ord.Sale__c=sales[i].Id;
-			for(String key :params.keySet()) {
-				ord.put(key, params.get(key));
-			}
-            
-            orderList.add(ord);
-		}
-
-		if (doInsert){
-
-			insert orderList;
-		}
-
-		return orderList;
-	}
-
-    /**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-    public static List<Case> createCaseNw(Integer amount, Boolean doInsert, Map<String,Object> params){
-		return createCaseMorositaNw(amount, doInsert, params);
-	}
-	
-    /**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-	public static List<Case> createCaseMorositaNw(Integer amount, Boolean doInsert, Map<String,Object> params){
-		
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 14/10/2021
+	 */
+	public static List<Case> createCaseWithStatusClosedNw(Integer amount, Map<String,Object> params){
+			
 		List<Case> caseList=new List<Case>();
 		
-		//String rtId='1111';
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
 
 		for (Integer i=0; i<amount; i++){
 
 			Case testCase=new Case();
-			testCase.AccountId=(String)params.get('accountId');
-			testCase.Status='In Lavorazione';
-			//testCase.Phase__c='Bozza';
+			testCase.Phase__c='Bozza';
 			testCase.Subject='test';
 			testCase.Type='BP/CA - errata categoria';
 			testCase.Subprocess__c='Account';
 			testCase.HerokuPracticeCode__c='21313232132132';
-			testCase.ContactId=(String)params.get('contactID');
-			testCase.ServicePoint__c=(String)params.get('servicepointID');
-			testCase.Contract__c=(String)params.get('ContractReference');
-			//testCase.VulturePracticeReference__c=orderId;
-			testCase.Cluster__c='Pagamenti';
-			//testCase.RecordTypeId=rtId;
+			testCase.RecordTypeId=rtId;
 			testCase.CompanyOwner__c='HERA COMM';
-            testCase.Order__c=(String)params.get('orderID');
-            testCase.VasStatus__c=(String)params.get('VasStatus');
+			for(String key:params.keySet()){
+				testCase.put(key, params.get(key));
+			}
 			caseList.add(testCase);
 		}
+		insert caseList;
 
-		if (doInsert){
-
-			insert caseList;
+		for(Case testCase:caseList){
+			testCase.Status='Closed';
+			testCase.PraxidiaOverrallSatisfaction__c=2;
 		}
-    
+		update caseList;
+
 		return caseList;
-    }
-    
-    /**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-    public static List<Product2> createProduct2Nw(Integer amount, Boolean doInsert, Map<String,Object> params){
-
-            List<Product2> productList=new List<Product2>();
-    
-            for (Integer i=0; i<amount; i++){
-    
-                Product2 product=new Product2();
-    
-                product.Name='testProduct2Name'+i;
-                product.NumberRateMonthly__c=(Double)params.get('NumberRateMonthly');
-                productList.add(product);
-            }
-    
-            if (doInsert){
-    
-                insert productList;
-            }
-    
-            return productList;
-    }
-	
-    /**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-    public static SBQQ__Quote__c createEmptyQuoteNw(){
-        SBQQ__Quote__c quote = new SBQQ__Quote__c();
-        insert quote;
-		return quote;
-	}
-
-    /**
-     * @author Valere (valere@noeli-it.net)
-     * @date 6/10/2021
-     */
-    public static SBQQ__Subscription__c createSubscriptionNw(String contactId){
-        SBQQ__Subscription__c mySubscription = new SBQQ__Subscription__c(
-            SBQQ__Contract__c=contactId,
-            SBQQ__Quantity__c=10
-        );
-        insert mySubscription;
-		return mySubscription;
 	}
 }
