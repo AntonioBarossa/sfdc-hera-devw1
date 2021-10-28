@@ -23,39 +23,39 @@ private class HDT_LC_OrdersForComfortQualityListTst {
 
     List<Sale__c> salesList= HDT_UTL_DataFactoryTst.createSale(4, true, accountList[0].id, 'Bozza');
 
-    List<Order> orderList0= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList0= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Annullato'
     } ); 
-    List<Order> orderList1= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList1= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione Motore VAS',
       'RecordTypeId'=>hdtRtVasRecordTypeId
     } ); 
-    List<Order> orderList2= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList2= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione verso Heroku',
       'RecordTypeId'=>hdtRtCambioOffertaRecordTypeId
     } );
-    List<Order> orderList3= HDT_UTL_DataFactoryTst.createOrderWithPricebookAndPhaseNw(1, true, salesList,new Map<String,Object>{
+    List<Order> orderList3= HDT_UTL_DataFactoryTst.createOrderWithParams(1, true, salesList,new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Pricebook2Id'=>standardPricebook.id,
       'Phase__c'=>'Comunicazione verso Heroku',
       'RecordTypeId'=>hdtRtSwitchInRecordTypeId
     } );    
-    List<wrts_prcgvr__Activity__c> activity0=HDT_UTL_DataFactoryTst.createActivityCustomNw(1, true,accountList[0].id,new Map<String,Object>{
+    List<wrts_prcgvr__Activity__c> activity0=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
         'orderId'=> orderList0[0].id
     });
-    List<wrts_prcgvr__Activity__c> activity1=HDT_UTL_DataFactoryTst.createActivityCustomNw(1, true,accountList[0].id,new Map<String,Object>{
+    List<wrts_prcgvr__Activity__c> activity1=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
       'orderId'=> orderList1[0].id
     });
-    List<wrts_prcgvr__Activity__c> activity2=HDT_UTL_DataFactoryTst.createActivityCustomNw(1, true,accountList[0].id,new Map<String,Object>{
+    List<wrts_prcgvr__Activity__c> activity2=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
       'orderId'=> orderList2[0].id
     });
-    List<wrts_prcgvr__Activity__c> activity3=HDT_UTL_DataFactoryTst.createActivityCustomNw(1, true,accountList[0].id,new Map<String,Object>{
+    List<wrts_prcgvr__Activity__c> activity3=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
       'orderId'=> orderList3[0].id
     });
     List<ServicePoint__c>  servicePoint=  HDT_UTL_DataFactoryTst.createServicePoint(1, true);
