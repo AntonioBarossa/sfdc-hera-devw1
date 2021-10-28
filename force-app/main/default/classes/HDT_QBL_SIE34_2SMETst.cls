@@ -14,16 +14,18 @@ public class HDT_QBL_SIE34_2SMETst {
     HDT_UTL_DataFactoryTst.pClickOrderPhase();
     HDT_UTL_DataFactoryTst.pClickCasePhase();
     List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM','Persona fisica','Famiglie');
-    List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact (1,true,accountList[0].id); 
-    List<ServicePoint__c> servicepointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+    HDT_UTL_DataFactoryTst.createContact (1,true,accountList[0].id); 
+    HDT_UTL_DataFactoryTst.createServicePoint(1, true);
     List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accountList[0].id);
-    List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseWithStatusClosedNw(1,new Map<String,Object>{
+    HDT_UTL_DataFactoryTst.createCaseWithParams(1, true, new Map<String,Object>{
       'AccountId'=>accountList[0].id,
       'Contract__c'=>contractList[0].id,
       'ServicePoint__c'=>null,
-      'Cluster__c'=>'Preventivi'
+      'Cluster__c'=>'Preventivi',
+      'Status' => 'Closed',
+      'PraxidiaOverrallSatisfaction__c' => 2
     });
-     
+
     HDT_UTL_DataFactoryTst.createWebServiceConfiguration('SIE34','http://test.test','POST','user0');
     HDT_UTL_DataFactoryTst.createWebServiceCredential('user0','pass', 'usrn');
   }
