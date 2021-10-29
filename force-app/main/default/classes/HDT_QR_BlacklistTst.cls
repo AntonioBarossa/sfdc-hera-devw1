@@ -15,7 +15,8 @@ public class HDT_QR_BlacklistTst{
 
 		System.runAs(internalUser){
 
-			List<BlackList__c> blacklists=HDT_UTL_DataFactoryTst.createBlacklist(1, true);
+			List<BlackList__c> blacklists;
+			blacklists=HDT_UTL_DataFactoryTst.createBlacklist(1, true);
 		}
 	}
 
@@ -36,7 +37,7 @@ public class HDT_QR_BlacklistTst{
 			test.stopTest();
 
 			System.assertEquals(true, tGetAllBlacklist[0].Id!=null, 'Blacklists not found');
-			System.assertNotEquals(false, tGetAllBlacklist[0].Id!=null);
+			System.assertNotEquals(false, tGetAllBlacklist[0].Id!=null, 'getAllBlacklist did not work correctly');
 		}
 	}
 
@@ -57,7 +58,7 @@ public class HDT_QR_BlacklistTst{
 			test.stopTest();
 
 			System.assertEquals(true, tGetAllBlacklistEmail[0].Id!=null, 'Blacklists not found');
-			System.assertNotEquals(false, tGetAllBlacklistEmail[0].Id!=null);
+			System.assertNotEquals(false, tGetAllBlacklistEmail[0].Id!=null, 'getAllBlacklistEmail did not work correctly');
 		}
 	}
 
@@ -78,7 +79,7 @@ public class HDT_QR_BlacklistTst{
 			test.stopTest();
 
 			System.assertEquals(true, tGetBlacklist.Id!=null, 'Blacklist not found');
-			System.assertNotEquals(false, tGetBlacklist.Id!=null);
+			System.assertNotEquals(false, tGetBlacklist.Id!=null, 'getBlacklist did not work correctly');
 		}
 	}
 }

@@ -13,7 +13,7 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         return;
     }
 
-    public HDT_SRV_BillableVasDeactivation(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+    /*public HDT_SRV_BillableVasDeactivation(HDT_WRP_MrrRequest.HDT_WRP_Request request){
         if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(this.mapRequestFields.get(field.name) == null){
@@ -21,9 +21,9 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
                 }
             }
         }
-    }
+    }*/
 
-    public static void testHandler(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+    public static void handlerAsyncronousNotify(HDT_WRP_MrrRequest.HDT_WRP_Request request){
         HDT_WRP_MrrRequest.HDT_WRP_Field fieldId;
         if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
@@ -194,7 +194,9 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         }
 
         system.debug(caseToUpdate);
-        system.enqueueJob(new HDT_QBL_UpdateQueueable(caseToUpdate));
+        if(!Test.isRunningTest()){
+            system.enqueueJob(new HDT_QBL_UpdateQueueable(caseToUpdate));
+        }
 
         response.success = true;
         response.message = 'OK';
@@ -214,7 +216,7 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         }
     }
 
-    @Future
+    /*@Future
     private static void updateFuture(String inputString){
         system.debug('ivaste updatefuture');
         Case c = (Case) JSON.deserialize(inputString, Case.class);
@@ -223,11 +225,6 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
 
     public Boolean isPostSalesOrder(){
         return this.mapRequestFields.get('RECORD_ID').startsWithIgnoreCase('O-');
-    }
-
-
+    }*/
     
-
-
-
 }

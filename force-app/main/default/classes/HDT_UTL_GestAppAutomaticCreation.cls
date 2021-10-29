@@ -27,7 +27,7 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
         String method = (String) argsMap.get('method');
         SObject obj = (sObject) argsMap.get('sender');
         String idObject = (String)obj.get('Id');
-        HDT_QR_Order orderQr= new HDT_QR_Order();
+        //HDT_QR_Order orderQr= new HDT_QR_Order();
         List<Order> ordList = [Select id,Sale__r.SalesContact__c,servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
         if(ordList != null && !ordList.isEmpty()){
             Order ord = ordList[0];

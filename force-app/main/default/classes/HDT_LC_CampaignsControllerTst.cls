@@ -856,9 +856,9 @@ CampaignMember member = new CampaignMember(
         listaIdProdotti.add(idsFound.Id);
     }
 
-    Id userID = [SELECT Id FROM User LIMIT 1].Id;
+    Id userId = [SELECT Id FROM User LIMIT 1].Id;
     Test.startTest();
-    String returnedUserName = HDT_LC_CampaignsController.getUserRole(userID);
+    String returnedUserName = HDT_LC_CampaignsController.getUserRole(userId);
     System.assertEquals(null, returnedUserName, 'User Id not  returned');
     Test.stopTest();
 
