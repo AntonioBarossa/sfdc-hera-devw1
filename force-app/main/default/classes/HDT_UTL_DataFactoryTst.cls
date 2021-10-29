@@ -3235,4 +3235,34 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return paperCampaignPars;
 	}
 
+	
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 08/10/2021
+	**/
+	public static List<wrts_prcgvr__Activity__c> createActivityWithParams(Integer amount, Boolean doInsert, Id accId,Map<String,Object> params){
+
+		List<wrts_prcgvr__Activity__c> activityCustomList=new List<wrts_prcgvr__Activity__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
+
+			actCustom.Account__c=accId;
+
+			for (String key : params.keySet()) {
+				actCustom.put(key, params.get(key));
+			}
+
+			activityCustomList.add(actCustom);
+		}
+
+		if (doInsert){
+
+			insert activityCustomList;
+		}
+
+		return activityCustomList;
+	}
+
 }
