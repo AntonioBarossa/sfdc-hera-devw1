@@ -60,14 +60,14 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                 when Case currentCase{
                     
                     //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
-                    if(currentCase.Phase__c.equalsIgnoreCase('Bozza')){
+                    if(currentCase.Phase__c.equalsIgnoreCase('Bozza') && mySobj2 != null && mySobj3 != null){
 
                         if(currentCase.Cluster__c.equalsIgnoreCase('Autolettura')){
                             //Get data from Days to Expiration Custom Setting
                             CS_DaysToExpiration__c myCS1 = (CS_DaysToExpiration__c)mySobj2;
                             Integer strNumberOfDays = integer.valueof(myCS1.NumberOfDays__c);
 
-                            if(currentCase.CreatedDate < System.today() - strNumberOfDays){
+                            if(currentCase.CreatedDate < (System.today() - strNumberOfDays)){
                                 currentCase.Phase__c = 'Bozza Annullata';
                                 myCurrentCaseList.add(currentCase);
                                 continue;
@@ -77,7 +77,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             CS_DaysToExpiration__c myCS2 = (CS_DaysToExpiration__c)mySobj3;
                             Integer strNumberOfDays = integer.valueof(myCS2.NumberOfDays__c);
                             
-                            if(currentCase.CreatedDate < System.today() - strNumberOfDays){
+                            if(currentCase.CreatedDate < (System.today() - strNumberOfDays)){
                                 currentCase.Phase__c = 'Bozza Annullata';
                                 myCurrentCaseList.add(currentCase);
                                 continue;
