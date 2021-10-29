@@ -46,22 +46,24 @@ private class HDT_LC_OrdersForComfortQualityListTst {
       'Phase__c'=>'Comunicazione verso Heroku',
       'RecordTypeId'=>hdtRtSwitchInRecordTypeId
     } );    
-    List<wrts_prcgvr__Activity__c> activity0=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
-        'orderId'=> orderList0[0].id
+    List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
+        'Order__c'=> orderList0[0].id
     });
-    List<wrts_prcgvr__Activity__c> activity1=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
-      'orderId'=> orderList1[0].id
-    });
-    List<wrts_prcgvr__Activity__c> activity2=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
-      'orderId'=> orderList2[0].id
-    });
-    List<wrts_prcgvr__Activity__c> activity3=HDT_UTL_DataFactoryTst.createActivityWithParams(1, true,accountList[0].id,new Map<String,Object>{
-      'orderId'=> orderList3[0].id
-    });
+    activities.addAll(HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
+      'Order__c'=> orderList1[0].id
+    }));
+    activities.addAll(HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
+      'Order__c'=> orderList2[0].id
+    }));
+    activities.addAll(HDT_UTL_DataFactoryTst.createActivityWithParams(1, false,accountList[0].id,new Map<String,Object>{
+      'Order__c'=> orderList3[0].id
+    }));
+    insert activities;
+
     List<ServicePoint__c>  servicePoint=  HDT_UTL_DataFactoryTst.createServicePoint(1, true);
     List<Product2> product2List = HDT_UTL_DataFactoryTst.createProduct2(1, true);
     List<PricebookEntry> pricebookentryList= HDT_UTL_DataFactoryTst.createPricebookEntry(product2List, true, standardPricebook.Id);
-    List<OrderItem> orderItem= HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList0[0].id, servicePoint[0].id, product2List[0].Id, pricebookentryList[0].id);
+    HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList0[0].id, servicePoint[0].id, product2List[0].Id, pricebookentryList[0].id);
   }
     
   @isTest
