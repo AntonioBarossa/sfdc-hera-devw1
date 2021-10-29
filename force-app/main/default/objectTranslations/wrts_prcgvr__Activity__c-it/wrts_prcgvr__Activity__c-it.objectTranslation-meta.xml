@@ -2,11 +2,11 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Attività(Custom)</value>
+        <value>Attività (Custom)</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Attività(Custom)</value>
+        <value>Attività (Custom)</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nome Attività</nameFieldLabel>
@@ -107,7 +107,7 @@
         <label></label>
         <name>HDT_RT_VisitaD2D</name>
     </recordTypes>
-    <startsWith>Consonant</startsWith>
+    <startsWith>Vowel</startsWith>
     <validationRules>
         <errorMessage></errorMessage>
         <name>HDT_VR_CreditCheck</name>
