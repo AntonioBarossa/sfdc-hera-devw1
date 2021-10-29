@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public class HDT_WRP_DocumentalConfiguration{
     
 	public class HDT_WRP_DatabaseResult {

@@ -24,6 +24,8 @@ public class HDT_UTL_GestAppAutomaticCreationTst {
 
         System.runAs(internalUser){
             
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
@@ -45,7 +47,7 @@ public class HDT_UTL_GestAppAutomaticCreationTst {
         Order ord = [Select id From Order];
         
         Map<String,Object> argsMap = new Map<String,Object>();
-        argsMap.put('method','Modifica impianto');
+        argsMap.put('method','Modificaimpianto');
         argsMap.put('sender',ord);
         
         Test.startTest();

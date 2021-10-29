@@ -68,14 +68,19 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     }
 
     handleConfirmDraft(){
-        this.handleSaveEvent();//gestire i casi draft e gestire casistica riprendi processo (il pulsante verifica che non si riabilita sempre è un bug di keltin)
+        //this.handleSaveEvent();//per limiti tecnici l'indirizzo deve essere validato anche nel draft
         this.saveInDraft=true;
+        this.checksAndSave();
     }
 
     handleSaveEvent(){
         console.log('save');
         this.cancelCase=false;
         this.saveInDraft=false;
+        this.checksAndSave();
+    }
+
+    checksAndSave(){
         const targetObjectFlow =this.template.querySelector('c-hdt-target-object-address-for-flow');
         let validity=targetObjectFlow.validate();
         if(validity.isValid){
@@ -85,7 +90,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
             //end jump
             //this.dataToSubmit['Account__c'] = this.accountId;
             this.dataToSubmit['IbanCountry__c'] = this.dataToSubmit['PaymentMethod__c'] == 'RID' ? 'IT' : '';
-            if(this.validFields()){
+            if(this.saveInDraft || this.validFields()){
                 this.loading = true;
                 //vai con la popolazione order, this.dataToSubmit da trasformare in case
                 //utilizza un metodo apex, controlla che il field api name sia nel case altrimenti lancia una auraExc
@@ -126,7 +131,7 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
     tryClone(){
         let map = this.convertCaseToBp();
         populateBpData({theCase:map}).then(data =>{
-            let map = data;
+            //let map = data;
 
             this.cloneObject = data;
             this.dataToSubmit = this.cloneObject;
@@ -195,8 +200,8 @@ export default class hdtModificaContrattiBillingProfile extends BillingProfileFo
         mapBpToCase.set("PaymentMethod__c", "DocumentPaymentMethod__c");
         mapBpToCase.set("InvoiceEmailAddress__c", "InvoiceEmail__c");
 
-        mapBpToCase.set("DivergentSubject__c", "ContactId");
-        mapBpToCase.set("IbanCountry__c", "SupplyCountry__c");
+        //mapBpToCase.set("DivergentSubject__c", "ContactId");
+        //mapBpToCase.set("IbanCountry__c", "SupplyCountry__c");
         return mapBpToCase;
     }
 

@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_ContactSelection {
 
     @AuraEnabled(cacheable = false)
@@ -5,8 +6,11 @@ public with sharing class HDT_LC_ContactSelection {
         String recordListString;
         try{
             System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: accountId: ' + accountId);
-
-            List<List<sObject>> recordList = new List<List<sObject>>();
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            //List<List<sObject>> recordList = new List<List<sObject>>();
             Map<Id, String> rolesMap = new Map<Id, String>();
 
             // TODO: capire se escludere contatti particolari, es. contatti SOL o Amministratore Condominio
@@ -63,7 +67,11 @@ public with sharing class HDT_LC_ContactSelection {
         try{
             System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: accountId: ' + accountId + ' soslSearchTerm: ' + soslSearchTerm);
 
-            List<List<sObject>> recordList = new List<List<sObject>>();
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            //List<List<sObject>> recordList = new List<List<sObject>>();
 
             HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
             List<AccountContactRelation> relationList = acrQueryHandler.getAdministratorRelations();
@@ -141,8 +149,11 @@ public with sharing class HDT_LC_ContactSelection {
         String recordListString;
         try{
             System.debug(LoggingLevel.DEBUG,'HDT_LC_ContactSelection: accountId: ' + accountId);
-
-            List<List<sObject>> recordList = new List<List<sObject>>();
+            /*
+                @Author: Davide Viola - 19/10/2021
+                Description: PMD -> Commentata variabile non utilizzata.
+            */
+            //List<List<sObject>> recordList = new List<List<sObject>>();
             Map<Id, String> rolesMap = new Map<Id, String>();
 
             HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();

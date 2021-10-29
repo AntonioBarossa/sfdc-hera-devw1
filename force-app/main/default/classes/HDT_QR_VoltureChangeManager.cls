@@ -188,8 +188,89 @@ public with sharing class HDT_QR_VoltureChangeManager {
     {
         SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(AccessType.READABLE, 
-            [SELECT RecordType.DeveloperName FROM Account WHERE Id = :accountId]
+            [SELECT RecordType.DeveloperName, CustomerMarking__c FROM Account WHERE Id = :accountId]
             );
+
+        return securityDecision.getRecords();
+    }
+    
+    /* Get Acitivty Template */
+    public List<wrts_prcgvr__ActivityTemplate__c> getActivityTemplateByName(String templateName)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT id,
+            wrts_prcgvr__Assignees__c, 
+            wrts_prcgvr__Subject__c, 
+            wrts_prcgvr__DueDateField__c,Name 
+            FROM wrts_prcgvr__ActivityTemplate__c  
+            WHERE Name = :templateName]);
+
+        return securityDecision.getRecords();
+    }
+
+    /* Get Excise Rate */
+    public List<HDT_ExciseTranscode__mdt> getExciseTranscode(String exciseString)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT Excise__c 
+            FROM HDT_ExciseTranscode__mdt 
+            WHERE Active__c = true 
+            AND ExciseString__c = :exciseString 
+            ]);
+        if(securityDecision.getRecords().isEmpty())
+        {
+            HDT_ExciseTranscode__mdt defaultMdt = new HDT_ExciseTranscode__mdt();
+            defaultMdt.Excise__c = 0.0;
+            return new List<HDT_ExciseTranscode__mdt>{defaultMdt};
+        }
+        return securityDecision.getRecords();
+    }
+
+    /* Get Account Infos */
+    public List<AccountContactRelation> getContactInfosByAccountId(String accountId)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE,
+            [SELECT ContactId
+            FROM AccountContactRelation
+            WHERE Roles = 'Titolare'
+            AND AccountId = :accountId]);
+        
+        return securityDecision.getRecords(); 
+    }
+
+    /* Get Order Infos */
+    public List<Order> getOrderInfosById(String orderId)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE,
+            [SELECT PreviousCustomer__r.Account.CustomerMarking__c,
+            PreviousCustomer__r.Account.RecordType.DeveloperName,
+            Account.CustomerMarking__c,
+            Account.RecordType.DeveloperName
+            FROM Order
+            WHERE Id = :orderId]);
+    
+        return securityDecision.getRecords();
+    }
+
+    /* Get Generic Data Enrichment Configs */
+    public List<HDT_GenericDataEnrichmentTranscode__mdt> getDataEnrichmentTranscodeByObjectName(List<String> objectNameList)
+    {
+        SObjectAccessDecision securityDecision = 
+            Security.stripInaccessible(AccessType.READABLE, 
+            [SELECT SapField__c,
+            SfdcField__c,
+            Method__c,
+            IsNumber__c,
+            Precision__c,
+            Commodity__c,
+            CommodityField__c,
+            ObjectName__c
+            FROM HDT_GenericDataEnrichmentTranscode__mdt
+            WHERE ObjectName__c IN :objectNameList]);
 
         return securityDecision.getRecords();
     }

@@ -6,6 +6,10 @@ public with sharing class HDT_SRV_VoltureChangeManager
 
     private static String voltureChangeRecordTypeName = 'HDT_RT_VolturaConSwitch';
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
+
+    private static String ammissibilityCheckTemplate = 'Controlli Ammissibilità';
+    @TestVisible
+    private static String publishUpdatePhase = 'Comunicazione verso Heroku';
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -83,31 +87,79 @@ public with sharing class HDT_SRV_VoltureChangeManager
     /**@frpanico 18/10/2021
      * This method handle the ammissibility checks
      * Takes in input the paramsMap returned from the response
-     * returns true or false depending on the outcome of the results
+     * if the check is false it creates an activity
      */
-    public Boolean handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
+    public void handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
     {
-        Boolean flagResult = false;
-
-        /**
-         * Address check stand by
-         */
-        String tension = String.valueOf(paramsMap.get('TENSIONE'));
-        String powerAvailable = String.valueOf(paramsMap.get('POTDISP'));
-        String powerCommitted = String.valueOf(paramsMap.get('POTCONTRIMP'));
-        //String address = '';
-
-        if(voltureChangeUtils.getTension(Integer.valueOf(tension)) == currentOrder.VoltageLevel__c)
+        Map<String,Object> ammissibilityCheckMap = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, currentOrder);
+        /**Execute the check and if its false creates the activity*/
+        if(!(Boolean)ammissibilityCheckMap.get('result'))
         {
-            if(String.isNotEmpty(powerAvailable) && String.isNotEmpty(powerCommitted))
+            wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
+            if(activity != null)
             {
-                flagResult = voltureChangeUtils.powerCheck(Decimal.valueOf(powerAvailable), currentOrder.PowerAvailable__c) 
-                    && voltureChangeUtils.powerCheck(Decimal.valueOf(powerCommitted), currentOrder.PowerCommitted__c);
+                activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
+                activity.Order__c = currentOrder.Id;
+                HDT_UTL_DatabaseService.insertSObject(activity);
             }
         }
-
-        return flagResult;
-    
+        return;
     }
 
+    /**@frpanico 19/10/2021
+     * This method handle the PlatformEvent publish to update the order and make the callout
+     * This method takes in input the order to update
+     * update the order and publish the event
+     */
+    public void handlePublishUpdate(Order inputOrder)
+    {
+        HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
+
+        inputOrder.Phase__c = publishUpdatePhase;
+        platEvent.SerializedSobj__c = JSON.serialize(inputOrder);
+        Database.SaveResult sr = Eventbus.publish(platEvent);
+        
+        if(sr.isSuccess())
+        {
+            return;
+        }
+    }
+
+    /**@frpanico 25/10/2021
+     * Metodo che gestisce la risposta dell'arricchimento dati
+     * esegue la query sul metadato di configurazione
+     * richiama poi i metodi da utilizzare
+     * Prende in input una mappa Map<String,List<Object>> dove gli argomenti sono:
+     * List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> risposta dell'arricchimento
+     * List<SObject> dove vengono passati gli SObject da arricchire
+     * Ritorna in output gli SObject arricchiti
+     */
+    public List<SObject> handleResponseDataEnrichment(Map<String,List<Object>> inputMap)
+    {
+        /* Variable declaration */
+        List<String> objectNameList = new List<String>();
+        Map<String,Object> inputMapSingleSobj = new Map<String,Object>();
+        List<HDT_GenericDataEnrichmentTranscode__mdt> transcodeConfigs = new List<HDT_GenericDataEnrichmentTranscode__mdt>();
+        /* Get input variable */
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = 
+            (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)inputMap.get('posizioni');
+        List<SObject> sobjList = (List<SObject>)inputMap.get('sobjList');
+        /* Enrich SobjName List */
+        for(SObject sobj : sobjList)
+        {
+            objectNameList.add(sobj.getSObjectType().getDescribe().getName());
+        }
+        /* Retrieve Configs */
+        transcodeConfigs = voltureChangeQr.getDataEnrichmentTranscodeByObjectName(objectNameList);
+        /* Populate input map for single sobj enrichment */
+        inputMapSingleSobj.put('posizioni', JSON.serialize(posizioni));
+        inputMapSingleSobj.put('configs', JSON.serialize(transcodeConfigs));
+        /* Enrich Data */
+        for(SObject sobj : sobjList)
+        {   
+            inputMapSingleSobj.put('sobj', sobj);
+            sobj = voltureChangeUtl.enrichSobj(inputMapSingleSobj);
+        }
+        return sobjList;
+    }
 }

@@ -47,6 +47,7 @@ public with sharing class HDT_UTL_Sales {
 
 
     public static Map<String,String> getAgentNameAndCode(ServicePoint__c Service,String Marcatura){
+        //system.debug('ivaste getAgentNameAndCode');
         String marcaturaValue = '';
         Map<String,String> mapRes = new Map<String,String>();
         String comune = getCityAgency(service.SupplyCity__c,Service.CommoditySector__c == 'Energia Elettrica' ? true:false,Service.CommoditySector__c == 'Gas' ? true:false);
@@ -64,9 +65,11 @@ public with sharing class HDT_UTL_Sales {
         System.debug('***Marcatura:' + marcaturaValue);
         List<HDT_MatriceSocietaVendita__mdt> listConf = new List<HDT_MatriceSocietaVendita__mdt>();
         if(service.distributor__c != null){
+            //system.debug('primo if '+service.distributor__c);
             listConf = HDT_QR_MatriceAgenti.getAgenteException(Service.CommoditySector__c,comune,marcaturaValue,'ALTRO',service.distributor__r.code__c);
         }
         if(listConf != null && listConf.isEmpty()){
+            //system.debug('sec if '+service.distributor__c);
             listConf = HDT_QR_MatriceAgenti.getAgente(Service.CommoditySector__c,comune,marcaturaValue,'ALTRO');
         }
 
@@ -227,7 +230,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                      //  ord.status = 'Activated';
                         childToUpdate.add(ord);
                     } 
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
@@ -248,7 +251,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' ){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                       // ord.status = 'Activated';
                         childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
@@ -266,7 +269,7 @@ public with sharing class HDT_UTL_Sales {
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }*/
                 }
-                else if(ord.phase__c == 'Documentazione da Firmare'){
+                else if(ord.phase__c == 'Documentazione da firmare'){
                     if(ord.DocumentalPhase__c == 'Plico firmato'){
                         if((ord.Sale__r.Channel__c == 'Agenzie' || ord.Sale__r.Channel__c == 'Business Agent') && (ord.SignatureMethod__c == 'OTP Remoto' || ord.SignatureMethod__c == 'OTP Coopresenza' )){
                             ord.Phase__c = 'Documentazione da Validare';
@@ -275,8 +278,9 @@ public with sharing class HDT_UTL_Sales {
                         }
                         else{
                             ord.phase__c = 'Documentazione Gestita';
-                            ord.status = 'Activated';
+                           // ord.status = 'Activated';
                             ord.SignedDate__c = date.today();
+                            childToUpdate.add(ord);
                         }
                     } 
                 }
@@ -291,7 +295,7 @@ public with sharing class HDT_UTL_Sales {
             activitySrv.createRecordWithFieldCheck(listActivityToCreate);
            // insert listActivityToCreate;
         }
-        return orderNew;
+        return childToUpdate;
     }
 
 
@@ -327,7 +331,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                      //  ord.status = 'Activated';
                        // childToUpdate.add(ord);
                     }
                 /* else if(ord.Sale__r.Channel__c = 'Web' && ord.SignatureMethod__c == 'Vocal Order'){
@@ -348,7 +352,7 @@ public with sharing class HDT_UTL_Sales {
                     }
                     else if((ord.Sale__r.Channel__c == 'Sportello') && ord.SignatureMethod__c == 'Cartacea' && ord.DocSendingMethod__c == 'Stampa Cartacea'){
                         ord.Phase__c = 'Documentazione Gestita';
-                        ord.status = 'Activated';
+                       // ord.status = 'Activated';
                     //    childToUpdate.add(ord);
                         listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
@@ -374,8 +378,9 @@ public with sharing class HDT_UTL_Sales {
                             //childToUpdate.add(ord);
                         }
                         else{
+                            System.debug('*********DentroValidazione');
                             ord.phase__c = 'Documentazione Gestita';
-                            ord.status = 'Activated';
+                            //ord.status = 'Activated';
                             ord.SignedDate__c = date.today();
                         }
                     } 

@@ -53,7 +53,7 @@ export default class HdtMassiveLoader extends LightningElement {
     exportCSV;
     downloadDisabled;
     exportFileName;
-
+    disabledPicklist=false;
     //Import
     importTypeValue;
     fileUploadDisabled;
@@ -61,8 +61,9 @@ export default class HdtMassiveLoader extends LightningElement {
     massiveLoaderRecordId;
     fileName;
     contentVersionId;
-
+    reqName;
     navigateDisabled;
+    spinner=false;
 
     get importFileFormat() {
         return ['.csv'];
@@ -74,7 +75,7 @@ export default class HdtMassiveLoader extends LightningElement {
         this.exportCSV = null;
         this.downloadDisabled = true;
         this.exportFileName = null;
-
+        this.disabledPicklist=false;
         this.importTypeValue = null;
         this.fileUploadDisabled = true;
         this.importDisabled = true;
@@ -158,6 +159,7 @@ export default class HdtMassiveLoader extends LightningElement {
     
                     this.massiveLoaderRecordId = result.massiveLoaderRequestId;
                     this.fileUploadDisabled = false;
+                    this.disabledPicklist=true;
     
                 } else {
     
@@ -224,7 +226,7 @@ export default class HdtMassiveLoader extends LightningElement {
     }
 
     handleCSVConfirm(event) {
-
+        this.spinner=true;
         checkCSV({
             fileName: this.fileName,
             contentVersionId: this.contentVersionId,
@@ -235,14 +237,15 @@ export default class HdtMassiveLoader extends LightningElement {
 
             if (result.error == false) {
 
-                var message = massiveLoaderImportSuccess + this.massiveLoaderRecordId;
+                var message = massiveLoaderImportSuccess + result.reqName;
                 console.log(message);
-
-                this.handleToastEvent(success + '!', message, 'success', 'sticky');
-
+                this.reqName=result.reqName;
+               // this.handleToastEvent(success + '!', message, 'success', 'sticky');
+                this.handleToastEventRedirect();
                 this.importDisabled = true;
                 
                 this.navigateDisabled = false;
+              
 
             } else {
 
@@ -256,9 +259,10 @@ export default class HdtMassiveLoader extends LightningElement {
                 this.handleToastEvent(error + '!', this.labels.massiveLoaderFileCheckError, 'error', null);
 
             }
+            this.spinner=false;
         })
         .catch(error => {
-
+            this.spinner=false;
             console.log('hdtMassiveLoader.checkCSV - Error: ', error);
 
         })
@@ -305,6 +309,7 @@ export default class HdtMassiveLoader extends LightningElement {
         const toastEvent = new ShowToastEvent({
             title: title,
             message: message,
+            
             variant: variant,
             mode: mode
         });
@@ -312,5 +317,23 @@ export default class HdtMassiveLoader extends LightningElement {
         this.dispatchEvent(toastEvent);
 
     }
+    handleToastEventRedirect(){
+
+        const event = new ShowToastEvent({
+            "title": "Success!",
+            "variant": 'success',
+            "mode": 'sticky',
+            "message": "Richiesta {0} creata! {1}!",
+            "messageData": [
+                'Salesforce',
+                {
+                    url:'/'+this.massiveLoaderRecordId,
+                    label:  this.reqName+ ' clicca qui'
+                }
+            ]
+        });
+        this.dispatchEvent(event);
+    }
+  
 
 }

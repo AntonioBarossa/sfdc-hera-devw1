@@ -90,7 +90,7 @@
         // HRAWRM-881 End 14/10/2021
         return indv;
     }
-    public class wrapContactIndi{
+    public class WrapContactIndi{
         public Contact c;
         public Individual i;
     }

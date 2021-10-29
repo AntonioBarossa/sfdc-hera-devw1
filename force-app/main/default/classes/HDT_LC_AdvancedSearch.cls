@@ -41,7 +41,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	@AuraEnabled
 	public static List<HDT_WRP_AddressObject> getIndirizzoFornitura(String accountId) {
 		system.debug('ACCOUNTID **********************'+accountId);
-		Map<String,String> outPutIndirizzo = new Map<String,String>();
+		// Map<String,String> outPutIndirizzo = new Map<String,String>(); // ! Unused variable
 		HDT_QR_ServicePoint sp = new HDT_QR_ServicePoint();
 		List<ServicePoint__c> listBp = new List<ServicePoint__c>();
 		List<HDT_WRP_AddressObject>  listWrapObject = new List<HDT_WRP_AddressObject>();
@@ -145,7 +145,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		system.debug('ACCOUNTID **********************'+accountId);
 
 		HDT_WRP_AddressObject wrapObject = new HDT_WRP_AddressObject();
-		List<HDT_WRP_AddressObject> listWrapperObject = new List<HDT_WRP_AddressObject>();
+		// List<HDT_WRP_AddressObject> listWrapperObject = new List<HDT_WRP_AddressObject>(); // !Unused variables
 		//Map<String,String> outPutIndirizzo = new Map<String,String>();
 		HDT_QR_Account qr = new HDT_QR_Account();		
 		Account ac = new Account();
@@ -154,107 +154,90 @@ public with sharing class HDT_LC_AdvancedSearch {
 			ac = qr.getBillingAddressAccount(accountId);
 		}
 		
-		List<Map<String,Object>> customBp = new List<Map<String,Object>>();
 		if(ac!= null){
-		/*for (BillingProfile__c BillingProfile : listBp) {
-          
+
+		if(ac.BillingCity != null){
 			
-				String value = BillingProfile.InvoicingAddressFormula__c;
-				String label = '';
-
-				row.put(label,value);
+			wrapObject.Comune= ac.BillingCity ;
+		}
+		else{
 			
-            customBp.add(row);
-		}*/
-
-	
-		Map<String,Object> row = new Map<String, Object>();
-
-			String value ;
-			String label = ' ';
-
-			if(ac.BillingCity != null){
-				
-				wrapObject.Comune= ac.BillingCity ;
-			}
-			else{
-				
-				wrapObject.Comune=' ';
-			}
-			if(ac.BillingStreetName__c != null){
-				
-				wrapObject.Via= ac.BillingStreetName__c ;
-			}
-			else{
-				
-				wrapObject.Via=', ';
-				
-			}
-			if(ac.BillingStreetNumber__c != null){
-				
-				wrapObject.Civico= ac.BillingStreetNumber__c ;
-			}
-			else{
-				
-				wrapObject.Civico=', ';
-			}
+			wrapObject.Comune=' ';
+		}
+		if(ac.BillingStreetName__c != null){
 			
-			if(ac.BillingStreetNumberExtension__c != null){
-				
-				wrapObject.EstensCivico= ac.BillingStreetNumberExtension__c ;
-			}
-			else{
-				
-				wrapObject.EstensCivico=', ';
-			}
-			if(ac.BillingPostalCode != null){
-				
-				wrapObject.CAP= ac.BillingPostalCode ;
-			}
-			else{
-				
-				wrapObject.CAP=', ';
-			}
-			if(ac.BillingState != null){
-				
-				wrapObject.Provincia= ac.BillingState ;
-			}
-			else{
-				
-				wrapObject.Provincia=', ';
-			}
-			if(ac.BillingCountry != null){
-				
-				wrapObject.Stato= ac.BillingCountry ;
-			}
-			else{
-				
-				wrapObject.Stato=', ';
-			}
-			if(ac.BillingStreetCode__c != null){
-				
-				wrapObject.CodiceViaStradarioSAP= ac.BillingStreetCode__c ;
-			}
-			else{
-				
-				wrapObject.CodiceViaStradarioSAP=', ';
-			}
-			if(ac.BillingCityCode__c != null){
-				
-				wrapObject.CodiceComuneSAP= ac.BillingCityCode__c ;
-			}
-			else{
-				
-				wrapObject.CodiceComuneSAP=', ';
-			}
-
-				
-
-			/*row.put(label,wrapObject);
-
+			wrapObject.Via= ac.BillingStreetName__c ;
+		}
+		else{
+			
+			wrapObject.Via=', ';
+			
+		}
+		if(ac.BillingStreetNumber__c != null){
+			
+			wrapObject.Civico= ac.BillingStreetNumber__c ;
+		}
+		else{
+			
+			wrapObject.Civico=', ';
+		}
+		
+		if(ac.BillingStreetNumberExtension__c != null){
+			
+			wrapObject.EstensCivico= ac.BillingStreetNumberExtension__c ;
+		}
+		else{
+			
+			wrapObject.EstensCivico=', ';
+		}
+		if(ac.BillingPostalCode != null){
+			
+			wrapObject.CAP= ac.BillingPostalCode ;
+		}
+		else{
+			
+			wrapObject.CAP=', ';
+		}
+		if(ac.BillingState != null){
+			
+			wrapObject.Provincia= ac.BillingState ;
+		}
+		else{
+			
+			wrapObject.Provincia=', ';
+		}
+		if(ac.BillingCountry != null){
+			
+			wrapObject.Stato= ac.BillingCountry ;
+		}
+		else{
+			
+			wrapObject.Stato=', ';
+		}
+		if(ac.BillingStreetCode__c != null){
+			
+			wrapObject.CodiceViaStradarioSAP= ac.BillingStreetCode__c ;
+		}
+		else{
+			
+			wrapObject.CodiceViaStradarioSAP=', ';
+		}
+		if(ac.BillingCityCode__c != null){
+			
+			wrapObject.CodiceComuneSAP= ac.BillingCityCode__c ;
+		}
+		else{
+			
+			wrapObject.CodiceComuneSAP=', ';
+		}
 
 			
-            customBp.add(row);*/
+
+		/*row.put(label,wrapObject);
+
+
+		
+		customBp.add(row);*/
 		
 
 		
@@ -264,49 +247,49 @@ public with sharing class HDT_LC_AdvancedSearch {
 	}
 
 	@AuraEnabled
-public static Map<String,String> getAddressFromAccount(String accountId)
-{
-	HDT_QR_Account qr = new HDT_QR_Account();
-	Account ac = new Account();
-	Map<String,String> outPut = new Map<String,String>();
-	if(accountId!=null){
-		ac = qr.getBillingAddressAccount(accountId);
+	public static Map<String,String> getAddressFromAccount(String accountId)
+	{
+		HDT_QR_Account qr = new HDT_QR_Account();
+		Account ac = new Account();
+		Map<String,String> outPut = new Map<String,String>();
+		if(accountId!=null){
+			ac = qr.getBillingAddressAccount(accountId);
+		}
+		system.debug('Account retrieved******'+ ac);
+
+			if(ac.BillingCity != null){
+				outPut.put('Comune',ac.BillingCity);
+			}
+			if(ac.BillingStreetNumber__c != null){
+				outPut.put('Civico',ac.BillingStreetNumber__c);
+			}
+			if(ac.BillingPostalCode != null){
+				outPut.put('CAP',ac.BillingPostalCode);
+			}
+			if(ac.BillingStreetName__c != null){
+				outPut.put('Via',ac.BillingStreetName__c );
+			}
+			if(ac.BillingState != null){
+				outPut.put('Provincia',ac.BillingState);
+			}
+			if(ac.BillingCountry != null){
+				outPut.put('Stato',ac.BillingCountry);
+			}
+			if(ac.BillingStreetNumberExtension__c != null){
+				outPut.put('Est.Civico',ac.BillingStreetNumberExtension__c);
+			}
+			if(ac.BillingStreetCode__c != null){
+				outPut.put('Codice Via Stradario SAP',ac.BillingStreetCode__c);
+			}
+			if(ac.BillingCityCode__c != null){
+				outPut.put('Codice Comune SAP',ac.BillingCityCode__c);
+			}
+
+		system.debug('outPut *******'+ outPut);
+
+		return outPut;
+
 	}
-	system.debug('Account retrieved******'+ ac);
-
-		if(ac.BillingCity != null){
-			outPut.put('Comune',ac.BillingCity);
-		}
-		if(ac.BillingStreetNumber__c != null){
-			outPut.put('Civico',ac.BillingStreetNumber__c);
-		}
-		if(ac.BillingPostalCode != null){
-			outPut.put('CAP',ac.BillingPostalCode);
-		}
-		if(ac.BillingStreetName__c != null){
-			outPut.put('Via',ac.BillingStreetName__c );
-		}
-		if(ac.BillingState != null){
-			outPut.put('Provincia',ac.BillingState);
-		}
-		if(ac.BillingCountry != null){
-			outPut.put('Stato',ac.BillingCountry);
-		}
-		if(ac.BillingStreetNumberExtension__c != null){
-			outPut.put('Est.Civico',ac.BillingStreetNumberExtension__c);
-		}
-		if(ac.BillingStreetCode__c != null){
-			outPut.put('Codice Via Stradario SAP',ac.BillingStreetCode__c);
-		}
-		if(ac.BillingCityCode__c != null){
-			outPut.put('Codice Comune SAP',ac.BillingCityCode__c);
-		}
-
-	system.debug('outPut *******'+ outPut);
-
-	return outPut;
-
-}	
 
 	/*
 	 * Retrieve data from ServicePoint Object By ServiceCode
@@ -320,7 +303,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		system.debug('additionalFilter' + additionalFilter);
 		Boolean isSerachFromContract = false;												
 		switch on queryType {
-			when 'serialnumber' {																				 
+			when 'serialnumber' {
 	 
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				if(additionalFilter=='' || additionalFilter== null){
@@ -361,8 +344,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 				}
 				isSerachFromContract=true;
 			}
-			when else {
-			}
+
 		}
 		checkTheNumberOfRecords(servicePoints.size());
 		String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
@@ -440,16 +422,13 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
 
-		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 		List<Contract> contracts  = new List<Contract>();
-		//if additionalFilter vuoto chiami getAccountContracts
 		
 		if(additionalFilter== null ||additionalFilter== ''){
 			contracts = contractQr.getAccountContracts(fieldContract,accountid);
 		}else{
 			
 			contracts = contractQr.getAccountContractsWithFilter(fieldContract,accountId,additionalFilter); 
-			//else chiami getAccountContractWithFilter(accountId,additionalFilter) 
 		}
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		if(!contracts.isEmpty()){
@@ -489,28 +468,16 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 
 		return customSp;
 		
-        /*List<Map<String,String>> customContracts = new List<Map<String,String>>();
-		for (Contract contract : contracts) {
-            Map<String,String> row = new Map<String, String>();
-            row.put('Contract Number',contract.SAPContractCode__c );
-            row.put('Account Name',contract.Account.Name);
-            row.put('Service Point',mapSubscriptions.get(contract.Id));
-            row.put('Status',contract.Status);
-			customContracts.add(row);
-		}
-		return customContracts;*/
 	}
 
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String,String>> getContractsBackup(String accountid,String additionalFilter) {
 		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 		List<Contract> contracts  = new List<Contract>();
-		//if additionalFilter vuoto chiami getAccountContracts
 		if(additionalFilter== null ||additionalFilter== ''){
 			contracts = contractQr.getAccountContracts(accountid);
 		}else{
 			contracts = contractQr.getAccountContractsWithFilter(accountId,additionalFilter); 
-			//else chiami getAccountContractWithFilter(accountId,additionalFilter) 
 		}
 		
 		
@@ -580,7 +547,6 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
-		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 
 		if(additionalFilter == null || additionalFilter== ''){
 			system.debug('entra in additionalFilter == null');
@@ -597,7 +563,6 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 			servicePointsCodes.add(s.ServicePointCode__c);
 		}
 		List<Contract> c = contractQr.getSapContractCode(servicePointsCodes);
-		Integer i = 0;
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
@@ -657,7 +622,6 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		system.debug('getForniture START');
 		system.debug('additionalFilter' + additionalFilter);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
-		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 
 		if(additionalFilter == null || additionalFilter== ''){
 			system.debug('entra in additionalFilter == null');
@@ -705,115 +669,84 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 			}
 
 		
-		/*	
-		if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			spNew.MeterClass__c = mapRes.get('CALIBRO1');
+		if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
+			spNew.ServicePointCode__c   = mapRes.get('POD');
+			spNew.Name   = mapRes.get('POD');
+
+
 		}
-		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
-			spNew.RemiCode__c = mapRes.get('CODICEREMI');
+		if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
+		
+			if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
+				spNew.CommoditySector__c = 'Energia Elettrica';
+
+			}else
+			{
+				spNew.CommoditySector__c = 'Gas';
+			}
+
+		}
+		if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){
+
+			spNew.ImplantType__c = mapRes.get('IMPIANTO');
+		}
+		if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
+
+			spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');
+		}
+		if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){
+
+			spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
+		}
+		if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
+
+			spNew.MarketOrigin__c = mapRes.get('MERCATO');
+		}
+		if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){
+
+			spNew.IsRemoteManaged__c =Boolean.valueOf(mapRes.get('FLAGTELEGESTIBILE'));
+		}
+		if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
+			spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+		}
+		if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){
+			spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.')+1)) ;
+		}
+		if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){
+
+			spNew.VoltageLevel__c = mapRes.get('TENSIONE');
+		}
+		if(mapRes.get('RESIDENTINDFORNITURA')!=null && !String.isBlank(mapRes.get('RESIDENTINDFORNITURA'))){
+
+			spNew.Resident__c = Boolean.valueOf(mapRes.get('RESIDENTINDFORNITURA'));
 		}
 
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
+		//campi indirizzo
+		if(mapRes.get('CAP')!=null && !String.isBlank(mapRes.get('CAP'))){
+
+			spNew.SupplyPostalCode__c = mapRes.get('CAP');
+		}
+		if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
+			spNew.SupplyStreet__c  = mapRes.get('VIA');
 		}
 
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
+		if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
+			spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
+		}
+		if(mapRes.get('LOCALITÀ')!=null && !String.isBlank(mapRes.get('LOCALITÀ'))){
+			spNew.SupplyPlace__c  = mapRes.get('LOCALITÀ');
+		}
+		if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
+			spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
+		}
+		if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
+			spNew.SupplySAPCityCode__c = mapRes.get('CODICEPAESE');
+		}
+		if(mapRes.get('REGIONE')!=null && !String.isBlank(mapRes.get('REGIONE'))){
+
+			spNew.SupplyPostalCode__c = mapRes.get('REGIONE');
 		}
 
-		if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
-			spNew.RequestPhase__c  = mapRes.get('FASE');
-		}
-
-		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
-			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
-		}
-
-		*/
-
-				//campi fornitura
-				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
-					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
-				}
-				if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
-					spNew.ServicePointCode__c   = mapRes.get('POD');
-                    spNew.Name   = mapRes.get('POD');
-
-
-				}
-				if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
-				
-                    if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
-                        spNew.CommoditySector__c = 'Energia Elettrica';
-
-                    }else
-                    {
-					    spNew.CommoditySector__c = 'Gas';
-                    }
-		
-				}
-				if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){
-		
-					spNew.ImplantType__c = mapRes.get('IMPIANTO');
-				}
-				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
-		
-					spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
-				}
-				if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){
-		
-					spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
-				}
-				if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
-		
-					spNew.MarketOrigin__c = mapRes.get('MERCATO');
-				}
-				if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){
-		
-					spNew.IsRemoteManaged__c =Boolean.valueOf(mapRes.get('FLAGTELEGESTIBILE'));
-				}
-				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
-					spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
-				}
-				if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){
-					spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.')+1)) ;
-				}
-				if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){
-		
-					spNew.VoltageLevel__c = mapRes.get('TENSIONE');
-				}
-				if(mapRes.get('RESIDENTINDFORNITURA')!=null && !String.isBlank(mapRes.get('RESIDENTINDFORNITURA'))){
-		
-					spNew.Resident__c = Boolean.valueOf(mapRes.get('RESIDENTINDFORNITURA'));
-				}
-
-				//campi indirizzo
-				if(mapRes.get('CAP')!=null && !String.isBlank(mapRes.get('CAP'))){
-
-					spNew.SupplyPostalCode__c = mapRes.get('CAP');
-				}
-				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
-					spNew.SupplyStreet__c  = mapRes.get('VIA');
-				}
-			/*	if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
-					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
-				}*/
-				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
-					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
-				}
-				if(mapRes.get('LOCALITÀ')!=null && !String.isBlank(mapRes.get('LOCALITÀ'))){
-					spNew.SupplyPlace__c  = mapRes.get('LOCALITÀ');
-				}
-				if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
-					spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
-				}
-				if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
-					spNew.SupplySAPCityCode__c = mapRes.get('CODICEPAESE');
-				}
-				if(mapRes.get('REGIONE')!=null && !String.isBlank(mapRes.get('REGIONE'))){
-
-					spNew.SupplyPostalCode__c = mapRes.get('REGIONE');
-				}
 		system.debug('spNew*****************' + spNew);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		servicePoints.add(spNew);
@@ -846,8 +779,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 
 	
 
-//creare metodo per riempimento lista posizioni (response) e upsert punto di fornitura
-//CREARE OGGETTO WRAP
+
 public class HDT_WRP_FieldsObject {
 	@AuraEnabled public String statusCode{get;set;}
 	@AuraEnabled public String message{get;set;}
