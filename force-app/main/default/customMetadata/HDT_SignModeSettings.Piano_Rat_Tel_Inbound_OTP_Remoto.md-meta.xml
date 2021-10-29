@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Piano_Rateizzazione_Telefono_Inbound_OTP_Remoto</label>
+    <label>Piano_Rat_Tel_Inbound_OTP_Remoto</label>
     <protected>false</protected>
     <values>
         <field>ProcessType__c</field>
