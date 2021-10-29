@@ -6,7 +6,8 @@
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 
- @isTest
+@SuppressWarnings('PMD.NcssTypeCount,PMD.ExcessivePublicCount')
+@isTest
 public with sharing class HDT_UTL_DataFactoryTst{
 
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
@@ -2467,7 +2468,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 
-	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> Rows ){
+	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> rows ){
 		HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess()						;
         HDT_MassiveLoaderProcess__mdt selectedProcess 	   = massiveLoaderProcessQr.getRecordByName(processName)	;
 		MassiveLoaderRequest__c massiveLoaderRequest 	   = new MassiveLoaderRequest__c()							;
@@ -2970,7 +2971,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 05/10/2021
 	 */
-	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithParams(Integer amount, Boolean doInsert,Map<String,Object> params){
 
 		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
 	  
@@ -3153,7 +3154,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 14/10/2021
 	 */
-	public static List<Case> createCaseWithStatusClosedNw(Integer amount, Map<String,Object> params){
+	public static List<Case> createCaseWithParams(Integer amount, Boolean doInsert, Map<String,Object> params){
 			
 		List<Case> caseList=new List<Case>();
 		
@@ -3174,14 +3175,64 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			}
 			caseList.add(testCase);
 		}
-		insert caseList;
 
-		for(Case testCase:caseList){
-			testCase.Status='Closed';
-			testCase.PraxidiaOverrallSatisfaction__c=2;
+		if (doInsert) {
+
+			insert caseList;
+
 		}
-		update caseList;
 
 		return caseList;
 	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 16/09/2021
+     * @description createCampaignWithParams Method
+     * @history valere - 16/09/2021– Created method
+     */
+	public static List<Campaign> createCampaignWithParams(Integer amount, Boolean doInsert,Map<String,String> params){
+
+		List<Campaign> campaignList=new List<Campaign>();
+
+		for (Integer i=0; i<amount; i++){
+			Campaign cp=new Campaign();
+
+			for(String key :params.keySet()) {
+				cp.put(key, params.get(key));
+			}
+			
+			campaignList.add(cp);
+		}
+
+		if (doInsert){
+
+			insert campaignList;
+		}
+
+		return campaignList;
+	}
+
+	/**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @date 28/10/2021
+     * @description createCampaignWithParams Method
+     * @history Name - dd/mm/yyyy– Description
+     */
+	public static List<PaperCampaignParameter__c> createPaperCampaignParameter(Integer amount, Boolean doInsert) {
+
+		List<PaperCampaignParameter__c> paperCampaignPars = new List<PaperCampaignParameter__c>();
+
+		for(Integer i = 0; i < amount; i++) {
+
+			paperCampaignPars.add(new PaperCampaignParameter__c(Name = 'PaperCampaignParameterName' + i));
+		}
+
+		if(doInsert) {
+			insert paperCampaignPars;
+		}
+
+		return paperCampaignPars;
+	}
+
 }

@@ -170,19 +170,33 @@ public virtual class HDT_TRH_TriggerHandler {
 
   // context-specific methods for override
   @TestVisible
-  protected virtual void beforeInsert(){}
+  protected virtual void beforeInsert(){
+    System.debug('Before Insert');
+  }
   @TestVisible
-  protected virtual void beforeUpdate(){}
+  protected virtual void beforeUpdate(){
+    System.debug('Before Update');
+  }
   @TestVisible
-  protected virtual void beforeDelete(){}
+  protected virtual void beforeDelete(){
+    System.debug('Before Delete');
+  }
   @TestVisible
-  protected virtual void afterInsert(){}
+  protected virtual void afterInsert(){
+    System.debug('After Insert');
+  }
   @TestVisible
-  protected virtual void afterUpdate(){}
+  protected virtual void afterUpdate(){
+    System.debug('After Update');
+  }
   @TestVisible
-  protected virtual void afterDelete(){}
+  protected virtual void afterDelete(){
+    System.debug('After Delete');
+  }
   @TestVisible
-  protected virtual void afterUndelete(){}
+  protected virtual void afterUndelete(){
+    System.debug('After Undelete');
+  }
 
   /***************************************
    * inner classes
@@ -232,7 +246,7 @@ public virtual class HDT_TRH_TriggerHandler {
 
   // possible trigger contexts
   @TestVisible
-  private enum TriggerContext {
+  private enum TriggerContext {   //NOPMD
     BEFORE_INSERT, BEFORE_UPDATE, BEFORE_DELETE,
     AFTER_INSERT, AFTER_UPDATE, AFTER_DELETE,
     AFTER_UNDELETE

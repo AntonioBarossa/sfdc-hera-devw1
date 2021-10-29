@@ -45,7 +45,8 @@ public with sharing class HDT_LC_SaleServiceContainerTst{
 		contracts[0].SBQQ__Quote__c=quotes[0].Id;
 		update contracts;
 
-		List<SaleServiceItem__c> saleServItens=HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opps[0].Id, quotes[0].Id, servpoints[1].id);
+		List<SaleServiceItem__c> saleServItens;
+		saleServItens=HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opps[0].Id, quotes[0].Id, servpoints[1].id);
 	}
 
 	@isTest
