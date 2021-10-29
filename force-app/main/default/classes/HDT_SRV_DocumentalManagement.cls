@@ -326,7 +326,7 @@ public class HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
 				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
@@ -346,6 +346,7 @@ public class HDT_SRV_DocumentalManagement{
 			*/
 			//String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
+			String caseType = (String)record.get('Type');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
 			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
@@ -362,6 +363,9 @@ public class HDT_SRV_DocumentalManagement{
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
+					if ('Rimborso'.equalsIgnoreCase(caseType) || 'Piano Rateizzazione'.equalsIgnoreCase(caseType)){
+						HDT_UTL_Case.createActivity((Id)record.get('Id'), 'Validazione Firma OTP', 'Validazione Firma OTP', 'Validazione Firma OTP');
+					}				
 				}else{
 					//Che fase documentale settare?
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){

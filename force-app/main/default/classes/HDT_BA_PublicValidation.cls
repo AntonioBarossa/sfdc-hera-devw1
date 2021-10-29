@@ -28,7 +28,7 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             ord.id = vo.Order__c;
             ord.SignedDate__c = vo.createddate.date();
             ord.MethodSignedAccepted__c = 'web assistito';
-            ord.Phase__c  ='Documentazione Validata'; //HRAWRM-906 15/10/2021
+            //ord.Phase__c  ='Documentazione Validata'; //HRAWRM-906 15/10/2021
 
             //orderToUpdate.add(ord);
             orderToUpdate.put(ord.id,ord);
@@ -39,6 +39,18 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             ord.id = child.id;
             ord.SignedDate__c = orderToUpdate.get(child.ParentOrder__c).SignedDate__c;
             ord.MethodSignedAccepted__c = 'web assistito';
+            if (ord.ProcessType__c == 'Subentro Ele' || ord.ProcessType__c == 'Cambio Offerta Gas' || ord.ProcessType__c == 'Cambio Offerta Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Gas') {
+                ord.Phase__c = 'Comunicazione verso Heroku';
+            } else if(ord.ProcessType__c == 'Switch in Ele' || ord.ProcessType__c == 'Switch in Gas') {
+                if (ord.WaiverRightAfterthought__c == 'No' && ord.WizardCompletedDate__c.daysBetween(Date.today()) > 14 ) {
+                    ord.Phase__c = 'In attesa tempi ripensamento';
+                } else {
+                    ord.Phase__c = 'Comunicazione verso Heroku';
+                }
+            } else {
+                ord.Phase__c = '';
+            }
+
             orderToUpdate.put(ord.id,ord);
         }
     }

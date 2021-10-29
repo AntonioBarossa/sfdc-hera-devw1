@@ -8,7 +8,7 @@ public with sharing class HDT_LC_RecallMeCreateForm {
         try {
             System.debug('Lead ID'+leadId);
         
-            Lead l = leadQr.getRecordById(leadId);
+            //Lead l = leadQr.getRecordById(leadId);
             CampaignMember campaignMember = new CampaignMember(
                 LeadId = leadId,
                 CampaignId = campaignId,

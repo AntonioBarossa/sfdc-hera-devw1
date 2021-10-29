@@ -7,8 +7,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
 
         Map<String, Object> argsMap = (Map<String, Object>) args;
 
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*SObject transition = (SObject) argsMap.get('transition');
+        SObject action = (SObject) argsMap.get('action');*/
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('sender');
 
