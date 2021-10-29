@@ -21,14 +21,7 @@
             </lightning-layout>
             <div class="slds-clearfix slds-p-around_small">
                 <div class="slds-float_right">
-                    <template if:true={isScriptBtnVisible}>
-                        <span class="slds-m-right_small">
-                            <template if:true={scriptMap.scriptName}>
-                                <c-hdt-manage-script-modal script-process-name={scriptMap.scriptName}
-                                    record-id={scriptMap.scriptTarget} button-label="Avvia Script"></c-hdt-manage-script-modal>
-                            </template>
-                        </span>
-                    </template>
+                    <c-hdt-order-script-launcher order-id={recordId} order={orderRecord}></c-hdt-order-script-launcher>
                     <c-hdt-after-script-modal order={orderParentRecord} show-modal={openAfterScriptModal}></c-hdt-after-script-modal>
                     <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
                     <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>

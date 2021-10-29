@@ -20,6 +20,7 @@ public with sharing class HDT_UTL_OrderFieldsAlignmentTst {
        	spoint.CommoditySector__c = 'Gas';
         spoint.ExciseGas__c='';
         spoint.MeterStatus__c= 'Attivo';
+        spoint.ServicePointCode__c='testServicePoint';
         insert spoint;
        
         
@@ -65,7 +66,7 @@ public with sharing class HDT_UTL_OrderFieldsAlignmentTst {
 
         Test.startTest();
 
-        Order ord = [SELECT Id,AccountId,Sale__c,ServicePoint__c, ServicePointCode__c, SBQQ__Quote__c,SalesCompanyCode__c,SalesCompany__c,BillingProfile__c,ServicePoint__r.Vat__c
+        Order ord = [SELECT Id,AccountId,Sale__c,ServicePoint__c, ServicePointCode__c,OrderReference__c,isTransition__c, SBQQ__Quote__c,SalesCompanyCode__c,SalesCompany__c,BillingProfile__c,ServicePoint__r.Vat__c
                      FROM Order LIMIT 1];
         ServicePoint__c srPoint= [SELECT Id, ServicePointCode__c
                      FROM ServicePoint__c Where Id= :ord.ServicePoint__c LIMIT 1];

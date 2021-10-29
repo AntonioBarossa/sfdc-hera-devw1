@@ -19,11 +19,17 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
         return Database.getQueryLocator(queryString);
     }
 
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public void execute(Database.BatchableContext bc, List<Product2> chunkList){
 
         Date todayDate = Date.today();
 
-        System.debug('>>> Today is: ' + String.valueOf(todayDate) + ' - chunkListSize: ' + String.valueOf(chunkList.size()));
+        System.debug(LoggingLevel.DEBUG, '>>> Today is: ' + String.valueOf(todayDate) + ' - chunkListSize: ' + String.valueOf(chunkList.size()));
 
         for(Product2 product : chunkList){
             if(!String.isEmpty(product.Status__c) && product.StartDate__c != null && product.EndDate__c != null){
@@ -58,13 +64,23 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
                     for(Database.Error err : sr.getErrors()) {
                         errorString += ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
                     }
-                    System.debug(errorString);
+                    System.debug(LoggingLevel.DEBUG, errorString);
                 }
             }
         }
 
     }
 
-    public void finish(Database.BatchableContext bc){}
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    19/10/2021
+    Reason: Avoid Debug Statements
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public void finish(Database.BatchableContext bc){
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+        System.debug(LoggingLevel.DEBUG, 'HDT_BA_ProductStObjStatusUpdate - finished job: ' + a);
+        
+    }
 
 }

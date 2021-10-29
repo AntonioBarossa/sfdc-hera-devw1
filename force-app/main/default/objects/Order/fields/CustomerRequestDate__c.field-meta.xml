@@ -6,5 +6,5 @@
     <label>Data inserimento richiesta</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Date</type>
+    <type>DateTime</type>
 </CustomField>

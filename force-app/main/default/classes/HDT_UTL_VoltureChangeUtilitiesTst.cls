@@ -12,9 +12,12 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
+        List<wrts_prcgvr__ActivityTemplate__c> activitiesTemplate = new List<wrts_prcgvr__ActivityTemplate__c>();
+
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');	
 		List<Order> orderList =HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<Contact> contactList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id); 
+        activitiesTemplate = HDT_UTL_DataFactoryTst.createActivityTemplate(1,true);
 
         String recordTypeNameVolturaConSwitch = 'HDT_RT_VolturaConSwitch';
         String recordTypeIdVolturaConSwitch = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(recordTypeNameVolturaConSwitch).getRecordTypeId();
@@ -122,7 +125,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
     static void getTensionBtTst()
     {
         Test.startTest();
-        String result = voltureChangeUtilities.getTension(HDT_UTL_VoltureChangeUtilities.btLimit);
+        String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.btLimit));
         Test.stopTest();
         System.assertEquals('BT', result, 'Livello Tensione BT non calcolato correttamente');
     }
@@ -132,7 +135,7 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
     static void getTensionMtTst()
     {
         Test.startTest();
-        String result = voltureChangeUtilities.getTension(HDT_UTL_VoltureChangeUtilities.mtLimit);
+        String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.mtLimit));
         Test.stopTest();
         System.assertEquals('MT', result, 'Livello Tensione MT non calcolato correttamente');
     }
@@ -142,9 +145,164 @@ public with sharing class HDT_UTL_VoltureChangeUtilitiesTst {
     static void getTensionAtTst()
     {
         Test.startTest();
-        String result = voltureChangeUtilities.getTension(HDT_UTL_VoltureChangeUtilities.atLimit);
+        String result = voltureChangeUtilities.getTension(String.valueOf(HDT_UTL_VoltureChangeUtilities.atLimit));
         Test.stopTest();
         System.assertEquals('AT', result, 'Livello Tensione AT non calcolato correttamente');
     }
 
+    @IsTest
+    static void getTensionNullTst()
+    {
+        Test.startTest();
+        String result = voltureChangeUtilities.getTension('');
+        Test.stopTest();
+        System.assertEquals('', result, 'Livello Tensione non calcolato correttamente');
+    }
+
+    @IsTest
+    static void getPowerBandFasciaUnoTst()
+    {
+        String power = String.valueOf(HDT_UTL_VoltureChangeUtilities.lowerThreshold);
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('Fascia 1', result, 'Fascia 1 non calcolata correttamente');
+    }
+
+    
+    @IsTest
+    static void getPowerBandFasciaDueTst()
+    {
+        String power = String.valueOf(HDT_UTL_VoltureChangeUtilities.higherThreshold);
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('Fascia 2', result, 'Fascia 2 non calcolata correttamente');
+    }
+
+    
+    @IsTest
+    static void getPowerBandFasciaTreTst()
+    {
+        String power = String.valueOf(HDT_UTL_VoltureChangeUtilities.higherThreshold + 1.0);
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('Fascia 3', result, 'Fascia 3 non calcolata correttamente');
+    }
+
+    @IsTest
+    static void getPowerBandNullTst()
+    {
+        String power = '';
+        Test.startTest();
+        String result = voltureChangeUtilities.getPowerBand(power);
+        Test.stopTest();
+
+        System.assertEquals('', result, 'Fascia non calcolata correttamente');
+    }
+
+    @IsTest
+    static void powerCheckTst()
+    {
+        Test.startTest();
+        Boolean result = voltureChangeUtilities.powerCheck(String.valueOf(HDT_UTL_VoltureChangeUtilities.higherThreshold),String.valueOf(HDT_UTL_VoltureChangeUtilities.higherThreshold));
+        Test.stopTest();
+
+        System.assertEquals(true, result,'Check non eseguito correttamente');
+    }
+
+    @IsTest
+    static void createActivityTst()
+    {
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplate = [SELECT Name FROM wrts_prcgvr__ActivityTemplate__c];
+        Test.startTest();
+        wrts_prcgvr__Activity__c activity = voltureChangeUtilities.createActivity(activityTemplate[0].Name);
+        Test.stopTest();
+
+        System.assert(activity != null, 'Activity non creata correttamente');
+    }
+
+    @IsTest
+    static void checkRatesEmptyTst()
+    {
+        Map<String, Object> currentRates = new Map<String,Object>
+        {
+            'VAT__c' => '',
+            'ExciseEle__c' => ''
+        };
+        Map<String, Object> toUpdateRates = new Map<String, Object>
+        {
+            'VAT__c' => 'Iva 22% (Cod. 02)',
+            'ExciseEle__c' => 'Imposta usi domestici'
+        };
+
+        Test.startTest();
+        Map<String,Object> resultMap = voltureChangeUtilities.checkRates(currentRates, toUpdateRates);
+        Test.stopTest();
+
+        System.assertequals(0, resultMap.get('ExciseRate__c'),'Mappa non calcolata correttamente');
+    }
+
+    
+    @IsTest
+    static void checkRatesTst()
+    {
+        Map<String, Object> currentRates = new Map<String,Object>
+        {
+            'VAT__c' => 'Iva 22% (Cod. 02)',
+            'ExciseEle__c' => 'Imposta usi domestici',
+            'RegionalAdditional__c' => 12.0
+        };
+        Map<String, Object> toUpdateRates = new Map<String, Object>
+        {
+            'VAT__c' => '',
+            'ExciseEle__c' => ''
+            
+        };
+
+        
+        Test.startTest();
+        Map<String,Object> resultMap = voltureChangeUtilities.checkRates(currentRates, toUpdateRates);
+        Test.stopTest();
+
+        System.assert( (Decimal)resultMap.get('RegionalAdditional__c') > 0,'Mappa non calcolata correttamente');
+    }
+
+    @IsTest
+    static void getPicklistValueTst()
+    {
+        Test.startTest();
+        String result = voltureChangeUtilities.getPicklistValue('E_IMPOST', 'Order', 'ExciseEle__c');
+        Test.stopTest();
+        System.assertEquals('Imposta usi domestici', result, 'Valore picklist errato');
+    }
+
+    @IsTest
+    static void addressCheckTrueTst()
+    {
+        Map<String,String> checkMap = new Map<String,String>
+        {
+            'A' => 'A'
+        };
+        Test.startTest();
+        Boolean result = voltureChangeUtilities.addressCheck(checkMap);
+        Test.stopTest();
+        System.assertEquals(true, result,'Check errato');
+    }
+    @IsTest
+    static void addessCheckFalseTst()
+    {
+        Map<String,String> checkMap = new Map<String,String>
+        {
+            'A' => 'B'
+        };
+        Test.startTest();
+        Boolean result = voltureChangeUtilities.addressCheck(checkMap);
+        Test.stopTest();
+        System.assertEquals(false, result,'Check errato');
+    }
 }

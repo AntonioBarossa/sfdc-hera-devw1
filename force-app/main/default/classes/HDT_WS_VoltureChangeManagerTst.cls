@@ -6,6 +6,8 @@ public with sharing class HDT_WS_VoltureChangeManagerTst {
      * TODO: Set Mock and create response
      */
 
+    private static Boolean nullResponse = false;
+
     @TestSetup
     static void setup()
     {
@@ -67,8 +69,24 @@ public with sharing class HDT_WS_VoltureChangeManagerTst {
         Test.startTest();
         HDT_UTL_DatabaseService.updateSObject(orderList);
         Test.stopTest();
-        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c FROM Order];
-        System.assertEquals('Amm. Precheck OK SII', orderListUpdated[0].TecnicalPhase__c, 'Fase non correttamente aggiornata');
+        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c, Phase__c FROM Order];
+        System.assert((orderListUpdated[0].TecnicalPhase__c =='Amm. Precheck OK SII' || orderListUpdated[0].Phase__c =='Amm. Precheck OK SII'),
+            'Fase non correttamente aggiornata');
+    }
+
+    @IsTest
+    static void executeNullTst()
+    {
+        nullResponse = true;
+        List<Order> orderList = [SELECT Id, Phase__c FROM Order];
+        orderList[0].Phase__c = 'Comunicazione verso Heroku';
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_VoltureChanageManagerMock());
+        Test.startTest();
+        HDT_UTL_DatabaseService.updateSObject(orderList);
+        Test.stopTest();
+        List<Order> orderListUpdated = [SELECT Id, TecnicalPhase__c, Phase__c FROM Order];
+        System.assertEquals(orderList[0].Phase__c,orderListUpdated[0].Phase__c,
+            'Fase non correttamente aggiornata');
     }
 
     public class HDT_WS_VoltureChanageManagerMock implements HTTPCalloutMock
@@ -77,7 +95,7 @@ public with sharing class HDT_WS_VoltureChangeManagerTst {
         {
             HttpResponse response = new HttpResponse();
             /* Create Body Response */
-            String bodyResponse = createBodyResponse(request.getBody());
+            String bodyResponse = nullResponse ? '' : createBodyResponse(request.getBody());
             /* Set Response */
             response.setHeader('Content-Type', 'application/json');
             response.setBody(bodyResponse);

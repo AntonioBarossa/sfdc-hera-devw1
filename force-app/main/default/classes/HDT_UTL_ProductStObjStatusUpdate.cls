@@ -1,5 +1,9 @@
 public inherited sharing class HDT_UTL_ProductStObjStatusUpdate {
-    
+    /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Local variable is declared and-or assigned but not used"
+    */
+    @SuppressWarnings('PMD.UnusedLocalVariable')
     public static void scheduleJob(){
         HDT_SCH_ProductStObjStatusUpdate jobToSched = new HDT_SCH_ProductStObjStatusUpdate();
         // Seconds Minutes Hours Day_of_month Month Day_of_week optional_year

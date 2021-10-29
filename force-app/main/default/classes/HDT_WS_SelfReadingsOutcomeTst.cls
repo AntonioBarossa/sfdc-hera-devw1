@@ -82,7 +82,68 @@ public with sharing class HDT_WS_SelfReadingsOutcomeTst {
         
     }
     
-    
+    //TESTS Case con Phase = Annullato
+    @isTest
+    private static void doPostTest_ANNULLATO() {
+        
+        //SETUP
+        mySetup();
+        
+        //CASE & PHASE
+        Case myCase = [SELECT Id FROM Case];
+
+        myCase.Phase__c = 'Annullato';
+        update myCase;
+        
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito OK da SAP', 'Bozza', rtId, rtName,'A','','','');
+        
+        
+        //MANAGING BODY RESPONSE
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest myOutcomeRequest;
+        myOutcomeRequest = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeRequest();
+        
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData singleData;
+        singleData = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData();
+        singleData.caseId = myCase.Id;
+        singleData.activityType = 'Esito OK da SAP';
+        singleData.errorCode = '';
+        singleData.errorDescription = '';
+        
+        List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData> data;
+        data = new List<HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeData>{singleData};
+        myOutcomeRequest.data = data;
+        
+        
+        //REST CONTEXT
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        
+        req.requestBody = Blob.valueOf(JSON.serialize(myOutcomeRequest));
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //TESTING
+        Test.startTest();
+        HDT_WS_SelfReadingsOutcome.doPost();
+        Test.stopTest();
+        
+        //RETRIEVING DATA
+        Case myCaseUpdated = [SELECT Id, Phase__c FROM Case];
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id, Type__c FROM wrts_prcgvr__Activity__c WHERE Case__c = :myCaseUpdated.Id AND Type__c = 'Gestione Manuale SAP'];
+        
+        //ASSERTS
+        HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse responseWrap;
+        responseWrap = new HDT_WRP_SelfReadingsOutcome.HDT_WRP_SelfReadingsOutcomeResponse();
+        
+        System.assertEquals(201, RestContext.response.statusCode, 'Status code errato.');
+        System.assertEquals('Annullato', myCaseUpdated.Phase__c, 'Fase del Case Errata.');
+        System.assert((activities != null && !activities.isEmpty()), 'Attività Gestione Manuale SAP non creata');
+        
+    }
+
     //TODO: TEST DEL METODO doPost CON CASISTICHE CON KO
     @isTest
     private static void doPostTest_ESITO_KO_SAP() {

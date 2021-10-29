@@ -48,7 +48,7 @@ public with sharing class HDT_WS_PaymentsTst {
         Test.stopTest();
         testCase = [SELECT TecnicalPhase__c FROM Case LIMIT 1];
         System.assertEquals(true, responseReturn.success, 'Failure in Response');
-        System.Assert(testCase.TecnicalPhase__c.equalsIgnoreCase('Esito OK da SAP'),'Fase non aggiornata');
+        System.assert(testCase.TecnicalPhase__c == null, 'Fase non aggiornata');
 
     }
 

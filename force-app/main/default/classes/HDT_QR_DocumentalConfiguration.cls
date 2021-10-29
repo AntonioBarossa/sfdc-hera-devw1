@@ -14,7 +14,9 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
         return docList;
     }
     public static List<SObject> getRecordFromServiceItems(String context,Set<String> numberSet){
-        if(numberSet.size()<= 0) return new List<SObject>();
+        if(numberSet.size()<= 0){
+            return new List<SObject>();
+        }
         if(context.equalsIgnoreCase('Case')){
             return [SELECT Id, CaseNumber FROM Case WHERE CaseNumber IN:numberSet WITH SECURITY_ENFORCED];
         }else {

@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Rollo (lorenzo.rollo@everis.com)
+ * @date 14/06/2021
+ * @description HDT_LC_ActivityReassignmentTool
+ * @history Name – Date – Description
+ */
+
 public with sharing class HDT_LC_ActivityReassignmentTool {
     private static Set<String> dynamicWorkGroupChannels = new Set<String> {
         'Assistente web',
@@ -44,7 +51,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         List<Map<String,String>> results = new List<Map<String,String>>();
         queryString = '%' + queryString + '%';
         User currentUser = getCurrentUser();
-        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :currentUser.Id AND PermissionSet.Name = 'HDT_OmniSupervisorPermissionSet'];
+        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :currentUser.Id AND PermissionSet.Name = 'HDT_OmniSupervisorPermissionSet' WITH SECURITY_ENFORCED];
         if(!assignments.isEmpty()) {
             for(User user : [SELECT Id, Name, LoginChannel__c, CreatorGroup__c, UserCompany__c FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED]) {
                 results.add(new Map<String,String>{

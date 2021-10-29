@@ -93,10 +93,10 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         }
 
         accountSrv.checkReadAccess('RecordType.DeveloperName');
-        Account currentAccount = accountQr.getRecordById(accountId, 'RecordType.DeveloperName ');
-        if (currentAccount.RecordType.DeveloperName  == 'HDT_RT_Business') {
+        // Account currentAccount = accountQr.getRecordById(accountId, 'RecordType.DeveloperName ');
+        // if (currentAccount.RecordType.DeveloperName  == 'HDT_RT_Business') { //HRAWRM-829
             resultMap.put('fatturazioneElettronica', fatturazioneElettronica);
-        }
+        // }
 
         return resultMap;
 

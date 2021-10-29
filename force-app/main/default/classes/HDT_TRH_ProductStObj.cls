@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
@@ -54,9 +55,9 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
         }
 
-        System.debug('>>> productIds ' + productIds.size());
-        System.debug('>>> productIdsForProductOption ' + productIdsForProductOption.size());
-        System.debug('>>> productIdsForTechOff ' + productIdsForTechOff.size());
+        System.debug(LoggingLevel.DEBUG, '>>> productIds ' + productIds.size());
+        System.debug(LoggingLevel.DEBUG, '>>> productIdsForProductOption ' + productIdsForProductOption.size());
+        System.debug(LoggingLevel.DEBUG, '>>> productIdsForTechOff ' + productIdsForTechOff.size());
 
         if(productIds.size()==0){
             // if not in familySet ship trigger
@@ -77,12 +78,12 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
         for(Product2 p : (Product2[])Trigger.New){
 
             //if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
-            //    System.debug('>>> ADD ERROR');
+            //    System.debug(LoggingLevel.DEBUG, '>>> ADD ERROR');
             //    p.addError(generateErrorMessage((p)));
             //}
 
             Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
-            System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
+            System.debug(LoggingLevel.DEBUG, '>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
 
             if(technicalOfferMap == null|| !technicalOfferMap.containsKey(p.Id)){
                 technicalOfferNumber = 0;
@@ -97,7 +98,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
             }
 
             statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, p.Id, oldProduct, p, productOptioNumber, technicalOfferNumber);
-            System.debug('>>> statusResponse: ' + statusResponse.success + ' - ' + statusResponse.message);
+            System.debug(LoggingLevel.DEBUG, '>>> statusResponse: ' + statusResponse.success + ' - ' + statusResponse.message);
 
             if(!statusResponse.success){
                 p.addError(statusResponse.message);
@@ -136,12 +137,12 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
             WITH SECURITY_ENFORCED
         ];
 
-        System.debug('>>> productsListSize ' + productsList.size());
+        System.debug(LoggingLevel.DEBUG, '>>> productsListSize ' + productsList.size());
 
         if(productsList.size() > 0){
             for(Product2 prod : productsList){
                 if(isUpdate && idSet.contains(prod.Id)){
-                    System.debug('>>> SAME RECORD IN UPDATE...');
+                    System.debug(LoggingLevel.DEBUG, '>>> SAME RECORD IN UPDATE...');
                 } else {
                     allUniqueProductCodeSet.add(generateUniqueCode(prod));
                 }
