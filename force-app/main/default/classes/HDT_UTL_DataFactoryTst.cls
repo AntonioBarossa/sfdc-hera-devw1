@@ -1142,6 +1142,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return quoteList;
 	}
 
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 6/10/2021
+     */
+    public static List<SBQQ__Quote__c> createEmptyQuote(Integer amount, Boolean doInsert){
+
+		List<SBQQ__Quote__c> quotes = new List<SBQQ__Quote__c>();
+
+		for(Integer i = 0; i < amount; i++) {
+			quotes.add(new SBQQ__Quote__c());
+		}
+
+		if(doInsert) {
+			insert quotes;
+		}
+
+		return quotes;
+	}
+
 	public static List<Pricebook2> createPricebook(Integer amount, Boolean doInsert){
 
 		activeStandardPricebook();
