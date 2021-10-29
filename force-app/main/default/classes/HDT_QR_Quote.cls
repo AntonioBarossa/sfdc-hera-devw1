@@ -171,9 +171,32 @@ public inherited sharing class HDT_QR_Quote {
             FriendCode__c,
             SaleBy__c,
             SalesCompany__c,
+            SalesCompanyCode__c,
             Market__c,
             SupplyCity__c,
-            ContractReference__c
+            ContractReference__c,
+            SBQQ__Opportunity2__c,
+            SBQQ__Account__c,
+            SBQQ__Primary__c,
+            CampaignCode__c,
+            CreatedBy__c,
+            BrandLogo__c,
+            isTransition__c,
+            AllowChangeUse__c,
+            UseCategory__c,
+            ConsumptionRangeEE__c,
+            ConsumptionRangeGAS__c,
+            PowerFlow__c,
+            MarketOrigin__c,
+            ResidentDeliveryAddress__c,
+            MeterType__c,
+            SupplyProvince__c,
+            Login__c,
+            LoginGroup__c,
+            Role__c,
+            NewClient__c,
+            SuperUser__c,
+            SBQQ__PricebookId__c
             FROM SBQQ__Quote__c
             WHERE SBQQ__Status__c = :status
             AND AmendmentAllowed__c = :amendementAllowed

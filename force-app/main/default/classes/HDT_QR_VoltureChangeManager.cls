@@ -219,7 +219,12 @@ public with sharing class HDT_QR_VoltureChangeManager {
             WHERE Active__c = true 
             AND ExciseString__c = :exciseString 
             ]);
-
+        if(securityDecision.getRecords().isEmpty())
+        {
+            HDT_ExciseTranscode__mdt defaultMdt = new HDT_ExciseTranscode__mdt();
+            defaultMdt.Excise__c = 0.0;
+            return new List<HDT_ExciseTranscode__mdt>{defaultMdt};
+        }
         return securityDecision.getRecords();
     }
 
@@ -266,7 +271,7 @@ public with sharing class HDT_QR_VoltureChangeManager {
             ObjectName__c
             FROM HDT_GenericDataEnrichmentTranscode__mdt
             WHERE ObjectName__c IN :objectNameList]);
-        
+
         return securityDecision.getRecords();
     }
 

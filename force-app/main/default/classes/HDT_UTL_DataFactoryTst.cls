@@ -6,7 +6,8 @@
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 
- @isTest
+@SuppressWarnings('PMD.NcssTypeCount,PMD.ExcessivePublicCount')
+@isTest
 public with sharing class HDT_UTL_DataFactoryTst{
 
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
@@ -2448,7 +2449,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 
-	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> Rows ){
+	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> rows ){
 		HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess()						;
         HDT_MassiveLoaderProcess__mdt selectedProcess 	   = massiveLoaderProcessQr.getRecordByName(processName)	;
 		MassiveLoaderRequest__c massiveLoaderRequest 	   = new MassiveLoaderRequest__c()							;
@@ -2570,9 +2571,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				CompanyOwner__c='HERA COMM',
 				ContactID__c=contactId,
 				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
-				MessageID__c=12321421,
+				MessageID__c='12321421',
 				Mobile__c='234234234',
-				MobileMessageTrackingID__c=12343143,
+				MobileMessageTrackingID__c='12343143',
 				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
 			);
 			
@@ -2951,7 +2952,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 05/10/2021
 	 */
-	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithParams(Integer amount, Boolean doInsert,Map<String,Object> params){
 
 		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
 	  
@@ -3129,4 +3130,90 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return vocalOrders;
 	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 14/10/2021
+	 */
+	public static List<Case> createCaseWithParams(Integer amount, Boolean doInsert, Map<String,Object> params){
+			
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='BP/CA - errata categoria';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+			for(String key:params.keySet()){
+				testCase.put(key, params.get(key));
+			}
+			caseList.add(testCase);
+		}
+
+		if (doInsert) {
+
+			insert caseList;
+
+		}
+
+		return caseList;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 16/09/2021
+     * @description createCampaignWithParams Method
+     * @history valere - 16/09/2021– Created method
+     */
+	public static List<Campaign> createCampaignWithParams(Integer amount, Boolean doInsert,Map<String,String> params){
+
+		List<Campaign> campaignList=new List<Campaign>();
+
+		for (Integer i=0; i<amount; i++){
+			Campaign cp=new Campaign();
+
+			for(String key :params.keySet()) {
+				cp.put(key, params.get(key));
+			}
+			
+			campaignList.add(cp);
+		}
+
+		if (doInsert){
+
+			insert campaignList;
+		}
+
+		return campaignList;
+	}
+
+	/**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @date 28/10/2021
+     * @description createCampaignWithParams Method
+     * @history Name - dd/mm/yyyy– Description
+     */
+	public static List<PaperCampaignParameter__c> createPaperCampaignParameter(Integer amount, Boolean doInsert) {
+
+		List<PaperCampaignParameter__c> paperCampaignPars = new List<PaperCampaignParameter__c>();
+
+		for(Integer i = 0; i < amount; i++) {
+
+			paperCampaignPars.add(new PaperCampaignParameter__c(Name = 'PaperCampaignParameterName' + i));
+		}
+
+		if(doInsert) {
+			insert paperCampaignPars;
+		}
+
+		return paperCampaignPars;
+	}
+
 }

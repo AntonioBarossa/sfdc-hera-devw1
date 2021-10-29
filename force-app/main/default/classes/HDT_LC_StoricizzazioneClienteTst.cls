@@ -11,64 +11,33 @@
 @isTest
 public class HDT_LC_StoricizzazioneClienteTst {    
     
-    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
-    @TestSetup
-    static void makedata(){
-        
-        
-        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-		internalUser.UserPermissionsMarketingUser=true;
+    @isTest static void test1(){
 
-		insert internalUser;
-
-        System.runAs(internalUser){
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
-            for(Account a : accs){
-                a.FiscalCode__c='testFC';
-                a.VATNumber__c='testVN';
-                a.CustomerCode__c='testCC';
-            }
-            
-            update accs;
-            
-		}
-    }
-    
-    @isTest
-    static void test1(){
-        
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId('Hera System Integrator');
         Id UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId('HDT_FrontOffice_HERA_COMM');
         User u = HDT_UTL_DataFactoryTst.createInternalUser(profileId,false);
         u.UserRoleId = UserRoleid;
         insert u;
         
-        system.runAs(u){
-            Test.startTest();        
+        system.runAs(u){        
             
             HDT_LC_StoricizzazioneCliente.HDT_LC_Link link = new HDT_LC_StoricizzazioneCliente.HDT_LC_Link('testname','testvalue');
             
-            List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer1 = HDT_LC_StoricizzazioneCliente.getExternalCustomer('testFC', 'id', 'ASC', 'Codice Fiscale');
-            List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer2 = HDT_LC_StoricizzazioneCliente.getExternalCustomer('testVN', 'id', 'ASC', 'Partita Iva');
-            List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer3 = HDT_LC_StoricizzazioneCliente.getExternalCustomer('testCC', 'id', 'DESC', 'Codice Cliente');
+            HDT_LC_StoricizzazioneCliente.HDT_LC_Customer customer = new HDT_LC_StoricizzazioneCliente.HDT_LC_Customer('Nome','CodiceFiscale', 'IVA', 'CodiceCliente', 'Id', 'isStoricizzato', 'NomeProprio');
             
-            System.assertNotEquals(null, listaCustomer1, 'A list of account is not returned');
+            List<SiebelCustomer__x> siebels = new List<SiebelCustomer__x>();
+            SiebelCustomer__x siebel = new SiebelCustomer__x(TAX_IDEN_NUM__c = 'taxtax', VAT_REGN_NUM__c = 'vat', OU_NUM__c = 'ou', ALIAS_NAME__c = 'sib');
+			siebels.add(siebel);
+
+			HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(siebels));
+        	Test.startTest();           
             
-            List <Account> accounts = [select id from Account where CustomerMarking__c = 'Azienda'];
-            List <Id> accountsId = new List<Id>();
-            for (Account a : accounts){
-                accountsId.add(a.id);
-            }
-            
-            List<Id> customerId = new List<Id>();
-            for(HDT_LC_StoricizzazioneCliente.HDT_LC_Customer a : listaCustomer1){
-                customerId.add(a.id);
-            }
-            
-            System.assertEquals(accountsId, customerId, 'The account with CustomerMarking__c = Azienda is not returned');
+            List<HDT_LC_StoricizzazioneCliente.HDT_LC_Customer> listaCustomer = HDT_LC_StoricizzazioneCliente.getExternalCustomer('taxtax', 'id', 'ASC', 'Codice Fiscale');
 
             Test.stopTest();
-        }        
-    }
+            
+            System.assertNotEquals(null, listaCustomer, 'HDT_LC_StoricizzazioneCliente did not work correctly');            
+            System.assertEquals(1, listaCustomer.size(), 'HDT_LC_StoricizzazioneCliente did not work correctly');
+        }
+    }        
 }

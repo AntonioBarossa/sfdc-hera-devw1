@@ -5,12 +5,12 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
-        HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
-        String recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_VisitaD2D');
+        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+        String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_VisitaD2D');
         HDT_QR_Contact contactQr = new HDT_QR_Contact();
         HDT_SRV_Account accountSrv = new HDT_SRV_Account();
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
-        Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
+        //Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
         Map<id,String> mapContactIdOwner = new Map<Id,String>();
         String userId = userinfo.getuserid();
         List<Lead> listLead = new List<Lead>();
@@ -197,8 +197,8 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     public static void creditCheckKoPrecedenteCliente(List<wrts_prcgvr__Activity__c> newActList, List<wrts_prcgvr__Activity__c> oldActList){
         system.debug('Start creditCheckKoPrecedenteCliente --->');
 
-        HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
-        Id recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
+        HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+        Id recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
         
         List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
         for(Integer i = 0; i < newActList.size(); i++){
@@ -303,8 +303,8 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     // @Alessio Murru 
     // public static void manageStatusChangeCrediCheck(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
-    //     HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
-    //     String recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
+    //     HDT_QR_Recordtype recQr = new HDT_QR_Recordtype();
+    //     String recordtypeid = recQr.getRecordTypeIdByName('HDT_RT_CreditCheckKO');
     //     Map<id,wrts_prcgvr__Activity__c> mapActivityNew = new Map<Id,wrts_prcgvr__Activity__c>();
     //     Map<id,wrts_prcgvr__Activity__c> mapActivityOld = new Map<Id,wrts_prcgvr__Activity__c>();
     //     List<wrts_prcgvr__Activity__c> actListToRecheck = new List<wrts_prcgvr__Activity__c>();
