@@ -189,13 +189,13 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			try{
 
-				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder1[0], true, true, true, date.today());
+				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder1[0], true, true, true, false, date.today());
 
-				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, true, true, date.today());
+				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, true, true, false, date.today());
 
 			//	HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, false, true, date.today());
 
-				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder3[0], true, true, true, date.today());						
+				HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder3[0], true, true, true, false, date.today());						
 
 			//	HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder5[0], false, true, true, date.today());
 
@@ -209,7 +209,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			tOrder2[0].EffectiveDate__c = Date.today().addDays(20);
 			update tOrder4;
 
-		    HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, true, true, date.today());
+		    HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrder2[0], true, true, true, false, date.today());
 
 
 			Test.stopTest();
