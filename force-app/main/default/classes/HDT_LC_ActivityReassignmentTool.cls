@@ -76,6 +76,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     public static String reassignActivity(List<String> idList, String assigneeId, String wrapperId, String workGroup, String agency) {
         try {
             List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+            Set<Id> parentActivitiesIds = new Set<Id>();
 
             for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id IN :idList WITH SECURITY_ENFORCED]) {
                 if(activity.Type__c == 'Gestione Agenzia' && activity.ParentActivity__c != null) {
@@ -86,10 +87,13 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     ) {
                         return 'L\'Attività ' + activity.Name +' deve essere assegnata all\'Agenzia ' + activity.ParentActivity__r.Order__r.Agency__c;
                     }
-                    activitiesToUpdate.add(new wrts_prcgvr__Activity__c(
-                        Id = activity.ParentActivity__c,
-                        wrts_prcgvr__Status__c = 'Aperta'
-                    ));
+                    if(!parentActivitiesIds.contains(activity.ParentActivity__c)) {
+                        parentActivitiesIds.add(activity.ParentActivity__c);
+                        activitiesToUpdate.add(new wrts_prcgvr__Activity__c(
+                            Id = activity.ParentActivity__c,
+                            wrts_prcgvr__Status__c = 'Aperta'
+                        ));
+                    }
                 }
 
                 activity = new wrts_prcgvr__Activity__c(
