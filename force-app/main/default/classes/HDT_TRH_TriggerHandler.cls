@@ -161,6 +161,7 @@ public virtual class HDT_TRH_TriggerHandler {
   }
 
   // make sure this trigger should continue to run
+  @SuppressWarnings('PMD.AvoidDebugStatements')
   @TestVisible
   private Boolean validateRun() {
     if(!this.isTriggerExecuting || this.context == null) {
