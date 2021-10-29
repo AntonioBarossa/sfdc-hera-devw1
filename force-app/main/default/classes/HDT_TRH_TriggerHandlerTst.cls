@@ -161,7 +161,7 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
         
         HDT_TRH_TriggerHandler triggerInstance = new HDT_TRH_TriggerHandler();
 
-        HDT_AutomationToggle__mdt triggerDis = addTriggerDisabilitation(HDT_TRH_TriggerHandler.JOLLY_CHAR, UserInfo.getName(), null);
+        HDT_AutomationToggle__mdt triggerDis = addTriggerDisabilitation(HDT_TRH_TriggerHandler.JOLLY_CHAR, UserInfo.getUserName(), null);
 
         triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.BEFORE_DELETE;
         Boolean isAutDisabled1 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);

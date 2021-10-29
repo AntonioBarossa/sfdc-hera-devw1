@@ -236,7 +236,7 @@ public virtual class HDT_TRH_TriggerHandler {
     }
 
     if (String.isNotBlank(toggleMd.SkipUsernames__c)) {
-      String username = UserInfo.getName();
+      String username = UserInfo.getUserName();
       for (String usernameLoop:toggleMd.SkipUsernames__c.split(LIST_SEPARATOR)) {
         if (username.equalsIgnoreCase(usernameLoop.trim())) {
           return true;
