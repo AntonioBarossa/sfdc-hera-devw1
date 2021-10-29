@@ -84,5 +84,7 @@ public with sharing class HDT_WRP_PaperProcessing {
     @AuraEnabled public String campo39 { get; set;}
     @AuraEnabled public String campo40 { get; set;}
 
-    public HDT_WRP_PaperProcessing(){}
+    public HDT_WRP_PaperProcessing(){
+        System.debug('Required');
+    }
 }

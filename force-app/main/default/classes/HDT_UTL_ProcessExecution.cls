@@ -71,6 +71,12 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
 
     }
    
+    /**
+    * @description :
+    * @param objName 
+    * @param fieldApiName 
+    * @return String 
+    **/
     public String getTypeField(String objName,String fieldApiName){
 
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
@@ -200,7 +206,7 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
         }  
     }
 
-    /**
+    /** 
     * @description confronta gli indirizzi che restituisce il servizio con l'indirizzo in input  
     * restituisce l'indirizzo che ha il numero matching points maggiore 
     * @param rs  lista di indirizzi HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj
@@ -210,11 +216,11 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
     * @param postalCode 
     **/
     public  HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj analizeRespVerifyAddress(List <HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj> rs,String city,String street,String myNumber,String postalCode){
-        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj addressWinner;
+        HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj addressWinner=rs.get(0);
         Integer matchingPoints = 0;
-      
         for (HDT_WS_HerokuAddressSearch.HDT_WS_PrestazioneObj tempRes : rs) {
            Integer tempMatchingPoints=0;
+           
            if(tempRes.city1.equalsIgnoreCase(city)){
                 tempMatchingPoints=tempMatchingPoints+1;
             }
@@ -231,6 +237,8 @@ public without sharing virtual class HDT_UTL_ProcessExecution {
                 matchingPoints=tempMatchingPoints;
                 addressWinner=tempRes;
             }
+
+          
         }
         return addressWinner;
     }
