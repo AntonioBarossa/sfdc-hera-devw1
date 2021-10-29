@@ -345,7 +345,7 @@ public virtual class HDT_TRH_TriggerHandler {
 
   // possible trigger contexts
   @TestVisible
-  private enum TriggerContext {
+  private enum TriggerContext {   //NOPMD
     BEFORE_INSERT, BEFORE_UPDATE, BEFORE_DELETE,
     AFTER_INSERT, AFTER_UPDATE, AFTER_DELETE,
     AFTER_UNDELETE
