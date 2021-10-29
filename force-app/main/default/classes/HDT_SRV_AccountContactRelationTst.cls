@@ -18,7 +18,7 @@ public class HDT_SRV_AccountContactRelationTst{
 		System.runAs(internalUser){
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[1].Id);
+			HDT_UTL_DataFactoryTst.createContact(1, true, accounts[1].Id);
 		}
 	}
 

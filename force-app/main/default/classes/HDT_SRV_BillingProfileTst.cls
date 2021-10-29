@@ -13,7 +13,7 @@ public with sharing class HDT_SRV_BillingProfileTst {
 	@TestSetup
 	static void setup(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<BillingProfile__c> billingProfiles = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+        HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
     }
 
 
@@ -24,7 +24,7 @@ public with sharing class HDT_SRV_BillingProfileTst {
         bProfileTest.Account__c =acc.Id;
         HDT_SRV_BillingProfile billingProfileClass = new HDT_SRV_BillingProfile();
         Test.startTest(); 
-        BillingProfile__c billingProfileInsert = billingProfileClass.createRecord(bProfileTest);
+        billingProfileClass.createRecord(bProfileTest);
         List<BillingProfile__c> billingProfileList = [SELECT Id FROM BillingProfile__c];
         
         System.assertEquals(billingProfileList.size(), 2, 'There are 2 BillingProfile in the ORG in this moment, becasue we insert another record (the other is old from setup)');
