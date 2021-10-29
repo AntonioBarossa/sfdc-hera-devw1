@@ -4,7 +4,7 @@
     <div id="reassignToMeCmpId"/>
 
     <script>
-        var jsonList = "{!activities}".replaceAll("[","[\"").replaceAll("]","\"]").replaceAll(", ","\",\"");
+        var jsonList = JSENCODE("{!activities}".replaceAll("[","[\"").replaceAll("]","\"]").replaceAll(", ","\",\""));
         var list = JSON.parse(jsonList);
         console.log("### SELECTED IDs:");
         console.log(list);
