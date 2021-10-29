@@ -4636,6 +4636,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.ContactLeadAddress__c</field><!--Matteo Tatti 29/10/2021-->
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMemberAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>

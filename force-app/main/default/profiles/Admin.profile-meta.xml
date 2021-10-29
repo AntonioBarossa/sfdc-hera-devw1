@@ -4251,6 +4251,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.ContactLeadAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.CampaignMemberUniqueCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
