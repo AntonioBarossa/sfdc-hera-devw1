@@ -10,16 +10,23 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
     
     @api hideNavigationButtons = false;
 
+    stopRendered=false;//boolean to check if set indirizzi
+
     @api
     validate() {
         let address = this.getAddress();
         let validity = this.validateAddress(address);
         if (validity.isValid) {
             this.populateCase(address);
+            //lanciare evento per inviare oggetto theCase;
+            //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
+            //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
+            //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
         }
         return validity;
     }
 
+    @api
     alert(title,msg,variant){
         console.log("alert: "+msg);
         const event = ShowToastEvent({
@@ -80,6 +87,44 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
                 errorMessage: errorMessages.join("; ")
             };
         }
+    }
+
+    renderedCallback(){
+        //init component indirizzi
+        if(this.stopRendered)   return;
+        const lwcIndirizzi =this.template.querySelector("c-hdt-target-object-address-fields");
+        if(lwcIndirizzi==null)  return;
+        this.stopRendered=true;
+        let wrapperAddress = {};
+        if(this.theCase["InvoicingStreetName__c"] != undefined){
+            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
+        }
+        if(this.theCase["InvoicingCity__c"] != undefined){
+            wrapperAddress['Comune'] = this.theCase["InvoicingCity__c"];
+        }
+        if(this.theCase["InvoicingPostalCode__c"] != undefined){
+            wrapperAddress['CAP'] = this.theCase["InvoicingPostalCode__c"];
+        }
+        if(this.theCase["InvoicingCountry__c"] != undefined){
+            wrapperAddress['Stato'] = this.theCase["InvoicingCountry__c"];
+        }
+        if(this.theCase["InvoicingProvince__c"] != undefined){
+            wrapperAddress['Provincia'] = this.theCase["InvoicingProvince__c"];
+        }
+        if(this.theCase["InvoicingStreetNumberExtension__c"]  != undefined){
+            wrapperAddress['Estens.Civico'] = this.theCase["InvoicingStreetNumberExtension__c"] ;
+        }
+        if(this.theCase["InvoicingStreetNumber__c"] != undefined){
+            wrapperAddress['Civico'] = this.theCase["InvoicingStreetNumber__c"];
+        }
+        //wrapperAddress["AbilitaVerifica"]=false;//abilita il tasto verifica
+        wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
+        wrapperAddress["FlagVerificato"]=true;//questi due abilitano la check "verificata"
+        console.log('wrapper addr'+JSON.stringify(wrapperAddress));
+        const targetFields = this.template.querySelector("c-hdt-target-object-address-fields");
+        //getInstanceWrapObject()
+        targetFields.getInstanceWrapObjectBilling(wrapperAddress);
+        //targetFields.handleAddressVerification();
     }
 
     getAddress() {

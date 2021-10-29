@@ -5,7 +5,7 @@ public class HDT_LC_AccountDataEnrichmentTst {
         Test Class for:
         HDT_QR_AccountDataEnrichment        77%
         HDT_LC_AccountDataEnrichment        100%
-        HDT_LC_AccountDataEnrichmentHelper  84%
+        HDT_LC_AccountDataEnrichmentHelper  86%
         HDT_WRP_AccountDataEnrichment       0% 
     */
 
@@ -126,4 +126,23 @@ public class HDT_LC_AccountDataEnrichmentTst {
         Test.stopTest();
     }
 
+
+    @IsTest
+    static void startRequestHelperHandleThrownError(){
+        
+        Test.startTest();
+
+        try {
+            
+            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(null, 'cmor');
+
+        } catch (AuraHandledException e) {
+            
+            System.assertNotEquals(null, e.getMessage(), 'AuraHandledException expected');
+
+        }
+
+        Test.stopTest();
+        
+    }
 }

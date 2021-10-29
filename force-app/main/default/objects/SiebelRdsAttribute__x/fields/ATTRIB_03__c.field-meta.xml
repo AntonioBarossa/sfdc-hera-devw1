@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Categoria</label>
+    <label>Tipo valore da modificare/Numero doc.</label>
     <length>30</length>
     <required>false</required>
     <type>Text</type>

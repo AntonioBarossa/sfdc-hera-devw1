@@ -64,7 +64,8 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 
-        List<Order> childOrder = HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
+        List<Order> childOrder;
+        childOrder = HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
 
     }
 
@@ -80,11 +81,12 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         Map<String, Object> mapAttiva = HDT_LC_OrderDossierWizard.controllerInit(saleAttiva.Id);
 
-        Map<String, Object> mapBozza = HDT_LC_OrderDossierWizard.controllerInit(saleBozza.Id);
+        Map<String, Object> mapBozza;
+        mapBozza = HDT_LC_OrderDossierWizard.controllerInit(saleBozza.Id);
 
-        System.assertEquals(6, mapAttiva.size());
+        System.assertEquals(6, mapAttiva.size(), 'controllerInit did not work correctly');
 
-        System.assertNotEquals(0, mapAttiva.size());
+        System.assertNotEquals(0, mapAttiva.size(), 'controllerInit did not work correctly');
 
         Test.stopTest();
     }
@@ -97,9 +99,9 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
         Order testOrder = [SELECT Id FROM Order WHERE Name Like 'testOrderName%' LIMIT 1];
         Order parentOrder = HDT_LC_OrderDossierWizard.getOrderParent(testOrder.Id);
 
-        System.assertEquals('testOrderName0', parentOrder.Name);
+        System.assertEquals('testOrderName0', parentOrder.Name, 'getOrderParent did not work correctly');
 
-        System.assertNotEquals('', parentOrder.Name);
+        System.assertNotEquals('', parentOrder.Name, 'getOrderParent did not work correctly');
 
         Test.stopTest();
     }
@@ -111,9 +113,9 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         Boolean check = HDT_LC_OrderDossierWizard.checkCommunityLogin();
 
-        System.assertEquals(false, check);
+        System.assertEquals(false, check, 'checkCommunityLogin did not work correctly');
 
-        System.assertNotEquals(true, check);
+        System.assertNotEquals(true, check, 'checkCommunityLogin did not work correctly');
 
         Test.stopTest();
     }
@@ -127,9 +129,9 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         Boolean check = HDT_LC_OrderDossierWizard.saveProsegui(testOrder.Id);
 
-        System.assertEquals(false, check);
+        System.assertEquals(false, check, 'saveProsegui did not work correctly');
 
-        System.assertNotEquals(true, check);
+        System.assertNotEquals(true, check, 'saveProsegui did not work correctly');
 
         Test.stopTest();
     }

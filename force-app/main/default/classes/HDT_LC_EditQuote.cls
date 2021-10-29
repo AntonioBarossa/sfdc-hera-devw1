@@ -140,6 +140,9 @@ public inherited sharing class HDT_LC_EditQuote {
 
                 quoteLineSrv.updateRecords(quoteLinesToUpdate);
 
+                bonusScontiNotAmend(quoteId);
+
+
             } else {
                 system.debug('HDT_LC_EditQuote - assocPodToQuoteLine - All Service Points have been assigned!');
             }
@@ -147,6 +150,35 @@ public inherited sharing class HDT_LC_EditQuote {
         } else {
             system.debug('HDT_LC_EditQuote - assocPodToQuoteLine - Configurare i prodotti per tutti i Service Point!');
         }
+
+    }
+
+    private static void bonusScontiNotAmend(Id quoteId){
+        List<SBQQ__QuoteLine__c> primaryQlSconto=HDT_LC_ApplyBillingProfileModal.getBonusPerOffer(quoteLineQr.getRecordsByQuoteFilteredFamilyBonus(quoteId));
+        
+
+        
+        if(primaryQlSconto.isEmpty())     return;
+        List<SBQQ__QuoteLine__c> quoteLinePods = quoteLineQr.getRecordsByQuoteIdAndProductPod(quoteId);
+        Map<id, SBQQ__QuoteLine__c> offertaToPod = new Map<id, SBQQ__QuoteLine__c>();
+
+        for(SBQQ__QuoteLine__c ql : quoteLinePods){
+            if(ql.servicePoint__c!=null && ql.SBQQ__RequiredBy__c!=null){
+                offertaToPod.put(ql.SBQQ__RequiredBy__c, ql);
+            }
+        }
+        list<SBQQ__QuoteLine__c> listToUpdate = new list<SBQQ__QuoteLine__c>();
+
+        for(SBQQ__QuoteLine__c ql : primaryQlSconto ){
+            if(ql.servicePoint__c==null){
+                SBQQ__QuoteLine__c qlUp = new SBQQ__QuoteLine__c(Id=ql.Id, ServicePoint__c=offertaToPod.get(ql.SBQQ__RequiredBy__c).ServicePoint__c);
+                listToUpdate.add(qlUp);
+            }
+            
+        }
+
+        quoteLineSrv.updateRecords(listToUpdate);
+
 
     }
 

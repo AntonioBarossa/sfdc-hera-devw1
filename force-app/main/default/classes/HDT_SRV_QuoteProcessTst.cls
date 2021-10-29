@@ -13,8 +13,8 @@ public with sharing class HDT_SRV_QuoteProcessTst {
         HDT_SRV_QuoteProcess hdtQuoteProcess = new HDT_SRV_QuoteProcess();
         hdtQuoteProcess.checkAccessInit('test', 'test');
 
-        System.assert(hdtQuoteProcess != null);
-        System.assertNotEquals(null, hdtQuoteProcess);
+        System.assert(hdtQuoteProcess != null,'');
+        System.assertNotEquals(null, hdtQuoteProcess, '');
         Test.stopTest();
 
     }
@@ -24,8 +24,8 @@ public with sharing class HDT_SRV_QuoteProcessTst {
         Test.startTest();
         HDT_SRV_QuoteProcess hdtQuoteProcess = new HDT_SRV_QuoteProcess();
         hdtQuoteProcess.checkReadAccess('Test');
-        System.assert(hdtQuoteProcess != null);
-        System.assertNotEquals(null, hdtQuoteProcess);
+        System.assert(hdtQuoteProcess != null,'');
+        System.assertNotEquals(null, hdtQuoteProcess,'');
         Test.stopTest();
 
     }

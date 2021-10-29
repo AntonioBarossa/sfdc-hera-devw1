@@ -64,12 +64,12 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <!-- <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>  HRAWRM-638 24/09/2021-->
             <valueName>Telefonico Inbound</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Campagna CRM</controllingFieldValue>
-            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <!-- <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>  HRAWRM-638 24/09/2021-->
             <valueName>Sportello</valueName>
         </valueSettings>
         <valueSettings>

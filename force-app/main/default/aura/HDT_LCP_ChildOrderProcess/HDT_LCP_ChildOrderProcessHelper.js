@@ -146,26 +146,56 @@
     },
 
     redirectToComponent : function(component,accountId,venditaId,orderParent){
-        console.log('HDT_LCP_ChildOrderProcessHelper.redirectToComponent');
-        var workspaceAPI = component.find("workspace");
-        console.log("Begin Redirect");
-        workspaceAPI.getFocusedTabInfo().then(function(response) {
-            console.log("Begin Redirect_2_: " + JSON.stringify(response));
-            var focusedTabId = response.parentTabId;
-            var focusedTab = response.tabId;
-
-            //INIZIO SVILUPPI EVERIS
-
-            workspaceAPI.closeTab({tabId: focusedTab}).then(function(){
-
-                $A.get('e.force:refreshView').fire();
-           
-            });
-
-            $A.get('e.force:refreshView').fire();
-
+        var checkprocess = component.get("c.isCommunity");
+        var navService = component.find("navService");
+        console.log('*********check');
+        checkprocess.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state == 'SUCCESS') {
+                let community = response.getReturnValue();
+                console.log('*******2:' + JSON.stringify(community));
+                if (community != null && community.isCommunity == true) {
+                            
+                    var pageReference = {
+                                    type: 'comm__namedPage',
+                                    attributes: {
+                                        name: "WizardOrder__c",
+                                    },
+                                    state: {
+                                        "c__accountId": accountId,
+                                        "c__venditaId": venditaId
+                                    }
+                                };
             
-            
+                 navService.navigate(pageReference);
+                } 
+                else{
+
+                    console.log('HDT_LCP_ChildOrderProcessHelper.redirectToComponent');
+                    var workspaceAPI = component.find("workspace");
+                    console.log("Begin Redirect");
+                    workspaceAPI.getFocusedTabInfo().then(function(response) {
+                        console.log("Begin Redirect_2_: " + JSON.stringify(response));
+                        var focusedTabId = response.parentTabId;
+                        var focusedTab = response.tabId;
+
+                        //INIZIO SVILUPPI EVERIS
+
+                        workspaceAPI.closeTab({tabId: focusedTab}).then(function(){
+
+                            $A.get('e.force:refreshView').fire();
+                    
+                        });
+
+                        $A.get('e.force:refreshView').fire();
+                    });
+                
+                }
+            }
+        });
+
+        $A.enqueueAction(checkprocess);
+                    
             /*workspaceAPI.openSubtab({//Subtab({ NON SEMBRA ESSERE NECESSARIO APRIRE UN NUOVO TAB
                 parentTabId: focusedTabId,
                 pageReference: {
@@ -189,10 +219,10 @@
 
             //FINE SVILUPPI EVERIS
         
-        })
-        .catch(function(error) {
+       // })
+      /*  .catch(function(error) {
             console.log('******' + error);
-        });
+        });*/
     },
 
     redirectToSObjectSubtab : function(component,objectId,objectApiname){
@@ -220,7 +250,12 @@
                 },
                 focus: true
             }).then(function(response2){
+                console.log("refresh", response2);
                 workspaceAPI.closeTab({tabId: focusedTab});
+                workspaceAPI.refreshTab({
+                    tabId: response2,
+                    includeAllSubtabs: true
+                });
                 $A.get('e.force:refreshView').fire();
             })
             .catch(function(error) {

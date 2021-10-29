@@ -3,6 +3,7 @@
 * @date 15/07/2021
 * @description HDT_BA_Dependencies – Batch per lo sblocco dei processi sequenzializzati
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject> {
     
     /**
@@ -79,11 +80,11 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
                     }
                 }
             }catch(Exception ex){
-                System.debug(ex.getMessage());
+                System.debug(LoggingLevel.ERROR, ex.getMessage());
                 Database.rollback(sp);
             }
         }
-        System.debug(recordsProcessed + ' records unlocked in the sequentialization processing');
+        System.debug(LoggingLevel.DEBUG, recordsProcessed + ' records unlocked in the sequentialization processing');
     }   
      
     /**
@@ -92,6 +93,6 @@ public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObj
     * @description finish method
     */
     public void finish(Database.BatchableContext bc) {
-        System.debug('Batch execution, for unlock records in the sequentialization processing, finished');
+        System.debug(LoggingLevel.DEBUG, 'Batch execution, for unlock records in the sequentialization processing, finished');
     }
 }

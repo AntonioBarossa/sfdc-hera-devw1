@@ -1,11 +1,15 @@
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public with sharing class HDT_WRP_DocumentalResponse {
-    public HDT_WRP_DocumentalResponse() {
-        this.deliverPackageResponse = new HDT_WRP_DocumentalResponseRoot();
-    }
+    
+    //DATA
     public Integer responseCode;
     public String responseStatus;
     public HDT_WRP_DocumentalResponseRoot deliverPackageResponse;
     
+    //EMPTY CONSTRUCTOR
+    public HDT_WRP_DocumentalResponse() {
+        this.deliverPackageResponse = new HDT_WRP_DocumentalResponseRoot();
+    }
 
     public class HDT_WRP_DocumentalResponseAttachment{
         public String code;
@@ -13,7 +17,11 @@ public with sharing class HDT_WRP_DocumentalResponse {
         public String version;
         public String mandatory;
         public String signature;
-        public HDT_WRP_DocumentalResponseAttachment(){}
+        
+        //EMPTY CONSTRUCTOR
+        public HDT_WRP_DocumentalResponseAttachment(){
+            this.code = '';
+        }
     }
 
     public class HDT_WRP_DocumentalResponseServiceItem{

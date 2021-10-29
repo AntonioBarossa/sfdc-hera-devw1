@@ -81,9 +81,9 @@ public with sharing class HDT_SRV_CommercialCodeTst {
 
         testCommercialCode.createRecord(cc);
 
-        System.assertEquals(commercialCode.Name, cc.Name);
+        System.assertEquals(commercialCode.Name, cc.Name, 'Value of parameter is matching');
 
-        System.assertNotEquals(commercialCode.Name, '');
+        System.assertNotEquals(commercialCode.Name, '', 'Value of parameter is not matching');
 
         Test.stopTest();
     }
@@ -103,9 +103,9 @@ public with sharing class HDT_SRV_CommercialCodeTst {
 
         testCommercialCode.updateRecord(commercialCode);
 
-        System.assertEquals(cc.Name, commercialCode.Name);
+        System.assertEquals(cc.Name, commercialCode.Name, 'Value of parameter is matching');
 
-        System.assertNotEquals(commercialCode.Name, '');
+        System.assertNotEquals(commercialCode.Name, '', 'Value of parameter is not matching');
 
         Test.stopTest();
 

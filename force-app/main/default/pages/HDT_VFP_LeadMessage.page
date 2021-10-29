@@ -1,0 +1,9 @@
+<apex:page standardController="lead" standardstylesheets="false" showHeader="false"  lightningStylesheets="true">
+<!-- Begin Default Content REMOVE THIS -->
+
+    
+    <font size="6" color="red">Risulta obbligatorio acquisire la privacy: clicca sul bottone in alto a destra “Acquisire privacy”</font>
+
+
+
+</apex:page>

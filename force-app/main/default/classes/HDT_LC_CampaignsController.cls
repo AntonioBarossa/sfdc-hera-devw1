@@ -410,13 +410,19 @@ public inherited sharing class HDT_LC_CampaignsController {
         if (String.isBlank(id)) {
             return null;
         }
-        List<String> listFiels = new List<String>{'name'};
+      //  List<String> listFiels = new List<String>{'name'};
         List<Account> listAcc =accountQr.getAccountById(id);
         Account currentAccount = listAcc.get(0);
         
         return currentAccount ;
         
         
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String getScriptNameFromCampaign(String memberId){
+        List<CampaignMember> lcs = [select id, Campaign.ScriptConfig__r.Name from CampaignMember where id=:memberId WITH SECURITY_ENFORCED LIMIT 1];
+        return lcs.isEmpty()? '' : lcs[0].Campaign.ScriptConfig__r.Name;
     }
     
     @AuraEnabled(cacheable=true)

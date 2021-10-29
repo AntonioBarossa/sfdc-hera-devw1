@@ -5,6 +5,17 @@
     <description>RT per le Chiamate degli Sportelli QAd</description>
     <label>Sportello</label>
     <picklistValues>
+        <picklist>ActivityOutcome__c</picklist>
+        <values>
+            <fullName>Negativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positivo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
             <fullName>Distributore</fullName>
@@ -324,6 +335,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type__c</picklist>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Sportello</fullName>
             <default>false</default>

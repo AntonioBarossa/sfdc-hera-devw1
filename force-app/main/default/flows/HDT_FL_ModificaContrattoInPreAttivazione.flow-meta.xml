@@ -58,6 +58,14 @@
             <numberValue>2.0</numberValue>
         </value>
     </choices>
+    <choices>
+        <name>PagamentoFatturazione</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);&quot;&gt;Modifica modalità di pagamento e fatturazione&lt;/span&gt;</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>4.0</numberValue>
+        </value>
+    </choices>
     <decisions>
         <description>Se case id null, il contratto non è presente e va prima creato</description>
         <name>CaseId_Present</name>
@@ -82,7 +90,7 @@
                 <leftValueReference>caseId</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -95,13 +103,13 @@
         <name>Formula_Field_Form</name>
         <dataType>String</dataType>
         <expression>&quot;Modifica Contr Preattivazione&quot; &amp; CASE({!Modifiche_Desiderate_0}, 1, IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Anagr Res&quot;, &quot; Anagr Non Res&quot;), 2, 
-IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Pagamento Residenziale&quot;, &quot; Pagamento Non Residenziale&quot;), 3, &quot; Bolletta&quot;, &quot;&quot;)</expression>
+IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quot;, &quot; Pagamento Residenziale&quot;, &quot; Pagamento Non Residenziale&quot;), 3, &quot; Bolletta&quot;, 4, &quot; Pagamento e Fatturazione&quot;, &quot;&quot;)</expression>
     </formulas>
     <formulas>
         <name>Header</name>
         <dataType>String</dataType>
         <expression>CASE({!Modifiche_Desiderate_0}, 1, &quot; Modifica dati contratto/dati anagrafici&quot;, 2, 
-&quot;Modifica modalità di pagamento&quot;, 3, &quot; Modifica modalità di invio bolletta e indirizzo di fatturazione&quot;, &quot;&quot;)</expression>
+&quot;Modifica modalità di pagamento&quot;, 3, &quot; Modifica modalità di invio bolletta e indirizzo di fatturazione&quot;, 4, &quot;Modifica modalità di pagamento e fatturazione&quot;, &quot;&quot;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_ModificaContrattoInPreAttivazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ModificaContrattoInPreAttivazione</label>
@@ -189,8 +197,7 @@ IF({!CaseRecived.Account.RecordType.DeveloperName}=&quot;HDT_RT_Residenziale&quo
                 <fields>
                     <name>Modifiche_Desiderate_0</name>
                     <choiceReferences>ContrattoAnagrafica</choiceReferences>
-                    <choiceReferences>ModalitaPagamento</choiceReferences>
-                    <choiceReferences>BollettaFatturazione</choiceReferences>
+                    <choiceReferences>PagamentoFatturazione</choiceReferences>
                     <dataType>Number</dataType>
                     <fieldText>Tipo Modifica:</fieldText>
                     <fieldType>DropdownBox</fieldType>

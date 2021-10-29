@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_RecordEditFormFlowController {
     
     @AuraEnabled(cacheable=true)
@@ -21,7 +22,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
     @AuraEnabled
     public static String validateRecord(String validateClass, String fields, String recordId) {
         String result;
-        System.debug('in class ' + fields);
+        System.debug(LoggingLevel.DEBUG, 'in class ' + fields);
         if(validateClass != null && String.isNotBlank(validateClass)){
             HDT_UTL_CaseValidationInterface support = HDT_UTL_CaseValidationFactory.getInstance(validateClass);
             result = support.validate(fields,recordId);
@@ -32,11 +33,12 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
     }
 
     @AuraEnabled
-    public static List<ContentDocument> getContentDocs(Id arecordId)
-    {   
+    public static List<ContentDocument> getContentDocs(Id arecordId){   
         //List<ContentDocumentLink> cdLs = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :arecordId];
         List<ContentDocumentLink> cdLs = HDT_QR_RecordEditFormFlowController.queryCdLink(arecordId);
-        if (cdLs.size() < 1) return new List<ContentDocument>(); 
+        if (cdLs.size() < 1){
+            return new List<ContentDocument>();
+        }
 
         // Make a List of ContentDocument IDs
         List <Id> cdIdList = new List <Id> ();
@@ -48,9 +50,9 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getOptions(String serviceClass, String params) {
+    public static String getOptions(String serviceClass, String params){
         String result;
-       System.debug('Params getOptions ' + params);
+       System.debug(LoggingLevel.DEBUG, 'Params getOptions ' + params);
         if(serviceClass != null && String.isNotBlank(serviceClass)){
             HDT_UTL_ComboboxOptionsInterface support = HDT_UTL_ComboboxOptionsFactory.getInstance(serviceClass);
             result = support.getOptions(params);
@@ -161,11 +163,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
     @AuraEnabled
     public static Case getFieldToPrePopulate(String recordId){
-
         return HDT_QR_InformativeManager.getFieldToPrePopulate(recordId);
-
     }
-
-
 
 }

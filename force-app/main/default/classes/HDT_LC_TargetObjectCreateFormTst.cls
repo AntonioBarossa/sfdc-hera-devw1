@@ -49,7 +49,8 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
             quotes[0].SBQQ__Status__c = 'Accepted';
             insert quotes;
 
-            List<SaleServiceItem__c> ssItem = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quotes[0].Id, spList[0].Id);
+            List<SaleServiceItem__c> ssItem;
+            ssItem = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quotes[0].Id, spList[0].Id);
         }
     }
 
@@ -265,7 +266,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
         
             ServicePoint__c sp = [SELECT Id, ServicePointCode__c,  MeterStatus__c, CommoditySector__c,
                                     PlugPresence__c, PowerRequested__c, PowerContractual__c, RecordTypeId,
-                                    SupplyCity__c, MarketOrigin__c 
+                                    SupplyCity__c, MarketOrigin__c, ImplantType__c, SupplyType__c
                                   FROM ServicePoint__c
                                   WHERE Name = 'servicepointTest'];
 

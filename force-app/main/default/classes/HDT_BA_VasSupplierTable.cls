@@ -5,7 +5,7 @@
  * @last modified on  : 2021-08-13
  * @last modified by  : gabriele.rota@webresults.it
 **/
-public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<SObject>, Schedulable{
+public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<SObject>, Schedulable, Database.Stateful{
 
     private static final String STATUS_PENDING = 'PENDING';
     private static final String STATUS_SUCCESS = 'SUCCESS';
@@ -31,6 +31,12 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     };
 
     private static Map<id, id> vasSupplToOrder;
+
+    private Map<Id, String> caseToProcess;//gonna update on finish method
+
+    public HDT_BA_VasSupplierTable(){
+        this.caseToProcess=new Map<Id, String>();
+    }
 
     /**
     * @description Running batch
@@ -64,8 +70,12 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         Map<String, VasSupplierTable__c> vasRecordsMap = mapVasRecords(vasRecords);
         Set<String> codes = vasRecordsMap.keySet();
 
+        system.debug('codici ' + String.join(new List<String>(codes), ',') );
+
         List<SBQQ__Subscription__c> subs = getSubscriptions(codes);
         List<Asset> assets = getAssets(codes);
+        system.debug('subs '+subs?.size()+JSON.serialize(subs));
+        system.debug('assets '+assets?.size()+JSON.serialize(assets));
 
         Map<SObject, String> recordsPerCode = new Map<SObject, String>();
         recordsPerCode.putAll( copyVasFields(subs, vasRecordsMap) );
@@ -74,9 +84,31 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         updateRecords(recordsPerCode, vasRecordsMap);
         
         saveVasRecords(vasRecords);
+
+        Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+        if(caseToProcess.size()>400 && limitQueueablesOk){
+            system.debug('test1');
+            system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(extractNumRecordsFromMap(2000)));
+        }
     }
 
-    public void finish(Database.BatchableContext bc) {}
+    public void finish(Database.BatchableContext bc) {
+        if(!caseToProcess.isEmpty()){
+            system.debug('test2');
+            system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(caseToProcess));
+        }
+    }
+
+
+    private Map<Id, String> extractNumRecordsFromMap(Integer num){
+        Map<Id, String> reducedMap = new Map<Id, String>();
+        for(Id caseIdKey : caseToProcess.keySet()){
+            if(num-- > 0){
+                reducedMap.put(caseIdKey, caseToProcess.remove(caseIdKey));
+            }
+        }
+        return reducedMap;
+    }
 
 
     /**
@@ -111,7 +143,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @return List<Asset> 
     **/
     private List<Asset> getAssets(Set<String> codes) {
-        return [SELECT VasPracticeCode__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE VasPracticeCode__c IN :codes WITH SECURITY_ENFORCED];
+        return [SELECT VasPracticeCode__c, SBQQ__OrderProduct__r.OrderId, AccountId FROM Asset WHERE VasPracticeCode__c IN :codes AND SBQQ__RootAsset__c=null WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -140,6 +172,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     }
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
+                    system.debug(e.getStackTraceString());
                     vasRecord.Status__c = STATUS_ERROR;
                     vasRecord.ErrorDescription__c = 'MAPPING_ERROR: Error mapping Asset/Subscription fields';
                 }
@@ -152,6 +185,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     vasSupplToOrder.put(vasRecord.Id, orderToUpdate.Id);
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
+                    system.debug(e.getStackTraceString());
                     vasRecord.Status__c = STATUS_ERROR;
                     vasRecord.ErrorDescription__c = 'MAPPING_ERROR: Error mapping Order fields';
                 }
@@ -174,27 +208,59 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     **/
     private void updateRecords(Map<SObject, String> recordsPerCode, Map<String, VasSupplierTable__c> vasRecordsMap) {
 
+        Id rtCaseDisattVas = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PostSalesVAS').getRecordTypeId();
         List<Asset> assetsToUpdate = new List<Asset>();
         List<SBQQ__Subscription__c> subsToUpdate = new List<SBQQ__Subscription__c>();
-        List<Order> ordersToUpdate = new List<Order>();
+        Map<Id, Id> assetToAccount = new Map<Id, Id>();
+        List<sobject> relatedSobjectsToInsert = new List<sobject>();
+        List<Case> casesDisattVas = new List<Case>();
+        //List<Order> ordersToUpdate = new List<Order>();
+        Map<Id, Order> mapOrdersToUpdate = new Map<Id, Order>();
 
         Map<Id, String> recordIdsPerCode = new Map<Id, String>();
         for (SObject record:recordsPerCode.keySet()) {
             if (record.getSObjectType() == Schema.Asset.getSObjectType()) {
                 assetsToUpdate.add((Asset)record);
+                switch on String.valueOf(record.get('VasSupplierStatus__c')){
+                    when 'TEL - CLT NON TROVATO', 'CLIENTE NON TROVATO', 'DA RICHIAMARE', 'KO FORNITORE', 'IN RIASSORTIMENTO', 'USCITA A VUOTO' {
+                        assetToAccount.put((Id) record.get('id'), (ID) record.get('AccountId'));
+                    }
+                    when 'CONSEGNA/Installazione RIFIUTATA', 'INSTALLAZIONE FALLITA', 'RESO (PRODOTTO)', 'RIFIUTATO preventivamente' {
+                        Case disattCase = new Case(AssetId=(Id) record.get('id'), RecordTypeId=rtCaseDisattVas);
+                        disattCase.CancellationReason__c='Ripensamento da cliente';
+                        disattCase.VasStatus__c='ANNUL PER RIPENS';
+                        disattCase.Phase__c='Bozza';
+                        disattCase.Type='Disattivazione VAS';
+                        disattCase.AccountId=(ID) record.get('AccountId');
+                        casesDisattVas.add(disattCase);
+                    }
+                }
             }
             if (record.getSObjectType() == Schema.SBQQ__Subscription__c.getSObjectType()) {
                 subsToUpdate.add((SBQQ__Subscription__c)record);
             }
             if (record.getSObjectType() == Schema.Order.getSObjectType()) {
-                ordersToUpdate.add((Order)record);
+                //ordersToUpdate.add((Order)record);
+                mapOrdersToUpdate.put((ID) record.get('id'), (Order)record);
             }
             recordIdsPerCode.put((Id)record.get('Id'), recordsPerCode.get(record) );
         }
 
+        relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToAccount));
+        relatedSobjectsToInsert.addAll(casesDisattVas);
+        if(!relatedSobjectsToInsert.isEmpty())
+            HDT_UTL_DatabaseService.insertSObject(relatedSobjectsToInsert);
+        
+        //Map<Id, String> caseToProcess = new  Map<Id, String>();
+        for(Case c : casesDisattVas){
+            caseToProcess.put(c.id, 'In Lavorazione');
+        }
+        //HDT_UTL_DatabaseService.updateSObject(casesDisattVas);
+
+
         saveAndCheckResults(assetsToUpdate, recordIdsPerCode, vasRecordsMap);
         saveAndCheckResults(subsToUpdate, recordIdsPerCode, vasRecordsMap);
-        saveAndCheckResults(ordersToUpdate, recordIdsPerCode, vasRecordsMap);
+        saveAndCheckResults(mapOrdersToUpdate.values(), recordIdsPerCode, vasRecordsMap);
     }
 
     /**
@@ -250,7 +316,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
             }
         }
         Database.update(vasRecords, true);
-        createDraftActivities(ordsIdScarti);
+        //createDraftActivities(ordsIdScarti);
     }
 
     /**
@@ -269,11 +335,53 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
 
     /**
     * @description 
+    * @author federico.defelice@webresults.it | 01-10-2021 
+    * @param assetToAccount 
+    * @return list<wrts_prcgvr__Activity__c> 
+    **/
+    private list<wrts_prcgvr__Activity__c> getActivitiesRicontatto(Map<Id, Id> assetToAccount){
+        Id rtDefault = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Default').getRecordTypeId();
+        Map<Id, List<Id>> accToAssets = new Map<Id, List<Id>>();
+        for(Id assId : assetToAccount.keySet()){
+            String accId = assetToAccount.get(assId);
+            if(accToAssets.get(accId)==null){
+                accToAssets.put(accId, new List<Id>());
+            }
+            accToAssets.get(accId).add(assId);
+        }
+
+        system.debug('assetIds');
+        system.debug(assetToAccount.keySet());
+
+        list<wrts_prcgvr__Activity__c> activities = getActivities(assetToAccount.values(),'VAS001_GESTIONE_ESITI_FORNITORE' );
+
+        for(wrts_prcgvr__Activity__c act : activities){
+            act.Asset__c = accToAssets.get((ID) act.wrts_prcgvr__ObjectId__c).remove(0);
+            act.recordTypeId=rtDefault;
+            act.Account__c=(ID) act.wrts_prcgvr__ObjectId__c;
+        }
+        return activities;
+    }
+
+    /**
+    * @description 
     * @author federico.defelice@webresults.it | 24-08-2021 
     * @param ordsIdScarti 
     **/
     private void createDraftActivities(List<String> ordsIdScarti){
-        list<wrts_prcgvr__Activity__c> activities = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(ordsIdScarti, 'CBS_ATT003__KO_FORNITORE');
+        list<wrts_prcgvr__Activity__c> activities = getActivities(ordsIdScarti, 'CBS_ATT003__KO_FORNITORE');
         HDT_UTL_DatabaseService.insertSObject(activities);
+    }
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 01-10-2021 
+    * @param sobjIds 
+    * @param templateName 
+    * @return list<wrts_prcgvr__Activity__c> 
+    **/
+    private list<wrts_prcgvr__Activity__c> getActivities(List<String> sobjIds, String templateName){
+        if(sobjIds.isEmpty())   return new list<wrts_prcgvr__Activity__c>();
+        return HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(sobjIds, templateName);
     }
 }

@@ -31,6 +31,8 @@ public with sharing class HDT_SRV_ServiceRequestTst {
 	
 	@isTest
     public static void testCheckReadAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -39,13 +41,19 @@ public with sharing class HDT_SRV_ServiceRequestTst {
             Test.startTest();
 
             HDT_SRV_ServiceRequest.checkReadAccess('ProcessType__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Finished');
         }
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -56,13 +64,19 @@ public with sharing class HDT_SRV_ServiceRequestTst {
             ServiceRequest__c sr = [SELECT ProcessType__c, ServicePointCode__c FROM ServiceRequest__c WHERE ProcessType__c = 'Alert'];
 
             HDT_SRV_ServiceRequest.checkCreateAccess(sr);
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Finished');
         }
     }
 
     @isTest
     public static void testCheckDeleteAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -73,13 +87,19 @@ public with sharing class HDT_SRV_ServiceRequestTst {
             ServiceRequest__c sr = [SELECT ProcessType__c, ServicePointCode__c FROM ServiceRequest__c WHERE ProcessType__c = 'Alert'];
 
             HDT_SRV_ServiceRequest.checkDeleteAccess(sr);
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Finished');
         }
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -90,8 +110,12 @@ public with sharing class HDT_SRV_ServiceRequestTst {
             ServiceRequest__c sr = [SELECT ProcessType__c, ServicePointCode__c FROM ServiceRequest__c WHERE ProcessType__c = 'Alert'];
 
             HDT_SRV_ServiceRequest.checkUpdateAccess(sr);
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Finished');
         }
     }
 

@@ -1,6 +1,8 @@
 import { LightningElement, api,wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
+import getActivity from '@salesforce/apex/HDT_QR_ActivityCustom.getRecordByOrderIdAndType';
+import saveActivityVO from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.createActivityVocalOrder'
 import save from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save';
 import save2 from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.save2';
 import cancel from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.cancel';
@@ -18,12 +20,21 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @api recordId
     currentStep = 2;
     loading = false;
+    signatureMethod = '';
     isSaveButtonDisabled = false;
     isCancelButtonDisabled = false;
     isDialogVisible = false;
     isPrintButtonDisabled = true;
+    isOrderPhaseToCheck = true;
     parentOrder;
+    isVocalAndActivityNotClose = true;
     enableDocumental = false;
+
+
+    get disablePrintButtonFunction() {
+        return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
+    }
+
 
     @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD] })
     wiredParentOrder({ error, data }) {
@@ -44,6 +55,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         } else if (data) {
             this.parentOrder = data;
             var signed = this.parentOrder.fields.ContractSigned__c.value;
+            this.signatureMethod = data.fields.SignatureMethod__c.value;
             this.enableDocumental = !signed;
         }
     }
@@ -82,59 +94,63 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
                 mode : 'Preview',
                 Archiviato : 'N',
             };
-            
-            previewDocumentFile({
-                recordId: this.recordId,
-                context: 'Order',
-                formParams: JSON.stringify(formParams)
+            saveActivityVO({
+                orderParent : this.orderParentRecord
             }).then(result => {
-                var resultParsed = JSON.parse(result);
-                if(resultParsed.code === '200' || resultParsed.code === '201'){
-                    if(resultParsed.result === '000'){
-                        var base64 = resultParsed.base64;
-                        var sliceSize = 512;
-                        base64 = base64.replace(/^[^,]+,/, '');
-                        base64 = base64.replace(/\s/g, '');
-                        var byteCharacters = window.atob(base64);
-                        var byteArrays = [];
+                if(result == 'Documentazione da validare'){
+                    this.orderParentRecord.Phase__c = 'Documentazione da validare';
+                }
+                previewDocumentFile({
+                    recordId: this.recordId,
+                    context: 'Order',
+                    formParams: JSON.stringify(formParams)
+                }).then(result => {
+                    var resultParsed = JSON.parse(result);
+                    if(resultParsed.code === '200' || resultParsed.code === '201'){
+                        if(resultParsed.result === '000'){
+                            var base64 = resultParsed.base64;
+                            var sliceSize = 512;
+                            var byteCharacters = window.atob(base64);
+                            var byteArrays = [];
 
-                        for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
-                            var slice = byteCharacters.slice(offset, offset + sliceSize);
-                            var byteNumbers = new Array(slice.length);
-                            for (var i = 0; i < slice.length; i++) {
-                                byteNumbers[i] = slice.charCodeAt(i);
-                            }
-                            var byteArray = new Uint8Array(byteNumbers);
-
-                            byteArrays.push(byteArray);
-                        }
-
-                        this.blob = new Blob(byteArrays, { type: 'application/pdf' });
-
-                        const blobURL = URL.createObjectURL(this.blob);
-                        this.loading = false;
-                        this[NavigationMixin.Navigate](
-                            {
-                                type: 'standard__webPage',
-                                attributes: {
-                                    url: blobURL
+                            for ( var offset = 0; offset < byteCharacters.length; offset = offset + sliceSize ) {
+                                var slice = byteCharacters.slice(offset, offset + sliceSize);
+                                var byteNumbers = new Array(slice.length);
+                                for (var i = 0; i < slice.length; i++) {
+                                    byteNumbers[i] = slice.charCodeAt(i);
                                 }
+                                var byteArray = new Uint8Array(byteNumbers);
+
+                                byteArrays.push(byteArray);
                             }
-                        );
-                        this.previewExecuted = true;
+
+                            this.blob = new Blob(byteArrays, { type: 'application/pdf' });
+
+                            const blobURL = URL.createObjectURL(this.blob);
+                            this.loading = false;
+                            this[NavigationMixin.Navigate](
+                                {
+                                    type: 'standard__webPage',
+                                    attributes: {
+                                        url: blobURL
+                                    }
+                                }
+                            );
+                            this.previewExecuted = true;
+                        }else{
+                            this.loading = false;
+                            this.showMessage('Attenzione',resultParsed.message,'error');
+                        }
                     }else{
                         this.loading = false;
-                        this.showMessage('Attenzione',resultParsed.message,'error');
+                        this.showMessage('Attenzione','Errore nella composizione del plico','error');
                     }
-                }else{
+                    this.isPrintButtonDisabled = false;
+                })
+                .catch(error => {
                     this.loading = false;
-                    this.showMessage('Attenzione','Errore nella composizione del plico','error');
-                }
-                this.isPrintButtonDisabled = false;
-            })
-            .catch(error => {
-                this.loading = false;
-                console.error(error);
+                    console.error(error);
+                });
             });
         }catch(error){
             console.error();
@@ -303,6 +319,23 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     connectedCallback(){
         this.getSaveButtonStatus();
         this.getCancelButtonStatus();
+        this.getActivityVocalOrder();
+    }
+
+    getActivityVocalOrder(){
+        getActivity({
+            orderId: this.recordId,
+            type: 'Validazione Vocal Order'
+        }).then(result => {
+            console.log('*********2:' + JSON.stringify(result));
+            if(result != undefined && result != null && result.length > 0 && result[0].wrts_prcgvr__Status__c == 'Completed' && result[0].Validation__c == 'Si'){
+                this.isVocalAndActivityNotClose = false;
+            }
+        })
+        .catch(error => {
+            this.loading = false;
+            console.error(error);
+        });
     }
 
 }

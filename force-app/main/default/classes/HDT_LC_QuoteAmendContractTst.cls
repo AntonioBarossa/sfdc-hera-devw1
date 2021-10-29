@@ -43,7 +43,8 @@ public with sharing class HDT_LC_QuoteAmendContractTst {
         prodList[0].Name = 'POD';
         insert prodList;
 
-        List<SaleServiceItem__c> ssItemList = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quoteList[0].Id, spList[0].Id);
+        List<SaleServiceItem__c> ssItemList;
+        ssItemList = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quoteList[0].Id, spList[0].Id);
 
         List<SBQQ__QuoteLine__c> quoteLineList = HDT_UTL_DataFactoryTst.createQuoteLines(prodList[0].Id, quoteList[0].Id, 1, false);
         quoteLineList[0].BillingProfile__c = billProfList[0].Id;
@@ -64,13 +65,15 @@ public with sharing class HDT_LC_QuoteAmendContractTst {
 
         ServicePoint__c sp = [SELECT Id FROM ServicePoint__c WHERE Name = 'servicePoint test'];
 
-        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id);
+        SBQQ__QuoteLine__c sbqqQuote = [SELECT Id, ServicePoint__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID' LIMIT 1];
 
-        SBQQ__QuoteLine__c sbqqQuote = [SELECT id, ServicePoint__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID' LIMIT 1];
+        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id, sbqqQuote.Id);
+
+        sbqqQuote = [SELECT Id, ServicePoint__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID' LIMIT 1];
         sbqqQuote.ServicePoint__c = null;
         update sbqqQuote;
 
-        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id);
+        HDT_LC_QuoteAmendContract.execModalExitActions(ct.Id, sale.Id, sbqqQuote.Id);
 
         System.assertEquals(null, sbqqQuote.ServicePoint__c, 'QuoteLine successfully updated');
         System.assertNotEquals(sp.Id, sbqqQuote.ServicePoint__c, 'QuoteLine update failed');

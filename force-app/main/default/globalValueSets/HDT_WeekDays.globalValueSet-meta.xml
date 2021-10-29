@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Lunedì</fullName>
+        <default>false</default>
+        <label>Lunedì</label>
+    </customValue>
+    <customValue>
+        <fullName>Martedì</fullName>
+        <default>false</default>
+        <label>Martedì</label>
+    </customValue>
+    <customValue>
+        <fullName>Mercoledì</fullName>
+        <default>false</default>
+        <label>Mercoledì</label>
+    </customValue>
+    <customValue>
+        <fullName>Giovedì</fullName>
+        <default>false</default>
+        <label>Giovedì</label>
+    </customValue>
+    <customValue>
+        <fullName>Venerdì</fullName>
+        <default>false</default>
+        <label>Venerdì</label>
+    </customValue>
+    <customValue>
+        <fullName>Sabato</fullName>
+        <default>false</default>
+        <label>Sabato</label>
+    </customValue>
+    <customValue>
+        <fullName>Domenica</fullName>
+        <default>false</default>
+        <label>Domenica</label>
+    </customValue>
+    <masterLabel>Giorni della settimana</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

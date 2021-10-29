@@ -15,14 +15,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+    private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
 
     @AuraEnabled
-    public static Map<String,Object> init(String Id){
+    public static Map<String,Object> init(String id){
         Map<String,Object> result = new Map<String,Object>();
 
-        List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+        User user = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
 
-        result.put('userProfile', user[0].Profile.Name);
+        result.put('loginChannel', user.LoginChannel__c);
 
         return result;
     }
@@ -45,7 +46,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         o.VATfacilitationFlag__c = flagVat; 
         orderSrv.updateRecord(o);
         RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-        String res = '';
+        // String res = '';
         ID recTypeId;
         if(rc !=null){
             recTypeId= rc.Id;
@@ -57,20 +58,29 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     }
 
     @AuraEnabled
+    @SuppressWarnings('PMD.AvoidDeeplyNestedIfStmts')
     public static void updateProcessStep(Order order,
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
         Boolean isRetroactive,
         Boolean isReading,
+        Boolean isUpdateStep,
         Date readingDate){
         //FINE SVILUPPI EVERIS
 
         System.debug('updateProcessStep: ' + order);
         System.debug('isVolture: '+isVolture);
 
+        Order currentOrder = new Order();
+            
+        /* If isUpdateStep query the currentOrder */
+        if(isUpdateStep != null && isUpdateStep == true)
+        {
+            currentOrder = voltureChangeQr.getOrderInfosById(order.Id)[0];
+        }
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
-            Order oldOrder = orderQr.getRecordById(order.Id);
+            // Order oldOrder = orderQr.getRecordById(order.Id);
             //@frpanico check "Cambio contatore non registrato"
             if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true)
             {
@@ -83,6 +93,22 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if(order.VoltureType__c != null && String.isBlank(order.VoltureType__c))
             {
                 throw new AuraHandledException('Valorizzare campi obbligatori');
+            }
+            /* Check Tipo Voltura "In Continuita"/"Recupero" ammesso solo se marcatura entrante/uscente e' "Persona Fisica"/"Persona Giuridica" */
+            if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('In Continuità'))
+            {
+                if(currentOrder.PreviousCustomer__r.Account.CustomerMarking__c != currentOrder.Account.CustomerMarking__c || !currentOrder.Account.CustomerMarking__c.containsIgnoreCase('Persona Fisica'))
+                {
+                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Fisiche\"');
+                }
+            }
+            else if(order.VoltureType__c != null && order.VoltureType__c.equalsIgnoreCase('Incorporazione societaria'))
+            {
+                if(currentOrder.PreviousCustomer__r.Account.RecordType.DeveloperName != currentOrder.Account.RecordType.DeveloperName
+                    || !currentOrder.Account.RecordType.DeveloperName.containsIgnoreCase('HDT_RT_Business'))
+                {
+                    throw new AuraHandledException('Per Voltura \"' + order.VoltureType__c + '\", entrambi i clienti (uscente ed entrante) devono essere \"Persone Giuridiche\"');
+                }
             }
             //@frpanico check "Data Decorrenza"
             if(order.EffectiveDate__c != null)
@@ -122,10 +148,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
-        //02/08/2021 gabriele.rota@webresults.it - Package B Attivazioni
-        Order orderFull = orderQr.getRecordById(order.Id);
-        if (orderFull.IsCloned__c && orderFull.Phase__c=='Bozza') {
-            order.Phase__c = 'Documentazione Validata';
+        // Date tempStart = order.TemporaryConnectionStartDate__c;
+        // Date tempEnd = order.TemporaryConnectionEndDate__c;
+        // Boolean tempDate = tempEnd < tempStart;
+
+        if(order.TemporaryConnectionStartDate__c != null 
+        && order.TemporaryConnectionEndDate__c != null
+        && order.TemporaryConnectionEndDate__c < order.TemporaryConnectionStartDate__c){
+            throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
         }
 
         exeChecks(order);
@@ -133,9 +163,22 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         orderSrv.updateRecord(order);
     }
 
+    /* Wrapper Method */
+    @AuraEnabled
+    public static void updateProcessStep(Order order, 
+    Boolean isVolture,
+    Boolean isRetroactive,
+    Boolean isReading,
+    Date readingDate){
+
+        Boolean isUpdateStep = false;
+        updateProcessStep(order, isVolture, isRetroactive, isReading, isUpdateStep, readingDate);
+
+    }
+
     private static void exeChecks(Order order){
         //Check RequestOption__c (Opzione di Distribuzione) START
-        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+        if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.ImplantType__c != null && order.PowerCommitted__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -144,7 +187,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if (calculatedRequestOption != oldOrder.RequestOption__c) {
                 throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
             }
-        } else if(order.RequestOption__c != null){
+        } else if(order.RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt' && order.RequestOption__c != null){
             orderSrv.checkReadAccess('RequestOption__c');
             Order oldOrder = orderQr.getRecordById(order.Id);
 
@@ -236,7 +279,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             system.debug(metas);
             if(!metas?.isEmpty()){
                 wrp.quoteType= metas[0].QuotationType__c;  
-                Integer code = Integer.valueOf(metas[0].OperationCode__c);
+                // Integer code = Integer.valueOf(metas[0].OperationCode__c);
                 wrp.quoteCode=formatCode(metas[0].OperationCode__c);        
             }
         } catch (Exception e) {

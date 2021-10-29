@@ -2,6 +2,38 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
     <assignments>
+        <name>activityToUpdate_0</name>
+        <label>activityToUpdate</label>
+        <locationX>1911</locationX>
+        <locationY>472</locationY>
+        <assignmentItems>
+            <assignToReference>toUpdateActivity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getActivity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateActivity_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>activityToUpdate_0_0</name>
+        <label>activityToUpdate</label>
+        <locationX>1930</locationX>
+        <locationY>692</locationY>
+        <assignmentItems>
+            <assignToReference>toUpdateActivity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getActivity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateActivity_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>caseToUpdate</name>
         <label>caseToUpdate</label>
         <locationX>1602</locationX>
@@ -14,7 +46,53 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateCase</targetReference>
+            <targetReference>closeActivity_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>closeActivity_0</name>
+        <label>closeActivity</label>
+        <locationX>1790</locationX>
+        <locationY>478</locationY>
+        <assignmentItems>
+            <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.DiscardResubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>activityToUpdate_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>closeActivity_0_0</name>
+        <label>closeActivity</label>
+        <locationX>1784</locationX>
+        <locationY>694</locationY>
+        <assignmentItems>
+            <assignToReference>getActivity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivity.DiscardResubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>activityToUpdate_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -30,7 +108,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updeteOrder</targetReference>
+            <targetReference>closeActivity_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -68,8 +146,8 @@
     <assignments>
         <name>phaseAssignCase_5</name>
         <label>phaseAssignCase_5</label>
-        <locationX>971</locationX>
-        <locationY>1219</locationY>
+        <locationX>1879</locationX>
+        <locationY>1271</locationY>
         <assignmentItems>
             <assignToReference>getCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -132,8 +210,8 @@
     <assignments>
         <name>phaseAssignOrder_5</name>
         <label>phaseAssignOrder_5</label>
-        <locationX>1119</locationX>
-        <locationY>1206</locationY>
+        <locationX>1426</locationX>
+        <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>getOrder.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -291,8 +369,8 @@
     <decisions>
         <name>parentObjectDecision_0_0_0_0</name>
         <label>parentObjectDecision</label>
-        <locationX>1036</locationX>
-        <locationY>1458</locationY>
+        <locationX>1569</locationX>
+        <locationY>1151</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Order_3</name>
@@ -571,19 +649,77 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>updateActivity_0</name>
+        <label>updateActivity</label>
+        <locationX>2059</locationX>
+        <locationY>472</locationY>
+        <connector>
+            <targetReference>updeteOrder</targetReference>
+        </connector>
+        <inputReference>toUpdateActivity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateActivity_0_0</name>
+        <label>updateActivity</label>
+        <locationX>2058</locationX>
+        <locationY>702</locationY>
+        <connector>
+            <targetReference>updateCase</targetReference>
+        </connector>
+        <inputReference>toUpdateActivity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateCase</name>
         <label>updateCase</label>
-        <locationX>1727</locationX>
-        <locationY>718</locationY>
+        <locationX>2193</locationX>
+        <locationY>700</locationY>
+        <connector>
+            <targetReference>endTextFlow_0_0</targetReference>
+        </connector>
         <inputReference>getCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updeteOrder</name>
         <label>updeteOrder</label>
-        <locationX>1717</locationX>
-        <locationY>479</locationY>
+        <locationX>2197</locationX>
+        <locationY>472</locationY>
+        <connector>
+            <targetReference>endTextFlow_0_0_0</targetReference>
+        </connector>
         <inputReference>orderRecord</inputReference>
     </recordUpdates>
+    <screens>
+        <name>endTextFlow_0_0</name>
+        <label>endTextFlow</label>
+        <locationX>2344</locationX>
+        <locationY>695</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getCase.CaseNumber} risottomesso correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>endTextFlow_0_0_0</name>
+        <label>endTextFlow</label>
+        <locationX>2343</locationX>
+        <locationY>473</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>finishText_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(30, 220, 35);&quot;&gt;&lt;i&gt;{!getOrder.OrderNumber} risottomesso correttamente!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>377</locationY>
@@ -621,5 +757,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>toUpdateActivity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
     </variables>
 </Flow>

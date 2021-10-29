@@ -14,10 +14,10 @@ manifest/package.xml
 manifest/*
 manifest/
 .gitignore
-
+scripts/*
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
-
+scripts/*
 # LWC Jest coverage reports
 coverage/
 
@@ -43,3 +43,6 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 launch.json
+
+# Folder that stores test class results
+./apexTestResults

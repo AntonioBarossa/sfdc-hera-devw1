@@ -6,6 +6,11 @@
 */
 public inherited sharing class HDT_QR_CampaignMember {
     
+    /**
+    * @description getActiveCampaignsByContact
+    * @param contactId
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getActiveCampaignsByContact(String contactId){
         return [
             SELECT 
@@ -22,6 +27,11 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED];
     }
 
+    /**
+    * @description getActiveCampaignsByLead
+    * @param leadId
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getActiveCampaignsByLead(String leadId){
         return [
             SELECT 
@@ -36,6 +46,11 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED];
     }
 
+    /**
+    * @description getActiveCampaignsByContacts
+    * @param contacts
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getActiveCampaignsByContacts(List<Contact> contacts){
         return [
             SELECT
@@ -51,6 +66,11 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED];
     }
 
+    /**
+    * @description getCampaignsFilteredByContacts
+    * @param contacts
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getCampaignsFilteredByContacts(List<String> contacts){
         Date d = Date.today();
         return [
@@ -78,6 +98,13 @@ public inherited sharing class HDT_QR_CampaignMember {
             ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
         ];
     }
+
+    /**
+    * @description filterCampaignsByCategory
+    * @param contacts
+    * @param category
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> filterCampaignsByCategory(List<String> contacts, String category){
         Date d = Date.today();
         return [
@@ -108,6 +135,13 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description filterCampaignsByCategoryAndChannel
+    * @param contacts
+    * @param category
+    * @param channel
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> filterCampaignsByCategoryAndChannel(List<String> contacts, String category, String channel){
         Date d = Date.today();
 
@@ -139,6 +173,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getUnassignedCampaignMembers
+    * @param campaignId
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getUnassignedCampaignMembers(String campaignId){
         return [
             SELECT 
@@ -150,6 +189,12 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getUnassignedCampaignMembersSlice
+    * @param campaignId
+    * @param amount
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getUnassignedCampaignMembersSlice(String campaignId, Integer amount){
         return [
             SELECT 
@@ -162,6 +207,10 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getAccountsforCampaignMembers
+    * @return List<Account>
+    */
     public List<Account> getAccountsforCampaignMembers(){
         return [
             SELECT 
@@ -172,6 +221,12 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @description getAccountAndCampaign
+    * @param campaignMemberId
+    * @return CampaignMember
+    */
     public CampaignMember getAccountAndCampaign(String campaignMemberId) {
         return [
             SELECT
@@ -186,6 +241,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getCampaignMembersByContacts
+    * @param contacts
+    * @return List<CampaignMember>
+    */
     public static List<CampaignMember> getCampaignMembersByContacts(List<Contact> contacts){
         return [
             SELECT
@@ -196,6 +256,11 @@ public inherited sharing class HDT_QR_CampaignMember {
             WITH SECURITY_ENFORCED];
     }
 
+    /**
+    * @description getByEcid
+    * @param ecid
+    * @return CampaignMember
+    */
     public CampaignMember getByEcid(String ecid) {
         List<CampaignMember> cmList = [
             SELECT
@@ -209,6 +274,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
     }
 
+    /**
+    * @description getByEcid
+    * @param id
+    * @return CampaignMember
+    */
     public CampaignMember getEcidById(String id) {
         List<CampaignMember> cmList = [
             SELECT
@@ -217,11 +287,18 @@ public inherited sharing class HDT_QR_CampaignMember {
             Ecid__c
             FROM CampaignMember 
             WHERE id = :id
+            WITH SECURITY_ENFORCED
         ];
         return cmList != null && !cmList.isEmpty() ? cmList[0] : null;
     }
 
-    
+    /**
+    * @description getContactsWithinDistance
+    * @param latitude
+    * @param longitude
+    * @param distanceKm
+    * @return CampaignMember
+    */
     public List<CampaignMember> getContactsWithinDistance(Decimal latitude, Decimal longitude, Decimal distanceKm) {
         Date d = Date.today();
         return [
@@ -242,6 +319,13 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getLeadsWithinDistance
+    * @param latitude
+    * @param longitude
+    * @param distanceKm
+    * @return CampaignMember
+    */
     public List<CampaignMember> getLeadsWithinDistance(Decimal latitude, Decimal longitude, Decimal distanceKm) {
         Date d = Date.today();
         return [
@@ -262,6 +346,12 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getMembersByAccountAndCampaign
+    * @param accountIds
+    * @param campaignIds
+    * @return CampaignMember
+    */
     public List<CampaignMember> getMembersByAccountAndCampaign(List<String> accountIds, List<String> campaignIds) {
         return [
             SELECT Id,
@@ -276,7 +366,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
-    
+    /**
+    * @description getCampaignMembersForPaperProcessing
+    * @param paperProcessingId
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getCampaignMembersForPaperProcessing(String paperProcessingId) {
         return [
             SELECT Id,
@@ -359,6 +453,11 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getMembersByCampaign
+    * @param campaignId
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getMembersByCampaign(String campaignId) {
         return [
             SELECT Id,
@@ -370,19 +469,34 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getCampaignMemberByCampaingAndContact
+    * @param campaign
+    * @param contact
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getCampaignMemberByCampaingAndContact(String campaign, String contact){
-        return [
+        SObjectAccessDecision securityDecision = 
+         Security.stripInaccessible(AccessType.READABLE, [
             SELECT Id,
             Contact.AccountId,
             CampaignId,
-            Status
+            Status,
+            Ecid__c
             FROM CampaignMember 
             WHERE ContactId = :contact
             AND CampaignId = :campaign
-            WITH SECURITY_ENFORCED
-        ];
+        ]);
+        return securityDecision.getRecords();
+        //System.debug(securityDecision.getRemovedFields());
     }
 
+    /**
+    * @description getCampaignMemberByCampaingAndContactInBulk
+    * @param campaign
+    * @param contact
+    * @return List<CampaignMember>
+    */
     public List<CampaignMember> getCampaignMemberByCampaingAndContactInBulk(List<String> campaign, List<String> contact){
         return [
             SELECT Id,
@@ -397,6 +511,12 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    /**
+    * @description getCampaignMemberByCampaingAndContactInBulk
+    * @param accountIds
+    * @param campaignChannel
+    * @return List<CampaignMember>
+    */
     public static List<CampaignMember> getSiblingMembersByAccountId(List<String> accountIds, String campaignChannel) {
         List<CampaignMember> allMembers = [
             SELECT CampaignId 
@@ -418,6 +538,18 @@ public inherited sharing class HDT_QR_CampaignMember {
             WHERE CampaignId IN :cmpList
             AND HasResponded = false
             AND Status != 'Non Proposto Auto'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public CampaignMember getRecordById(String campaignMemberId) {
+        return [
+            SELECT
+            Id,
+            ContactId, 
+            LeadId
+            FROM CampaignMember 
+            WHERE Id = :campaignMemberId
             WITH SECURITY_ENFORCED
         ];
     }

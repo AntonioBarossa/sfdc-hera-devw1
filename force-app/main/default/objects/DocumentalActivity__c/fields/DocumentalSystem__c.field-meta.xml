@@ -3,7 +3,7 @@
     <fullName>DocumentalSystem__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-OR(AND(NOT(ISBLANK(OrderId__c)), CONTAINS(TEXT(OrderId__r.SignMode__c), &apos;OTP&apos;)),
+OR(AND(NOT(ISBLANK(OrderId__c)), CONTAINS(TEXT(OrderId__r.SignatureMethod__c), &apos;OTP&apos;)),
 AND(NOT(ISBLANK(CaseId__c)), CONTAINS(TEXT(CaseId__r.SignMode__c), &apos;OTP&apos;))),
 &apos;Intesa&apos;, &apos;Postel&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

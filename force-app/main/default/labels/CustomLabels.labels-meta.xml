@@ -631,4 +631,263 @@
         <shortDescription>UnsupportedObjectType</shortDescription>
         <value>Object Type not supported for this action</value>
     </labels>
+    <labels>
+        <fullName>ProdOptAssociationNotification_Body</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationNotification_Body</shortDescription>
+        <value>Il processo è terminato!</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationNotification_Title</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationNotification_Title</shortDescription>
+        <value>Associazione massiva prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdRuleAssociationNotification_DeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdRuleAssociationNotification_DeleteTitle</shortDescription>
+        <value>Rimozione massiva regole prodotti</value>
+    </labels>
+    <labels>
+        <fullName>ProdRuleAssociationNotification_Title</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdRuleAssociationNotification_Title</shortDescription>
+        <value>Associazione massiva regole prodotti</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCreateTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCreateTitle</shortDescription>
+        <value>Associazione Massiva del prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationDeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationDeleteTitle</shortDescription>
+        <value>Rimozione Massiva del prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCreateSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCreateSection</shortDescription>
+        <value>Su queste offerte commerciali puoi associare il prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationDeleteSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationDeleteSection</shortDescription>
+        <value>Da queste offerte commerciali puoi eliminare il prodotto opzione</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmSelection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmSelection</shortDescription>
+        <value>Conferma i prodotti selezionati</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationClose</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationClose</shortDescription>
+        <value>Chiudi la ricerca</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCloseDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCloseDeleteBody</shortDescription>
+        <value>Attenzione! Vuoi annullare la rimozione dell'opzione prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationCloseCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationCloseCreateBody</shortDescription>
+        <value>Attenzione! Vuoi annullare l'associazione dell'opzione prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfimSelectBodyDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfimSelectBodyDelete</shortDescription>
+        <value>Attenzione! il prodotto opzione verrà rimosso da tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfimSelectBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfimSelectBody</shortDescription>
+        <value>Attenzione! il prodotto opzione verrà associato a tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmFilterTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmFilterTitle</shortDescription>
+        <value>Conferma tutti prodotti ottenuti dal filtro</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmFilterDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmFilterDeleteBody</shortDescription>
+        <value>Attenzione! In questo modo l'opzione verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationConfirmFilterCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationConfirmFilterCreateBody</shortDescription>
+        <value>Attenzione! In questo modo l'opzione verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationRunBatch</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationRunBatch</shortDescription>
+        <value>L'operazione durerà pochi minuti</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationSuccessDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationSuccessDelete</shortDescription>
+        <value>L'associazione è stata eliminata correttamente</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationSuccessCreate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationSuccessCreate</shortDescription>
+        <value>L'associazione è stata eseguita correttamente</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationResultText</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationResultText</shortDescription>
+        <value>I risultati verranno mostrati qui</value>
+    </labels>
+    <labels>
+        <fullName>ProdOptAssociationNoResultText</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdOptAssociationNoResultText</shortDescription>
+        <value>Non è stato trovato nessun prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_JobIsRunning</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_JobIsRunning</shortDescription>
+        <value>E' in corso un processo di creazione/rimozione di prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_CreateIsAvailable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_CreateIsAvailable</shortDescription>
+        <value>Puoi associare i prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_DeleteIsAvailable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_DeleteIsAvailable</shortDescription>
+        <value>Puoi eliminare i prodotti opzione</value>
+    </labels>
+    <labels>
+        <fullName>ChooseAssOperation_StatusError</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ChooseAssOperation_StatusError</shortDescription>
+        <value>Lo stato del prodotto opzione non è compatibile</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCreateTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCreateTitle</shortDescription>
+        <value>Associazione Massiva delle regole prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleDeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleDeleteTitle</shortDescription>
+        <value>Rimozione Massiva delle regole prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCreateSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCreateSection</shortDescription>
+        <value>Su questi elementi puoi associare le regole di prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleDeleteSection</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleDeleteSection</shortDescription>
+        <value>Da questi elementi puoi eliminare le regole di prodotto</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCloseDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCloseDeleteBody</shortDescription>
+        <value>Attenzione! Vuoi annullare la rimozione delle regole prodotto prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleCloseCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleCloseCreateBody</shortDescription>
+        <value>Attenzione! Vuoi annullare l'associazione delle regole  prodotto?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfimSelectBodyDelete</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfimSelectBodyDelete</shortDescription>
+        <value>Attenzione! la regola verrà rimossa da tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfimSelectBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfimSelectBody</shortDescription>
+        <value>Attenzione! la regola verrà associata a tutti i prodotti selezionati.</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfirmFilterDeleteBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfirmFilterDeleteBody</shortDescription>
+        <value>Attenzione! In questo modo la regola verrà eliminata da tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>ConfRuleConfirmFilterCreateBody</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ConfRuleConfirmFilterCreateBody</shortDescription>
+        <value>Attenzione! In questo modo la regola verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>Cpq_ProductAssociation_EnabledProfile</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
+        <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
+    </labels>
 </CustomLabels>

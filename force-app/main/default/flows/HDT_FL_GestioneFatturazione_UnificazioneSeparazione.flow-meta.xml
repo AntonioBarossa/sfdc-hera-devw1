@@ -5,7 +5,7 @@
         <name>Set_Descrizione_Account</name>
         <label>Set Descrizione Account</label>
         <locationX>2467</locationX>
-        <locationY>923</locationY>
+        <locationY>924</locationY>
         <assignmentItems>
             <assignToReference>FinalDescription</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Set_Descrizione_Contratti</name>
         <label>Set Descrizione Contratti</label>
-        <locationX>2712</locationX>
-        <locationY>446</locationY>
+        <locationX>2932</locationX>
+        <locationY>447</locationY>
         <assignmentItems>
             <assignToReference>FinalDescription</assignToReference>
             <operator>Assign</operator>
@@ -33,6 +33,27 @@
             <targetReference>Next_Step</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>aggiungiAltriBp_SI_choice</name>
+        <choiceText>Si</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>FatturazioneConAltriContrattiChoice</name>
+        <choiceText>&lt;span style=&quot;font-family: Calibri, sans-serif; font-size: 11pt;&quot;&gt;Fatturazione con altri contratti&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Fatturazione con altri contratti</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>FatturazioneSeparataChoice</name>
+        <choiceText>Fatturazione separata</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Fatturazione separata</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>NoChoice</name>
         <choiceText>No</choiceText>
@@ -82,6 +103,22 @@
         </value>
     </choices>
     <choices>
+        <name>wannaAddMoreBPs_No_choice</name>
+        <choiceText>No</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>wannaAddMoreBPs_Yes_choice</name>
+        <choiceText>Si</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <choices>
         <name>YesChoice</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
@@ -89,6 +126,31 @@
             <stringValue>Si</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>BPAdded_decision</name>
+        <label>Aggiungere BP?</label>
+        <locationX>2011</locationX>
+        <locationY>751</locationY>
+        <defaultConnector>
+            <targetReference>Input_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>BPAdded_decision_yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>wannaAddMoreBPs_Yes_choice</leftValueReference>
+                <operator>WasSelected</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Account</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Tipo_Operazione</name>
         <label>Tipo Operazione?</label>
@@ -189,8 +251,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>2704</locationX>
-        <locationY>621</locationY>
+        <locationX>2919</locationX>
+        <locationY>607</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -220,6 +282,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Campi_da_salvare_su_bozza</targetReference>
+            </connector>
             <label>Salva in bozza</label>
         </rules>
     </decisions>
@@ -261,6 +326,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>TipoFatturaCollettivaFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Tipo_Fatturazione_Collettiva}), {!Get_Case_Arricchito.Note__c}, {!Get_Case_Arricchito.Note__c} &amp; &apos; - &apos; &amp; &apos;Tipo fattura collettiva selezionata: &apos; &amp; {!Tipo_Fatturazione_Collettiva})</expression>
+    </formulas>
+    <formulas>
         <name>TipoOperazioneCAFormula</name>
         <dataType>String</dataType>
         <expression>IF({!CreaNuovoCA} == &apos;Si&apos;, TEXT({!Refresh_Case.OperationType__c}) &amp; &apos; - CreaCA&apos;, TEXT({!Refresh_Case.OperationType__c}))</expression>
@@ -289,7 +359,7 @@
     <recordLookups>
         <name>Get_Account_Master</name>
         <label>Get Account Master</label>
-        <locationX>2267</locationX>
+        <locationX>2313</locationX>
         <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -305,6 +375,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Arricchito</name>
+        <label>Get Case Arricchito</label>
+        <locationX>2623</locationX>
+        <locationY>607</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Tipo_Fattura_Collettiva</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -350,13 +441,40 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Campi_da_salvare_su_bozza</name>
+        <label>Salva in Bozza</label>
+        <locationX>3078</locationX>
+        <locationY>844</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>FinalDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ReadingDate__c</field>
+            <value>
+                <elementReference>DataLetturaCliente</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <description>Valorizzato da arricchimento dati ma necessario solo per il ramo Unificazione/Separazione bolletta.</description>
         <name>Rimozione_Tipo_Fattura_Collettiva</name>
         <label>Rimozione Tipo Fattura Collettiva</label>
-        <locationX>1820</locationX>
-        <locationY>781</locationY>
+        <locationX>1684</locationX>
+        <locationY>809</locationY>
         <connector>
-            <targetReference>Selezione_Account</targetReference>
+            <targetReference>wannaAddMoreBPsScreen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -396,8 +514,8 @@
     <recordUpdates>
         <name>Set_Fase_In_Lavorazione</name>
         <label>Set Fase In Lavorazione</label>
-        <locationX>3009</locationX>
-        <locationY>619</locationY>
+        <locationX>3188</locationX>
+        <locationY>605</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -422,6 +540,31 @@
             <field>ReadingDate__c</field>
             <value>
                 <elementReference>DataLetturaCliente</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Valorizzato da arricchimento dati ma necessario solo per il ramo Unificazione/Separazione bolletta.</description>
+        <name>Set_Num_Contratti</name>
+        <label>Set Num Contratti</label>
+        <locationX>2138</locationX>
+        <locationY>446</locationY>
+        <connector>
+            <targetReference>Input_Dati_CA</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ContractsMergeNumber__c</field>
+            <value>
+                <elementReference>NumContrattiSelezionati</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -456,21 +599,71 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_Tipo_Fattura_Collettiva</name>
+        <label>Update Tipo Fattura Collettiva</label>
+        <locationX>2774</locationX>
+        <locationY>606</locationY>
+        <connector>
+            <targetReference>Next_Step</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Note__c</field>
+            <value>
+                <elementReference>TipoFatturaCollettivaFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>Input_Dati</name>
         <label>Input Dati</label>
-        <locationX>2468</locationX>
-        <locationY>619</locationY>
+        <locationX>2467</locationX>
+        <locationY>607</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Next_Step</targetReference>
+            <targetReference>Get_Case_Arricchito</targetReference>
         </connector>
         <fields>
             <name>DT2</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Tipo_Fatturazione_Collettiva</name>
+            <choiceReferences>FatturazioneConAltriContrattiChoice</choiceReferences>
+            <choiceReferences>FatturazioneSeparataChoice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Tipo Fatturazione Collettiva</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.OperationType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Unificazione bolletta</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Query_Case.OperationType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Separazione bolletta</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Form2</name>
@@ -858,8 +1051,8 @@
     <screens>
         <name>Selezione_Account</name>
         <label>Selezione Account</label>
-        <locationX>1824</locationX>
-        <locationY>924</locationY>
+        <locationX>2025</locationX>
+        <locationY>925</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -938,8 +1131,8 @@
     <screens>
         <name>Selezione_Account_Master</name>
         <label>Selezione Account Master</label>
-        <locationX>2037</locationX>
-        <locationY>924</locationY>
+        <locationX>2174</locationX>
+        <locationY>925</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1024,7 +1217,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Input_Dati_CA</targetReference>
+            <targetReference>Set_Num_Contratti</targetReference>
         </connector>
         <fields>
             <name>DT3</name>
@@ -1083,6 +1276,12 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>firstContract</name>
+                <value>
+                    <elementReference>Query_Case.ContractCode__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -1096,6 +1295,10 @@
             <outputParameters>
                 <assignToReference>SaveInDraft</assignToReference>
                 <name>saveDraft</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>NumContrattiSelezionati</assignToReference>
+                <name>numSelectedContracts</name>
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
@@ -1152,6 +1355,34 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>wannaAddMoreBPsScreen</name>
+        <label>Vuoi aggiungere altri BP?</label>
+        <locationX>1684</locationX>
+        <locationY>983</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>BPAdded_decision</targetReference>
+        </connector>
+        <fields>
+            <name>wannaAddMoreBpText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family: Arial, sans-serif;&quot;&gt;Vuoi aggiungere altri BP?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>wannaAddMoreBPsButtons</name>
+            <choiceReferences>wannaAddMoreBPs_Yes_choice</choiceReferences>
+            <choiceReferences>wannaAddMoreBPs_No_choice</choiceReferences>
+            <dataType>Boolean</dataType>
+            <defaultSelectedChoiceReference>wannaAddMoreBPs_Yes_choice</defaultSelectedChoiceReference>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>650</locationX>
         <locationY>591</locationY>
@@ -1163,8 +1394,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2713</locationX>
-        <locationY>827</locationY>
+        <locationX>2921</locationX>
+        <locationY>923</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1268,6 +1499,14 @@ Account Master:
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NumContrattiSelezionati</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
     <variables>
         <name>SaveInDraft</name>

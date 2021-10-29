@@ -10,7 +10,6 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 	@TestSetup
 	static void setup(){
 
-		Id standardUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_STANDARD_USER_NAME);
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_STANDARD_USER_NAME);
 
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
@@ -45,7 +44,8 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			Id pricebookId=Test.getStandardPricebookId();
 
-			List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
+			List<PricebookEntry> pricebookEntry;
+			pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
 
 			List<BillingProfile__c> billingProfiles=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 
@@ -75,7 +75,8 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			update orders;
 
-            List<SaleServiceItem__c> saleServiceItens = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opportunities[0].Id, quotes[0].Id, servicePoints[0].Id);
+            List<SaleServiceItem__c> saleServiceItens;
+			saleServiceItens = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opportunities[0].Id, quotes[0].Id, servicePoints[0].Id);
 		}
 	}
 
@@ -102,7 +103,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			System.assertEquals(2, tgetTiles.size(), 'Return is wrong');
 
-			System.assertNotEquals(1, tgetTiles.size());
+			System.assertNotEquals(1, tgetTiles.size(), 'getTiles did not work correctly');
 
 			Test.stopTest();
 
@@ -139,7 +140,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			System.assertEquals('Closed Lost', tOppUpdt.StageName, 'Opportunity not updated');
 
-			System.assertNotEquals('Negotiation', tOppUpdt.StageName);
+			System.assertNotEquals('Negotiation', tOppUpdt.StageName, 'deleteTile did not work correctly');
 
 			Test.stopTest();
 

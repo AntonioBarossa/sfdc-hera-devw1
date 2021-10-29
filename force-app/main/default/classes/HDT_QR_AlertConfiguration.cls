@@ -32,6 +32,12 @@ public with sharing class HDT_QR_AlertConfiguration {
         ];
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 20/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public List<AlertConfiguration__c> getRecordsForAccount(String accountId, String accountCategory) {
 
         List<Contract> activeContracts = getActiveContracts(accountId);
@@ -39,7 +45,7 @@ public with sharing class HDT_QR_AlertConfiguration {
         for (Contract c : activeContracts) {
             accountSendingMethods.add(c.BillingProfile__r.BillSendingMethod__c);
         }
-        //System.debug('accountSendingMethods: ' + accountSendingMethods);
+        System.debug(LoggingLevel.DEBUG, 'accountSendingMethods: ' + accountSendingMethods);
 
         List<AlertConfiguration__c> alerts = [
             SELECT 
@@ -54,6 +60,7 @@ public with sharing class HDT_QR_AlertConfiguration {
             WHERE AccountCategory__c INCLUDES (:accountCategory)
             WITH SECURITY_ENFORCED
         ];
+        System.debug(LoggingLevel.DEBUG, 'alerts: ' + alerts);
 
         List<AlertConfiguration__c> availableAlerts = new List<AlertConfiguration__c>();
         for (AlertConfiguration__c alertRule : alerts) {

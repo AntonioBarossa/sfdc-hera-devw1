@@ -11,8 +11,11 @@
         <enabled>true</enabled>
         <name>RunReports</name>
     </userPermissions>
+    <!--Start  HRAWRM-674 22/092021 EC-->
     <userPermissions>
-        <enabled>false</enabled>
-        <name>ViewPublicReports</name>
+        <enabled>true</enabled>
+        <name>SubscribeToLightningReports</name>
     </userPermissions>
+    <!--Start  HRAWRM-674 22/092021 EC-->
+
 </PermissionSet>

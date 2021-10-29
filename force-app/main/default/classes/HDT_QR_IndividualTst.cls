@@ -14,7 +14,8 @@ public class HDT_QR_IndividualTst{
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
-			List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
+			List<Individual> individuals;
+			individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
 		}
 	}
 
@@ -39,7 +40,7 @@ public class HDT_QR_IndividualTst{
 			test.stopTest();
 
 			System.assertEquals(true, tInd.Id!=null, 'Individual not found');
-			System.assertNotEquals(false, tInd.Id!=null);
+			System.assertNotEquals(false, tInd.Id!=null, 'value of parameter is not matching');
 		}
 	}
 }

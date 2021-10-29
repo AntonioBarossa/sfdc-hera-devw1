@@ -29,7 +29,6 @@ export default class HdtActivityReassignmentTool extends LightningElement {
     async handleAssigneeSearch(event) {
         if(event.keyCode === 13 && event.target.value) {
             try {
-                console.log('b');
                 this.assignees = await getAssignees({queryString: event.target.value});
                 this.assigneesSearched = true;
             } catch (err) {
@@ -41,7 +40,6 @@ export default class HdtActivityReassignmentTool extends LightningElement {
     async handleWorkGroupSearch(event) {
         if(event.keyCode === 13 && event.target.value) {
             try {
-                console.log('a');
                 this.workGroups = await getWorkGroups({queryString: event.target.value});
             } catch (err) {
                 console.log("### ERROR: " + err);
@@ -57,9 +55,6 @@ export default class HdtActivityReassignmentTool extends LightningElement {
     }
 
     async selectWorkGroup(event) {
-        console.log('d');
-        console.log(event.currentTarget.dataset.workgroup);
-        console.log(event.currentTarget.dataset.agency);
         this.handleReassignResult(await reassignActivity({
             recordId: this.recordId,
             assigneeId: this.assigneeId,
@@ -71,16 +66,8 @@ export default class HdtActivityReassignmentTool extends LightningElement {
 
     async handleListClick(event) {
         const dataset = event.currentTarget.dataset;
-        console.log(dataset.id);
-        console.log(dataset.wrapperid);
-        console.log(dataset.workgroup);
-        console.log(dataset.agency);
-        console.log('c');
 
-        console.log('1' + this.assigneeId);
-        console.log('2' + this.recordId);
         if(dataset.wrapperid) {
-            console.log(5);
             this.handleReassignResult(await reassignActivity({
                 recordId: this.recordId,
                 assigneeId: dataset.id,
@@ -88,14 +75,10 @@ export default class HdtActivityReassignmentTool extends LightningElement {
                 workGroup: dataset.workgroup,
                 agency: dataset.agency
             }));
-            console.log(6);
         } else {
             if(await isDynamicWorkGroup({loginChannel: dataset.loginchannel})) {
-                console.log(7);
                 this.toggleWorkGroupSearch(dataset.id);
-                console.log(8);
             } else {
-                console.log(9);
                 this.handleReassignResult(await reassignActivity({
                     recordId: this.recordId,
                     assigneeId: dataset.id,
@@ -103,7 +86,6 @@ export default class HdtActivityReassignmentTool extends LightningElement {
                     workGroup: dataset.workgroup,
                     agency: dataset.agency
                 }));
-                console.log(10);
             }
         }
     }

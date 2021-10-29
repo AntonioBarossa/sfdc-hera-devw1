@@ -58,6 +58,6 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
     * @param bc 
     **/
     public void finish(Database.BatchableContext bc) {
-        System.debug(LoggingLevel.INFO, 'HDT_BA_VasEngineSender finish');
+        return;
     }
 }

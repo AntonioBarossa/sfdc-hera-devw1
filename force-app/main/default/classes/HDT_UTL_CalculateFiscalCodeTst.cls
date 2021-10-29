@@ -9,7 +9,7 @@
 public class HDT_UTL_CalculateFiscalCodeTst {
     @testSetup 
     static void setup() {
-        HDT_UTL_DataFactoryTst.createCity(5,true);
+        HDT_UTL_DataFactoryTst.createCity();
     }
 
     @isTest 
@@ -20,9 +20,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'LastNameTest');
         infoDtata.put('firstName', 'FirtNameTest');
         infoDtata.put('gender', 'Maschio');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('LSTFTN21H02Bt0T', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('LSTFTN21L06Bt0Q', resulFilscalCode, 'Calculate FiscalCode Test');
     }
     @isTest 
     static void calculateFiscalCodeBirthPlaceNotFoundTest(){
@@ -32,9 +32,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'LastNameTest');
         infoDtata.put('firstName', 'FirtNameTest');
         infoDtata.put('gender', 'f');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals(null, ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals(null, resulFilscalCode, 'Calculate FiscalCode Birth Place Not Found Test');
     }
     @isTest 
     static void calculateFiscalCodeOtherGenderTest(){
@@ -44,9 +44,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'LNT');
         infoDtata.put('firstName', 'FNT');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('LNTFNT21T50Bt0Y', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('LNTFNT22A54Bt0U', resulFilscalCode, 'Calculate FiscalCode Other Gender Test');
     }
     @isTest 
     static void calculateFiscalCodeLastAndFirtNameEqual2(){
@@ -56,9 +56,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'waN');
         infoDtata.put('firstName', 'zoD');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('WNAZDO22A50Bt0T', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('WNAZDO22B54Bt0A', resulFilscalCode,'Calculate FiscalCode Last And FirtName Equal');
     }
     @isTest 
     static void calculateFiscalCodeLastAndFirtNameEqual1(){
@@ -68,9 +68,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'Le');
         infoDtata.put('firstName', 'Qu');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('LEXQUX22B50Bt0Y', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('LEXQUX22C54Bt0L', resulFilscalCode, 'Calculate FiscalCode Last And FirtName Equal');
     }
     @isTest 
     static void calculateFiscalCodeLastAndFirtNameEqual1manyVowel(){
@@ -80,9 +80,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'pao');
         infoDtata.put('firstName', 'joa');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('PAOJOA22C50Bt0B', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('PAOJOA22D54Bt0L', resulFilscalCode, 'Calculate FiscalCode Last And FirtName Equal1 many Vowel');
     }
     @isTest 
     static void calculateFiscalCodeMonthsplusSeven(){
@@ -92,9 +92,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'bi123456789');
         infoDtata.put('firstName', 'ovhi');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('B12VHO22D50Bt0B', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('B12VHO22E54Bt0L', resulFilscalCode, 'Calculate FiscalCode Months plus Seven');
     }
     @isTest 
     static void calculateFiscalCodeMonthsplusone(){
@@ -104,9 +104,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tyi');
         infoDtata.put('firstName', 'reg');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TYIRGE21R50Bt0K', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TYIRGE21S54Bt0W', resulFilscalCode, 'Calculate FiscalCode Months plus one');
     }
     @isTest 
     static void calculateFiscalCodeMonthsplutwo(){
@@ -116,9 +116,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tipolo');
         infoDtata.put('firstName', 'coca');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TPLCCO21S50Bt0B', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TPLCCO21T54Bt0L', resulFilscalCode, 'Calculate FiscalCode Months plus two');
     }
     @isTest 
     static void calculateFiscalCodeMonthsplusheigth(){
@@ -128,9 +128,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tipolo');
         infoDtata.put('firstName', 'coca');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TPLCCO22E50Bt0Z', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TPLCCO22H54Bt0P', resulFilscalCode, 'Calculate FiscalCode Months plus two');
     }
     @isTest 
     static void calculateFiscalCodeMonthsminous1(){
@@ -140,9 +140,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tipolo');
         infoDtata.put('firstName', 'coca');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TPLCCO21M50Bt0H', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TPLCCO21P54Bt0A', resulFilscalCode, 'Calculate FiscalCode Months minous 1');
     }
     @isTest 
     static void calculateFiscalCodeMonthsminous2(){
@@ -152,9 +152,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tipolo');
         infoDtata.put('firstName', 'coca');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TPLCCO21L50Bt0T', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TPLCCO21M54Bt0P', resulFilscalCode, 'Calculate FiscalCode Months minous 1');
     }
     @isTest 
     static void calculateFiscalCodeCyrrentMonth(){
@@ -164,9 +164,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tipolo');
         infoDtata.put('firstName', 'coca');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TPLCCO21P50Bt0S', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TPLCCO21R54Bt0F', resulFilscalCode, 'Calculate FiscalCode CyrrentMonth');
     }
     @isTest 
     static void calculateFiscalCodeInvalidMonth(){
@@ -176,9 +176,9 @@ public class HDT_UTL_CalculateFiscalCodeTst {
         infoDtata.put('lastName', 'tipolo');
         infoDtata.put('firstName', 'coca');
         infoDtata.put('gender', 'M');
-        String ResulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
-        System.debug('test:'+ ResulFilscalCode);
-        System.assertEquals('TPLCCO59T57Bt0J', ResulFilscalCode);
+        String resulFilscalCode =HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoDtata);
+        System.debug('test:'+ resulFilscalCode);
+        System.assertEquals('TPLCCO59T57Bt0J', resulFilscalCode, 'Calculate FiscalCode Invalid Month');
     }
 
 }
