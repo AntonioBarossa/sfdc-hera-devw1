@@ -61,7 +61,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //CONTACT AND ACCOUNT RELATIONSHIP
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id); //NOPMD
+        HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id);
         
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
         contractList[0].ServicePoint__c = servPoint.Id;
