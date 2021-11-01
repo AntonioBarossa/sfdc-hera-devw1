@@ -13,6 +13,9 @@ public class HDT_UTL_GestAppAutomaticCreationCaseTst {
     @TestSetup
     static void setup(){
         
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+
+
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
@@ -31,7 +34,7 @@ public class HDT_UTL_GestAppAutomaticCreationCaseTst {
         
          Case c = [SELECT Id,Phase__c,ServicePoint__c,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name,ServicePoint__r.Account__c FROM Case LIMIT 1];
         
-        Map<String,Object> myMap = new Map<String,Object>{'method' => 'Chiusura contatore',
+        Map<String,Object> myMap = new Map<String,Object>{'method' => 'VerificaPressione',
             												'sender' => c};
            Test.startTest();                                                     
           HDT_UTL_GestAppAutomaticCreationCase gestApp = new HDT_UTL_GestAppAutomaticCreationCase(); 
