@@ -108,17 +108,26 @@ public class HDT_QR_OpportunityTst{
 		                 FROM Sale__c
 		                 WHERE Status__c='Attiva'
 		                 LIMIT 1];
+		
+		Order ordTst=[SELECT Id
+		FROM Order
+		LIMIT 1];
+
+		Opportunity oppTst=[SELECT Id, SBQQ__PrimaryQuote__c
+		FROM Opportunity
+		LIMIT 1];
+		
+		List<SBQQ__Quote__c> tQuote= HDT_UTL_DataFactoryTst.createQuote(1, true, ordTst.Id, oppTst.Id, saleTst.Id, 'Quote');
+		oppTst.SBQQ__PrimaryQuote__c = tQuote[0].Id;
+		update oppTst;
 
 
 		HDT_QR_Opportunity oppQr=new HDT_QR_Opportunity();
 
-		string stageName='Negotiation';
+		string stageName='NotNegotiation';
 		string fields='StageName';
 
-
 		List<Opportunity> methodRet=oppQr.getRecordsBySaleFilterStageNameNotVas(saleTst.Id, fields, stageName);
-
-		System.debug('methodRet = '+methodRet);
 
 		// Cannot insert IsVas= null, return is always empty
 
