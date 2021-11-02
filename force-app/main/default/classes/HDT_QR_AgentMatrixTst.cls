@@ -10,14 +10,14 @@ public with sharing class HDT_QR_AgentMatrixTst {
 
     @testSetup
         static void setup(){
-            HDT_UTL_DataFactoryTst.createAgentMatrix(1, true, 'Telefono');
+            HDT_UTL_DataFactoryTst.createAgentMatrix(1, true, 'Sportello');
         }
 
 
     @isTest
     public static void testGetRecordsByChannel(){
         Test.startTest();
-        AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getRecordsByChannel('Telefono');
+        AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getRecordsByChannel('Sportello');
         
         System.assert(testAgent!=null, 'getRecordByChannel did not work correctly');
         System.assertNotEquals(new List<AgentMatrix__c>{new AgentMatrix__c()},testAgent, 'getRecordByChannel did not work correctly');
