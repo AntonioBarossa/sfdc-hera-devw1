@@ -99,7 +99,9 @@ public with sharing class HDT_LC_GeneralInfoTst {
         Test.startTest();
         try {
             HDT_LC_GeneralInfo.handleAutomaticAgentAssign('Channel Test', sales.Id);
-        } catch (Exception ex) { }
+        } catch (Exception ex) { 
+            System.debug(ex.getMessage());
+        }
         System.assert(agentMatrix!= null, 'AgentMatrix__c is not null');
         System.assertNotEquals(null, agentMatrix, 'handleAutomaticAgentAssign did not work correctly');
         Test.stopTest();

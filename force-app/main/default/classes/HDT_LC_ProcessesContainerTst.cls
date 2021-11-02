@@ -12,7 +12,8 @@ public class HDT_LC_ProcessesContainerTst{
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();
 		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
-		List<Order> orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, saleList);
+		List<Order> orderList;
+		orderList=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, saleList);
 	}
 
 	@isTest

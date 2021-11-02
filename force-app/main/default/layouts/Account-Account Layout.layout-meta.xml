@@ -25,7 +25,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RecordTypeId</field>
+                <field>RecordTypeName__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

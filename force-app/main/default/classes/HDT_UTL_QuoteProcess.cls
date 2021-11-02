@@ -12,6 +12,8 @@ public inherited sharing class HDT_UTL_QuoteProcess {
     private static HDT_SRV_SaleServiceItem itemsSrv = new HDT_SRV_SaleServiceItem();
     private static HDT_SRV_Opportunity oppSrv = new HDT_SRV_Opportunity();
 
+    //private static boolean justForTest = false;
+
     private static list<SBQQ__Quote__c> filterAmendedQuote(list<SBQQ__Quote__c> quoteList){
         list<SBQQ__Quote__c> filteredList = new list<SBQQ__Quote__c>();
 
@@ -20,7 +22,7 @@ public inherited sharing class HDT_UTL_QuoteProcess {
                 filteredList.add(quote);
             }
         }
-
+        //justForTest=filteredList.size()>0;
         return filteredList;
     }
 
@@ -93,7 +95,31 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         newQuote.Market__c = oldQuote.Market__c;
         newQuote.SupplyCity__c = oldQuote.SupplyCity__c;
         newQuote.ContractReference__c = oldQuote.ContractReference__c;
+        newQuote.SalesCompanyCode__c = oldQuote.SalesCompanyCode__c;
         newQuote.SBQQ__Status__c = 'In Review';
+
+        newQuote.SBQQ__Opportunity2__c = oldQuote.SBQQ__Opportunity2__c;
+        newQuote.SBQQ__Account__c = oldQuote.SBQQ__Account__c;
+        newQuote.SBQQ__Primary__c = oldQuote.SBQQ__Primary__c;
+        newQuote.CampaignCode__c = oldQuote.CampaignCode__c;
+        newQuote.CreatedBy__c = oldQuote.CreatedBy__c;
+        newQuote.BrandLogo__c = oldQuote.BrandLogo__c;
+        newQuote.isTransition__c = oldQuote.isTransition__c;
+        newQuote.AllowChangeUse__c = oldQuote.AllowChangeUse__c;
+        newQuote.UseCategory__c = oldQuote.UseCategory__c;
+        newQuote.ConsumptionRangeEE__c = oldQuote.ConsumptionRangeEE__c;
+        newQuote.ConsumptionRangeGAS__c = oldQuote.ConsumptionRangeGAS__c;
+        newQuote.PowerFlow__c = oldQuote.PowerFlow__c;
+        newQuote.MarketOrigin__c = oldQuote.MarketOrigin__c;
+        newQuote.ResidentDeliveryAddress__c = oldQuote.ResidentDeliveryAddress__c;
+        newQuote.MeterType__c = oldQuote.MeterType__c;
+        newQuote.SupplyProvince__c = oldQuote.SupplyProvince__c;
+        newQuote.Login__c = oldQuote.Login__c;
+        newQuote.LoginGroup__c = oldQuote.LoginGroup__c;
+        newQuote.Role__c = oldQuote.Role__c;
+        newQuote.NewClient__c = oldQuote.NewClient__c;
+        newQuote.SuperUser__c = oldQuote.SuperUser__c;
+        newQuote.SBQQ__PricebookId__c = oldQuote.SBQQ__PricebookId__c;
     }
 
     private static list<SBQQ__Quote__c> getSaleAmendOldQuotes(list<SBQQ__Quote__c> newQuoteList){
@@ -201,18 +227,21 @@ public inherited sharing class HDT_UTL_QuoteProcess {
     public static void amendProcessManagementBefore(list<SBQQ__Quote__c> newQuoteList){
 
         list<SBQQ__Quote__c> amendList = filterAmendedQuote(newQuoteList);
-        System.debug('before - amendList ' + amendList);
+        //System.debug('before - amendList ' + json.serialize(amendList));
 
         list<SBQQ__Quote__c> quoteToAssignList = getQuoteToAssign(amendList);
-        System.debug('before - quoteToAssignList ' + quoteToAssignList);
+        //System.debug('before - quoteToAssignList ' + json.serialize(quoteToAssignList));
         
         List<HDT_WRP_QuoteAmend> wrapQuote = mapQuoteAmend(amendList, quoteToAssignList);
-        System.debug('before - wrapQuote ' + wrapQuote);
+        //System.debug('before - wrapQuote ' + json.serialize(wrapQuote));
 
         for (HDT_WRP_QuoteAmend wrp : wrapQuote) {
             assignValueToNewQuote(wrp.newQuote, wrp.oldQuote);
         }
-        System.debug('before - assignValueToNewQuote ' + wrapQuote);
+        //System.debug('before - assignValueToNewQuote ' + wrapQuote);
+        /*if(justForTest){
+            throw new HDT_WS_MrrRequest.CustomMessageException('testing amendment quote');
+        }*/
         
     }
 

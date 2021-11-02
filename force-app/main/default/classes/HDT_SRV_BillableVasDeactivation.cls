@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     
@@ -13,7 +14,7 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         return;
     }
 
-    public HDT_SRV_BillableVasDeactivation(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+    /*public HDT_SRV_BillableVasDeactivation(HDT_WRP_MrrRequest.HDT_WRP_Request request){
         if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
                 if(this.mapRequestFields.get(field.name) == null){
@@ -21,9 +22,9 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
                 }
             }
         }
-    }
+    }*/
 
-    public static void testHandler(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+    public static void handlerAsyncronousNotify(HDT_WRP_MrrRequest.HDT_WRP_Request request){
         HDT_WRP_MrrRequest.HDT_WRP_Field fieldId;
         if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
             for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
@@ -90,14 +91,14 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         //fake code
 
         List<HDT_WRP_HerokuPostSalesManager> wrpResponses = new List<HDT_WRP_HerokuPostSalesManager>();
-        String outputResult;
+        //String outputResult;
 
         Map<String, Object> argsMap = (Map<String, Object>) args;
-        SObject transition = (SObject) argsMap.get('transition'); //phase transition
-        SObject action = (SObject) argsMap.get('action'); //phase transition detail
-        String method = (String) argsMap.get('method');
+        //SObject transition = (SObject) argsMap.get('transition'); //phase transition
+        //SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        //String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
-        Object templateMap = argsMap.get('templateMap');
+        //Object templateMap = argsMap.get('templateMap');
         Map<String, String> parameters = (Map<String, String>) argsMap.get(
             'parameters'
         );
@@ -194,7 +195,9 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         }
 
         system.debug(caseToUpdate);
-        system.enqueueJob(new HDT_QBL_UpdateQueueable(caseToUpdate));
+        if(!Test.isRunningTest()){
+            system.enqueueJob(new HDT_QBL_UpdateQueueable(caseToUpdate));
+        }
 
         response.success = true;
         response.message = 'OK';
@@ -214,7 +217,7 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         }
     }
 
-    @Future
+    /*@Future
     private static void updateFuture(String inputString){
         system.debug('ivaste updatefuture');
         Case c = (Case) JSON.deserialize(inputString, Case.class);
@@ -223,11 +226,6 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
 
     public Boolean isPostSalesOrder(){
         return this.mapRequestFields.get('RECORD_ID').startsWithIgnoreCase('O-');
-    }
-
-
+    }*/
     
-
-
-
 }

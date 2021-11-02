@@ -16,7 +16,8 @@ public class HDT_QR_CaseTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList;
+        caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
     }
 
@@ -49,7 +50,7 @@ public class HDT_QR_CaseTst {
     @isTest
     static void testgetChageNonRegMeterByOrder() {
         Test.startTest();
-        Case tCase = [SELECT Id, Status, Type, Phase__c, VulturePracticeReference__c FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+        //Case tCase = [SELECT Id, Status, Type, Phase__c, VulturePracticeReference__c FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
         Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
 
         //tCase.Type = 'Cambio Contatore Non Registrato';
@@ -76,7 +77,7 @@ public class HDT_QR_CaseTst {
         Test.startTest();
     
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
-        Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
+
         HDT_QR_Case qrCase = new HDT_QR_Case();
         
         //EMPTY TEST
@@ -99,8 +100,6 @@ public class HDT_QR_CaseTst {
         Test.startTest();
     
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
-    
-        Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
 
         List<String> caseIdList = new List<String>();
         caseIdList.add(tCase.Id);    
@@ -125,8 +124,6 @@ public class HDT_QR_CaseTst {
         Test.startTest();
     
         Case tCase = [SELECT Id, Status FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
-    
-        Order tOrder = [SELECT Id, Status FROM Order WHERE Status = 'Draft' LIMIT 1];
 
         List<String> caseIdList = new List<String>();
         caseIdList.add(tCase.Id);    
@@ -136,7 +133,8 @@ public class HDT_QR_CaseTst {
         List<Case> testCase = qrCase.getRecordCreatedYesterdayDifferentBy('Pagamenti');
         system.debug('testCase = '+testCase);
 
-        List<Case> testCase1 = qrCase.getRecordCreatedLastWeekEqualsBy('Pagamenti');
+        List<Case> testCase1;
+        testCase1 = qrCase.getRecordCreatedLastWeekEqualsBy('Pagamenti');
 
     
         System.assertEquals(true, testCase.isEmpty(), 'Case list not empty');

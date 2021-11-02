@@ -147,10 +147,10 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     let username;
                     let password;
                     for (let i = 0; i < this.toolbarAttributes.callData.length; i++) {
-                        if (dataArray[i].fieldName == 'username') {
+                        if (dataArray[i].fieldName == 'SF_USERNAME') {
                             username = dataArray[i].value;
                         }
-                        if (dataArray[i].fieldName == 'password') {
+                        if (dataArray[i].fieldName == 'SF_PASSWORD') {
                             password = dataArray[i].value;
                         }
                     }
@@ -163,9 +163,9 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                         'username' : username,
                         'password' : password
                     }).then(data => {
-                        console.log('******createActivity --- ' + JSON.stringify(data));
-                        this.activityId = data.Id;
-                        console.log('CAMPAINGCHECK:' + this.campaignMemberId);
+                        console.log('******createActivity --- OrderId - ' + JSON.stringify(data));
+                        // this.activityId = data.Id;
+                        // console.log('CAMPAINGCHECK:' + this.campaignMemberId);
                     // var hostname = window.location.hostname;
                     /*   var arr = hostname.split(".");
                         var instance = arr[0];
