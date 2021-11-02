@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     
@@ -90,14 +91,14 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         //fake code
 
         List<HDT_WRP_HerokuPostSalesManager> wrpResponses = new List<HDT_WRP_HerokuPostSalesManager>();
-        String outputResult;
+        //String outputResult;
 
         Map<String, Object> argsMap = (Map<String, Object>) args;
-        SObject transition = (SObject) argsMap.get('transition'); //phase transition
-        SObject action = (SObject) argsMap.get('action'); //phase transition detail
-        String method = (String) argsMap.get('method');
+        //SObject transition = (SObject) argsMap.get('transition'); //phase transition
+        //SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        //String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
-        Object templateMap = argsMap.get('templateMap');
+        //Object templateMap = argsMap.get('templateMap');
         Map<String, String> parameters = (Map<String, String>) argsMap.get(
             'parameters'
         );
