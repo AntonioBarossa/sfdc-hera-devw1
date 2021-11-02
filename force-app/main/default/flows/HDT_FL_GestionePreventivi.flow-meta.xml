@@ -2903,7 +2903,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>Get_Input_Case.Type</elementReference>
+                    <stringValue>Preventivo</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
