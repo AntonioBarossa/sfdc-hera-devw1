@@ -19,7 +19,7 @@ public with sharing class HDT_QR_AgentMatrixTst {
         Test.startTest();
         AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getRecordsByChannel('Sportello');
         
-        System.assert(testAgent!=null, 'getRecordByChannel did not work correctly');
+        System.assertEquals(true, testAgent!=null, 'getRecordByChannel did not work correctly');
         System.assertNotEquals(new List<AgentMatrix__c>{new AgentMatrix__c()},testAgent, 'getRecordByChannel did not work correctly');
         Test.stopTest();
     }
@@ -29,7 +29,7 @@ public with sharing class HDT_QR_AgentMatrixTst {
         Test.startTest();
         AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getAllRecords();  
               
-        System.assert(testAgent!=null, 'getAllRecords did not work correctly');
+        System.assertEquals(true, testAgent!=null, 'getAllRecords did not work correctly');
         System.assertNotEquals(new List<AgentMatrix__c>{new AgentMatrix__c()},testAgent, 'getAllRecords did not work correctly');
 
         Test.stopTest();
@@ -48,7 +48,7 @@ public with sharing class HDT_QR_AgentMatrixTst {
         Test.startTest();   
         AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getRecordByAgencyName(updateAgentMatrix.AgencyName__c);  
 
-        System.assert(testAgent != null, 'getRecordByAgencyName did not work correctly');
+        System.assertEquals(true, testAgent!=null, 'getRecordByAgencyName did not work correctly');
         System.assertNotEquals(new List<AgentMatrix__c>{new AgentMatrix__c()},testAgent, 'getRecordByAgencyName did not work correctly');
 
         Test.stopTest();
@@ -61,7 +61,7 @@ public with sharing class HDT_QR_AgentMatrixTst {
 
         AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getRecordByAgencyNameAndChannel('AgencyName', 'Channel');  
 
-        System.assert(testAgent != null, 'getRecordByAgencyNameAndChannel did not work correctly');
+        System.assertEquals(true, testAgent!=null, 'getRecordByAgencyNameAndChannel did not work correctly');
         System.assertNotEquals(new List<AgentMatrix__c>{new AgentMatrix__c()},testAgent, 'getRecordByAgencyNameAndChannel did not work correctly');
 
         Test.stopTest();
@@ -74,7 +74,7 @@ public with sharing class HDT_QR_AgentMatrixTst {
 
         AgentMatrix__c[] testAgent = HDT_QR_AgentMatrix.getAgentByUserNameAndChannel('userName' ,'Channel');   
 
-        System.assert(testAgent!=null, 'getAgentByUserNameAndChannel did not work correctly');
+        System.assertEquals(true, testAgent!=null, 'getAgentByUserNameAndChannel did not work correctly');
         System.assertNotEquals(new List<AgentMatrix__c>{new AgentMatrix__c()},testAgent, 'getAgentByUserNameAndChannel did not work correctly');
         
         Test.stopTest();
