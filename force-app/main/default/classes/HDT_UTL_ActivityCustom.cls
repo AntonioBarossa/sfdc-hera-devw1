@@ -166,6 +166,23 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    public static void checkForMandatoryAttachment(Map<Id, wrts_prcgvr__Activity__c> newActsMap){
+        Id rtKoOldClient = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_KoPrecedeteCliente').getRecordTypeId();
+        Set<Id> actsToCheck = new Set<Id>();
+
+        for(wrts_prcgvr__Activity__c act : newActsMap.values()){
+            if(act.recordTypeId == rtKoOldClient && act.Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c)){
+                actsToCheck.add(act.Id);
+            }
+        }
+        List<wrts_prcgvr__Activity__c> actsWithAttachments = [select Id, (select Id from AttachedContentDocuments ) from wrts_prcgvr__Activity__c where id IN :actsToCheck WITH Security_Enforced];
+        for(wrts_prcgvr__Activity__c act : actsWithAttachments){
+            if(!(act.AttachedContentDocuments?.size()>0)){//if AttachedContentDocuments.isEmpty() or null
+                newActsMap.get(act.id).addError('Allegare Documentazione Obbligatoria');
+            }
+        }
+    }
+
 
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
