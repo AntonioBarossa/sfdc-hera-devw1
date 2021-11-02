@@ -17,7 +17,7 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 		System.runAs(internalUser){
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 
 		}
 	}

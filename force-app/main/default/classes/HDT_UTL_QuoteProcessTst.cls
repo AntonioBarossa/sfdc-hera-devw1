@@ -47,7 +47,7 @@ public with sharing class HDT_UTL_QuoteProcessTst{
 
 			insert quotes;
 
-			List<SaleServiceItem__c> saleServItem=HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opps[0].Id, quotes[0].Id, servPoints[0].Id);
+			HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opps[0].Id, quotes[0].Id, servPoints[0].Id);
 		}
 	}
 
