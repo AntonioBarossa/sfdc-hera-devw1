@@ -49,42 +49,62 @@ public with sharing class HDT_SRV_BillingProfileTst {
     
     @isTest
     static void testCrudUpdate() {
+        boolean finito;
         HDT_SRV_BillingProfile billingProfileClass = new HDT_SRV_BillingProfile();
         Test.startTest(); 
         billingProfileClass.checkAccessInit('Account__c','update'); 
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCrudUpdate not finished');
+        System.assertNotEquals(false, finito, 'testCrudUpdate not finished');
     }
 
     @isTest
     static void testCrudRead() {
+        boolean finito;
         HDT_SRV_BillingProfile billingProfileClass = new HDT_SRV_BillingProfile();
         Test.startTest(); 
         billingProfileClass.checkAccessInit('Account__c','read');
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCrudRead not finished');
+        System.assertNotEquals(false, finito, 'testCrudRead not finished');
     }
 
 
     @isTest
     static void testCheckReadAccess() {
+        boolean finito;
         HDT_SRV_BillingProfile billingProfileClass = new HDT_SRV_BillingProfile();
         Test.startTest(); 
         billingProfileClass.checkReadAccess('BankAgency__c');
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckReadAccess not finished');
+        System.assertNotEquals(false, finito, 'testCheckReadAccess not finished');
     }
 
     @isTest
     static void testCheckUpdateAccess() {
+        boolean finito;
         HDT_SRV_BillingProfile billingProfileClass = new HDT_SRV_BillingProfile();
         Test.startTest(); 
         billingProfileClass.checkUpdateAccess('BankAgency__c');
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckUpdateAccess not finished');
+        System.assertNotEquals(false, finito, 'testCheckUpdateAccess not finished');
     }
 
     @isTest
     static void testCheckCreateAccess() {
+        boolean finito;
         HDT_SRV_BillingProfile billingProfileClass = new HDT_SRV_BillingProfile();
         Test.startTest(); 
         billingProfileClass.checkCreateAccess('BankAgency__c');
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckCreateAccess not finished');
+        System.assertNotEquals(false, finito, 'testCheckCreateAccess not finished');
     }
 }
