@@ -5,6 +5,7 @@
  * @last modified on  : 07-10-2021
  * @last modified by  : federico.defelice@webresults.it
 **/
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_PclickBulkActionVas implements wrts_prcgvr.Interfaces_1_2.IApexActionBulk {
 
     private static Map<Id, Id> orderToContract = new Map<Id, Id>();
