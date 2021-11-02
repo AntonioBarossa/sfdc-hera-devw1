@@ -16,8 +16,6 @@ public class HDT_QR_CampaignMemberStatusMetadataTst{
 		                                            WHERE MasterLabel='Nuovo'
 		                                            LIMIT 1];
 
-		System.debug('campMembStat = '+campMembStat);
-
 		HDT_QR_CampaignMemberStatusMetadata.getRecords();
 
 

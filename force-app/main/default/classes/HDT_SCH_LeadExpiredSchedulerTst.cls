@@ -12,7 +12,7 @@ public class HDT_SCH_LeadExpiredSchedulerTst {
     static void myData() 
     {
         
-          List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
+          HDT_UTL_DataFactoryTst.createLead(1, true);
         
         }
     
@@ -23,7 +23,7 @@ public class HDT_SCH_LeadExpiredSchedulerTst {
 
         Test.startTest();
         HDT_SCH_LeadExpiredScheduler le = new HDT_SCH_LeadExpiredScheduler();
-        String jobID = System.schedule('Label of the job', CRON_EXP , le);
+        System.schedule('Label of the job', CRON_EXP , le);
         Test.stopTest();
 
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];
