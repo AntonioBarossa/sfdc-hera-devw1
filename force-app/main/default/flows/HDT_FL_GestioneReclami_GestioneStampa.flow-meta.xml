@@ -942,7 +942,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <stringValue>Reclamo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

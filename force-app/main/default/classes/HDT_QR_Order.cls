@@ -293,7 +293,8 @@ public inherited sharing class HDT_QR_Order {
             RegionalAdditional__c,                            //@frpanico 16/09/21 
             isTransition__c,
             QuotationType__c,
-            CommodityFormula__c                              //@frpanico 28/09/21
+            CommodityFormula__c,                              //@frpanico 28/09/21
+            Email__c                                          //@frpanico 28/09/21
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

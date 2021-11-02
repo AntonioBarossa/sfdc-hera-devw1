@@ -4251,6 +4251,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>CampaignMember.ContactLeadAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMember.CampaignMemberUniqueCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13444,6 +13449,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocumentPackage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.isMultipleQuoteOffer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

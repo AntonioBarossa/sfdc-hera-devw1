@@ -118,6 +118,12 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                             res.setStatusCode(404);
                         }
 
+                    } when 'ArrichDataEntity' {
+                        HDT_WS_Response customResp = (HDT_WS_Response)HDT_WS_ArrichmentDataEntityResponse.class.newInstance();
+                        body = JSON.serialize(customResp);
+                        res.setStatusCode(200);
+                        res.setStatus('success');
+                        res.setBody(body); 
                     } when else {
         
                         res.setStatusCode(404);
