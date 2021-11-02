@@ -13118,6 +13118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.isMultipleQuoteOffer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DocumentReceiptDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
