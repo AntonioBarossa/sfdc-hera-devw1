@@ -83,7 +83,7 @@ public inherited sharing class HDT_QR_Contract {
     * @return List<Contract>
     */
     public List<Contract> getActiveRecordsByAccountId(String accountId){
-        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status'); 
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
             Name,
@@ -91,6 +91,7 @@ public inherited sharing class HDT_QR_Contract {
             ContractNumber,
             Status,
             ServicePoint__c,
+            SAPContractCode__c,
             ServicePoint__r.ServicePointCode__c,
             ServicePoint__r.SupplyAddress__c
             FROM
@@ -108,7 +109,7 @@ public inherited sharing class HDT_QR_Contract {
     * @return List<Contract>
     */
     public List<Contract> getTempNewActivationContractsByAccountId(String accountId){
-        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status'); 
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
             Name,
@@ -116,6 +117,7 @@ public inherited sharing class HDT_QR_Contract {
             ContractNumber,
             Status,
             ServicePoint__c,
+            SAPContractCode__c,
             ServicePoint__r.ServicePointCode__c,
             ServicePoint__r.SupplyAddress__c
             FROM
