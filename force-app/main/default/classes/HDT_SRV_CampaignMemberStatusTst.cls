@@ -13,7 +13,7 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
 
         List<Campaign> cp = HDT_UTL_DataFactoryTst.createCampaign(1, true);
 
-        List<CampaignMemberStatus> cpmsList= HDT_UTL_DataFactoryTst.createCampaignMemberStatus(1, true, cp[0].Id);
+        cpmsList= HDT_UTL_DataFactoryTst.createCampaignMemberStatus(1, true, cp[0].Id);
 
     }
 
