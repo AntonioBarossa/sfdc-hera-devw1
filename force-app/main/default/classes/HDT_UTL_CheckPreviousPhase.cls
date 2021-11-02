@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_CheckPreviousPhase implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
 
     global Boolean evaluate(Object args){
