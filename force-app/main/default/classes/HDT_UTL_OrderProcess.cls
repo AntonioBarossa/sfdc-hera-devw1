@@ -170,8 +170,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         //List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
         List<String> ordersParent = new List<String>();//getParentOrders2(newOrdersList, oldOrdersList, orderMapNewToOld);
         List<Order> ordersFullList2 = orderQr.getRecordsByIds(olistd);
-        List<String> onlyString = new List<String>();
-        List<Order> ordersQualityOkUpdate = new List<Order>();
+        // List<String> onlyString = new List<String>();
+        // List<Order> ordersQualityOkUpdate = new List<Order>();
 
 //**** AGGIUNTA Validazione Documentale LG 2009 FF */
         List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
@@ -359,7 +359,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.checkReadAccess('RecordType.DeveloperName, Phase__c');
         List<Order> ordersFullList = orderQr.getRecordsByIds(orderIds);
 
-        List<Order> ordersToUpdateContract = new List<Order>();
+        // List<Order> ordersToUpdateContract = new List<Order>();
 
         for (Order order : ordersFullList) {
             if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
@@ -390,7 +390,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         orderSrv.checkReadAccess('RecordType.DeveloperName, Phase__c');
         List<Order> ordersFullList = orderQr.getRecordsByIds(orderIds);
 
-        List<Order> ordersToUpdateContract = new List<Order>();
+        // List<Order> ordersToUpdateContract = new List<Order>();
 
         for (Order order : ordersFullList) {
             if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
@@ -552,7 +552,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
         Map<String,Order> orderMapOld = new Map<String,Order>();
-        List<Order> ordersToUpdate = new List<Order>();        
+        // List<Order> ordersToUpdate = new List<Order>();        
         for (Order oldOrder : oldOrdersList) {
             orderMapOld.put(oldOrder.id,oldOrder);
         }
@@ -676,7 +676,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> orderListOldCustomer = new List<Order>();                        
         List<Order> orderListNewCustomer = new List<Order>();   
         List<Order> orderListcreditCheckPhaseManager = new List<Order>();                        
-        List<Order> orderList = new List<Order>();                                
+        // List<Order> orderList = new List<Order>();                                
 
         for (Order newOrder : (List<Order>) newOrdersMap.values()) {
             Order oldOrder = (Order) oldOrdersMap.get(newOrder.id); 
@@ -893,9 +893,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             {
                 orderNew.Status = 'Annullato';
             }
+            /**@frpanico 22/10/2021
+             * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
+             * Dunque non sono previste activity
+             */
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-                return true;
+                if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
+                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                {
+				    orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                    return true;
+                }
+                return false;
+            /**@frpanico 22/10/2021
+             * Si entra nello skip soltanto se la fase di arrivo non e' di annullamento
+             * Dunque non sono previste activity
+             */
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;
@@ -944,7 +957,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
             for(ServiceRequest__c s: srvRequests){
-                ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
+                // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
                 sReqToUpdate.add(s);
             }

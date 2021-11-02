@@ -14,6 +14,9 @@ public inherited sharing class HDT_QR_OrderItem {
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        famils.add('VAS Prodotto');
+        famils.add('VAS Servizio');
         return [
             SELECT
             ServicePoint__c,
@@ -25,7 +28,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto', 'VAS Servizio') AND (NOT Product2.Description LIKE '%Sconto%')))
+            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family IN  :famils AND (NOT Product2.Description LIKE '%Sconto%')))
             WITH SECURITY_ENFORCED
         ];
     }
@@ -106,16 +109,20 @@ public inherited sharing class HDT_QR_OrderItem {
     * @return List<OrderItem>
     */
     public List<OrderItem> getRecordsWithAmend(List<Id> listOrderId){
+        Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        //famils.add('VAS Prodotto');
+        //famils.add('VAS Servizio');
         return [
             SELECT 
             OrderId,
-            BillingProfile__c
+            BillingProfile__c,
+            ServicePoint__c
             FROM 
             OrderItem 
             WHERE
             OrderId IN :listOrderId  
             AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
-            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN  ('VAS Opzione prodotto', 'VAS Fatturabili', 'VAS Prodotto', 'VAS Servizio'))
+            AND (Product2.Name IN ('PDR','POD') OR Product2.Family IN :famils)
             WITH SECURITY_ENFORCED
         ];
     }
@@ -138,7 +145,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.Name,
             Product2.DescriptionSAP__c,
             VASBillingMode__c,
-            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c
+            SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
+            SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
@@ -156,15 +164,16 @@ public inherited sharing class HDT_QR_OrderItem {
     * @param quoteLineId 
     * @return List<Order> 
     **/
-    public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id quoteLineId){
+    public List<OrderItem> getPodOrderFromQuote(Id quoteId, Id qlOrServPointId){
         return [
             SELECT
-            OrderId
+            OrderId,
+            Order.ServicePoint__r.ServicePointCode__c
             FROM
             OrderItem
             WHERE
             Order.SBQQ__Quote__c =:quoteId
-            AND SBQQ__QuoteLine__c =:quoteLineId
+            AND (SBQQ__QuoteLine__c =:qlOrServPointId OR Order.ServicePoint__c=:qlOrServPointId)
             AND Order.ServicePoint__c!=null
             WITH SECURITY_ENFORCED
         ];
@@ -187,7 +196,7 @@ public inherited sharing class HDT_QR_OrderItem {
             FROM 
             OrderItem 
             WHERE OrderId = :orderId
-            AND Product2.Name = 'Analisi Consumi'
+            AND Product2.Family = 'VAS Fatturabili'
             WITH SECURITY_ENFORCED
         ];
     }

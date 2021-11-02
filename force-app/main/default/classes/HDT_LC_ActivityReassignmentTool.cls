@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Rollo (lorenzo.rollo@everis.com)
+ * @date 14/06/2021
+ * @description HDT_LC_ActivityReassignmentTool
+ * @history Name – Date – Description
+ */
+
 public with sharing class HDT_LC_ActivityReassignmentTool {
     private static Set<String> dynamicWorkGroupChannels = new Set<String> {
         'Assistente web',

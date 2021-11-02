@@ -5,6 +5,7 @@
  * @history Francesco Panico – 09/03/2021 – Created Class
  */
 
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
 public inherited sharing class HDT_QR_Variations {
 
     public static Boolean queryConsistencyTable(String recordId, String useCategory, String supplyType, String servicePointType){
@@ -48,8 +49,10 @@ public inherited sharing class HDT_QR_Variations {
             AND Account__c = :accountId
             AND Resident__c = true
             WITH SECURITY_ENFORCED];
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'queryServicePoint -  Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'queryServicePoint -  Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'queryServicePoint -  Exception StackTraceString: ' + e.getStackTraceString());
         }
 
         return toReturnList;
@@ -65,8 +68,10 @@ public inherited sharing class HDT_QR_Variations {
             AND Id != :caseId
             AND Resident__c = false
             WITH SECURITY_ENFORCED];
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'queryOtherCases -  Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'queryOtherCases -  Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'queryOtherCases -  Exception StackTraceString: ' + e.getStackTraceString());
         }
 
         return toReturnList;
@@ -77,7 +82,6 @@ public inherited sharing class HDT_QR_Variations {
         Case currentCase = new Case();
 
         try{
-
             currentCase = [SELECT AccountId,
             ServicePoint__c,
             CommodityFormula__c
@@ -86,9 +90,10 @@ public inherited sharing class HDT_QR_Variations {
             WITH SECURITY_ENFORCED
             LIMIT 1];
 
-        }catch(Exception e){
-
-            System.debug(e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'getCaseInfo -  Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'getCaseInfo -  Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'getCaseInfo -  Exception StackTraceString: ' + e.getStackTraceString());
         }
 
         return currentCase;

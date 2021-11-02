@@ -8,6 +8,8 @@ public with sharing class HDT_SRV_VoltureChangeManager
     private static String clonedOrderRecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(voltureChangeRecordTypeName).getRecordTypeId();
 
     private static String ammissibilityCheckTemplate = 'Controlli Ammissibilità';
+    @TestVisible
+    private static String publishUpdatePhase = 'Comunicazione verso Heroku';
     /**
      * @frpanico 06/10/2021
      * This method call the cloneSobject method from the HDT_UTL_VoltureChangeManager class
@@ -89,12 +91,14 @@ public with sharing class HDT_SRV_VoltureChangeManager
      */
     public void handleAmmissibilityCheck(Map<String,Object> paramsMap, Order currentOrder)
     {
+        Map<String,Object> ammissibilityCheckMap = voltureChangeUtl.handleAmmissibilityCheck(paramsMap, currentOrder);
         /**Execute the check and if its false creates the activity*/
-        if(!voltureChangeUtl.handleAmmissibilityCheck(paramsMap, currentOrder))
+        if(!(Boolean)ammissibilityCheckMap.get('result'))
         {
             wrts_prcgvr__Activity__c activity = voltureChangeUtils.createActivity(ammissibilityCheckTemplate);
             if(activity != null)
             {
+                activity.wrts_prcgvr__Description__c = (String)ammissibilityCheckMap.get('message');
                 activity.Order__c = currentOrder.Id;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             }
@@ -111,7 +115,7 @@ public with sharing class HDT_SRV_VoltureChangeManager
     {
         HDT_PEV_VoltureChangeManagerUpdateSObj__e platEvent = new HDT_PEV_VoltureChangeManagerUpdateSObj__e();
 
-        inputOrder.Phase__c = 'Comunicazione verso Heroku';
+        inputOrder.Phase__c = publishUpdatePhase;
         platEvent.SerializedSobj__c = JSON.serialize(inputOrder);
         Database.SaveResult sr = Eventbus.publish(platEvent);
         
@@ -119,7 +123,43 @@ public with sharing class HDT_SRV_VoltureChangeManager
         {
             return;
         }
-        return;
     }
 
+    /**@frpanico 25/10/2021
+     * Metodo che gestisce la risposta dell'arricchimento dati
+     * esegue la query sul metadato di configurazione
+     * richiama poi i metodi da utilizzare
+     * Prende in input una mappa Map<String,List<Object>> dove gli argomenti sono:
+     * List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> risposta dell'arricchimento
+     * List<SObject> dove vengono passati gli SObject da arricchire
+     * Ritorna in output gli SObject arricchiti
+     */
+    public List<SObject> handleResponseDataEnrichment(Map<String,List<Object>> inputMap)
+    {
+        /* Variable declaration */
+        List<String> objectNameList = new List<String>();
+        Map<String,Object> inputMapSingleSobj = new Map<String,Object>();
+        List<HDT_GenericDataEnrichmentTranscode__mdt> transcodeConfigs = new List<HDT_GenericDataEnrichmentTranscode__mdt>();
+        /* Get input variable */
+        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = 
+            (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)inputMap.get('posizioni');
+        List<SObject> sobjList = (List<SObject>)inputMap.get('sobjList');
+        /* Enrich SobjName List */
+        for(SObject sobj : sobjList)
+        {
+            objectNameList.add(sobj.getSObjectType().getDescribe().getName());
+        }
+        /* Retrieve Configs */
+        transcodeConfigs = voltureChangeQr.getDataEnrichmentTranscodeByObjectName(objectNameList);
+        /* Populate input map for single sobj enrichment */
+        inputMapSingleSobj.put('posizioni', JSON.serialize(posizioni));
+        inputMapSingleSobj.put('configs', JSON.serialize(transcodeConfigs));
+        /* Enrich Data */
+        for(SObject sobj : sobjList)
+        {   
+            inputMapSingleSobj.put('sobj', sobj);
+            sobj = voltureChangeUtl.enrichSobj(inputMapSingleSobj);
+        }
+        return sobjList;
+    }
 }

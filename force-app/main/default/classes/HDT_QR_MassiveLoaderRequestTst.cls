@@ -20,19 +20,19 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
             List<Opportunity> listOpp = HDT_UTL_DataFactoryTst.createOpportunity(1,true);
             List<ContentVersion> listContent = HDT_UTL_DataFactoryTst.createContentVersion(1,true,'test','body','path');
             Id contentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =: listContent[0].id].ContentDocumentId;
-
-            List<MassiveLoaderRequest__c> mLRList = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(1,false);
-            mLRList.get(0).Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
-            mLRList.get(0).Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO;
+            String processName='Lead';
+            String dataLead='HERA COMM,HCM,084588559,3485555555,test@mail.com,null,Rossi,Mario,Laurea,Studente,Benedetto Brin,1,80100,80100,Napoli,NA,null,null,null,,25,null,Maschio,null,SI,null,,null,,null,NO,null,,null,,null,sito standard,null,,null,,2020-10-11,null,,null,,null,,null,,null,test';
+            HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead});
+            //List<MassiveLoaderRequest__c> mLRList = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(1,false);
+            //  mLRList.get(0).Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE;
+            //  mLRList.get(0).Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO;
             
-            insert mLRList;
 
-            HDT_UTL_DataFactoryTst.createContentDocumentLink(1,true,listOpp[0].id,contentDocumentId);
+           HDT_UTL_DataFactoryTst.createContentDocumentLink(1,true,listOpp[0].id,contentDocumentId);
 
         }
 
-        u.ProfileId = HDT_UTL_DataFactoryTst.getProfileId(constantsUtl.HERA_STANDARD_USER_NAME);
-        update u;       
+         
 
     }
     
@@ -47,8 +47,8 @@ public with sharing class HDT_QR_MassiveLoaderRequestTst {
             HDT_QR_MassiveLoaderRequest testRequest = new HDT_QR_MassiveLoaderRequest ();
             List<MassiveLoaderRequest__c> returnedValue = testRequest.getRecordForImport();
           
-            System.assertEquals(false, returnedValue.isEmpty(), 'Get Record for Import is found');
-            System.assertNotEquals(true, returnedValue.isEmpty(), 'No records of MassiveLoaderRequest__c were retrieved');
+            System.assertEquals(1, returnedValue.size(), 1);
+          
 
             Test.stopTest();
 

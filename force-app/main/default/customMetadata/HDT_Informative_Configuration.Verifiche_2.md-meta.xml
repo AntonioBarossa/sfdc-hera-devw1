@@ -19,6 +19,10 @@
         <value xsi:type="xsd:string">Verifiche</value>
     </values>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Contact__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>
@@ -80,6 +84,10 @@
     </values>
     <values>
         <field>PaymentsList__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>ProcessObject__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Variabile</fullName>
+        <default>false</default>
+        <label>Variabile</label>
+    </customValue>
+    <customValue>
+        <fullName>Fisso</fullName>
+        <default>false</default>
+        <label>Fisso</label>
+    </customValue>
+    <masterLabel>Flag variabile o fisso</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

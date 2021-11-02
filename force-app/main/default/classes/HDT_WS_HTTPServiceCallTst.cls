@@ -7,68 +7,86 @@ public with sharing class HDT_WS_HTTPServiceCallTst {
     @TestSetup
 	static void setup()
     {
-
-		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.HERA_SYSTEM_ADMINISTRATOR_NAME);
-
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-
-		internalUser.UserPermissionsMarketingUser=true;
-
-		insert internalUser;
-
-		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false)};
-
-		insert permissionSetAssignments;
-
-		System.runAs(internalUser){
-            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-
-            insert accList;
-           
-        }
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration ('ArrichDataEntity', 'endpoint', 'POST', 'endUser');
+        HDT_UTL_DataFactoryTst.createWebServiceCredential ('endUser', 'test123', 'usernameTest');
     }
 
     @isTest
 	static void testsendRequest(){
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
+
         Test.startTest();
-        String nomeApi = 'ArrichData.Entity';
+        String nomeApi = 'ArrichDataEntity';
 
         HDT_WS_ArrichmentDataEntityRequest req = new HDT_WS_ArrichmentDataEntityRequest('IT019283999499','');
 
-        
         HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,req,HDT_WS_ArrichmentDataEntityResponse.class);
-	
-        Test.stopTest();
+        
         system.assertEquals(200, resp.statusCode,'status code is not 200');
         system.assertNotEquals(500, resp.statusCode,'status code is not 500');
+
+        Test.stopTest();
     }
 
     @isTest
 	static void testsendRequest2(){
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
+
         Test.startTest();
         
-        String nomeApi = 'ArrichData.Entity';
+        String nomeApi = 'ArrichDataEntity';
 
         List<HDT_WS_Request> reqList = new List<HDT_WS_Request>();
 
         HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,reqList,HDT_WS_ArrichmentDataEntityResponse.class);
 
         Test.stopTest();
+
         system.assertEquals(200, resp.statusCode,'status code is not 200');
         system.assertNotEquals(500, resp.statusCode,'status code is not 500');
+
     }
 
     @isTest
 	static void testsendRequest3(){
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
+
         Test.startTest();
-        String nomeApi = 'ArrichData.Entity';
+        String nomeApi = 'ArrichDataEntity';
 
         Map<String,String> reqMap = new Map<String,String>();
 
         HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,reqMap,HDT_WS_ArrichmentDataEntityResponse.class);
         Test.stopTest();
+
         system.assertEquals(200, resp.statusCode,'status code is not 200');
         system.assertNotEquals(500, resp.statusCode,'status code is not 500');
+    }
+
+    @isTest
+    static void testsendRequest4(){
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+        String nomeApi = 'ArrichDataEntity';
+
+        Map<String,Object> reqMap = new Map<String,Object>();
+
+        HDT_WS_Response resp = HDT_WS_HTTPServiceCall.sendRequest(nomeApi,reqMap,HDT_WS_ArrichmentDataEntityResponse.class);
+
+        Test.stopTest();
+
+        system.assertEquals(200, resp.statusCode,'status code is not 200');
+        system.assertNotEquals(500, resp.statusCode,'status code is not 500');
+
     }
 
 }

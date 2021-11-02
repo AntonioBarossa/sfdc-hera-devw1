@@ -1,0 +1,9 @@
+<template>
+    <template if:true={isScriptBtnVisible}>
+        <span class="slds-m-right_small">
+            <lightning-button label="Avvia Script" icon-name="utility:call" onclick={showModal} variant="brand"> </lightning-button>
+        </span>
+    </template>
+
+    <c-hdt-manage-script-modal record-id={orderId} modal></c-hdt-manage-script-modal>
+</template>

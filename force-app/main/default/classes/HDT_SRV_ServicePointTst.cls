@@ -138,30 +138,25 @@ public with sharing class HDT_SRV_ServicePointTst {
  
             Test.startTest();
 
+            ServicePoint__c spException = new ServicePoint__c(
+                    ServicePointCode__c='testServicePointCode',
+                    Name = 'testServicePoint0',
+                    SupplyStreet__c = 'testSupplyStreet1'
+            );
+            insert spException;
+
             List<ServicePoint__c> spList = [SELECT Id, Name, ServicePointCode__c FROM ServicePoint__c WHERE Name='testServicePoint0'];
 
             try {
-
-                spList[0].Name = 'ServicePointTest';
-
+                spList[0].SupplyStreet__c = 'testSupplyStreet2';            
                 srvPoint.updateRecord(spList[0]);
 
             } catch (Exception e) {
-                
+
                 System.debug(e);
             }
 
-            try {
-                spList[0].ServicePointCode__c = 'SPC';
-            
-                srvPoint.updateRecord(spList[0]);
-
-            } catch (Exception e) {
-                
-                System.debug(e);
-            }
-
-            List<ServicePoint__c> spCheckList = [SELECT Id FROM ServicePoint__c WHERE Name = 'testServicePoint0'];
+            List<ServicePoint__c> spCheckList = [SELECT Id FROM ServicePoint__c WHERE SupplyStreet__c = 'testSupplyStreet2'];
  
             Test.stopTest();
 
@@ -178,6 +173,12 @@ public with sharing class HDT_SRV_ServicePointTst {
         System.runAs(u){
  
             Test.startTest();
+
+            ServicePoint__c spException = new ServicePoint__c(
+                    ServicePointCode__c='testServicePointCode',
+                    Name = 'testServicePoint0'
+            );
+            insert spException;
 
             List<ServicePoint__c> spList = [SELECT Id, RemiCode__c FROM ServicePoint__c WHERE Name='testServicePoint0'];
             spList[0].RemiCode__c = 'idclip';

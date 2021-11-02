@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_AccountSelectorController {
 	
 	@TestVisible
@@ -34,11 +35,11 @@ public with sharing class HDT_LC_AccountSelectorController {
 					result.preFilter = activity.ClientNumber__c;
 				}
 				
-				System.debug('Init - String.isBlank(activity.Account__c): ' + String.isBlank(activity.Account__c));
-				System.debug('Init - String.isNotBlank(activity.Contact__c): ' + String.isNotBlank(activity.Contact__c));
-				System.debug('Init - String.isBlank(activity.Lead__c): ' + String.isBlank(activity.Lead__c));
-				System.debug('Init - String.isNotBlank(result.preFilter): ' + String.isNotBlank(result.preFilter));
-				System.debug('Init - result.preFilter: ' + result.preFilter);
+				System.debug(LoggingLevel.DEBUG, 'Init - String.isBlank(activity.Account__c): ' + String.isBlank(activity.Account__c));
+				System.debug(LoggingLevel.DEBUG, 'Init - String.isNotBlank(activity.Contact__c): ' + String.isNotBlank(activity.Contact__c));
+				System.debug(LoggingLevel.DEBUG, 'Init - String.isBlank(activity.Lead__c): ' + String.isBlank(activity.Lead__c));
+				System.debug(LoggingLevel.DEBUG, 'Init - String.isNotBlank(result.preFilter): ' + String.isNotBlank(result.preFilter));
+				System.debug(LoggingLevel.DEBUG, 'Init - result.preFilter: ' + result.preFilter);
 
 				if(String.isBlank(activity.Account__c) && String.isNotBlank(activity.Contact__c)) {
 					result.accounts = handleAccount(activity.Contact__c, activity.Id);
@@ -46,16 +47,17 @@ public with sharing class HDT_LC_AccountSelectorController {
 				} else if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
 					
 					result.contacts = getContacts(result.preFilter);
-					System.debug('Init - result.contacts: ' + result.contacts);
+					System.debug(LoggingLevel.DEBUG, 'Init - result.contacts: ' + result.contacts);
 					result.leads = getLeads(result.preFilter);
-					System.debug('Init - result.leads: ' + result.leads);
+					System.debug(LoggingLevel.DEBUG, 'Init - result.leads: ' + result.leads);
 					
 					if(result.contacts.size() == 1 && result.leads.isEmpty()) {
 						String contactId = result.contacts.get(0).Id;
 						result.contactId = contactId;
 						result.accounts = handleAccount(contactId, activity.Id);
-						if(result.accounts.size() == 1) 
+						if(result.accounts.size() == 1) {
 							result.accountId = result.accounts.get(0).Id;
+						}
 					} else if(result.contacts.isEmpty() && result.leads.size() == 1) {
 						String leadId = result.leads.get(0).Id;
 						handleLead(leadId, activity.Id);
@@ -78,7 +80,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 				// return handleBPCodeSearch(queryString);
 				queryString = queryString + '%';
 				result.accounts = getAccountByBPCode(queryString);
-				System.debug('account Id: ' + result.accounts.get(0).Id);
+				System.debug(LoggingLevel.DEBUG, 'account Id: ' + result.accounts.get(0).Id);
 				result.contacts = getContactTitolare(result.accounts.get(0).Id);
 			} else {
 				queryString = '%' + queryString + '%';
@@ -87,9 +89,9 @@ public with sharing class HDT_LC_AccountSelectorController {
 			}
 			return JSON.serialize(result);
 		} catch (Exception e) {
-			System.debug('seach - exception message: ' + e.getMessage());
-            System.debug('seach - exception type name: ' + e.getTypeName());
-            System.debug('seach - exception stack trace string: ' + e.getStackTraceString());
+			System.debug(LoggingLevel.DEBUG, 'seach - exception message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'seach - exception type name: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'seach - exception stack trace string: ' + e.getStackTraceString());
 			throw new AuraHandledException(e.getMessage());
 		}
 	}

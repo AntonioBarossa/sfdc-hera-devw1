@@ -33,7 +33,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
     { 
         List<Order> ordList = new List<Order>();
         List<Case> csList = new List<Case>();
-        List<Contact> listContact = new List<Contact>();
+        // List<Contact> listContact = new List<Contact>(); //! Variable was not used
         List<String> accountIdList = new List<String>();
         Map<id,Contact> assignAccountIdCont = new Map<id,Contact>();
         for(HDT_WRP_CampaignPraxidia.wrapToIterate wr :wrapIterable){

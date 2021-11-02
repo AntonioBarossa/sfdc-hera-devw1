@@ -1,6 +1,14 @@
-
+@SuppressWarnings('PMD.ExcessivePublicCount')
 public class HDT_WRP_BpCaVariation {
-
+	
+	public String numeroSr;
+	public String codiceCausale;
+	public String dataCreazione;
+	public String cancellaBpAlternativo;
+	public String nomeContatto;
+	public HDT_WRP_BpCaVariationAccount account;
+	public HDT_WRP_BpCaVariationOrdine ordine;
+	
 	public class HDT_WRP_BpCaVariationAccount {
 		public String nome;
 		public String alias;
@@ -31,14 +39,6 @@ public class HDT_WRP_BpCaVariation {
 		public String provincia;
 		public String nazione;
 	}
-
-	public String numeroSr;
-	public String codiceCausale;
-	public String dataCreazione;
-	public String cancellaBpAlternativo;
-	public String nomeContatto;
-	public HDT_WRP_BpCaVariationAccount account;
-	public HDT_WRP_BpCaVariationOrdine ordine;
 	
 	public HDT_WRP_BpCaVariation(){
 		this.account = new HDT_WRP_BpCaVariationAccount();

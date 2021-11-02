@@ -90,7 +90,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RecordTypeId</field>
+                <field>RecordTypeName__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -418,6 +418,8 @@
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
         <fields>DistributorNameFormula__c</fields>
+        <fields>Resident__c</fields>
+        <fields>FlowComputerSN__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

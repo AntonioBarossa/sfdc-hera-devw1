@@ -12,10 +12,12 @@ private class HDT_UTL_HandleTechnicalDataTst {
 
     List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
 
-    List<Order> order = HDT_UTL_DataFactoryTst.createOrder(1,true, accountList[0].id,'Bozza');
+    //List<Order> order = 
+    HDT_UTL_DataFactoryTst.createOrder(1,true, accountList[0].id,'Bozza');
 
 
-    List<ServicePoint__c> servicePoint = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
+    //List<ServicePoint__c> servicePoint = 
+    HDT_UTL_DataFactoryTst.createServicePoint(1,true);
 
 
   }
