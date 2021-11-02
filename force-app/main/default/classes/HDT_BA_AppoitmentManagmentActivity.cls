@@ -11,7 +11,7 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
         System.debug('RecordType id: '+recType);
         System.debug('dtEmail value: '+dtEmail);
         System.debug('dtSms value: '+dtSms);
-        String query = 'SELECT Id, AppointmentDate__c,Email__c, Mobile__c,Account__c FROM wrts_prcgvr__Activity__c Where Status__c IN (\'Appuntamento confermato\',\'Modifica confermata\') AND (RecordTypeId= :recType) AND (Type__c= \'Presa Appuntamento\') AND ( (Mobile__c!= NULL AND AppointmentDate__c<= :dtSms AND AppointmentDate__c >= :dt) OR (Email__c !=NULL AND AppointmentDate__c<= : dtEmail AND AppointmentDate__c >= :dt))';
+        String query = 'SELECT Id, AppointmentDate__c,DateTimeRef__c, Email__c, Mobile__c,Account__c FROM wrts_prcgvr__Activity__c Where Status__c IN (\'Appuntamento confermato\',\'Modifica confermata\') AND (RecordTypeId= :recType) AND (Type__c= \'Presa Appuntamento\') AND ( (Mobile__c!= NULL AND AppointmentDate__c<= :dtSms AND AppointmentDate__c >= :dt) OR (Email__c !=NULL AND AppointmentDate__c<= : dtEmail AND AppointmentDate__c >= :dt))';
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext bc, List<wrts_prcgvr__Activity__c> scope){
