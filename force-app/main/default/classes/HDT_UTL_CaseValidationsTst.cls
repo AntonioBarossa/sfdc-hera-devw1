@@ -9,7 +9,17 @@ public with sharing class HDT_UTL_CaseValidationsTst {
     
     //DEBUG
     public static final String TEST_NAME = 'HDT_UTL_CaseValidationsTst';
+
+    private static HDT_UTL_CaseValidations caseValidationsUtl = new HDT_UTL_CaseValidations();
     
+    //Added Setup
+    @TestSetup
+    static void setup(){
+        Case myCase = new Case();
+        myCase.Type = 'Proroga Conn Temp';
+        myCase.Cluster__c = 'Disattivazioni';
+        insert myCase;      
+    }
     
     //TEST SETUP
     private static void mySetup(){
@@ -1068,6 +1078,27 @@ public with sharing class HDT_UTL_CaseValidationsTst {
         //ASSERTS
         System.assert(myCase10 != null, 'myCase10 non può essere null');        
 
+    }
+
+    @IsTest
+    static void validateEndDateTst(){
+
+       List<Case> myCase = [Select Id from Case where Type = 'Proroga Conn Temp'];
+       String myRecordId = myCase[0].Id;
+
+       Map<String, Object> dateCase = new Map<String, Object>();
+       dateCase.put( 'TemporaryConnectionStartDate__c', '2021-11-03 0:00:00' );
+       dateCase.put( 'TemporaryConnectionEndDate__c',  '2021-11-02 00:00:00' );
+
+       String fields = JSON.serialize(dateCase);
+
+       Test.startTest();
+
+       string result = caseValidationsUtl.validate(fields,myRecordId);
+       
+       Test.stopTest();
+
+       System.assert( result.containsIgnoreCase('Error'), 'Test validateEndDate Fallito');
     }
 
     /*@isTest
