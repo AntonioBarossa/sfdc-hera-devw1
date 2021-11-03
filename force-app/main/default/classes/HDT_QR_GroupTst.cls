@@ -19,7 +19,7 @@ public with sharing class HDT_QR_GroupTst {
     }
 
     @isTest
-    public static void test2GetQueueByDevelopername(){
+    public static void testToGetQueueByDevelopername(){
         List<Group> lstGroup = new List<Group>();
         List<String> lstString = new List<String>();
         Test.startTest();

@@ -18,7 +18,7 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
         User adminUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
         adminUser.UserPermissionsMarketingUser=true;
-        adminUser.UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId(constants.USERROLE_DEVELOPERNAME_BACKOFFICE);
+        //adminUser.UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId(constants.USERROLE_DEVELOPERNAME_BACKOFFICE);
         insert adminUser;
  
         System.runAs(adminUser) {

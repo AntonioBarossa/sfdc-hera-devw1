@@ -9,6 +9,7 @@ public class HDT_LCP_CreateDistributorApointmentTst {
 
     @TestSetup
     static void requiredData(){
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
