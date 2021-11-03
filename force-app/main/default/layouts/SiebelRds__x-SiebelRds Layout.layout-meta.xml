@@ -1541,9 +1541,15 @@
     </layoutSections>
     <quickActionList/>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
-        <fields>DisplayUrl</fields>
+        <fields>ORDER_NUM__c</fields>
+        <fields>STATUS_CD__c</fields>
+        <fields>ORDER_TYPE__c</fields>
+        <fields>ORDER_DT__c</fields>
         <relatedList>SiebelOrder__x.SR_ID__c</relatedList>
+        <sortField>ORDER_DT__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>

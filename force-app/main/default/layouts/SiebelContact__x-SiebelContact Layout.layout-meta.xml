@@ -146,6 +146,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>X_ADDR_TYPE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>X_COMP_ADDR__c</field>
             </layoutItems>
             <layoutItems>
@@ -158,15 +162,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CITY__c</field>
+                <field>X_ADDR_NUM_SUFF__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PROVINCE__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ZIPCODE__c</field>
+                <field>X_ISTAT_LOC__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -180,15 +180,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_ADDR_TYPE__c</field>
+                <field>CITY__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_ISTAT_LOC__c</field>
+                <field>ZIPCODE__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_ADDR_NUM_SUFF__c</field>
+                <field>PROVINCE__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
