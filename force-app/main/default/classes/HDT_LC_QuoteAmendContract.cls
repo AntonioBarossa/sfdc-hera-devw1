@@ -62,7 +62,7 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         }
         for(SBQQ__QuoteLine__c ql : podsAndVas.values()){
             id key = podToFather.get(ql.SBQQ__RequiredBy__c);
-            if(key!= ql.id){
+            if(key!= ql.id && key!=null){
                 podToChilds.get(key).add(ql.id);
             }
         }
