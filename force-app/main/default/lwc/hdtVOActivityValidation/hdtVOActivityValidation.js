@@ -4,7 +4,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
 import valida from '@salesforce/apex/HDT_UTL_ActivityCustom.validaActivityVocal';
 import TYPE_ACTIVITY from '@salesforce/schema/wrts_prcgvr__Activity__c.Type__c';
-import VALIDAZIONE_ACTIVITY from '@salesforce/schema/wrts_prcgvr__Activity__c.Validation__c'
+import VALIDAZIONE_ACTIVITY from '@salesforce/schema/wrts_prcgvr__Activity__c.wrts_prcgvr__Status__c'
 
 export default class hdtVOActivityValidation extends LightningElement {
 
@@ -39,7 +39,7 @@ export default class hdtVOActivityValidation extends LightningElement {
             );
         } else if (data) {
            // this.parentOrder = data;
-            this.showFunction = (data.fields.Type__c.value == 'Validazione Vocal Order' && data.fields.Validation__c.value == null) ? true : false;
+            this.showFunction = (data.fields.Type__c.value == 'Validazione Vocal Order' && data.fields.wrts_prcgvr__Status__c.value != 'Completed') ? true : false;
         }
     }
 
@@ -64,7 +64,6 @@ export default class hdtVOActivityValidation extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
-                this.showFunction = false;
             }
             updateRecord({ fields: { Id: this.recordId } });
         });
