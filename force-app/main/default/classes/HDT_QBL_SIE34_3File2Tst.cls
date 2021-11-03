@@ -49,15 +49,15 @@ public with sharing class HDT_QBL_SIE34_3File2Tst {
         }
      }
 
-     static testmethod void testQueueable(){
+     @isTest static void testQueueable(){
 
         Boolean finished = false;
 
-        HDT_QBL_SIE34_3File2 sie34 = new HDT_QBL_SIE34_3File2('1',HDT_UTL_LeadProcess.getDateTimeFromString('2021-01-01T13:00:00Z'),'TEXT', new List<String>());
+        HDT_QBL_SIE34_3File2 sie = new HDT_QBL_SIE34_3File2('1',HDT_UTL_LeadProcess.getDateTimeFromString('2021-01-01T13:00:00Z'),'TEXT', new List<String>());
 
         Test.startTest();
         
-        System.enqueueJob(sie34);
+        System.enqueueJob(sie);
 
         finished = true;
 

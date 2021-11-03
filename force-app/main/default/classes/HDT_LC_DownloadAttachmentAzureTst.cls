@@ -16,7 +16,7 @@ public class HDT_LC_DownloadAttachmentAzureTst {
         String msg;
         String targetId = 'test';
         try{
-        	String s = HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink(targetId);
+        	HDT_LC_DownloadAttachmentAzure.getUrlNameDocumentLink(targetId);
         }catch(Exception e){
             msg = e.getMessage();
         }
@@ -28,8 +28,8 @@ public class HDT_LC_DownloadAttachmentAzureTst {
     @isTest static void testGetExtensionFile(){
         
         List<SiebelDocumentLink__x> docs = new List<SiebelDocumentLink__x>();
-        SiebelDocumentLink__x doc1 = new SiebelDocumentLink__x();
-        docs.add(doc1);
+        SiebelDocumentLink__x doc = new SiebelDocumentLink__x();
+        docs.add(doc);
         
         HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(docs));
         Test.startTest();
@@ -49,7 +49,7 @@ public class HDT_LC_DownloadAttachmentAzureTst {
         
         try{
 
-        Boolean b = HDT_LC_DownloadAttachmentAzure.getExtensionFile('0031X00000jNwOpQAK');
+        HDT_LC_DownloadAttachmentAzure.getExtensionFile('0031X00000jNwOpQAK');
             
         }catch(Exception e){
             msg = e.getMessage();

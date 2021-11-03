@@ -57,7 +57,7 @@ public class HDT_BA_CommercialCodeTst {
     }
     
     @isTest
-    static void test1(){
+    static void test(){
         
         String campaignId = [SELECT id from Campaign].id;
         
@@ -66,17 +66,17 @@ public class HDT_BA_CommercialCodeTst {
         for(CampaignMember m : cm)
         	campaignMembers.add(m.id);
                 
-        CampaignMember  cm1 = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
+        CampaignMember  cm = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
         Map<String,List<String>> allMembers = new Map<String,List<String>>();
         allMembers.put(campaignId, campaignMembers);            
         
         Test.startTest();
 		HDT_BA_CommercialCode cc = new HDT_BA_CommercialCode(allMembers);     
-        Id batchId = Database.executeBatch(cc,200);
+        Database.executeBatch(cc,200);
         Test.stopTest();
         
-        CampaignMember  cm2 = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
-        System.assertNotEquals(cm1.PromoCommercialCode__c,cm2.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c not updated by the batch'); 
+        CampaignMember  cmAfter = [SELECT id,PromoCommercialCode__c from CampaignMember limit 1];
+        System.assertNotEquals(cm.PromoCommercialCode__c,cmAfter.PromoCommercialCode__c,'CampaignMember field PromoCommercialCode__c not updated by the batch'); 
         
         List<CommercialCode__c> commercialCodes = [select id from CommercialCode__c];
     	System.assertEquals(100, commercialCodes.size(), 'The number of CommercialCodes in the system does not double the number of CampaignMembers');

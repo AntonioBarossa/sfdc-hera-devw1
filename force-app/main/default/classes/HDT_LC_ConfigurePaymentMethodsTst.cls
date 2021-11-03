@@ -47,7 +47,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
             Sale__c tSale = [SELECT Id FROM Sale__c LIMIT 1];
             
             new HDT_LC_ConfigurePaymentMethods();
-            Boolean sucessAcc = HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
+            HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
             
             System.assertEquals('No', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');
             System.assertNotEquals('Si', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');
@@ -69,7 +69,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
             Sale__c tSale = [SELECT Id FROM Sale__c LIMIT 1];
             
             new HDT_LC_ConfigurePaymentMethods();
-            Boolean failAcc = HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
+            HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
             
             System.assertEquals('Si', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');
             System.assertNotEquals('No', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');

@@ -58,13 +58,13 @@ public with sharing class HDT_BA_ImportFubFileTst {
 
         Test.startTest();
         HDT_BA_ImportFubFile imp = new HDT_BA_ImportFubFile(fubId,csv);
-        Id batchId = Database.executeBatch(imp);
+        Database.executeBatch(imp);
         Test.stopTest();
 
-        FUBProcessing__c fubP = [SELECT id,Status__c FROM FUBProcessing__c WHERE id = :fubId];
+        FUBProcessing__c fubp = [SELECT id,Status__c FROM FUBProcessing__c WHERE id = :fubId];
 
-        system.assertEquals(true, fubP.Status__c == 'Archivio FUB importato' , 'the status of FUBProcessing__c is not assigned');
-        system.assertNotEquals('', fubP.Status__c, 'the status of FUBProcessing__c is null');
+        system.assertEquals(true, fubp.Status__c == 'Archivio FUB importato' , 'the status of FUBProcessing__c is not assigned');
+        system.assertNotEquals('', fubp.Status__c, 'the status of FUBProcessing__c is null');
     
     } 
 }
