@@ -1,167 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_AutomationToggle__mdt</members>
-        <members>HDT_SmsSettings__c</members>
+        <members>HDT_VF_ActivityReassignToMeMassive</members>
+        <members>HDT_VF_ActivityReassignmentToolMassive</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>wrts_prcgvr__Activity__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>CampaignMember-Campaign Member Page Layout</members>
-        <members>HDT_AutomationToggle__mdt-Automation Toggle Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_BA_AppoitmentManagmentActivity</members>
-        <members>HDT_BA_AppoitmentManagmentActivityTst</members>
-        <members>HDT_BA_CalloutBatchMck</members>
-        <members>HDT_BA_CalloutBatchTst</members>
-        <members>HDT_BA_PostSalesMasterBatch</members>
-        <members>HDT_BA_PostSalesMasterBatchTst</members>
-        <members>HDT_BA_PublicValidation</members>
-        <members>HDT_LCP_CreateDistributorApointmentTst</members>
-        <members>HDT_LC_ActivityChildCreationCntTst</members>
-        <members>HDT_LC_CampaignsControllerTst</members>
-        <members>HDT_LC_OrdersForComfortQualityListTst</members>
-        <members>HDT_QR_AtecoMatrixTst</members>
-        <members>HDT_QR_BlacklistTst</members>
-        <members>HDT_QR_BusinessDateTst</members>
-        <members>HDT_QR_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_QR_CampaignMemberStatusMetadataTst</members>
-        <members>HDT_QR_CampaignTst</members>
-        <members>HDT_QR_CaseTst</members>
-        <members>HDT_QR_ContactTst</members>
-        <members>HDT_QR_FileTemplateTst</members>
-        <members>HDT_QR_FiltriProcessiTst</members>
-        <members>HDT_QR_GroupTst</members>
-        <members>HDT_QR_IndividualTst</members>
-        <members>HDT_QR_OpportunityTst</members>
+        <members>HDT_LC_ActivityReassignmentTool</members>
+        <members>HDT_LC_ActivtyMassiveReassignmentTool</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_SaleActions</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_OrderItemTst</members>
-        <members>HDT_QR_PaperProcessingTst</members>
-        <members>HDT_QR_PostSalesMasterBatch</members>
-        <members>HDT_QR_UserQueriesWithoutSharing</members>
-        <members>HDT_SRV_BillableVasDeactivation</members>
-        <members>HDT_SRV_BillingProfileTst</members>
-        <members>HDT_SRV_InformativeManager</members>
-        <members>HDT_SRV_PostSalesCriteriaManager</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_SRV_PrescrizioneFattura</members>
-        <members>HDT_SRV_SalesCriteriaManager</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_SRV_SelfReadingsFacade</members>
-        <members>HDT_SRV_ServicePointTst</members>
-        <members>HDT_TRH_ActivityCustom</members>
-        <members>HDT_TRH_Contract</members>
-        <members>HDT_TRH_DocumentalActivity</members>
-        <members>HDT_TRH_PaperProcessing</members>
-        <members>HDT_TRH_SmsTrackingTst</members>
-        <members>HDT_TRH_Task</members>
-        <members>HDT_TRH_TriggerHandler</members>
-        <members>HDT_TRH_TriggerHandlerTst</members>
-        <members>HDT_UTL_ActivityCustom</members>
-        <members>HDT_UTL_CalculateFiscalCodeTst</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CheckPreviousPhase</members>
-        <members>HDT_UTL_CompanyOwnerTst</members>
-        <members>HDT_UTL_DataEnrichmentPostSales</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_DocumentalManagement</members>
-        <members>HDT_UTL_HandleTechnicalDataTst</members>
-        <members>HDT_UTL_NewsNotificationCenter</members>
-        <members>HDT_UTL_NotifVasTst</members>
+        <members>HDT_SRV_RecordShareTst</members>
         <members>HDT_UTL_Order</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_PclickBulkActionVas</members>
-        <members>HDT_UTL_PrClickDoubleTransaction</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_ScriptWrappers</members>
-        <members>HDT_UTL_ScriptWrappersTst</members>
         <members>HDT_UTL_SearchPlug</members>
-        <members>HDT_UTL_VasManagement</members>
-        <members>HDT_UTL_VasManagementTst</members>
-        <members>HDT_WS_DocumentaryInvoices</members>
-        <members>HDT_WS_HTTPServiceCallMock</members>
-        <members>HDT_WS_HTTPServiceCallTst</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_VFC_ActivityReassignmentMassive</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>CampaignMember.ContactLeadAddress__c</members>
-        <members>HDT_AutomationToggle__mdt.SkipDueDateTime__c</members>
-        <members>HDT_AutomationToggle__mdt.SkipEvents__c</members>
-        <members>HDT_AutomationToggle__mdt.SkipUsernames__c</members>
-        <members>HDT_SmsSettings__c.MaxLength__c</members>
-        <members>wrts_prcgvr__Activity__c.DueDate__c</members>
+        <members>wrts_prcgvr__Activity__c.AppoitmentTimeSlotConfirmed__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_ChildOrderProcess</members>
+        <members>HDT_ReassignmentListButtonsRenderer</members>
+        <name>StaticResource</name>
+    </types>
+    <types>
+        <members>HDT_LAP_ActivityReassignmentMassive</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>hdtCtToolbarContainer</members>
+        <members>hdtAccountSelector</members>
+        <members>hdtActivityReassignToMe</members>
+        <members>hdtActivityReassignmentTool</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User OneShot</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
+        <members>wrts_prcgvr__Activity__c.Inoltra_ad_Agenzia_Massivo</members>
+        <members>wrts_prcgvr__Activity__c.Riassegna_Massivo</members>
+        <members>wrts_prcgvr__Activity__c.Riassegna_a_Me_Massivo</members>
+        <name>WebLink</name>
     </types>
     <types>
-        <members>HDT_SignModeSettings.Domicil_Tel_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Domiciliazione_Back_office_Cartacea</members>
-        <members>HDT_SignModeSettings.Domiciliazione_Back_office_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Domiciliazione_Sportello_Cartacea</members>
-        <members>HDT_SignModeSettings.Domiciliazione_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Domiciliazione_Telefono_Inbound_Cartacea</members>
-        <members>HDT_SignModeSettings.Mod_Privacy_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Mod_Privacy_Tel_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Modifica_Privacy_Back_office_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Modifica_Privacy_Sportello_Cartacea</members>
-        <members>HDT_SignModeSettings.Modifica_Privacy_Teleselling_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Back_office_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Tel_Inbound_Cartacea</members>
-        <members>HDT_SignModeSettings.Piano_Rat_Tel_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Piano_Rateizzazione_Back_office_Cartacea</members>
-        <members>HDT_SignModeSettings.Piano_Rateizzazione_Sportello_Cartacea</members>
-        <members>HDT_SignModeSettings.Preventivo_Back_office_Cartacea</members>
-        <members>HDT_SignModeSettings.Preventivo_Back_office_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Preventivo_Sportello_Cartacea</members>
-        <members>HDT_SignModeSettings.Preventivo_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Preventivo_Telefono_Inbound_Cartacea</members>
-        <members>HDT_SignModeSettings.Preventivo_Telefono_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Reclamo_Back_office_Cartacea</members>
-        <members>HDT_SignModeSettings.Rimborso_Back_office_Cartacea</members>
-        <members>HDT_SignModeSettings.Rimborso_Back_office_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Rimborso_Sportello_Cartacea</members>
-        <members>HDT_SignModeSettings.Rimborso_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Rimborso_Telefono_Inbound_Cartacea</members>
-        <members>HDT_SignModeSettings.Rimborso_Telefono_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Vendita_Agenzie_Cartacea</members>
-        <members>HDT_SignModeSettings.Vendita_Back_office_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Vendita_Sportello_Cartacea</members>
-        <members>HDT_SignModeSettings.Vendita_Sportello_OTP_Coopresenza</members>
-        <members>HDT_SignModeSettings.Vendita_Telefono_Inbound_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Vendita_Telefono_Inbound_Vocal_Order</members>
-        <members>HDT_SignModeSettings.Vendita_Teleselling_OTP_Remoto</members>
-        <members>HDT_SignModeSettings.Vendita_Teleselling_Vocal_Order</members>
-        <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneInnescoDocumentaleCase</members>
-        <members>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</members>
-        <members>HDT_FL_GestionePagamenti_VariazioneDomiciliazione</members>
-        <members>HDT_FL_GestionePreventivi</members>
-        <members>HDT_FL_GestioneReclami_GestioneStampa</members>
-        <members>HDT_FL_GestioneVerifiche</members>
-        <members>HDT_PB_ConfigurazioneScript</members>
+        <members>HDT_FL_PostSalesVAS</members>
         <name>Flow</name>
     </types>
     <version>49</version>
