@@ -58,7 +58,11 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
-        additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+        //additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+
+        List<String> idStrs = (List<String>)JSON.deserialize(JSON.serialize(eligibleProductsId), List<String>.class);
+        additionalFilter += ' AND Product2Id IN (\'' + String.join(idStrs, '\',\'') + '\')';
+
 		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
         System.debug(LoggingLevel.DEBUG, 'Additional Filter: '+ additionalFilter);
@@ -178,7 +182,10 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
-        additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+        //additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+
+        List<String> idStrs = (List<String>)JSON.deserialize(JSON.serialize(eligibleProductsId), List<String>.class);
+        additionalFilter += ' AND Product2Id IN (\'' + String.join(idStrs, '\',\'') + '\')';
 		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
         System.debug(LoggingLevel.DEBUG, 'Additional Filter Suggest: '+ additionalFilter);
