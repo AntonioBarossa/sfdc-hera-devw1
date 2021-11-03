@@ -97,6 +97,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
                 }
                 
+                if (order.ProcessType__c == 'Switch in Fittizio') {
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                }
+
                 if (order.ProcessType__c == 'Switch in Ripristinatorio') {
                     orderToUpdate.DateSentToSII__c = Date.today();
                     orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
