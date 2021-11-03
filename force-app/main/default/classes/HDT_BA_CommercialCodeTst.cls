@@ -21,8 +21,7 @@ public class HDT_BA_CommercialCodeTst {
 		insert internalUser;
 
         System.runAs(internalUser){
-        	
-            
+        	            
             List<Campaign> camps = HDT_UTL_DataFactoryTst.createCampaign(1, false);
             for(Campaign c : camps){
                 c.CodeManagementModel__c ='Porta un amico';
