@@ -35,7 +35,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
     }
 
-    public static List<Order> updateChildOrderIvr(Map<Id,Order> oldMap, Map<Id,Order> newMap) {
+    public static List<Order> updateChildOrderIvr(Map<String,Order> oldMap, Map<String,Order> newMap) {
         List<String> orderParentList = new List<String>();
         List<Order> childrenToUpdate = new List<Order>();
         for(Order ord : newMap.values()) {
