@@ -3,8 +3,8 @@
     <actionCalls>
         <name>go_to_new_activity_acton</name>
         <label>Vai a Nuova Attività</label>
-        <locationX>358</locationX>
-        <locationY>2006</locationY>
+        <locationX>402</locationX>
+        <locationY>2342</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>add_activities_to_lists_assignment</name>
         <label>Aggiungi Attività a Liste</label>
-        <locationX>270</locationX>
-        <locationY>1094</locationY>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>activities_to_insert</assignToReference>
             <operator>Add</operator>
@@ -44,7 +44,7 @@
         <name>add_recordId_to_list_assignment</name>
         <label>Aggiungi RecordId a Lista</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>ids</assignToReference>
             <operator>Add</operator>
@@ -53,14 +53,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>activities_loop</targetReference>
+            <targetReference>insert_note</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>forwarding_activity_set</name>
         <label>Compila Attività di Inoltro</label>
-        <locationX>270</locationX>
-        <locationY>854</locationY>
+        <locationX>314</locationX>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>forwarding_activity.Type__c</assignToReference>
             <operator>Assign</operator>
@@ -96,8 +96,8 @@
     <assignments>
         <name>id_save_assignment</name>
         <label>Salva ID</label>
-        <locationX>446</locationX>
-        <locationY>1790</locationY>
+        <locationX>490</locationX>
+        <locationY>2126</locationY>
         <assignmentItems>
             <assignToReference>forwarding_activity.Id</assignToReference>
             <operator>Assign</operator>
@@ -112,8 +112,8 @@
     <assignments>
         <name>suspend_parent_activity</name>
         <label>Sospendi Attività Madre</label>
-        <locationX>270</locationX>
-        <locationY>974</locationY>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>parent_activity.Id</assignToReference>
             <operator>Assign</operator>
@@ -135,8 +135,8 @@
     <decisions>
         <name>massive_forwarding_decision</name>
         <label>Inoltro Massivo?</label>
-        <locationX>182</locationX>
-        <locationY>1550</locationY>
+        <locationX>226</locationX>
+        <locationY>1886</locationY>
         <defaultConnector>
             <targetReference>select_created_activity_loop</targetReference>
         </defaultConnector>
@@ -157,10 +157,10 @@
     <decisions>
         <name>massive_operation_decision</name>
         <label>Operazione Massiva?</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationX>226</locationX>
+        <locationY>158</locationY>
         <defaultConnector>
-            <targetReference>activities_loop</targetReference>
+            <targetReference>record_selected_decision</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Si</defaultConnectorLabel>
         <rules>
@@ -179,13 +179,38 @@
             <label>No</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>record_selected_decision</name>
+        <label>Record Selezionati?</label>
+        <locationX>402</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>empt_selection_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>record_selected_yes_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ids</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>insert_note</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <interviewLabel>Activity - Inoltro ad Agenzia {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Inoltro ad Agenzia</label>
     <loops>
         <name>activities_loop</name>
         <label>Loop su Attività</label>
-        <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationX>226</locationX>
+        <locationY>1070</locationY>
         <collectionReference>ids</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -198,8 +223,8 @@
     <loops>
         <name>select_created_activity_loop</name>
         <label>Seleziona Attività Creata</label>
-        <locationX>358</locationX>
-        <locationY>1670</locationY>
+        <locationX>402</locationX>
+        <locationY>2006</locationY>
         <collectionReference>activities_to_insert</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -231,8 +256,8 @@
     <recordCreates>
         <name>forwarding_activity_create</name>
         <label>Crea Attività di Inoltro</label>
-        <locationX>182</locationX>
-        <locationY>1310</locationY>
+        <locationX>226</locationX>
+        <locationY>1646</locationY>
         <connector>
             <targetReference>suspend_parent_activities</targetReference>
         </connector>
@@ -241,11 +266,11 @@
     <recordLookups>
         <name>recordtype_get</name>
         <label>RecordType</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>226</locationX>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>massive_operation_decision</targetReference>
+            <targetReference>activities_loop</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -270,18 +295,34 @@
     <recordUpdates>
         <name>suspend_parent_activities</name>
         <label>Sospendi Attività Inoltrate</label>
-        <locationX>182</locationX>
-        <locationY>1430</locationY>
+        <locationX>226</locationX>
+        <locationY>1766</locationY>
         <connector>
             <targetReference>massive_forwarding_decision</targetReference>
         </connector>
         <inputReference>activities_to_update</inputReference>
     </recordUpdates>
     <screens>
+        <name>empt_selection_screen</name>
+        <label>Screen - Selezione Vuota</label>
+        <locationX>490</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>empt_selection_text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;&lt;u&gt;Attenzione&lt;/u&gt;&lt;/b&gt;&lt;u style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;,&lt;/u&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(56, 56, 56); font-size: 14px;&quot;&gt;Impossibile proseguire: nessun record è stato selezionato. Selezionare almeno un record per Inoltrare ad Agenzia.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>insert_note</name>
         <label>Inserisci Note</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationX>226</locationX>
+        <locationY>830</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -298,10 +339,10 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>insert_note</targetReference>
+            <targetReference>massive_operation_decision</targetReference>
         </connector>
     </start>
     <status>Active</status>
