@@ -4,6 +4,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
 import valida from '@salesforce/apex/HDT_UTL_ActivityCustom.validaActivityVocal';
 import TYPE_ACTIVITY from '@salesforce/schema/wrts_prcgvr__Activity__c.Type__c';
+import VALIDAZIONE_ACTIVITY from '@salesforce/schema/wrts_prcgvr__Activity__c.Validation__c'
 
 export default class hdtVOActivityValidation extends LightningElement {
 
@@ -17,7 +18,7 @@ export default class hdtVOActivityValidation extends LightningElement {
     @api causale = '';
     @api caseid;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [TYPE_ACTIVITY] })
+    @wire(getRecord, { recordId: '$recordId', fields: [TYPE_ACTIVITY,VALIDAZIONE_ACTIVITY] })
     wiredParentOrder({ error, data }) {
         console.log('*********' + this.recordId);
         console.log('*********' + data);
@@ -38,7 +39,7 @@ export default class hdtVOActivityValidation extends LightningElement {
             );
         } else if (data) {
            // this.parentOrder = data;
-            this.showFunction = data.fields.Type__c.value == 'Validazione Vocal Order' ? true : false;
+            this.showFunction = (data.fields.Type__c.value == 'Validazione Vocal Order' && data.fields.Validation__c.value == null) ? true : false;
         }
     }
 
@@ -55,6 +56,7 @@ export default class hdtVOActivityValidation extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                this.showFunction = false;
             }else{
                 const event = new ShowToastEvent({
                     title: 'Successo',
@@ -62,6 +64,7 @@ export default class hdtVOActivityValidation extends LightningElement {
                     variant: 'success',
                 });
                 this.dispatchEvent(event);
+                this.showFunction = false;
             }
             updateRecord({ fields: { Id: this.recordId } });
         });
