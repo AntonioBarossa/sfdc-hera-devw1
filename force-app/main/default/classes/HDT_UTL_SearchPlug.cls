@@ -40,7 +40,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     //RICHIAMATO QUANDO isSearchCustom è FALSE. Aggiunge filtri alla query
     global String getAdditionalSearchFilters(SObject quote, Map<String,Object> fieldValuesMap){
         System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: getAdditionalSearchFilters');
-        
+
         // This would add an extra inventory filter if the family is Hardware
         String additionalFilter = '';
         
@@ -54,7 +54,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             @Author: Davide Viola - 20/10/2021
             Description: PMD -> Commentata variabile non utilizzata.
         */
-        /*Set<Id> eligibleProductsId = */getEligibleProducts(myQuote);
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
@@ -68,6 +68,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
     global List<PriceBookEntry> search(SObject quote, Map<String,Object> fieldValuesMap){
         System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: search');
+
+        System.debug('>>> fieldValuesMap ' + fieldValuesMap);
 
         //GET ALL POSSIBLE FILTER FIELDS FROM THE SEARCH FILTER FIELD SET
         List<Schema.FieldSetMember> searchFilterFieldSetFields = SObjectType.Product2.FieldSets.SBQQ__SearchFilters.getFields();
@@ -91,7 +93,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
                 continue;
             }
 
-            if(field.getType() == Schema.DisplayType.String || field.getType() == Schema.DisplayType.Picklist){
+            if(field.getType() == Schema.DisplayType.String || field.getType() == Schema.DisplayType.Picklist || field.getType() == Schema.DisplayType.TextArea){
                 whereClause += 'Product2.' + field.getFieldPath() + ' LIKE \'%' + fieldValuesMap.get(field.getFieldPath()) + '%\' AND ';
             }
         }
@@ -106,7 +108,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             @Author: Davide Viola - 20/10/2021
             Description: PMD -> Commentata variabile non utilizzata.
         */
-        /*Set<Id> eligibleProductsId = */getEligibleProducts(myQuote);
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         //whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         whereClause += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
@@ -172,7 +174,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 			@Author: Davide Viola - 20/10/2021
 			Description: PMD -> Commentata variabile non utilizzata.
 		*/
-		/*Set<Id> eligibleProductsId = */getEligibleProducts(myQuote);
+		Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
