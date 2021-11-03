@@ -35,7 +35,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
     }
 
-    public static List<Order> updateChildOrderIVR(Map<Id,Order> oldMap, Map<Id,Order> newMap) {
+    public static List<Order> updateChildOrderIvr(Map<Id,Order> oldMap, Map<Id,Order> newMap) {
         List<String> orderParentList = new List<String>();
         List<Order> childrenToUpdate = new List<Order>();
         for(Order ord : newMap.values()) {
@@ -249,7 +249,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         if(ordersFullList != null && !ordersFullList.isEmpty()){
             childOrdersDocValid.addAll(ordersFullList);
         }
-        List<Order> ivrChildren = updateChildOrderIVR(orderMapOld, orderMapNew);
+        List<Order> ivrChildren = updateChildOrderIvr(orderMapOld, orderMapNew);
         if(ivrChildren != null && !ivrChildren.isEmpty()){
             childOrdersDocValid.addAll(ivrChildren);
         }
