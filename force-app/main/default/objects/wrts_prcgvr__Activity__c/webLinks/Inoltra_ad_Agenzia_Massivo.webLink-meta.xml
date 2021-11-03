@@ -9,5 +9,5 @@
     <openType>replace</openType>
     <protected>false</protected>
     <requireRowSelection>true</requireRowSelection>
-    <url>/flow/HDT_FL_ActivityForwardToAgency</url>
+    <url>/flow/HDT_FL_ActivityForwardToAgency?retURL=lightning/o/wrts_prcgvr__Activity__c/home</url>
 </WebLink>

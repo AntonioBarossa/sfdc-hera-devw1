@@ -83,6 +83,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     public static String reassignActivity(List<String> idList, String assigneeId, String wrapperId, String workGroup, String agency) {
         try {
             List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+            List<wrts_prcgvr__Activity__c> parentActivitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
             Set<Id> parentActivitiesIds = new Set<Id>();
 
             for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id IN :idList WITH SECURITY_ENFORCED]) {
@@ -96,7 +97,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
                     }
                     if(!parentActivitiesIds.contains(activity.ParentActivity__c)) {
                         parentActivitiesIds.add(activity.ParentActivity__c);
-                        activitiesToUpdate.add(new wrts_prcgvr__Activity__c(
+                        parentActivitiesToUpdate.add(new wrts_prcgvr__Activity__c(
                             Id = activity.ParentActivity__c,
                             wrts_prcgvr__Status__c = 'Aperta'
                         ));
@@ -122,6 +123,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
             }
 
             HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
+            HDT_UTL_DatabaseService.updateSObject(parentActivitiesToUpdate);
 
             return null;
         } catch (Exception e) {
