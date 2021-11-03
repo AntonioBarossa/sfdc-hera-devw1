@@ -147,7 +147,7 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             Integer testMax =loopCount.getMax();
             loopCount.getCount();
             loopCount.setMax(10);
-            Integer testMax = loopCount.getMax();
+            testMax = loopCount.getMax();
             Boolean exceeded = loopCount.increment();
             Integer testCount = loopCount.getCount();
 
