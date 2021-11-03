@@ -4,7 +4,7 @@
 * @description HDT_TRH_TriggerHandler
 * @history Fatjola Memishaj – 18/03/2021 – Created class
 */
-public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
+public without sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
     
     // public override void afterInsert(){  
         
@@ -23,6 +23,7 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
             deactivateCampaign(Trigger.new, (Map<Id,Campaign>)Trigger.oldMap);
         }
 
+        @SuppressWarnings('PMD.ApexCRUDViolation')
         public static void deactivateCampaign(List<Campaign> newCampaigns, Map<Id,Campaign> oldCampaignsMap) {
             List<Id> deactivateCampaignsId = new List<Id>();
             for (Campaign cmp : newCampaigns) {
@@ -44,8 +45,7 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
 
             if (campaignIdsToBatch.size() > 0) {
                 HDT_BA_DeactivateCampaign cbBatch = new HDT_BA_DeactivateCampaign(campaignIdsToBatch);
-                ID batchId = Database.executeBatch(cbBatch, 50);
-                System.debug('batchId - '+batchId);
+                Database.executeBatch(cbBatch, 50);
             }
         }
         
@@ -93,7 +93,7 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
                 }
             }
             if (!listCommercialCode.isEmpty()) {
-                List<CommercialCode__c> res = commercialCodeSrv.createRecords(listCommercialCode);
+                commercialCodeSrv.createRecords(listCommercialCode);
             }
         }
     }
