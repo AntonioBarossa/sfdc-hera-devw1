@@ -4,7 +4,7 @@
 * @description HDT_TRH_TriggerHandler
 * @history Fatjola Memishaj – 18/03/2021 – Created class
 */
-public without sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
+public Inherited Sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
     
     // public override void afterInsert(){  
         
