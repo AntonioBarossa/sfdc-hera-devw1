@@ -6,7 +6,7 @@
     <label>Fascia appuntamento confermato</label>
     <length>11</length>
     <required>false</required>
-    <trackHistory>true</trackHistory><!-- Matteo Tatti-->
+    <trackHistory>true</trackHistory><!-- Matteo Tatti 03/11/2021 email-->
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
