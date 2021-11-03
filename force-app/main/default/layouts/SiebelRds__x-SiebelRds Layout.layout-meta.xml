@@ -1526,6 +1526,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_81__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MODIFIEDDATE_AZURE__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -1571,13 +1575,17 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
+        <fields>TYPE__c</fields>
         <fields>CREATED__c</fields>
-        <fields>ATTRIB_03__c</fields>
-        <fields>ATTRIB_02__c</fields>
         <fields>LAST_UPD__c</fields>
+        <fields>ATTRIB_03__c</fields>
         <fields>ATTRIB_01__c</fields>
+        <fields>ATTRIB_02__c</fields>
         <relatedList>SiebelRdsAttribute__x.PAR_ROW_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

@@ -295,10 +295,13 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
-        <fields>X_COGNOME_BENEF__c</fields>
+        <fields>STATUS_CD__c</fields>
+        <fields>X_TIPO_OPERAZIONE__c</fields>
         <fields>CREATED__c</fields>
         <fields>X_DATA_CHIUSURA_RDO__c</fields>
         <relatedList>SiebelRdo__x.ORDER_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -306,7 +309,11 @@
         <fields>NAME__c</fields>
         <fields>TYPE__c</fields>
         <fields>ATTRIB_05__c</fields>
+        <fields>CREATED__c</fields>
+        <fields>LAST_UPD__c</fields>
         <relatedList>SiebelOrderAttribute__x.PAR_ROW_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
