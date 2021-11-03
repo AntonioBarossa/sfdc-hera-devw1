@@ -6,7 +6,7 @@
     <label>Fascia appuntamento confermato</label>
     <length>11</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory><!-- Matteo Tatti-->
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
