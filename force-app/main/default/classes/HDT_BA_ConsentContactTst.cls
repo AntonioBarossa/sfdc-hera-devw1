@@ -48,14 +48,6 @@ public with sharing class HDT_BA_ConsentContactTst{
 
 			Test.startTest();
 
-			List<Individual> inds=[SELECT Id, FirstName
-			                       FROM Individual
-			                       WHERE FirstName='Mama'];
-
-			List<Contact> contacts=[SELECT Id, FirstName, IndividualId, Email
-			                        FROM Contact
-			                        WHERE FirstName='test'];
-
 			List<id> paramListIdContentVersion=new List<Id>();
 			Set<String> paramSetEmailProcessed=new Set<String>();
 			paramSetEmailProcessed.add('conTre@conTre.com');

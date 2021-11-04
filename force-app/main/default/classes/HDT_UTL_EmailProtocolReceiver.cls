@@ -1,5 +1,5 @@
-global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHandler {
-    global Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
+public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHandler {
+    public Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
        Messaging.InboundEmailResult result = new Messaging.InboundEmailresult();
        Date d = Date.today();
        boolean b = false;
@@ -7,7 +7,7 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
        HDT_SRV_Interaction intSrv = new HDT_SRV_Interaction();
        HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
        HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
-       HDT_QR_Group groupQR = new HDT_QR_Group();
+       HDT_QR_Group groupQr = new HDT_QR_Group();
        Interaction__c newInter = new Interaction__c();
        String mess = '';
        if(email.plainTextBody != null && email.plainTextBody.length() >= 32000){
@@ -88,7 +88,7 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
          
           System.debug('Prova2:::');
       }
-      wrts_prcgvr__Activity__c resActivity = actSrv.createRecord(activityCustom);
+      actSrv.createRecord(activityCustom);
       System.debug('Prova3:::');
        System.debug('Record Id: ' + res.Id);
 

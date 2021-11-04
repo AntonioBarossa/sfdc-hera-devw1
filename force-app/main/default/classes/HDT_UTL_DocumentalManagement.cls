@@ -268,6 +268,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 	}
 	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,SObject processRecord){
+		String activityType;
+		if ('35'.equals(errorMessage)){
+			errorMessage = 'Indirizzo Email non valido.';
+			activityType = 'Busta Docusign non consegnata.';
+		}
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
@@ -282,7 +287,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
 			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
-
+			documentalActivity.ActivityType__c = activityType;
 			/*
 				@Author: Davide Viola - 20/10/2021
 				Description: PMD -> Commentata variabile non utilizzata.

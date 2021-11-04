@@ -11,19 +11,19 @@
 @isTest
 public class HDT_LC_StoricizzazioneClienteTst {    
     
-    @isTest static void test1(){
+    @isTest static void test(){
 
         Id profileId = HDT_UTL_DataFactoryTst.getProfileId('Hera System Integrator');
-        Id UserRoleId = HDT_UTL_DataFactoryTst.getUserRoleId('HDT_FrontOffice_HERA_COMM');
+        Id userRoleId = HDT_UTL_DataFactoryTst.getUserRoleId('HDT_FrontOffice_HERA_COMM');
         User u = HDT_UTL_DataFactoryTst.createInternalUser(profileId,false);
         u.UserRoleId = UserRoleid;
         insert u;
         
         system.runAs(u){        
             
-            HDT_LC_StoricizzazioneCliente.HDT_LC_Link link = new HDT_LC_StoricizzazioneCliente.HDT_LC_Link('testname','testvalue');
+            new HDT_LC_StoricizzazioneCliente.HDT_LC_Link('testname','testvalue');
             
-            HDT_LC_StoricizzazioneCliente.HDT_LC_Customer customer = new HDT_LC_StoricizzazioneCliente.HDT_LC_Customer('Nome','CodiceFiscale', 'IVA', 'CodiceCliente', 'Id', 'isStoricizzato', 'NomeProprio');
+            new HDT_LC_StoricizzazioneCliente.HDT_LC_Customer('Nome','CodiceFiscale', 'IVA', 'CodiceCliente', 'Id', 'isStoricizzato', 'NomeProprio');
             
             List<SiebelCustomer__x> siebels = new List<SiebelCustomer__x>();
             SiebelCustomer__x siebel = new SiebelCustomer__x(TAX_IDEN_NUM__c = 'taxtax', VAT_REGN_NUM__c = 'vat', OU_NUM__c = 'ou', ALIAS_NAME__c = 'sib');

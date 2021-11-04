@@ -27,7 +27,7 @@ public with sharing class HDT_QR_ContractTst {
             accList[0].ActiveServicesWaste__c = 30;
             insert accList;
             
-            List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+            HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
 
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].SAPContractCode__c = 'SAPCode';

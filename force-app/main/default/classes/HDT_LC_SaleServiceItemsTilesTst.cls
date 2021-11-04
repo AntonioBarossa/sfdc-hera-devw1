@@ -44,8 +44,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			Id pricebookId=Test.getStandardPricebookId();
 
-			List<PricebookEntry> pricebookEntry;
-			pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
+			HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
 
 			List<BillingProfile__c> billingProfiles=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 
@@ -75,8 +74,7 @@ public class HDT_LC_SaleServiceItemsTilesTst{
 
 			update orders;
 
-            List<SaleServiceItem__c> saleServiceItens;
-			saleServiceItens = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opportunities[0].Id, quotes[0].Id, servicePoints[0].Id);
+			HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, opportunities[0].Id, quotes[0].Id, servicePoints[0].Id);
 		}
 	}
 

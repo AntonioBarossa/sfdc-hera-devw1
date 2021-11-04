@@ -31,6 +31,7 @@ public with sharing class HDT_BA_VasEngineSender implements Database.Batchable<S
     **/
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Date nDaysAgo = Date.today().addDays(AFTERTHOUGHT_DAYS_NUMBER*-1);
+        System.debug('nDaysAgo value: '+nDaysAgo);
         String query = 'SELECT Id FROM Order';
         query += ' WHERE Phase__c = :ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT';
         query += ' AND RecordType.DeveloperName = :ORDER_RT_VAS';

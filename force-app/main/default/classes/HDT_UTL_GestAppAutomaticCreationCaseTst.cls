@@ -21,7 +21,7 @@ public class HDT_UTL_GestAppAutomaticCreationCaseTst {
          spList[0].Distributor__c = accList[0].Id;
         insert spList;
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
         
     }
     

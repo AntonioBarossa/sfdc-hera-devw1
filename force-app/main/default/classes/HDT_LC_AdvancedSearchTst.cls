@@ -219,16 +219,16 @@ public with sharing class HDT_LC_AdvancedSearchTst {
             update cttList;
 
             List<Map<String, Object>> assertMap = HDT_LC_AdvancedSearch.getServicePoints(spList[0].MeterSN__c, 'serialnumber', '', true);
-            List<Map<String, Object>> assertMap2 = HDT_LC_AdvancedSearch.getServicePoints(spList[0].MeterSN__c, 'serialnumber', 'AND CorrectorSignal__c = null', false);
-            List<Map<String, Object>> assertMap3 = HDT_LC_AdvancedSearch.getServicePoints(spList[0].ServicePointCode__c, 'pod', '', true);
-            List<Map<String, Object>> assertMap4 = HDT_LC_AdvancedSearch.getServicePoints(spList[0].ServicePointCode__c, 'pod', 'AND CorrectorSignal__c = null', true);
-            List<Map<String, Object>> assertMap5 = HDT_LC_AdvancedSearch.getServicePoints(spList[0].SAPContractCode__c, 'contract', '', true);
+            HDT_LC_AdvancedSearch.getServicePoints(spList[0].MeterSN__c, 'serialnumber', 'AND CorrectorSignal__c = null', false);
+            HDT_LC_AdvancedSearch.getServicePoints(spList[0].ServicePointCode__c, 'pod', '', true);
+            HDT_LC_AdvancedSearch.getServicePoints(spList[0].ServicePointCode__c, 'pod', 'AND CorrectorSignal__c = null', true);
+            HDT_LC_AdvancedSearch.getServicePoints(spList[0].SAPContractCode__c, 'contract', '', true);
 
             List<CS_SelezioneFornitura__c> csList= [SELECT Id, OutputServicePoint__c FROM CS_SelezioneFornitura__c WHERE OutputServicePoint__c = 'ServicePointCode__c'];
             csList[0].OutputServicePoint__c = 'Account__r.Name';
             update csList;
 
-            List<Map<String, Object>> assertMap6 = HDT_LC_AdvancedSearch.getServicePoints(spList[0].SAPContractCode__c, 'contract', 'AND SBQQ__AmendmentOpportunityStage__c = null', true);
+            HDT_LC_AdvancedSearch.getServicePoints(spList[0].SAPContractCode__c, 'contract', 'AND SBQQ__AmendmentOpportunityStage__c = null', true);
             
             Test.stopTest();
 
@@ -267,7 +267,7 @@ public with sharing class HDT_LC_AdvancedSearchTst {
             Account acc = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM'];
 
             List<Map<String,String>> assertMap = HDT_LC_AdvancedSearch.getContracts(acc.Id, '');
-            List<Map<String,String>> assertMap2 = HDT_LC_AdvancedSearch.getContracts(acc.Id, 'AND SBQQ__AmendmentOpportunityStage__c = null');
+            HDT_LC_AdvancedSearch.getContracts(acc.Id, 'AND SBQQ__AmendmentOpportunityStage__c = null');
  
             Test.stopTest();
 
@@ -288,7 +288,7 @@ public with sharing class HDT_LC_AdvancedSearchTst {
             Account acc = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM'];
 
             List<Map<String,String>> assertMap = HDT_LC_AdvancedSearch.getContractsBackup(acc.Id, '');
-            List<Map<String,String>> assertMap2 = HDT_LC_AdvancedSearch.getContractsBackup(acc.Id, 'AND SBQQ__AmendmentOpportunityStage__c = null');
+            HDT_LC_AdvancedSearch.getContractsBackup(acc.Id, 'AND SBQQ__AmendmentOpportunityStage__c = null');
  
             Test.stopTest();
 
@@ -361,7 +361,7 @@ public with sharing class HDT_LC_AdvancedSearchTst {
             update ctt;
 
             List<Map<String,String>> assertMap = HDT_LC_AdvancedSearch.getForniture(acc.Id, '');
-            List<Map<String,String>> assertMap2 = HDT_LC_AdvancedSearch.getForniture(acc.Id, 'AND Vendor__c = null');
+            HDT_LC_AdvancedSearch.getForniture(acc.Id, 'AND Vendor__c = null');
  
             Test.stopTest();
 
@@ -382,7 +382,7 @@ public with sharing class HDT_LC_AdvancedSearchTst {
             Account acc = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM'];
 
             List<Map<String,String>> assertMap = HDT_LC_AdvancedSearch.getFornitureBackup(acc.Id, '');
-            List<Map<String,String>> assertMap2 = HDT_LC_AdvancedSearch.getFornitureBackup(acc.Id, 'AND CommoditySector__c = null');
+            HDT_LC_AdvancedSearch.getFornitureBackup(acc.Id, 'AND CommoditySector__c = null');
  
             Test.stopTest();
 
