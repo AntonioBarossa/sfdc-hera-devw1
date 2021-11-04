@@ -19,8 +19,8 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 			return Database.getQueryLocator(query);
 		}
 	
-		public void execute(Database.BatchableContext BC, List<Lead> scope) {
-			System.debug('HDT_BA_ConsentLead execute ');
+		public void execute(Database.BatchableContext bc, List<Lead> scope) {
+			//System.debug('HDT_BA_ConsentLead execute ');
 			status='success';
 			try {
 				
@@ -153,7 +153,7 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 					listIdContentVersion.add(cv.Id);
 		  		}	  
 			} catch (Exception e) {
-				System.debug('Exception : '+e.getMessage());
+				//System.debug('Exception : '+e.getMessage());
 				status='failed';
 				errorMessage=e.getMessage();
 			}
@@ -161,9 +161,8 @@ public without sharing  class HDT_BA_ConsentLead   implements Database.Batchable
 		
 		public void finish(Database.BatchableContext bc){
 			
-			System.debug('Finish HDT_BA_ConsentLead ');
 			HDT_BA_ConsentContact consentContact = new HDT_BA_ConsentContact(fileNumber,runId,status,errorMessage,listIdContentVersion,setEmailContactProcessed); 
-			Id batchprocessid = Database.executeBatch(consentContact,1000);
+			Database.executeBatch(consentContact,1000);
 
 		}
 }

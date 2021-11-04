@@ -20,10 +20,10 @@ public with sharing class HDT_SRV_ContentVersionTst {
  
         insert internalUser;
  
-        System.runAs(internalUser) {
+        //System.runAs(internalUser) {
             //seu testSetup  
  
-        }
+        //}
     }
 
     @isTest
@@ -33,7 +33,7 @@ public with sharing class HDT_SRV_ContentVersionTst {
             Test.startTest();   
 
             ContentVersion contentVersion = new HDT_SRV_ContentVersion().createRecord('ABC', 'test', 'Unit Test Attachment Body');
-            System.assertEquals('ABC', contentVersion.Title);
+            System.assertEquals('ABC', contentVersion.Title, 'Value of parameter is matching');
             System.assertNotEquals('', contentVersion.Title, 'The Title is not correct');
             Test.stopTest();
         }

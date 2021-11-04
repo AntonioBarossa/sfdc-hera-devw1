@@ -118,8 +118,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     this.modalitaFirma = signMode;
                     console.log('this.signSendMap ' + JSON.stringify( this.signSendMap));
                     console.log('SEND_MODE >>> ' + this.sendMode);
-                    if(this.entryChannel !== null && this.entryChannel !== '' && this.entryChannel !== undefined)
                     console.log('ENTRY_CHANNEL >>> ' +this.entryChannel);
+                    if(this.entryChannel !== null && this.entryChannel !== '' && this.entryChannel !== undefined)
                     {
                         if(this.entryChannel === 'Email')
                         {
@@ -143,6 +143,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                             });
                             console.log('out ' + JSON.stringify(temp));
                             this.modalitaInvio = temp.sendMode;
+                            this.sendMode = inputWrapper.sendMode;
                         }
                     }catch(error){
                         console.error(error);
@@ -358,8 +359,6 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     if(resultParsed.result === '000'){
                         var base64 = resultParsed.base64;
                         var sliceSize = 512;
-                        base64 = base64.replace(/^[^,]+,/, '');
-                        base64 = base64.replace(/\s/g, '');
                         var byteCharacters = window.atob(base64);
                         var byteArrays = [];
 

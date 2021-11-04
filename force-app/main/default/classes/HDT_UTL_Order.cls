@@ -157,21 +157,23 @@ public inherited sharing class HDT_UTL_Order {
             HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
             List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordScartoDiscordante(newOrder.ServicePoint__c,newOrder.AccountId);
             if(listActivity != null && !listActivity.isEmpty()){
+                system.debug('DENTRO TRAVASO DATO DISCORDANTE 2');
                 wrts_prcgvr__Activity__c wr = listActivity[0];
                 wr.wrts_prcgvr__Status__c = 'Completed';
-                actSrv.updateRecord(wr);
+                //actSrv.updateRecord(wr);
                 Order oldOrder = orderQr.getRecordById(wr.order__c);
                 travasaOrder(oldOrder,newOrder);
                 //return true;
             }
             return true;
         }catch(Exception e){
+            system.debug('checkToDiscordanti exception: ' + e.getMessage());
             return false;
         }
     }
     @AuraEnabled
     public static void travasaOrder(Order oldOrder, order orderToUpdate){
-
+        system.debug('DENTRO TRAVASO DATO DISCORDANTE');
         orderToUpdate.exciseEle__c =  oldOrder.exciseEle__c;
         orderToUpdate.ExciseGas__c =  oldOrder.ExciseGas__c;
         orderToUpdate.vat__c = oldOrder.vat__c;
@@ -192,8 +194,12 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.Resident__c = oldOrder.Resident__c;
         orderToUpdate.RemiCode__c = oldOrder.RemiCode__c;
         orderToUpdate.SupplyCity__c = oldOrder.SupplyCity__c;
+       /// orderToUpdate.CommercialProductVersion__c = oldOrder.CommercialProductVersion__c ;
+      ///  orderToUpdate.CommercialProductCode__c = oldOrder.CommercialProductCode__c ;
+      ///  orderToUpdate.CommercialProduct__c = oldOrder.CommercialProduct__c;
         orderToUpdate.SupplyStreetName__c = oldOrder.SupplyStreetName__c;
         orderToUpdate.SupplyStreetNumber__c = oldOrder.SupplyStreetNumber__c;
+        orderToUpdate.SupplyStreetNumberExtension__c = oldOrder.SupplyStreetNumberExtension__c;
         orderToUpdate.SupplyPlace__c = oldOrder.SupplyPlace__c;
         orderToUpdate.SupplyPostalCode__c = oldOrder.SupplyPostalCode__c;
         orderToUpdate.SupplyCountry__c = oldOrder.SupplyCountry__c;
@@ -211,12 +217,21 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.SelfCertificationConnection__c = oldOrder.SelfCertificationConnection__c;
         orderToUpdate.RequestOption__c = oldOrder.RequestOption__c;
         orderToUpdate.MeterClass__c =oldOrder.MeterClass__c;
+        orderToUpdate.PrecheckResultSII__c = oldOrder.PrecheckResultSII__c;
+        orderToUpdate.Step__c = 2;
+        orderToUpdate.ProcessCode__c = oldOrder.ProcessCode__c;
+        orderToUpdate.WaiverRightAfterthought__c = oldOrder.WaiverRightAfterthought__c;
+        orderToUpdate.HerAteco__c = oldOrder.HerAteco__c;
+        orderToUpdate.AtecoCode__c = oldOrder.AtecoCode__c;
+        orderToUpdate.CommentForDL__c = oldOrder.CommentForDL__c;
+        orderToUpdate.PhoneNumber__c = oldOrder.PhoneNumber__c;
+        orderToUpdate.RateCategory__c = oldOrder.RateCategory__c;
         orderToUpdate.WithdrawalClass__c = oldOrder.WithdrawalClass__c;
         orderToUpdate.SupplyType__c = oldOrder.SupplyType__c;
         orderToUpdate.DistributorCode__c = oldOrder.DistributorCode__c;
         orderToUpdate.PressureLevel__c = oldOrder.PressureLevel__c;
         orderToUpdate.RequestPhase__c = oldOrder.RequestPhase__c;
-        orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+       // orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
         orderToUpdate.PowerRequested__c = oldOrder.PowerRequested__c;
         orderToUpdate.EnergyService__c = oldOrder.EnergyService__c;
         orderToUpdate.LiftingPeople__c = oldOrder.LiftingPeople__c;
@@ -224,6 +239,38 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.IsRemoteManaged__c = oldOrder.IsRemoteManaged__c;
         orderToUpdate.CustomerRequestDate__c = oldOrder.CustomerRequestDate__c;
         orderToUpdate.Commodity__c = oldOrder.Commodity__c;
+        orderToUpdate.SubjectCode__c = oldOrder.SubjectCode__c;
+        orderToUpdate.InvoiceCertifiedEmailAddress__c = oldOrder.InvoiceCertifiedEmailAddress__c;
+        orderToUpdate.ElectronicInvoicingMethod__c = oldOrder.ElectronicInvoicingMethod__c;
+        orderToUpdate.XMLType__c =  oldOrder.XMLType__c;
+        orderToUpdate.CIG__c  = oldOrder.CIG__c;
+        orderToUpdate.CUP__c  = oldOrder.CUP__c;
+        orderToUpdate.IbanIsForeign__c = oldOrder.IbanIsForeign__c;
+        orderToUpdate.IbanCIN_IBAN__c = oldOrder.IbanCIN_IBAN__c;
+        orderToUpdate.IbanCIN__c = oldOrder.IbanCIN__c;
+        orderToUpdate.IbanABI__c = oldOrder.IbanABI__c;
+        orderToUpdate.IbanCAB__c = oldOrder.IbanCAB__c;
+        orderToUpdate.IbanCodeNumber__c = oldOrder.IbanCodeNumber__c;
+        orderToUpdate.BankAccountSignatoryFiscalCode__c = oldOrder.BankAccountSignatoryFiscalCode__c;
+        orderToUpdate.BankAccountSignatoryFirstName__c = oldOrder.BankAccountSignatoryFirstName__c;
+        orderToUpdate.BankAccountSignatoryLastName__c = oldOrder.BankAccountSignatoryLastName__c;
+        orderToUpdate.BillSendMode__c = oldOrder.BillSendMode__c;
+        orderToUpdate.PaymentMode__c = oldOrder.PaymentMode__c;
+        orderToUpdate.InvoiceEmailAddress__c = oldOrder.InvoiceEmailAddress__c;
+        orderToUpdate.BillingCity__c = oldOrder.BillingCity__c;
+        orderToUpdate.BillingCountry__c = oldOrder.BillingCountry__c;
+        orderToUpdate.BillingProvince__c = oldOrder.BillingProvince__c;
+        orderToUpdate.BillingStreetName__c = oldOrder.BillingStreetName__c;
+        orderToUpdate.BillingStreetNumber__c = oldOrder.BillingStreetNumber__c;
+        orderToUpdate.BillingStreetNumberExtension__c = oldOrder.BillingStreetNumberExtension__c;
+        orderToUpdate.BillingPostalCode__c = oldOrder.BillingPostalCode__c;
+        orderToUpdate.BillingCityCode__c = oldOrder.BillingCityCode__c;
+        orderToUpdate.SignatoryType__c = oldOrder.SignatoryType__c;
+        orderToUpdate.SendCertifiedEmailConsentDate__c = oldOrder.SendCertifiedEmailConsentDate__c;
+        orderToUpdate.CreateContractAccount__c = oldOrder.CreateContractAccount__c;
+        orderToUpdate.IbanCountry__c = oldOrder.IbanCountry__c;
+        orderToUpdate.isDatoDiscordante__c = true;
+        orderToUpdate.Contact__c = oldOrder.Contact__c;
         update orderToUpdate;
     }
 

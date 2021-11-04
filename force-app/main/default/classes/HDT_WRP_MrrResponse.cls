@@ -6,7 +6,9 @@
 */
 
 public with sharing class HDT_WRP_MrrResponse {
-    
+
+    Public List<HDT_WRP_Response> responses;
+
     Public with sharing class HDT_WRP_Header {
         Public String requestId;
         Public String requestTimeStamp;
@@ -40,5 +42,4 @@ public with sharing class HDT_WRP_MrrResponse {
 
     }
 
-    Public List<HDT_WRP_Response> responses;
 }

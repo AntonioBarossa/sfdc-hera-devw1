@@ -1,4 +1,3 @@
-
 /*
  * File: hdtManageScriptModal.js
  * Project: HERA
@@ -15,40 +14,111 @@
 
 
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+import templateModal from './templateModal.html';
+import templateStandard from './templateStandard.html';
+
+import getScriptConfig from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptConfig';
+
+const columns = [
+    {label: 'Nome Script', fieldName: 'scriptName', type: 'text'},
+    {label: 'Stato', fieldName: 'status', type: 'text'},
+    {type: 'button', initialWidth: 120, typeAttributes:{
+            label: 'Avvia', 
+            title: 'Avvia',
+            name: 'startScript', 
+            value: 'startScript',
+            iconName: 'utility:call',
+            disabled: {fieldName :'completed'}
+        }
+    }
+];
 
 export default class HdtManageScriptModal extends LightningElement {
 
-    @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
-    @api buttonLabel;
-    @api childAdditionalInfo="";//API field of child Record you want to show info in the title
+    @api activityId;
+    @api childAdditionalInfo='';//API field of child Record you want to show info in the title
     @api linkReitek;
-    openModal;
+    @api hasLink;
+    @api modal = false;
+    openModal = false;
+    isLoading = false;
+
+    scriptConfig;
+    scriptConfigs;
+    columns = columns;
+
+    render() {
+        return this.modal ? templateModal : templateStandard;
+    }
     
-    
-    connectedCallback(){// stub parameters for test purpose
-        if(!this.scriptProcessName){
-            this.scriptProcessName='Mini Vocal Order';
-            this.buttonLabel='OTP';
-            this.recordId='8011X000002SkvlQAC';
-            this.childAdditionalInfo='orderNumber';
-        }
+    connectedCallback(){
+        this.loadScriptConfig();
     }
 
-
-    
-
+    @api
     showModal(){
-        this.openModal=true;
+        this.openModal = true;
+        this.loadScriptConfig();
     }
 
     closeModal(){
-        this.openModal=false;
+        console.log("closeModal");
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('close'));
     }
 
+    confirmModal(evt){
+        /*console.log("confirmModal");
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('confirm'));*/
 
+        let scriptConfigs = this.scriptConfigs;
+        scriptConfigs.forEach(scriptConfig => {
+            if (scriptConfig.scriptName === this.scriptConfig.scriptName) {
+                scriptConfig.status = 'Completato';
+                scriptConfig.completed = true;
+            }
+        });
+        this.scriptConfigs = scriptConfigs;
+        this.scriptConfig = null;
+    }
 
+    handleRowAction(event){
+        let scriptConfig = event.detail.row;
+        let action = event.detail.action;
 
+        if (action.value === 'startScript') {
+            this.scriptConfig = scriptConfig;
+        }
+    }
 
+    loadScriptConfig(){
+        if (this.recordId) {
+            this.isLoading = true;
+            getScriptConfig({recordId: this.recordId}).then(scriptConfigs => {
+                
+                if (scriptConfigs.length>0) {
+                    scriptConfigs.forEach(scriptConfig => {
+                        scriptConfig.status = 'Da Completare';
+                        scriptConfig.completed = false;
+                    });
+                    console.log(JSON.stringify(scriptConfigs));
+                    this.scriptConfigs = scriptConfigs;
+                }
 
+                this.isLoading = false;
+            },error => {
+                console.log(error);
+                const evt = new ShowToastEvent({
+                    title: 'Errore caricamento Script',
+                    message: 'Non è stato possibile recuperare le informazioni relative agli script',
+                    variant: 'error'
+                });
+                this.dispatchEvent(evt);
+            });
+        }
+    }
 }

@@ -6,6 +6,7 @@
     <aura:attribute name='orderPod' type="String"/>
     <aura:attribute name='selectedValue' type='String' default="Prima Attivazione"/>
     <aura:attribute name='precheck' type='String' default=""/>
+    <aura:attribute name='isCommunity' type='Boolean' default="false"/>
 	<aura:attribute name='compatibilita' type='String' default=""/>
     <aura:attribute name="openModale" type="Boolean" default="false"/>
     <aura:attribute name="recordtypeOrder" type="String"/>
@@ -48,8 +49,8 @@
         </aura:if>
     </aura:if>
 
-    <aura:if isTrue="{!v.order}">
+    <!-- <aura:if isTrue="{!v.order}"> --> <!-- commented for rendering problem in certain cases -->
         <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" onredirect_attivazione_mod="{!c.handleRedirectAttivazioneMod}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" lastStepData="{!v.lastStepData}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
-    </aura:if>
+    <!-- </aura:if> -->
 
 </aura:component>

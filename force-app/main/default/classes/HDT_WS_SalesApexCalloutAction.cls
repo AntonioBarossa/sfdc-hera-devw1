@@ -5,6 +5,10 @@
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+
+    @Testvisible
+    private static HDT_WS_SalesApexCalloutActionMock mock;
+
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
@@ -107,11 +111,18 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             try{
 
                 map<String,String> fieldValueResponse = new map<String,String>();
-                wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+                wrts_prcgvr.MRR_1_0.MultiResponse responseService;
+                if (Test.isRunningTest()){
+                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)mock.respond(action);
+                     responseService = responseServiceTemp;
+                }else{
+                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+                     responseService = responseServiceTemp;
+                } 
 
                 System.debug('********MRRequest:' + responseService);
-                System.debug('********description:' + responseService.responses[0].description);
-                System.debug('********objects:' + responseService.responses[0].objects);            
+                //System.debug('********description:' + responseService.responses[0].description);
+                //System.debug('********objects:' + responseService.responses[0].objects);            
                 //for()
              //   responseService.responses[0].objects[0].objects[0].objectType == 'OrderItem'
              //   responseService.responses[0].objects[0].objects[0].fields[0].name = 'TEMPLATENAME'
@@ -120,6 +131,21 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 
                 Order ord = new Order();
                 ord.id = (id)obj.get('Id');
+
+                Set<Id> recordTypeIdsNoPhase = new Set<Id>{
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Attivazione').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AttivazioneConModifica').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioOfferta').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioUso').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Subentro').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchInVolturaTecnica').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_TemporaneaNuovaAtt').getRecordTypeId(),
+                    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId()
+                };
+
 
                 if (responseService.responses[0].objects == null) {
                     // ord.DiscardReason__c = responseService.responses[0].description;
@@ -230,6 +256,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }
+                                            ord.PreviousCompany__c = fieldValueResponse.get('Z_RAGSOC_CC');
                                         }
                                         when 'Esito KO da SII' {
                                             ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');
@@ -271,7 +298,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 ord.TecnicalPhase__c = method + ' - Comunicazione verso Heroku OK';
                                 ord.CancellationHerokuPracticeCode__c = responseService.responses[0].header.requestId;
                             }
-                            else if( (ID) obj.get('RecordTypeId') == Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId()){
+                            //else if( (ID) obj.get('RecordTypeId') == Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId()){
+                            else if( recordTypeIdsNoPhase.contains((ID) obj.get('RecordTypeId'))){
                                 //BonusESconti
                                 ord.HerokuPracticeCode__c = responseService.responses[0].header.requestId;
                                 ord.TecnicalPhase__c = 'Comunicazione verso Heroku OK';

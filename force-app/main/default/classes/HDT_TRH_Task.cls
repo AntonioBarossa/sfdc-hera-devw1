@@ -8,15 +8,20 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
     // protected override void beforeUpdate() {
     // }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     protected override void afterInsert() {
+        Boolean hasAfterInsert = true;
+        System.debug(LoggingLevel.DEBUG, 'hasAfterInsert' + hasAfterInsert);
         // Il campo WhoId non può essere sbiancato in before insert, quindi dobbiamo farlo in after.
         // removeWhoId();  // NOT WORKING
     }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     private void doValidation() {
 
         Set<Id> contactIds = new Set<Id>();
         Set<Id> leadIds = new Set<Id>();
+        HDT_SmsSettings__c smsSettings = HDT_SmsSettings__c.getInstance();
 
         for (Task t : (List<Task>) Trigger.new) {
 
@@ -26,8 +31,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             }
 
             if (t.IsSms__c == True) {
-                // TODO: rendere parametrica la lunghezza.
-                if (t.Description != null && t.Description.length() > 320) {
+                if (t.Description != null && t.Description.length() > smsSettings.MaxLength__c) {
                     t.addError('È necessario inserire un testo inferiore a 320 caratteri.');
                 }
                 
@@ -63,7 +67,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 }
             }
 
-            System.debug('Task after validation: ' + t);
+            System.debug(LoggingLevel.DEBUG, 'Task after validation: ' + t);
         }
 
         List<Contact> contacts = new List<Contact>();
@@ -133,6 +137,10 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                     } else {
                         t.PecAddress__c = leadsPecMap.get(t.WhoId);
                     }
+
+                    if (String.isBlank(t.PecAddress__c)) {
+                        t.addError('Il destinatario selezionato non ha nessun indirizzo PEC in anagrafica.');
+                    }
                 }
             }
         }
@@ -186,25 +194,26 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         }
 
     }*/
-
-    private Integer doxeeTemplateCode(String doxeeTemplate) {
+    
+    @testVisible
+    private String doxeeTemplateCode(String doxeeTemplate) {
 
         switch on doxeeTemplate {
             when 'Comunicazione Forte Consumo (23)' {
-                return 23;
+                return '023';
             }
             when 'Comunicazione Fuga Accertata (24)' {
-                return 24;
+                return '024';
             }
             when 'Comunicazione Fuga Presunta (25)' {
-                return 25;
+                return '025';
             }
             when 'Ultimo Avviso (26)' {
-                return 26;
+                return '026';
             }
         }
 
-        return 0;
+        return '0';
 
     }
 

@@ -15,7 +15,7 @@ public class HDT_LC_ManageBillingProfileTst{
 		insert accList;
 
 
-		List<BillingProfile__c> bilProfList=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+		HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
 	}
 
 	@isTest
@@ -42,7 +42,7 @@ public class HDT_LC_ManageBillingProfileTst{
 
 		System.assertEquals(testBilProf[0].Name, tBilProf[0].Name, 'Billing Profile Name is wrong');
 
-		System.assertNotEquals(null, tBilProf[0].Name);
+		System.assertNotEquals(null, tBilProf[0].Name, 'getBillingProfileList did not work correctly');
 
 		Test.stopTest();
 	}

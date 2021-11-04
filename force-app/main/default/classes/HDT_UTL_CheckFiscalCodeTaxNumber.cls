@@ -22,6 +22,27 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
     };
     private static List<String> listAlf = new List<String>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' ,'T' ,'U', 'V', 'W', 'X', 'Y' ,'Z'};
     private static  List<String> listNum = new List<String>{'0','1','2','3','4','5','6','7','8','9'};
+    
+    /**
+    * @description  Confronta il codice fiscale inserito con il codice fiscale stimato
+    * @param infoData 
+    * @param fiscalCode 
+    * @return Boolean 
+    **/
+    public static Boolean matchEstimatedFCode(Map<String,String> infoData,String fiscalCode){
+        //HRAWRM-491 27/09/2021 Controllo codice fiscale stimato
+
+        String estimatedFCode=HDT_UTL_CalculateFiscalCode.calculateFiscalCode(infoData);
+        System.debug('Inserted FiscalCode:'+fiscalCode);
+        System.debug('Estimated FiscalCode:'+estimatedFCode);
+        if (estimatedFCode.equalsIgnoreCase(fiscalCode)) {
+            return true;
+            
+        }
+        return false;
+    }
+
+
 
     @AuraEnabled
     public static Map<String,Object> getDataFromFiscalCodeData(String fiscalCodes){
@@ -107,6 +128,7 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
                     }
 
                 }
+               
                 if (!isValid) {
                     throw new AuraHandledException('Inserire un codice fiscale valido');
 

@@ -4,10 +4,9 @@
     <description>Unique ID for tracking information related to the sent message</description>
     <externalId>false</externalId>
     <label>MobileMessageTrackingID</label>
-    <precision>18</precision>
+    <length>18</length>
     <required>true</required>
-    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>true</unique>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

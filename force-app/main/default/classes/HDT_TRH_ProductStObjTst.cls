@@ -4,8 +4,8 @@ public class HDT_TRH_ProductStObjTst {
     @testSetup
     static void setup() {
         List<OperandTemplate__c> operandTemplateList = new List<OperandTemplate__c>();
-        OperandTemplate__c op1 = new OperandTemplate__c(Operands__c = 'ES_ADG_GO', ContractTemplate__c = 'ZELE_PREZZO', Typology__c = 'PDISCNT', Definition__c = 'DESCR ES_ADG_GO');
-        operandTemplateList.add(op1);
+        OperandTemplate__c op = new OperandTemplate__c(Operands__c = 'ES_ADG_GO', ContractTemplate__c = 'ZELE_PREZZO', Typology__c = 'PDISCNT', Definition__c = 'DESCR ES_ADG_GO');
+        operandTemplateList.add(op);
         insert operandTemplateList;
 
         List<RateTemplate__c> rateList = new List<RateTemplate__c>();
@@ -17,6 +17,8 @@ public class HDT_TRH_ProductStObjTst {
     @isTest
     static void beforeInsert(){
 
+        Boolean finished = false;
+
         Test.startTest();
 
         Product2 p = new Product2();
@@ -27,12 +29,18 @@ public class HDT_TRH_ProductStObjTst {
 
         insert p;
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
     @isTest
     static void beforeUpdate(){
+
+        Boolean finished = false;
 
         Product2 p = new Product2();
         p.ProductCode = 'pCode01';
@@ -91,12 +99,18 @@ public class HDT_TRH_ProductStObjTst {
         p.Status__c = 'Confermata';
         update p;
 
+        finished = true;
+
         Test.stopTest();
+
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 
     @isTest
     static void changeStatusHandlerNull(){
+
+        Boolean finished = false;
 
         Product2 pOld = new Product2();
         pOld.Status__c = null;
@@ -107,10 +121,16 @@ public class HDT_TRH_ProductStObjTst {
         HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse statusResponse;
         statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, null, pOld, pNew, 0, 0);
 
+        finished = true;
+
+        System.assertEquals(true, finished, 'Test Not Ended');
+
     }
 
     @isTest
     static void changeStatusHandlerInDevelopment(){
+
+        Boolean finished = false;
 
         Product2 pOld = new Product2();
         pOld.Status__c = Label.HDT_InDevelopment;
@@ -134,10 +154,16 @@ public class HDT_TRH_ProductStObjTst {
         pNew.Status__c = Label.HDT_Expired;
         statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, null, pOld, pNew, 0, 0);
 
+        finished = true;
+
+        System.assertEquals(true, finished, 'Test Not Ended');
+
     }
 
     @isTest
     static void changeStatusHandlerConfirmed(){
+
+        Boolean finished = false;
 
         Product2 pOld = new Product2();
         pOld.Status__c = Label.HDT_Confirmed;
@@ -160,10 +186,16 @@ public class HDT_TRH_ProductStObjTst {
         pNew.Status__c = Label.HDT_Expired;
         statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, null, pOld, pNew, 0, 0);
 
+        finished = true;
+
+        System.assertEquals(true, finished, 'Test Not Ended');
+
     }
 
     @isTest
     static void changeStatusHandlerSold(){
+
+        Boolean finished = false;
 
         Product2 pOld = new Product2();
         pOld.Status__c = Label.HDT_Sold;
@@ -186,10 +218,16 @@ public class HDT_TRH_ProductStObjTst {
         pNew.Status__c = Label.HDT_Expired;
         statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, null, pOld, pNew, 0, 0);
 
+        finished = true;
+
+        System.assertEquals(true, finished, 'Test Not Ended');
+
     }
 
     @isTest
     static void changeStatusHandlerCanceled(){
+
+        Boolean finished = false;
 
         Product2 pOld = new Product2();
         pOld.Status__c = Label.HDT_Canceled;
@@ -212,10 +250,16 @@ public class HDT_TRH_ProductStObjTst {
         pNew.Status__c = Label.HDT_Expired;
         statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, null, pOld, pNew, 0, 0);
 
+        finished = true;
+
+        System.assertEquals(true, finished, 'Test Not Ended');
+
     }
 
     @isTest
     static void changeStatusHandlerExpired(){
+
+        Boolean finished = false;
 
         Product2 pOld = new Product2();
         pOld.Status__c = Label.HDT_Expired;
@@ -237,6 +281,10 @@ public class HDT_TRH_ProductStObjTst {
 
         pNew.Status__c = Label.HDT_Expired;
         statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, null, pOld, pNew, 0, 0);
+
+        finished = true;
+
+        System.assertEquals(true, finished, 'Test Not Ended');
 
     }
 

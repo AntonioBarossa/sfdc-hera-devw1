@@ -12,18 +12,30 @@ public with sharing class HDT_LC_BillingProfileFormTst {
 @TestSetup
 static void makeData(){
     List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-    List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].id);
+    HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].id);
 }
 
 @isTest
 public static void testGetFormFields() {
     List<Account> accList = [SELECT Id FROM Account LIMIT 1];
 
+    Map<String,List<String>> resultBollettinoPostale = new Map<String,List<String>>();
+    Map<String,List<String>> resultBollettino = new Map<String,List<String>>();
+    Map<String,List<String>> resultRid = new Map<String,List<String>>();
+
     Test.startTest();
-    HDT_LC_BillingProfileForm.getFormFields('Bollettino postale', accList[0].Id);
-    HDT_LC_BillingProfileForm.getFormFields('Bollettino', accList[0].Id);
-    HDT_LC_BillingProfileForm.getFormFields('RID', accList[0].Id);
+    resultBollettinoPostale = HDT_LC_BillingProfileForm.getFormFields('Bollettino postale', accList[0].Id);
+    resultBollettino = HDT_LC_BillingProfileForm.getFormFields('Bollettino', accList[0].Id);
+    resultRid = HDT_LC_BillingProfileForm.getFormFields('RID', accList[0].Id);
     Test.stopTest();
+
+    System.assertEquals(resultBollettinoPostale != null, true, 'Value of parameter is matching');
+    System.assertEquals(resultBollettino != null, true, 'Value of parameter is matching');
+    System.assertEquals(resultRid != null, true, 'Value of parameter is matching');
+    System.assertNotEquals(resultBollettinoPostale != null, false, 'Value of parameter is not matching');
+    System.assertNotEquals(resultBollettino != null, false, 'Value of parameter is not matching');
+    System.assertNotEquals(resultRid != null, false, 'Value of parameter is not matching');
+
 }
 
 @isTest
@@ -54,7 +66,6 @@ public static void testGetAccountOwnerInfo() {
 
 @isTest
 public static void testGetLegalAccount() {
-    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
     List<Contact> contactList = [SELECT Id FROM Contact LIMIT 1];
 
     Test.startTest();

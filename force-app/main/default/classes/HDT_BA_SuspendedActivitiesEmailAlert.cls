@@ -1,4 +1,5 @@
 public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Database.Batchable<wrts_prcgvr__Activity__c>, Database.AllowsCallouts {
+
     List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
     Map<String, String> usersEmail = new Map<String, String>();
     Map<wrts_prcgvr__Activity__c, User> activityOwner = new Map<wrts_prcgvr__Activity__c, User> ();
@@ -9,6 +10,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
                            AND Status__c = 'Sospesa' 
                            AND RecordType.DeveloperName = 'HDT_RT_Scarto'
                            WITH SECURITY_ENFORCED]; //Marco Arci
+        system.debug('-----'+this.activities); //Marco arci debug temporaneo
         if (this.activities.size() > 0) {
             List<String> userNames = new List<String>();
             for (wrts_prcgvr__Activity__c act : this.activities) {
@@ -20,6 +22,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
             for (User user : users) {
                 this.usersEmail.put(user.Name, user.Email);
             }
+            system.debug('------'+this.usersEmail); //Marco Arci debug temporaneo
         }
     }
 
@@ -29,21 +32,22 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
 
     public void execute(Database.BatchableContext BC, List<wrts_prcgvr__Activity__c> scope) {
         List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
-        List<String> toAddresses = new List<String>();
         OrgWideEmailAddress orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
         if (orgWideAddress == null) {
             System.abortJob(BC.getJobId());
         }
         for (wrts_prcgvr__Activity__c activity : scope) {
             Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage();
+            List<String> toAddresses = new List<String>();
             //old toAddresses.add(this.usersEmail.get(activity.OwnedByUser__c));
-            toAddresses.add(this.usersEmail.get(activity.Owner.Name)); //Marco Arci
+            toAddresses.add(this.usersEmail.get(activity.Owner.Name)); 
             emailMsg.setToAddresses(toAddresses);
             emailMsg.setSubject('Attività sospesa');
             String emailBody = String.format('Gentile utente, <br/> ti segnaliamo che l’attività {0} ha raggiunto la data fine sospensione <br/>', new List<String>{activity.Name});
             emailMsg.setHtmlBody(emailBody);
             emailMsg.setOrgWideEmailAddressId(orgWideAddress.Id);
             emailList.add(emailMsg);
+            system.debug('-----'+toAddresses); //Marco Arci debug temporaneo
         }
         if(emailList.size() > 0){
             Messaging.sendEmail(emailList);
@@ -53,4 +57,5 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlert implements Databa
     public void finish(Database.BatchableContext bc){
         System.debug('-------- finish batch');
     }
+    
 }

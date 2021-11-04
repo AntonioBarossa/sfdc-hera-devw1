@@ -1,3 +1,4 @@
+// BATCH DEPRECATO - DA NON SCHEDULARE
 public inherited sharing class HDT_BA_SelfReadings implements Database.Batchable<SObject> {
 
     public Database.QueryLocator start(Database.BatchableContext context) {
@@ -12,12 +13,17 @@ public inherited sharing class HDT_BA_SelfReadings implements Database.Batchable
                 when Case selfReadingCase {
                     selfReadingCase.Phase__c = 'Esito KO da SAP simulato';
                 }
-                when else {}
             }
         }
 
         HDT_UTL_DatabaseService.updateSObject(recordList);
     }
 
+    /*
+    * @Author: Salvatore A. Sarà 18/10/2021
+    * Risoluzione "Avoid Empty Block Statements"
+    * Inserito SuppressWarnings per metodo required che in questo caso specifico non deve eseguire azioni
+    */
+    @SuppressWarnings('PMD.EmptyStatementBlock')
     public void finish(Database.BatchableContext context) {}
 }

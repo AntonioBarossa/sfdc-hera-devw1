@@ -67,7 +67,8 @@ public inherited sharing class HDT_QR_AgentMatrix {
             IsMonitoring__c,
             AgentFirstName__c,
             AgencyName__c,
-            OwnerId
+            OwnerId,
+            AreaManager__c
             FROM AgentMatrix__c WHERE AgencyName__c=:agencyName
             WITH SECURITY_ENFORCED
         ];
@@ -107,7 +108,8 @@ public inherited sharing class HDT_QR_AgentMatrix {
             IsMonitoring__c,
             AgentFirstName__c,
             AgencyName__c,
-            OwnerId
+            OwnerId,
+            AreaManager__c
             FROM AgentMatrix__c WHERE AgencyName__c=:agencyName AND Channel__c=:channel
             WITH SECURITY_ENFORCED
             ];
@@ -133,7 +135,8 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgentCode__c,
             UpperChannelAgency__c,
             LowerChannelAgency__c,
-            IsMonitoring__c	
+            IsMonitoring__c,
+            AreaManager__c
             FROM AgentMatrix__c
             WHERE Channel__c=:channel AND UserIdentification__c=:userName
             WITH SECURITY_ENFORCED

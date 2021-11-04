@@ -3,6 +3,8 @@ public with sharing class HDT_ActivityCustomTst {
 
     @isTest
     public static void testActivityCustomTst() {
+        
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
         HDT_UTL_DataFactoryTst.pClickInstance();
         

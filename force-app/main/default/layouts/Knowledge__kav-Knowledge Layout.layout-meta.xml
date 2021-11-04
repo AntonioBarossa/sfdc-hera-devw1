@@ -34,15 +34,12 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Corpo Articolo</label>
         <layoutColumns>
             <layoutItems>
                 <field>ArticleContent__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>OfferedService__c</field>
             </layoutItems>
             <layoutItems>
                 <field>FrontOffice__c</field>
@@ -53,7 +50,7 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
-        <editHeading>false</editHeading>
+        <editHeading>true</editHeading>
         <label>Custom Links</label>
         <layoutColumns/>
         <layoutColumns/>

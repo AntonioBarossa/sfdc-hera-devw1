@@ -2,69 +2,39 @@
  * @author alessandro.picchiri@eng.it
  * @date 28/05/2021 
 */
-public class HDT_WS_CreditCheckRequest  extends HDT_WS_Request {
+public class HDT_WS_CreditCheckRequest extends HDT_WS_Request {
 
-
-    @AuraEnabled Public String sistema;
-    @AuraEnabled Public String caso;
-    @AuraEnabled Public String crmEntity;
-    @AuraEnabled Public String crmId;    
-    @AuraEnabled Public String userId;
-    @AuraEnabled Public String activationUser;
-    @AuraEnabled Public String account;
-    @AuraEnabled Public String jobTitle;
-    @AuraEnabled Public String internalCustomerId;
-    @AuraEnabled Public String companyName;
-    @AuraEnabled Public String externalCustomerId;
-    @AuraEnabled Public String secondaryCustomerId;
-    @AuraEnabled Public String bpClass;
-    @AuraEnabled Public String bpCategory;
-    @AuraEnabled Public String bpType;
-    @AuraEnabled Public String customerType;
-    @AuraEnabled Public String address;
-    @AuraEnabled Public String municipality;
-    @AuraEnabled Public String district;
-    @AuraEnabled Public String postCode;
-    @AuraEnabled Public String operation;
-    @AuraEnabled Public String companyGroup;
-    @AuraEnabled Public String market;
-    @AuraEnabled Public String offerType;    
-    @AuraEnabled Public String bpAlternative;  
-    @AuraEnabled Public String alternativeCustomerId; 
-    @AuraEnabled Public List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail> details;
+    @AuraEnabled public String sistema { get; set; }
+    @AuraEnabled public String caso { get; set; }
+    @AuraEnabled public String crmEntity { get; set; }
+    @AuraEnabled public String crmId { get; set; }    
+    @AuraEnabled public String userId { get; set; }
+    @AuraEnabled public String activationUser { get; set; }
+    @AuraEnabled public String account { get; set; }
+    @AuraEnabled public String jobTitle { get; set; }
+    @AuraEnabled public String internalCustomerId { get; set; }
+    @AuraEnabled public String companyName { get; set; }
+    @AuraEnabled public String externalCustomerId { get; set; }
+    @AuraEnabled public String secondaryCustomerId { get; set; }
+    @AuraEnabled public String bpClass { get; set; }
+    @AuraEnabled public String bpCategory { get; set; }
+    @AuraEnabled public String bpType { get; set; }
+    @AuraEnabled public String customerType { get; set; }
+    @AuraEnabled public String address { get; set; }
+    @AuraEnabled public String municipality { get; set; }
+    @AuraEnabled public String district { get; set; }
+    @AuraEnabled public String postCode { get; set; }
+    @AuraEnabled public String operation { get; set; }
+    @AuraEnabled public String companyGroup { get; set; }
+    @AuraEnabled public String market { get; set; }
+    @AuraEnabled public String offerType { get; set; }    
+    @AuraEnabled public String bpAlternative { get; set; }  
+    @AuraEnabled public String alternativeCustomerId { get; set; } 
+    @AuraEnabled public List<HDT_WRP_InputWrapperDetail> details { get; set; } 
     
-    
-    public HDT_WS_CreditCheckRequest(HDT_WS_CreditCheck.HDT_VFC_InputWrapper wrpVals){
-
-        system.debug('HDT_WS_CreditCheckRequest - HDT_WS_CreditCheckRequest: wrpVals ----> ' + JSON.serialize(wrpVals));   
-
-        this.sistema = wrpVals.sistema;
-        this.caso = wrpVals.caso;
-        this.crmEntity = wrpVals.crmEntity;
-        this.crmId = wrpVals.crmId;        
-        this.userId = wrpVals.userId;
-        this.activationUser = wrpVals.activationUser;
-        this.account = wrpVals.account;
-        this.jobTitle = wrpVals.jobTitle;
-        this.internalCustomerId = wrpVals.internalCustomerId;
-        this.companyName = wrpVals.companyName;
-        this.externalCustomerId = wrpVals.externalCustomerId;        
-        this.secondaryCustomerId = wrpVals.secondaryCustomerId;
-        this.bpClass = wrpVals.bpClass;
-        this.bpCategory = wrpVals.bpCategory;
-        this.bpType = wrpVals.bpType;
-        this.customerType = wrpVals.customerType;
-        this.address = wrpVals.address;
-        this.municipality = wrpVals.municipality;
-        this.district = wrpVals.district;
-        this.postCode = wrpVals.postCode;
-        this.operation = wrpVals.operation;
-        this.companyGroup = wrpVals.companyGroup;
-        this.market = wrpVals.market;
-        this.offerType = wrpVals.offerType;     
-        this.bpAlternative = wrpVals.bpAlternative;  
-        this.alternativeCustomerId = wrpVals.alternativeCustomerId;    
-        this.details = wrpVals.details;        
+    public class HDT_WRP_InputWrapperDetail {        
+        @AuraEnabled public String annualConsumption { get; set; } 
+        @AuraEnabled public String commodity { get; set; } 
+        @AuraEnabled public String totalConsumption { get; set; } 
     }
-
 }

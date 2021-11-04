@@ -410,7 +410,7 @@ public inherited sharing class HDT_LC_CampaignsController {
         if (String.isBlank(id)) {
             return null;
         }
-        List<String> listFiels = new List<String>{'name'};
+      //  List<String> listFiels = new List<String>{'name'};
         List<Account> listAcc =accountQr.getAccountById(id);
         Account currentAccount = listAcc.get(0);
         
@@ -418,11 +418,17 @@ public inherited sharing class HDT_LC_CampaignsController {
         
         
     }
+
+    @AuraEnabled(cacheable=true)
+    public static String getScriptNameFromCampaign(String memberId){
+        List<CampaignMember> lcs = [select id, Campaign.ScriptConfig__r.Name from CampaignMember where id=:memberId WITH SECURITY_ENFORCED LIMIT 1];
+        return lcs.isEmpty()? '' : lcs[0].Campaign.ScriptConfig__r.Name;
+    }
     
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c FROM CampaignMember WHERE Id = :campaignMemberId];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             System.debug(cm);
             return cm;
         } catch (Exception e) {

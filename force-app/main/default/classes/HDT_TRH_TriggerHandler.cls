@@ -1,8 +1,22 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 13/02/2021
+* @description HDT_TRH_TriggerHandler
+* @history Lorenzo – 13/02/2021 – created class
+*/
 public virtual class HDT_TRH_TriggerHandler {
+
+  @TestVisible
+  private static final String JOLLY_CHAR = '*';
+  @TestVisible
+  private static final String LIST_SEPARATOR = ';';
 
   // static map of handlername, times run() was invoked
   private static Map<String, HDT_TRH_LoopCount> loopCountMap;
   private static Set<String> bypassedHandlers;
+
+  @TestVisible
+  private static Map<String,HDT_AutomationToggle__mdt> disabilitationMap;
 
   // the current context of the trigger, overridable in tests
   @TestVisible
@@ -16,6 +30,9 @@ public virtual class HDT_TRH_TriggerHandler {
   static {
     loopCountMap = new Map<String, HDT_TRH_LoopCount>();
     bypassedHandlers = new Set<String>();
+
+    //existing records are not considered during testing
+    disabilitationMap = Test.isRunningTest() ? new Map<String,HDT_AutomationToggle__mdt>() : HDT_AutomationToggle__mdt.getAll();
   }
   
   // constructor
@@ -30,7 +47,9 @@ public virtual class HDT_TRH_TriggerHandler {
   // main method that will be called during execution
   public void run() {
 
-    if(!validateRun()) return;
+    if(!validateRun()) {
+      return;
+    }
 
     addToLoopCount();
 
@@ -142,6 +161,7 @@ public virtual class HDT_TRH_TriggerHandler {
   }
 
   // make sure this trigger should continue to run
+  @SuppressWarnings('PMD.AvoidDebugStatements')
   @TestVisible
   private Boolean validateRun() {
     if(!this.isTriggerExecuting || this.context == null) {
@@ -149,6 +169,13 @@ public virtual class HDT_TRH_TriggerHandler {
     }
     if(HDT_TRH_TriggerHandler.bypassedHandlers.contains(getHandlerName())) {
       return false;
+    }
+    if (isAutomationDisabled(getHandlerName())) {
+      System.debug(LoggingLevel.DEBUG, 'Trigger Disabled');
+      return false;
+    }
+    else {
+      System.debug(LoggingLevel.DEBUG, 'Trigger Running');
     }
     return true;
   }
@@ -158,25 +185,116 @@ public virtual class HDT_TRH_TriggerHandler {
     return String.valueOf(this).substring(0,String.valueOf(this).indexOf(':'));
   }
 
+  /**
+  * @description Check if current trigger run has been disabled by Custom Metadata Type
+  * @author gabriele.rota@webresults.it | 2021-10-28 
+  * @return Boolean 
+  **/
+  @TestVisible
+  private Boolean isAutomationDisabled(String handlerName) {
+    if (!disabilitationMap.containsKey(handlerName)) {
+      //no disabilitations defined for current trigger
+      return false;
+    }
+
+    HDT_AutomationToggle__mdt toggleMd = disabilitationMap.get(handlerName);
+    return isMatchingEvent(toggleMd) && isMatchingUser(toggleMd) && isBeforeDueDate(toggleMd);
+  }
+
+  /**
+  * @description Check if current trigger event (before insert, after update ...) is disabled
+  * @author gabriele.rota@webresults.it | 2021-10-28 
+  * @param toggleMd  
+  * @return Boolean 
+  **/
+  private Boolean isMatchingEvent(HDT_AutomationToggle__mdt toggleMd) {
+    if (toggleMd.SkipEvents__c == JOLLY_CHAR) {
+      return true;
+    }
+
+    if (String.isNotBlank(toggleMd.SkipEvents__c)) {
+      String contextName = this.context.name();
+      for (String event:toggleMd.SkipEvents__c.split(LIST_SEPARATOR)) {
+        //' before insert ' -> 'BEFORE_INSERT'
+        String disabledEvent = event.trim().toUpperCase().replace(' ','_');
+        if (contextName == disabledEvent) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+  * @description Check if current trigger is disabled for the running user
+  * @author gabriele.rota@webresults.it | 2021-10-28 
+  * @param toggleMd  
+  * @return Boolean 
+  **/
+  private Boolean isMatchingUser(HDT_AutomationToggle__mdt toggleMd) {
+    if (toggleMd.SkipUsernames__c == JOLLY_CHAR) {
+      return true;
+    }
+
+    if (String.isNotBlank(toggleMd.SkipUsernames__c)) {
+      String username = UserInfo.getUserName();
+      for (String usernameLoop:toggleMd.SkipUsernames__c.split(LIST_SEPARATOR)) {
+        if (username.equalsIgnoreCase(usernameLoop.trim())) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+  * @description Check if current trigger disabilitation is expired
+  * @author gabriele.rota@webresults.it | 2021-10-28 
+  * @param toggleMd  
+  * @return Boolean 
+  **/
+  private Boolean isBeforeDueDate(HDT_AutomationToggle__mdt toggleMd) {
+    if (toggleMd.SkipDueDateTime__c == null) {
+      return true;
+    }
+    else {
+      return (Datetime.now() < toggleMd.SkipDueDateTime__c);
+    }
+  }
+
   /***************************************
    * context methods
    ***************************************/
 
   // context-specific methods for override
   @TestVisible
-  protected virtual void beforeInsert(){}
+  protected virtual void beforeInsert(){
+    return;
+  }
   @TestVisible
-  protected virtual void beforeUpdate(){}
+  protected virtual void beforeUpdate(){
+    return;
+  }
   @TestVisible
-  protected virtual void beforeDelete(){}
+  protected virtual void beforeDelete(){
+    return;
+  }
   @TestVisible
-  protected virtual void afterInsert(){}
+  protected virtual void afterInsert(){
+    return;
+  }
   @TestVisible
-  protected virtual void afterUpdate(){}
+  protected virtual void afterUpdate(){
+    return;
+  }
   @TestVisible
-  protected virtual void afterDelete(){}
+  protected virtual void afterDelete(){
+    return;
+  }
   @TestVisible
-  protected virtual void afterUndelete(){}
+  protected virtual void afterUndelete(){
+    return;
+  }
 
   /***************************************
    * inner classes
@@ -204,7 +322,9 @@ public virtual class HDT_TRH_TriggerHandler {
     }
 
     public Boolean exceeded() {
-      if(this.max < 0) return false;
+      if(this.max < 0) {
+        return false;
+      }
       if(this.count > this.max) {
         return true;
       }
@@ -226,7 +346,7 @@ public virtual class HDT_TRH_TriggerHandler {
 
   // possible trigger contexts
   @TestVisible
-  private enum TriggerContext {
+  private enum TriggerContext {   //NOPMD
     BEFORE_INSERT, BEFORE_UPDATE, BEFORE_DELETE,
     AFTER_INSERT, AFTER_UPDATE, AFTER_DELETE,
     AFTER_UNDELETE

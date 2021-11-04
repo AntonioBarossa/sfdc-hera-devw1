@@ -2,27 +2,36 @@
 public class HDT_UTL_SearchPlugTst {
 
     /*
-        HDT_UTL_SearchPlug           32%
-        HDT_QR_SearchPlug            61%
+        HDT_UTL_SearchPlug           87%
+        HDT_QR_SearchPlug            87%
     */
 
     @TestSetup
     static void makeData(){
-        List<Product2> productList = new List<Product2>();
-        Product2 p = new Product2();
-        p.ProductCode = 'pCode01';
-        p.Version__c = '01V1';
-        p.Name = 'ExampleProduct';
-        p.Family = Label.HDT_ProductFamilyTrigger;
-        p.IsActive = true;
-        p.NoOrderable__c = false;
-        productList.add(p);
+
+        List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+        accList[0].BirthDate__c = Date.valueof('1964-03-21');
+        insert accList;
+        List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
+
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+        productList[0].ProductCode = 'pCode01';
+        productList[0].Version__c = '01V1';
+        productList[0].Name = 'ExampleProduct';
+        productList[0].Family = Label.HDT_ProductFamilyTrigger;
+        productList[0].IsActive = true;
+        productList[0].NoOrderable__c = false;
+        productList[0].Status__c = 'Vendibile';
         insert productList;
+        
+		Id pricebookId=Test.getStandardPricebookId();
+		List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pricebookId);
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, true, accList[0].Id, saleList, pricebookId);
     
         List<EligibilityCriteria__c> criteriaList = new List<EligibilityCriteria__c>();
         EligibilityCriteria__c criteria = new EligibilityCriteria__c();
         criteria.Product__c = productList[0].Id;
-        criteria.EligibleForAllCities__c = true;
+        criteria.EligibleForAllCities__c = false;
         criteria.ClientAgeMin__c = null;
         criteria.ClientAgeMax__c = null;
         criteria.LoginGroup__c = null;
@@ -47,8 +56,19 @@ public class HDT_UTL_SearchPlugTst {
         criteriaList.add(criteria);
         insert criteriaList;   
 
+        EligibilityCriteria__c crit = [SELECT Id FROM EligibilityCriteria__c LIMIT 1];
+
+        EligibleMunicipality__c eligibilityMun = new EligibleMunicipality__c();
+        eligibilityMun.Name = 'Roma';
+        eligibilityMun.AreaCode__c = 'RM';
+        eligibilityMun.EligibilityCriteria__c = crit.Id;
+        insert eligibilityMun;
+
+        List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
+
         SBQQ__Quote__c quote = new SBQQ__Quote__c();
-        quote.SBQQ__PricebookId__c = null;
+        quote.SBQQ__PricebookId__c = pbList[0].Id;
+        quote.SupplyCity__c = 'Roma';
         insert quote;
 
         List<OperandTemplate__c> operandTemplateList = new List<OperandTemplate__c>();
@@ -94,13 +114,16 @@ public class HDT_UTL_SearchPlugTst {
         techOffeItems.add(tecOffItem);
         insert techOffeItems;
 
-        p.Status__c = 'Confermata';
-        p.StartDate__c = Date.today().addDays(2);
-        p.EndDate__c = Date.today().addDays(3);
-        update p;
+        productList[0].Status__c = 'Confermata';
+        productList[0].StartDate__c = Date.today().addDays(2);
+        productList[0].EndDate__c = Date.today().addDays(3);
+        update productList;
 
         HDT_BA_ProductStObjStatusUpdate batch = new HDT_BA_ProductStObjStatusUpdate();
         Id batchId = Database.executeBatch(batch); 
+
+        LoginGroup__c loginGroup = new LoginGroup__c(NameGroup__c = 'Sportello Imola');
+        insert loginGroup;
 
     }
 
@@ -115,8 +138,13 @@ public class HDT_UTL_SearchPlugTst {
         ];
 
         Test.startTest();
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.getAdditionalSuggestFilters(quote, null);
+        String result = controller.getAdditionalSuggestFilters(quote, null);
+        
+        System.assertNotEquals(null, result, 'result = null');
+        System.assertNotEquals('', result, 'result = \'\'');
+
         Test.stopTest();
 
     }
@@ -124,6 +152,7 @@ public class HDT_UTL_SearchPlugTst {
     @isTest
     static void HDT_UTL_SearchPlug(){
         HDT_UTL_SearchPlug searchPlug = new HDT_UTL_SearchPlug();
+        System.assertNotEquals(null, searchPlug, 'searchPlug != null');
     }
 
     @isTest
@@ -138,7 +167,15 @@ public class HDT_UTL_SearchPlugTst {
 
         Test.startTest();
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.isFilterHidden(quote, 'ProductCode');
+        Boolean result = controller.isFilterHidden(quote, 'ProductCode');
+        System.assertEquals(null, result, 'result2 = false');
+
+        quote.SBQQ__Status__c = 'Approved';
+        update quote;
+
+        Boolean result2 = controller.isFilterHidden(quote, 'ProductCode');
+        System.assertEquals(null, result2, 'result2 = false');
+
         Test.stopTest();
 
     }
@@ -147,8 +184,12 @@ public class HDT_UTL_SearchPlugTst {
     static void getFilterDefaultValue(){
 
         Test.startTest();
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.getFilterDefaultValue(null, 'ProductCode');
+        String result = controller.getFilterDefaultValue(null, 'ProductCode');
+
+        System.assertEquals(null, result, 'result != null');
+
         Test.stopTest();
 
     } 
@@ -157,8 +198,13 @@ public class HDT_UTL_SearchPlugTst {
     static void isSearchCustom(){
 
         Test.startTest();
+
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.isSearchCustom(null, null);
+        Boolean result = controller.isSearchCustom(null, null);
+
+        System.assertEquals(true, result, 'result = false');
+
         Test.stopTest();
 
     }
@@ -167,36 +213,108 @@ public class HDT_UTL_SearchPlugTst {
     static void getAdditionalSearchFilters(){
 
         SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c, SuperUser__c, SupplyCity__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        quote.ConsumptionRangeEE__c = 20.00;
+        quote.NewClient__c = 'Y';
+        update quote;
+
+        EligibilityCriteria__c criteria = [SELECT Id,ConsumptionRangeEEmin__c, ConsumptionRangeEEmax__c, NewClient__c FROM EligibilityCriteria__c WITH SECURITY_ENFORCED LIMIT 1];
+        criteria.ConsumptionRangeEEmin__c = 10;
+        criteria.ConsumptionRangeEEmax__c = null;
+        criteria.NewClient__c = 'Si';
+        update criteria;
+
+        Test.startTest();
+
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        String result = controller.getAdditionalSearchFilters(quote, null);
+
+        System.assertNotEquals(null, result, 'result = null');
+        System.assertNotEquals('', result, 'result = \'\'');
+
+        quote.SuperUser__c = 'Y';
+        update quote;
+
+        String result2 = controller.getAdditionalSearchFilters(quote, null);
+
+        System.assertNotEquals(null, result2, 'result = null');
+        System.assertNotEquals('', result2, 'result = \'\'');
+
+        Test.stopTest();
+
+    }
+
+    @isTest
+    static void getAdditionalSearchFiltersWithSuperUser(){
+
+        SBQQ__Quote__c quote = [
+            SELECT Id, SBQQ__PricebookId__c, SuperUser__c, SupplyCity__c
+            FROM SBQQ__Quote__c
+            WITH SECURITY_ENFORCED
+            LIMIT 1 
+        ];
+
+        quote.SuperUser__c = 'Y';
+        quote.ConsumptionRangeEE__c = 20.00;
+        update quote;
+
+        EligibilityCriteria__c criteria = [SELECT Id,ConsumptionRangeEEmin__c, ConsumptionRangeEEmax__c FROM EligibilityCriteria__c WITH SECURITY_ENFORCED LIMIT 1];
+        criteria.ConsumptionRangeEEmin__c = null;
+        criteria.ConsumptionRangeEEmax__c = 60;
+        update criteria;
+
+        Test.startTest();
+
+        HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
+        String result = controller.getAdditionalSearchFilters(quote, null);
+
+        System.assertNotEquals(null, result, 'result = null');
+        System.assertNotEquals('', result, 'result = \'\'');
+
+        Test.stopTest();
+
+    }
+    
+    @isTest
+    static void search(){
+
+        SBQQ__Quote__c quote = [
             SELECT Id, SBQQ__PricebookId__c
             FROM SBQQ__Quote__c
             WITH SECURITY_ENFORCED
             LIMIT 1 
         ];
 
+        quote.SuperUser__c = 'Y';
+        quote.ConsumptionRangeEE__c = 20.00;
+        quote.NewClient__c = 'N';
+        update quote;
+
+        LoginGroup__c lg = [SELECT Id FROM LoginGroup__c WITH SECURITY_ENFORCED LIMIT 1];
+
+        EligibilityCriteria__c criteria = [SELECT Id, LoginGroup__c, ConsumptionRangeEEmin__c, ConsumptionRangeEEmax__c, NewClient__c FROM EligibilityCriteria__c WITH SECURITY_ENFORCED LIMIT 1];
+        criteria.LoginGroup__c = lg.Id;
+        criteria.ConsumptionRangeEEmin__c = 10;
+        criteria.ConsumptionRangeEEmax__c = 60;
+        criteria.NewClient__c = 'No';
+        update criteria;
+
+        Map<String,Object> fieldValuesMap = new Map<String,Object>();
         Test.startTest();
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.getAdditionalSearchFilters(quote, null);
+        List<PriceBookEntry> pbe = controller.search(quote, fieldValuesMap);
+
+        System.assert(pbe.size() == 0, 'pbe == null or pbe.size() > 0');
+
         Test.stopTest();
 
     }
-    
-    //@isTest
-    //static void search(){
-//
-    //    SBQQ__Quote__c quote = [
-    //        SELECT Id, SBQQ__PricebookId__c
-    //        FROM SBQQ__Quote__c
-    //        WITH SECURITY_ENFORCED
-    //        LIMIT 1 
-    //    ];
-//
-    //    Map<String,Object> fieldValuesMap = new Map<String,Object>();
-    //    Test.startTest();
-    //    HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-    //    controller.search(quote, fieldValuesMap);
-    //    Test.stopTest();
-//
-    //}
 
     @isTest
     static void isInputHidden(){
@@ -209,8 +327,13 @@ public class HDT_UTL_SearchPlugTst {
         ];
 
         Test.startTest();
+
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.isInputHidden(quote, 'Comune__c');
+        Boolean result = controller.isInputHidden(quote, 'Comune__c');
+
+        System.assertEquals(true, result, 'result = false');
+
         Test.stopTest();
 
     }
@@ -226,8 +349,12 @@ public class HDT_UTL_SearchPlugTst {
         ];
 
         Test.startTest();
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.getInputDefaultValue(quote, '');
+        String result = controller.getInputDefaultValue(quote, '');
+
+        System.assertEquals(null, result, 'result != null');
+
         Test.stopTest();
 
     }
@@ -243,17 +370,26 @@ public class HDT_UTL_SearchPlugTst {
         ];
 
         Test.startTest();
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.isSuggestCustom(quote, null);
+        Boolean result = controller.isSuggestCustom(quote, null);
+
+        System.assertEquals(false, result, 'result = true');
+
         Test.stopTest();
 
     }
     
     @isTest
     static void suggest(){
+
         Test.startTest();
+
         HDT_UTL_SearchPlug controller = new HDT_UTL_SearchPlug();
-        controller.suggest(null, null);
+        List<PricebookEntry> pbeList = controller.suggest(null, null);
+
+        System.assert(pbeList.size() > 0, 'pbeList == null or pbeList.size() = 0');
+
         Test.stopTest();
 
     }

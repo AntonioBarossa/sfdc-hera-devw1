@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_KpiTracking {
     public static void createKpiTracking(List<Account> accountList, Map<Id,Sobject> accountOldMap){
         List<KpiTracking__c> kpiList = new List<KpiTracking__c>();
@@ -20,13 +21,14 @@ public with sharing class HDT_UTL_KpiTracking {
         
         try {
             if (KpiTracking__c.SObjectType.getDescribe().isAccessible() && KpiTracking__c.SObjectType.getDescribe().isCreateable()) {
-                HDT_UTL_DatabaseService.insertSObject(kpiList);
+                //HDT_UTL_DatabaseService.insertSObject(kpiList);
+                HDT_UTL_DatabaseService.upsertSObjectExternalId(kpiList, 'KpiTracking__c', 'CustomerCode__c');
                 for(KpiTracking__c kpi : kpiList){
                     accountMap.get(kpi.CustomerCode__c).KpiTracking__c = kpi.Id;
                 }
             }
         } catch (DmlException ex) {
-            System.debug('Non è stato possibile creare il KPI');
+            System.debug(LoggingLevel.DEBUG, 'Non è stato possibile creare il KPI');
         }
     }
 
@@ -44,7 +46,7 @@ public with sharing class HDT_UTL_KpiTracking {
         List<KpiTracking__c> kpiList = new List<KpiTracking__c>();
         KpiTracking__c singleKpi;
         for (Account singleAccount : accountList) {
-            if(singleAccount.KpiTracking__c != null && singleAccount.KpiTracking__c != ''){
+            if(singleAccount.KpiTracking__c != null){
                 singleKpi = new KpiTracking__c();
                 singleKpi.Id = singleAccount.KpiTracking__c;
                 kpiList.add(singleKpi);
@@ -54,7 +56,7 @@ public with sharing class HDT_UTL_KpiTracking {
             try {
                 HDT_UTL_DatabaseService.deleteSObject(kpiList);
             } catch (DmlException ex) {
-                System.debug('Non è stato possibile cancellare i KPI');
+                System.debug(LoggingLevel.DEBUG, 'Non è stato possibile cancellare i KPI');
             }
         }
     }
@@ -64,7 +66,7 @@ public with sharing class HDT_UTL_KpiTracking {
                 HDT_UTL_DatabaseService.updateSObject(record);
             }
         } catch (DmlException ex) {
-            System.debug('Error updating kpi');
+            System.debug(LoggingLevel.DEBUG, 'Error updating kpi');
         }
     }
     public static List<KpiTracking__c> getKpiRecord(String params){

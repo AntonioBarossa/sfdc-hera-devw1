@@ -25,6 +25,12 @@
                 <default>false</default>
                 <label>In attesa di lavorazione</label>
             </value>
+            <value>
+                <fullName>Pronto A Partire</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pronto A Partire</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

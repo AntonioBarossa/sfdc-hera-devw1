@@ -12,6 +12,9 @@
 
     <template if:true={showWelcom} >
         <c-hdt-choose-association-operation
+            obj-type={objApiName}
+            enable-create={enableCreate}
+            enable-delete={enableDelete}
             icon-name="standard:product_service_campaign"
             main-title-label={label.mainTitle}
             delete-title-label={label.deleteTitleLabel}
@@ -25,7 +28,7 @@
     <!--<div if:true={showCreateRecord} ></div>-->
     <template if:true={showCreateRecord} >
         <c-hdt-product-option-edit-form
-            optional-sku-id={productid}
+            optional-sku-id={recordid}
             oncloseeditform={closeEditForm}
             onsaverecord={saveRecord}
         ></c-hdt-product-option-edit-form>
@@ -33,12 +36,14 @@
 
     <template if:true={showSearchTable} >
         <c-hdt-product-association-search-table
+            obj-type={objApiName}
+            labels={tableLabels}
             dml-context={dmlContext}
-            optional-sku-id={productid}
-            product-option-obj={productOptionObj}
-            product-option-id={productOptionId}
+            child-record-id={recordid}
+            junction-obj={productOptionObj}
             onclosemodal={closeModal}
         ></c-hdt-product-association-search-table>
+        <!--product-option-id={productOptionId}-->
     </template>
 
 </template>

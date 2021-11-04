@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    16/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_VariationsTst {
 
@@ -41,7 +46,7 @@ public with sharing class HDT_UTL_VariationsTst {
         Test.stopTest();
         
         //ASSERTS
-        //System.assert(caseList != null);
+        System.assert(myCase != null, 'Attenzione, myCase non può essere null!');
         
     }
     
@@ -98,8 +103,8 @@ public with sharing class HDT_UTL_VariationsTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(caseId != null);
-        System.assert(newCase != null);
+        System.assert(caseId != null, 'Attenzione, caseId non può essere null!');
+        System.assert(newCase != null, 'Attenzione, newCase non può essere null!');
         
     }
 

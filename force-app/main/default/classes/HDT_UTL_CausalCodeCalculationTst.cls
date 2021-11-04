@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    21/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_CausalCodeCalculationTst {
 
@@ -42,7 +47,7 @@ public with sharing class HDT_UTL_CausalCodeCalculationTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(inputs != null);
+        System.assert(inputs != null, 'Attenzione, inputs non può essere null!');
         
     }
 

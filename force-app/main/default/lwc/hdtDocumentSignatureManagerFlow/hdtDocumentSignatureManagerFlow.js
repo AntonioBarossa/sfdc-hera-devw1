@@ -100,6 +100,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
         else 
             return "Conferma Pratica"
     }
+    oldSignMode = '';
 
     connectedCallback(){
         if(this.quoteType && (this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0)){
@@ -231,6 +232,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                     signMode:this.caseRecord.fields.SignMode__c.value 
                 }
                 this.inputParams = JSON.stringify(inputParams);
+                this.oldSignMode = this.caseRecord.fields.SignMode__c.value;
                 console.log(this.inputParams);
             }
         }
@@ -253,8 +255,6 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 if(resultParsed.result === '000'){
                     var base64 = resultParsed.base64;
                     var sliceSize = 512;
-                    base64 = base64.replace(/^[^,]+,/, '');
-                    base64 = base64.replace(/\s/g, '');
                     var byteCharacters = window.atob(base64);
                     var byteArrays = [];
 
@@ -338,10 +338,11 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 .then(() => {
                     //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     try {
-                        updateContactForScartoDocumentale({oldPhone: this.oldPhoneValue,
-                            oldEmail: this.oldEmailValue,
-                            newPhone: resultWrapper.phone,
-                            newMail: resultWrapper.email});
+                        updateContactForScartoDocumentale({accountId:this.accountId, 
+                                                            oldPhone: this.oldPhoneValue,
+                                                            oldEmail: this.oldEmailValue,
+                                                            newPhone: resultWrapper.phone,
+                                                            newMail: resultWrapper.email});
                     } catch (error) {
                       console.error('updateContactForScartoDocumentale exception: ',JSON.stringify(error));
                     }
@@ -426,6 +427,10 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
             if (this.processType === 'RICH_RATEIZZAZIONE'){
                 tipoPlico = 'RICH_RATEIZZAZIONE';
             }
+            var discardOldEnvelope = false;
+            if (this.confirmData.signMode.localeCompare('OTP Remoto') === 0 && this.oldSignMode.localeCompare('OTP Coopresenza') === 0){
+                discardOldEnvelope = true;
+            }
             var formParams = {
                 sendMode : sendMode,
                 signMode : this.confirmData.signMode,
@@ -433,7 +438,8 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 email : this.confirmData.email,
                 TipoPlico : tipoPlico,
                 mode : 'Print',
-                Archiviato : 'Y'
+                Archiviato : 'Y',
+                DiscardOldEnvelope : discardOldEnvelope
             }
             if(sendMode.localeCompare('Sportello') ===0){
                 this.sendAndViewDocument(formParams);
@@ -445,7 +451,7 @@ export default class HdtDocumentSignatureManagerFlow extends NavigationMixin(Lig
                 }).then(result => {
                     this.handleGoNext();
                 }).catch(error => {
-                    this.showToast('Errore nell\'invio del documento al cliente.');
+                    this.showMessage('Errore nell\'invio del documento al cliente.','error');
                     console.error(error);
                 });
             }

@@ -54,7 +54,7 @@ public with sharing class HDT_QR_ServicePointTst {
             cttList[0].Status = 'Attivo';
             insert cttList;
 
-            List<SBQQ__Subscription__c> subscriptionList = HDT_UTL_DataFactoryTst.createSubscription(1, true, accList[0].Id, cttList[0].Id, spList[0].Id);
+            HDT_UTL_DataFactoryTst.createSubscription(1, true, accList[0].Id, cttList[0].Id, spList[0].Id);
             
             List<CS_SelezioneFornitura__c> selezioneList = HDT_UTL_DataFactoryTst.createSelezioneFornitura(1, false);
             selezioneList[0].Output_Contract__c = 'OutputContractTest';
@@ -318,7 +318,7 @@ public with sharing class HDT_QR_ServicePointTst {
 
             ServicePoint__c sp = [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE MeterStatus__c = 'Bozza'];
 
-            List<ServicePoint__c> spList = qrServPoint.getServicePointsByCodeWithFilter(sp.ServicePointCode__c, 'Id', 'Status__c = \'Impianto compl. in funzione\'');
+            List<ServicePoint__c> spList = qrServPoint.getServicePointsByCodeWithFilter(sp.ServicePointCode__c, 'Id', 'AND Status__c = \'Impianto compl. in funzione\'');
 
             List<ServicePoint__c> spList2 = qrServPoint.getServicePointsByCodeWithFilter(sp.ServicePointCode__c, 'Id', 'AND SupplyCity__c = \'Firenze\'');
 

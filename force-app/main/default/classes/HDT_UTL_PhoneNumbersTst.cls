@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    07/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_PhoneNumbersTst {
 
@@ -37,7 +42,7 @@ public with sharing class HDT_UTL_PhoneNumbersTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phoneNumber != null);
+        System.assert(phoneNumber != null, 'Attenzione, phoneNumber non può essere null!');
         
     }
 
@@ -72,7 +77,7 @@ public with sharing class HDT_UTL_PhoneNumbersTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(phoneNumber != null);        
+        System.assert(phoneNumber != null, 'Attenzione, phoneNumber non può essere null!');        
     }
 
 

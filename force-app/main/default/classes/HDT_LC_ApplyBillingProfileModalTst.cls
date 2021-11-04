@@ -17,7 +17,7 @@ public with sharing class HDT_LC_ApplyBillingProfileModalTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
 
-        List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
         List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
         

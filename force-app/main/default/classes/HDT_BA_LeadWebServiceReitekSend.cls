@@ -22,8 +22,10 @@ public with sharing class HDT_BA_LeadWebServiceReitekSend implements Database.Ba
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Datetime dt = system.now();
-        Date dt2 = system.today().addDays(-1);
-        String query = 'SELECT Id, CreatedDate,lead.MobilePhone , Status, LeadSource FROM CampaignMember Where campaignId = :campaignId AND LeadId != null AND lead.ContactDate__c != null AND lead.isSendToReitek__c = false AND lead.ContactDate__c > :dt2 AND lead.ContactDate__c < :dt' ;
+        System.debug('dt value: '+ dt);
+        Date dtYesterday = system.today().addDays(-1);
+        System.debug('dtYesterday value: '+ dtYesterday);
+        String query = 'SELECT Id, CreatedDate,lead.MobilePhone , Status, LeadSource FROM CampaignMember Where campaignId = :campaignId AND LeadId != null AND lead.ContactDate__c != null AND lead.isSendToReitek__c = false AND lead.ContactDate__c > :dtYesterday AND lead.ContactDate__c < :dt' ;
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext bc, List<CampaignMember> scope){
@@ -36,5 +38,6 @@ public with sharing class HDT_BA_LeadWebServiceReitekSend implements Database.Ba
     }
     public void finish(Database.BatchableContext bc){
        // update leads;
+       System.debug('MethodNotNecessaryButRequired');
     }
 }

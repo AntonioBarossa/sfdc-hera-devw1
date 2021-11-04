@@ -25,7 +25,7 @@
             </value>
             <value>
                 <fullName>3</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>3 - Bassa</label>
             </value>
         </valueSetDefinition>

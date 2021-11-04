@@ -8,12 +8,15 @@
  * HISTORY:
  */
 
-global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
+public inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
     
-    private static final String VAS_SERVICE_TYPE = 'Servizio';
+    private static final String VAS_SERVICE_TYPE = 'VAS Servizio';
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';
     private static final String ORDER_PHASE_VAS_COMMUNICATION = 'Comunicazione Motore VAS';
+    private static final String PHASE_SEQUENZIALIZZATO = 'Sequenzializzato';
+    private static final String PHASE_KO_PRODOTTO = 'Cod. offerta non mappato';
 
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     
     /**
@@ -22,11 +25,10 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     * @param args  
     * @return Object 
     **/
-    global Object execute(Object args){
+    public Object execute(Object args){
         Map<String, Object> argsMap = (Map<String, Object>) args;
-        system.debug(json.serialize(args));
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
+        //SObject transition = (SObject) argsMap.get('transition');
+        //SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('sender');
 
@@ -34,9 +36,10 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
 
         switch on method{
             when 'activation', 'deactivation', 'service26' {
-                if(system.isQueueable()){
+                Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
+                if(system.isQueueable()){// && !limitQueueablesOk){//removed so i won't burn a queable if this is a queueable job
                     asyncCalloutFuture(objectId, method);
-                }else{
+                }else if((!system.isBatch()) || limitQueueablesOk){
                     system.enqueueJob(new HDT_QBL_AsycnronousCallout(
                         objectId, method
                         )
@@ -45,7 +48,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                 
             }
             when 'updatePhase'{
-                Id orderId = objectId;
                 Order currentOrder = (Order) sender;
                 Boolean isServiceType = (currentOrder.VASType__c==VAS_SERVICE_TYPE);
                 String newPhase = isServiceType?ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT:ORDER_PHASE_VAS_COMMUNICATION;
@@ -55,9 +57,18 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
                     )
                 );
             }
+            when 'contracted'{
+                asyncUpdateContracted(objectId);
+            }
         }
         
         return null;
+    }
+
+
+    @future(callout=true)
+    private static void asyncUpdateContracted(Id sobjectId){
+        orderSrv.updateRecord(new Order(Id=sobjectId, SBQQ__Contracted__c=true));
     }
 
     /**
@@ -68,7 +79,6 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     **/
     @future(callout=true)
     private static void asyncCalloutFuture(Id sobjectId, String method){
-        system.debug('asyncCalloutFuture ');
         asyncCallout(sobjectId, method);
     }
 
@@ -79,34 +89,55 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
     * @param method  
     **/
     private static void asyncCallout(Id sobjectId, String method){
-        HDT_WS_Response res;
+        HDT_WS_ArrichmentDataEntityResponse res;
         String newPhase;
-        String vasStatus;
+        String errorDescription;
+
+        //gabriele.rota@webresults.it | 2021-09-27
+        if (sobjectId.getSobjectType().getDescribe().getName()=='Order') {
+            Order currentOrder = orderQr.getRecordById(sobjectId);
+            if (currentOrder.Phase__c==PHASE_SEQUENZIALIZZATO) {
+                //l'Ordine è stato sequenzializzato, non deve essere inviato al Motore VAS
+                return;
+            }
+        }
 
         switch on method{
             when 'activation'{
                 res = HDT_WS_MotoreVas.activationCallout(sobjectId);
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
-                newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
-                vasStatus = isSuccess?null:res.errorDetails;
+                if (!isSuccess) {
+                    if (String.isNotBlank(res.exceptionMessage)){
+                        errorDescription = res.exceptionMessage;
+                    }
+                    else {
+                        errorDescription = res.errorDetails[0].message;
+                    }
+                }
+                newPhase = isSuccess?'Comunicazione verso Motore VAS OK': errorDescription.startsWithIgnoreCase(PHASE_KO_PRODOTTO)? 'Ko prodotto vas' : 'Comunicazione verso Motore VAS KO';
             }
             when 'deactivation'{
                 res = HDT_WS_MotoreVas.deactivationCallout(sobjectId);
                 Boolean isSuccess = (res.statusCode==200 || res.statusCode==201);
                 newPhase = isSuccess?'Comunicazione verso Motore VAS OK':'Comunicazione verso Motore VAS KO';
-                vasStatus = isSuccess?null:res.errorDetails;
+                if (!isSuccess) {
+                    if (String.isNotBlank(res.exceptionMessage)){
+                        errorDescription = res.exceptionMessage;
+                    }
+                    else {
+                        errorDescription = res.errorDetails[0].message;
+                    }
+                }
             }
             when 'service26' {
                 res = HDT_SRV_ServiceTwentySix.callService26(sobjectId);
             }
         }
 
-        system.debug('***HDT_QBL_AsycnronousCallout'+res);
-
         //do UpdatePhase
 
         if(String.isNotBlank(newPhase)){ 
-            new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase, vasStatus);
+            new HDT_QBL_AsycnronousUpdate().asyncronousUpdate(SobjectId, newPhase, errorDescription);
         }
     }
 
@@ -122,7 +153,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         * @description Constructor
         * @author gabriele.rota@webresults.it | 2021-07-12 
         **/
-        public HDT_QBL_AsycnronousCallout(){}
+        public HDT_QBL_AsycnronousCallout(){
+            return;
+        }
 
         /**
         * @description Constructor with record id and method
@@ -167,7 +200,9 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         * @description Constructor
         * @author gabriele.rota@webresults.it | 2021-07-12 
         **/
-        public HDT_QBL_AsycnronousUpdate(){}
+        public HDT_QBL_AsycnronousUpdate(){
+            return;
+        }
 
         /**
         * @description Constructor with record id and new phase
@@ -204,16 +239,19 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
         * @author gabriele.rota@webresults.it | 2021-07-12 
         * @param sobjectId  
         * @param newPhase  
-        * @param vasStatus  
+        * @param errorDescription  
         **/
-        public void asyncronousUpdate(Id sobjectId, String newPhase, String vasStatus){
+        public void asyncronousUpdate(Id sobjectId, String newPhase, String errorDescription){
             Sobject sender;
+            String errorField;
             switch on sobjectId.getSobjectType().getDescribe().getName() {
                 when 'Case' {
                     sender = (SObject) new Case();
+                    errorField = 'DiscardDescription__c';
                 }
                 when 'Order' {
                     sender = (SObject) new Order();
+                    errorField = 'DiscardReason__c';
                 }
                 when else {
                     throw new HDT_UTL_HeraException('Invalid sObject provided');
@@ -222,8 +260,8 @@ global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Inter
             
             sender.put('Id', sobjectId);
             sender.put('Phase__c', newPhase);
-            if (String.isNotBlank(vasStatus)) {
-                sender.put('VasStatusDescription__c', vasStatus);
+            if (String.isNotBlank(errorDescription)) {
+                sender.put(errorField, errorDescription);
             }
             Database.update(sender);
         }

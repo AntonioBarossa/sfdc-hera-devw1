@@ -15,8 +15,8 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItemTst{
 
 		System.runAs(internalUser){
 
-			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<CampaignMemberAssigment__c> campMembAssigs=HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true, true, 'CampaignMemberAssigmentNameTest');
+			HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true, true, 'CampaignMemberAssigmentNameTest');
 		}
 	}
 
@@ -48,7 +48,7 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItemTst{
 			Test.stopTest();
 
 			System.assertEquals(false, campMemAssigItens[0].Id!=null, 'Campaign Member Assignment Item not created');
-			System.assertNotEquals(true, campMemAssigItens[0].Id!=null);
+			System.assertNotEquals(true, campMemAssigItens[0].Id!=null, 'Campaign Member Assignment Item not created');
 		}
 	}
 
@@ -82,7 +82,7 @@ public with sharing class HDT_UTL_CampaignMemberAssigmentItemTst{
 			Test.stopTest();
 
 			System.assertEquals(500, campMemAssigItens[0].PercentageAllocation__c, 'Campaign Member Assignment Item not Updated');
-			System.assertNotEquals(0, campMemAssigItens[0].PercentageAllocation__c);
+			System.assertNotEquals(0, campMemAssigItens[0].PercentageAllocation__c, 'Campaign Member Assignment Item not Updated');
 		}
 	}
 }

@@ -4,7 +4,7 @@
 * @description HDT_TRH_TriggerHandler
 * @history Fatjola Memishaj – 18/03/2021 – Created class
 */
-public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
+public Inherited Sharing class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
     
     // public override void afterInsert(){  
         
@@ -20,7 +20,34 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
             HDT_UTL_CampaignMember.createCampaignMemberStatus(trigger.new, trigger.old);  
             HDT_UTL_CampaignMember.campaignSuspension(trigger.new, trigger.old);
             createCommercialCode((map<Id,Campaign>)Trigger.newMap,(map<Id,Campaign>)Trigger.oldMap);
-        } 
+            deactivateCampaign(Trigger.new, (Map<Id,Campaign>)Trigger.oldMap);
+        }
+
+        @SuppressWarnings('PMD.ApexCRUDViolation')
+        public static void deactivateCampaign(List<Campaign> newCampaigns, Map<Id,Campaign> oldCampaignsMap) {
+            List<Id> deactivateCampaignsId = new List<Id>();
+            for (Campaign cmp : newCampaigns) {
+                if ((oldCampaignsMap.get(cmp.Id).Status == 'In Corso' || oldCampaignsMap.get(cmp.Id).Status == 'Pianificata') && (cmp.Status == 'Bloccata' || cmp.Status == 'Cancellata')) {
+                    deactivateCampaignsId.add(cmp.Id);
+                    cmp.IsActive = false;                    
+                }
+            }
+
+            List<Id> campaignIdsToBatch = new List<Id>();
+
+            List<AggregateResult> campaignsWithReitekStatusSend = [SELECT COUNT(id) members, CampaignId from CampaignMember WHERE isToSendStatusReitek__c = true AND CampaignId IN :deactivateCampaignsId GROUP BY CampaignId ];
+
+            for (AggregateResult res : campaignsWithReitekStatusSend) {
+                if ((Decimal) res.get('members') > 0) {
+                    campaignIdsToBatch.add((Id)res.get('CampaignId'));
+                } 
+            }
+
+            if (campaignIdsToBatch.size() > 0) {
+                HDT_BA_DeactivateCampaign cbBatch = new HDT_BA_DeactivateCampaign(campaignIdsToBatch);
+                Database.executeBatch(cbBatch, 50);
+            }
+        }
         
         /**
         * @description : Crea CommercialCode per Modello Gestione Codici "Convenzione"
@@ -66,7 +93,7 @@ public class HDT_TRH_Campaign extends HDT_TRH_TriggerHandler{
                 }
             }
             if (!listCommercialCode.isEmpty()) {
-                List<CommercialCode__c> res = commercialCodeSrv.createRecords(listCommercialCode);
+                commercialCodeSrv.createRecords(listCommercialCode);
             }
         }
     }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>ChangeRecordType</excludeButtons>
+    <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>Edit</excludeButtons>
+    <excludeButtons>PrintableView</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Cliente</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_ATTRIB_104__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_VAS_CUSTOMER_ADDRESS_VIA__c</field>
@@ -34,10 +34,6 @@
                 <behavior>Readonly</behavior>
                 <field>X_TEL_CELL_PREAVV_PERS_PESSE__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Rds_X_COGNOME_BP_ALTERN__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -55,10 +51,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_CAMPAGNA_DEF__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Rds_OU_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -79,19 +71,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NOME_CONTATTO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>INTEGRATION_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_INDIRIZZO_MAIL__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_ATTRIB_54__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -102,34 +82,14 @@
                 <field>X_BP_ALTERN__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CST_CON_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>COGNOME_CONTATTO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_72__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>COMM_DESC__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ATTRIB_04__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_HER_EMAIL_PEC_ATTUALE__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_HER_EMAIL_PEC__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -154,10 +114,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ATTRIB_20__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_MOD_INVIO_CONTR__c</field>
             </layoutItems>
             <layoutItems>
@@ -173,22 +129,22 @@
                 <field>X_MERCATO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_MOD_INVIO_DOC__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_118__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ASSET_NUM__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ATTRIB_07__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ATTRIB_21__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -228,7 +184,7 @@
         <label>Punto di Fornitura</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_POD__c</field>
             </layoutItems>
             <layoutItems>
@@ -286,11 +242,11 @@
                 <field>X_ATTRIB_91__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_124__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_80__c</field>
             </layoutItems>
             <layoutItems>
@@ -375,11 +331,11 @@
                 <field>X_MESE_COMPETENZA__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_ATTRIB_41__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_X_MOD_FATTURA__c</field>
             </layoutItems>
         </layoutColumns>
@@ -449,7 +405,7 @@
                 <field>X_IMPORT_RATE_SUCC__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ATTRIB_17__c</field>
             </layoutItems>
         </layoutColumns>
@@ -490,6 +446,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_COD_UFFICIO__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Rds_X_HER_DATA_CONSENSO_PEC__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -622,14 +582,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_CIFRE_LETT_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_CIFRE_LETT_5__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_UNITA_MISURA_1__c</field>
             </layoutItems>
         </layoutColumns>
@@ -756,50 +708,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_CIFRE_LETT_3__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_CIFRE_LETT_6__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>X_UNITA_MISURA_2__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Materiale</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MATERIALE2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MATERIALE4__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MATERIALE6__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MATERIALE3__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MATERIALE5__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_MATERIALE7__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -883,15 +792,11 @@
                 <field>X_VAS_CONTRACT_IMPIANTO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ASSET_NUM__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_VAS_DT_ATTIVAZIONE__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_VAS_CONTRACT_POD__c</field>
             </layoutItems>
         </layoutColumns>
@@ -976,6 +881,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_VAS_CONTRACT_NUMBER__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_VAS_PREAV_RIN__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -990,19 +899,19 @@
                 <field>X_COGNOME_BENEF__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_ATTRIB_47__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_ATTRIB_36__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_CF_BENEF__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_COD_PAPERLESS__c</field>
             </layoutItems>
             <layoutItems>
@@ -1026,11 +935,11 @@
                 <field>ATTRIB_46__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_85__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ATTRIB_44__c</field>
             </layoutItems>
             <layoutItems>
@@ -1038,17 +947,13 @@
                 <field>X_RAGSOC_BENEF__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>X_PAG_RAPP__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ATTRIB_36__c</field>
+                <field>X_PAG_RAPP__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_ATTRIB_35__c</field>
             </layoutItems>
             <layoutItems>
@@ -1060,11 +965,11 @@
                 <field>ATTRIB_09__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ATTRIB_45__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_ATTRIB_37__c</field>
             </layoutItems>
             <layoutItems>
@@ -1096,12 +1001,8 @@
                 <field>X_NOME_BENEF__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>X_TEL_BENEF__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ATTRIB_35__c</field>
+                <field>X_TEL_BENEF__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -1129,15 +1030,15 @@
                 <field>X_TAG_7__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_62__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_65__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_64__c</field>
             </layoutItems>
         </layoutColumns>
@@ -1159,11 +1060,11 @@
                 <field>X_TCP_RDS_RDO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_129__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_63__c</field>
             </layoutItems>
         </layoutColumns>
@@ -1176,15 +1077,15 @@
         <label>Annullamento</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_CAT_CLIENTE_ANNULLAMENTO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_DATA_FIRMA_DA_ANNULLARE__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_NOTE__c</field>
             </layoutItems>
             <layoutItems>
@@ -1206,15 +1107,15 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_CAUSALE_ANNULL__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_RDS_RDO_ANNULLAMENTO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_NUMERO_RDS_ANNULLAMENTO__c</field>
             </layoutItems>
             <layoutItems>
@@ -1259,7 +1160,7 @@
                 <field>SR_CST_NUM__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_CODICE_RECLAMO__c</field>
             </layoutItems>
             <layoutItems>
@@ -1275,11 +1176,11 @@
                 <field>X_FLG_DOC_ALLEGATO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Rds_DESC_TEXT__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_NUM_OCCUPANTI__c</field>
             </layoutItems>
             <layoutItems>
@@ -1333,15 +1234,15 @@
                 <field>X_DESCR_ERRORE_PI__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_DIFF_DAYS__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_ATTRIB_126__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>X_NUOVO_TENT__c</field>
             </layoutItems>
             <layoutItems>
@@ -1363,6 +1264,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_115__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_DATE_COMP__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -1445,12 +1350,12 @@
                 <field>X_PROT_DT__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Rds_SR_NUM__c</field>
+                <behavior>Readonly</behavior>
+                <field>X_SR_NUM_ROW_ID_ORD_ITEM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_SR_NUM_ROW_ID_ORD_ITEM__c</field>
+                <field>SR_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1479,8 +1384,8 @@
                 <field>X_DATA_CAMBIO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Rds_CREATED__c</field>
+                <behavior>Readonly</behavior>
+                <field>CREATED__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1534,10 +1439,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ATTRIB_47__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CREATED__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1607,19 +1508,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_DATE_COMP__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X_VAS_PREAV_RIN__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>LAST_UPD_BY__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SR_NUM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1637,6 +1526,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_81__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MODIFIEDDATE_AZURE__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -1650,40 +1543,17 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <quickActionList>
-        <quickActionListItems>
-            <quickActionName>FeedItem.TextPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.ContentPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.MobileSmartActions</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.RypplePost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.LinkPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.PollPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems>
-    </quickActionList>
+    <quickActionList/>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
-        <fields>DisplayUrl</fields>
+        <fields>ORDER_NUM__c</fields>
+        <fields>STATUS_CD__c</fields>
+        <fields>ORDER_TYPE__c</fields>
+        <fields>ORDER_DT__c</fields>
         <relatedList>SiebelOrder__x.SR_ID__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ExternalId</fields>
-        <fields>FILE_NAME__c</fields>
-        <fields>FILE_DATE__c</fields>
-        <fields>X_TIPO_ALLEGATO__c</fields>
-        <relatedList>SiebelDocumentLink__x.SR_NUM__c</relatedList>
+        <sortField>ORDER_DT__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>
@@ -1691,15 +1561,39 @@
         <fields>TODO_CD__c</fields>
         <fields>EVT_STAT_CD__c</fields>
         <relatedList>SiebelActivity__x.SRA_SR_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
+        <fields>DESC_ALLEGATO__c</fields>
+        <fields>DisplayUrl</fields>
         <fields>CREATED__c</fields>
-        <fields>ATTRIB_03__c</fields>
-        <fields>ATTRIB_02__c</fields>
+        <relatedList>SiebelDocumentActivity__x.ID_RDS__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>ExternalId</fields>
+        <fields>TYPE__c</fields>
+        <fields>CREATED__c</fields>
         <fields>LAST_UPD__c</fields>
+        <fields>ATTRIB_03__c</fields>
         <fields>ATTRIB_01__c</fields>
+        <fields>ATTRIB_02__c</fields>
         <relatedList>SiebelRdsAttribute__x.PAR_ROW_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>ExternalId</fields>
+        <fields>FILE_NAME__c</fields>
+        <fields>FILE_EXT__c</fields>
+        <fields>CREATED__c</fields>
+        <relatedList>SiebelDocumentLink__x.SR_ID__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -1707,7 +1601,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000002lHvW</masterLabel>
+        <masterLabel>00h3N000002gKk2</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

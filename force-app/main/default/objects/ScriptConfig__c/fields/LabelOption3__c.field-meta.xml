@@ -3,6 +3,7 @@
     <fullName>LabelOption3__c</fullName>
     <description>label scelta 3</description>
     <externalId>false</externalId>
+    <inlineHelpText>Inserire label decisione e indice pagina di destinazione &quot;Si::4&quot;</inlineHelpText>
     <label>Label Opzione 3</label>
     <length>255</length>
     <required>false</required>

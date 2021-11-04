@@ -4,6 +4,10 @@
         <field>IsSms__c</field>
         <formula>True</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>Subject</field>
+        <formula>&apos;SMS&apos;</formula>
+    </fieldOverrides>
     <label>Invia SMS</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>

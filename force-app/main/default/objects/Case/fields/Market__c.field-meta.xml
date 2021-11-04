@@ -11,6 +11,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_Mercato</valueSetName>
+        <valueSetName>HDT_Market</valueSetName>
     </valueSet>
 </CustomField>

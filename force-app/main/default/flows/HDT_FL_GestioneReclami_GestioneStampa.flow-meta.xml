@@ -100,6 +100,13 @@
                 <elementReference>CaseToLoop</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ActivityToLoop</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>ToLoop_0</targetReference>
         </connector>
@@ -153,6 +160,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaActivityToLoop</name>
+        <label>AssegnaActivityToLoop</label>
+        <locationX>713</locationX>
+        <locationY>1898</locationY>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetActivityPraticaGestita</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaStatoActivity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaCase</name>
         <label>AssegnaCase</label>
         <locationX>721</locationX>
@@ -187,8 +210,8 @@
     <assignments>
         <name>AssegnaFase</name>
         <label>AssegnaFase</label>
-        <locationX>513</locationX>
-        <locationY>1742</locationY>
+        <locationX>454</locationX>
+        <locationY>1665</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -204,7 +227,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_a_Collection</targetReference>
+            <targetReference>GetActivityPraticaGestita</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -227,7 +250,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_a_Collection</targetReference>
+            <targetReference>GetActivityPraticaGestita</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -276,6 +299,29 @@
         </assignmentItems>
         <connector>
             <targetReference>GetCaseContenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaStatoActivity</name>
+        <label>AssegnaStatoActivity</label>
+        <locationX>621</locationX>
+        <locationY>2006</locationY>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ActivityToLoop.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_a_Collection</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -481,6 +527,13 @@
                     <stringValue>Si</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>CaseToLoop.CorrectionDocumentEmissionDay__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssegnaFase_0</targetReference>
             </connector>
@@ -493,7 +546,7 @@
         <locationX>1141</locationX>
         <locationY>1998</locationY>
         <defaultConnector>
-            <targetReference>AggiornaCases</targetReference>
+            <targetReference>AggiornaActivityCollection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>End</defaultConnectorLabel>
         <rules>
@@ -577,6 +630,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>wrts_prcgvr__ActivityTemplate__c</field>
             <value>
                 <elementReference>GetActivityTemplate.Id</elementReference>
@@ -591,6 +650,34 @@
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>GetActivityPraticaGestita</name>
+        <label>GetActivityPraticaGestita</label>
+        <locationX>552</locationX>
+        <locationY>1822</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaActivityToLoop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseToLoop.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>wrts_prcgvr__Description__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Pratica in gestione</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>GetActivityTemplate</name>
         <label>GetActivityTemplate</label>
@@ -728,6 +815,16 @@
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>AggiornaActivityCollection</name>
+        <label>AggiornaActivityCollection</label>
+        <locationX>1247</locationX>
+        <locationY>2099</locationY>
+        <connector>
+            <targetReference>AggiornaCases</targetReference>
+        </connector>
+        <inputReference>ActivityCollection</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>776</locationX>
@@ -845,7 +942,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <stringValue>Reclamo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -891,6 +988,22 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>ActivityCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>ActivityToLoop</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
     <variables>
         <name>CaseCollection</name>
         <dataType>SObject</dataType>

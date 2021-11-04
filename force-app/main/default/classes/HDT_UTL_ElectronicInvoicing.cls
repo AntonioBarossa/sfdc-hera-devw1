@@ -26,6 +26,9 @@ public inherited sharing class HDT_UTL_ElectronicInvoicing {
                 if (!String.isBlank(electronicInvoicing.billSendMode) && electronicInvoicing.billSendMode.equals('Fatturazione PA')) {
                     return 'La modalità di invio bolletta non può essere valorizzata con Fatturazione PA.';
                 }
+                if (electronicInvoicing.accountRecordTypeName == 'HDT_RT_Business' && String.isBlank(electronicInvoicing.officeCode) && String.isBlank(electronicInvoicing.certifiedEmail)) {
+                    return 'Per clienti Business è obbligatorio valorizzare almeno uno dei campi: Codice Ufficio/Destinatario oppure PEC Fatturazione Elettronica';
+                }
             }
             when 'XML' {
                 if (String.isBlank(electronicInvoicing.xmlType)) {
@@ -66,5 +69,6 @@ public inherited sharing class HDT_UTL_ElectronicInvoicing {
         public String xmlType;
         public String officeCode;
         public String certifiedEmail;
+        public String accountRecordTypeName;
     }
 }

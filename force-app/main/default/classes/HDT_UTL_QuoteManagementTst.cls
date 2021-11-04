@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    09/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_QuoteManagementTst {
 
@@ -8,7 +13,16 @@ public with sharing class HDT_UTL_QuoteManagementTst {
     
     //TEST SETUP
     
-    
+    @TestSetup
+    static void setup(){
+        
+        QuoteManagement__c qm = new QuoteManagement__c();
+        qm.Commodity__c = 'Energia Elettrica';
+        qm.Operation_type__c = 'Verifica GdM';
+        insert qm;
+
+    }
+
     //TESTS
     
 
@@ -64,7 +78,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(inputs != null);
+        System.assert(inputs != null, 'Attenzione, inputs non può essere null!');
         
     }
 
@@ -92,7 +106,7 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(localDispatcher != null);
+        System.assert(localDispatcher != null, 'Attenzione, localDispatcher non può essere null!');
         
     }
 
@@ -120,7 +134,22 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(power != null);
+        System.assert(power != null, 'Attenzione, power non può essere null!');
+        
+    }
+
+    @IsTest
+    static void testQueryAddInformation(){
+        
+        //TESTING
+        Test.startTest();
+
+        QuoteManagement__c qm = HDT_QR_QuoteManagement.queryAddInformation('Energia Elettrica', 'Verifica GdM');
+
+        //ASSERTS
+        System.assertNotEquals(null, qm, 'QuoteManagement__c = null');
+
+        Test.stopTest();
         
     }
 

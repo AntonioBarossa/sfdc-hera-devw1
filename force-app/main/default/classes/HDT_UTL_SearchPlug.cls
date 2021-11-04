@@ -1,33 +1,34 @@
-global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
-{
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.AvoidGlobalModifier')
+global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin{
     //Costruttore -- può essere null
-    global HDT_UTL_SearchPlug()
-    {
-        System.debug('HDT_UTL_SearchPlug used ( constructor )');        
+    global HDT_UTL_SearchPlug(){
+        System.debug(LoggingLevel.DEBUG, 'HDT_UTL_SearchPlug used ( constructor )');        
     }
     
     //Per ogni field permette di nascondere il filtro a video
     global Boolean isFilterHidden(SObject quote, String fieldName){
         //inserire in IF quali filtri nascondere a video.
-        System.debug('isFilterHidden ' + fieldName);
-        if(fieldName.equalsIgnoreCase('ProductCode') && quote.get('SBQQ__Status__c') == 'Approved')
-            return true;
-        /*else if(fieldName.equalsIgnoreCase('Comune__c')) 
-            return true;*/
-        else
-            return false;
+        System.debug(LoggingLevel.DEBUG, 'isFilterHidden: ' + fieldName);
+        return null;
+        //return false;
+        //if(fieldName.equalsIgnoreCase('ProductCode') && quote.get('SBQQ__Status__c') == 'Approved'){
+        //    return true;
+        //} else {
+        //    return false;
+        //}
+        
     }
     
     //QUESTO METODO PERMETTE DI INSERIRE PREDEFAULT SUI FILTRI
     global String getFilterDefaultValue(SObject quote, String fieldName){
-        System.debug('getFilterDefaultValue ' + fieldName);
+        System.debug(LoggingLevel.DEBUG, 'getFilterDefaultValue ' + fieldName);
         //return fieldName == 'Family'? 'Hardware' : NULL;
-        return NULL;
+        return null;
     }
     
     //SE TRUE, richiama il metodo Search
     global Boolean isSearchCustom(SObject quote, Map<String,Object> fieldValuesMap){
-        System.debug('METHOD CALLED: isSearchCustom');
+        System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: isSearchCustom');
         /*
         // This would use CUSTOM mode if a Search field for sorting was defined and used
         return fieldValuesMap.get('Sort_By__c') != '';
@@ -38,8 +39,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     
     //RICHIAMATO QUANDO isSearchCustom è FALSE. Aggiunge filtri alla query
     global String getAdditionalSearchFilters(SObject quote, Map<String,Object> fieldValuesMap){
-        System.debug('METHOD CALLED: getAdditionalSearchFilters');
-        
+        System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: getAdditionalSearchFilters');
+
         // This would add an extra inventory filter if the family is Hardware
         String additionalFilter = '';
         
@@ -49,20 +50,30 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
         Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
-        additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+        //additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+
+        List<String> idStrs = (List<String>)JSON.deserialize(JSON.serialize(eligibleProductsId), List<String>.class);
+        additionalFilter += ' AND Product2Id IN (\'' + String.join(idStrs, '\',\'') + '\')';
+
 		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
-        System.debug('Additional Filter: '+ additionalFilter);
+        System.debug(LoggingLevel.DEBUG, 'Additional Filter: '+ additionalFilter);
         return additionalFilter;
 
     }
 
     global List<PriceBookEntry> search(SObject quote, Map<String,Object> fieldValuesMap){
-        System.debug('METHOD CALLED: search');
+        System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: search');
+
+        System.debug('>>> fieldValuesMap ' + fieldValuesMap);
 
         //GET ALL POSSIBLE FILTER FIELDS FROM THE SEARCH FILTER FIELD SET
         List<Schema.FieldSetMember> searchFilterFieldSetFields = SObjectType.Product2.FieldSets.SBQQ__SearchFilters.getFields();
@@ -86,7 +97,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
                 continue;
             }
 
-            if(field.getType() == Schema.DisplayType.String || field.getType() == Schema.DisplayType.Picklist){
+            if(field.getType() == Schema.DisplayType.String || field.getType() == Schema.DisplayType.Picklist || field.getType() == Schema.DisplayType.TextArea){
                 whereClause += 'Product2.' + field.getFieldPath() + ' LIKE \'%' + fieldValuesMap.get(field.getFieldPath()) + '%\' AND ';
             }
         }
@@ -97,6 +108,10 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
         Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         //whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
@@ -104,7 +119,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         whereClause += ' AND Product2Id IN :eligibleProductsId';
         //*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 
-        System.debug('# whereClause -> ' + whereClause);
+        System.debug(LoggingLevel.DEBUG, '# whereClause -> ' + whereClause);
 
         //BUILD THE QUERY
         String query = selectClause + ' FROM PriceBookEntry WHERE ' + whereClause;
@@ -118,7 +133,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     
     //Metodo per nascondere i field di input per la guided Selling
     global Boolean isInputHidden(SObject quote, String input){
-        System.debug('METHOD CALLED: isInputHidden');
+        System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: isInputHidden');
         
         // This would hide an Input called 'Urgent Shipment' on Fridays.
         return (input == 'Comune__c')? true : false;
@@ -126,7 +141,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     }
 
     global String getInputDefaultValue(SObject quote, String input){
-        System.debug('METHOD CALLED: getInputDefaultValue ' + input);
+        System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: getInputDefaultValue ' + input);
 
         Id currentId = String.valueOf(quote.get('Id'));
 
@@ -138,19 +153,18 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     
     global Boolean isSuggestCustom(SObject quote, Map<String,Object> inputValuesMap){
         //return true;
-		System.debug('isSuggestCustom false');
+		System.debug(LoggingLevel.DEBUG, 'isSuggestCustom false');
         return false;
     }
 
     global List<PricebookEntry> suggest( sObject query, Map<String,Object> usg ){
-        System.debug('suggest');
+        System.debug(LoggingLevel.DEBUG, 'suggest');
         return [SELECT Id FROM PricebookEntry WITH SECURITY_ENFORCED LIMIT 1];
     }
 
-    global String getAdditionalSuggestFilters( sObject quote, Map<String,Object> suggFilts )
-    {
-        system.debug('getAdditionalSuggestFilters');
-        System.debug('METHOD CALLED: getAdditionalSearchFilters');
+    global String getAdditionalSuggestFilters( sObject quote, Map<String,Object> suggFilts ){
+        System.debug(LoggingLevel.DEBUG, 'getAdditionalSuggestFilters');
+        System.debug(LoggingLevel.DEBUG, 'METHOD CALLED: getAdditionalSearchFilters');
         
         String additionalFilter = '';
         
@@ -160,14 +174,21 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
+        /*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
-        additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+        //additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+
+        List<String> idStrs = (List<String>)JSON.deserialize(JSON.serialize(eligibleProductsId), List<String>.class);
+        additionalFilter += ' AND Product2Id IN (\'' + String.join(idStrs, '\',\'') + '\')';
 		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
-        System.debug('Additional Filter Suggest: '+ additionalFilter);
+        System.debug(LoggingLevel.DEBUG, 'Additional Filter Suggest: '+ additionalFilter);
         return additionalFilter;
     }
 
@@ -181,7 +202,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         Boolean iAmSalesforceCpqAdmin = checkIfIamAsalesforceCpqAdmin();
         Boolean iAmAsuperUser = checkIfIamAsuperUser(quote.SuperUser__c);
-        System.debug('>>> iAmSalesforceCpqAdmin: ' + iAmSalesforceCpqAdmin + ' - iAmAsuperUser: ' + iAmAsuperUser);
+        System.debug(LoggingLevel.DEBUG, '>>> iAmSalesforceCpqAdmin: ' + iAmSalesforceCpqAdmin + ' - iAmAsuperUser: ' + iAmAsuperUser);
 
         if(iAmSalesforceCpqAdmin && iAmAsuperUser){
 
@@ -221,10 +242,10 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //    return idList;
         //}
 
-        System.debug('>>>>> statusList ' + statusList);
+        System.debug(LoggingLevel.DEBUG, '>>>>> statusList ' + statusList);
 
         //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
-        System.debug('>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
+        System.debug(LoggingLevel.DEBUG, '>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
         //  Here we filter these fields:
         //  - OriginMarket__c           - Campaign__c
         //  - Channel__c                - PromoCode__c
@@ -253,14 +274,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
             login = checkLoginGroup(criteria.LoginGroup__c);
 
-            System.debug('>>> criteria productcode: ' + criteria.product__r.productcode);
-            System.debug('>>> age: ' + age);
-            System.debug('>>> consumptionRangeEe: ' + consumptionRangeEe);
-            System.debug('>>> consumptionRangeGas: ' + consumptionRangeGas);
-            System.debug('>>> powerRange: ' + powerRange);
-            System.debug('>>> residentDeliveryAddress: ' + residentDeliveryAddress);
-            System.debug('>>> newClient: ' + newClient);
-            System.debug('>>> login: ' + login);
+            System.debug(LoggingLevel.DEBUG, '>>> criteria productcode: ' + criteria.product__r.productcode);
+            System.debug(LoggingLevel.DEBUG, '>>> age: ' + age);
+            System.debug(LoggingLevel.DEBUG, '>>> consumptionRangeEe: ' + consumptionRangeEe);
+            System.debug(LoggingLevel.DEBUG, '>>> consumptionRangeGas: ' + consumptionRangeGas);
+            System.debug(LoggingLevel.DEBUG, '>>> powerRange: ' + powerRange);
+            System.debug(LoggingLevel.DEBUG, '>>> residentDeliveryAddress: ' + residentDeliveryAddress);
+            System.debug(LoggingLevel.DEBUG, '>>> newClient: ' + newClient);
+            System.debug(LoggingLevel.DEBUG, '>>> login: ' + login);
 
             if(age && consumptionRangeEe && consumptionRangeGas && powerRange && residentDeliveryAddress && newClient && login){
 
@@ -274,11 +295,11 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             
         }
 
-        System.debug('>>>> criteri: ' + idToFilterByMunicipalities);
+        System.debug(LoggingLevel.DEBUG, '>>>> criteri: ' + idToFilterByMunicipalities);
 
         //>>> FILTER - STEP 2 > FILTER ONLY Municipalities...
         if(!String.isEmpty(quote.SupplyCity__c) && idToFilterByMunicipalities.size()>0){
-            System.debug('>>> FILTER - STEP 2 > FILTER ONLY Municipalities...');
+            System.debug(LoggingLevel.DEBUG, '>>> FILTER - STEP 2 > FILTER ONLY Municipalities...');
 
             List<EligibleMunicipality__c> eligibleMunicipality;
             String supplyCity = String.valueOf(quote.SupplyCity__c);
@@ -291,7 +312,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         }
 
         //>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...
-        System.debug('>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...');
+        System.debug(LoggingLevel.DEBUG, '>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...');
         List<Product2> prodWithoutCriteria;
         prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, statusList, familyList);
 
@@ -315,7 +336,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }            
         }*/
         
-        System.debug('>>>> UFFICIAL LIST: ' + idList);
+        System.debug(LoggingLevel.DEBUG, '>>>> UFFICIAL LIST: ' + idList);
 
         return idList;
 
@@ -385,23 +406,23 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         Boolean superUserPermission;
         
         if(!String.isEmpty(superUser) && superUser.equalsIgnoreCase('Y')){
-            System.debug('>>> QUOTE IS A SUPER USER');
+            System.debug(LoggingLevel.DEBUG, '>>> QUOTE IS A SUPER USER');
             superUserQuote = true;
         } else {
-            System.debug('>>> QUOTE IS NOT A SUPER USER');
+            System.debug(LoggingLevel.DEBUG, '>>> QUOTE IS NOT A SUPER USER');
             superUserQuote = false;
         }
 
         try{
             assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId(), Label.HDT_SuperUserCPQ);
-            System.debug('>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
+            System.debug(LoggingLevel.DEBUG, '>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
             if(assignmentList.size() > 0){
                 superUserPermission = true;
             } else {
                 superUserPermission = false;
             }
         } catch (Exception ex){
-            System.debug('>>> Exception: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, '>>> Exception: ' + ex.getMessage());
             superUserPermission = false;
         }
 
@@ -418,14 +439,14 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         try{
             assignmentList = HDT_QR_SearchPlug.getUserPermissionSets(assignmentList, UserInfo.getUserId(), Label.HDT_PermissionSetNameForCPQ);
-            System.debug('>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
+            System.debug(LoggingLevel.DEBUG, '>>> PermissionSetList Size: ' + String.valueOf(assignmentList.size()));
             if(assignmentList.size() > 0){
                 return true;
             } else {
                 return false;
             }
         } catch (Exception ex){
-            System.debug('>>> Exception: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG, '>>> Exception: ' + ex.getMessage());
             return false;
         }
     }

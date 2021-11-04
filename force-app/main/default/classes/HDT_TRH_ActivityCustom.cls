@@ -1,15 +1,57 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 25/05/2021
+* @description HDT_TRH_ActivityCustom
+* @history Lorenzo – 25/05/2021 – created class
+*/
 public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHandler {
-	
+	private  Id recordTypeD2DId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
+
     public override void beforeInsert(){
+        //Start>>> modifica marco.arci@webresults.it 11/10/21
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+        wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+        activityIntegration.handleStatusChange(new Map<String, Object>{
+            'newActivities' => Trigger.new,
+            'oldActivities' => Trigger.old
+        });
+        //End>>> modifica marco.arci@webresults.it 11/10/21
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_Scarti.setLookupFields(trigger.new);
     }
 
- 	public override void beforeDelete(){}
- 	public override void afterDelete(){}
-  	public override void afterUndelete(){}
+ 	//public override void beforeDelete(){}
+ //	public override void afterDelete(){}
+  //	public override void afterUndelete(){}
     
-    public override void beforeUpdate(){}
+    public override void beforeUpdate(){
+        System.debug('beforeUpdate');
+        //Start>>> modifica marco.arci@webresults.it 11/10/21
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+        wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+        activityIntegration.handleStatusChange(new Map<String, Object>{
+            'newActivities' => Trigger.new,
+            'oldActivities' => Trigger.old
+        });
+        //End>>> modifica marco.arci@webresults.it 11/10/21
+        // HRAWRM-672 22/09/2021 EC
+        //wrts_prcgvr__Status__c='Chiusa';
+        String varStatus='Chiusa';
+        Map<Id, wrts_prcgvr__Activity__c> mapNew = (Map<Id, wrts_prcgvr__Activity__c>)trigger.newMap;
+        Map<Id, wrts_prcgvr__Activity__c> mapOld = (Map<Id, wrts_prcgvr__Activity__c>)trigger.oldMap;
+        for (wrts_prcgvr__Activity__c tempAct :(List<wrts_prcgvr__Activity__c>)trigger.new) {
+            if (mapNew.get(tempAct.id)!=null && mapOld.get(tempAct.id)!=null
+                && mapNew.get(tempAct.id).OwnerId !=  mapOld.get(tempAct.id).OwnerId
+                && mapNew.get(tempAct.id).wrts_prcgvr__Status__c!=varStatus&& mapNew.get(tempAct.id).RecordTypeId==recordTypeD2DId ) {
+                    System.debug('********HERE');
+                    tempAct.wrts_prcgvr__Status__c=varStatus;
+            }
+        }
+        // HRAWRM-672 22/09/2021 EC
+        // HRAWRM-880 LG
+        HDT_UTL_ActivityCustom.updateTimeRefAppointment(trigger.old,trigger.new);
+        HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);//>>> costanzo.lomele@webresults.it 14/10/21
+    }
 
     public override void afterUpdate(){
 
@@ -27,6 +69,12 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
        // marco.arci@webresults.it 01/09/2021 gestione scarti documentali
        HDT_UTL_Scarti.updatePraticaForScartoDocumentale(trigger.new, trigger.old);
 
+        //f. defelice Chiusura case Proroga
+        HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
+        HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
+
+        // costanzo.lomele@webresults.it 19/10/21
+        HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
     }
 
     public override void afterInsert(){

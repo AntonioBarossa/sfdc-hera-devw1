@@ -66,7 +66,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals(1, methodRet, 'Return is wrong');
 
-		System.assertNotEquals(0, methodRet);
+		System.assertNotEquals(0, methodRet, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -94,7 +94,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Negotiation', methodRet[0].StageName, 'Return is wrong');
 
-		System.assertNotEquals('', methodRet[0].StageName);
+		System.assertNotEquals('', methodRet[0].StageName, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -108,23 +108,32 @@ public class HDT_QR_OpportunityTst{
 		                 FROM Sale__c
 		                 WHERE Status__c='Attiva'
 		                 LIMIT 1];
+		
+		Order ordTst=[SELECT Id
+		FROM Order
+		LIMIT 1];
+
+		Opportunity oppTst=[SELECT Id, SBQQ__PrimaryQuote__c
+		FROM Opportunity
+		LIMIT 1];
+		
+		List<SBQQ__Quote__c> tQuote= HDT_UTL_DataFactoryTst.createQuote(1, true, ordTst.Id, oppTst.Id, saleTst.Id, 'Quote');
+		oppTst.SBQQ__PrimaryQuote__c = tQuote[0].Id;
+		update oppTst;
 
 
 		HDT_QR_Opportunity oppQr=new HDT_QR_Opportunity();
 
-		string stageName='Negotiation';
+		string stageName='NotNegotiation';
 		string fields='StageName';
-
 
 		List<Opportunity> methodRet=oppQr.getRecordsBySaleFilterStageNameNotVas(saleTst.Id, fields, stageName);
 
-		System.debug('methodRet = '+methodRet);
-
 		// Cannot insert IsVas= null, return is always empty
 
-		//System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		//System.assertNotEquals(0, methodRet);
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -149,7 +158,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Negotiation', methodRet.StageName, 'Return is wrong');
 
-		System.assertNotEquals('', methodRet.StageName);
+		System.assertNotEquals('', methodRet.StageName, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -174,7 +183,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Negotiation', methodRet.StageName, 'Return is wrong');
 
-		System.assertNotEquals('', methodRet.StageName);
+		System.assertNotEquals('', methodRet.StageName, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -199,7 +208,7 @@ public class HDT_QR_OpportunityTst{
 
 		System.assertEquals('Roma', methodRet[0].SBQQ__PrimaryQuote__r.SupplyCity__c, 'Return is wrong');
 
-		System.assertNotEquals('0', methodRet[0].SBQQ__PrimaryQuote__r.SupplyCity__c);
+		System.assertNotEquals('0', methodRet[0].SBQQ__PrimaryQuote__r.SupplyCity__c, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -222,9 +231,9 @@ public class HDT_QR_OpportunityTst{
 		System.debug('methodRet = '+methodRet);
 
 
-		//System.assertEquals(1, methodRet, 'Return is wrong');
+		System.assertEquals(1, methodRet.size(), 'Return is wrong');
 
-		//System.assertNotEquals(0, methodRet);
+		System.assertNotEquals(0, methodRet.size(), 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}

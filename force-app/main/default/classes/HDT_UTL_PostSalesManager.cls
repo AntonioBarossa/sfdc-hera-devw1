@@ -1,3 +1,9 @@
+/*
+* @Author: Salvatore A. Sarà 21/10/2021
+* Risoluzione "Debug Should Use Logging Level"
+* Risoluzione "Avoid debug statements since they impact on performance"
+*/
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_PostSalesManager{
 
     private HDT_QR_Contract contractQr = new HDT_QR_Contract();
@@ -18,17 +24,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
         Case currentCase = (Case) inputCase;
 
-        System.debug('Amount --> '+currentCase.Amount__c);
+        System.debug(LoggingLevel.DEBUG,'Amount --> '+currentCase.Amount__c);
 
-        System.debug('Condition--> '+currentCase.Amount__c != null);
+        System.debug(LoggingLevel.DEBUG,'Condition--> '+currentCase.Amount__c != null);
 
         if(currentCase.Amount__c != null){
 
-            System.debug('QuotationType__c before --> '+currentCase.QuotationType__c);
+            System.debug(LoggingLevel.DEBUG,'QuotationType__c before --> '+currentCase.QuotationType__c);
 
             currentCase.QuotationType__c = 'Predeterminabile';
 
-            System.debug('QuotationType__c after --> '+currentCase.QuotationType__c);
+            System.debug(LoggingLevel.DEBUG,'QuotationType__c after --> '+currentCase.QuotationType__c);
 
         }
 
@@ -47,7 +53,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             
         }catch(Exception e){
             
-            System.debug(e.getMessage());
+            System.debug(LoggingLevel.DEBUG,e.getMessage());
 
         }
 
@@ -62,7 +68,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         try{
             parentCase = caseQr.getParentCaseById(currentCase.ParentId);
         }catch(Exception e){
-            System.debug(e.getMessage());
+            System.debug(LoggingLevel.DEBUG,e.getMessage());
         }
         if(parentCase != null){
 
@@ -101,12 +107,12 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     public void handleVariazioneAnagraficaCliente(SObject inputCase) {
 
         if (inputCase == null) {
-            System.debug('handleVariazioneAnagraficaCliente: null input case.');
+            System.debug(LoggingLevel.DEBUG,'handleVariazioneAnagraficaCliente: null input case.');
             return;
         }
 
         Case currentCase = (Case) inputCase;
-        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
+        System.debug(LoggingLevel.DEBUG,'Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
         SObject objToUpdate = null;
 
         switch on currentCase.SubProcess__c {
@@ -183,7 +189,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 objToUpdate = bp;
             }
             when else {
-                System.debug('Sottoprocesso non supportato: ' + currentCase.SubProcess__c);
+                System.debug(LoggingLevel.DEBUG,'Sottoprocesso non supportato: ' + currentCase.SubProcess__c);
             }
         }
 
@@ -194,19 +200,19 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         // Per tutti i sottoprocessi, tranne la Variaz. Gruppo IVA, inneschiamo il processo di Allineamento Anagrafica.
         if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA')) {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
-            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+            System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         }
     }
 
     public void handleVariazioneAmministratore(SObject inputCase) {
 
         if (inputCase == null) {
-            System.debug('handleVariazioneAmministratore: null input case.');
+            System.debug(LoggingLevel.DEBUG,'handleVariazioneAmministratore: null input case.');
             return;
         }
 
         Case currentCase = (Case) inputCase;
-        System.debug('Gestione dati VariazioneAmministratore da case: ' + currentCase.Id);
+        System.debug(LoggingLevel.DEBUG,'Gestione dati VariazioneAmministratore da case: ' + currentCase.Id);
 
         switch on currentCase.SubProcess__c {
             when 'Cambio Amministratore' {
@@ -215,7 +221,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 HDT_QR_AccountContactRelation queryHandler = new HDT_QR_AccountContactRelation();
                 AccountContactRelation currentAdminAcr = queryHandler.getActiveAdministratorRelation(accountId);
                 if (currentAdminAcr != null) {
-                    System.debug('Disassociazione Account ' + accountId + ' da Amministratore di condominio: ' + currentAdminAcr.ContactId);
+                    System.debug(LoggingLevel.DEBUG,'Disassociazione Account ' + accountId + ' da Amministratore di condominio: ' + currentAdminAcr.ContactId);
                     currentAdminAcr.IsActive = False;
                     currentAdminAcr.EndDate = Date.today();
                     HDT_UTL_DatabaseService.updateSObject(currentAdminAcr);
@@ -227,7 +233,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 newAdminAcr.IsActive = True;
                 newAdminAcr.StartDate = Date.today();
                 newAdminAcr.Roles = 'Amministratore condominio';
-                System.debug('Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
+                System.debug(LoggingLevel.DEBUG,'Associazione Account ' + accountId + ' ad Amministratore di condominio: ' + newAdministratorId);
                 HDT_UTL_DatabaseService.insertSObject(newAdminAcr);
             }
             when 'Cambio Intest/Indirizzo Amministratore' {
@@ -249,56 +255,56 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 HDT_UTL_DatabaseService.updateSObject(c);
             }
             when else {
-                System.debug('Sottoprocesso non supportato: ' + currentCase.SubProcess__c);
+                System.debug(LoggingLevel.DEBUG,'Sottoprocesso non supportato: ' + currentCase.SubProcess__c);
             }
         }
     }
 
     public void innescoAllineamentoAnagraficaFiscale(SObject inputCase) {
         if (inputCase == null) {
-            System.debug('innescoAllineamentoAnagraficaFiscale: null input case.');
+            System.debug(LoggingLevel.DEBUG,'innescoAllineamentoAnagraficaFiscale: null input case.');
             return;
         }
 
-        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case Fiscale: ' + inputCase.Id);
+        System.debug(LoggingLevel.DEBUG,'Innesco Allineamento Anagrafica alla chiusura del Case Fiscale: ' + inputCase.Id);
 
         try {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
-            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+            System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         } catch (Exception ex) {
-            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG,'# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
         }
     }
 
     public void innescoAllineamentoAnagraficaCanoneRai(SObject inputCase) {
         if (inputCase == null) {
-            System.debug('innescoAllineamentoAnagraficaCanoneRai: null input case.');
+            System.debug(LoggingLevel.DEBUG,'innescoAllineamentoAnagraficaCanoneRai: null input case.');
             return;
         }
 
-        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case di Allineamento Canone RAI: ' + inputCase.Id);
+        System.debug(LoggingLevel.DEBUG,'Innesco Allineamento Anagrafica alla chiusura del Case di Allineamento Canone RAI: ' + inputCase.Id);
 
         try {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.ALLINEAMENTO_CANONE_RAI);
-            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+            System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         } catch (Exception ex) {
-            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG,'# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
         }
     }
 
     public void innescoAllineamentoAnagraficaGestioneDisalimentabilita(SObject inputCase) {
         if (inputCase == null) {
-            System.debug('innescoAllineamentoGestioneDisalimentabilita: null input case.');
+            System.debug(LoggingLevel.DEBUG,'innescoAllineamentoGestioneDisalimentabilita: null input case.');
             return;
         }
 
-        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case di Gestione Disalimentabilità: ' + inputCase.Id);
+        System.debug(LoggingLevel.DEBUG,'Innesco Allineamento Anagrafica alla chiusura del Case di Gestione Disalimentabilità: ' + inputCase.Id);
 
         try {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.GESTIONE_DISALIMENTABILITA);
-            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+            System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         } catch (Exception ex) {
-            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+            System.debug(LoggingLevel.DEBUG,'# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
         }
     }
 
@@ -373,6 +379,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
         activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+        activity.Type__c = templateName;
         return activity;
     }
 
@@ -382,5 +389,23 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         formParams.put('mode', 'Print');
         formParams.put('Archiviato', 'Y');
         HDT_LC_DocumentSignatureManager.sendDocumentFile(recordId, 'Case', JSON.serialize(formParams));
+    }
+
+    public void closeRiattivazione(SObject inputCase)
+    {
+        Case currentCase = (Case)inputCase;
+        if(currentCase.Type.equalsIgnoreCase('Riattivazione Fornitura') && (currentCase.HerokuPracticeCode__c == null || currentCase.HerokuPracticeCode__c == ''))
+        {
+            currentCase.Phase__c = 'Annullato';
+            currentCase.Status = 'Closed';
+        }
+        updateFuture(JSON.serialize(currentCase));
+    }
+
+    @Future
+    private static void updateFuture(String serializedCase)
+    {
+        Case currentCase  = (Case) JSON.deserialize(serializedCase, Case.class);
+        HDT_UTL_DatabaseService.updateSobject(currentCase);
     }
 }
