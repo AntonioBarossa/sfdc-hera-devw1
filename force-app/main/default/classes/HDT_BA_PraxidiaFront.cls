@@ -216,7 +216,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
         cv.VersionData = generateFileBlob;
         cv.Title = 'PraxidiaFrontOffice';
         cv.PathOnClient = 'PraxidiaFrontOffice.csv';
-        contentSRV.insertContentVersion(new List<ContentVersion>{cv});
+        contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
         cnt.ContentDocumentId = cv2.ContentDocumentId;
