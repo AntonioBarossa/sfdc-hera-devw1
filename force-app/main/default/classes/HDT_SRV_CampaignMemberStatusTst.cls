@@ -10,11 +10,7 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
 
     @TestSetup
     static void setup(){
-
-        List<Campaign> cp = HDT_UTL_DataFactoryTst.createCampaign(1, true);
-
-        HDT_UTL_DataFactoryTst.createCampaignMemberStatus(1, true, cp[0].Id);
-
+		return;
     }
 
     @isTest
@@ -92,6 +88,8 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                     LIMIT 1];
 
         System.runAs(tUser){
+            List<Campaign> cp = HDT_UTL_DataFactoryTst.createCampaign(1, true);
+        	HDT_UTL_DataFactoryTst.createCampaignMemberStatus(1, true, cp[0].Id);
 
             List<CampaignMemberStatus> listCms = HDT_SRV_CampaignMemberStatus.createRecord(
                 new List<CampaignMemberStatus> {new CampaignMemberStatus(
