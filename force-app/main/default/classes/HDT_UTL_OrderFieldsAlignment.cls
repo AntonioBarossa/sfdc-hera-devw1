@@ -20,7 +20,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
     private static HDT_WRP_Data mixedData = new HDT_WRP_Data();
-    private static HDT_QR_Individual individualQr = new HDT_QR_Individual();
 
     private static Map<String,String> mapIvaIdToValue = new Map<String,String>{
     '01' => 'Iva 10% (Cod. 01)',
