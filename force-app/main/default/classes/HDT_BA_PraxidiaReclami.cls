@@ -123,7 +123,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
         cv.VersionData = generateFileBlob;
         cv.Title = 'PraxidiaReclami';
         cv.PathOnClient = 'PraxidiaReclami.csv';
-        contentSRV.insertContentVersion(new List<ContentVersion>{cv});
+        contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
         cnt.ContentDocumentId = cv2.ContentDocumentId;
