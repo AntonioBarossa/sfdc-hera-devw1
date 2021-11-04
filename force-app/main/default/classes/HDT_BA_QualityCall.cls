@@ -17,7 +17,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
 
-        List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
+        // List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
         // Set<CampaignMember> campaignMembersUpdateAdd = new Set<CampaignMember>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
 

@@ -10,8 +10,7 @@ public class HDT_QR_ContactTst{
 	static void setup(){
 
 		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<Contact> conList;
-		conList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+		HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
 
 	}
 

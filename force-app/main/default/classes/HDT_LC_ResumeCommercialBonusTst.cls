@@ -16,8 +16,7 @@ public with sharing class HDT_LC_ResumeCommercialBonusTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList;
-        caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
     }
 
@@ -28,8 +27,6 @@ public static void testLoadCase(){
     Case tCase = [SELECT Id, Status, Phase__c, type FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
 
     Map<String, Object> tCaseMap = HDT_LC_ResumeCommercialBonus.loadCase(tcase.Id);
-
-    System.debug('tCaseMap = '+tCaseMap);
 
     List<Case> cList = new List<Case>();
     cList.add(tCase);

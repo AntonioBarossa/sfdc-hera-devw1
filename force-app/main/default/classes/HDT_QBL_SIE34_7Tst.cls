@@ -29,7 +29,7 @@ public with sharing class HDT_QBL_SIE34_7Tst {
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
-			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].id);
+			HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].id);
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].id);
             
             Id pricebookId = Test.getStandardPricebookId();
@@ -56,11 +56,9 @@ public with sharing class HDT_QBL_SIE34_7Tst {
             
             List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,pricebookId);
             Id entryId = entries[0].id;
-            
-            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(10,true,childorders[0].id,pointId,productId,entryId);
-            Id orderItemId = orderItems[0].id;
-         
-            
+
+            HDT_UTL_DataFactoryTst.createOrderItem(10,true,childorders[0].id,pointId,productId,entryId);
+                    
 		}
 	}
 
@@ -68,11 +66,11 @@ public with sharing class HDT_QBL_SIE34_7Tst {
 
         Boolean finished = false;
 
-        HDT_QBL_SIE34_7 sie34 = new HDT_QBL_SIE34_7('1','2021-01-01T13:00:00Z','TEXT');
+        HDT_QBL_SIE34_7 sie = new HDT_QBL_SIE34_7('1','2021-01-01T13:00:00Z','TEXT');
 
         Test.startTest();
         
-        System.enqueueJob(sie34);
+        System.enqueueJob(sie);
 
         finished = true;
 

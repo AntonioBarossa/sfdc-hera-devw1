@@ -27,7 +27,7 @@ public with sharing class HDT_WRP_CampaignPraxidiaTst {
             List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
-            List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
+            HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
         }
     }
 
@@ -46,6 +46,11 @@ public with sharing class HDT_WRP_CampaignPraxidiaTst {
             HDT_WRP_CampaignPraxidia.front cpFront = new HDT_WRP_CampaignPraxidia.front();
             HDT_WRP_CampaignPraxidia.reclami cpReclami = new HDT_WRP_CampaignPraxidia.reclami();
             HDT_WRP_CampaignPraxidia.wrapToIterate cpWrapPopulated = new HDT_WRP_CampaignPraxidia.wrapToIterate(orders[0], cases[0]);
+
+            System.assertEquals(orders[0], cpWrapPopulated.o, 'HDT_WRP_CampaignPraxidia did not work correctly');
+            System.assertNotEquals(null, cp, 'HDT_WRP_CampaignPraxidia did not work correctly');
+            System.assertNotEquals(null, cpFront, 'HDT_WRP_CampaignPraxidia did not work correctly');
+            System.assertNotEquals(null, cpReclami, 'HDT_WRP_CampaignPraxidia did not work correctly');
 
             Test.stopTest();
         }
