@@ -20,6 +20,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
     private static HDT_WRP_Data mixedData = new HDT_WRP_Data();
+    private static HDT_QR_Individual individualQr = new HDT_QR_Individual();
 
     private static Map<String,String> mapIvaIdToValue = new Map<String,String>{
     '01' => 'Iva 10% (Cod. 01)',
@@ -302,8 +303,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
+        saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
@@ -315,6 +316,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Contact__c = sale.SalesContact__c;
         orderToUpdate.SalesContact__c = sale.SalesContact__c;
         orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.MarketingPrivacy__c = sale.SalesContact__r?.Individual?.MarketingPrivacy__c;
+        orderToUpdate.ProfilingPrivacy__c = sale.SalesContact__r?.Individual?.ProfilingPrivacy__c;
         orderToUpdate.LowerChannelAgency__c = sale.LowerChannelAgency__c;
         orderToUpdate.UpperChannelAgency__c = sale.UpperChannelAgency__c;
         
