@@ -90,8 +90,10 @@ public inherited sharing class HDT_SRV_Contact {
      * @return List<Contact>
      */
     public List<Contact> updateRecord(List<Contact> contacts){
-        checkUpdateAccess(contacts[0]);
-        HDT_UTL_DatabaseService.updateSObject(contacts);
+        if (!contacts.isEmpty()) {
+            checkUpdateAccess(contacts[0]);
+            HDT_UTL_DatabaseService.updateSObject(contacts);
+        }
         return contacts;
     }
 }
