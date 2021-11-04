@@ -26,7 +26,7 @@ public with sharing class HDT_SRV_ScriptManagerTst {
         ordListChild[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
         insert ordListChild;
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1, false, accList[0].id);
-        actList[0].SuspensionDueDate__c = system.today(); 
+        actList[0].SuspensionDueDate__c = system.today().addDays(1); 
         actList[0].Status__c = 'Sospesa'; 
         actList[0].Type__c = 'Quality Call'; 
         actList[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';
