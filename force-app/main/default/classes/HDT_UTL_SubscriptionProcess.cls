@@ -8,15 +8,18 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         for(SBQQ__Subscription__c sub : newSubs){
             itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
         }
-        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>([SELECT id, Order.OrderReference__c, Order.ContractReference__c FROM OrderItem WHERE Id IN :itemToSub.keySet() AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null) WITH Security_Enforced ]);
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>([SELECT id, OrderId, Order.OrderReference__c, Order.ContractReference__c, Order.ServicePoint__c, Order.RecordType.DeveloperName FROM OrderItem WHERE Id IN :itemToSub.keySet() AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' ) WITH Security_Enforced ]);
         list<OrderItem> items = itemsMap.values();
         Map<id, id> itemToOrderOffer = new Map<id, id>();
         Map<id, id> itemToContract = new Map<id, id>();
         for(OrderItem item : items){
             if(item.Order.OrderReference__c!=null){
                 itemToOrderOffer.put( item.Order.OrderReference__c, item.id);
-            }else{
+            }else if(item.Order.ContractReference__c!=null){
                 itemToContract.put(item.Order.ContractReference__c, item.id);
+            }else{
+                //bonus e sconti
+                itemToOrderOffer.put(item.OrderId, item.id);
             }
         }
 
@@ -26,11 +29,14 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
 
             system.debug(orderOfferContracts);
             for(Contract c : orderOfferContracts){
-                SBQQ__Subscription__c sub = itemToSub.get(itemToOrderOffer.get(c.SBQQ__Order__c));
+                OrderItem item = itemsMap.get(itemToOrderOffer.get(c.SBQQ__Order__c));
+                SBQQ__Subscription__c sub = itemToSub.get(item.id);
                 system.debug(sub);
                 if(sub!=null && c.Id!= sub.SBQQ__Contract__c){
                     system.debug(c.ContractNumber);
-                    contractToDelete.add(new Contract(Id=sub.SBQQ__Contract__c));
+                    if(item.Order.RecordType.DeveloperName!='HDT_RT_ScontiBonus'){
+                        contractToDelete.add(new Contract(Id=sub.SBQQ__Contract__c));//don't delete "old contract" if it's BonusSconti
+                    }
                     sub.SBQQ__Contract__c=c.Id;
                 }   
             }
