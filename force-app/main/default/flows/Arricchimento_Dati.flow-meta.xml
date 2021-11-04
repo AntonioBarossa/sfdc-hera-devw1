@@ -96,12 +96,12 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>TODAY() </stringValue>
+                <stringValue>NOW() </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_6_myRule_5_A1_4067717145</name>
-        <dataType>Date</dataType>
-        <expression>TODAY()</expression>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
