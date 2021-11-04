@@ -12,7 +12,7 @@ Modified By:
 public with sharing class HDT_ActivityCustomTst {
 
     @isTest
-    public static void HDT_ActivityCustomTst() {
+    public static void testActivityCustomTst() {
         
         HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
@@ -24,7 +24,6 @@ public with sharing class HDT_ActivityCustomTst {
         insert testAcc;
 
         Id acctId = testAcc[0].id;
-
 
         List<wrts_prcgvr__Activity__c> testActCust = HDT_UTL_DataFactoryTst.createActivityCustom(1,true, acctId);
 
