@@ -86,19 +86,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>TODO_PLAN_START_DT__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>TODO_ACTL_START_DT__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>TODO_DUE_DT__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>TODO_PLAN_END_DT__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

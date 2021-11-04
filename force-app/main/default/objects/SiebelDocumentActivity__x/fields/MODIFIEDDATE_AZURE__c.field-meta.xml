@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data modifica Azure</label>
+    <label>Data Modifica AZURE</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

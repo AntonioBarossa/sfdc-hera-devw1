@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Numero Richiesta</label>
+    <label>Id RDS</label>
     <length>15</length>
     <referenceTo>SiebelRds__x</referenceTo>
     <relationshipLabel>Attività Documentali</relationshipLabel>
