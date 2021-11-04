@@ -1526,6 +1526,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_ATTRIB_81__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MODIFIEDDATE_AZURE__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -1541,9 +1545,15 @@
     </layoutSections>
     <quickActionList/>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
-        <fields>DisplayUrl</fields>
+        <fields>ORDER_NUM__c</fields>
+        <fields>STATUS_CD__c</fields>
+        <fields>ORDER_TYPE__c</fields>
+        <fields>ORDER_DT__c</fields>
         <relatedList>SiebelOrder__x.SR_ID__c</relatedList>
+        <sortField>ORDER_DT__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ExternalId</fields>
@@ -1565,13 +1575,17 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
+        <fields>TYPE__c</fields>
         <fields>CREATED__c</fields>
-        <fields>ATTRIB_03__c</fields>
-        <fields>ATTRIB_02__c</fields>
         <fields>LAST_UPD__c</fields>
+        <fields>ATTRIB_03__c</fields>
         <fields>ATTRIB_01__c</fields>
+        <fields>ATTRIB_02__c</fields>
         <relatedList>SiebelRdsAttribute__x.PAR_ROW_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
