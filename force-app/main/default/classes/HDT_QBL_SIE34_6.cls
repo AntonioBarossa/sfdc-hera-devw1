@@ -287,13 +287,13 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
           if(!Test.isRunningTest()){
             System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
           }
-       } 
-       catch (Exception e) {
+       } catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
           if(!Test.isRunningTest()){
             System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
          }
+         
        }
       
     }
