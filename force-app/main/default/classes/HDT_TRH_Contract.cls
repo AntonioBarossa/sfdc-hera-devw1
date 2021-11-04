@@ -80,7 +80,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             orderToContract.add(c.SBQQ__Order__c);
         }
         map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
-        Set<id> contractsToBeBlanked = new Set<id>();
+        //Set<id> contractsToBeBlanked = new Set<id>();
         for(Contract c : newContracts){
             if(ordersMap.containskey(c.SBQQ__Order__c) && ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
                 c.SBQQ__Quote__c=null;

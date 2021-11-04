@@ -42,7 +42,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		// String query;
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
 		if(additionalFilter.contains('Commodity')){
-			listSp = Database.query('SELECT '+String.escapeSingleQuotes(fieldSp)+' FROM ServicePoint__c WHERE Account__c =: accountid '+ additionalFilter);
+			listSp = Database.query('SELECT '+String.escapeSingleQuotes(fieldSp)+' FROM ServicePoint__c WHERE Account__c =: accountid '+ String.escapeSingleQuotes(additionalFilter));
 		}
 		//List<ServicePoint__c> listSP = [SELECT Id, Account__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 		system.debug('listSP : ************' + listSp);
@@ -133,11 +133,11 @@ public inherited sharing class HDT_QR_ServicePoint {
 		List<Contract> contracts = new List<Contract>();
 
 		if(additionalFilter.contains('status')){
-			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c  FROM Contract WHERE SAPContractCode__c =:code '+additionalFilter+'LIMIT 1');
+			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c  FROM Contract WHERE SAPContractCode__c =:code '+String.escapeSingleQuotes(additionalFilter)+'LIMIT 1');
 		}else{
 			String addFilterReplaced = additionalFilter.replaceAll('CommoditySector__c', 'ServicePoint__r.CommoditySector__c');
 			system.debug('******************' + addFilterReplaced);
-			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c, ServicePoint__r.CommoditySector__c FROM Contract WHERE SAPContractCode__c =:code '+ addFilterReplaced +' LIMIT 1');
+			contracts = Database.query('SELECT Id, Name, ServicePoint__c,ContractNumber,SAPContractCode__c, ServicePoint__r.CommoditySector__c FROM Contract WHERE SAPContractCode__c =:code '+ String.escapeSingleQuotes(addFilterReplaced) +' LIMIT 1');
 		}
 		system.debug('List contracts'+contracts.toString());
 		String spCode ;
@@ -152,7 +152,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		if(spCode != null){
 			// String query ;
 			if(additionalFilter.contains('Commodity')){
-				servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE Id = :spCode '+additionalFilter+' LIMIT 1');
+				servicePoints = Database.query('SELECT '+ String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE Id = :spCode '+String.escapeSingleQuotes(additionalFilter)+' LIMIT 1');
 			}
 			else
 			{
@@ -175,6 +175,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getServicePointsByMeterSerialNumber(String serialNumber, String fields) {
 		contractSrv.checkReadAccess(fields);
 		String stringSerialNumber = '%' + serialNumber + '%';
+		System.debug('stringSerialNumber:'+ stringSerialNumber);
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) +	' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber ');
 		return servicePoints;
     }
@@ -190,10 +191,11 @@ public inherited sharing class HDT_QR_ServicePoint {
 		system.debug('getServicePointsByMeterSerialNumberWithFilter START');
 		contractSrv.checkReadAccess(fields);
 		String stringSerialNumber = '%' + serialNumber + '%';
+		System.debug('stringSerialNumber:'+ stringSerialNumber);
 		// String query;
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(!additionalFilter.contains('status')){
-			servicePoints =	Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber '+ additionalFilter);
+			servicePoints =	Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber '+ String.escapeSingleQuotes(additionalFilter));
 		}
 		else
 		{
@@ -213,6 +215,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getServicePointsByCode(String code, String fields) {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
+		System.debug('stringCode:'+ stringCode);
 		List<ServicePoint__c> servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ');
 		return servicePoints;
 	}
@@ -227,10 +230,11 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getServicePointsByCodeWithFilter(String code, String fields,String additionalFilter) {
 		contractSrv.checkReadAccess(fields);
 		String stringCode = code.trim();
+		System.debug('stringCode:'+ stringCode);
 		// String query;
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		if(!additionalFilter.contains('status')){
-			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode '+ additionalFilter);
+			servicePoints = Database.query('SELECT ' + String.escapeSingleQuotes(fields) + ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode '+ String.escapeSingleQuotes(additionalFilter));
 		}
 		else
 		{

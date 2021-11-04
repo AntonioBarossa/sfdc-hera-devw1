@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.ApexCRUDViolation,PMD.AvoidDebugStatements')
 public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
    
     //public override void beforeDelete(){}
@@ -15,8 +16,6 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
 
     public override void afterInsert(){
         List<Lead> listlead = Trigger.New;
-        system.debug('test');
-
         // for(Lead lead :listlead){
         //     HDT_UTL_GestionePrivacy.setPrivacyForLead(lead);
         // }
