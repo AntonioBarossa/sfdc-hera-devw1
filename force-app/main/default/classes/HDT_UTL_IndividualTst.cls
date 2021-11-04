@@ -11,10 +11,10 @@ public class HDT_UTL_IndividualTst {
     static void makeData() 
     {
         
-        List<Individual> individualList = HDT_UTL_DataFactoryTst.createIndividual(1,true);
+        HDT_UTL_DataFactoryTst.createIndividual(1,true);
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
-        List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1,true);
+        HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
+        HDT_UTL_DataFactoryTst.createLead(1,true);
 
          
         }
@@ -33,9 +33,6 @@ public class HDT_UTL_IndividualTst {
         List<String> lstString = new List<String>();
         
         lstString.add(String.valueOf(leadId[0].Id));
-        List<Individual> indv =[SELECT Id FROM Individual];
-        Individual ind = (Individual)indv[0];
-        Date todayD = date.today(); 
 
         
         List<Individual> individualReturnedFromMethod = HDT_UTL_Individual.createIndividualContact(listString);

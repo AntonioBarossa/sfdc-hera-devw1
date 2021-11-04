@@ -294,7 +294,41 @@ public inherited sharing class HDT_QR_Order {
             isTransition__c,
             QuotationType__c,
             CommodityFormula__c,                              //@frpanico 28/09/21
-            Email__c                                          //@frpanico 28/09/21
+            Email__c,                                          //@frpanico 28/09/21
+            HerAteco__c,
+            AtecoCode__c,
+            PhoneNumber__c,
+            CommentForDL__c,
+            SubjectCode__c,
+            InvoiceCertifiedEmailAddress__c,
+            ElectronicInvoicingMethod__c,
+            XMLType__c,
+            CIG__c,
+            CUP__c,
+            IbanIsForeign__c,
+            IbanABI__c,
+            IbanCIN__c,
+            IbanCIN_IBAN__c,
+            IbanCAB__c,
+            IbanCodeNumber__c,
+            BankAccountSignatoryFiscalCode__c,
+            BankAccountSignatoryFirstName__c,
+            BankAccountSignatoryLastName__c,
+            BillSendMode__c,
+            PaymentMode__c,
+            InvoiceEmailAddress__c,
+            BillingCity__c,
+            BillingCountry__c,
+            BillingProvince__c,
+            BillingStreetName__c,
+            BillingStreetNumber__c,
+            BillingStreetNumberExtension__c,
+            BillingPostalCode__c,
+            BillingCityCode__c,
+            SignatoryType__c,
+            SendCertifiedEmailConsentDate__c,
+            CreateContractAccount__c,
+            IbanCountry__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -1097,7 +1131,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+        return [Select id,Phase__c,ProcessType__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode

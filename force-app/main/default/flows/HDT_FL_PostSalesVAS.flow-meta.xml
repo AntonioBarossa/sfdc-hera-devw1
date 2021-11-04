@@ -67,6 +67,13 @@
                 <elementReference>TerminationDateFormula</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.Commodity__c</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_Causale_Disattivazione</name>

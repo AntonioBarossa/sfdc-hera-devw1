@@ -22,7 +22,7 @@ public with sharing class HDT_UTL_AccountTst{
 			HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 		}
 	}
 
@@ -43,7 +43,7 @@ public with sharing class HDT_UTL_AccountTst{
 			test.stopTest();
 
 			System.assertEquals(true, checkIsBackOffice!=null, 'Return is wrong');
-			System.assertNotEquals(false, checkIsBackOffice!=null);
+			System.assertNotEquals(false, checkIsBackOffice!=null, 'checkIsBackoffice did not work correclty');
 		}
 	}
 
@@ -72,7 +72,7 @@ public with sharing class HDT_UTL_AccountTst{
 			test.stopTest();
 
 			System.assertEquals(true, callBpCaSearch!=null, 'Return is wrong');
-			System.assertNotEquals(false, callBpCaSearch!=null);
+			System.assertNotEquals(false, callBpCaSearch!=null, 'callBpCaSearch did not work correclty');
 		}
 	}
 
@@ -101,7 +101,7 @@ public with sharing class HDT_UTL_AccountTst{
 			test.stopTest();
 
 			System.assertEquals(true, callBpCaCreate!=null, 'Return is wrong');
-			System.assertNotEquals(false, callBpCaCreate!=null);
+			System.assertNotEquals(false, callBpCaCreate!=null, 'callBpCaCreate did not work correclty');
 		}
 	}
 
@@ -130,7 +130,7 @@ public with sharing class HDT_UTL_AccountTst{
 			test.stopTest();
 
 			System.assertEquals(true, callAmCaCreate!=null, 'Return is wrong');
-			System.assertNotEquals(false, callAmCaCreate!=null);
+			System.assertNotEquals(false, callAmCaCreate!=null, 'callAmCaCreate did not work correclty');
 		}
 	}
 
@@ -163,7 +163,7 @@ public with sharing class HDT_UTL_AccountTst{
             List<Account> tResult = [SELECT Id, Code__c FROM Account WHERE Code__c = 'test' LIMIT 1];
 
 			System.assertEquals(true, tResult!=null, 'Account not updated');
-			System.assertNotEquals(false, tResult!=null);
+			System.assertNotEquals(false, tResult!=null, 'makeRequest did not work correclty');
 		}
 	}
 
@@ -189,14 +189,14 @@ public with sharing class HDT_UTL_AccountTst{
 			                    FROM Contact
 			                    WHERE FirstName='test'];
 
-			Account massiveReq=HDT_UTL_Account.massiveRequest(tAcc[0], tCon[0]);
+			HDT_UTL_Account.massiveRequest(tAcc[0], tCon[0]);
 
 			test.stopTest();
 
 			List<Account> tResult = [SELECT Id, Code__c,CustomerCode__c FROM Account WHERE CustomerCode__c = 'test' LIMIT 1];
 
 			System.assertEquals(true, tResult!=null, 'Account not updated');
-			System.assertNotEquals(false, tResult!=null);
+			System.assertNotEquals(false, tResult!=null, 'massiveRequest did not work correctly');
 		}
 	}
 }
