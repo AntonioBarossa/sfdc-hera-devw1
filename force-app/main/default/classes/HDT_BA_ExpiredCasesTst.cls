@@ -7,7 +7,7 @@ public with sharing class HDT_BA_ExpiredCasesTst {
     
     //DATA
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
-    //TODO: VERIFICARE CHE NON VENGANO PRESI BLANK DocusignExpirationDate__c
+    
     
     //TEST SETUP
     private static void mySetup(){
@@ -29,6 +29,11 @@ public with sharing class HDT_BA_ExpiredCasesTst {
             c.RecordTypeId = recTypeId;
             //c.Contact__c = conList[0].Id;
         }
+        
+        Case mySingleCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
+        mySingleCase.RecordTypeId = recTypeId;
+        
+        caseList.add(mySingleCase);
         insert caseList;
         
     }
@@ -55,14 +60,18 @@ public with sharing class HDT_BA_ExpiredCasesTst {
         
         //RETRIEVING DATA
         Case myUpdatedCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE Id = :myCase.Id];
-        Case myRegularCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE Id != :myCase.Id];
+        Case myRegularCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE Id != :myCase.Id AND DocusignExpirationDate__c != Null];
+        Case myUnaffectedCase = [SELECT Id, Phase__c, CancellationReason__c FROM Case WHERE DocusignExpirationDate__c = Null];
         
         //ASSERTS
-        System.assert('Annullato'.equalsIgnoreCase(myUpdatedCase.Phase__c), 'Ordine NON è in Fase Annullato');
-        System.assert('Annullato per no conferma cliente'.equalsIgnoreCase(myUpdatedCase.CancellationReason__c), 'Ordine risulta NON annullato.');
+        System.assert('Annullato'.equalsIgnoreCase(myUpdatedCase.Phase__c), 'Case NON è in Fase Annullato');
+        System.assert('Annullato per no conferma cliente'.equalsIgnoreCase(myUpdatedCase.CancellationReason__c), 'Case risulta NON annullato.');
         
-        System.assert(!'Annullato'.equalsIgnoreCase(myRegularCase.Phase__c), 'Ordine è in Fase Annullato, non previsto.');
-        System.assert(!'Annullato per no conferma cliente'.equalsIgnoreCase(myRegularCase.CancellationReason__c), 'Ordine risulta annullato.');
+        System.assert(!'Annullato'.equalsIgnoreCase(myRegularCase.Phase__c), 'Case è in Fase Annullato, non previsto.');
+        System.assert(!'Annullato per no conferma cliente'.equalsIgnoreCase(myRegularCase.CancellationReason__c), 'Case risulta annullato.');
+        
+        System.assert(!'Annullato'.equalsIgnoreCase(myUnaffectedCase.Phase__c), 'Case senza scadenza è in Fase Annullato, non previsto.');
+        System.assert(!'Annullato per no conferma cliente'.equalsIgnoreCase(myUnaffectedCase.CancellationReason__c), 'Case senza scadenza risulta annullato.');
         
     }
     

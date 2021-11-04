@@ -1,5 +1,5 @@
 @isTest
-public with sharing class HDT_HDT_BA_ConsentContactTest {
+public with sharing class HDT_BA_ConsentContactTest {
    @TestSetup
    static void makeData(){
 	   List<Lead> listLead = new List<Lead>();
@@ -88,11 +88,11 @@ public with sharing class HDT_HDT_BA_ConsentContactTest {
    public static void testConsentLead(){
 	   Test.StartTest();
 		 	HDT_BA_ConsentLead shn = new HDT_BA_ConsentLead('123458'); 
-			Id batchprocessid = Database.executeBatch(shn);
+			Database.executeBatch(shn);
 		Test.StopTest();
 		
 		List<ContentVersion> listContentVersion = [SELECT id FROM ContentVersion];
-		System.assertEquals(2, listContentVersion.size());
+		System.assertEquals(2, listContentVersion.size(),'value of parameter is matching');
 
 
    }
@@ -102,9 +102,9 @@ public with sharing class HDT_HDT_BA_ConsentContactTest {
 	   delete listContact;
 		Test.StartTest();
 			HDT_BA_ConsentLead shn = new HDT_BA_ConsentLead('123458'); 
-			Id batchprocessid = Database.executeBatch(shn);
+			Database.executeBatch(shn);
 	 	Test.StopTest();
 		List<ContentVersion> listContentVersion = [SELECT id FROM ContentVersion];
-		System.assertEquals(1, listContentVersion.size());
+		System.assertEquals(1, listContentVersion.size(),'value of parameter is matching');
 	}
 }

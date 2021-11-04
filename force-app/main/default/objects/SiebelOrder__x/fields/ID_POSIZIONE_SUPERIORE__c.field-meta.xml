@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ID_POSIZIONE_SUPERIORE</label>
+    <label>Id posizione superiore</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

@@ -151,7 +151,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                         };
 
         servicePointSrv.checkReadAccess('CommoditySector__c,IsRemoteManaged__c,MeterType__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,SupplyTypeTemp__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyStreetNumberExtension__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SwitchOutDate__c,SupplyStreetNumberExtension__c,SupplyTypeTemp__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,ImplantTypeTemp__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'SwitchOutDate__c,SupplyStreetNumberExtension__c,SupplyTypeTemp__c,exciseEle__c,ExciseGas__c,Vat__c,CommoditySector__c,IsRemoteManaged__c,MeterType__c,SwitchInWinback__c,PowerRequested__c,RequestPhase__c,PressureLevel__c,Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,ImplantTypeTemp__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,Pressure__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,VATNumberUdb__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c,MeterStatus__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
         
@@ -242,6 +242,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CustomerRequestDate__c = Date.today();
         //Aggiunta valorizzazione Commodity
         orderToUpdate.Commodity__c = servicePoint.CommoditySector__c;
+        orderToUpdate.Pressure__c = servicePoint.Pressure__c;
         mixedData.servicePointStatus=servicePoint.MeterStatus__c;
     }
 
@@ -302,10 +303,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
         saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
-        orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
+        orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
+        orderToUpdate.Campaign__c = sale.Campaign__c;
+        orderToUpdate.CampaignName__c = sale.Campaign__r?.Name;
+        orderToUpdate.CommissioningCampaignName__c = sale.CommissioningCampaign__r?.Name;
+
         orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
         orderToUpdate.Contact__c = sale.SalesContact__c;
         orderToUpdate.SalesContact__c = sale.SalesContact__c;
@@ -338,6 +343,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(quoteId);
 
         if (!quoteLineList.isEmpty()) {
+            system.debug('productcode '+quoteLineList[0].SBQQ__Product__r.ProductCode);
             orderToUpdate.CommercialProductCode__c = quoteLineList[0].SBQQ__Product__r.ProductCode;
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
             orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
@@ -374,15 +380,16 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
         Set<String> sconti = HDT_UTL_OrderProcessAssignment.getFamilySconto();
         
-
-        if (!mainItems.isEmpty()) {
-            if(originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)){
-                return;
-            }
-            system.debug('ivaste 1');
+        if((originalOrder.ServicePoint__c != null && !sconti.contains(mainItems[0].Product2.Family)) || mainItems.isEmpty()){
+            return;
+        }
+        system.debug('ivaste 1');
+        if(!sconti.contains(mainItems[0].Product2.Family)){
+            system.debug('ivaste 1 '+mainItems[0].Product2.ProductCode);//only for vas
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
             orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
+        
             orderToUpdate.isVas__c= mainItems[0].Product2.Family.startsWith('VAS');
             orderToUpdate.VASType__c=orderToUpdate.isVas__c? mainItems[0].Product2.Family : '';
             orderToUpdate.VASSubtype__c=orderToUpdate.isVas__c? mainItems[0].Product2.Name.abbreviate(30) : '';
@@ -403,6 +410,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
             }
         }
+        
         if(sconti.contains(mainItems[0].Product2.Family)){
             //only for Amend Bonus
             List<OrderItem> billableVas = orderToUpdate.isVas__c? null : orderItemQr.getAnalisiConsumi(orderToUpdate.id);
@@ -478,6 +486,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     * @param order - Order
     */
     public static void alignFields(Order order) {
+
+        system.debug('ORDER FIELDS ALIGN');
 
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;

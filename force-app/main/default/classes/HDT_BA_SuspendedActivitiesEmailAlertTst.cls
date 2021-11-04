@@ -50,4 +50,5 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         system.assertNotEquals('', users[0].id , 'List of  users with ownerId of wrts_prcgvr__Activity__c is Empty' );
 
     }
+    
 }

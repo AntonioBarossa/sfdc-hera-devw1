@@ -71,7 +71,7 @@ public inherited sharing class HDT_LC_SaleActions {
     public static void save(Sale__c sale, String campaignMemberId){
 
         Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
-        Id campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
+        String campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
         
         List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
 

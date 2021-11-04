@@ -25,8 +25,9 @@ public class HDT_SCH_QueueAssignmentSchedulerTst {
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('PraxidiaIntegration','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
                         
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountPartner(1,false,'AccountTest');
-            for(Account a : accs)
+            for(Account a : accs){
                 a.CompanyOwner__c='MMS';
+            }
             insert accs;
             
         }
@@ -42,10 +43,10 @@ public class HDT_SCH_QueueAssignmentSchedulerTst {
 		Test.startTest();
         
         HDT_SCH_PraxidiaReclami prec = new HDT_SCH_PraxidiaReclami();
-        String someSchJob = System.schedule('xxxPartnerQueuesxxx', CRON_EXP , prec);
+        System.schedule('xxxPartnerQueuesxxx', CRON_EXP , prec);
         
         HDT_SCH_QueueAssignmentScheduler qas = new HDT_SCH_QueueAssignmentScheduler(accs);
-        String jobID = System.schedule('Label of the job', CRON_EXP , qas);
+        System.schedule('Label of the job', CRON_EXP , qas);
         
         Test.stopTest();
         

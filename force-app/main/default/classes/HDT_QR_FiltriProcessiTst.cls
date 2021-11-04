@@ -19,10 +19,6 @@ public with sharing class HDT_QR_FiltriProcessiTst {
         internalUser.UserPermissionsMarketingUser=true;
  
         insert internalUser;
- 
-        System.runAs(internalUser) {
-            //seu testSetup       
-        }
     }
 
     @isTest

@@ -11,7 +11,7 @@
 public class HDT_LC_ReportNavigatorControllerTst {
     
 	@isTest
-    static void test1(){
+    static void testException(){
         
         Exception ex;
         String msg;
@@ -20,7 +20,7 @@ public class HDT_LC_ReportNavigatorControllerTst {
         
         try{
             
-        	Id result = HDT_LC_ReportNavigatorController.getReportId('randomstring');
+        	HDT_LC_ReportNavigatorController.getReportId('randomstring');
             
         }catch(Exception e){
             ex = e;
@@ -36,7 +36,7 @@ public class HDT_LC_ReportNavigatorControllerTst {
     }
     
     @isTest
-    static void test2(){
+    static void test(){
         
         String reportName = [Select DeveloperName From Report LIMIT 1].DeveloperName;
         

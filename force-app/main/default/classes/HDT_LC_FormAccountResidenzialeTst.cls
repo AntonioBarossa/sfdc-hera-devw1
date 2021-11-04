@@ -22,7 +22,7 @@ public class HDT_LC_FormAccountResidenzialeTst{
 		System.debug('SETUPaccList = '+accList);
 		System.debug('SETUPconList = '+conList);
         
-        List<City__c> cities = HDT_UTL_DataFactoryTst.createCity(1, false);
+        List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
         cities[0].Name = 'hello';
         insert cities;
 	}

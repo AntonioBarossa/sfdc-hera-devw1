@@ -10,7 +10,7 @@
     <label>Order Id</label>
     <length>15</length>
     <referenceTo>SiebelOrder__x</referenceTo>
-    <relationshipLabel>Riga d&apos;ordine</relationshipLabel>
+    <relationshipLabel>Righe d&apos;ordine</relationshipLabel>
     <relationshipName>SiebelRdo</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>
