@@ -11,6 +11,8 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
 
     @TestSetup
     static void setup(){
+
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         
         Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
  

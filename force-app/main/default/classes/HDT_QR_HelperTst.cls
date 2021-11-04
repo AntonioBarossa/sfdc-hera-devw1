@@ -15,7 +15,7 @@ public with sharing class HDT_QR_HelperTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].Id, contactList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
     }
     @isTest
     public static void testSetObj(){
@@ -59,7 +59,6 @@ public with sharing class HDT_QR_HelperTst {
         Test.startTest();
             Case cs=[SELECT Id FROM Case limit 1];
         	String filter= 'Id=\''+ cs.Id+'\'';
-        	System.debug(filter);
             helpQR.setFilter(filter);
         
         Test.stopTest();   
@@ -93,7 +92,7 @@ public with sharing class HDT_QR_HelperTst {
         Test.startTest();
         
             helpQR.setObj('Case');
-        	Case cs=[SELECT Id, CaseNumber, AccountId, AssetId, ContactId, ParentId, RecordTypeId, Status,Priority, Description , ClosedDate FROM Case limit 1];
+        	//Case cs=[SELECT Id, CaseNumber, AccountId, AssetId, ContactId, ParentId, RecordTypeId, Status,Priority, Description , ClosedDate FROM Case limit 1];
         	List<String> fields = new List<String>();
             helpQR.setNestedFields(fields);
             String resp= helpQR.getQeryString();
@@ -111,7 +110,6 @@ public with sharing class HDT_QR_HelperTst {
         	Case cs=[SELECT Id, CaseNumber, AccountId, AssetId, ContactId, ParentId, RecordTypeId, Status,Priority, Description , ClosedDate FROM Case limit 1];
         	List<String> fields = new List<String>();
             helpQR.setNestedFields(fields);
-            System.debug(helpQR.getQeryString());
         	String filter= 'Id=\''+ cs.Id+'\'';
             helpQR.setFilter(filter);
             List<SObject> resp= helpQR.getListSObject();
@@ -130,7 +128,6 @@ public with sharing class HDT_QR_HelperTst {
         	Case cs=[SELECT Id, CaseNumber, AccountId, AssetId, ContactId, ParentId, RecordTypeId, Status,Priority, Description , ClosedDate FROM Case limit 1];
         	List<String> fields = new List<String>();
             helpQR.setNestedFields(fields);
-            System.debug(helpQR.getQeryString());
         	String filter= 'Id='+ cs.Id;
             helpQR.setFilter(filter);
             List<SObject> resp= helpQR.getListSObject();
