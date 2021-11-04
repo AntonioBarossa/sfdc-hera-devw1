@@ -61,7 +61,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //CONTACT AND ACCOUNT RELATIONSHIP
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id);
+        HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id);
         
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
         contractList[0].ServicePoint__c = servPoint.Id;
@@ -120,20 +120,20 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING objectString (ItemVAS not null)
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('handleAmountVas', inputs, formParams);
+        String result = myObjectToTest.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert(!'||'.equalsIgnoreCase(result1), 'Result identico.');
+        System.debug('result: ' + result);
+        System.assert(!'||'.equalsIgnoreCase(result), 'Result identico.');
         
         
         //TESTING objectString (ItemVAS equals null)
         inputs.put('ItemVAS', null);
-        String result2 = myObjectToTest.execute('handleAmountVas', inputs, formParams);
+        String resultNull = myObjectToTest.execute('handleAmountVas', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert('||'.equalsIgnoreCase(result2), 'Result non è identico.');
+        System.debug('resultNull: ' + resultNull);
+        System.assert('||'.equalsIgnoreCase(resultNull), 'Result non è identico.');
         
         
     }
@@ -161,32 +161,32 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Regular
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        String result = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('IF'.equalsIgnoreCase(result1), 'Risultato non è IF');
+        System.debug('result: ' + result);
+        System.assert('IF'.equalsIgnoreCase(result), 'Risultato non è IF');
         
         //TODO: TESTARE CASO NON "IF". Attualmente non possibile.
         
         //TESTING Blank Contract Id
         Contract con = [SELECT Id FROM Contract];
         myItem.ContractId = con.Id;
-        String result2 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        String resultBlank = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert(''.equalsIgnoreCase(result2), 'Risultato non è stringa vuota.');
+        System.debug('resultBlank: ' + resultBlank);
+        System.assert(''.equalsIgnoreCase(resultBlank), 'Risultato non è stringa vuota.');
         
         
         
         //TESTING context Not Order
         formParams.put('Contesto', 'Fake');
-        String result3 = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
+        String resultFake = myObjectToTest.execute('handleFlagDeliveryAddress', inputs, formParams);
         
         //ASSERTS
-        System.debug('result3: ' + result3);
-        System.assert(''.equalsIgnoreCase(result3), 'Risultato non è stringa vuota.');
+        System.debug('resultFake: ' + resultFake);
+        System.assert(''.equalsIgnoreCase(resultFake), 'Risultato non è stringa vuota.');
         
     }
     
@@ -212,41 +212,41 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Case - Not Paperless
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        String result = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('N'.equalsIgnoreCase(result1), 'Risultato non è N');
+        System.debug('result: ' + result);
+        System.assert('N'.equalsIgnoreCase(result), 'Risultato non è N');
         
         
         
         //TESTING Context Case - Not Paperless
         myItem.Type = 'Paperless';
-        String result2 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        String resultPaperless = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert('Y'.equalsIgnoreCase(result2), 'Risultato non è Y');
+        System.debug('resultPaperless: ' + resultPaperless);
+        System.assert('Y'.equalsIgnoreCase(resultPaperless), 'Risultato non è Y');
         
         
         
         //TESTING Blank Type
         myItem.Type = '';
-        String result3 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        String resultBlank = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        System.debug('result3: ' + result3);
-        System.assert('N'.equalsIgnoreCase(result3), 'Risultato non è N');
+        System.debug('resultBlank: ' + resultBlank);
+        System.assert('N'.equalsIgnoreCase(resultBlank), 'Risultato non è N');
         
         
         
         //TESTING Context Not Case
         formParams.put('Contesto', 'Fake');
-        String result4 = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
+        String resultFake = myObjectToTest.execute('handleFlagPaperless', inputs, formParams);
         
         //ASSERTS
-        System.debug('result4: ' + result4);
-        System.assert('N'.equalsIgnoreCase(result4), 'Risultato non è N');
+        System.debug('resultFake: ' + resultFake);
+        System.assert('N'.equalsIgnoreCase(resultFake), 'Risultato non è N');
         
     }
     
@@ -275,14 +275,14 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Order
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);//'Hera Comm S.p.A.'
+        String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);//'Hera Comm S.p.A.'
         
         //RETRIEVING DATA
         HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm S.p.A.'];
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert(myData.CompanyCode__c.equalsIgnoreCase(result1), 'Risultato non è ' + myData.CompanyCode__c);
+        System.debug('result: ' + result);
+        System.assert(myData.CompanyCode__c.equalsIgnoreCase(result), 'Risultato non è ' + myData.CompanyCode__c);
     }
     
     
@@ -307,11 +307,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Case
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert(''.equalsIgnoreCase(result1), 'Risultato non è stringa vuota');
+        System.debug('result: ' + result);
+        System.assert(''.equalsIgnoreCase(result), 'Risultato non è stringa vuota');
         
     }
     
@@ -338,14 +338,14 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Account
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //RETRIEVING DATA
         HDT_HeraCompany__mdt myData = [SELECT CompanyCode__c from HDT_HeraCompany__mdt WHERE Label=:'Hera Comm S.p.A.'];
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert(myData.CompanyCode__c.equalsIgnoreCase(result1), 'Risultato non è ' + myData.CompanyCode__c);
+        System.debug('result: ' + result);
+        System.assert(myData.CompanyCode__c.equalsIgnoreCase(result), 'Risultato non è ' + myData.CompanyCode__c);
         
     }
     
@@ -353,7 +353,7 @@ public with sharing class HDT_UTL_PayloadManagementTst {
     
     ///EC GC
     @isTest
-    private static void calculateCompanyCodeTestEC(){
+    private static void calculateCompanyCodeTestECc(){ 
         
         //SETUP
         mySetup();
@@ -373,44 +373,44 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context EC - 2060
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('2060'.equalsIgnoreCase(result1), 'Risultato non è 2060');
+        System.debug('result: ' + result);
+        System.assert('2060'.equalsIgnoreCase(result), 'Risultato non è 2060');
         
         
         
         //TESTING Context EC - 7030
         primolivello.put('societa', 'ESTENERGY SPA');
         formParams.put('EstrattoConto', JSON.serialize(itemVasList));
-        String result2 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String resultEst = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert('7030'.equalsIgnoreCase(result2), 'Risultato non è 7030');
+        System.debug('resultEst: ' + resultEst);
+        System.assert('7030'.equalsIgnoreCase(resultEst), 'Risultato non è 7030');
         
         
         
         //TESTING Context EC - 7015
         primolivello.put('societa', 'HERA COMM NORDEST');
         formParams.put('EstrattoConto', JSON.serialize(itemVasList));
-        String result3 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String resultHeraComm = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result3: ' + result3);
-        System.assert('7015'.equalsIgnoreCase(result3), 'Risultato non è 7015');
+        System.debug('resultHeraComm: ' + resultHeraComm);
+        System.assert('7015'.equalsIgnoreCase(resultHeraComm), 'Risultato non è 7015');
         
         
         
         //TESTING Context EC - 1070
         primolivello.put('societa', '6 USZE TAHAM');
         formParams.put('EstrattoConto', JSON.serialize(itemVasList));
-        String result4 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String resultUsze = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result4: ' + result1);
-        System.assert('1070'.equalsIgnoreCase(result4), 'Risultato non è 1070');
+        System.debug('resultUsze: ' + resultUsze);
+        System.assert('1070'.equalsIgnoreCase(resultUsze), 'Risultato non è 1070');
         
         //TODO: POSSIBILE ESTENSIONE CON COPERTURA DEL CATCH SE EstrattoConto PUNTA A NULL
         
@@ -431,11 +431,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Account
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
+        String result = myObjectToTest.execute('calculateCompanyCode', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert(''.equalsIgnoreCase(result1), 'Risultato non è Stringa vuota.');
+        System.debug('result: ' + result);
+        System.assert(''.equalsIgnoreCase(result), 'Risultato non è Stringa vuota.');
         
     }
     
@@ -469,11 +469,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Case - SIP
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('checkQuotationType', inputs, formParams);
+        String result = myObjectToTest.execute('checkQuotationType', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('SIP'.equalsIgnoreCase(result1), 'Risultato non è SIP');
+        System.debug('result: ' + result);
+        System.assert('SIP'.equalsIgnoreCase(result), 'Risultato non è SIP');
         
         //COMMENTATO - FIELD DocumentalProcessType__c NON WRITEABLE.
         /*
@@ -546,11 +546,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING Context Case - Empty Amount
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        String result = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('|||||'.equalsIgnoreCase(result1), 'Risultato non è |||||');
+        System.debug('result: ' + result);
+        System.assert('|||||'.equalsIgnoreCase(result), 'Risultato non è |||||');
         formParams.put('Contesto', 'Case');
         
         
@@ -569,11 +569,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         itemVasList.add(myPreventivo);
         inputs.put('Case', itemVasList);
         
-        String result2 = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
+        String resultCase = myObjectToTest.execute('calculateQuotationAmount', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert(!'|||||'.equalsIgnoreCase(result2), 'Risultato è |||||, previsto diverso.');
+        System.debug('resultCase: ' + resultCase);
+        System.assert(!'|||||'.equalsIgnoreCase(resultCase), 'Risultato è |||||, previsto diverso.');
         
     }
     
@@ -600,23 +600,23 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - REGULAR
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
+        String result = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
+        System.debug('result: ' + result);
         
         String awaitedResult = acc.VATGroup__c + '|' + HDT_UTL_DocumentalManagement.transformDate(Date.valueOf(acc.VATGroupStartDate__c));
-        System.assert(awaitedResult.equalsIgnoreCase(result1), 'Risultato non è ' + awaitedResult);
+        System.assert(awaitedResult.equalsIgnoreCase(result), 'Risultato non è ' + awaitedResult);
         
         
         
         //TESTING - empty
         acc.VATGroupStartDate__c = Date.today();
-        String result2 = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
+        String resultEmpty = myObjectToTest.execute('checkGruppoIva', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert(''.equalsIgnoreCase(result2), 'Risultato non è Stringa vuota');
+        System.debug('resultEmpty: ' + resultEmpty);
+        System.assert(''.equalsIgnoreCase(resultEmpty), 'Risultato non è Stringa vuota');
         
     }
     
@@ -643,51 +643,51 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CO|
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        String result = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1: ' + result1);
-        System.assert('||||CO||'.equalsIgnoreCase(result1), 'Risultato non è ||||CO||');
+        System.debug('result: ' + result);
+        System.assert('||||CO||'.equalsIgnoreCase(result), 'Risultato non è ||||CO||');
         
         
         
         //TESTING - AC|
         myItem.ImplantType__c = 'acq calda';
-        String result2 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        String resultAc = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2: ' + result2);
-        System.assert('||||AC||'.equalsIgnoreCase(result2), 'Risultato non è ||||AC||');
+        System.debug('resultAc: ' + resultAc);
+        System.assert('||||AC||'.equalsIgnoreCase(resultAc), 'Risultato non è ||||AC||');
         
         
         
         //TESTING - RA|
         myItem.ImplantType__c = 'Riscaldamento';
-        String result3 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        String resultRa = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
         
         //ASSERTS
-        System.debug('result3: ' + result3);
-        System.assert('||||RA||'.equalsIgnoreCase(result3), 'Risultato non è ||||RA||');
+        System.debug('resultRa: ' + resultRa);
+        System.assert('||||RA||'.equalsIgnoreCase(resultRa), 'Risultato non è ||||RA||');
         
         
         
         //TESTING - RC|
         myItem.ImplantType__c = 'Risc. centraliz';
-        String result4 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        String resultRc = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
         
         //ASSERTS
-        System.debug('result4: ' + result4);
-        System.assert('||||RC||'.equalsIgnoreCase(result4), 'Risultato non è ||||RC||');
+        System.debug('resultRc: ' + resultRc);
+        System.assert('||||RC||'.equalsIgnoreCase(resultRc), 'Risultato non è ||||RC||');
         
         
         
         //TESTING - |
         myItem.ImplantType__c = 'Fake';
-        String result5 = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
+        String resultFake = myObjectToTest.execute('checkCommercialOffer', inputs, formParams);
         
         //ASSERTS
-        System.debug('result5: ' + result5);
-        System.assert('||||||'.equalsIgnoreCase(result5), 'Risultato non è ||||||');
+        System.debug('resultFake: ' + resultFake);
+        System.assert('||||||'.equalsIgnoreCase(resultFake), 'Risultato non è ||||||');
         
     }
     
@@ -713,11 +713,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO GENERICO
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('generateSection20', inputs, formParams);
+        String result = myObjectToTest.execute('generateSection20', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.debug('result length ' + result.length());
+        System.assert(String.isNotBlank(result), 'Risultato è stringa vuota.');
         
     }
     
@@ -740,12 +740,12 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO GENERICO
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('generateSection40', inputs, formParams);
+        String result = myObjectToTest.execute('generateSection40', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.debug('result length ' + result.length());
+        //System.assert(String.isBlank(result), 'Risultato non è stringa vuota.');
+        System.assert(String.isNotBlank(result), 'Risultato è stringa vuota.');
         
     }
     
@@ -776,12 +776,12 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO GENERICO
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('generateSection50', inputs, formParams);
+        String result = myObjectToTest.execute('generateSection50', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.debug('result length ' + result.length());
+        //System.assert(String.isBlank(result), 'Risultato non è stringa vuota.');
+        System.assert(String.isNotBlank(result), 'Risultato è stringa vuota.');
         
     }
     
@@ -807,12 +807,12 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO GENERICO
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('generateSection70', inputs, formParams);
+        String result = myObjectToTest.execute('generateSection70', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        //System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
-        System.assert(String.isNotBlank(result1), 'Risultato è stringa vuota.');
+        System.debug('result length ' + result.length());
+        //System.assert(String.isBlank(result), 'Risultato non è stringa vuota.');
+        System.assert(String.isNotBlank(result), 'Risultato è stringa vuota.');
         
         
         //TESTING - CASO senza ACR
@@ -822,8 +822,8 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         inputs = new Map<String,List<SObject>>();
         inputs.put('Account', itemVasList);
         
-        String result2 = myObjectToTest.execute('generateSection70', inputs, formParams);
-        System.assert(String.isBlank(result2), 'Risultato non è stringa vuota.');
+        String resultNoAcr = myObjectToTest.execute('generateSection70', inputs, formParams);
+        System.assert(String.isBlank(resultNoAcr), 'Risultato non è stringa vuota.');
         
     }
     
@@ -850,22 +850,22 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO cluster not Reclami
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
+        String result = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        System.assert(String.isBlank(result1), 'Risultato NON è stringa vuota.');
+        System.debug('result length ' + result.length());
+        System.assert(String.isBlank(result), 'Risultato NON è stringa vuota.');
         
         
         
         //TESTING - Caso HTML Response Blank
         myItem.Cluster__c = 'Reclami';
         myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result2 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
+        String resultBlank = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2 length ' + result2.length());
-        System.assert(String.isBlank(result2), 'Risultato NON è stringa vuota.');
+        System.debug('resultBlank length ' + resultBlank.length());
+        System.assert(String.isBlank(resultBlank), 'Risultato NON è stringa vuota.');
         
         
         
@@ -873,11 +873,11 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         myItem.ComplaintBodyResponse__c = 'Body Response Fake';//TODO: SPLITTER PATTERN TESTING
         //myItem.IsContainer__c = true;
         myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result3 = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
+        String resultNormale = myObjectToTest.execute('generateSectionReclami', inputs, formParams);
         
         //ASSERTS
-        System.debug('result3 length ' + result3.length());
-        System.assert(String.isNotBlank(result3), 'Risultato è stringa vuota.');
+        System.debug('resultNormale length ' + resultNormale.length());
+        System.assert(String.isNotBlank(resultNormale), 'Risultato è stringa vuota.');
         
     }
     
@@ -903,21 +903,21 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO INPUTS
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateSignModeDriver', inputs, formParams);
+        String result = myObjectToTest.execute('calculateSignModeDriver', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        System.assert('Vocal Order'.equalsIgnoreCase(result1), 'Risultato non è Vocal order.');
+        System.debug('result length ' + result.length());
+        System.assert('Vocal Order'.equalsIgnoreCase(result), 'Risultato non è Vocal order.');
         
         
         
         //TESTING - CASO FORMPARAMS
         formParams.put('signMode', 'Vocal Order');
-        String result2 = myObjectToTest.execute('calculateSignModeDriver', inputs, formParams);
+        String resultForm = myObjectToTest.execute('calculateSignModeDriver', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2 length ' + result2.length());
-        System.assert('Vocal Order'.equalsIgnoreCase(result2), 'Risultato non è Vocal order.');
+        System.debug('resultForm length ' + resultForm.length());
+        System.assert('Vocal Order'.equalsIgnoreCase(resultForm), 'Risultato non è Vocal order.');
         
     }
     
@@ -943,21 +943,21 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //TESTING - CASO Contesto Not Order
         HDT_UTL_PayloadManagement myObjectToTest = new HDT_UTL_PayloadManagement();
-        String result1 = myObjectToTest.execute('calculateDriverCatalogo', inputs, formParams);
+        String result = myObjectToTest.execute('calculateDriverCatalogo', inputs, formParams);
         
         //ASSERTS
-        System.debug('result1 length ' + result1.length());
-        System.assert(String.isBlank(result1), 'Risultato non è stringa vuota.');
+        System.debug('result length ' + result.length());
+        System.assert(String.isBlank(result), 'Risultato non è stringa vuota.');
         
         
         
         //TESTING - CASO Pricebook Blank
         formParams.put('Contesto', 'Order');
-        String result2 = myObjectToTest.execute('calculateDriverCatalogo', inputs, formParams);
+        String resultBlank = myObjectToTest.execute('calculateDriverCatalogo', inputs, formParams);
         
         //ASSERTS
-        System.debug('result2 length ' + result2.length());
-        System.assert(String.isBlank(result2), 'Risultato non è stringa vuota.');
+        System.debug('resultBlank length ' + resultBlank.length());
+        System.assert(String.isBlank(resultBlank), 'Risultato non è stringa vuota.');
         
         
     }
