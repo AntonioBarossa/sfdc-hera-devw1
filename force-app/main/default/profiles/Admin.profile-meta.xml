@@ -33781,6 +33781,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_HCPoint</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
     </layoutAssignments>

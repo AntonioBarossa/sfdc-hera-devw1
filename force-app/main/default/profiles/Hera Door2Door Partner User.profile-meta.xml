@@ -31389,6 +31389,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_Protocollo</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
     </layoutAssignments>
