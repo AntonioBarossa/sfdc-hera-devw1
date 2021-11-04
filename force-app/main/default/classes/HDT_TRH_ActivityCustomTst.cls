@@ -11,7 +11,7 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 	@TestSetup
 	static void makeData(){
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
-		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
+		HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 		HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 	}
 
@@ -40,7 +40,7 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 			                                                 WHERE Id=:activityCustom[0].Id];
 
 			System.assertEquals(true, tActCustomInsert[0].Account__c!=null, 'Activity Custom not created');
-			System.assertNotEquals(false, tActCustomInsert[0].Account__c!=null);
+			System.assertNotEquals(false, tActCustomInsert[0].Account__c!=null, 'Activity Custom not created');
 		}
 	}
 
@@ -69,7 +69,7 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 			                                                 WHERE Id=:activityCustom[0].Id];
 
 			System.assertEquals('Manuale', tActCustomUpdate[0].DiscardCategory__c, 'Activity Custom not Updated');
-			System.assertNotEquals('', tActCustomUpdate[0].DiscardCategory__c);
+			System.assertNotEquals('', tActCustomUpdate[0].DiscardCategory__c, 'Activity Custom not Updated');
 		}
 	}
 
@@ -98,7 +98,7 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 			                                                 WHERE Id=:activityCustom[0].Id];
 
 			System.assertEquals('Manuale', tActCustomUpdate[0].DiscardCategory__c, 'Activity Custom not Updated');
-			System.assertNotEquals('', tActCustomUpdate[0].DiscardCategory__c);
+			System.assertNotEquals('', tActCustomUpdate[0].DiscardCategory__c, 'Activity Custom not Updated');
 		}
 	}
 	/*@isTest

@@ -23,8 +23,8 @@ public with sharing class HDT_SRV_ContactPointTst {
         System.runAs(internalUser) {
  
             List<Individual> ind = HDT_UTL_DataFactoryTst.createIndividual(1, true);
-            List<ContactPointPhone> cppList = HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, ind[0].Id);
-            List<ContactPointEmail> cpeList = HDT_UTL_DataFactoryTst.createContactPointEmail(1, true, ind[0].Id);
+            HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, ind[0].Id);
+            HDT_UTL_DataFactoryTst.createContactPointEmail(1, true, ind[0].Id);
         }
     }
 

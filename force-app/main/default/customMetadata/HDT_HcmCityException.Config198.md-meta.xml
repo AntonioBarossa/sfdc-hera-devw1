@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>City__c</field>
-        <value xsi:type="xsd:string">ISOLA DEL GRAN SASSO D'ITALIA</value>
+        <value xsi:type="xsd:string">ISOLA DEL GRAN SASSO D&apos;ITALIA</value>
     </values>
     <values>
         <field>Commodity__c</field>

@@ -1,8 +1,50 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
     private static HDT_UTL_HerokuPostSalesManager hpsmUtl = new HDT_UTL_HerokuPostSalesManager();
+
+    private final static String PHASE_OK = 'Comunicazione verso Heroku OK';
+    private final static String PHASE_KO = 'Comunicazione verso Heroku KO';
+
+    private Map<String,String> mapRequestFields = new Map<String,String>();
+    
+    global HDT_SRV_BillableVasDeactivation(){
+        return;
+    }
+
+    /*public HDT_SRV_BillableVasDeactivation(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+        if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
+            for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
+                if(this.mapRequestFields.get(field.name) == null){
+                    this.mapRequestFields.put(field.name,field.value);
+                }
+            }
+        }
+    }*/
+
+    public static void handlerAsyncronousNotify(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldId;
+        if (request?.objects?.size()> 0 && request?.objects?.get(0)?.fields?.size() > 0) {
+            for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
+                if(field.name == 'RECORD_ID'){
+                    fieldId=field;
+                }
+            }
+        }
+        List<Case> cases;
+        if(STRING.isNotBlank(fieldId?.value) && fieldId.value.startsWithIgnoreCase('O-')){
+            cases = [SELECT Id FROM Case
+                        WHERE RecordType.DeveloperName='HDT_RT_PostSalesVAS' AND Type='Disattivazione VAS'
+                        AND (Asset.SBQQ__OrderProduct__r.Order.OrderNumber=:fieldId.value OR Subscription__r.SBQQ__Contract__r.SBQQ__Order__r.OrderNumber=:fieldId.value) AND Status NOT IN ('Closed', 'Bozza')
+                        WITH SECURITY_ENFORCED LIMIT 1];
+        }
+        if(cases?.size()>0){
+            fieldId.value=cases[0].Id;
+        }
+    }
+    
 
     
     public static wrts_prcgvr__Log__c createLogObj(wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj, wrts_prcgvr.MRR_1_0.MultiResponse responseService, Map<String, Object> argsMap) {
@@ -35,10 +77,11 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         wrts_prcgvr.MRR_1_0.MultiResponse responseMrr = new wrts_prcgvr.MRR_1_0.MultiResponse();
         wrts_prcgvr__CalloutTemplate__c record = new wrts_prcgvr__CalloutTemplate__c();
         Map<String, Object> arg = new Map<String, Object>();
-        List<Case> caseToUpdate = new List<Case>();
+        //List<Case> caseToUpdate = new List<Case>();
         Case currentCase = new Case();
         String ticket;
         String code;
+        Case caseToUpdate;
 
         //fake code
 
@@ -48,14 +91,14 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         //fake code
 
         List<HDT_WRP_HerokuPostSalesManager> wrpResponses = new List<HDT_WRP_HerokuPostSalesManager>();
-        String outputResult;
+        //String outputResult;
 
         Map<String, Object> argsMap = (Map<String, Object>) args;
-        SObject transition = (SObject) argsMap.get('transition'); //phase transition
-        SObject action = (SObject) argsMap.get('action'); //phase transition detail
-        String method = (String) argsMap.get('method');
+        //SObject transition = (SObject) argsMap.get('transition'); //phase transition
+        //SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        //String method = (String) argsMap.get('method');
         SObject obj = (SObject) argsMap.get('sender');
-        Object templateMap = argsMap.get('templateMap');
+        //Object templateMap = argsMap.get('templateMap');
         Map<String, String> parameters = (Map<String, String>) argsMap.get(
             'parameters'
         );
@@ -63,6 +106,7 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
         try {
             ticket = (String) obj.get('Id');
             currentCase = (Case) obj;
+            caseToUpdate = new Case(Id=currentCase.Id);
             code = hpsmUtl.getCodeFromPhaseTransition(currentCase);
             record = hpsmQr.getCalloutTemplateByCode(code);
 
@@ -127,18 +171,61 @@ global inherited sharing class HDT_SRV_BillableVasDeactivation implements wrts_p
 
         System.debug('ResponseMrr --> ' + responseMrr);
 
-        wrpResponses = hpsmUtl.manipulateResponse(responseMrr);
+        //wrpResponses = hpsmUtl.manipulateResponse(responseMrr);
 
         System.debug('WRPResponse --> ' + wrpResponses);
-        caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
+        //caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
 
-        if (caseToUpdate != null && caseToUpdate.size() > 0) {
-            String serializedCase = JSON.serialize(caseToUpdate[0]);
-            //updateFuture(serializedCase);
+        if (responseMrr.responses[0].objects == null) {
+            // ord.DiscardReason__c = responseService.responses[0].description;
+            //ord.Phase__c = 'Comunicazione verso Heroku KO';
+            caseToUpdate.Phase__c=PHASE_KO;
+        }else{
+            map<String,String> fieldValueResponse = new map<String,String>();
+            wrts_prcgvr.MRR_1_0.WObject objResponse = responseMrr.responses[0].objects[0];
+            for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
+                fieldValueResponse.put(field.name,field.value);
+            }
+            if(String.isNotBlank(fieldValueResponse.get('COD_PRAT_UTENTE'))){
+                caseToUpdate.HerokuPracticeCode__c = fieldValueResponse.get('COD_PRAT_UTENTE');
+            }else if(String.isNotBlank(responseMrr.responses[0].header.requestId)){
+                caseToUpdate.HerokuPracticeCode__c = responseMrr.responses[0].header.requestId;
+            }
+            caseToUpdate.Phase__c = 'OK'.equalsIgnoreCase(fieldValueResponse.get('result'))? PHASE_OK : PHASE_KO;
+        }
+
+        system.debug(caseToUpdate);
+        if(!Test.isRunningTest()){
+            system.enqueueJob(new HDT_QBL_UpdateQueueable(caseToUpdate));
         }
 
         response.success = true;
         response.message = 'OK';
         return response;
     }
+
+    public class HDT_QBL_UpdateQueueable implements Queueable {
+        private Case caseToUpdate;
+        public HDT_QBL_UpdateQueueable(){
+            return;
+        }
+        public HDT_QBL_UpdateQueueable(Case c){
+            this.caseToUpdate = c;
+        }
+        public void execute(QueueableContext context){
+            HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+        }
+    }
+
+    /*@Future
+    private static void updateFuture(String inputString){
+        system.debug('ivaste updatefuture');
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+        HDT_UTL_DatabaseService.updateSObject(c);
+    }
+
+    public Boolean isPostSalesOrder(){
+        return this.mapRequestFields.get('RECORD_ID').startsWithIgnoreCase('O-');
+    }*/
+    
 }

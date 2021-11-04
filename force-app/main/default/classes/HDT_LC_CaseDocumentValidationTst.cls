@@ -50,7 +50,7 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         Boolean result = HDT_LC_CaseDocumentValidation.isValidPhase(myCase.Id);
         
         //ASSERTS
-        System.assert(result);
+        System.assert(result,'value of parameter is matching');
         
     }
     
@@ -85,17 +85,17 @@ public with sharing class HDT_LC_CaseDocumentValidationTst {
         //IN ATTESA
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', false);
         Case myCase_Check1 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
-        System.assertEquals('In attesa Documentazione', myCase_Check1.Phase__c);
+        System.assertEquals('In attesa Documentazione', myCase_Check1.Phase__c,'value of parameter is matching');
         
         //ELAB MANUALE
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Accise - Energia Elettrica', true);
         Case myCase_Check2 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
-        System.assertEquals('Elaborazione Manuale', myCase_Check2.Phase__c);
+        System.assertEquals('Elaborazione Manuale', myCase_Check2.Phase__c,'value of parameter is matching');
         
         //DA INVIARE
         HDT_LC_CaseDocumentValidation.saveValidation(myCase.Id, 'Test', true);
         Case myCase_Check3 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase.Id];
-        System.assertEquals('Da Inviare', myCase_Check3.Phase__c);
+        System.assertEquals('Da Inviare', myCase_Check3.Phase__c,'value of parameter is matching');
         
     }
     

@@ -15,7 +15,7 @@ public class HDT_LC_ManageBillingProfileTst{
 		insert accList;
 
 
-		List<BillingProfile__c> bilProfList=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+		HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
 	}
 
 	@isTest

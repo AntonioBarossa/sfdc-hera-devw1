@@ -42,8 +42,8 @@ public inherited sharing class HDT_UTL_HelperMethods {
     }
 
     /**
-     * @description Check if current user is community or salesforce crm
-     * @return Boolean true(is community), false(is crm)
+     * @description Check if current user is super user
+     * @return Boolean
      */
     public Boolean isSuperUser(){
         List<PermissionSetAssignment> psasList = permissionSetQr.getPermissionSetAssignmentByName('HDT_SuperUserCPQ', UserInfo.getUserId());

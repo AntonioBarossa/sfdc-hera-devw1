@@ -7,6 +7,7 @@
 public inherited sharing class HDT_TRH_User extends HDT_TRH_TriggerHandler{
 
     public static HDT_QR_Contact contactQr= new HDT_QR_Contact();
+    public static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
     public override void afterInsert(){
         publishPartnerAccount();
@@ -33,6 +34,7 @@ public inherited sharing class HDT_TRH_User extends HDT_TRH_TriggerHandler{
                 accountsToUpdate.add(a);
             }
         }
-        update accountsToUpdate;
+        //update accountsToUpdate;
+        accountSrv.updateRecords(accountsToUpdate);
     }
 }

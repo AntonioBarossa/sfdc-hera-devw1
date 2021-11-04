@@ -71,7 +71,7 @@ public with sharing class HDT_SRV_ModificaLayoutFatturaTst {
         System.assertEquals('OK', result.message, 'Message non OK');
         //@frpanico 20/09/2021 a seguito di modifica classe adeguata anche classe di test
         //TODO: 'Errore Lavorazione SAP'
-        //System.assertEquals('Completata', myCase.TecnicalPhase__c, 'Tecnical Phase errata.');
+        System.assertEquals('Completata', myCase.TecnicalPhase__c, 'Tecnical Phase errata.');
         
     }
     

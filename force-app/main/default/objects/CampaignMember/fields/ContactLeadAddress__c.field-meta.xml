@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactLeadAddress__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(LeadId = NULL, Contact.MailingAddressFormula__c, &apos;&apos;)
+/*Lead.StreetName__c &amp;&apos; &apos;&amp; Lead.StreetNumber__c &amp;&apos;&apos;&amp; Lead.StreetNumberExtension__c &amp;&apos;, &apos;&amp; Lead.City &amp;&apos; &apos;&amp; Lead.State &amp;&apos;, &apos;&amp; Lead.CityCode__c &amp;&apos; &apos;&amp; Lead.Country*/</formula>
+    <label>Indirizzo Contact/Lead</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

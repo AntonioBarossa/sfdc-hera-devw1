@@ -13,7 +13,7 @@ public with sharing class HDT_TRH_LeadTst{
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
-		List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
+		HDT_UTL_DataFactoryTst.createIndividual(1, true);
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
          	leads[0].VATNumber__c = '12345678100';
             leads[0].CustomerMarking__c= 'Azienda';
@@ -25,9 +25,9 @@ public with sharing class HDT_TRH_LeadTst{
             leads[0].IsAddressVerified__c = true;
 
 			insert leads;
-			List<City__c> cities = HDT_UTL_DataFactoryTst.createCity(1,false);
+			List<City__c> cities = HDT_UTL_DataFactoryTst.createCity();
         	cities[0].BelfioreCode__c='Bt00';
-        	insert cities;
+        	update cities;
 
 			List<User> ownerUser = new List<User>();
 			ownerUser.add(internalUser);
@@ -42,7 +42,7 @@ public with sharing class HDT_TRH_LeadTst{
 			                          LIMIT 1];
 			convLead.setConvertedStatus(convertStatus.MasterLabel);
 
-			Database.LeadConvertResult lcr=Database.convertLead(convLead);
+			Database.convertLead(convLead);
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
             HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 
@@ -101,14 +101,16 @@ public with sharing class HDT_TRH_LeadTst{
             lead.Birthdate__c= Date.parse('2/10/1990') ;
             lead.Birthcity__c='Roma';
             lead.Gender__c='Maschio';
-            lead.FiscalCode__c= 'SMTGRG90R02Bt00Q';
             update lead;
 
+			HDT_LC_LeadCalculateFiscalCode.calculateLeadFiscalCode(lead.Id);
+			
 			test.stopTest();
 
 			List<Lead> leads = [SELECT Id,FiscalCode__c,Birthcity__c, FirstName,LastName FROM Lead Where LastName='Smith'];
 
 			System.assertEquals(true, leads[0].FiscalCode__c!=null, 'Lead has not been updated');
-			System.assertNotEquals('', leads[0].Birthcity__c,'The Birthcity__c has not been updated');		}
+			System.assertNotEquals('', leads[0].Birthcity__c,'The Birthcity__c has not been updated');		
+		}
 	}
 }

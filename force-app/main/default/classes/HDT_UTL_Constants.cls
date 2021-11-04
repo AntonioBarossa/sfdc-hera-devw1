@@ -5,6 +5,7 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
+@SuppressWarnings('PMD.ExcessivePublicCount,PMD.TooManyFields')
 public with sharing class HDT_UTL_Constants {
 
     @AuraEnabled
@@ -66,12 +67,12 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
 
-            //Activity Custom RecordType comfort quality call
-            @AuraEnabled
-            public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL = 'HDT_RT_ComfortQualityCall';
-            @AuraEnabled
-            public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
-            Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
+    //Activity Custom RecordType comfort quality call
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL = 'HDT_RT_ComfortQualityCall';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
@@ -239,6 +240,8 @@ public with sharing class HDT_UTL_Constants {
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME = 'HDT_SalesforceCPQAdmin';
     @AuraEnabled
     public final String PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME = 'HDT_SalesforceCPQLicense';
+    @AuraEnabled
+    public final String PERMISSIONSET_HDT_SUPER_USER_CPQ = 'HDT_SuperUserCPQ';
 
     //APEX Classes Permission Set
     @AuraEnabled

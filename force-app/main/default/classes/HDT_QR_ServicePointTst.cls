@@ -54,7 +54,7 @@ public with sharing class HDT_QR_ServicePointTst {
             cttList[0].Status = 'Attivo';
             insert cttList;
 
-            List<SBQQ__Subscription__c> subscriptionList = HDT_UTL_DataFactoryTst.createSubscription(1, true, accList[0].Id, cttList[0].Id, spList[0].Id);
+            HDT_UTL_DataFactoryTst.createSubscription(1, true, accList[0].Id, cttList[0].Id, spList[0].Id);
             
             List<CS_SelezioneFornitura__c> selezioneList = HDT_UTL_DataFactoryTst.createSelezioneFornitura(1, false);
             selezioneList[0].Output_Contract__c = 'OutputContractTest';

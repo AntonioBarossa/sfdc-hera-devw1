@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_GenericSolHandler {
     public static void checkCompatibility(String caseId,String phase){
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
@@ -5,25 +6,19 @@ public with sharing class HDT_SRV_GenericSolHandler {
         //CompatibilityCheck
         String compatibility = '';
         //checkCompatibility Method Call
-        try
-        {
+        try{
             compatibility = HDT_UTL_MatrixCompatibility.checkCompatibilityPostSales(currentCase);
-        }
-        catch(Exception e)
-        {
-            System.debug('Errore Compatibilita ' + e.getMessage());
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Errore Compatibilita ' + e.getMessage());
         }
         //Check Compatibility Output
-        if(String.isEmpty(compatibility))
-        {
+        if(String.isEmpty(compatibility)){
             if(String.isNotBlank(phase)){
                 currentCase.Phase__c = phase;
             }
-            System.debug('Compatibilita superata con successo ' + compatibility);
-        }
-        else
-        {
-            System.debug('Compatibilita non superata ' + compatibility);
+            System.debug(LoggingLevel.DEBUG, 'Compatibilita superata con successo ' + compatibility);
+        } else {
+            System.debug(LoggingLevel.DEBUG, 'Compatibilita non superata ' + compatibility);
             currentCase.Phase__c = 'Bozza Annullata';
             currentCase.Status = 'Closed';
             currentCase.CancellationReason__c = 'Processo incompatibile';
@@ -82,13 +77,15 @@ public with sharing class HDT_SRV_GenericSolHandler {
             HDT_UTL_DatabaseService.insertSObject(recordToInsert);
         }
     }
+    
     private static Date formatDateForInsert(String dateString){
         if(dateString!= null && dateString != ''){
             List<String> dateSplitted = new List<String>();
             dateSplitted = dateString.split('/');
             return Date.newInstance(Integer.valueOf(dateSplitted[2]), Integer.valueOf(dateSplitted[1]), Integer.valueOf(dateSplitted[0]));
-        }
-        else
+        } else {
             return null;
+        }
     }
+    
 }
