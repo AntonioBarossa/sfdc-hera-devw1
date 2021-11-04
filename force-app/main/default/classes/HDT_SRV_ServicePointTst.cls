@@ -23,7 +23,7 @@ public with sharing class HDT_SRV_ServicePointTst {
  
         System.runAs(internalUser) {
  
-            List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+            HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         }
     }
 	
@@ -111,14 +111,14 @@ public with sharing class HDT_SRV_ServicePointTst {
                     Name = 'testServicePoint0'
                 );
                 
-                ServicePoint__c spTest = srvPoint.createRecord(spException);
+                srvPoint.createRecord(spException);
 
             } catch (Exception e) {
                 
                 System.debug(e);
             }
 
-            ServicePoint__c testSp = srvPoint.createRecord(sp);
+            srvPoint.createRecord(sp);
  
             List<ServicePoint__c> spList = [SELECT Id FROM ServicePoint__c WHERE Name = 'Esquina'];
 

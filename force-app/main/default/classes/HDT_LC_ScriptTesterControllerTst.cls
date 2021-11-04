@@ -35,7 +35,7 @@ public class HDT_LC_ScriptTesterControllerTst {
         System.runAs(minimumAccessUser) {
         Test.startTest();
    try {
-          List<ScriptConfig__c> response = HDT_LC_ScriptTesterController.getScripts();
+          HDT_LC_ScriptTesterController.getScripts();
         } catch(Exception e) {
             System.assertEquals('Script-thrown exception', e.getMessage(), 'As expected, if the logged user has minimum access the method cant run');
             System.assertNotEquals('', e.getMessage(), 'The exception throws an error message');

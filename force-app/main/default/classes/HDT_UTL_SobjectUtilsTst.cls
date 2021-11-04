@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 	@testSetup
 	static void setup(){
 
-		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 	}
 
 	@isTest
@@ -182,7 +182,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Schema.DescribeFieldResult describe=Account.Id.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
 
-		Map<String, Schema.SObjectField> fieldMap=Schema.SObjectType.Account.fields.getMap();
+		Schema.SObjectType.Account.fields.getMap();
 
 		Map<String, Set<String>> mapFieldAndSet=HDT_UTL_SobjectUtils.mapFieldAndSet(tObjList, fieldDesc, fieldDesc);
 

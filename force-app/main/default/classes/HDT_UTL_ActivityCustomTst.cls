@@ -199,7 +199,7 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 			                                           WHERE Place__c='testPlace1'];
 
 			string validaActivityDocument=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'Si');
-			string validaActivityDocumentNo=HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'No');
+			HDT_UTL_ActivityCustom.validaActivityDocument(tActivCust[0].Id, 'No');
 
 			test.stopTest();
 

@@ -20,7 +20,7 @@ public class HDT_SmsTrackingTst {
         contacts[0].Company__c='MMS';
         insert contacts;
 
-        List<SMSTracking__c> trackings = HDT_UTL_DataFactoryTst.createSmsTracking(1, true, contacts[0].id);
+        HDT_UTL_DataFactoryTst.createSmsTracking(1, true, contacts[0].id);
         
         List<SMSTracking__c> query = [Select id from SMSTracking__c];
 

@@ -72,11 +72,6 @@ public with sharing class HDT_UTL_LeadTst{
 
 			Test.startTest();
 
-			Lead ld=[SELECT id, Company__c, Country
-			         FROM Lead
-			         WHERE Country='IT'
-			         LIMIT 1];
-
 			Map<String, String> hdt=HDT_UTL_Lead.getBlackListMap();
 
 			System.debug('hdt = '+hdt);

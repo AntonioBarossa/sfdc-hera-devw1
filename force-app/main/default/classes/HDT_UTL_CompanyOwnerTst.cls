@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-            List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+            HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
             
             List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, false);
             leadList[0].CompanyOwner__c = 'HERA COMM';
@@ -42,7 +42,7 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
             quoteList[0].SBQQ__Account__c = accList[0].Id;
             insert quoteList;
 
-            List<DocumentalActivity__c> daList = HDT_UTL_DataFactoryTst.createDocumentalActivity(1, true, orderList[0].Id, caseList[0].Id);
+            HDT_UTL_DataFactoryTst.createDocumentalActivity(1, true, orderList[0].Id, caseList[0].Id);
             
             List<SMSTracking__c> smsTrackingList = HDT_UTL_DataFactoryTst.createSmsTracking(1, false, contactList[0].Id);
             smsTrackingList[0].LeadID__c = leadList[0].Id;
@@ -79,7 +79,6 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c='Roma' LIMIT 1];
             List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
             leadList[0].CompanyOwner__c = null;
             update leadList;
@@ -107,9 +106,6 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
             Test.startTest();
 
             List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c='Roma' LIMIT 1];
-            List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
-            List<Case> caseList = [SELECT Id, CompanyOwner__c FROM Case WHERE Phase__c = 'Bozza' LIMIT 1];
-            List<Order> orderList = [SELECT Id, CompanyOwner__c FROM Order WHERE Phase__c = 'Bozza' LIMIT 1];
             List<wrts_prcgvr__Activity__c> activityList = [SELECT Id, Account__c, Lead__c, Case__c, Order__c, wrts_prcgvr__ObjectId__c, CompanyOwner__c
                                                            FROM wrts_prcgvr__Activity__c LIMIT 1];
 
@@ -137,10 +133,7 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c='Roma' LIMIT 1];
             List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
-            List<Case> caseList = [SELECT Id, CompanyOwner__c FROM Case WHERE Phase__c = 'Bozza' LIMIT 1];
-            List<Order> orderList = [SELECT Id, CompanyOwner__c FROM Order WHERE Phase__c = 'Bozza' LIMIT 1];
             List<wrts_prcgvr__Activity__c> activityList = [SELECT Id, Account__c, Lead__c, Case__c, Order__c, wrts_prcgvr__ObjectId__c, CompanyOwner__c
                                                            FROM wrts_prcgvr__Activity__c LIMIT 1];
 
@@ -167,10 +160,7 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c='Roma' LIMIT 1];
-            List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
             List<Case> caseList = [SELECT Id, CompanyOwner__c FROM Case WHERE Phase__c = 'Bozza' LIMIT 1];
-            List<Order> orderList = [SELECT Id, CompanyOwner__c FROM Order WHERE Phase__c = 'Bozza' LIMIT 1];
             List<wrts_prcgvr__Activity__c> activityList = [SELECT Id, Account__c, Lead__c, Case__c, Order__c, wrts_prcgvr__ObjectId__c
                                                            FROM wrts_prcgvr__Activity__c LIMIT 1];
 
@@ -202,9 +192,6 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c='Roma' LIMIT 1];
-            List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
-            List<Case> caseList = [SELECT Id, CompanyOwner__c FROM Case WHERE Phase__c = 'Bozza' LIMIT 1];
             List<Order> orderList = [SELECT Id, CompanyOwner__c FROM Order WHERE Phase__c = 'Bozza' LIMIT 1];
             List<wrts_prcgvr__Activity__c> activityList = [SELECT Id, Account__c, Lead__c, Case__c, Order__c, wrts_prcgvr__ObjectId__c
                                                            FROM wrts_prcgvr__Activity__c LIMIT 1];
@@ -238,7 +225,6 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c='Roma' LIMIT 1];
             List<SBQQ__Quote__c> quotes = [SELECT Id, SBQQ__Account__c, CompanyOwner__c FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Quote' LIMIT 1];
 
             HDT_UTL_CompanyOwner.feedCompanyOwner(quotes);
@@ -261,7 +247,6 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
  
             Test.startTest();
 
-            List<Account> accounts = [SELECT Id, CompanyOwner__c FROM Account WHERE BillingCityCode__c = 'Roma' LIMIT 1];
             List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
             List<Case> caseList = [SELECT Id, CompanyOwner__c FROM Case WHERE Phase__c = 'Bozza' LIMIT 1];
             List<Contact> cttList = [SELECT Id, CompanyOwner__c FROM Contact WHERE CompanyOwner__c = 'HERA COMM'];
@@ -316,7 +301,6 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
 
             List<Lead> leadList = [SELECT Id, CompanyOwner__c FROM Lead WHERE CompanyOwner__c='HERA COMM' LIMIT 1];
             List<Case> caseList = [SELECT Id, CompanyOwner__c FROM Case WHERE Phase__c = 'Bozza' LIMIT 1];
-            List<Contact> cttList = [SELECT Id, CompanyOwner__c FROM Contact WHERE CompanyOwner__c='HERA COMM'];
             List<et4ae5__IndividualEmailResult__c> ierList = [SELECT Id, Account__c, CompanyOwner__c, et4ae5__Lead__c, et4ae5__Contact__c, CaseID__c, OrderID__c 
                                                               FROM et4ae5__IndividualEmailResult__c 
                                                               WHERE EmailAddress__c = 'my@email.com' LIMIT 1];
@@ -378,6 +362,8 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
 
     @isTest
     public static void testFillCompanyOwnerAaaebtUserRole() {
+
+        Boolean finito = false;
  
         Test.startTest();
 
@@ -420,5 +406,10 @@ public with sharing class HDT_UTL_CompanyOwnerTst {
         }
 
         Test.stopTest();
+
+        finito = true;
+
+        System.assertEquals(true, finito, 'Test not ended');
+        System.assertNotEquals(false, finito, 'Test not ended');
     }
 }

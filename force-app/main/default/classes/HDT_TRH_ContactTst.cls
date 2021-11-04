@@ -23,7 +23,7 @@ public with sharing class HDT_TRH_ContactTst {
         System.runAs(internalUser) {
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-            List<Contact> ct = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
+            HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         }
     }
 	

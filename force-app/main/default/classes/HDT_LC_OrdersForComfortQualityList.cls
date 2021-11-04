@@ -76,8 +76,6 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
     @AuraEnabled
     public static void cancelContract(String ordId, String activityId, String causal){
 
-        String causalQuality = '';
-
         orderSrv.updateRecord(new Order(
             Id = ordId,
             Phase__c = 'Annullato',
