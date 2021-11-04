@@ -24,13 +24,15 @@ public with sharing class HDT_SRV_ContactTst {
         System.runAs(internalUser) {
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-            List<Contact> cttList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
+            HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
 
         }
     }
 
     @isTest
     public static void testCheckReadAccess() {
+
+        boolean finito;
  
         User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -41,11 +43,16 @@ public with sharing class HDT_SRV_ContactTst {
             srvContact.checkReadAccess('Id');
  
             Test.stopTest();
+            finito = true;
+			System.assertEquals(true, finito, 'testCheckReadAccess not finished');
+			System.assertNotEquals(false, finito, 'testCheckReadAccess not finished');
         }
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        boolean finito;
 
         User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -65,6 +72,9 @@ public with sharing class HDT_SRV_ContactTst {
             srvContact.checkCreateAccess(ctt);
 
             test.stopTest();
+            finito = true;
+			System.assertEquals(true, finito, 'testCheckCreateAccess not finished');
+			System.assertNotEquals(false, finito, 'testCheckCreateAccess not finished');
         }
     }
 
@@ -101,6 +111,8 @@ public with sharing class HDT_SRV_ContactTst {
     @isTest
     public static void testCheckUpdateAccess() {
 
+        boolean finito;
+
         User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
         System.runAs(u){
@@ -112,6 +124,9 @@ public with sharing class HDT_SRV_ContactTst {
             srvContact.checkUpdateAccess(ctt);
 
             Test.stopTest();
+            finito = true;
+			System.assertEquals(true, finito, 'testCheckUpdateAccess not finished');
+			System.assertNotEquals(false, finito, 'testCheckUpdateAccess not finished');
         }
     }
 

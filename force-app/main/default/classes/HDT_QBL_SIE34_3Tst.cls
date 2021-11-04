@@ -49,15 +49,15 @@ public with sharing class HDT_QBL_SIE34_3Tst {
         }
      }
 
-     static testmethod void testQueueable(){
+     @isTest static void testQueueable(){
 
         Boolean finished = false;
 
-        HDT_QBL_SIE34_3 sie34 = new HDT_QBL_SIE34_3('1','2021-01-01T13:00:00Z','TEXT');
+        HDT_QBL_SIE34_3 sie = new HDT_QBL_SIE34_3('1','2021-01-01T13:00:00Z','TEXT');
 
         Test.startTest();
         
-        System.enqueueJob(sie34);
+        System.enqueueJob(sie);
 
         finished = true;
 

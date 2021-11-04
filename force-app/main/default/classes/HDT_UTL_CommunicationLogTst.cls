@@ -14,7 +14,7 @@ public with sharing class HDT_UTL_CommunicationLogTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
     }
 
     @isTest

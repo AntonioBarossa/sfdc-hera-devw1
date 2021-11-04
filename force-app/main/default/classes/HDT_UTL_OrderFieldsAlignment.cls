@@ -308,8 +308,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
         orderToUpdate.Campaign__c = sale.Campaign__c;
-        orderToUpdate.CampaignName__c = sale.CommissioningCampaign__r?.Name;
-        orderToUpdate.CommissioningCampaignName__c = sale.Campaign__r?.Name;
+        orderToUpdate.CampaignName__c = sale.Campaign__r?.Name;
+        orderToUpdate.CommissioningCampaignName__c = sale.CommissioningCampaign__r?.Name;
 
         orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
         orderToUpdate.Contact__c = sale.SalesContact__c;

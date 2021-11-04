@@ -9,8 +9,8 @@ public class HDT_SRV_NoteTst{
 	@TestSetup
 	static void setup(){
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<ContentVersion> contVerTstList=HDT_UTL_DataFactoryTst.createContentVers(1, true);
+		HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createContentVers(1, true);
 	}
 
 	@isTest

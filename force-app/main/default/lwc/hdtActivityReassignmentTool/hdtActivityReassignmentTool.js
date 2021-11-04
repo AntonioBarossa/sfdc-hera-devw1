@@ -10,6 +10,7 @@ import getCurrentUser from "@salesforce/apex/HDT_LC_ActivityReassignmentTool.get
 
 export default class HdtActivityReassignmentTool extends LightningElement {
     @api recordId;
+    @api idList;
     workGroups;
     assignees;
     assigneeId;
@@ -24,7 +25,11 @@ export default class HdtActivityReassignmentTool extends LightningElement {
         return this.assigneesSearched && !this.assigneesFound;
     }
 
-    connectedCallback() {}
+    connectedCallback() {
+        if(this.recordId) {
+            this.idList = [this.recordId];
+        }
+    }
 
     async handleAssigneeSearch(event) {
         if(event.keyCode === 13 && event.target.value) {
@@ -51,12 +56,12 @@ export default class HdtActivityReassignmentTool extends LightningElement {
         this.assignees = undefined;
         this.assigneesSearched = false;
         this.assigneeId = agentId;
-        this.template.querySelector('[data-id="button1"]').classList.toggle('slds-hidden');
+        // this.template.querySelector('[data-id="button1"]').classList.toggle('slds-hidden');
     }
 
     async selectWorkGroup(event) {
         this.handleReassignResult(await reassignActivity({
-            recordId: this.recordId,
+            idList: this.idList,
             assigneeId: this.assigneeId,
             wrapperId: null,
             workGroup: event.currentTarget.dataset.workgroup,
@@ -69,7 +74,7 @@ export default class HdtActivityReassignmentTool extends LightningElement {
 
         if(dataset.wrapperid) {
             this.handleReassignResult(await reassignActivity({
-                recordId: this.recordId,
+                idList: this.idList,
                 assigneeId: dataset.id,
                 wrapperId: dataset.wrapperid,
                 workGroup: dataset.workgroup,
@@ -80,7 +85,7 @@ export default class HdtActivityReassignmentTool extends LightningElement {
                 this.toggleWorkGroupSearch(dataset.id);
             } else {
                 this.handleReassignResult(await reassignActivity({
-                    recordId: this.recordId,
+                    idList: this.idList,
                     assigneeId: dataset.id,
                     wrapperId: null,
                     workGroup: dataset.workgroup,
@@ -96,7 +101,7 @@ export default class HdtActivityReassignmentTool extends LightningElement {
             if(await isDynamicWorkGroup({loginChannel: currentUser.LoginChannel__c})) {
                 this.toggleWorkGroupSearch(currentUser.Id);
             } else {
-                this.handleReassignResult(await assignToMe({recordId: this.recordId}));
+                this.handleReassignResult(await assignToMe({idList: this.idList}));
             }
         } catch (error) {
             console.error(error);
@@ -111,9 +116,13 @@ export default class HdtActivityReassignmentTool extends LightningElement {
                 this.showToast("error", "Errore", errorMessage);
             }
         } else {
-            this.refreshPage();
-            this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
-            this.closeModal();
+            if(this.recordId) {
+                this.refreshPage();
+                this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
+                this.closeModal();
+            } else {
+                window.history.back();
+            }
         }
     }
 
