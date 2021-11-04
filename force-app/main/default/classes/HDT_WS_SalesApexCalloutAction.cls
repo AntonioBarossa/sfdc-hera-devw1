@@ -5,6 +5,10 @@
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+
+    @Testvisible
+    private static HDT_WS_SalesApexCalloutActionMock mock;
+
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
@@ -107,11 +111,18 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             try{
 
                 map<String,String> fieldValueResponse = new map<String,String>();
-                wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+                wrts_prcgvr.MRR_1_0.MultiResponse responseService;
+                if (Test.isRunningTest()){
+                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)mock.respond(action);
+                     responseService = responseServiceTemp;
+                }else{
+                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+                     responseService = responseServiceTemp;
+                } 
 
                 System.debug('********MRRequest:' + responseService);
-                System.debug('********description:' + responseService.responses[0].description);
-                System.debug('********objects:' + responseService.responses[0].objects);            
+                //System.debug('********description:' + responseService.responses[0].description);
+                //System.debug('********objects:' + responseService.responses[0].objects);            
                 //for()
              //   responseService.responses[0].objects[0].objects[0].objectType == 'OrderItem'
              //   responseService.responses[0].objects[0].objects[0].fields[0].name = 'TEMPLATENAME'

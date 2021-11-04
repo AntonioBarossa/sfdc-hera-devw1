@@ -32,11 +32,11 @@ public with sharing class HDT_TRH_IndividualEmailResultTst{
 
 			test.startTest();
            
-			List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
+			HDT_UTL_DataFactoryTst.createIndividual(1, true);
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
             List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 	        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
-            List<Opportunity> opps =HDT_UTL_DataFactoryTst.createOpportunity(1, true);
+            HDT_UTL_DataFactoryTst.createOpportunity(1, true);
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
@@ -70,7 +70,7 @@ public with sharing class HDT_TRH_IndividualEmailResultTst{
             List<et4ae5__IndividualEmailResult__c> tIndEmailResult = [SELECT Id, Name FROM et4ae5__IndividualEmailResult__c WHERE Name = 'testUpdate'];
 
 			System.assertEquals(true, tIndEmailResult[0].Id!=null, 'Individual Email Result not created');
-			System.assertNotEquals(false, tIndEmailResult[0].Id!=null);
+			System.assertNotEquals(false, tIndEmailResult[0].Id!=null, 'Individual Email Result not created');
 		}
 	}
 }

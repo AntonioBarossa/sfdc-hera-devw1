@@ -19,10 +19,6 @@ public with sharing class HDT_SRV_MassiveLoaderRequestTst {
         internalUser.UserPermissionsMarketingUser=true;
  
         insert internalUser;
- 
-        System.runAs(internalUser) {
-            //seu testSetup       
-        }
     }
 
     @isTest
@@ -44,7 +40,7 @@ public with sharing class HDT_SRV_MassiveLoaderRequestTst {
             Test.startTest();    
             List<MassiveLoaderRequest__c> lstMassiveLoaderReq = [SELECT Id FROM MassiveLoaderRequest__c LIMIT 1]; 
 
-            List<MassiveLoaderRequest__c> newLstMassive = new HDT_SRV_MassiveLoaderRequest().updateRequestRecord(lstMassiveLoaderReq);
+            new HDT_SRV_MassiveLoaderRequest().updateRequestRecord(lstMassiveLoaderReq);
             System.assertEquals(true, lstMassiveLoaderReq != null, 'Lead not updated');
 			System.assertNotEquals(true, lstMassiveLoaderReq == null, 'Lead not updated');
             Test.stopTest();

@@ -18,7 +18,7 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
         minimumAccessUser.Email = 'sales@force.com';
         insert minimumAccessUser;
 
-        List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1, true);
+        HDT_UTL_DataFactoryTst.createLead(1, true);
         
         HDT_UTL_DataFactoryTst.createOpportunity(2, true);
 
@@ -137,7 +137,7 @@ public with sharing class HDT_UTL_DatabaseServiceTst {
         System.runAs(u) {
 
             try {
-                Boolean deleteTest = HDT_UTL_DatabaseService.deleteSObject(ld.Id);
+                HDT_UTL_DatabaseService.deleteSObject(ld.Id);
             }
             catch (Exception e) {
                 System.debug('Exception: '+ e);

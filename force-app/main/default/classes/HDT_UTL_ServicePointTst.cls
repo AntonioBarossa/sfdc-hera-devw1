@@ -21,7 +21,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
         System.runAs(internalUser) {
 
-            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].MeterStatus__c = 'Bozza';
             insert spList;
@@ -242,7 +242,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             response.data.posizioni = positions;
 
-            List<ServicePoint__c> spListTest1 = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
+            HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
 
             //Testing other values
             response = new HDT_WS_ArrichmentDataEntityResponse();
@@ -260,7 +260,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             response.data.posizioni = positions;
 
-            List<ServicePoint__c> spListTest2 = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
+            HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
 
             //Testing other values
             response = new HDT_WS_ArrichmentDataEntityResponse();
@@ -273,7 +273,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             response.data.posizioni = positions;
 
-            List<ServicePoint__c> spListTest3 = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
+            HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
 
             //Testing other values
             response = new HDT_WS_ArrichmentDataEntityResponse();
@@ -285,7 +285,7 @@ public with sharing class HDT_UTL_ServicePointTst {
 
             response.data.posizioni = positions;
 
-            List<ServicePoint__c> spListTest4 = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
+            HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);
 
             //Testing CALIBRO1 values
             for (Integer i=2; i<19; i++) {
@@ -306,7 +306,7 @@ public with sharing class HDT_UTL_ServicePointTst {
                     positions.add(position);
                     response.data.posizioni = positions;
                 }    
-                List<ServicePoint__c> spListTestCalibro = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);            
+                HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(spList[0], response);            
             }
 
             Test.stopTest();

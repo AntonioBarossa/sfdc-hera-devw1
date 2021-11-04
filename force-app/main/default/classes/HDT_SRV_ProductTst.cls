@@ -23,7 +23,7 @@ public with sharing class HDT_SRV_ProductTst {
  
         System.runAs(internalUser) {
  
-            List<Product2> prodList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+            HDT_UTL_DataFactoryTst.createProduct2(1, true);
         }
     }
 	
