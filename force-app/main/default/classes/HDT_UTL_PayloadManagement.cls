@@ -61,9 +61,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
             Integer i = 0;
             for (SObject singleVas : itemVasList) {
-                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams));
-                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'PriceNetDiscounted__c', i, inputs, formParams));
-                quantity += Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
+                Integer singleQuantity = Integer.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'Quantity', i, inputs, formParams));
+                amountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'UnitPrice', i, inputs, formParams)) * singleQuantity;
+                fixedAmountNoIva += Double.valueOf(HDT_UTL_DocumentalManagement.getValue('ItemVAS', 'PriceNetDiscounted__c', i, inputs, formParams)) * singleQuantity;
+                quantity += singleQuantity;
                 i++;
             }
             
