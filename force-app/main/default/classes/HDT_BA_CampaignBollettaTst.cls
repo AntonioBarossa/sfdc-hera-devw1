@@ -59,7 +59,7 @@ public class HDT_BA_CampaignBollettaTst {
     }
     
     @isTest
-    static void test1(){
+    static void test(){
              
         String campaignId = [SELECT id from Campaign where Name='Test Campaign' limit 1].id;     
         List<CampaignMember> listaCMpreBatch = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference'];
@@ -69,10 +69,10 @@ public class HDT_BA_CampaignBollettaTst {
         
         Test.startTest();
         HDT_BA_CampaignBolletta cb = new HDT_BA_CampaignBolletta(new List<String>{campaignId}); //Updated method signature
-        Id batchId = Database.executeBatch(cb,200);
+        Database.executeBatch(cb,200);
         Test.stopTest();
         
-        List<CampaignMember> listaCM = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference' and isWsBollettaInvoked__c = true];              
+        List<CampaignMember> listaCm = [SELECT id,isWsBollettaInvoked__c from CampaignMember where ContractReference__c = 'testContractReference' and isWsBollettaInvoked__c = true];              
         
         System.assertEquals(50, listaCM.size(), 'CampaignMembers field isWsBollettaInvoked__c were not set to true by the batch');
         System.assertNotEquals(listaCMpreBatch[0].isWsBollettaInvoked__c, listaCM[0].isWsBollettaInvoked__c ,'CampaignMember field isWsBollettaInvoked__c was not updated by the batch');

@@ -47,10 +47,10 @@ public class HDT_BA_AttributesContactTst {
             }
             insert contacts;
             
-            List<Contact> contacts2 = HDT_UTL_DataFactoryTst.createContact(50,false,accId);
+            List<Contact> contactsDuplicate = HDT_UTL_DataFactoryTst.createContact(50,false,accId);
             
             i=0;
-            for(Contact c : contacts2){
+            for(Contact c : contactsDuplicate){
                 c.FirstName='test2'+i;
                 c.LastName='tester2'+i;
                 c.Email='email@'+i+'.it';
@@ -58,7 +58,7 @@ public class HDT_BA_AttributesContactTst {
                 c.IndividualId=inds[0].Id;
                 i++;
             }
-            insert contacts2;
+            insert contactsDuplicate;
             
             
             
@@ -66,7 +66,7 @@ public class HDT_BA_AttributesContactTst {
             
             i=0;
             for(BillingProfile__c b : billings){
-                b.Contact__c=contacts2[i].id;
+                b.Contact__c=contactsDuplicate[i].id;
                 b.BillSendingMethod__c='Cartaceo';
                 b.PaymentMethod__c='RID';
                 b.Status__c='Attivo';
@@ -79,7 +79,7 @@ public class HDT_BA_AttributesContactTst {
             
             i=0;
             for(Order o : orders){
-                o.Contact__c=contacts2[i].id;
+                o.Contact__c=contactsDuplicate[i].id;
             }
             insert orders;
             
@@ -88,13 +88,13 @@ public class HDT_BA_AttributesContactTst {
             
             i=0;
             for(Contract contr : contracts){
-                contr.Contact__c=contacts2[i].id;
+                contr.Contact__c=contactsDuplicate[i].id;
                 contr.SAPContractCode__c='30119134'+i;
                 i++;
             }
             insert contracts;
             
-            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(50,true,accId,contacts2[0].id,null,contracts[0].id,orders[0].id);
+            HDT_UTL_DataFactoryTst.createCase(50,true,accId,contactsDuplicate[0].id,null,contracts[0].id,orders[0].id);
             
                 
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('CampagenDmDmpData','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser'); 
@@ -102,7 +102,7 @@ public class HDT_BA_AttributesContactTst {
     }
     
     @isTest
-    static void test1(){
+    static void testMail(){
         
         Integer varFileNumber = 0;
         String paramRunId = 'someid';
@@ -117,7 +117,7 @@ public class HDT_BA_AttributesContactTst {
 		HDT_BA_AttributesContact ac = new HDT_BA_AttributesContact(varFileNumber,paramRunId,paramStatus,paramErrorMessage,paramListIdContentVersion,paramSetEmailProcessed);
         ac.setEmailContactProcessed = new Set<String>();
         ac.setEmailContactProcessed.add('email@0.it');
-        Id batchId = Database.executeBatch(ac,200);
+        Database.executeBatch(ac,200);
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
@@ -125,7 +125,7 @@ public class HDT_BA_AttributesContactTst {
     }
     
     @isTest
-    static void test2(){
+    static void testNull(){
         
         Integer varFileNumber = 0;
         String paramRunId = 'someid';
@@ -137,7 +137,7 @@ public class HDT_BA_AttributesContactTst {
         
         Test.startTest();
 		HDT_BA_AttributesContact ac = new HDT_BA_AttributesContact(varFileNumber,paramRunId,paramStatus,paramErrorMessage,paramListIdContentVersion,paramSetEmailProcessed);
-        Id batchId = Database.executeBatch(ac,200);
+        Database.executeBatch(ac,200);
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
@@ -145,7 +145,7 @@ public class HDT_BA_AttributesContactTst {
     }
     
     @isTest
-    static void test3(){
+    static void test(){
         
         Integer varFileNumber = 0;
         String paramRunId = 'someid';
@@ -159,7 +159,7 @@ public class HDT_BA_AttributesContactTst {
 		HDT_BA_AttributesContact ac = new HDT_BA_AttributesContact(varFileNumber,paramRunId,paramStatus,paramErrorMessage,paramListIdContentVersion,paramSetEmailProcessed);
         ac.setEmailContactProcessed = new Set<String>();
         ac.setEmailContactProcessed.add('email@0.it');
-        Id batchId = Database.executeBatch(ac,200);
+        Database.executeBatch(ac,200);
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
@@ -168,7 +168,7 @@ public class HDT_BA_AttributesContactTst {
     
     
      @isTest
-    static void test4(){
+    static void testParam(){
         
         Integer varFileNumber = 0;
         String paramRunId = 'someid';
@@ -181,7 +181,7 @@ public class HDT_BA_AttributesContactTst {
         
         Test.startTest();
 		HDT_BA_AttributesContact ac = new HDT_BA_AttributesContact(varFileNumber,paramRunId,paramStatus,paramErrorMessage,paramListIdContentVersion,paramSetEmailProcessed);
-        Id batchId = Database.executeBatch(ac,200);
+        Database.executeBatch(ac,200);
         Test.stopTest();
         
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];

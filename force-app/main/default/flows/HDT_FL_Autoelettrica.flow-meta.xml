@@ -68,13 +68,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Case.CustomerRequestDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Data_Richiesta</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Case.DocumentPaymentMethod__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -226,6 +219,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Tipo_Intestatario</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CustomerRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Data_Richiesta_Dt</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -408,8 +408,8 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Data_Richiesta</name>
-                    <dataType>Date</dataType>
+                    <name>Data_Richiesta_Dt</name>
+                    <dataType>DateTime</dataType>
                     <fieldText>Data Richiesta</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>

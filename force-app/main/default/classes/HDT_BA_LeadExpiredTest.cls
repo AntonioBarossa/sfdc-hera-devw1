@@ -12,7 +12,7 @@ public class HDT_BA_LeadExpiredTest {
     static void createLead() 
     {
         
-        List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
+        HDT_UTL_DataFactoryTst.createLead(1, true);
 
             
         }
@@ -21,12 +21,10 @@ public class HDT_BA_LeadExpiredTest {
     public static void testConsentLead(){
          Test.startTest();
         HDT_BA_LeadExpired le = new HDT_BA_LeadExpired();
-        Id batchId = Database.executeBatch(le);
+        Database.executeBatch(le);
 
 
           List<Lead> myLeads = [SELECT Id, FirstName,LastName,CompanyOwner__c,Company,Status,Birthdate__c,Gender__c from Lead];
-
-           system.debug(myLeads);
            system.assertEquals('New', myLeads[0].Status,'We have a new Status');
            System.assertNotEquals('Expired', myLeads[0].Status,'We have expired Status');
                 Test.stopTest();

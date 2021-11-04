@@ -19,7 +19,7 @@ public class HDT_SRV_ActivityCustomTst{
             
             HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
-			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 		}
 	}
 

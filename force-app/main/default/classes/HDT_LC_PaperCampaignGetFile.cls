@@ -34,13 +34,10 @@ public with sharing class HDT_LC_PaperCampaignGetFile {
     @AuraEnabled
     public static Boolean createPaperFile(String fileBase64, String paperId, String filename){
         try {
-            List<PaperCommunication__c> paperList = new List<PaperCommunication__c>();
             //create content version
             ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(fileBase64, filename);
-            system.debug('ContentVersion: ' + cv);
             //create content document link
             ContentDocumentLink cdl =  HDT_UTL_DocumentalManagement.createContentLink(cv.Id, paperId);
-            system.debug('ContentDocumentLink ' + cdl);
             if (cdl != null) {
                 return true;
             }

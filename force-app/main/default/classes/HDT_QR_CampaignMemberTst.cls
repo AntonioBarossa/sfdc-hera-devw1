@@ -352,11 +352,10 @@ public class HDT_QR_CampaignMemberTst{
 		List<CampaignMember> getMembByAccAndCamp=campMembQr.getMembersByAccountAndCampaign(new list<String>{tAccs.get(0).id},new list<String>{tCampMember.get(0).Id});
 
 		Test.stopTest();
-		System.assertEquals(0, getMembByAccAndCamp.size(),0);
-		System.assertEquals(1, tAccs.size(),1);
-		System.assertEquals(1, tCampMember.size(),1);
-		//System.assertEquals(1, getMembByAccAndCamp!=null, 'Campaign Member not found');
-		//System.assertNotEquals(false, getMembByAccAndCamp!=null);
+
+		System.assertEquals(true, getMembByAccAndCamp!=null, 'Campaign Member not found');
+		System.assertNotEquals(false, getMembByAccAndCamp!=null,'value of parameter is not matching');
+
 	}
 
 	@isTest
@@ -371,9 +370,10 @@ public class HDT_QR_CampaignMemberTst{
 		List<CampaignMember> getCampMemForPaperProc=campMembQr.getCampaignMembersForPaperProcessing(tPaperProc[0].Id );
 
 		Test.stopTest();
-		System.assertEquals(0, getCampMemForPaperProc.size(),0);
-		//ystem.assertEquals(0, getCampMemForPaperProc.isEmpty(), false);
-	//	System.assertNotEquals(true, getCampMemForPaperProc.isEmpty());
+
+		System.assertEquals(false, getCampMemForPaperProc.isEmpty(), 'Campaign Member not found');
+		System.assertNotEquals(true, getCampMemForPaperProc.isEmpty(),'value of parameter is not matching');
+
 	}
 
 	@isTest
