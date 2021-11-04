@@ -21,6 +21,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     //protected String rightIncapsulatingData= '}}';
 
     private Boolean isFirstSection=true;
+    @TestVisible
     private Map<String,List<HDT_CallScriptValue__mdt>> overrideMap = new Map<String,List<HDT_CallScriptValue__mdt>>();
     private Map<String,String> constantMap = new Map<String,String>();
 
@@ -87,7 +88,15 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
     protected String getBoldFieldValue(String fieldPath, SObject relation){
-        return '<b>'+getFieldValue( fieldPath,  relation)+'</b>';
+
+        String fieldValue = getFieldValue(fieldPath,  relation);
+
+        //overriding empty values with placeholder
+        if (String.isBlank(fieldValue) || fieldValue=='null') {
+            fieldValue = EMPTY_PLACEHOLDER;
+        }
+
+        return '<b>'+fieldValue+'</b>';
     }
 
 
@@ -111,11 +120,14 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             fieldOrRelation = relationshipNames[indexParentField];
 
             if(indexParentField!=relationshipNames.size()-1){
-                relation=relation.getSobject(fieldOrRelation);
-            }else{
-                if(relation==null){
-                    return fieldValue;
+                SObject parent = relation.getSobject(fieldOrRelation);
+                if (parent==null) {
+                    break;
                 }
+                else {
+                    relation = parent;
+                }
+            }else{
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
                                             .get(fieldOrRelation)
                                             .getDescribe()
@@ -166,7 +178,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             }
         }
     }
-
+	@TestVisible
     private String overwriteValue(String fieldValue, String sobjectApiName, String fieldApiName){
 
         //reading overrides from HDT_CallScriptValue__mdt
@@ -180,11 +192,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                     fieldValue = String.format(overrideValue.Value__c, formatParams);
                 }
             }
-        }
-
-        //overriding empty values with placeholder
-        if (String.isBlank(fieldValue) || fieldValue=='null') {
-            fieldValue = EMPTY_PLACEHOLDER;
         }
 
         return fieldValue;
@@ -300,11 +307,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 tagValue='*valore mancante*';
             }
         }
-        //lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Modifica+Privacy&c__recordTypeName=HDT_RT_GestionePrivacy&c__accid={!Id}&c__flowName=HDT_FL_PostSalesMasterDispatch
-        //lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__processType=Variazione+Anagrafica+Cliente&c__recordTypeName=HDT_RT_VariazioneAnagraficaCliente&c__accid={0}&c__flowName=HDT_FL_PostSalesMasterDispatch
+        
         return ''+tagValue+'';
     }
-
+	@TestVisible
     private String getConstantValue(List<String> relationshipNames){
         String constantName = relationshipNames[1];
         String key = constantName.toLowerCase();

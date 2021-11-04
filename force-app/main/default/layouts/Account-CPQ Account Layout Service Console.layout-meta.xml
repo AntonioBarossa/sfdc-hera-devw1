@@ -90,7 +90,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RecordTypeId</field>
+                <field>RecordTypeName__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -418,6 +418,8 @@
         <fields>MeterSN__c</fields>
         <fields>CommoditySector__c</fields>
         <fields>DistributorNameFormula__c</fields>
+        <fields>Resident__c</fields>
+        <fields>FlowComputerSN__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -510,9 +512,6 @@
         <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
         <sortField>CREATED__c</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

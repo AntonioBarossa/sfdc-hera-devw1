@@ -4,19 +4,24 @@
 * @description HDT_TRH_DocumentalActivity
 * @history Sabina Levonja – 04/06/21 – created class
 */
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_TRH_DocumentalActivity extends HDT_TRH_TriggerHandler{
 
     public override void beforeInsert(){
-
+        
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         // Valorizza le lookup OrderId__c e CaseId__c, se vuote, a partire dai campi ParentProcessId__c e ProcessId__c che valorizza il MOGA.
         try{
             List<DocumentalActivity__c> docActivityList = (List<DocumentalActivity__c>) trigger.new;
             Set<String> parentSetCase = new Set<String>();
             Set<String> parentSetOrder = new Set<String>();
-            Set<String> recordSet = new Set<String>();
+            /*
+                @Author: Davide Viola - 20/10/2021
+                Description: PMD -> Commentate variabili non utilizzate.
+            */
+            /*Set<String> recordSet = new Set<String>();
+            Map<String,Id> caseNumberIdMap = new Map<String,Id>();*/
             Map<String,Id> numberIdMap = new Map<String,Id>();
-            Map<String,Id> caseNumberIdMap = new Map<String,Id>();
             for(DocumentalActivity__c single : docActivityList){
                 if(single.ParentProcessId__c != null && single.ParentProcessId__c.indexOf('C-') > -1){
                     parentSetCase.add(single.ParentProcessId__c);
@@ -57,10 +62,11 @@ public inherited sharing class HDT_TRH_DocumentalActivity extends HDT_TRH_Trigge
                 }/*else if(String.isNotBlank(parentRecordId) && parentObjectName.equalsIgnoreCase('Case')){
                     single.CaseId__c = parentRecordId;
                 }*/
-                
             }
-        }catch(Exception ex){
-            System.debug('Error ' + ex.getMessage() + ' at line '+ex.getLineNumber());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Error ' + ex.getMessage() + ' at line '+ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'StackTraceString: ' + ex.getStackTraceString());
+            
         }
     }
 }

@@ -36,7 +36,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
             campaignList[0].Category__c = 'Campagna Outbound';
             //** [START MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             //campaignList[0].Channel__c = 'Door to Door';
-            campaignList[0].Channel__c = 'Bolletta';
+            campaignList[0].Channel__c = 'Bolletta;Door to Door';
             //** [END MOD 2021-08-20] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Correct the wrong channel
             campaignList[0].IsActive = true;
             campaignList[0].StartDate = Date.today();
@@ -131,7 +131,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         System.assertEquals(ctt.Id, cmList[0].ContactId, 'getContactsWithinDistance did not work correctly');
 
-        System.assertNotEquals(ctt.Id, 'getContactsWithinDistance did not work correctly');
+        System.assertNotEquals(ctt.Id, null, 'getContactsWithinDistance did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];
@@ -160,7 +160,7 @@ public with sharing class HDT_LC_GeolocationCommunityTst {
 
         System.assertEquals(ld.Id, cmList[0].LeadId, 'getLeadsWithinDistance did not work correctly');
 
-        System.assertNotEquals(ld.Id, 'getLeadsWithinDistance did not work correctly');
+        System.assertNotEquals(ld.Id, null, 'getLeadsWithinDistance did not work correctly');
 
         //To reach exception
         User u=[SELECT Id FROM User WHERE Email='sales@force.com' LIMIT 1];

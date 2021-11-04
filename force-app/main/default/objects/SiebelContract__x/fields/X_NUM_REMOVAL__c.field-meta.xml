@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Unità di tempo per disdetta</label>
+    <label>Numero unità di tempo per disdetta</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

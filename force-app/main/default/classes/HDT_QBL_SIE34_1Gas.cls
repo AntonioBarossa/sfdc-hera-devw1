@@ -227,16 +227,19 @@ public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
         if (listOrderItem!=null && listOrderItem.size()>0 ) {
             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_GAS.txt','OUT_OP_GAS'));
          }
-         System.enqueueJob(new HDT_QBL_SIE34_1EE(runId,filterDate, fileType,contentVersionIds));
+        if(!Test.isRunningTest()){
+        	System.enqueueJob(new HDT_QBL_SIE34_1EE(runId,filterDate, fileType,contentVersionIds));
+        }
          
        } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          if(!Test.isRunningTest()){
+          	System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          }
        }
       
     }
   
  }
- 

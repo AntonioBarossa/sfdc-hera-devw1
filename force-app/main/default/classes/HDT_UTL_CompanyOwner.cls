@@ -12,9 +12,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
     private static HDT_QR_Lead leadQr = new HDT_QR_Lead();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
 
-
     public static void feedCompanyOwner(List<SObject> objs){
-        List<String> owners=new List<String>();
         String userId= System.UserInfo.getUserId();
         User currentUser= HDT_QR_UserQueriesWithoutSharing.getRoleAndProfile(userId)[0];
         String objectApiName='';

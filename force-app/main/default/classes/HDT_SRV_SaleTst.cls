@@ -24,7 +24,7 @@ public with sharing class HDT_SRV_SaleTst {
         System.runAs(internalUser) {
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-            List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
+            HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
         }
     }
 	
@@ -108,7 +108,7 @@ public with sharing class HDT_SRV_SaleTst {
                 Account__c = acc.Id
             );
 
-            Sale__c testSale = srvSale.createRecord(sale);
+            srvSale.createRecord(sale);
 
             List<Sale__c> sales = [SELECT Id FROM Sale__c WHERE Status__c = 'Attiva'];
  

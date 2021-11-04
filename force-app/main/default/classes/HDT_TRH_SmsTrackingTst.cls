@@ -18,6 +18,7 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+			HDT_UTL_DataFactoryTst.createSmsTracking(1, true, contacts[0].Id);
 
 		}
 	}
@@ -39,26 +40,13 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 
 			Test.startTest();
 
-			List<SMSTracking__c> smsTracks=new List<SMSTracking__c>();
-			SMSTracking__c smsTrack=new SMSTracking__c();
-			smsTrack.FromName__c='testSms';
-			smsTrack.CompanyOwner__c='HERA COMM';
-			smsTrack.ContactID__c=tContact[0].Id;
-			smsTrack.ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0);
-			smsTrack.MessageID__c=12321421;
-			smsTrack.Mobile__c='234234234';
-			smsTrack.MobileMessageTrackingID__c=12343143;
-			smsTrack.ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0);
-
-			smsTracks.add(smsTrack);
-
-			insert smsTracks;
+			SMSTracking__c track = HDT_UTL_DataFactoryTst.createSmsTracking(1, true, tContact[0].Id).get(0);
 
 			Test.stopTest();
 
 			SMSTracking__c testSmsTracking=[SELECT Id, FromName__c
 			                                FROM SMSTracking__c
-			                                WHERE FromName__c='testSms'
+			                                WHERE Id =: track.Id
 			                                LIMIT 1];
 
 			System.assertEquals(true, testSmsTracking.Id!=null, 'SmsTracking not Inserted');
@@ -77,37 +65,19 @@ public with sharing class HDT_TRH_SmsTrackingTst{
 
 		System.runAs(u){
 
-			List<Contact> tContact=[SELECT Id, CompanyOwner__c
-			                        FROM Contact
-			                        WHERE CompanyOwner__c='HERA COMM'
-			                        LIMIT 1];
+			SMSTracking__c smsTrack = [SELECT Id, Name__c FROM SMSTracking__c LIMIT 1];
 
-			Test.startTest();
+			Test.startTest();			
 
-			List<SMSTracking__c> smsTracks=new List<SMSTracking__c>();
-			SMSTracking__c smsTrack=new SMSTracking__c();
-			smsTrack.FromName__c='testSms';
-			smsTrack.CompanyOwner__c='HERA COMM';
-			smsTrack.ContactID__c=tContact[0].Id;
-			smsTrack.ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0);
-			smsTrack.MessageID__c=12321421;
-			smsTrack.Mobile__c='234234234';
-			smsTrack.MobileMessageTrackingID__c=12343143;
-			smsTrack.ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0);
+			smsTrack.Name__c='test';
 
-			smsTracks.add(smsTrack);
-
-			insert smsTracks;
-
-			smsTracks[0].Name__c='test';
-
-			update smsTracks;
+			update smsTrack;
 
 			Test.stopTest();
 
 			SMSTracking__c testSmsTracking=[SELECT Id, Name__c, FromName__c
 			                                FROM SMSTracking__c
-			                                WHERE FromName__c='testSms'
+			                                WHERE Id =: smsTrack.Id
 			                                LIMIT 1];
 
 			System.assertEquals('test', testSmsTracking.Name__c, 'SmsTracking not Updated');

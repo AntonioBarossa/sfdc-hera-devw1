@@ -23,7 +23,7 @@ public with sharing class HDT_SRV_AccountTst {
  
         System.runAs(internalUser) {
  
-            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 
         }
     }

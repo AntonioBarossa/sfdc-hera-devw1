@@ -12,18 +12,15 @@
      
      @TestSetup
      static void myData(){
-         
-          List<Individual> indList = HDT_UTL_DataFactoryTst.createIndividual(1,true);
-          Id indId = indList[0].Id;
-         HDT_UTL_DataFactoryTst.pClickInstance();
-         HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            
+        HDT_UTL_DataFactoryTst.createIndividual(1,true);
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
         User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
-    internalUser.UserPermissionsMarketingUser=true;
-    internalUser.IsActive=true;
-    insert internalUser;
-         
-        
+        internalUser.UserPermissionsMarketingUser=true;
+        internalUser.IsActive=true;
+        insert internalUser;       
      }
      
      

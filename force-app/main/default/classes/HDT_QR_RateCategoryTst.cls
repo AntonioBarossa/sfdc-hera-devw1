@@ -13,7 +13,7 @@ public class HDT_QR_RateCategoryTst{
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
-			List<RateCategory__c> rateCategs=HDT_UTL_DataFactoryTst.createRateCategoty(1, true);
+			HDT_UTL_DataFactoryTst.createRateCategoty(1, true);
 		}
 	}
 

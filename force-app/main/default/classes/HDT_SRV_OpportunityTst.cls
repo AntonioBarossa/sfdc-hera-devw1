@@ -17,7 +17,7 @@ public class HDT_SRV_OpportunityTst{
 		System.runAs(internalUser){
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Bozza');
+			HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Bozza');
 		}
 	}
 
@@ -243,7 +243,7 @@ public class HDT_SRV_OpportunityTst{
 			List<Opportunity> tOpps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
 			List<SBQQ__Quote__c> tQuotes=HDT_UTL_DataFactoryTst.createQuote(1, true, tOrder[0].Id, tOpps[0].Id, tSale[0].Id, 'Quote');
 			List<ServicePoint__c> servPoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-			List<SaleServiceItem__c> saleServItem=HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, tOpps[0].Id, tQuotes[0].Id, servPoints[0].Id);
+			HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, tOpps[0].Id, tQuotes[0].Id, servPoints[0].Id);
 
 			tOpps[0].SBQQ__PrimaryQuote__c=tQuotes[0].Id;
 			update tOpps;

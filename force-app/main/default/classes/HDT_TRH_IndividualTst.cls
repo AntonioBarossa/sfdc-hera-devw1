@@ -18,10 +18,6 @@ public with sharing class HDT_TRH_IndividualTst {
         internalUser.UserPermissionsMarketingUser=true;
  
         insert internalUser;
- 
-        System.runAs(internalUser) {
-            //seu testSetup
-        }
     }
     @isTest
     static void testBeforeInsert() {

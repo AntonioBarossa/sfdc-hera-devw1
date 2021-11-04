@@ -60,15 +60,15 @@ public with sharing class HDT_BA_OldDraftSalesTest {
 
        for (Sale__c s : mySales) {
            system.debug(s);
-           system.assertEquals('Annullata', s.Status__c);
+           system.assertEquals('Annullata', s.Status__c, 'value of parameter is matching');
 
            for(SBQQ__Quote__c quote : s.Quotes__r) {
                system.debug(quote);
-               system.assertEquals('Annullata', quote.SBQQ__Status__c);
+               system.assertEquals('Annullata', quote.SBQQ__Status__c, 'value of parameter is matching');
            }
            for(Opportunity opp : s.Opportunities__r) {
                system.debug(opp);
-               system.assertEquals('Chiusa/Annullata', opp.StageName);
+               system.assertEquals('Chiusa/Annullata', opp.StageName, 'value of parameter is matching');
            }
        }
     }

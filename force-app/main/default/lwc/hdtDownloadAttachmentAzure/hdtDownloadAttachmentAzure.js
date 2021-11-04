@@ -10,8 +10,10 @@ export default class Fdt_Alessio_test extends LightningElement {
     @api recordId;
 
     handleDownload(){
+        console.log('-----log_Start');
         getUrlNameDocumentLink({rId:this.recordId})
         .then(r=>{
+            console.log('-----log_first then');
             this.searchKey = r;
             let url = this.base_url + r;
             console.log(url);
@@ -26,6 +28,7 @@ export default class Fdt_Alessio_test extends LightningElement {
                 .then(reader =>
                     new ReadableStream({
                         async start(controller) {
+                            console.log('-----log_in to async start');
                             while (true) {
                             const { done, value } = await reader.read();
                     
@@ -59,7 +62,7 @@ export default class Fdt_Alessio_test extends LightningElement {
                 })
                 //START Modifica>>> marco.arci@webresults.it 22/09/21
                 .catch((error)=>{
-                    console.log();
+                    console.log('-----log_in to catch');
                     this.showToast('Attenzione!', 'Allegato NON presente', null, 'warning','dismissable');
                 })
                 //END Modifica>>> marco.arci@webresults.it 22/09/21

@@ -62,28 +62,23 @@ public class HDT_BA_ComfortCallTst {
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaigns[0].Name = 'Comfort Campaign';
             insert campaigns;
-            Id campaignId = campaigns[0].id;
             
-            List<Order> orders2 = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
-            orders2[0].qualityCall__c = true;
-            orders2[0].DateComfortCall__c = System.today() - 3;
-            orders2[0].ComfortCallDaysDue__c = 6.2;
-            orders2[0].ParentOrder__c = parentOrderId;
-            orders2[0].Contact__c = anotherContactId;
-            insert orders2;
-            orders2[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-            orders2[0].Phase__c = 'In attesa conferma cliente';
-            update orders2;
-            
-            List<Lead> leads =  HDT_UTL_DataFactoryTst.createLead(1, true);
-            
-            HDT_UTL_DataFactoryTst.createCampaignMember(true, campaignId, leads, contacts);
+            List<Order> ordersDuplicate = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
+            ordersDuplicate[0].qualityCall__c = true;
+            ordersDuplicate[0].DateComfortCall__c = System.today() - 3;
+            ordersDuplicate[0].ComfortCallDaysDue__c = 6.2;
+            ordersDuplicate[0].ParentOrder__c = parentOrderId;
+            ordersDuplicate[0].Contact__c = anotherContactId;
+            insert ordersDuplicate;
+            ordersDuplicate[0].recordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            ordersDuplicate[0].Phase__c = 'In attesa conferma cliente';
+            update ordersDuplicate;
   
         }
     }
     
     @isTest
-    static void test1(){
+    static void test(){
 
         Test.startTest();
         

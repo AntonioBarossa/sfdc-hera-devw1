@@ -60,9 +60,13 @@ global with sharing class HDT_WS_MrrRequest {
             }
 
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
+                HDT_SRV_BillableVasDeactivation.handlerAsyncronousNotify(requestBody.requests[0]);
+                //HDT_SRV_BillableVasDeactivation billableVasHndlr = new HDT_SRV_BillableVasDeactivation(requestBody.requests[0]);
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
-                }
+                }//else if(billableVasHndlr.isPostSalesOrder()){
+                    //mrrResponseItem = billableVasHndlr.manageBillableVasDeactivation(requestBody.requests[0], mrrResponseItem);
+                //}
                 else {
                     //INIZIO SVILUPPI EVERIS
                     mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
@@ -150,6 +154,6 @@ global with sharing class HDT_WS_MrrRequest {
     }
 
 
-    public virtual class CustomMessageException extends Exception{}
+    public virtual class CustomMessageException extends Exception{} //NOPMD
 
 }
