@@ -259,11 +259,6 @@ public class HDT_QR_OrderTst{
 
 		Test.startTest();
 
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
 		List<Order> tOrder=[SELECT Id, Name
 		                    FROM Order 
 		                    WHERE Name='testOrderName0'
@@ -314,12 +309,6 @@ public class HDT_QR_OrderTst{
 	static void testgetRecordsForVasSelection(){
 
 		Test.startTest();
-
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
 
 		List<Order> tOrder=[SELECT Id, Name
 		                    FROM Order 

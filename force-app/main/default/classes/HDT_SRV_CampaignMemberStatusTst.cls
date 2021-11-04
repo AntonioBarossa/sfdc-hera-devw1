@@ -19,6 +19,9 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
 
     @isTest
     public static void testCheckCreateAccess() {
+        
+        Exception ex;
+        String message;
 
         Test.startTest();
 
@@ -28,17 +31,30 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                     LIMIT 1];
 
         System.runAs(tUser){
+            
+            try{
 
             HDT_SRV_CampaignMemberStatus.checkCreateAccess('Label');
-
+                
+            }catch(Exception e){
+                ex = e;
+                message = e.getMessage();
+            }
+            
         }
 
         Test.stopTest();
+        
+        System.assertEquals(null, ex, 'CheckCreateAccess did not work correctly');
+        System.assertNotEquals('Non hai permessi per accedere ai campi ', message, 'CheckCreateAccess did not work correctly');
 
     }
 
     @isTest
     public static void testCheckAccessInit() {
+        
+        Exception ex;
+        String message;
 
         Test.startTest();
 
@@ -48,12 +64,21 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                     LIMIT 1];
 
         System.runAs(tUser){
+            
+            try{
 
             HDT_SRV_CampaignMemberStatus.checkAccessInit('Label', 'create');
-
+                
+            }catch(Exception e){
+                ex = e;
+                message = e.getMessage();
+            }
         }
         
         Test.stopTest();
+        
+        System.assertEquals(null, ex, 'CheckCreateAccess did not work correctly');
+        System.assertNotEquals('Non hai permessi per accedere ai campi ', message, 'CheckCreateAccess did not work correctly');
     }
 
     @isTest

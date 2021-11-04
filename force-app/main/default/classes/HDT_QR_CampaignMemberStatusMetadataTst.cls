@@ -21,7 +21,7 @@ public class HDT_QR_CampaignMemberStatusMetadataTst{
 
 		System.assertEquals('Nuovo', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 
-		System.assertNotEquals('', campMembStat.MasterLabel, 'getRecords did not work correctly');
+		System.assertNotEquals('', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 
 		Test.stopTest();
 	}

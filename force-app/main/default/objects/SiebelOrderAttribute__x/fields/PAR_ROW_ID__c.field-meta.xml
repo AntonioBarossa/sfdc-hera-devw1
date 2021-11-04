@@ -10,7 +10,7 @@
     <label>Ordine</label>
     <length>15</length>
     <referenceTo>SiebelOrder__x</referenceTo>
-    <relationshipLabel>Attributi Ordine</relationshipLabel>
+    <relationshipLabel>Attributi</relationshipLabel>
     <relationshipName>SiebelOrderAttribute</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

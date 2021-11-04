@@ -21,7 +21,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
         List<Order> ordersToUpdate = new List<Order>();
-        List<Order> childOrdersToUpdate = new List<Order>();
         
         Order orderToUpdate = new Order(
             Id = orderParent.Id
@@ -128,7 +127,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
-    public static void save2(Order orderParent,boolean isPlicoSend){
+    public static void savE2(Order orderParent,boolean isPlicoSend){ 
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();

@@ -8,6 +8,7 @@ public with sharing class HDT_LC_DocumentSignatureManager {
     @AuraEnabled
     public static void sendDocumentFile(String recordId,String context,String formParams){
         HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, context,formParams);
+        HDT_SRV_DocumentalManagementFacade.checkEnvelopeForDiscard(recordId, formParams);
     }
 
     @AuraEnabled

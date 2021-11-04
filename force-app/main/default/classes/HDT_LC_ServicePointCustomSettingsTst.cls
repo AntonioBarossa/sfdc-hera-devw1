@@ -15,7 +15,7 @@ public with sharing class HDT_LC_ServicePointCustomSettingsTst{
 
 		System.runAs(internalUser){
 
-			List<CS_SelezioneFornitura__c> csSelezioneForn=HDT_UTL_DataFactoryTst.createSelezioneFornitura(1, true);
+			HDT_UTL_DataFactoryTst.createSelezioneFornitura(1, true);
 		}
 	}
 
@@ -31,17 +31,12 @@ public with sharing class HDT_LC_ServicePointCustomSettingsTst{
 
 			test.startTest();
 
-			CS_SelezioneFornitura__c tSelezione=[SELECT Id, Name
-			                                     FROM CS_SelezioneFornitura__c
-			                                     WHERE Name='selezioneTestName'
-			                                     LIMIT 1];
-
 			CS_SelezioneFornitura__c tCsSelFornitura=HDT_LC_ServicePointCustomSettings.getCustomSettings();
 
 			test.stopTest();
 
 			System.assertEquals('selezioneTestName', tCsSelFornitura.Name, 'CS_SelezioneFornitura__c not returned');
-			System.assertNotEquals('', tCsSelFornitura.Name);
+			System.assertNotEquals('', tCsSelFornitura.Name, 'getCustomSettings did not work correctly');
 		}
 	}
 }

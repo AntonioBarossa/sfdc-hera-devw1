@@ -10,14 +10,14 @@ private class HDT_SubscriptionTst {
     @testSetup 
     static void setup() {
         List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie');
-        List<Contract> contract= HDT_UTL_DataFactoryTst.createContract(1, true, accountList[0].Id);
-        List<ServicePoint__c> servPoints = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        HDT_UTL_DataFactoryTst.createContract(1, true, accountList[0].Id);
+        HDT_UTL_DataFactoryTst.createServicePoint(1, true);
     } 
 
 
 
     @isTest 
-    static void TestDeleteAccountWithOnesubscriptionortunity() {
+    static void testDeleteAccountWithOnesubscriptionortunity() {
         List<Account> accountList=[SELECT Id FROM Account ];
         List<Contract> contracts=[SELECT Id FROM Contract ];
         List<ServicePoint__c> sps=[SELECT Id FROM ServicePoint__c ];

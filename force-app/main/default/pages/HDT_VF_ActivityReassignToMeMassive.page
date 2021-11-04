@@ -1,0 +1,10 @@
+<apex:page standardController="wrts_prcgvr__Activity__c" recordSetVar="activities" tabStyle="wrts_prcgvr__Activity__c" extensions="HDT_VFC_ActivityReassignmentMassive">
+    <apex:includeLightning />
+    <apex:includeScript value="{! $Resource.HDT_ReassignmentListButtonsRenderer }"/>
+
+    <div id="reassignToMeCmpId"/>
+
+    <script>
+        renderComponent("{!activities}", "c:hdtActivityReassignToMe", "reassignToMeCmpId");
+    </script>
+</apex:page>
