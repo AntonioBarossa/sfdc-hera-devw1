@@ -13,8 +13,8 @@ public with sharing class HDT_QR_BusinessDateTst {
     public static void testGetWorkingBusinessDateConfSuccess(){
         Test.startTest();
         String testBd = HDT_QR_BusinessDate.getWorkingBusinessDateConf();
-        System.assert(testBd == null);
-		System.assertNotEquals('BusinessHours', testBd,'value of parameter is not matching');
+        System.assert(testBd == null, 'getWorkingBusinessDateConfSuccess did not work correctly');
+		System.assertNotEquals('BusinessHours', testBd, 'getWorkingBusinessDateConfSuccess did not work correctly');
         Test.stopTest();    
     }
 

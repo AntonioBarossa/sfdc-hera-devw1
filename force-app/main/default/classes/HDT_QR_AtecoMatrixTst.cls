@@ -26,7 +26,7 @@ public class HDT_QR_AtecoMatrixTst{
 		List<AtecoMatrix__c> testGetByComune=HDT_QR_AtecoMatrix.getAtecoMatrixByComune('RO');
 
 		System.assertEquals('RO', testGetByComune[0].City__c, 'Ateco Matrix returned is wrong');
-		System.assertNotEquals('', testGetByComune[0].City__c,'value of parameter is not matching');
+		System.assertNotEquals('', testGetByComune[0].City__c, 'getAtecoMatrixByComune did not work correctly');
 
 		Test.stopTest();
 	}
@@ -39,7 +39,7 @@ public class HDT_QR_AtecoMatrixTst{
 		List<AtecoMatrix__c> testGetByComune=HDT_QR_AtecoMatrix.getAtecoMatrixByCodiceIstat('test1');
 
 		System.assertEquals('test1', testGetByComune[0].IstatCode__c, 'Ateco Matrix returned is wrong');
-		System.assertNotEquals('', testGetByComune[0].IstatCode__c,'value of parameter is not matching');
+		System.assertNotEquals('', testGetByComune[0].IstatCode__c, 'getAtecoMatrixByCodiceIstat did not work correctly');
 
 		Test.stopTest();
 	}

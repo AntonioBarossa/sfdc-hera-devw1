@@ -172,7 +172,8 @@ public with sharing class HDT_BA_AttributesTest {
     public static void testConsentLead(){
         Test.StartTest();
         HDT_BA_AttributesLead shn = new HDT_BA_AttributesLead('123458'); 
-        Id batchprocessid = Database.executeBatch(shn);
+        Id batchprocessid;
+        batchprocessid = Database.executeBatch(shn);
         Test.StopTest();
         
         List<ContentVersion> listContentVersion = [SELECT id FROM ContentVersion];

@@ -25,7 +25,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     @AuraEnabled
     public static boolean riassegnaComCod(string recordId,String causale){
         try{
-            HDT_QR_Case caseQr = new HDT_QR_Case();
+            // HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
           //  Case c = caseQr.getRecordById(s.case__c);
             Case c = new Case();
@@ -127,16 +127,19 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         wrts_prcgvr__Activity__c act = HDT_QR_ActivityCustom.getRecordByIdValidation(recordid);
         act.validation__c = validazione;
         boolean res = false;
+        Order ord = new Order();
+        ord.id = act.order__c;
         if(validazione == 'Si'){
             act.wrts_prcgvr__status__c = 'Completed';
             res = true;
-            Order ord = new Order();
-            ord.id = act.order__c;
             ord.DocumentPackage__c = 'Validato';
             //ord.phase__c = 'Documentazione Gestita';
             //ord.status = 'Activated';
-            orderSrv.updateRecord(ord);
         }
+        else{
+            ord.CancellationReason__c = 'Registrazione non conforme';
+        }
+        orderSrv.updateRecord(ord);
         activityCustomSrv.updateRecord(act);
 
         return res;
@@ -163,6 +166,23 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    public static void checkForMandatoryAttachment(Map<Id, wrts_prcgvr__Activity__c> newActsMap){
+        Id rtKoOldClient = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_KoPrecedeteCliente').getRecordTypeId();
+        Set<Id> actsToCheck = new Set<Id>();
+
+        for(wrts_prcgvr__Activity__c act : newActsMap.values()){
+            if(act.recordTypeId == rtKoOldClient && act.Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c)){
+                actsToCheck.add(act.Id);
+            }
+        }
+        List<wrts_prcgvr__Activity__c> actsWithAttachments = [select Id, (select Id from AttachedContentDocuments ) from wrts_prcgvr__Activity__c where id IN :actsToCheck WITH Security_Enforced];
+        for(wrts_prcgvr__Activity__c act : actsWithAttachments){
+            if(!(act.AttachedContentDocuments?.size()>0)){//if AttachedContentDocuments.isEmpty() or null
+                newActsMap.get(act.id).addError('Allegare Documentazione Obbligatoria');
+            }
+        }
+    }
+
 
     @AuraEnabled
     public static String validaActivityDocument(String recordid, String validazione){
@@ -181,7 +201,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             orderSrv.updateRecord(ord);
         }
         else{
-            Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
+            // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
             List<wrts_prcgvr__Activity__c> actCusList =  HDT_QR_ActivityCustom.getRecordByOrderIdAndType(act.order__c,'Documenti non validati');
             if(actCusList != null && !actCusList.isEmpty()){
                 if(actCusList[0].wrts_prcgvr__status__c == 'Completed'){

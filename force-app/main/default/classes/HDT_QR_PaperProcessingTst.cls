@@ -10,8 +10,8 @@ public with sharing class HDT_QR_PaperProcessingTst {
 
     @TestSetup
     static void setup(){
-        PaperProcessing__c pProcessing = new PaperProcessing__c();
-        insert pProcessing;
+        List<Campaign> campTestList = HDT_UTL_DataFactoryTst.createCampaign(1, true);
+        HDT_UTL_DataFactoryTst.createPaperProcessing(1, true, 'testPaperProcessing', campTestList[0].Id);
     }
     
 

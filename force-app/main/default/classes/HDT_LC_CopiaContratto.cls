@@ -110,7 +110,7 @@ public with sharing class HDT_LC_CopiaContratto {
     @AuraEnabled
     public static boolean chiudiAttivit(String recordId){
         try{
-            HDT_QR_Case caseQr = new HDT_QR_Case();
+            // HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
             s.wrts_prcgvr__status__c = 'Completed';
             activitySrv.updateRecord(s);
@@ -129,7 +129,6 @@ public with sharing class HDT_LC_CopiaContratto {
     @AuraEnabled
     public static boolean chiudiAttivitNoCase(String recordId){
         try{
-            HDT_QR_Case caseQr = new HDT_QR_Case();
             wrts_prcgvr__Activity__c s = HDT_QR_ActivityCustom.getRecordByIdS(recordId);
             s.wrts_prcgvr__status__c = 'Completed';
             activitySrv.updateRecord(s);

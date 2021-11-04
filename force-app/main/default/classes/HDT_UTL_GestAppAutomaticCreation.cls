@@ -1,4 +1,4 @@
-global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+public inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
     Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -22,12 +22,12 @@ global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
     };
     HDT_Qr_RecordType rcQr =  new  HDT_Qr_RecordType();
     HDT_SRV_ActivityCustom actSrv = new  HDT_SRV_ActivityCustom();
-    global Object execute(Object args) {
+    public Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         String method = (String) argsMap.get('method');
         SObject obj = (sObject) argsMap.get('sender');
         String idObject = (String)obj.get('Id');
-        HDT_QR_Order orderQr= new HDT_QR_Order();
+        //HDT_QR_Order orderQr= new HDT_QR_Order();
         List<Order> ordList = [Select id,Sale__r.SalesContact__c,servicePoint__c,AccountId,ServicePoint__r.CommoditySector__c,ServicePoint__r.distributor__r.name from order where id =:idObject WITH SECURITY_ENFORCED];
         if(ordList != null && !ordList.isEmpty()){
             Order ord = ordList[0];

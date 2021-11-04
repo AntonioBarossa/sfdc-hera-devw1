@@ -9,9 +9,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
     public override void beforeInsert(){
         //Start>>> modifica marco.arci@webresults.it 11/10/21
-        wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
-        ActivityIntegration.handleStatusChange(new Map<String, Object>{
+        activityIntegration.handleStatusChange(new Map<String, Object>{
             'newActivities' => Trigger.new,
             'oldActivities' => Trigger.old
         });
@@ -27,9 +27,9 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
     public override void beforeUpdate(){
         System.debug('beforeUpdate');
         //Start>>> modifica marco.arci@webresults.it 11/10/21
-        wrts_prcgvr.Interfaces_1_1.IActivityIntegration ActivityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =(wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
         wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
-        ActivityIntegration.handleStatusChange(new Map<String, Object>{
+        activityIntegration.handleStatusChange(new Map<String, Object>{
             'newActivities' => Trigger.new,
             'oldActivities' => Trigger.old
         });
@@ -50,6 +50,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         // HRAWRM-672 22/09/2021 EC
         // HRAWRM-880 LG
         HDT_UTL_ActivityCustom.updateTimeRefAppointment(trigger.old,trigger.new);
+        HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);//>>> costanzo.lomele@webresults.it 14/10/21
     }
 
     public override void afterUpdate(){
@@ -70,6 +71,10 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
 
         //f. defelice Chiusura case Proroga
         HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(trigger.new, trigger.old);
+        HDT_UTL_ActivityCustom.checkForMandatoryAttachment((Map<Id, wrts_prcgvr__Activity__c>) trigger.newMap);
+
+        // costanzo.lomele@webresults.it 19/10/21
+        HDT_UTL_Scarti.handleEditButtonPress(trigger.new, (Map<Id, wrts_prcgvr__Activity__c>) trigger.oldMap);
     }
 
     public override void afterInsert(){

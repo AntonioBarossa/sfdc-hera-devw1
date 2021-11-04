@@ -13,12 +13,12 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         String query = 'SELECT Id,Order__c,Status__c,Createddate FROM VocalOrderPublicConfirm__c WHERE Status__c != \'Chiusa\'';
-        System.debug(query);
+      //  System.debug(query);
         return Database.getQueryLocator(query);
         
     }
     public void execute(Database.BatchableContext bc, List<VocalOrderPublicConfirm__c> scope){
-        System.debug(scope);
+       // System.debug(scope);
         List<String> orderParentList = new List<String>();
         for(VocalOrderPublicConfirm__c vo : scope){
             orderParentList.add(vo.order__c);
@@ -28,6 +28,8 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             ord.id = vo.Order__c;
             ord.SignedDate__c = vo.createddate.date();
             ord.MethodSignedAccepted__c = 'web assistito';
+            //ord.Phase__c  ='Documentazione Validata'; //HRAWRM-906 15/10/2021
+
             //orderToUpdate.add(ord);
             orderToUpdate.put(ord.id,ord);
         }
@@ -37,7 +39,17 @@ public with sharing class HDT_BA_PublicValidation implements Database.Batchable<
             ord.id = child.id;
             ord.SignedDate__c = orderToUpdate.get(child.ParentOrder__c).SignedDate__c;
             ord.MethodSignedAccepted__c = 'web assistito';
-            orderToUpdate.put(ord.id,ord);
+            if (ord.ProcessType__c == 'Subentro Ele' || ord.ProcessType__c == 'Cambio Offerta Gas' || ord.ProcessType__c == 'Cambio Offerta Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Gas') {
+                ord.Phase__c = 'Comunicazione verso Heroku';
+                orderToUpdate.put(ord.id,ord);
+            } else if(ord.ProcessType__c == 'Switch in Ele' || ord.ProcessType__c == 'Switch in Gas') {
+                if (ord.WaiverRightAfterthought__c == 'No' && ord.WizardCompletedDate__c.daysBetween(Date.today()) > 14 ) {
+                    ord.Phase__c = 'In attesa tempi ripensamento';
+                } else {
+                    ord.Phase__c = 'Comunicazione verso Heroku';
+                }
+                orderToUpdate.put(ord.id,ord);
+            }            
         }
     }
     public void finish(Database.BatchableContext bc){

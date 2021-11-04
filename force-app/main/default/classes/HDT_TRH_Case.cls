@@ -1,4 +1,5 @@
-public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
+@SuppressWarnings('PMD.AvoidDebugStatements')
+public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
     public override void beforeInsert(){
 
@@ -14,8 +15,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
         try{
-            for(Case caseNew : (List<Case>) Trigger.new)
-            {
+            for(Case caseNew : (List<Case>) Trigger.new){
                 Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
                 if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido'){
                     caseNew.QuotationType__c = 'Predeterminabile';
@@ -31,8 +31,9 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                     caseNew.TecnicalPhase__c = null;
                 }
             }   
-        }catch(Exception ex){
-            System.debug('Error ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Error ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            
         }
 
         HDT_UTL_CaseProcess.updateServiceRequest(trigger.new, trigger.old);
@@ -69,6 +70,7 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //**FINE SVILUPPO */
 
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+        HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
 
     }
 
@@ -99,7 +101,6 @@ public inherited sharing class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
             if (String.isBlank(c.Station__c)) {
                 c.Station__c = currentUser.Station__c;
-
             }
 
             if (String.isBlank(c.CreatorGroup__c)) {

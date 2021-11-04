@@ -630,6 +630,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>wrts_prcgvr__ActivityTemplate__c</field>
             <value>
                 <elementReference>GetActivityTemplate.Id</elementReference>
@@ -936,7 +942,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <stringValue>Reclamo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

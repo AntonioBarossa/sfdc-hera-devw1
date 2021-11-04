@@ -8,15 +8,20 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
     // protected override void beforeUpdate() {
     // }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     protected override void afterInsert() {
+        Boolean hasAfterInsert = true;
+        System.debug(LoggingLevel.DEBUG, 'hasAfterInsert' + hasAfterInsert);
         // Il campo WhoId non può essere sbiancato in before insert, quindi dobbiamo farlo in after.
         // removeWhoId();  // NOT WORKING
     }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     private void doValidation() {
 
         Set<Id> contactIds = new Set<Id>();
         Set<Id> leadIds = new Set<Id>();
+        HDT_SmsSettings__c smsSettings = HDT_SmsSettings__c.getInstance();
 
         for (Task t : (List<Task>) Trigger.new) {
 
@@ -26,8 +31,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             }
 
             if (t.IsSms__c == True) {
-                // TODO: rendere parametrica la lunghezza.
-                if (t.Description != null && t.Description.length() > 320) {
+                if (t.Description != null && t.Description.length() > smsSettings.MaxLength__c) {
                     t.addError('È necessario inserire un testo inferiore a 320 caratteri.');
                 }
                 
@@ -63,7 +67,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 }
             }
 
-            System.debug('Task after validation: ' + t);
+            System.debug(LoggingLevel.DEBUG, 'Task after validation: ' + t);
         }
 
         List<Contact> contacts = new List<Contact>();
@@ -190,7 +194,8 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         }
 
     }*/
-
+    
+    @testVisible
     private String doxeeTemplateCode(String doxeeTemplate) {
 
         switch on doxeeTemplate {

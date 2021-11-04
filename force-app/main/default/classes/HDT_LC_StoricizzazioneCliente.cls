@@ -78,6 +78,8 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
 
             List<String> marcaturePermesse = getMarcatureFromRole();
+            
+            system.debug(marcaturePermesse);
             // se il ruolo non è presente nella mappa allora non ha alcun permesso di visualizzazione sugli account
             if(marcaturePermesse == null){
                 return wrapperToreturn;
@@ -99,7 +101,9 @@ public with sharing class HDT_LC_StoricizzazioneCliente {
             if (sortBy != null && sortDirection != null ) {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
-            List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) ); 
+            List<SiebelCustomer__x> listSiebelCustomer = HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )); 
+            
+            //List<SiebelCustomer__x> listSiebelCustomer = Database.query( String.escapeSingleQuotes(queryStoricizzati) );
             
             //START>>> Modifica Task HRAWRM-691 marco.arci@webresults.it
             /*

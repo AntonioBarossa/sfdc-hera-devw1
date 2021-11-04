@@ -9,7 +9,6 @@ public class HDT_SRV_InteractionTst{
 	@TestSetup
 	static void setup(){
 
-		List<Interaction__c> interactionTstList=new List<Interaction__c>();
 		Interaction__c interactionTst=new Interaction__c();
 		interactionTst.Comment__c='test';
 		interactionTst.Status__c='Bozza';
@@ -44,7 +43,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest
@@ -74,7 +73,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest
@@ -104,7 +103,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest
@@ -134,7 +133,7 @@ public class HDT_SRV_InteractionTst{
 
 		Test.stopTest();
 
-		System.assertEquals(true, finished, 'Test Ended');
+		System.assertEquals(true, finished, 'Test Not Ended');
 	}
 
 	@isTest

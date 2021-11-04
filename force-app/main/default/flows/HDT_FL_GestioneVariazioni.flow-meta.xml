@@ -1127,7 +1127,7 @@
                 <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2137,6 +2137,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <field>Case__c</field>
             <value>
                 <elementReference>GetCaseAggiornatoMancataLettura.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Name</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

@@ -11,7 +11,6 @@ public class HDT_QR_CampaignMemberStatusMetadataTst{
 
 		Test.startTest();
 
-		List<HDT_CampaignMemberStatus__mdt> campMembStatList=new List<HDT_CampaignMemberStatus__mdt>();
 		HDT_CampaignMemberStatus__mdt campMembStat=[SELECT Id, DeveloperName, MasterLabel, Category__c, Channel__c, HasResponded__c, Default__c
 		                                            FROM HDT_CampaignMemberStatus__mdt
 		                                            WHERE MasterLabel='Nuovo'
@@ -24,7 +23,7 @@ public class HDT_QR_CampaignMemberStatusMetadataTst{
 
 		System.assertEquals('Nuovo', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 
-		System.assertNotEquals('', campMembStat.MasterLabel,'value of parameter is not matching');
+		System.assertNotEquals('', campMembStat.MasterLabel, 'Campaign Member Status not correct');
 
 		Test.stopTest();
 	}

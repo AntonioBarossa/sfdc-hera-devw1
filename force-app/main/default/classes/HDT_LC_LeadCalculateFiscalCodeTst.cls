@@ -12,7 +12,7 @@ public with sharing class HDT_LC_LeadCalculateFiscalCodeTst {
     static void setup(){
 
         HDT_UTL_DataFactoryTst.createLead(1, true);
-        HDT_UTL_DataFactoryTst.createCity(1, true);
+        HDT_UTL_DataFactoryTst.createCity();
 
     }
 

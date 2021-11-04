@@ -11,6 +11,14 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
     /**
      * Gestisce la response dell'arricchimento dati scrivendo i valori su currentCase e restituendo la lista dei campi valorizzati in dataEnrichmentFields.
      */
+
+     /*
+    * @Author: Salvatore A. Sarà 19/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    * Risoluzione "Local variable is declared and-or assigned but not used"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public static Case handleResponse(String serializedResponse, Case currentCase, Set<String> dataEnrichmentFields){
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
@@ -27,7 +35,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompanyCode;
         String salesCompany;
         String method;
-        String value;
+        /*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		//String value;
         Decimal decValue;
 
         positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
@@ -44,7 +56,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 Integer.valueOf(position.valore));
                             }catch(Exception e){
-                                System.debug(e.getMessage());
+                                System.debug(LoggingLevel.DEBUG, e.getMessage());
                             }
                         }else if(transcodeConfig.Precision__c > 0){
                             try{
@@ -52,7 +64,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
                                 decValue.setScale(Integer.valueOf(transcodeConfig.Precision__c)));
                             }catch(Exception e){
-                                System.debug(e.getMessage());
+                                System.debug(LoggingLevel.DEBUG, e.getMessage());
                             }
                         }
                     } else if(transcodeConfig.IsTranscode__c){
@@ -147,7 +159,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('InvoicingCountry__c', nazioneRecapito);
 
         } catch(Exception e) {
-            System.debug('Billing Profile non presente a sistema');
+            System.debug(LoggingLevel.DEBUG, 'Billing Profile non presente a sistema');
         }
 
         //ServicePoint
@@ -157,7 +169,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('Disconnectable__c',ServicePoint.Disconnectable__c);
             transcodeMap.put('DisconnectibilityType__c',ServicePoint.DisconnectibilityType__c);
         } catch(Exception e){
-            System.debug('Errore Ereditare campi SP -> ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'Errore Ereditare campi SP -> ' + e.getMessage());
         }
 
 

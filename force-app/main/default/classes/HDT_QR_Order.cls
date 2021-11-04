@@ -110,6 +110,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.CompanyOwner__c,
             Sale__r.SalesContact__c,
+            Sale__r.Ecid__c,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -185,8 +186,10 @@ public inherited sharing class HDT_QR_Order {
 			ConnectionType__c,
 			ProcessCode__c,
             ContractReference__r.ServicePoint__c,
+            ContractReference__r.ServicePoint__r.ServicePointCode__c,
             OrderReference__c,
             OrderReference__r.SBQQ__Quote__c,
+            OrderReference__r.ServicePoint__r.ServicePointCode__c,
             SBQQ__Quote__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
@@ -290,7 +293,42 @@ public inherited sharing class HDT_QR_Order {
             RegionalAdditional__c,                            //@frpanico 16/09/21 
             isTransition__c,
             QuotationType__c,
-            CommodityFormula__c                              //@frpanico 28/09/21
+            CommodityFormula__c,                              //@frpanico 28/09/21
+            Email__c,                                          //@frpanico 28/09/21
+            HerAteco__c,
+            AtecoCode__c,
+            PhoneNumber__c,
+            CommentForDL__c,
+            SubjectCode__c,
+            InvoiceCertifiedEmailAddress__c,
+            ElectronicInvoicingMethod__c,
+            XMLType__c,
+            CIG__c,
+            CUP__c,
+            IbanIsForeign__c,
+            IbanABI__c,
+            IbanCIN__c,
+            IbanCIN_IBAN__c,
+            IbanCAB__c,
+            IbanCodeNumber__c,
+            BankAccountSignatoryFiscalCode__c,
+            BankAccountSignatoryFirstName__c,
+            BankAccountSignatoryLastName__c,
+            BillSendMode__c,
+            PaymentMode__c,
+            InvoiceEmailAddress__c,
+            BillingCity__c,
+            BillingCountry__c,
+            BillingProvince__c,
+            BillingStreetName__c,
+            BillingStreetNumber__c,
+            BillingStreetNumberExtension__c,
+            BillingPostalCode__c,
+            BillingCityCode__c,
+            SignatoryType__c,
+            SendCertifiedEmailConsentDate__c,
+            CreateContractAccount__c,
+            IbanCountry__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -515,7 +553,9 @@ public inherited sharing class HDT_QR_Order {
             OutgoingCreditCheckResult__c,
             OrderReference__c,
             ProcessType__c,
-            SBQQ__Quote__c
+            SBQQ__Quote__c,
+            CommercialProductCode__c,
+            DocumentPackage__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -550,7 +590,9 @@ public inherited sharing class HDT_QR_Order {
             DistributorFormula__c,
             VASType__c,
             DateComfortCall__c,
-            DocumentPackage__c
+            DocumentPackage__c,
+            ProcessType__c,
+            ParentOrder__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -861,8 +903,59 @@ public inherited sharing class HDT_QR_Order {
     * @param orderNumber - String
     * @return List<Order>
     */
+    /**@frpanico 26/10/2021
+     * Added Supply Address Fields
+     * Added Power Available/Committed
+     * Added VoltageLevel
+     */
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c, ServicePoint__c,ServicePoint__r.Distributor__r.Name, CancellationNote__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [SELECT id,
+        phase__c,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        ServicePoint__r.Distributor__r.Name, 
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c
+        FROM Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+    /**@frpanico 26/10/2021
+     * Added Supply Address Fields
+     * Added Power Available/Committed
+     * Added VoltageLevel
+     */
+    public List<Order> getOrdersByOrderNumber(List<String> orderNumbers){
+        return [SELECT id,
+        phase__c,
+        PrecheckResultSII__c,
+        ProcessType__c,
+        BillingProfile__c, 
+        Vat__c, 
+        ServicePoint__c,
+        AccountId,
+        CancellationNote__c,
+        SupplyStreetName__c,
+        SupplyStreetNumber__c,
+        SupplyPostalCode__c,
+        SupplyCityCode__c,
+        SupplyCity__c,
+        SupplyState__c,
+        SupplyCountry__c,
+        PowerCommitted__c,
+        PowerAvailable__c,
+        VoltageLevel__c
+        FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
 
     /**

@@ -96,7 +96,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         
         if (extraParams != null) {
             if (extraParams.get('AllowChangeUse__c') != null && extraParams.get('AllowChangeUse__c') == 'true') {
-                contractReference = extraParams.get('contractReference');
+                if(extraParams.get('contractReference') != null){
+                    contractReference = extraParams.get('contractReference');
+                }
                 amendmentAllowed = false;
                 allowChangeUse = true;
             }
@@ -178,7 +180,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = existingSaleServiceItems[0].Opportunity__c,
                 Quote__c = existingSaleServiceItems[0].Quote__c,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name=servicePoint.ServicePointCode__c
             );
         } else {
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
@@ -209,7 +212,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SupplyCity__c = servicePoint.SupplySAPCityCode__c,
                 AmendmentAllowed__c = amendmentAllowed && !isTransition,
                 isTransition__c = isTransition,
-                ContractReference__c = contractReference,
+                //ContractReference__c = contractReference,
                 AllowChangeUse__c = allowChangeUse,
                 UseCategory__c = servicePoint.UseCategory__c,
                 ConsumptionRangeEE__c = consumptionRangeEle,
@@ -227,7 +230,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
             );
-
+            if(contractReference != null){
+                newQuote.ContractReference__c = contractReference;
+            }
             /** Andrei Necsulescu - 27/08/2021
              *  New quote Profile__c logic using custom permission
              */
@@ -254,7 +259,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = newOpportunity.Id,
                 Quote__c = newQuote.Id,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name = servicePoint.ServicePointCode__c
             );
         }
 

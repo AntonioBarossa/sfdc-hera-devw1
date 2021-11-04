@@ -55,12 +55,12 @@ public class HDT_BA_AttributesLeadTst {
             }
             insert orders;
             
-            List<Lead> leads2 = HDT_UTL_DataFactoryTst.createLead(2,false);
-            for(Lead l : leads2){
+            List<Lead> leadsDuplicate = HDT_UTL_DataFactoryTst.createLead(2,false);
+            for(Lead l : leadsDuplicate){
                 l.FirstName = 'test 0';
                 l.IsConverted = false;
             }           
-            insert leads2;
+            insert leadsDuplicate;
             
             List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(2,false);
             leads[1].Email = leads[0].Email;
@@ -101,13 +101,13 @@ public class HDT_BA_AttributesLeadTst {
     }
     
     @isTest
-    static void test1(){
+    static void test(){
         String paramRunId = 'someid';
         
         Test.startTest();
         
         HDT_BA_AttributesLead al = new HDT_BA_AttributesLead(paramRunId);
-        Id batchId = Database.executeBatch(al,200);
+        Database.executeBatch(al,200);
         
         Test.stopTest();
         
@@ -116,6 +116,34 @@ public class HDT_BA_AttributesLeadTst {
         System.assertNotEquals(null, cvs, 'ContentVersions not created');
         
         System.assertEquals(2, cvs.size(), 'AttributesLead did not work correctly');
+            
+    }
+    
+    @isTest
+    static void testContacts(){
+                
+        List<Contact> contacts = [Select id, Email from contact];
+        integer i = 0;
+        for(Contact c : contacts){
+            c.Email = c.Email + i;
+            i++;
+        }
+        update contacts;
+        
+        String paramRunId = 'someid';
+        
+        Test.startTest();
+        
+        HDT_BA_AttributesLead al = new HDT_BA_AttributesLead(paramRunId);
+        Database.executeBatch(al,200);
+        
+        Test.stopTest();
+        
+        List<ContentVersion> cvs = [Select id From ContentVersion];
+        
+        System.assertNotEquals(0, cvs.size(), 'ContentVersions not created');
+        
+        System.assertEquals(null, al.errormessage, 'AttributesLead did not work correctly');
             
     }
 }

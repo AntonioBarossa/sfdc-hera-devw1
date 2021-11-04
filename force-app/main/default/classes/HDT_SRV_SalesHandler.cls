@@ -16,6 +16,11 @@ public with sharing class HDT_SRV_SalesHandler {
     * @return the response item containing the result of the executed operations
     */
 
+    /**@frpanico 25/10/2021
+     * Added class instance
+     */
+    private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+
     public  HDT_WRP_MrrResponse.HDT_WRP_Response manageSalesProcessCategory(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
         
         HDT_WRP_MrrResponse.HDT_WRP_Object responseObject = new HDT_WRP_MrrResponse.HDT_WRP_Object();
@@ -98,6 +103,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                  }
                             }
                             when 'Ammissibilità OK' {
+
+                                /**@frpanico 26/10/2021
+                                 * Cambio Voltura - RN008 "Voltura con Switch"
+                                 */
+                                if(ordRetrieved.ProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+                                {
+                                    voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
+                                }
+
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -109,12 +123,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                 } else {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
+                                //String workExecutionTime =mapRequestFields.get('TEMP_ES_PREV');
+                                if(String.isNotBlank(mapRequestFields.get('TEMP_ES_PREV')) && mapRequestFields.get('TEMP_ES_PREV').isNumeric()){
+                                    ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
+                                }
 
                                 if (String.isNotBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
                                     ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
                                     Boolean isDispatcherInMtd= HDT_UTL_QuoteManagement.checkLocalDispatcher(ord.ServicePoint__r.Distributor__r.Name);
                                     Integer validityDateDelay=isDispatcherInMtd ? 90 : 30; //ExtraRete? 30 : InRete? 90 : AAA? 180 : null; Manca caso AAA
-                                    ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
                                     ord.QuotationType__c='Predeterminabile';
                                     switch on mapRequestFields.get('TIPO_INTERVENTO') {
                                         when 'Attivazione', 'Lavoro Semplice' {
@@ -127,7 +144,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         when 'Lavoro Semplice' {
                                             ord.QuotationType__c='Rapido';
                                         }
-                                        when 'A Preventivo'{
+                                        when 'A Preventivo', 'Lavoro Complesso'{
                                             ord.QuotationType__c='Analitico';
                                         }
                                     }
@@ -164,7 +181,9 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
                                 system.debug('previousPhase '+previousPhase);
                                 String finalPhase = ord.phase__c;
-                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)) finalPhase = 'Errore comunicazione SAP';
+                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)){
+                                     finalPhase = 'Errore comunicazione SAP';
+                                }
                             	ord.TrackingDiscardPhase__c = finalPhase;
                                 ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
                                 system.debug('phase__c '+ord.phase__c);
@@ -451,17 +470,25 @@ public with sharing class HDT_SRV_SalesHandler {
             }
             when 'WSLead_Callback'{
                 try {
-                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                    List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
+                    requiredFields(listFieldsReq, request);
                     RestContext.response.statusCode = 200; 
+                    HDT_UTL_LeadProcess.formCallback(request, mrrResponseItem, responseObject);
+                   
+                  
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
                 }
+                
             }
             when 'WSLead_Winback'{
                 try {
-                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                    List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
+                    requiredFields(listFieldsReq, request);
                     RestContext.response.statusCode = 200;
+                    HDT_UTL_LeadProcess.formWinback(request, mrrResponseItem, responseObject);
+                  
 
                 } 
                 catch (Exception e) {
@@ -470,8 +497,11 @@ public with sharing class HDT_SRV_SalesHandler {
             }
             when 'WSLead_CariBoll'{
                 try {
-                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                    List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
+                    requiredFields(listFieldsReq, request);
                     RestContext.response.statusCode = 200;
+                    HDT_UTL_LeadProcess.formCaricBoll(request, mrrResponseItem, responseObject);
+                    
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
@@ -480,8 +510,11 @@ public with sharing class HDT_SRV_SalesHandler {
             }
             when 'WSLead_HVAC'{
                 try {
+                    List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
+                    requiredFields(listFieldsReq, request);
+                    RestContext.response.statusCode = 200; 
                     HDT_UTL_LeadProcess.formHvac(request, mrrResponseItem, responseObject);
-                    RestContext.response.statusCode = 200;  
+                     
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
@@ -490,8 +523,11 @@ public with sharing class HDT_SRV_SalesHandler {
             }
             when 'WSLead_SOL'{
                 try {
-                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                    List<String> listFieldsReq =new List<String>{'NOMEMACROACTIVITYEASYCIM'};
+                    requiredFields(listFieldsReq, request);
                     RestContext.response.statusCode = 200;
+                    HDT_UTL_LeadProcess.formSol(request, mrrResponseItem, responseObject);
+                  
                 } 
                 catch (Exception e) {
                     mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
@@ -501,136 +537,105 @@ public with sharing class HDT_SRV_SalesHandler {
             when 'CMPDMP_PRV'{
                
                 if (request.objects.get(0).fields.get(0) != null) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
-
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''  ){
-
-		                HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
-		                Database.executeBatch(ba,1000);
+                    List<String> listFieldsReq =new List<String>{'runId'};
+                    try {
+                        Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
+                        HDT_BA_ConsentLead ba = new HDT_BA_ConsentLead(localMapRequestFields.get('runId')); 
+                        Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
-                        
                     }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
-                    }
+                    catch (Exception e){
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+                      //  mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+
+                    }  
                 }
             }
 
             when 'CMPDMP_ATTR'{
                 if (request.objects.get(0).fields.get(0) != null ) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
-
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''){   
+                    List<String> listFieldsReq =new List<String>{'runId'};
+                    Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
+                    try {
                         HDT_BA_AttributesLead ba = new HDT_BA_AttributesLead(localMapRequestFields.get('runId')); 
-		                Database.executeBatch(ba,1000);
+                        Database.executeBatch(ba,1000);
                         RestContext.response.statusCode = 200;
                     }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                     catch (Exception e) {
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
+
             when 'SIE34_7'{
                 if (request.objects.get(0).fields.get(0) != null ) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
-
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                    List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
+                    try {
+                        Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
                         System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
+                    } catch (Exception e) {
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
-                    }
+                   
                 }
             }
             when 'SIE34_6'{
                 if (request.objects.get(0).fields.get(0) != null ) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
-
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                    List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
+                    try {
+                        Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
                         System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
-                    }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
-                    }
+                    } 
+                    catch (Exception e) {
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+
+                    }       
                 }
             }
             when 'SIE34_3'{
                 //System.debug('SIE34');
                 if (request.objects.get(0).fields.get(0) != null ) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
-
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                    List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
+                    try {
+                        Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
                         System.enqueueJob(new HDT_QBL_SIE34_3(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
                         RestContext.response.statusCode = 200;
+                    } catch (Exception e) {
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
-                    }
+                   
                 }
             }
             when 'SIE34_2'{
-                //System.debug('SIE34_2');
+               
                 if (request.objects.get(0).fields.get(0) != null ) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
-
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+                    List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
+                    try {
+                        Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
                         System.enqueueJob(new HDT_QBL_SIE34_2SME(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_2'));
                         RestContext.response.statusCode = 200;
-                    }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
+                    } 
+                    catch (Exception e) {
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
                     }
                 }
             }
-            when 'SIE34_1'{
-               // System.debug('SIE34_1');
-                if (request.objects.get(0).fields.get(0) != null ) {
-                    Map<String,String> localMapRequestFields = new Map<String,String>();
 
-                    for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
-                        if(localMapRequestFields.get(field.name) == null){
-                            localMapRequestFields.put(field.name,field.value);
-                        }
-                    }
-                    if(localMapRequestFields.get('runId')!= null && localMapRequestFields.get('runId')!=''&&  localMapRequestFields.get('updatedFrom')!=null){   
+            when 'SIE34_1'{
+              
+                if (request.objects.get(0).fields.get(0) != null ) {
+                    List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
+                    try {
+                        Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
                         System.enqueueJob(new HDT_QBL_SIE34_1Gas(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_1'));
                         RestContext.response.statusCode = 200;
-                    }
-                    else {
-                        mapError('runId cannot be empty',responseField,responseFieldError,responseObject,mrrResponseItem);
-                    }
+                    } 
+                    catch (Exception e) {
+                        mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
+
+                    } 
                 }
             }
             when else {
@@ -650,7 +655,6 @@ public with sharing class HDT_SRV_SalesHandler {
 
             }
         }
-
         return mrrResponseItem;
     }
     
@@ -674,6 +678,8 @@ public with sharing class HDT_SRV_SalesHandler {
         RestContext.response.statusCode = 400;
 
     }
+
+    @TestVisible
     private static void updateServicePoint(ServicePoint__c sp){
         try{
             new HDT_SRV_ServicePoint().updateRecord(sp);
@@ -682,6 +688,20 @@ public with sharing class HDT_SRV_SalesHandler {
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }
-    
+    @TestVisible
+    private static Map<String,String> requiredFields(List<String> listFieldsReq,HDT_WRP_MrrRequest.HDT_WRP_Request request){
+        Map<String,String> localMapRequestFields = new Map<String,String>();
+
+        for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){ 
+                localMapRequestFields.put(field.name,field.value);
+        }
+        for (String tempString : listFieldsReq) {
+            if (localMapRequestFields.get(tempString)==null || String.isBlank(localMapRequestFields.get(tempString))) { 
+                throw new HDT_WS_MrrRequest.CustomMessageException('Missing Required Field '+tempString);
+            }
+        }
+        
+        return localMapRequestFields;
+    }
 
 }

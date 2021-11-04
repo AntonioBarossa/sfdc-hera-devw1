@@ -257,7 +257,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         wrapReturnValidity resp = new wrapReturnValidity();
         resp.wrapCheck = true;
         resp.responseError = '';
-        Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
+        // Boolean hasPermission = FeatureManagement.checkPermission('HDT_CP_SuperUserCPQ');
         Map<String,wrts_prcgvr__Activity__c> orderLineActivity = new Map<String,wrts_prcgvr__Activity__c>();
             List<SBQQ__QuoteLine__c> quoteLinesActive = quoteLineQr.getActiveRecords(sale.Id);
             for(SBQQ__QuoteLine__c line : quoteLinesActive){
@@ -269,6 +269,8 @@ public inherited sharing class HDT_LC_ConfigureProduct {
             if(!listId.isEmpty()){
                 List<wrts_prcgvr__Activity__c> listActivity = HDT_QR_ActivityCustom.getRecordByOrderLine(listId);
                 System.debug('*****DEBUGActivity:' + listActivity);
+                Set<String> quoteToUpdateId = new Set<String>();
+                List<SBQQ__Quote__c> quoteToUpdate = new List<SBQQ__Quote__c>();
                 for(wrts_prcgvr__Activity__c a : listActivity){
                     orderLineActivity.put(a.QuoteLine__c,a);
                 }
@@ -286,6 +288,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                             System.debug('*****DEBUGActivityDENTROELSE:' + line);
                             resp.responseError += (resp.responseError == '' ? line.sbqq__product__r.Name : ',' + line.sbqq__product__r.Name);
                             idToCreateActivity.add(line.id);
+                            quoteToUpdateId.add(line.sbqq__quote__c);
                             resp.wrapCheck = false;
                         }
                      }
@@ -300,8 +303,12 @@ public inherited sharing class HDT_LC_ConfigureProduct {
                     for(String s : idToCreateActivity){
                         listActivityToCreate.add(new wrts_prcgvr__Activity__c(QuoteLine__c=s, RecordTypeId= recTypeId, Type__c= 'Approvazione Offerte',Account__c=sale.Account__r.Id,Sale__c=sale.id,Status__c='Creata'));
                     }
+                    for(String s : quoteToUpdateId){
+                        quoteToUpdate.add(new SBQQ__Quote__C(id=s,SBQQ__Status__c='In Revisione'));
+                    }
                     System.debug('listActivityToCreate : ' + listActivityToCreate);
                     actSrv.createRecord(listActivityToCreate);
+                    quoteSrv.updateRecords(quoteToUpdate);
                 }
             }else{
                 return resp;

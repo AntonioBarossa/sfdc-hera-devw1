@@ -23,7 +23,7 @@ public with sharing class HDT_SRV_ProductTst {
  
         System.runAs(internalUser) {
  
-            List<Product2> prodList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+            HDT_UTL_DataFactoryTst.createProduct2(1, true);
         }
     }
 	
@@ -45,7 +45,7 @@ public with sharing class HDT_SRV_ProductTst {
             Test.stopTest();
         }
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -66,7 +66,7 @@ public with sharing class HDT_SRV_ProductTst {
             Test.stopTest();
         }
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -111,7 +111,7 @@ public with sharing class HDT_SRV_ProductTst {
             Test.stopTest();
         }
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest

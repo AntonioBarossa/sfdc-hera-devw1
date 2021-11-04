@@ -5,6 +5,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     String typeInstallments = 'Piano Rateizzazione';
     String nonRequestedContract = 'Contratto Non Richiesto';
     String phaseQuotations = 'Attesa conferma preventivo cliente';
+    String bozzaCase = 'Bozza';
+    String autoletturaCase = 'Autolettura';
 
     public List<Knowledge__kav> getExpiredArticle(){
 
@@ -75,6 +77,42 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
 
     }
 
+    public List<Case> getAutoletturaBozzaCase(){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,        
+        CreatedDate,
+        DepositPaymentMode__c,
+        SuspensionEndDate__c,
+        EffectiveDate__c,
+        Order__c,
+        QuotationType__c,
+        QuotationValidityDate__c
+        FROM Case
+        WHERE Phase__c = :this.bozzaCase
+        AND Cluster__c = : this.autoletturaCase
+        WITH SECURITY_ENFORCED
+        ];
+    }
 
+    public List<Case> getPostSalesBozzaCase(){
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,
+        CreatedDate,
+        DepositPaymentMode__c,
+        SuspensionEndDate__c,
+        EffectiveDate__c,
+        Order__c,
+        QuotationType__c,
+        QuotationValidityDate__c
+        FROM Case
+        WHERE Phase__c = :this.bozzaCase
+        AND Cluster__c != : this.autoletturaCase
+        WITH SECURITY_ENFORCED
+        ];
+    }
 
 }

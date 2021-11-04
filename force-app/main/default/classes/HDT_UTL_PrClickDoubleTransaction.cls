@@ -5,6 +5,7 @@
  * @last modified on  : 16-09-2021
  * @last modified by  : federico.defelice@webresults.it
 **/
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_prcgvr.Interfaces_1_0.IApexAction {
 
     private static Map<Id, String> idToNewPhase = new Map<Id, String>();
@@ -47,10 +48,10 @@ global inherited sharing class HDT_UTL_PrClickDoubleTransaction implements wrts_
         }
         Map<Id, String> bulkMapForDoubleTransasction = new Map<Id, String>(idToNewPhase);
         idToNewPhase.clear();
-
+        Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
         if(system.isQueueable()){
             asyncBulkUpdateFuture(bulkMapForDoubleTransasction);
-        }else{
+        }else if((!system.isBatch()) || limitQueueablesOk){
             system.enqueueJob(new HDT_QBL_BulkUpdate(bulkMapForDoubleTransasction));
         }
     }

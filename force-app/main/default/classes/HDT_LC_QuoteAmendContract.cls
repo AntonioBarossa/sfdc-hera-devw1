@@ -18,6 +18,8 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
         List<Contract> contract = contractQr.getRecordById(contractId);
         List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByContractFilteredPaymentMethodNotNull(contractId,saleId);
+        // Set<String> famils = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        //quoteLine.addAll([Select id, name, BillingProfile__c, SBQQ__Quote__c from SBQQ__QuoteLine__c where SBQQ__Quote__r.ContractReference__c=:contractId AND SBQQ__Quote__r.Sale__c=:saleId AND SBQQ__ProductFamily__c IN :famils WITH SECURITY_ENFORCED]);
 
         system.debug('HDT_LC_QuoteAmendContract - contract: ' + contract);
         system.debug('HDT_LC_QuoteAmendContract - quoteLine: ' + quoteLine);
@@ -60,7 +62,7 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         }
         for(SBQQ__QuoteLine__c ql : podsAndVas.values()){
             id key = podToFather.get(ql.SBQQ__RequiredBy__c);
-            if(key!= ql.id){
+            if(key!= ql.id && key!=null){
                 podToChilds.get(key).add(ql.id);
             }
         }
@@ -108,7 +110,7 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
                         ServicePoint__c = availableServicePoints[i]
                     ));
                     for(id childId : podToChilds.get(quoteLinesWithoutServicePoint[i].Id)){
-                        if(childId==null) break;
+                        if(childId==null){ break; }
                         quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(
                             Id = childId,
                             ServicePoint__c = availableServicePoints[i]

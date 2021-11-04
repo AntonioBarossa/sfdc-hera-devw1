@@ -16,7 +16,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
          List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
          List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
          List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Attiva');
-         List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, true, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');        
+         HDT_UTL_DataFactoryTst.createQuote(1, true, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');        
     }
 
     @isTest
@@ -34,7 +34,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -52,7 +52,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
     
     @isTest
@@ -70,7 +70,7 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -89,9 +89,9 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
 
         quoteLineGroupClass.createRecords(qlgList);
 
-        List<SBQQ__QuoteLineGroup__c> testCreationOfQLG = [SELECT Id FROM SBQQ__QuoteLineGroup__c LIMIT 1];
+        List<SBQQ__QuoteLineGroup__c> testCreationOfQlg = [SELECT Id FROM SBQQ__QuoteLineGroup__c LIMIT 1];
 
-        System.assertNotEquals(null, testCreationOfQLG[0].Id, 'The ORG has the record, just created -- there is a Id in the ORG');
+        System.assertNotEquals(null, testCreationOfQlg[0].Id, 'The ORG has the record, just created -- there is a Id in the ORG');
 
         Test.stopTest();
     }
@@ -110,8 +110,8 @@ public with sharing class HDT_SRV_QuoteLineGroupTst {
         HDT_SRV_QuoteLineGroup quoteLineGroupClass = new HDT_SRV_QuoteLineGroup();
         quoteLineGroupClass.createRecord(qlg);
 
-        List<SBQQ__QuoteLineGroup__c> testCreationOfQLG = [SELECT Id FROM SBQQ__QuoteLineGroup__c LIMIT 1];
-        System.assertNotEquals(null, testCreationOfQLG[0].Id, 'The ORG has the record, just created -- there is a Id in the ORG');
+        List<SBQQ__QuoteLineGroup__c> testCreationOfQlg = [SELECT Id FROM SBQQ__QuoteLineGroup__c LIMIT 1];
+        System.assertNotEquals(null, testCreationOfQlg[0].Id, 'The ORG has the record, just created -- there is a Id in the ORG');
 
         Test.stopTest();
     }

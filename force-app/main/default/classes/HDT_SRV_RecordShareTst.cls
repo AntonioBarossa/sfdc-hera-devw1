@@ -21,7 +21,7 @@ public with sharing class HDT_SRV_RecordShareTst {
         User standardUser = HDT_UTL_DataFactoryTst.createInternalUser(standardUserProfileId, true);
  
         internalUser.UserPermissionsMarketingUser=true;
-        internalUser.FirstName = 'test Adm User';
+        internalUser.FirstName = 'test Admin User';
         insert internalUser;
 
         System.runAs(internalUser) {
@@ -47,7 +47,7 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -67,7 +67,7 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest
@@ -160,7 +160,7 @@ public with sharing class HDT_SRV_RecordShareTst {
 
         Test.stopTest();
 
-        System.assertEquals(true, finished, 'Test Ended');
+        System.assertEquals(true, finished, 'Test Not Ended');
     }
 
     @isTest

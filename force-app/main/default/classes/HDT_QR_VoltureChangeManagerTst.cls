@@ -33,6 +33,9 @@ public with sharing class HDT_QR_VoltureChangeManagerTst {
         childOrderList[0].ProcessType__c = 'Switch in Ele';
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,priceBookEntryList[0].Id);
+
+        List<wrts_prcgvr__ActivityTemplate__c> activitiesTemplate = new List<wrts_prcgvr__ActivityTemplate__c>();
+        activitiesTemplate = HDT_UTL_DataFactoryTst.createActivityTemplate(1,true);
     }
 
     @IsTest
@@ -104,4 +107,63 @@ public with sharing class HDT_QR_VoltureChangeManagerTst {
         Test.stopTest();
         System.assertEquals(1, accountList.size(),'Account non trovato');
     }
+
+    @IsTest
+    static void getActivityTemplateByNameTst()
+    {
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplate = [SELECT Name FROM wrts_prcgvr__ActivityTemplate__c];
+        Test.startTest();
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = voltureChangeQr.getActivityTemplateByName(activityTemplate[0].Name);
+        Test.stopTest();
+        System.assertEquals(1, activityTemplates.size(),'Activity Template non trovato');
+    }
+
+    @IsTest
+    static void getExciseTranscodeTst()
+    {
+        Test.startTest();
+        List<HDT_ExciseTranscode__mdt> results = voltureChangeQr.getExciseTranscode('Imposta usi domestici');
+        Test.stopTest();
+
+        System.assert(results.size() > 0, 'Record non trovati');
+    }
+
+    @IsTest
+    static void getContactInfosByAccountIdTst()
+    {
+        List<Account> accList = [SELECT Id FROM Account];
+        List<AccountContactRelation> acrList = [SELECT Roles FROM AccountContactRelation WHERE AccountId = :accList[0].Id];
+        acrList[0].Roles = 'Titolare';
+        update acrList;
+
+        Test.startTest();
+        List<AccountContactRelation> acrTestList = voltureChangeQr.getContactInfosByAccountId(accList[0].Id);
+        Test.stopTest();
+
+        System.assertEquals(1, acrTestList.size(),'Record non trovati');
+    }
+
+    @IsTest
+    static void getOrderInfosByIdTst()
+    {
+        List<Order> orderList = [SELECT Id FROM Order];
+
+        Test.startTest();
+        List<Order> orderTestList = voltureChangeQr.getOrderInfosById(orderList[0].Id);
+        Test.stopTest();
+
+        System.assertEquals(1, orderTestList.size(), 'Record non trovati');
+    }
+
+    @IsTest
+    static void getDataEnrichmentTranscodeByObjectNameTst()
+    {
+        Test.startTest();
+        List<HDT_GenericDataEnrichmentTranscode__mdt> results = voltureChangeQr.getDataEnrichmentTranscodeByObjectName(new List<String>{'Order'});
+        Test.stopTest();
+
+        System.assert(results.size() > 0, 'Record non trovati');
+    }
+
+
 }

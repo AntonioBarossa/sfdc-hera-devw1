@@ -15,9 +15,20 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
 
     String childRecordIdentifier='';//Add an Header Identifier to childs sections
 
+    /**
+    * @description Get script configuration for a given record
+    * @author gabriele.rota@webresults.it | 2021-09-13 
+    * @param recordId 
+    * @return List<HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig> 
+    **/
+    @AuraEnabled
+    public static List<HDT_SRV_ScriptManager.HDT_WRP_ScriptConfig> getScriptConfig(String recordId){
+        return HDT_SRV_ScriptManager.getScriptConfig(recordId);
+    }
+
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled(cacheable=true)
-    public static List<HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
+    public static List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput> getScriptSections(String processName, String recordId, String childRecordIdentifier){
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
@@ -43,29 +54,22 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
         }
     }
 
-    public class HDT_WRP_ScriptOutput{
-        @AuraEnabled public string sectionLabel;
-        @AuraEnabled public string sectionText;
-        @AuraEnabled public String type;
-        @AuraEnabled public Decimal nextSection;
-        @AuraEnabled public List<HDT_WRP_ScriptDecision> decisions;
+    private List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
+        List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput> scriptPages= new List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput>();
+        if(processName != null && String.isNotBlank(processName)){
+            List<ScriptConfig__c> processList = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED];
+            if(!processList.isEmpty()){
+                scriptPages= getScriptPagesFromScript(processList[0], recordId, false);
+            }
+        }
+        return scriptPages;
     }
 
-    public class HDT_WRP_ScriptDecision{
-        @AuraEnabled public String label;
-        @AuraEnabled public Integer targetPage;
-    }
-
-    private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
-        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND ScriptType__c='Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
-        return getScriptPagesFromScript(process, recordId);
-    }
-
-    protected List<HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId){
+    protected List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput> getScriptPagesFromScript(ScriptConfig__c process, String recordId, Boolean isDecisional){
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
-        List<HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_WRP_ScriptOutput>();
+        List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput>();
 
         for(ScriptConfig__c section : process.ChildSections__r){
             if(section.isChildLoopEvaluated__C){
@@ -89,55 +93,29 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
                 listSectionWrappers.add(
                     createSectionWrapper(section, record)
                 );
-            }            
+            }
+            else {
+                if (isDecisional) {
+                    listSectionWrappers.add(
+                        createEmptySectionWrapper(section)
+                    );
+                }
+            }
         }
         return listSectionWrappers;
     }
 
-    private HDT_WRP_ScriptOutput createSectionWrapper(ScriptConfig__c section, SObject record){
+    private HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput createSectionWrapper(ScriptConfig__c section, SObject record){
         return createSectionWrapper(section, record, '');
     }
 
-    private HDT_WRP_ScriptOutput createSectionWrapper(ScriptConfig__c section, SObject record, String additionalLabel){
-        HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
-        sectionWrapper.sectionLabel=section.SectionLabel__c+additionalLabel;
-        sectionWrapper.sectionText=formatText(section.textScript__c, record);
-
-        if (section.isSet('ScriptType__c')) {
-            sectionWrapper.type = (String)section.get('ScriptType__c');
-        }
-
-        if (section.isSet('NextSection__c')) {
-            sectionWrapper.nextSection = (Decimal)section.get('NextSection__c');
-        }
-
-        List<HDT_WRP_ScriptDecision> decisions = new List<HDT_WRP_ScriptDecision>();
-        List<Schema.SObjectField> decisionFields = new List<Schema.SObjectField>{
-            ScriptConfig__c.LabelOption1__c,
-            ScriptConfig__c.LabelOption2__c,
-            ScriptConfig__c.LabelOption3__c
-        };
-        for (Schema.SObjectField decisionField:decisionFields) {
-            if (section.isSet(decisionField)) {
-                String decision = (String)section.get(decisionField);
-                if (String.isNotBlank(decision)) {
-                    List<String> decisionSplit = decision.split('::');
-                    HDT_WRP_ScriptDecision dec = new HDT_WRP_ScriptDecision();
-                    dec.label = decisionSplit[0];
-                    dec.targetPage = Integer.valueOf( decisionSplit[1] );
-                    decisions.add(dec);
-                }
-            }
-        }
-        sectionWrapper.decisions = decisions;
-
-        return sectionWrapper;
+    private HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput createSectionWrapper(ScriptConfig__c section, SObject record, String additionalLabel){
+        return new HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput(section, formatText(section.textScript__c, record), additionalLabel);
     }
 
-
-    /* private override String formatText(String textScript, String recordId){
-
-    } */
+    private HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput createEmptySectionWrapper(ScriptConfig__c section){
+        return new HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput(section);
+    }
 
     private List<String> getAllFieldsToQuery(ScriptConfig__c process){
         //getting all fields to be queried from starting object, both for data binding and also for removing sections
@@ -195,9 +173,8 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
             String splitOperator = isOrOperator?'OR':'AND';
             List<String> arrayConditions = conditions.split(splitOperator);
             for(String condition : arrayConditions){
-                Boolean checkCompare = condition.contains('==');
-                String compareOperator = checkCompare? '==' : '!=';
-                String field = condition.split(compareOperator)[0].toLowerCase();
+                HDT_UTL_ScriptWrappers.HDT_WRP_ScriptCondition condWrp = new HDT_UTL_ScriptWrappers.HDT_WRP_ScriptCondition(condition);
+                String field = condWrp.fieldName.toLowerCase();
                 returnSetFieldsToQuery.add(field);
             }
         }
@@ -205,63 +182,44 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
     }
 
 
-
-
-    private boolean checkVisibility(String conditions, SObject record){
+    private Boolean checkVisibility(String conditions, SObject record){
         //this method check if the conditions of a sections are met (both record and condition are defined at run Time)
         if (conditions == null || conditions.trim().equals('')){
             return true;
         }
         
-        Boolean isOrOperator = conditions.contains('OR');
-        Boolean isAndOperator = !isOrOperator;
-        String splitOperator = isOrOperator?'OR':'AND';
-
-        String fieldName, valueToCheck, actualFieldValue;
-        List<String> arrayConditions = conditions.split(splitOperator);
-        Boolean visibility = isAndOperator?true:false;
         try{
-            for(String condition : arrayConditions){
-                Boolean checkCompare = condition.contains('==');
-                String compareOperator = checkCompare? '==' : '!=';
-				
-                List<String> arraySingleCondition = condition.split(compareOperator);
-                fieldName = arraySingleCondition[0].trim();
-                valueToCheck = arraySingleCondition[1].trim();
-                actualFieldValue = getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
-                Boolean conditionVisibility = assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
+            Boolean isOrOperator = conditions.contains('OR');
+            String splitOperator = isOrOperator?'OR':'AND';
 
-                if (isOrOperator) {
-                    visibility = visibility || conditionVisibility;
-                }
-                else {
-                    visibility = visibility && conditionVisibility;
-                }
-
-                if(!visibility && isAndOperator){
-                    break;
-                }
-            }
-
+            List<String> arrayConditions = conditions.split(splitOperator);
+            return evaluateConditions(arrayConditions, isOrOperator, record);
         }catch(Exception ex){
 			return false;
         }
+    }
+
+    private Boolean evaluateConditions(List<String> arrayConditions, Boolean isOrOperator, SObject record){
+        
+        Boolean isAndOperator = !isOrOperator;
+
+        Boolean visibility = isAndOperator?true:false;
+        for (String condition : arrayConditions){
+            HDT_UTL_ScriptWrappers.HDT_WRP_ScriptCondition condWrp = new HDT_UTL_ScriptWrappers.HDT_WRP_ScriptCondition(condition);
+            String actualFieldValue = getFieldValue(condWrp.fieldName, record);
+            Boolean conditionVisibility = condWrp.checkCondition(actualFieldValue);
+
+            if (isOrOperator) {
+                visibility = visibility || conditionVisibility;
+            }
+            else {
+                visibility = visibility && conditionVisibility;
+            }
+
+            if(!visibility && isAndOperator){
+                break;
+            }
+        }
         return visibility;
     }
-
-
-
-    private static Boolean assertDynamicValues(String actualFieldValue, String valueToCheck, Boolean checkEquals){
-        //This method dinamically compares two string, it can be used to check if they match or they differ
-        //checkEquals set true means that you must check if the two strings matches, if it false you check if the strings differ
-        if ('null'.equalsIgnoreCase(valueToCheck)) {//null means "empty string"
-            if (String.isBlank(actualFieldValue) == !checkEquals) {
-                return false;
-            }
-        }else if(valueToCheck.equalsIgnoreCase(String.valueOf(actualFieldValue)) == !checkEquals){
-            return false;
-        }
-        return true;
-    }
-
 }

@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
@@ -8,7 +9,7 @@ import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.han
 import updateActivity from '@salesforce/apex/HDT_LC_AccountSelectorController.updateActivity';
 import reset from '@salesforce/apex/HDT_LC_AccountSelectorController.reset';
 
-export default class HdtAccountSelector extends LightningElement {
+export default class HdtAccountSelector extends NavigationMixin(LightningElement) {
 	@api recordId;
 	isCall;
 	leadId;
@@ -18,6 +19,7 @@ export default class HdtAccountSelector extends LightningElement {
 	contacts;
 	accounts;
 	changesCommitted;
+	navigateOnSelectAccount = true;
 	get resetButtonDisabled() {
 		return !this.contactId && !this.accountId && !this.leadId;
 	}
@@ -77,6 +79,7 @@ export default class HdtAccountSelector extends LightningElement {
 					.then(result => {
 						var resObj = JSON.parse(result);
 						console.log('### ' + result);
+						this.navigateOnSelectAccount = false;
 						this.leads = resObj.leads;
 						this.contacts = resObj.contacts;
 						this.accounts = resObj.accounts;
@@ -104,6 +107,10 @@ export default class HdtAccountSelector extends LightningElement {
 					this.changesCommitted = true;
 					this.refreshPage();
 					this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
+
+					if(this.navigateOnSelectAccount) {
+						this.navigateToRecordPage(this.accountId, 'Account');
+					}
 				})
 				.catch(error => {
 					// WIP
@@ -121,6 +128,10 @@ export default class HdtAccountSelector extends LightningElement {
 						this.changesCommitted = true;
 						this.refreshPage();
 						this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
+
+						if(this.navigateOnSelectAccount) {
+							this.navigateToRecordPage(this.accountId, 'Account');
+						}
 					}
 					this.accounts = resultObj;
 				})
@@ -190,5 +201,16 @@ export default class HdtAccountSelector extends LightningElement {
 
 	refreshPage() {
 		getRecordNotifyChange([{recordId: this.recordId}]);
+	}
+
+	navigateToRecordPage(recordId, sobjectApiName) {
+		this[NavigationMixin.Navigate]({
+			type: 'standard__recordPage',
+			attributes: {
+				recordId: recordId,
+				objectApiName: sobjectApiName,
+				actionName: 'view'
+			}
+		});
 	}
 }

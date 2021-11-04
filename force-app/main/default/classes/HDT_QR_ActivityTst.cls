@@ -14,7 +14,7 @@ public class HDT_QR_ActivityTst{
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
-
+			HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, false, accList[0].Id, 'Attiva');
 			sales[0].Name='Vendita Fabiana Federici 313';

@@ -39,8 +39,8 @@ public with sharing class HDT_LC_CambioUsoTst {
 
             Test.startTest(); 
 
-            Case tCase = [SELECT Id,SupplyType__c, UseChangeCharge__c, PhoneNumber__c, ServicePointType__c, Resident__c, Note__c, phase__c, status FROM Case LIMIT 1];
-            Boolean sucessCase = HDT_LC_CambioUso.updateCase(tCase.Id, tCase.SupplyType__c, tCase.UseChangeCharge__c, tCase.PhoneNumber__c, tCase.ServicePointType__c, tCase.Resident__c, tCase.Note__c);
+            Case tCase = [SELECT Id,SupplyType__c, UseChangeCharge__c, PhoneNumber__c, ServicePointType__c, Resident__c, Note__c, phase__c, status, Disconnectable__c, DisconnectibilityType__c FROM Case LIMIT 1];
+            Boolean sucessCase = HDT_LC_CambioUso.updateCase((String) tCase.Id,tCase.UseChangeCharge__c, tCase.SupplyType__c, tCase.PhoneNumber__c, tCase.ServicePointType__c, tCase.Resident__c, tCase.Note__c, tcase.Disconnectable__c, tcase.DisconnectibilityType__c); //Updated method signature
             
             
             System.assertEquals(true, sucessCase != null, 'sucessCase is not null');

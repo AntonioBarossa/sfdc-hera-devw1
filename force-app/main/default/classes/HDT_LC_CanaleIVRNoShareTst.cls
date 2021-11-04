@@ -1,3 +1,10 @@
+/**
+* @author Andrea Buzzi ()
+* @date 02/09/21
+* @description HDT_LC_CanaleIVRNoShare test class
+* @history LName – dd/mm/yy – description
+*/
+
 @isTest
 public with sharing class HDT_LC_CanaleIVRNoShareTst {
     
@@ -6,7 +13,22 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
     
     
     //TEST SETUP
-    
+    @TestSetup
+    static void setup(){
+        
+        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+        List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, accounts[0].Id, 'Bozza');
+        orders[0].Username__c = 'testUsername';
+        orders[0].Password__c = '0123456789';
+
+        insert orders;
+
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, accounts[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orders[0].id);
+
+    }
     
     
     //TESTS
@@ -14,21 +36,13 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
     //getOrderByUsernamePassword
     @isTest
     private static void getOrderByUsernamePasswordTest() {
-        
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'getOrderByUsernamePasswordTest';
-        System.debug(debugString);
-        
-        //SETUP
-        String username = '';
-        String password = '';
-        
+                
         //TESTING
         HDT_LC_CanaleIVRNoShare myChannel = new HDT_LC_CanaleIVRNoShare();
-        List<Order> result = myChannel.getOrderByUsernamePassword(username, password);
+        List<Order> result = myChannel.getOrderByUsernamePassword('testUsername', '0123456789');
         
         //ASSERTS
-        System.assertEquals(0, result.size(),'value of parameter is matching');
+        System.assertEquals(1, result.size(), 'The Order was not extracted correctly');
         
     }
     
@@ -41,12 +55,8 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         System.debug(debugString);
         
         //SETUP
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Order> ordList = [SELECT Id FROM Order];
+        List<Case> caseList = [SELECT Id FROM Case];
         
         DocumentalActivity__c myDoc = HDT_UTL_DataFactoryTst.createDocumentalActivity(1, ordList[0].Id, caseList[0].Id)[0];
         
@@ -55,26 +65,22 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         DocumentalActivity__c result = myChannel.getActivityByOrder(ordList[0].Id);
         
         //ASSERTS
-        System.assertNotEquals(null, result,'value of parameter is not matching');
-        System.assertEquals(myDoc.Id, result.Id,'value of parameter is matching');
+        System.assertNotEquals(null, result, 'The Documnental Activity record was not found');
+        System.assertEquals(myDoc.Id, result.Id, 'The incorrect Documental Activity was extracted');
         
     }
     
     //getPlico
     @isTest
-    private static void getPlicoTest_DocumentalActivity() {
+    private static void getPlicoTestDocumentalActivity() {
         
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'getPlicoTest_DocumentalActivity';
         System.debug(debugString);
         
         //SETUP
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Order> ordList = [SELECT Id FROM Order];
+        List<Case> caseList = [SELECT Id FROM Case];
         
         DocumentalActivity__c myDoc = HDT_UTL_DataFactoryTst.createDocumentalActivity(1, ordList[0].Id, caseList[0].Id)[0];
         
@@ -92,25 +98,21 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assertNotEquals(null, result,'value of parameter is not matching');
-        System.assertEquals('OK', result.get('outcome'),'value of parameter is matching');
+        System.assertNotEquals(null, result, 'The method didn\'t return the correct result');
+        System.assertEquals('OK', result.get('outcome'), 'The outcom of the method was incorrect');
         
     }
     
     @isTest
-    private static void getPlicoTest_DocumentSendTracking() {
+    private static void getPlicoTestDocumentSendTracking() {
         
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'getPlicoTest_DocumentSendTracking';
         System.debug(debugString);
         
         //SETUP
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Order> ordList = [SELECT Id FROM Order];
+        List<Case> caseList = [SELECT Id FROM Case];
         
         DocumentSendTracking__c myDoc = HDT_UTL_DataFactoryTst.createDocumentSendTracking(1, ordList[0].Id, caseList[0].Id)[0];
         
@@ -126,8 +128,8 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assertNotEquals(null, result,'value of parameter is not matching');
-        System.assertEquals('OK', result.get('outcome'),'value of parameter is matching');
+        System.assertNotEquals(null, result, 'The method didn\'t return the correct result');
+        System.assertEquals('OK', result.get('outcome'), 'The outcom of the method was incorrect');
         
         
         //TESTING - Null
@@ -139,27 +141,29 @@ public with sharing class HDT_LC_CanaleIVRNoShareTst {
     }
     
     @isTest
-    private static void getPlicoTest_Null() {
+    private static void getPlicoTestNull() {
         
         //DEBUG
         String debugString = TEST_NAME + ' - ' + 'getPlicoTest_Null';
         System.debug(debugString);
         
         //SETUP
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> accList = [SELECT Id FROM Account WHERE CompanyOwner__c = 'HERA COMM'];
         
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock());
         
         //TESTING - Wrong Id
         HDT_LC_CanaleIVRNoShare myChannel = new HDT_LC_CanaleIVRNoShare();
-        Map<String,String> result_wrong = myChannel.getPlico(accList[0].Id);
-        Map<String,String> result_null = myChannel.getPlico(null);
+        Map<String,String> resultWrong = myChannel.getPlico(accList[0].Id);
+
+        // TEST NULL recordId
+        myChannel.getPlico(null);
         
         //ASSERTS
-        System.assertNotEquals(null, result_wrong,'value of parameter is not matching');
-        System.assertEquals('KO', result_wrong.get('outcome'),'value of parameter is matching');
-        System.assertEquals('Errore interno nel recupero del documento archiviato.', result_wrong.get('errorMessage'),'value of parameter is matching');
+        System.assertNotEquals(null, resultWrong, 'The outcom of the method was incorrect');
+        System.assertEquals('KO', resultWrong.get('outcome'), 'The outcom of the method was incorrect');
+        System.assertEquals('Errore interno nel recupero del documento archiviato.', resultWrong.get('errorMessage'), 'The returned error message was not the expected one');
         
     }
     

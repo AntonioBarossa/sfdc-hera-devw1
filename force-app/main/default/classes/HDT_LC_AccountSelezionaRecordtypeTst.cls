@@ -10,7 +10,7 @@ public with sharing class HDT_LC_AccountSelezionaRecordtypeTst {
     @testSetup
     static void setup(){
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
-        List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
     }
 
     @isTest
@@ -22,7 +22,7 @@ public with sharing class HDT_LC_AccountSelezionaRecordtypeTst {
         Test.stopTest();
         
         System.assertEquals(lstAccount.size() != null, true, 'The List is null!');
-        System.assertNotEquals(lstAccount.size() == null, true,'value of parameter is not matching');
+        System.assertNotEquals(lstAccount.size() == null, true, 'getRecordTypesForAccount did not work correctly');
         
     }
 }

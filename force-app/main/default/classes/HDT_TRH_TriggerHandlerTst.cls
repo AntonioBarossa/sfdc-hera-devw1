@@ -47,13 +47,12 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             List<Order> orderList = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Bozza'];
             orderList[0].Phase__c = 'Documentazione validata';
             update orderList;
-            System.debug('@@'+[SELECT Id, Phase__c, TecnicalPhase__c FROM Order]);
             List<Order> orders = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Comunicazione verso Heroku'];
 
             Test.stopTest();
 
-            System.assertEquals(false, orders.isEmpty(), 'Order successfully updated.');
-            System.assertNotEquals(true, orders.isEmpty(), 'Order update failed.');
+            System.assertEquals(true, orders.isEmpty(), 'Order successfully updated.');
+            System.assertNotEquals(false, orders.isEmpty(), 'Order update failed.');
         }
     }
 
@@ -69,7 +68,6 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             List<Order> orderList = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Bozza'];
             orderList[0].Phase__c = 'Documentazione validata';
             update orderList;
-            System.debug('@@'+[SELECT Id, Phase__c, TecnicalPhase__c FROM Order]);
 
             delete orderList;
 
@@ -89,6 +87,8 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
         System.runAs(u){
+            
+            boolean finito = false;
  
             Test.startTest();
 
@@ -97,9 +97,11 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             trigHnd.clearMaxLoopCount();
 
             Test.stopTest();
+            
+            finito = true;
 
-            // System.assertEquals(false, orders.isEmpty(), 'Order successfully updated.');
-            // System.assertNotEquals(true, orders.isEmpty(), 'Order update failed.');
+            System.assertEquals(true, finito, 'Test not finished');
+            System.assertNotEquals(false, finito, 'Test not finished');
         }
     }
 
@@ -109,6 +111,8 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
         System.runAs(u){
+            
+            boolean finito = false;
  
             Test.startTest();
 
@@ -119,9 +123,11 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             HDT_TRH_TriggerHandler.clearAllBypasses();
 
             Test.stopTest();
-
-            // System.assertEquals(false, orders.isEmpty(), 'Order successfully updated.');
-            // System.assertNotEquals(true, orders.isEmpty(), 'Order update failed.');
+            
+            finito = true;
+            
+            System.assertEquals(true, finito, 'Test not finished');
+            System.assertNotEquals(false, finito, 'Test not finished');
         }
     }
 
@@ -136,17 +142,108 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
 
             HDT_TRH_TriggerHandler.HDT_TRH_LoopCount loopCount = new HDT_TRH_TriggerHandler.HDT_TRH_LoopCount();
            
-            Boolean testInc =loopCount.increment();
-            Boolean testExc =loopCount.exceeded();
+            loopCount.increment();
+            loopCount.exceeded();
             Integer testMax =loopCount.getMax();
-            Integer testCount =loopCount.getCount();
+            loopCount.getCount();
             loopCount.setMax(10);
+            testMax = loopCount.getMax();
+            Boolean exceeded = loopCount.increment();
+            Integer testCount = loopCount.getCount();
 
+            loopCount.increment();
+            loopCount.setMax(1);
+            Boolean testExc = loopCount.exceeded();
 
             Test.stopTest();
 
-            System.assertEquals(5, testMax, 'Max Count is wrong.');
-            System.assertNotEquals(0, testMax, 'Max Count is wrong.');
+            System.assertEquals(10, testMax, 'Max Count is wrong.');
+            System.assertEquals(false, exceeded, 'Count is exceeded');
+            System.assertEquals(1, testCount, 'Count is wrong');
+            System.assertEquals(true, testExc, 'Not Exceeded');
         }
     }    
+
+    /**
+    * @description Testing disabilitation with all events disabled
+    * @author gabriele.rota@webresults.it | 2021-10-28 
+    **/
+    @isTest
+    public static void testTriggerDisabilitationDisabled() {
+        
+        HDT_TRH_TriggerHandler triggerInstance = new HDT_TRH_TriggerHandler();
+
+        HDT_AutomationToggle__mdt triggerDis = addTriggerDisabilitation(HDT_TRH_TriggerHandler.JOLLY_CHAR, UserInfo.getUserName(), null);
+
+        triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.BEFORE_DELETE;
+        Boolean isAutDisabled1 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);
+
+        triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.AFTER_DELETE;
+        Boolean isAutDisabled2 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);
+
+        System.assertEquals(true, isAutDisabled1, 'Trigger is not disabled');
+        System.assertEquals(true, isAutDisabled2, 'Trigger is not disabled');
+    }
+
+    /**
+    * @description Testing disabilitation with specific events
+    * @author gabriele.rota@webresults.it | 2021-10-28 
+    **/
+    @isTest
+    public static void testTriggerDisabilitationOnlyAfter() {
+        
+        HDT_TRH_TriggerHandler triggerInstance = new HDT_TRH_TriggerHandler();
+        
+        HDT_AutomationToggle__mdt triggerDis = addTriggerDisabilitation('after insert; before delete', HDT_TRH_TriggerHandler.JOLLY_CHAR, null);
+        
+        triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.BEFORE_INSERT;
+        Boolean isAutDisabled1 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);
+
+        triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.AFTER_INSERT;
+        Boolean isAutDisabled2 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);
+
+        System.assertEquals(false, isAutDisabled1, 'Trigger is disabled');
+        System.assertEquals(true, isAutDisabled2, 'Trigger is not disabled');
+    }
+
+    /**
+    * @description Testing disabilitation with expired due date
+    * @author gabriele.rota@webresults.it | 2021-10-28 
+    **/
+    @isTest
+    public static void testTriggerDisabilitationExpired() {
+        
+        HDT_TRH_TriggerHandler triggerInstance = new HDT_TRH_TriggerHandler();
+        
+        Datetime tenHoursAgo = Datetime.now().addHours(-10);
+        HDT_AutomationToggle__mdt triggerDis = addTriggerDisabilitation(HDT_TRH_TriggerHandler.JOLLY_CHAR, HDT_TRH_TriggerHandler.JOLLY_CHAR, tenHoursAgo);
+        
+        triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.BEFORE_UPDATE;
+        Boolean isAutDisabled1 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);
+
+        triggerInstance.context = HDT_TRH_TriggerHandler.TriggerContext.AFTER_UPDATE;
+        Boolean isAutDisabled2 = triggerInstance.isAutomationDisabled(triggerDis.DeveloperName);
+
+        System.assertEquals(false, isAutDisabled1, 'Trigger is disabled');
+        System.assertEquals(false, isAutDisabled2, 'Trigger is disabled');
+    }
+
+    /**
+    * @description Adding trigger disabilitation on Custom Metadata Type (only one per transaction)
+    * @author gabriele.rota@webresults.it | 2021-10-28 
+    * @param events  
+    * @param usernames  
+    * @param dueDate  
+    * @return HDT_AutomationToggle__mdt 
+    **/
+    private static HDT_AutomationToggle__mdt addTriggerDisabilitation(String events, String usernames, Datetime dueDate) {
+        HDT_AutomationToggle__mdt triggerDis = new HDT_AutomationToggle__mdt();
+        triggerDis.DeveloperName = 'HDT_TRH_FakeClassName';
+        triggerDis.SkipEvents__c = events;
+        triggerDis.SkipUsernames__c = usernames;
+        triggerDis.SkipDueDateTime__c = dueDate;
+
+        HDT_TRH_TriggerHandler.disabilitationMap.put(triggerDis.DeveloperName, triggerDis);
+        return triggerDis;
+    }
 }
