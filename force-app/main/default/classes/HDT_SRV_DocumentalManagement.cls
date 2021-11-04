@@ -636,10 +636,10 @@ public class HDT_SRV_DocumentalManagement{
 		try {
 			//signInfo
 			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
-			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','PhoneNumber__c',0,inputs,formParams);
 			String telephoneNumber = '+39';
 			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
-			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
+			String emailOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','ShippingMail__c',0,inputs,formParams);
 			if(String.isNotBlank(telephoneNumberCase)){
 				telephoneNumber = telephoneNumber + telephoneNumberCase;
 			}else {
