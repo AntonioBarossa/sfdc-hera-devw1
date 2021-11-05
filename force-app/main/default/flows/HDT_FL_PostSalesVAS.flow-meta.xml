@@ -74,6 +74,13 @@
                 <elementReference>Get_Subscription.SBQQ__OrderProduct__r.Order.Commodity__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Case.CommercialProduct__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Subscription.SBQQ__Product__r.Family</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_Causale_Disattivazione</name>
@@ -267,7 +274,7 @@
             <inputParameters>
                 <name>groupOptions</name>
                 <value>
-                    <stringValue>ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI</stringValue>
+                    <stringValue>ASSETS_ACTIVATED;SUBS_ANALISI_CONSUMI;SUBS_VAS_SERVIZIO</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
