@@ -373,10 +373,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if(!dataForKOSAPHandling.keySet().isEmpty()){
             Map<String,String> requestData;
             Set<String> orderNumbers = new Set<String>();
+            Set<String> caseNumbers = new Set<String>();
             Set<Id> orderIds = new Set<Id>();
             Set<Id> caseIds = new Set<Id>();
             for(String curRecordId : dataForKOSAPHandling.keySet()){
                 if(curRecordId.startsWithIgnoreCase('O-')){ orderNumbers.add(curRecordId); }
+                else if(curRecordId.startsWithIgnoreCase('C-')){caseNumbers.add(curRecordId);}
                 else if(Schema.Order.SObjectType == Id.valueOf(curRecordId).getSobjectType()){ orderIds.add(curRecordId); }
                 else if(Schema.Case.SObjectType == Id.valueOf(curRecordId).getSobjectType()){ caseIds.add(curRecordId); }
             }
@@ -401,10 +403,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     toInsert.add(newAct);
                 }
             }
-            if(!caseIds.isEmpty()){
+            if(!(caseIds.isEmpty() && caseNumbers.isEmpty())){
                 Map<Id, Case> casesMap = new Map<Id, Case>([SELECT Id, RecordType.DeveloperName, CaseNumber
                                                             FROM Case
-                                                            WHERE Id IN :caseIds]);
+                                                            WHERE Id IN :caseIds OR CaseNumber IN :caseNumbers]);
                 for(Id curId : casesMap.keySet()){
                     requestData = dataForKOSAPHandling.get(curId);
                     wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curId, TRACCIAMENTOKOSAPPOSTSALES.get(casesMap.get(curId).RecordType.DeveloperName));
