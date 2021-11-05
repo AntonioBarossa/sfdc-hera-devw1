@@ -194,9 +194,9 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.Resident__c = oldOrder.Resident__c;
         orderToUpdate.RemiCode__c = oldOrder.RemiCode__c;
         orderToUpdate.SupplyCity__c = oldOrder.SupplyCity__c;
-       /// orderToUpdate.CommercialProductVersion__c = oldOrder.CommercialProductVersion__c ;
-      ///  orderToUpdate.CommercialProductCode__c = oldOrder.CommercialProductCode__c ;
-      ///  orderToUpdate.CommercialProduct__c = oldOrder.CommercialProduct__c;
+        orderToUpdate.CommercialProductVersion__c = oldOrder.CommercialProductVersion__c ;
+        orderToUpdate.CommercialProductCode__c = oldOrder.CommercialProductCode__c ;
+        orderToUpdate.CommercialProduct__c = oldOrder.CommercialProduct__c;
         orderToUpdate.SupplyStreetName__c = oldOrder.SupplyStreetName__c;
         orderToUpdate.SupplyStreetNumber__c = oldOrder.SupplyStreetNumber__c;
         orderToUpdate.SupplyStreetNumberExtension__c = oldOrder.SupplyStreetNumberExtension__c;
