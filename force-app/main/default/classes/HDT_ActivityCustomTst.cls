@@ -12,7 +12,7 @@ Modified By:
 public with sharing class HDT_ActivityCustomTst {
 
     @isTest
-    public static void testActivityCustomTst() {
+    public static void test() {
         
         HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
