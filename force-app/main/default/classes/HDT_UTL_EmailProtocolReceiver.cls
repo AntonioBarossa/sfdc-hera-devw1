@@ -4,6 +4,9 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
        Date d = Date.today();
        boolean b = false;
        HDT_QR_Contact contactQr = new HDT_QR_Contact();
+       HDT_SRV_ContentDocumentLink contentdocumentLink = new HDT_SRV_ContentDocumentLink();
+       HDT_SRV_ContentVersion contentSrv = new HDT_SRV_ContentVersion();
+       HDT_QR_ContentVersion contentQr = new HDT_QR_ContentVersion();
        HDT_SRV_Interaction intSrv = new HDT_SRV_Interaction();
        HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
        HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
@@ -23,7 +26,7 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
        newInter.BodyEmail__c = mess;
        newInter.SubjectEmail__c = email.subject;
        Group g = groupQR.getQueueByDevelopername('HDT_QUE_ActivityProtocollo');
-      list<Attachment> listAttach = new List<Attachment>();
+      list<ContentVersion> listContent = new List<ContentVersion>();
       List<Contact> contacts = contactQr.getContactByEmailAddress(email.fromAddress);
       if(contacts.size()==1){
           newInter.Account__c = contacts[0].AccountId;
@@ -37,26 +40,36 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
       if(email.textAttachments != null)
       {
           for (Messaging.Inboundemail.TextAttachment tAttachment : email.textAttachments) {
-              Attachment attachment = new Attachment();
-              attachment.Name = tAttachment.fileName;
-              attachment.Body = Blob.valueOf(tAttachment.body);
-              attachment.ParentId = res.Id;
-              listAttach.add(attachment);
+              ContentVersion content = contentSrv.createRecordNoInsert(tAttachment.fileName,tAttachment.fileName,tAttachment.body);
+              //content.ParentId = res.Id;
+              listContent.add(content);
           }
       }
       if(email.binaryAttachments != null)
       {
           for (Messaging.Inboundemail.BinaryAttachment bAttachment : email.binaryAttachments) {
-              Attachment attachment = new Attachment();
-              attachment.Name = bAttachment.fileName;
-              attachment.Body = bAttachment.body;
-              attachment.ParentId = res.Id;
-              listAttach.add(attachment);
+            ContentVersion content = contentSrv.createRecordNoInsert(bAttachment.fileName,bAttachment.fileName,bAttachment.body);
+            //content.ParentId = res.Id;
+            listContent.add(content);
           }
       }
-      if(!listAttach.isEmpty()){
-          HDT_SRV_Attachment.insertAttach(listAttach);
+      if(!listContent.isEmpty()){
+        listContent = contentSrv.insertRecords(listContent);
       }
+      List<ContentDocumentLink> contentDocumentList = new List<ContentDocumentLink>();
+      List<String> idContentVersion = new List<String>();
+      for(ContentVersion cv : listContent){
+         idContentVersion.add(cv.id);
+      }
+      if(!listContent.isEmpty()){
+         List<ContentVersion> contentWithDocument = contentQr.getRecordByIds(idContentVersion);
+         for(ContentVersion cv : contentWithDocument){
+            contentDocumentList.add(contentdocumentLink.createRecordNoInsert(res.Id, cv.ContentDocumentId, 'I'));
+         }
+         contentdocumentLink.insertRecords(contentDocumentList);
+      }
+      
+      System.debug('*****' + listContent);
       EmailMessage newEmail = new EmailMessage(
       FromAddress = email.fromAddress,
       FromName = email.fromName,

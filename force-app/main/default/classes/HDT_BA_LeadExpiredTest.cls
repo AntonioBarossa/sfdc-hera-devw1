@@ -25,8 +25,6 @@ public class HDT_BA_LeadExpiredTest {
 
 
           List<Lead> myLeads = [SELECT Id, FirstName,LastName,CompanyOwner__c,Company,Status,Birthdate__c,Gender__c from Lead];
-
-           system.debug(myLeads);
            system.assertEquals('New', myLeads[0].Status,'We have a new Status');
            System.assertNotEquals('Expired', myLeads[0].Status,'We have expired Status');
                 Test.stopTest();

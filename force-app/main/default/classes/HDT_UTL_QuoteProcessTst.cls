@@ -67,10 +67,15 @@ public with sharing class HDT_UTL_QuoteProcessTst{
 			                             FROM SBQQ__Quote__c
 			                             WHERE BrandLogo__c='testLogo'];
 
-			List<SBQQ__Quote__c> tQuote1=[SELECT Id, BrandLogo__c, SaleBy__c, SupplyCity__c, Market__c, SalesCompany__c, FriendCode__c, Agency__c, SBQQ__Quote__c.Channel__c, SBQQ__Type__c, SBQQ__Account__c, SBQQ__MasterContract__c, ContractReference__c, SBQQ__Opportunity2__c, Sale__c, SBQQ__Status__c, AmendmentAllowed__c, SBQQ__Quote__c.Campaign__c
+			List<SBQQ__Quote__c> tQuote1=[SELECT Id, isTransition__c, CreatedBy__c, CampaignCode__c, SBQQ__Primary__c, SalesCompanyCode__c, BrandLogo__c, SaleBy__c, 
+                                                 SupplyCity__c, Market__c, SalesCompany__c, FriendCode__c, Agency__c, SBQQ__Quote__c.Channel__c, SBQQ__Type__c, SBQQ__Account__c, 
+                                          		 SBQQ__MasterContract__c, ContractReference__c, SBQQ__Opportunity2__c, Sale__c, SBQQ__Status__c, AmendmentAllowed__c, 
+                                          		 SBQQ__Quote__c.Campaign__c, AllowChangeUse__c, UseCategory__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c,
+                                          		 MarketOrigin__c, ResidentDeliveryAddress__c, MeterType__c, SupplyProvince__c, Login__c, LoginGroup__c, Role__c, NewClient__c,
+                                          		 SuperUser__c, SBQQ__PricebookId__c
 			                              FROM SBQQ__Quote__c
 			                              WHERE BrandLogo__c='testLogo1'];
-
+            
 			List<SaleServiceItem__c> tSaleServItem=[SELECT Id, Quote__c, Opportunity__c, Quote__r.SBQQ__Status__c
 			                                        FROM SaleServiceItem__c
 			                                        WHERE Quote__c=:tQuote];
