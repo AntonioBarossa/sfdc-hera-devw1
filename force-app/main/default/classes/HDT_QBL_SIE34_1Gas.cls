@@ -19,6 +19,10 @@ public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
     public void execute(QueueableContext context) {
        String status                  = 'success'      ;
        String errorMessage            = ''             ;
+       // Delete Start old File
+       String title                   = 'OUT_OP_GAS'   ;
+       HDT_UTL_ContentVersion.deleteFiles(title)       ;
+       // Delete End old File
    
        String condition = ' WHERE Order.Phase__c IN (\'Inviato al DL\',\'Completata\') AND Order.Commodity__c =\'GAS\' AND LastModifiedDate >=:filterDate ';
        String query     = 'SELECT  Order.Account.Fax__c,Order.Account.FirstName__c, Order.Account.lastName__c, order.ResidentialState__c,order.ResidentialPostalCode__c,order.ResidentialPlace__c,order.ResidentialCity__c,Order.ResidentialStreetNumber__c,order.Contact__r.Account.FAX__c,Order.Contact__r.MobilePhone,Order.Account.CustomerCode__c, Order.Account.Category__c, Order.Account.FiscalCode__c,  Order.Account.VATNumber__c, Order.Account.LegalFormType__c, Order.BillingProfile__r.BankAccountSignatoryFirstName__c, Order.BillingProfile__r.BankAccountSignatoryFiscalCode__c, Order.BillingProfile__r.BankAccountSignatoryLastName__c, Order.BillingProfile__r.BankAgency__c, Order.BillingProfile__r.BankName__c, Order.BillingProfile__r.IbanABI__c, Order.BillingProfile__r.IbanCAB__c, Order.BillingProfile__r.IbanCIN_IBAN__c, Order.BillingProfile__r.IbanCIN__c, Order.BillingProfile__r.IbanCodeNumber__c, Order.BillingProfile__r.IbanCountry__c, Order.BillingProfile__r.PaymentMethod__c,  Order.Account.FAX, Order.Contact__r.Email, Order.Contact__r.Phone, Order.Agency__c, Order.AggregateBilling__c, Order.AnnualConsumption__c, Order.AtecoCode__c, Order.Channel__c, Order.CommentForDL__c, Order.CommercialAction__c, Order.CommercialProductVersion__c, Order.ConnectionMandate__c, Order.ContractId, Order.CreatedBy__c, Order.createddate, Order.CustomerCompanyName__c, Order.CustomerFiscalCode__c, Order.CustomerLastName__c, Order.CustomerName__c, Order.Disconnectable__c, Order.DisconnectibilityType__c, Order.DistributorCode__c, Order.EffectiveDate, Order.ExciseGAS__c, Order.ImplantType__c, Order.MarketOrigin__c, Order.MaxRequiredPotential__c, Order.MeterClass__c, Order.MeterSN__c, Order.OrderNumber, Order.PhoneNumber__c, Order.PowerAvailable__c, Order.Pressure__c, Order.PreviousHolderFirstName__c, Order.PreviousHolderFiscalCode__c, Order.PreviousHolderLastName__c, Order.PreviousHolderVatNumber__c, Order.PreviousTrader__c, Order.ProcessType__c, Order.Profile__c, Order.RemiCode__c, Order.ResidentialStreetName__c, Order.SalesContact__r.FirstName, Order.SalesContact__r.LastName, Order.SelfCertificationConnection__c, Order.ServicePointCodeFormula__c, Order.ShippingCity__c, Order.ShippingPlaceCode__c, Order.ShippingPostalCode__c, Order.ShippingProvince__c, Order.ShippingStreetName__c, Order.ShippingStreetNumber__c, Order.SignedDate__c, Order.SupplyCityCode__c, Order.SupplyCity__c, Order.SupplyPlace__c, Order.SupplyPostalCode__c, Order.SupplyState__c, Order.SupplyStreetName__c, Order.SupplyStreetNumber__c, Order.TemporaryConnectionEndDate__c, Order.TemporaryConnectionStartDate__c, Order.UseCategory__c, Order.VAT__c, Order.VendorFirstName__c, Order.VendorLastName__c, Order.WithdrawalClass__c, PriceGas__c, PriceGreenOption__c from OrderItem ';
@@ -225,7 +229,7 @@ public with sharing class HDT_QBL_SIE34_1Gas implements Queueable  {
              }
           }
         if (listOrderItem!=null && listOrderItem.size()>0 ) {
-            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_GAS.txt','OUT_OP_GAS'));
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_GAS.txt',title));
          }
         if(!Test.isRunningTest()){
         	System.enqueueJob(new HDT_QBL_SIE34_1EE(runId,filterDate, fileType,contentVersionIds));

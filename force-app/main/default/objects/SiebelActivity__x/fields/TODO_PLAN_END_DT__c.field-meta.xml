@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>RDS__c</fullName>
-    <description>RDS</description>
-    <externalDeveloperName>RDS</externalDeveloperName>
+    <fullName>TODO_PLAN_END_DT__c</fullName>
+    <externalDeveloperName>S_EVT_ACT_X</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Id RDS</label>
-    <length>64</length>
+    <label>Completamento pianificato</label>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>DateTime</type>
 </CustomField>

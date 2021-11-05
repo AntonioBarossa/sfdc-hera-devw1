@@ -374,7 +374,6 @@ public class HDT_SRV_DocumentalManagement{
 			*/
 			//String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
-			String caseType = (String)record.get('Type');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
 			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
@@ -386,6 +385,7 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			
 			if(record.getSobjectType() == Case.getSobjectType()){
+				String caseType = (String)record.get('Type');
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
@@ -663,13 +663,13 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate templateInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate();
 		try {
 			//signInfo
-			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
-			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
 			String rdsCase = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
 			String rdsOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'OrderNumber', 0, inputs, formParams);
+			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','PhoneNumber__c',0,inputs,formParams);
 			String telephoneNumber = '+39';
 			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
-			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
+			String emailOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','ShippingMail__c',0,inputs,formParams);
 			if(String.isNotBlank(telephoneNumberCase)){
 				telephoneNumber = telephoneNumber + telephoneNumberCase;
 			}else {
@@ -708,8 +708,8 @@ public class HDT_SRV_DocumentalManagement{
 			customerInfo.emailSubject = 'HERA - ' + processType;
 			//@ealpi nuovi campi inviati
 			customerInfo.rds = rds;
-			customerInfo.dataCreazioneDocumento = dataCreazioneDocumento.format('yyyy-MM-dd hh:mm:ss', userTimeZone);
-			customerInfo.dataCaricamentoDocumento = dataCaricamentoDocumento.format('yyyy-MM-dd hh:mm:ss', userTimeZone);
+			customerInfo.dataCreazioneDocumento = dataCreazioneDocumento.format('yyyy-MM-dd HH:mm:ss', userTimeZone);
+			customerInfo.dataCaricamentoDocumento = dataCaricamentoDocumento.format('yyyy-MM-dd HH:mm:ss', userTimeZone);
 			customerInfo.lastName = lastName;
 			customerInfo.firstName = firstName;
 			if (formParams.containsKey('SettMerceologico')){
