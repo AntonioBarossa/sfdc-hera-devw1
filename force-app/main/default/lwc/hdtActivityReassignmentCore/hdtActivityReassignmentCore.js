@@ -16,6 +16,9 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     assignees;
     assigneeId;
     showSpinner;
+    status = {
+        error: false
+    };
     get searchingWorkGroup() {
         return (this.assigneeId != undefined);
     }
@@ -30,6 +33,13 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     connectedCallback() {
         if(this.recordId) {
             this.idList = [this.recordId];
+        }
+        if(!this.idList[0]) {
+            this.status = {
+                error: true,
+                title: "ATTENZIONE",
+                message: "Nessun record selezionato."
+            } 
         }
         if(this.assignToMeMode) {
             this.doAssignToMe();
@@ -128,9 +138,13 @@ export default class hdtActivityReassignmentCore extends LightningElement {
                 this.showToast("success", "Operazione completata", "Activity riassegnata con successo.");
                 this.closeModal();
             } else {
-                window.history.back();
+                this.goBack();
             }
         }
+    }
+    
+    goBack() {
+        window.history.back();
     }
 
     toggleHoveredClass(event) {

@@ -21,3 +21,8 @@
 .hovered {
     background-color: gainsboro;
 }
+
+.custom-title {
+    color: rgb(56,56,56) !important;
+    font-size: 18px !important;
+}

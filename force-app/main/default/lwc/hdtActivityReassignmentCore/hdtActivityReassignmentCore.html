@@ -1,40 +1,51 @@
 <template>
-    <div class="slds-box slds-theme_default slds-is-relative">
-        <template if:true={showSpinner}>
-            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
-        </template>
-        <div class="flex">
-            <template if:false={searchingWorkGroup}>
-                <div class="grow" onkeyup={handleAssigneeSearch}>
-                    <lightning-input type="search" variant="label-hidden" placeholder="Cercare per nome assegnatario"></lightning-input>
+    <template if:false={status.error}>
+        <div class="slds-theme_default slds-m-around_medium slds-is-relative">
+            <template if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </template>
+            <div class="flex">
+                <template if:false={searchingWorkGroup}>
+                    <div class="grow" onkeyup={handleAssigneeSearch}>
+                        <lightning-input type="search" variant="label-hidden" placeholder="Cercare per nome assegnatario"></lightning-input>
+                    </div>
+                </template>
+                <template if:true={searchingWorkGroup}>
+                    <div class="grow" onkeyup={handleWorkGroupSearch}>
+                        <lightning-input type="search" variant="label-hidden" placeholder="Ricerca Gruppo di Lavoro"></lightning-input>
+                    </div>
+                </template>
+            </div>
+            <template if:true={assigneesNotFound}>
+                <div class="slds-m-top_x-small">
+                    Nessuna corrispondenza trovata.
                 </div>
+            </template>
+            <template if:true={assigneesFound}>
+                <template for:each={assignees} for:item="assignee" class="slds-scrollable_y">
+                    <div key={assignee.id} data-id={assignee.id} data-wrapperid={assignee.wrapperId} data-workgroup={assignee.workGroup} data-agency={assignee.agency} data-loginchannel={assignee.loginChannel} onclick={handleListClick} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="slds-theme_default slds-m-top_x-small">
+                        <lightning-icon icon-name={assignee.icon} class="slds-m-right_medium"></lightning-icon>
+                        {assignee.name}
+                    </div>
+                </template>
             </template>
             <template if:true={searchingWorkGroup}>
-                <div class="grow" onkeyup={handleWorkGroupSearch}>
-                    <lightning-input type="search" variant="label-hidden" placeholder="Ricerca Gruppo di Lavoro"></lightning-input>
-                </div>
+                <template for:each={workGroups} for:item="group" class="slds-scrollable_y">
+                    <div key={group.name} data-id={group.name} data-workgroup={group.name} data-agency={group.agency} onclick={selectWorkGroup} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="slds-theme_default slds-m-top_x-small">
+                        <lightning-icon icon-name="standard:groups" class="slds-m-right_medium"></lightning-icon>
+                        {group.name}
+                    </div>
+                </template>
             </template>
         </div>
-        <template if:true={assigneesNotFound}>
-            <div class="slds-m-top_x-small">
-                Nessuna corrispondenza trovata.
-            </div>
-        </template>
-        <template if:true={assigneesFound}>
-            <template for:each={assignees} for:item="assignee" class="slds-scrollable_y">
-                <div key={assignee.id} data-id={assignee.id} data-wrapperid={assignee.wrapperId} data-workgroup={assignee.workGroup} data-agency={assignee.agency} data-loginchannel={assignee.loginChannel} onclick={handleListClick} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="slds-theme_default slds-m-top_x-small">
-                    <lightning-icon icon-name={assignee.icon} class="slds-m-right_medium"></lightning-icon>
-                    {assignee.name}
-                </div>
-            </template>
-        </template>
-        <template if:true={searchingWorkGroup}>
-            <template for:each={workGroups} for:item="group" class="slds-scrollable_y">
-                <div key={group.name} data-id={group.name} data-workgroup={group.name} data-agency={group.agency} onclick={selectWorkGroup} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="slds-theme_default slds-m-top_x-small">
-                    <lightning-icon icon-name="standard:groups" class="slds-m-right_medium"></lightning-icon>
-                    {group.name}
-                </div>
-            </template>
-        </template>
-    </div>
+    </template>
+    <template if:true={status.error}>
+        <div class="slds-theme_default slds-p-around_medium">
+            <b class="slds-text-body_regular custom-title">{status.title}</b>
+            <div class="slds-text-body_regular">{status.message}</div>
+        </div>
+        <div class="slds-theme_default slds-border_top slds-p-around_medium slds-grid slds-grid_reverse">
+            <lightning-button variant="brand" label="Indietro" onclick={goBack}></lightning-button>
+        </div>
+    </template>
 </template>
