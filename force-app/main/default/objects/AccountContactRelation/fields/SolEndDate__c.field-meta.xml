@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SolEndDate__c</fullName>
     <externalId>false</externalId>
-    <label>SolEndDate</label>
+    <label>Data fine SOL</label>
     <required>false</required>
     <type>Date</type>
 </CustomField>
