@@ -24,6 +24,7 @@ public with sharing class HDT_SRV_ContentDocumentLink {
         return cdl;
         
     }
+    
 
     public List<ContentDocumentLink> insertRecords(List<ContentDocumentLink> listContent) {
         HDT_UTL_DatabaseService.insertSObject(listContent);

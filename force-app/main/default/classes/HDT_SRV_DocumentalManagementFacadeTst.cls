@@ -207,9 +207,24 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
     
     //resendDocusignEnvelope
     
+
+    //checkEnvelopeForDiscard
+    @isTest
+    private static void checkEnvelopeForDiscard(){
+        //SETUP
+        mySetup();
+
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        Order myOrder = [SELECT Id FROM Order];
+        DocumentSendTracking__c sendTracking = HDT_UTL_DataFactoryTst.createDocumentSendTracking(1,myOrder.Id,null)[0];
+        Map<String,Object> params = new Map<String,Object>{'DiscardOldEnvelope' => true};
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagementFacade_HTTP_MOCK());
+        Test.startTest();
+            HDT_SRV_DocumentalManagementFacade.checkEnvelopeForDiscard(myOrder.Id, JSON.serialize(params));
+        Test.stopTest();
+    }
     
     
-    //discardDocusignEnvelope
     
     
     

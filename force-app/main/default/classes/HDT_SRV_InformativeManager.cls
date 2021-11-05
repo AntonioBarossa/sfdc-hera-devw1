@@ -30,6 +30,12 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug(LoggingLevel.DEBUG, 'getOptions - getCluster: ' + paramsMap);
         
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result;
+        String sObjName;*/
         String context = (String) paramsMap.get('context');
         
         if(context instanceOf Id){
@@ -46,6 +52,12 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug(LoggingLevel.DEBUG, 'getOptions - getTopic: ' + paramsMap);
         
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result;
+        String sObjName;*/
         String context = (String) paramsMap.get('context');
         
         if(context instanceOf Id){
@@ -62,6 +74,11 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug(LoggingLevel.DEBUG, 'getOptions - getProcess: ' + paramsMap);
         
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //String result;
         String process = HDT_QR_InformativeManager.getProcessByCluster((String) paramsMap.get('cluster'));
         
         return process;
@@ -71,6 +88,12 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         
         System.debug(LoggingLevel.DEBUG, 'getOptions - getInfo: ' + paramsMap);
         
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*String result;
+        String sObjName;*/
         String context = (String) paramsMap.get('context');
         
         if(context instanceOf Id){
@@ -117,6 +140,11 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
         System.debug(LoggingLevel.DEBUG, 'distinctRecords - records: ' + records);
         System.debug(LoggingLevel.DEBUG, 'distinctRecords - field: ' + field);
         
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentata variabile non utilizzata.
+        */
+        //Set<String> setValue = new Set<String>();
         List<SObject> distinctRecords = new List<SObject>();
         Map<String,String> mapRecords = new Map<String,String>();
         

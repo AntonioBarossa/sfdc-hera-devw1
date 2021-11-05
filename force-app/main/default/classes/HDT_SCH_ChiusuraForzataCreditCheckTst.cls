@@ -34,13 +34,13 @@ public class HDT_SCH_ChiusuraForzataCreditCheckTst {
      }
 
   @isTest
-	static void test1(){
+	static void test(){
 
-        String CRON_EXP = '20 30 8 10 2 ?';
+        String crono = '20 30 8 10 2 ?';
         
         Test.startTest();
         HDT_SCH_ChiusuraForzataCreditCheck cf = new HDT_SCH_ChiusuraForzataCreditCheck();
-        String jobID = System.schedule('Label of the job', CRON_EXP , cf);
+        System.schedule('Label of the job', crono , cf);
         Test.stopTest();
         
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];

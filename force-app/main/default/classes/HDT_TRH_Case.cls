@@ -70,6 +70,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //**FINE SVILUPPO */
 
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
+        HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
 
     }
 

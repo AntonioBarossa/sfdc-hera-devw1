@@ -30,6 +30,7 @@ public class HDT_WS_MotoreVasTst {
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
             for(Order o : orders){
                 o.CustomerLastName__c = 'test';
+                o.CommercialProduct__c = 'test';
             }
             insert orders;
             Id orderId = orders[0].id;
@@ -58,8 +59,8 @@ public class HDT_WS_MotoreVasTst {
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VAS.Activation','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
         
         List <Order> orders = [Select id from Order];
-        
-        HDT_WS_Response res = new HDT_WS_Response();
+
+        HDT_WS_ArrichmentDataEntityResponse res = new HDT_WS_ArrichmentDataEntityResponse();
         
         Test.startTest();
         

@@ -232,7 +232,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         return positionsToReturn;
     }
 
-
+    @TestVisible
     private String getFieldValue(String posField, SObject relatedProduct, SObject ordItem){
         if(STRING.isBlank(posField)){
             return '';

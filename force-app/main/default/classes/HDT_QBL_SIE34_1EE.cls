@@ -27,8 +27,12 @@ public with sharing class HDT_QBL_SIE34_1EE implements Queueable  {
         String condition     = ' WHERE Order.Phase__c IN (\'Inviato al DL\',\'Completata\') AND Order.Commodity__c =\'Energia eletrica\' AND LastModifiedDate >=:filterDate ';
         String query         = 'SELECT BillingProfile__r.BankAccountSignatoryFiscalCode__c,BillingProfile__r.BankAccountSignatoryLastName__c, BillingProfile__r.BankAccountSignatoryFirstName__c, BillingProfile__r.IbanCodeNumber__c,BillingProfile__r.IbanCIN__c,BillingProfile__r.IbanABI__c, BillingProfile__r.IbanCAB__c,  BillingProfile__r.IbanCIN_IBAN__c, BillingProfile__r.IbanCountry__c,BillingProfile__r.BankAgency__c,BillingProfile__r.BankName__c,Order.Account.Category__c ,Order.ResidentialPlace__c,Order.ResidentialState__c,Order.ResidentialCity__c,Order.ResidentialPostalCode__c,Order.ResidentialStreetNumber__c,Order.Contact__r.Account.FAX__c,Order.CustomerVATNumber__c,Order.OneshotCustomer__c,order.Account.CustomerCode__c,order.Account.FiscalCode__c,order.Account.VATNumber__c ,order.Account.LegalFormType__c,order.BillingProfile__r.BankAccountSignatoryFirstName__c ,order.BillingProfile__r.BankAccountSignatoryFiscalCode__c ,order.BillingProfile__r.BankAccountSignatoryLastName__c ,order.BillingProfile__r.BankAgency__c,order.BillingProfile__r.BankName__c,order.BillingProfile__r.IbanABI__c ,order.BillingProfile__r.IbanCAB__c ,order.BillingProfile__r.IbanCIN_IBAN__c ,order.BillingProfile__r.IbanCIN__c ,order.BillingProfile__r.IbanCodeNumber__c ,order.BillingProfile__r.IbanCountry__c ,BillingProfile__r.PaymentMethod__c,order.Contact__r.FAX,order.Contact__r.Email,order.Contact__r.Phone,order.SalesContact__r.FirstName,order.SalesContact__r.LastName,Order.Agency__c,Order.AggregateBilling__c,Order.AnnualConsumption__c,Order.AtecoCode__c,Order.Channel__c ,Order.CommentForDL__c,Order.CommercialAction__c,Order.CommercialProductVersion__c,Order.ConnectionMandate__c,Order.ContractId,Order.ConventionAssociation__c,Order.CreatedBy__c ,Order.createddate,Order.CustomerCompanyName__c,Order.CustomerFiscalCode__c,Order.CustomerLastName__c,Order.CustomerName__c,Order.Disconnectable__c,Order.DisconnectibilityType__c,Order.DistributorCode__c,Order.EffectiveDate,Order.ExciseGAS__c,Order.ImplantType__c,Order.MarketOrigin__c,Order.MaxRequiredPotential__c,Order.OrderNumber,Order.PhoneNumber__c,Order.PowerAvailable__c,Order.PowerCommitted__c,Order.PreviousHolderFirstName__c ,Order.PreviousHolderFiscalCode__c ,Order.PreviousHolderLastName__c ,Order.PreviousHolderVatNumber__c ,Order.PreviousTrader__c,Order.ProcessType__c,Order.Profile__c,Order.RequestOption__c,Order.ResidentialStreetName__c,Order.SelfCertificationConnection__c,Order.ServicePointCodeFormula__c,Order.ShippingCity__c,Order.ShippingPlaceCode__c,Order.ShippingPostalCode__c,Order.ShippingProvince__c,Order.ShippingStreetName__c,Order.ShippingStreetNumber__c,Order.SignedDate__c,Order.SupplyCityCode__c,Order.SupplyCity__c,Order.SupplyPlace__c,Order.SupplyPostalCode__c,Order.SupplyState__c,Order.SupplyStreetName__c,Order.SupplyStreetNumber__c,Order.TemporaryConnectionEndDate__c,Order.TemporaryConnectionStartDate__c,Order.VAT__c,Order.VendorFirstName__c ,Order.VendorLastName__c ,Order.VoltageLevel__c,OrderItem.GreenCertificateIncluded__c,OrderItem.GreenEnergyOption__c,OrderItem.Index0PUN__c,OrderItem.Index1PUN__c,OrderItem.Index2PUN__c,OrderItem.Index3PUN__c,OrderItem.PriceF0__c,OrderItem.PriceF1__c,OrderItem.PriceF2__c,OrderItem.PriceF3__c,OrderItem.PriceGas__c,OrderItem.PriceGreenOption__c FROM OrderItem   ';
         String separator     = ';';
- 
-    try {   
+        // Delete Start old File
+        String title                   = 'OUT_OP_EE' ;
+        HDT_UTL_ContentVersion.deleteFiles(title);
+       // Delete End old File
+    
+       try {   
         List<OrderItem> listOrderItem = Database.query(query+condition);
            
           
@@ -220,18 +224,21 @@ public with sharing class HDT_QBL_SIE34_1EE implements Queueable  {
            
         }
         if (listOrderItem!=null && listOrderItem.size()>0 ) {
-            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_EE.txt','OUT_OP_EE'));
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_OP_EE.txt',title));
         }
-        System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+        if(!Test.isRunningTest()){
+        	System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
+        }
      
     } 
        catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
-          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          if(!Test.isRunningTest()){
+    	  	System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
+          }
        }
       
     }
   
  }
- 

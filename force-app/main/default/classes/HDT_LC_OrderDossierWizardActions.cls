@@ -21,7 +21,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
         List<Order> ordersToUpdate = new List<Order>();
-        List<Order> childOrdersToUpdate = new List<Order>();
         
         Order orderToUpdate = new Order(
             Id = orderParent.Id
@@ -43,8 +42,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
-
-        Set<Id> quoteIds = new Set<Id>();//if quote is in this set and sp!=null, blank quote
+        Map<id, Order> quoteIdsMap = new Map<id, Order>();
+        Set<Id> quoteIdsDuplicates = new Set<Id>();//if quote is in this set and sp!=null, blank quote
 
         for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
@@ -52,10 +51,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     Id = childOrd.Id,
                     Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Documentazione Validata' : (checkRequiredDocs(childOrd) ? 'Documentazione Validata': 'In attesa validazione')
                 );
-                if(quoteIds.contains(childOrd.SBQQ__Quote__c)){
-                    o.SBQQ__Quote__c=null;
+                if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
+                    o.isMultipleQuoteOffer__c=true;
+                    quoteIdsDuplicates.add(childOrd.SBQQ__Quote__c);
                 }else{
-                    quoteIds.add(childOrd.SBQQ__Quote__c);
+                    quoteIdsMap.put(childOrd.SBQQ__Quote__c, childOrd);
                 }
                 ordersToUpdate.add( o );
             } else if(childOrd.RecordType.DeveloperName == 'HDT_RT_VAS' && mapChildOrders.get(childOrd?.OrderReference__c) != null ){
@@ -67,19 +67,32 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 );
                 ordersToUpdate.add(o);//get CCheck Result from offer
             }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
-                if(quoteIds.contains(childOrd.SBQQ__Quote__c)){
-                    ordersToUpdate.add(new Order( Id = childOrd.Id, SBQQ__Quote__c=null));
+                if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
+                    ordersToUpdate.add(new Order( Id = childOrd.Id, isMultipleQuoteOffer__c=true));
+                    quoteIdsDuplicates.add(childOrd.SBQQ__Quote__c);
                 }else{
-                    quoteIds.add(childOrd.SBQQ__Quote__c);
+                    quoteIdsMap.put(childOrd.SBQQ__Quote__c, childOrd);
                 }
             }
         }
         
         ordersToUpdate.add(orderToUpdate);
+        map<id, Order> ordersToUpdateMap = new map<id, Order>(ordersToUpdate);
+
+        for(id quoteDuplicate : quoteIdsDuplicates){
+            id ordId = quoteIdsMap.get(quoteDuplicate).Id;
+            Order o = ordersToUpdateMap.get(ordId);
+            if(o==null){
+                o=new Order(id=ordId);
+                ordersToUpdate.add(o);
+            }
+            o.isMultipleQuoteOffer__c=true;
+        }
+
 
         //update child orders
         for (Order childOrder : childOrders) {
-            if (childOrder.ComfortCallDaysDue__c != null) {
+            if (childOrder.ComfortCallDaysDue__c != null) {//pay attention of duplicate order in list
                 ordersToUpdate.add(new Order(
                     Id = childOrder.Id,
                     Phase__c = 'In attesa conferma cliente'
@@ -114,7 +127,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
-    public static void save2(Order orderParent,boolean isPlicoSend){
+    public static void savE2(Order orderParent,boolean isPlicoSend){ 
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();

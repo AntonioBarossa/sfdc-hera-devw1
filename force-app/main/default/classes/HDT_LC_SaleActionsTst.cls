@@ -168,9 +168,9 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 		HDT_LC_SaleActions.saveBackup(tSales[0]);
 
-		List<Opportunity> tOppSavedBckUp=[SELECT Id, StageName
+		/*List<Opportunity> tOppSavedBckUp=[SELECT Id, StageName
 		                                  FROM Opportunity
-		                                  WHERE StageName='Closed Won'];
+		                                  WHERE StageName='Closed Won'];*/
 
 		List<Sale__c> tSaleSavedBckUp=[SELECT Id, Status__c
 		                               FROM Sale__c

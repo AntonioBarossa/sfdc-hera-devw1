@@ -27,6 +27,7 @@ public class HDT_LC_CompleteCaseTst {
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickCasePhase();
             
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', constants.CASE_RECORDTYPEID_MOROSITA, constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'In Lavorazione', constants.CASE_RECORDTYPEID_MOROSITA, constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
@@ -39,13 +40,13 @@ public class HDT_LC_CompleteCaseTst {
             }
             insert cases;
             
-            List<Case> cases2 = HDT_UTL_DataFactoryTst.createCase(1,false,accId,null,null,null,null);
-            for(Case c : cases2){
+            List<Case> casesModifica = HDT_UTL_DataFactoryTst.createCase(1,false,accId,null,null,null,null);
+            for(Case c : casesModifica){
                 c.type = 'Modifica Contratti PreAttivazione';
                 c.phase__c = 'In Lavorazione';
             }
-            insert cases2;
-            Id caseId = cases2[0].id;
+            insert casesModifica;
+            Id caseId = casesModifica[0].id;
             
             List<wrts_prcgvr__Activity__c> activities =  HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
             for(wrts_prcgvr__Activity__c a : activities){
@@ -54,26 +55,26 @@ public class HDT_LC_CompleteCaseTst {
             }
             insert activities;
             
-            List<Case> cases3 = HDT_UTL_DataFactoryTst.createCase(1,false,accId,null,null,null,null);
-            for(Case c : cases3){
+            List<Case> casesDocumentale = HDT_UTL_DataFactoryTst.createCase(1,false,accId,null,null,null,null);
+            for(Case c : casesDocumentale){
                 c.type = 'Documentale/Copia Contratto';
                 c.phase__c = 'In Lavorazione';
             }
-            insert cases3;
+            insert casesDocumentale;
             
             
-            List<wrts_prcgvr__Activity__c> activities2 =  HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
-            for(wrts_prcgvr__Activity__c a : activities2){
+            List<wrts_prcgvr__Activity__c> activitiesOpen =  HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
+            for(wrts_prcgvr__Activity__c a : activitiesOpen){
                 a.wrts_prcgvr__Status__c = 'Aperta';
-                a.case__c = cases3[0].id;
+                a.case__c = casesDocumentale[0].id;
             }
-            insert activities2;
+            insert activitiesOpen;
                         
         }
      }
 
   @isTest
-	static void test1(){
+	static void testContratti(){
         
         String caseId = [Select id From Case Where type = 'Contratti/Bonus Commerciale'].id;
         
@@ -83,14 +84,14 @@ public class HDT_LC_CompleteCaseTst {
         
         Test.stopTest();
         
-        System.assertEquals('Il case deve essere "In Lavorazione" per procedere con la chiusura', res, 'The method does not return the correct string');
+        System.assertEquals('success', res, 'The method does not return the correct string');
         
         System.assertNotEquals(null, res, 'String not returned');
         
     }
     
   @isTest
-	static void test2(){
+	static void testModificaContratti(){
         
         String caseId = [Select id From Case Where type = 'Modifica Contratti PreAttivazione'].id;
         
@@ -107,7 +108,7 @@ public class HDT_LC_CompleteCaseTst {
     }
     
   @isTest
-	static void test3(){
+	static void testDocumentale(){
         
         String caseId = [Select id From Case Where type = 'Documentale/Copia Contratto'].id;
         

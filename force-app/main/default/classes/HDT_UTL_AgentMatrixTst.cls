@@ -39,7 +39,7 @@ public with sharing class HDT_UTL_AgentMatrixTst{
 			test.stopTest();
 
 			System.assertEquals('testCode', agencyCodeisMonitoringList[0], 'AgencyCode not returned');
-			System.assertNotEquals(true, agencyCodeisMonitoringList.isEmpty());
+			System.assertNotEquals(true, agencyCodeisMonitoringList.isEmpty(), 'agencyCodeIsMonitoringList did not work correctly');
 		}
 	}
 }

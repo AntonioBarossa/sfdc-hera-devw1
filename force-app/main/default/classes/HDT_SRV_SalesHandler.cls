@@ -16,6 +16,11 @@ public with sharing class HDT_SRV_SalesHandler {
     * @return the response item containing the result of the executed operations
     */
 
+    /**@frpanico 25/10/2021
+     * Added class instance
+     */
+    private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
+
     public  HDT_WRP_MrrResponse.HDT_WRP_Response manageSalesProcessCategory(HDT_WRP_MrrRequest.HDT_WRP_Request request, HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem) {
         
         HDT_WRP_MrrResponse.HDT_WRP_Object responseObject = new HDT_WRP_MrrResponse.HDT_WRP_Object();
@@ -98,6 +103,15 @@ public with sharing class HDT_SRV_SalesHandler {
                                  }
                             }
                             when 'Ammissibilità OK' {
+
+                                /**@frpanico 26/10/2021
+                                 * Cambio Voltura - RN008 "Voltura con Switch"
+                                 */
+                                if(ordRetrieved.ProcessType__c.equalsIgnoreCase('Voltura con Switch'))
+                                {
+                                    voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
+                                }
+
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                 ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
@@ -109,7 +123,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 } else {
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
                                 }
-                                String workExecutionTime =mapRequestFields.get('TEMP_ES_PREV');
+                                //String workExecutionTime =mapRequestFields.get('TEMP_ES_PREV');
                                 if(String.isNotBlank(mapRequestFields.get('TEMP_ES_PREV')) && mapRequestFields.get('TEMP_ES_PREV').isNumeric()){
                                     ord.WorkExecutionTime__c = Decimal.valueOf(mapRequestFields.get('TEMP_ES_PREV'));
                                 }
@@ -167,7 +181,9 @@ public with sharing class HDT_SRV_SalesHandler {
                             when 'Errore tecnico invio a SAP', 'Flusso bloccato in assenza del precedente', 'Errore invio a DL/SII' {
                                 system.debug('previousPhase '+previousPhase);
                                 String finalPhase = ord.phase__c;
-                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)) finalPhase = 'Errore comunicazione SAP';
+                                if('Errore tecnico invio a SAP'.equalsIgnoreCase(finalPhase)){
+                                     finalPhase = 'Errore comunicazione SAP';
+                                }
                             	ord.TrackingDiscardPhase__c = finalPhase;
                                 ord.phase__c=previousPhase; //perchè queste 3 non sono ammesse nel campo phase__c
                                 system.debug('phase__c '+ord.phase__c);

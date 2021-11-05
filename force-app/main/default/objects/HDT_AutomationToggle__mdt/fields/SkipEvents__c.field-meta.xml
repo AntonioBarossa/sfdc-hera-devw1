@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SkipEvents__c</fullName>
+    <description>List of events to be skipped (e.g.: after update;before insert)</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>List of events to be skipped
+(e.g.: after update;before insert)
+* = All events</inlineHelpText>
+    <label>Skip Events</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

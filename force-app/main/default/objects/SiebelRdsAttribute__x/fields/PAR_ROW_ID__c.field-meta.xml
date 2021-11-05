@@ -7,10 +7,10 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Parent Siebel row ID</label>
+    <label>Numero Richiesta</label>
     <length>15</length>
     <referenceTo>SiebelRds__x</referenceTo>
-    <relationshipLabel>Attributi Richiesta</relationshipLabel>
+    <relationshipLabel>Attributi</relationshipLabel>
     <relationshipName>SiebelRdsAttribute</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

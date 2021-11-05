@@ -969,6 +969,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Segnalazioni VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Aggiunta Bonus o VAS</valueName>
         </valueSettings>
         <valueSettings>

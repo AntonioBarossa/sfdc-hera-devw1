@@ -4,8 +4,8 @@ public class HDT_TRH_ProductStObjTst {
     @testSetup
     static void setup() {
         List<OperandTemplate__c> operandTemplateList = new List<OperandTemplate__c>();
-        OperandTemplate__c op1 = new OperandTemplate__c(Operands__c = 'ES_ADG_GO', ContractTemplate__c = 'ZELE_PREZZO', Typology__c = 'PDISCNT', Definition__c = 'DESCR ES_ADG_GO');
-        operandTemplateList.add(op1);
+        OperandTemplate__c op = new OperandTemplate__c(Operands__c = 'ES_ADG_GO', ContractTemplate__c = 'ZELE_PREZZO', Typology__c = 'PDISCNT', Definition__c = 'DESCR ES_ADG_GO');
+        operandTemplateList.add(op);
         insert operandTemplateList;
 
         List<RateTemplate__c> rateList = new List<RateTemplate__c>();

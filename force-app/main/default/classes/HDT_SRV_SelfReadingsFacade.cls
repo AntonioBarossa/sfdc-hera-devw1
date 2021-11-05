@@ -4,10 +4,14 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
     global Object execute(Object args) {
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,Object> arg = new Map<String,Object>();
+        String method = (String) argsMap.get('method');//NOTA: PARAMETRO NON UTILIZZATO*/
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
-        String method = (String) argsMap.get('method');//NOTA: PARAMETRO NON UTILIZZATO
         SObject obj = (SObject) argsMap.get('sender');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
@@ -26,14 +30,22 @@ global with sharing class HDT_SRV_SelfReadingsFacade implements wrts_prcgvr.Inte
                     System.debug(LoggingLevel.DEBUG, 'CheckAutolettura OK, next step: InvioLetture');
                     HDT_WRP_GenericSapIntegration sapIntegrationInvioLetture = new HDT_WRP_GenericSapIntegration();
                     sapIntegrationInvioLetture = submitRequest(recordId, 'InvioLetture');
-                    HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture, responseCheckAutoletture.checkAutoletturaDescription);
+                    /*
+                        @Author: Davide Viola - 20/10/2021
+                        Description: PMD -> Commentata variabile non utilizzata.
+                    */
+                    /*HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = */HDT_SRV_SelfReadings.handleResponse(sapIntegrationInvioLetture, responseCheckAutoletture.checkAutoletturaDescription);
                 } else {
                     System.debug(LoggingLevel.DEBUG, 'CheckAutolettura KO');
                 }
             } else if (requestType == 'InvioLettureForzato') {
                 HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
                 sapIntegration = submitRequest(recordId, requestType);
-                HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
+                /*
+                    @Author: Davide Viola - 20/10/2021
+                    Description: PMD -> Commentata variabile non utilizzata.
+                */
+                /*HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse responseInvioLetture = */HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
             }
 
             response.success = True;

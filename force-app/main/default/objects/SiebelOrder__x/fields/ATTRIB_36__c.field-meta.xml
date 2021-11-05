@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Nome referente</label>
+    <label>Nome referente in azienda</label>
     <length>50</length>
     <required>false</required>
     <type>Text</type>

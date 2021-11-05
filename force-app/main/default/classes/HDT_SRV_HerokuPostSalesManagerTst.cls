@@ -632,7 +632,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
 
         Map<String,Map<String,String>> responseMap;
 
-        HDT_WS_PostSalesTstMock2(Map<String,Map<String,String>> rM){
+        public HDT_WS_PostSalesTstMock2(Map<String,Map<String,String>> rM){
             responseMap = rM;
         }
         public HTTPResponse respond(HTTPRequest request) {
