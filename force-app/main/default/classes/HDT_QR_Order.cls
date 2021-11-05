@@ -1131,7 +1131,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [Select id,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
+        return [Select id,Phase__c,ProcessType__c,RecordType.DeveloperName from Order Where id = :id WITH SECURITY_ENFORCED];
     }
 
     //@frpanico getExciseTranscode

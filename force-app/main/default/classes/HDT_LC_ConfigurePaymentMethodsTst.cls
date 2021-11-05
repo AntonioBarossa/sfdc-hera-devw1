@@ -11,6 +11,8 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
 
     @TestSetup
     static void setup(){
+
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         
         Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
  
@@ -21,6 +23,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
         insert internalUser;
  
         System.runAs(internalUser) {
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
             //seu testSetup   
             List<Account> accountList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accountList[0].id, 'Bozza');

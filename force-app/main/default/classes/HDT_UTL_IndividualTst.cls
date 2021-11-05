@@ -38,9 +38,7 @@ public class HDT_UTL_IndividualTst {
         List<Individual> individualReturnedFromMethod = HDT_UTL_Individual.createIndividualContact(listString);
         Id indIdRet = individualReturnedFromMethod[0].Id;
         List<Individual> indvl =[SELECT Id FROM Individual WHERE Id = :indIdRet];
-        System.debug('@@@@RETURNED INDIVIDUAL FROM METHOD: ' + individualReturnedFromMethod);
-        System.debug('@@@@RETURNED INDIVIDUAL FROM METHOD - SIZE:  ' + individualReturnedFromMethod.size());
-
+       
         
         
         System.assertEquals(indvl[0].Id,individualReturnedFromMethod[0].Id,'The method worked on the right Id of the Individual');

@@ -166,7 +166,7 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                     let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
                     createActivityInbound({
                         //startCall: startCallDateTime,
-                        'registrationLink': reiteklink,
+                        'reiteklink': reiteklink,
                         'username' : username,
                         'password' : password
                     }).then(data => {
