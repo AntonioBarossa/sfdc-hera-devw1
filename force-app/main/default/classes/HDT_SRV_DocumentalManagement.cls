@@ -40,6 +40,8 @@ public class HDT_SRV_DocumentalManagement{
 		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 3');
 		
 		//sub-processing della lista di mappe realizzata al punto precedente.
+		//nuovo campo Customer Info settoreMerceologico
+		String settoreMerceologico = '';
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], driverStructure, formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure, formParamsMap);
@@ -49,7 +51,30 @@ public class HDT_SRV_DocumentalManagement{
 			}else if(context.equalsIgnoreCase('GC')){
 				payload += generatePayloadGestioneCredito(formParamsMap);
 			}
+
+			//nuova logica per campo settore merceologico
+			if ('Context1'.equalsIgnoreCase(documentalContext) || 'Context2'.equalsIgnoreCase(documentalContext)){
+				String objectName = 'Context1'.equalsIgnoreCase(documentalContext)? 'Order' : 'Case';
+				String retrivedValue = HDT_UTL_DocumentalManagement.getValue(objectName, 'CommodityFormula__c', 0, recordObjectsListMap[i], formParamsMap);
+				switch on retrievedValue {
+					when  'Gas' {
+						retrivedValue = '#GAS';
+					}
+					when  'Energia Elettrica' {
+						retrivedValue = '#ELE';
+					}
+					when else {
+						retrivedValue = '';
+					}
+				}
+				if (String.isNotEmpty(retrivedValue) && !settoreMerceologico.contains(retrivedValue)) {
+					settoreMerceologico += retrivedValue;
+				}
+			}
 			
+
+			
+
 			Blob payloadBlob = Blob.valueOf(payload);
 			payload = EncodingUtil.base64Encode(payloadBlob);
 			System.debug(LoggingLevel.DEBUG, 'Paylod ' + payload);
@@ -57,6 +82,9 @@ public class HDT_SRV_DocumentalManagement{
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
+		}
+		if (String.isNotEmpty(settoreMerceologico)){
+			formParamsMap.put('SettMerceologico',settoreMerceologico.substring(1));
 		}
 		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 4');
 		
@@ -637,6 +665,8 @@ public class HDT_SRV_DocumentalManagement{
 			//signInfo
 			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
 			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String rdsCase = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
+			String rdsOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'OrderNumber', 0, inputs, formParams);
 			String telephoneNumber = '+39';
 			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
 			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
@@ -659,8 +689,14 @@ public class HDT_SRV_DocumentalManagement{
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
 			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
+			String firstName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','FirstName',0,inputs,formParams);
+			String lastName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','LastName',0,inputs,formParams);
+			String userTimeZone = UserInfo.getTimeZone().getDisplayName(); 
 			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
 			String processType = 'Plico contrattuale';
+			Datetime dataCreazioneDocumento = Datetime.now(); 
+			Datetime dataCaricamentoDocumento = Datetime.now();
+			String rds = String.isNotBlank(rdsCase)? rdsCase : rdsOrder;
 			if(String.isNotBlank(processTypeCase)){
 				processType = processTypeCase;
 			}
@@ -670,6 +706,15 @@ public class HDT_SRV_DocumentalManagement{
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
 			customerInfo.emailSubject = 'HERA - ' + processType;
+			//@ealpi nuovi campi inviati
+			customerInfo.rds = rds;
+			customerInfo.dataCreazioneDocumento = dataCreazioneDocumento.format('yyyy-MM-dd hh:mm:ss', userTimeZone);
+			customerInfo.dataCaricamentoDocumento = dataCaricamentoDocumento.format('yyyy-MM-dd hh:mm:ss', userTimeZone);
+			customerInfo.lastName = lastName;
+			customerInfo.firstName = firstName;
+			if (formParams.containsKey('SettMerceologico')){
+				customerInfo.settoreMerceologico = (String)formParams.get('SettMerceologico');
+			}
 			signInfo.customerInfo = customerInfo;
 
 			//template
