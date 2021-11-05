@@ -1,6 +1,6 @@
 <template>
     <template if:false={status.error}>
-        <div class="slds-theme_default slds-m-around_medium slds-is-relative">
+        <div class="slds-theme_default slds-p-around_medium slds-is-relative">
             <template if:true={showSpinner}>
                 <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
             </template>
@@ -44,6 +44,8 @@
             <b class="slds-text-body_regular custom-title">{status.title}</b>
             <div class="slds-text-body_regular">{status.message}</div>
         </div>
+    </template>
+    <template if:true={showBackButton}>
         <div class="slds-theme_default slds-border_top slds-p-around_medium slds-grid slds-grid_reverse">
             <lightning-button variant="brand" label="Indietro" onclick={goBack}></lightning-button>
         </div>

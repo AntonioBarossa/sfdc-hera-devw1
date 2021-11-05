@@ -29,6 +29,9 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     get assigneesNotFound() {
         return this.assigneesSearched && !this.assigneesFound;
     }
+    get showBackButton() {
+        return this.recordId == null;
+    }
 
     connectedCallback() {
         if(this.recordId) {
@@ -114,8 +117,10 @@ export default class hdtActivityReassignmentCore extends LightningElement {
 
     async doAssignToMe() {
         try {
+            this.showSpinner = true;
             const currentUser = await getCurrentUser();
             if(await isDynamicWorkGroup({loginChannel: currentUser.LoginChannel__c})) {
+                this.showSpinner = false;
                 this.toggleWorkGroupSearch(currentUser.Id);
             } else {
                 this.handleReassignResult(await assignToMe({idList: this.idList}));
