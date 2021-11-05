@@ -2,11 +2,11 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
     public static Object getProductList(String filterString, String ruleId, String dmlContext, Boolean usePagination, String pageNumber){
 
-        System.debug('>>> filterString: ' + filterString);
-        System.debug('>>> ruleId: ' + ruleId);
-        System.debug('>>> dmlContext: ' + dmlContext);
-        System.debug('>>> usePagination: ' + usePagination);
-        System.debug('>>> pageNumber: ' + pageNumber);
+        System.debug(logginglevel.DEBUG, '>>> filterString: ' + filterString);
+        System.debug(logginglevel.DEBUG, '>>> ruleId: ' + ruleId);
+        System.debug(logginglevel.DEBUG, '>>> dmlContext: ' + dmlContext);
+        System.debug(logginglevel.DEBUG, '>>> usePagination: ' + usePagination);
+        System.debug(logginglevel.DEBUG, '>>> pageNumber: ' + pageNumber);
 
         HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj respObj = new HDT_WRP_ProductAssociation.HDT_WRP_RespQueryObj();
 
@@ -15,14 +15,14 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
             if(!usePagination){
                 Integer recordCounter = HDT_QR_ProductAssociation.getCountOfNonConfiguredProduct2(queryString);
-                System.debug('>>> recordCounter: ' + recordCounter);
+                System.debug(logginglevel.DEBUG, '>>> recordCounter: ' + recordCounter);
                 respObj.recordCounter = String.valueOf(recordCounter);
             }
             
             queryString += HDT_SRV_ProductAssociation.generateOffSetString(pageNumber);
             respObj.prodList = HDT_QR_ProductAssociation.getIdsNonConfiguredProduct2(respObj.prodList, queryString);
             respObj.success = true;
-            System.debug('>>> RECORDS TOT: ' + respObj.prodList.size());
+            System.debug(logginglevel.DEBUG, '>>> RECORDS TOT: ' + respObj.prodList.size());
 
         } catch (Exception ex){
             respObj.success = false;
@@ -35,12 +35,12 @@ public inherited sharing class HDT_SRV_RuleAssociation {
     //************
     public static Object runProductOptionAssociation(String ruleId, String confRuleObj, List<String> recordList, String executionType, String filterString, String dmlContext){
         
-        System.debug('>>> ruleId: ' + ruleId);
-        System.debug('>>> confRuleObj: ' + confRuleObj);
-        System.debug('>>> recordList: ' + recordList);
-        System.debug('>>> executionType: ' + executionType);
-        System.debug('>>> filterString: ' + filterString);
-        System.debug('>>> dmlContext: ' + dmlContext);   
+        System.debug(logginglevel.DEBUG, '>>> ruleId: ' + ruleId);
+        System.debug(logginglevel.DEBUG, '>>> confRuleObj: ' + confRuleObj);
+        System.debug(logginglevel.DEBUG, '>>> recordList: ' + recordList);
+        System.debug(logginglevel.DEBUG, '>>> executionType: ' + executionType);
+        System.debug(logginglevel.DEBUG, '>>> filterString: ' + filterString);
+        System.debug(logginglevel.DEBUG, '>>> dmlContext: ' + dmlContext);   
 
         HDT_WRP_ProductAssociation.HDT_WRP_RespRunBatchObj respRunBatchObj;
 
@@ -70,18 +70,18 @@ public inherited sharing class HDT_SRV_RuleAssociation {
         //List<SBQQ__ProductFeature__c> productFeatureList;
         //Map<Id, Id> productIdFeatureIdMap;
 
-        System.debug('>>> PRODUCT RULE ID: ' + configurationRuleToClone.SBQQ__ProductRule__c);
+        System.debug(logginglevel.DEBUG, '>>> PRODUCT RULE ID: ' + configurationRuleToClone.SBQQ__ProductRule__c);
 
         //prod2list = HDT_QR_ProductAssociation.getProductOption2recordBySkuId(prod2list, configurationRuleToClone.SBQQ__Product__c);
 
-        //System.debug('>>> prod2listsize ' + prod2list.size());
-        //System.debug('>>> family ' + prod2list[0].Family);
+        //System.debug(logginglevel.DEBUG, '>>> prod2listsize ' + prod2list.size());
+        //System.debug(logginglevel.DEBUG, '>>> family ' + prod2list[0].Family);
 
         //productIdFeatureIdMap = new Map<Id, Id>();
 
         //if(prod2list != null && prod2list.size() > 0){
         //    productFeatureList = HDT_QR_ProductAssociation.productFeatureListByFamily(productFeatureList, recordList, prod2list[0].Family);
-        //    System.debug('>>> productFeatureList ' + productFeatureList.size());
+        //    System.debug(logginglevel.DEBUG, '>>> productFeatureList ' + productFeatureList.size());
         //    productIdFeatureIdMap = HDT_UTL_ProductAssociation.generateSkuIdFeatureIdMap(productFeatureList, productIdFeatureIdMap);
         //}
 
@@ -99,7 +99,7 @@ public inherited sharing class HDT_SRV_RuleAssociation {
 
             configurationRuleList.add(newRecord);
         }
-        System.debug('>>> record to insert: ' + String.valueOf(configurationRuleList));
+        System.debug(logginglevel.DEBUG, '>>> record to insert: ' + String.valueOf(configurationRuleList));
         insertResult.errorData = new List<HDT_WRP_ProductAssociation.HDT_WRP_LineError>();
         insertResult.errorData = databaseInsert(configurationRuleList, insertResult.errorData);
 

@@ -161,4 +161,9 @@
         <default>false</default>
         <label>Vendita TopBusiness</label>
     </standardValue>
+    <standardValue>
+        <fullName>Alexa</fullName>
+        <default>false</default>
+        <label>Alexa</label>
+    </standardValue>
 </StandardValueSet>

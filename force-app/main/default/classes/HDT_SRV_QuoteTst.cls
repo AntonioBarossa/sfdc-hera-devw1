@@ -30,12 +30,14 @@ public with sharing class HDT_SRV_QuoteTst {
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
             List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-            List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, true, orderList[0].Id, oppList[0].Id, saleList[0].Id, 'Amendment');
+            HDT_UTL_DataFactoryTst.createQuote(1, true, orderList[0].Id, oppList[0].Id, saleList[0].Id, 'Amendment');
         }
     }
 	
 	@isTest
     public static void testCheckReadAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -44,13 +46,19 @@ public with sharing class HDT_SRV_QuoteTst {
             Test.startTest();
 
             srvQuote.checkReadAccess('Agency__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -59,13 +67,19 @@ public with sharing class HDT_SRV_QuoteTst {
             Test.startTest();
 
             srvQuote.checkCreateAccess('Agency__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -74,8 +88,12 @@ public with sharing class HDT_SRV_QuoteTst {
             Test.startTest();
 
             srvQuote.checkUpdateAccess('Agency__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
@@ -99,7 +117,7 @@ public with sharing class HDT_SRV_QuoteTst {
                 Sale__c = sale.Id
             );
 
-            SBQQ__Quote__c testQuote = srvQuote.createRecord(quote);
+            srvQuote.createRecord(quote);
 
             List<SBQQ__Quote__c> quoteList = [SELECT Id FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'In Review'];
  

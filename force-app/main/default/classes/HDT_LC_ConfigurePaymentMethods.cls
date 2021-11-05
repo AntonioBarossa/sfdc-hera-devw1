@@ -3,10 +3,12 @@ public inherited sharing class HDT_LC_ConfigurePaymentMethods {
     private static HDT_QR_Activity activityQr = new HDT_QR_Activity();
 
 
-    public HDT_LC_ConfigurePaymentMethods() {}
+    public HDT_LC_ConfigurePaymentMethods() {
+        system.debug('Costruttore HDT_LC_ConfigurePaymentMethods');
+    }
 
      @AuraEnabled
-     public static Boolean disableBotton(String idAcc, Object o){
+     public static Boolean disableBotton(String idAcc, SObject o){
 
         if (o != null) {
         

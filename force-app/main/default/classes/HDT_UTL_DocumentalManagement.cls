@@ -1,6 +1,11 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
 public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static List<Map<String,List<sObject>>> getRecordObjectsList(List<SObject> recordsList, String context){
-		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		/*
+			@Author: Davide Viola - 20/10/2021
+			Description: PMD -> Commentata variabile non utilizzata.
+		*/
+		//List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		switch on context {
 			when 'Context1' {
 				return getRecordObjectsListContext1(recordsList);
@@ -29,10 +34,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cv.PathOnClient = filename + '.pdf';
 		cv.ContentLocation = 'S';
 		try {
-			insert cv;
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
+			HDT_UTL_DatabaseService.insertSObject(cv);
 			return cv;
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 	}
@@ -50,10 +56,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		// V = Viewer, C = Collaborator, I = Inferred
 		cdl.ShareType = 'V';
 		try {
-			insert cdl;
+			HDT_UTL_DatabaseService.insertSObject(cdl);
 			return cdl;
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 	}
@@ -65,7 +71,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			ContentDistribution cd = (ContentDistribution)recordList[0];
 			return cd.DistributionPublicUrl;
 		} catch (Exception e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 		
@@ -82,10 +88,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		cd.PreferencesPasswordRequired=false;
 		cd.PreferencesAllowOriginalDownload= true;
 		try {
-			insert cd;
+			HDT_UTL_DatabaseService.insertSObject(cd);
 			return getSharedLink(cd.Id);
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(LoggingLevel.DEBUG, e);
 			return null;
 		}
 	}
@@ -94,7 +100,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		
 		//DEBUG
 		String debugString = 'HDT_UTL_DocumentalManagement - createDocumentEnvelopeAttachment';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
 		
 		try {
 			String recordId;
@@ -141,15 +147,15 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			
 			if(envelopeList.size()>0){
 				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
-				System.debug(debugString + ' - result: '+ result);
+				System.debug(LoggingLevel.DEBUG, debugString + ' - result: '+ result);
 			}
 			if(orderList.size()>0){
 				Boolean resultOrder = HDT_UTL_DatabaseService.updateSObject(orderList);
-				System.debug(debugString + ' - resultOrder: '+ resultOrder);
+				System.debug(LoggingLevel.DEBUG, debugString + ' - resultOrder: '+ resultOrder);
 			}
 			
 		} catch (Exception ex) {
-			System.debug('Error in class HDT_UTL_DocumentalManagement method createDocumentEnvelopeAttachment at line' + ex.getLineNumber() + '. Error: '+ ex.getMessage());
+			System.debug(LoggingLevel.DEBUG, 'Error in class HDT_UTL_DocumentalManagement method createDocumentEnvelopeAttachment at line' + ex.getLineNumber() + '. Error: '+ ex.getMessage());
 		}
 	}
 
@@ -157,8 +163,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.mandatory == '1')
+			if(singleAttachment.mandatory == '1'){
 				return true;
+			}
 		}
 		return false;
 	}
@@ -198,7 +205,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order','DocumentazioneAnticipata' {
-				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c,Cluster__c';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,ShippingMail__c,SignMode__c,DocumentalPhase__c,Cluster__c';
 				fromString = 'Order';
 				whereString = ' OrderNumber = \''+requestId + '\'';
 			}
@@ -208,13 +215,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				whereString = ' CaseNumber = \''+requestId + '\'';
 			}
 			when else {
-				fieldString = 'Id,PrimaryEmail__c,SendMode__c';
+				fieldString = 'Id,PrimaryEmail__c,SendMode__c,LastUsedPostelEmail__c';
 				fromString = 'Account';
 				whereString = 'Id = \''+requestId + '\'';
 			}
 		}
 		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
-		System.debug('Query: ' + queryString);
+		System.debug(LoggingLevel.DEBUG, 'Query: ' + queryString);
 		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
 		return toReturnList[0];
 	}
@@ -227,54 +234,67 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			switch on sObjName {
 				when 'Case' {
 					documentalSendTracking.Case__c = (Id) requestId;
-					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Type__c = 'Plico';
 				}
 				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
-					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('ShippingMail__c');
+					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
 				when else {
 					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
-					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
-					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('LastUsedPostelEmail__c');
+					documentalSendTracking.Type__c = 'Estratto Conto';
 				}
 			}
 			
 			documentalSendTracking.SendDate__c = Date.today();
 			documentalSendTracking.EnvelopeId__c = envelopeId;
-			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
+			/*
+				@Author: Davide Viola - 20/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
 			
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	public static void createDocumentalActivityForError(String errorMessage, Id requestId, String envelopeId,SObject processRecord){
+		String activityType;
+		if ('35'.equals(errorMessage)){
+			errorMessage = 'Indirizzo Email non valido.';
+			activityType = 'Busta Docusign non consegnata.';
+		}
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentalActivity__c documentalActivity = new DocumentalActivity__c ();
 			switch on sObjName {
 				when 'Case' {
 					documentalActivity.CaseId__c = (Id) requestId;
-					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					//System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
 				}
 				when 'Order' {
 					documentalActivity.OrderId__c = (Id) requestId;
 				}
-				when else {
-
-				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
-			documentalActivity.ErrorDescription__c = errorMessage;
-
-			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalActivity);
+			documentalActivity.ErrorDescription__c = String.isNotBlank(errorMessage) ? errorMessage : 'Errore Firma OTP';
+			documentalActivity.ActivityType__c = activityType;
+			/*
+				@Author: Davide Viola - 20/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*Boolean result = */HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	
@@ -290,13 +310,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				when 'Order' {
 					documentalActivity.OrderId__c = requestId;
 				}
-				when else {
-
-				}
 			}
 			documentalActivity.EnvelopeId__c = envelopeId;
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivity ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivity ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 		return documentalActivity;
 	}
@@ -305,14 +322,14 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			if (sObjName != 'Order'){
-				System.debug('Necessario passare un Order per procedere con la creazione dei dati catastali.');
+				System.debug(LoggingLevel.DEBUG, 'Necessario passare un Order per procedere con la creazione dei dati catastali.');
 				return;
 			}
 
 			// TODO DLM
 
 		} catch (Exception ex) {
-			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createLandRegistryData ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createLandRegistryData ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
@@ -322,7 +339,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		List<DocumentSelected__c> documentSelectedObjectList = (List<DocumentSelected__c> ) caseObject.documenti_selezionati__r;
 		List<sObject> listCase = new List<sObject>();
 		listCase.add(caseObject);
-		System.debug('listCase ' + listCase);
+		System.debug(LoggingLevel.DEBUG, 'listCase ' + listCase);
 		List<sObject> listAccount = new List<sObject>();
 		listAccount.add(accountObject);
 		List<sObject> listContact = new List<sObject>();
@@ -527,7 +544,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				retVal = String.valueOf(formParams.get(fieldString));
 			}
 		} catch (Exception ex) {
-			System.debug(objectString + ' ' + fieldString +' '+ index + ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, objectString + ' ' + fieldString +' '+ index + ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
 		}
     return retVal;
   }
@@ -554,7 +571,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					Date dateObj = Date.valueOf(result);
 					result = transformDate(dateObj);
 				} catch (Exception ex) {
-					System.debug('Attenzione! Rimuovere flag is data nella sezione' + singleRecord.recordType);
+					System.debug(LoggingLevel.DEBUG, 'Attenzione! Rimuovere flag is data nella sezione' + singleRecord.recordType);
 				}
 			}else if(singleRecord.manageAmount != null && singleRecord.manageAmount == 'Y'){
 				result = manageAmountDot(result);
@@ -572,10 +589,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		if(resultOne != null && resultOne != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
 			resultTwo += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
 		}
-		if(singleRecord.separetor == 'space')
+		if(singleRecord.separetor == 'space'){
 			return resultOne + ' ' + resultTwo;
-		else
+		} else {
 			return resultOne + singleRecord.separetor + resultTwo;
+		}
 	}
 
 	public static String calculateExpression(Map<String,List<sObject>> inputs,String expression, Map<String,Object> formParams){
@@ -594,10 +612,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String jolly = '';
 		Integer i = 0;
 		
-		//System.debug('expression ' + expression);
+		//System.debug(LoggingLevel.DEBUG, 'expression ' + expression);
     	expressionArray = expression.split('\\|');
 		
-		//System.debug('expressionArray ' + expressionArray);
+		//System.debug(LoggingLevel.DEBUG, 'expressionArray ' + expressionArray);
 		try{
 			if(expressionArray.size()>0){
 				while(i<expressionArray.size()){
@@ -654,8 +672,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 							break;
 						}
 					}else if(operatore == '>'){
-						Integer propValueInt = Integer.valueOf(propValue);
-						Integer condizioneInt = Integer.valueOf(condizione);
+						/*
+							@Author: Davide Viola - 20/10/2021
+							Description: PMD -> Commentate variabili non utilizzate.
+						*/
+						/*Integer propValueInt = Integer.valueOf(propValue);
+						Integer condizioneInt = Integer.valueOf(condizione);*/
 						if(propValue > condizione){
 							resultToReturn = result;
 							break;
@@ -682,7 +704,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 		}catch(Exception ex){
-			System.debug('for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
 		}
 		
     	return resultToReturn;
@@ -752,7 +774,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 		} catch (Exception ex) {
-			System.debug('Errore calcolo stato documento GC ' + ex.getMessage());
+			System.debug(LoggingLevel.DEBUG, 'Errore calcolo stato documento GC ' + ex.getMessage());
 		}
 		return statoDocumento;
 	}

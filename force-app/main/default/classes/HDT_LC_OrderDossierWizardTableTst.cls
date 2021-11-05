@@ -61,14 +61,14 @@ public class HDT_LC_OrderDossierWizardTableTst{
 
 		List<Order> torderList=[SELECT Id, Phase__c, ContractSigned__c
 		                        FROM Order
-		                        WHERE Phase__c='Bozza'
+		                        WHERE ParentOrder__c = null
 		                        LIMIT 1];
 
 		Map<String, Object> testgetTableData=HDT_LC_OrderDossierWizardTable.getTableData(torderList[0].Id);
 
-		System.assertEquals(2, testgetTableData.values().size(), 'Result Map is Wrong');
+		System.assertEquals(true, testgetTableData.get('childOrdersList') != null, 'Result Map is Wrong');
 
-		System.assertNotEquals(0, testgetTableData.values().size());
+		System.assertNotEquals(0, testgetTableData.values().size(), 'getTableData did not work correctly');
 
 		Test.stopTest();
 	}
@@ -93,7 +93,7 @@ public class HDT_LC_OrderDossierWizardTableTst{
 
 		System.assertEquals(3, torderList2[0].Step__c, 'Order was not updated');
 
-		System.assertNotEquals(0, torderList2[0].Step__c);
+		System.assertNotEquals(0, torderList2[0].Step__c, 'next did not work correctly');
 
 		Test.stopTest();
 	}
@@ -118,7 +118,7 @@ public class HDT_LC_OrderDossierWizardTableTst{
 
 		System.assertEquals(2, torderList2[0].Step__c, 'Order was not updated');
 
-		System.assertNotEquals(0, torderList2[0].Step__c);
+		System.assertNotEquals(0, torderList2[0].Step__c, 'edit did not work correctly');
 
 		Test.stopTest();
 	}

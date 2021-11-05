@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
+        <field>HtmlBody</field>
+        <formula>&apos;&apos;</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Subject</field>
+        <formula>&apos;&apos;</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>ToIds</field>
         <formula>JUNCTIONIDLIST(Case.ContactId)</formula>
     </fieldOverrides>

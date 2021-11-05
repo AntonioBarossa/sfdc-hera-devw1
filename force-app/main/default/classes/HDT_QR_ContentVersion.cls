@@ -19,9 +19,17 @@ public with sharing class HDT_QR_ContentVersion {
 
         return [SELECT Id, ContentDocumentId, VersionData, Title, FileType  
                 FROM ContentVersion 
-                WHERE Id =: contentVersionId];
+                WHERE Id =: contentVersionId
+                WITH SECURITY_ENFORCED];
     }
 
+    public List<ContentVersion> getRecordByIds(List<String> contentVersionId) {
+
+        return [SELECT Id, ContentDocumentId, VersionData, Title, FileType  
+                FROM ContentVersion 
+                WHERE Id IN: contentVersionId
+                WITH SECURITY_ENFORCED];
+    }
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 31/03/2021

@@ -4,21 +4,20 @@
  * @description HDT_SRV_CampaignMemberStatus Test Class
  * @history Lucas da Silva Fernandes – 28/07/2021 – Created Class
  */
-
+@SuppressWarnings('PMD.ApexUnitTestClassShouldHaveAsserts')
 @isTest
 public with sharing class HDT_SRV_CampaignMemberStatusTst {
 
     @TestSetup
     static void setup(){
-
-        List<Campaign> cp = HDT_UTL_DataFactoryTst.createCampaign(1, true);
-
-        List<CampaignMemberStatus> cpmsList= HDT_UTL_DataFactoryTst.createCampaignMemberStatus(1, true, cp[0].Id);
-
+		return;
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+        
+        Exception ex;
+        String message;
 
         Test.startTest();
 
@@ -28,17 +27,30 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                     LIMIT 1];
 
         System.runAs(tUser){
+            
+            try{
 
             HDT_SRV_CampaignMemberStatus.checkCreateAccess('Label');
-
+                
+            }catch(Exception e){
+                ex = e;
+                message = e.getMessage();
+            }
+            
         }
 
         Test.stopTest();
+        
+        System.assertEquals(null, ex, 'CheckCreateAccess did not work correctly');
+        System.assertNotEquals('Non hai permessi per accedere ai campi ', message, 'CheckCreateAccess did not work correctly');
 
     }
 
     @isTest
     public static void testCheckAccessInit() {
+        
+        Exception ex;
+        String message;
 
         Test.startTest();
 
@@ -48,12 +60,21 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                     LIMIT 1];
 
         System.runAs(tUser){
+            
+            try{
 
             HDT_SRV_CampaignMemberStatus.checkAccessInit('Label', 'create');
-
+                
+            }catch(Exception e){
+                ex = e;
+                message = e.getMessage();
+            }
         }
         
         Test.stopTest();
+        
+        System.assertEquals(null, ex, 'CheckCreateAccess did not work correctly');
+        System.assertNotEquals('Non hai permessi per accedere ai campi ', message, 'CheckCreateAccess did not work correctly');
     }
 
     @isTest
@@ -67,6 +88,8 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                     LIMIT 1];
 
         System.runAs(tUser){
+            List<Campaign> cp = HDT_UTL_DataFactoryTst.createCampaign(1, true);
+        	HDT_UTL_DataFactoryTst.createCampaignMemberStatus(1, true, cp[0].Id);
 
             List<CampaignMemberStatus> listCms = HDT_SRV_CampaignMemberStatus.createRecord(
                 new List<CampaignMemberStatus> {new CampaignMemberStatus(
@@ -74,9 +97,9 @@ public with sharing class HDT_SRV_CampaignMemberStatusTst {
                                                 CampaignId = [SELECT Id FROM Campaign Limit 1].Id
             )});
 
-            System.assertEquals('Test Label List', listCms[0].Label);
+            System.assertEquals('Test Label List', listCms[0].Label, 'Value of parameter is matching');
 
-            System.assertNotEquals(listCms.isEmpty(), true);
+            System.assertNotEquals(listCms.isEmpty(), true, 'Value of parameter is not matching');
 
         }
 

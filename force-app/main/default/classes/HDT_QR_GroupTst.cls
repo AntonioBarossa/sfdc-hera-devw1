@@ -13,19 +13,19 @@ public with sharing class HDT_QR_GroupTst {
 
         Test.startTest();
             Group gp = new HDT_QR_Group().getQueueByDevelopername('HDT_QUE_ActivityProtocollo');
-            System.assertEquals(gp != null, true);
-            System.assertNotEquals(gp == null, true);
+            System.assertEquals(gp != null, true, 'value of parameter is matching');
+            System.assertNotEquals(gp == null, true, 'value of parameter is not matching');
         Test.stopTest();
     }
 
     @isTest
-    public static void test2GetQueueByDevelopername(){
+    public static void testToGetQueueByDevelopername(){
         List<Group> lstGroup = new List<Group>();
         List<String> lstString = new List<String>();
         Test.startTest();
         lstGroup = new HDT_QR_Group().getQueueByDevelopername(lstString);
-        System.assertEquals(lstGroup.size() != null, true);
-        System.assertNotEquals(lstGroup.size() == null, true);
+        System.assertEquals(lstGroup.size() != null, true, 'value of parameter is matching');
+        System.assertNotEquals(lstGroup.size() == null, true, 'value of parameter is not matching');
         Test.stopTest();
     }
 }

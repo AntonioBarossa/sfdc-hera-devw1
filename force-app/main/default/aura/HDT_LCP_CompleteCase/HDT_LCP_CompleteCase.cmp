@@ -1,6 +1,6 @@
 <aura:component 
     controller="HDT_LC_CompleteCase"
-    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName,lightning:isUrlAddressable"
     access="global">
     <aura:attribute name="recordId" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />

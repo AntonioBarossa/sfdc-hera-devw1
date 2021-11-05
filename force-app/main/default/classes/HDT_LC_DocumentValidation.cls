@@ -8,12 +8,22 @@
 public inherited sharing class HDT_LC_DocumentValidation {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
 	private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+
+    /**
+    * @description isValidPhase
+    * @param recordId
+    * @return Boolean
+    */
     @AuraEnabled
     public static Boolean isValidPhase(String recordId){
         Order ord = orderQr.getRecordById(recordId);
         return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c) || 'Documentazione da validare'.equalsIgnoreCase(ord.Phase__c));
     }
     
+    /**
+    * @description saveValidation
+    * @param ord
+    */
     @AuraEnabled
     public static void saveValidation(Order ord){
         System.debug('**************:'+ord);
@@ -77,6 +87,10 @@ public inherited sharing class HDT_LC_DocumentValidation {
         //return ('Da Inviare'.equalsIgnoreCase(ord.phase__c) || 'In Attesa Validazione'.equalsIgnoreCase(ord.phase__c));
     }
 
+    /**
+    * @description cancelOrder
+    * @param recordId
+    */
     @AuraEnabled
     public static void cancelOrder(String recordId){
         orderSrv.updateRecord(new Order(

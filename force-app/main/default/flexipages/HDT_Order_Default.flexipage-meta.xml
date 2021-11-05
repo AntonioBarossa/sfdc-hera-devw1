@@ -519,9 +519,6 @@
                             <value>Order.Riprendi_Processo</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Order.Escalation</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Order.HDT_CreateDistributorApointment</value>
                         </valueListItems>
                         <valueListItems>
@@ -558,7 +555,7 @@
                         <valueListItems>
                             <value>CustomButton.Order.Ripensamento_VAS</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+                                <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.VASType__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -571,13 +568,13 @@
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Bozza</rightValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In attesa tempi di ripensamento</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>In Lavorazione</rightValue>
+                                    <rightValue>Documentazione da validare</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

@@ -15,12 +15,7 @@ public class HDT_WS_CampagenDmDmpDataResponseTst {
         HDT_UTL_DataFactoryTst.createWebServiceConfiguration('CampagenDmDmpData','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
     }
     @isTest
-    static void test1(){
-        String runId = 'someid';
-        String status = '';
-        String fileType ='';
-        String errorMessage = 'some error message';
-        List<String> contentVersionIds = new List<String>();
+    static void test(){
         
         Test.startTest();
         
@@ -52,8 +47,8 @@ public class HDT_WS_CampagenDmDmpDataResponseTst {
         
         Test.stopTest();
                 
-        System.assertEquals('test4', res.data.testata.messaggio, 'Value of the field messaggio successfully set');
-        System.assertNotEquals(null, res.errorDetails[0].additionalInfo, 'Value of the field additionalInfo successfully set');
+        System.assertEquals('test4', res.data.testata.messaggio, 'Value of the field messaggio not set');
+        System.assertNotEquals(null, res.errorDetails[0].additionalInfo, 'Value of the field additionalInfo not set');
             
     }
 

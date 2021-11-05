@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    22/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_ComboboxOptionsFactoryTst {
 
@@ -34,7 +39,7 @@ public with sharing class HDT_UTL_ComboboxOptionsFactoryTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(serviceClass != null);
+        System.assert(serviceClass != null, 'Attenzione, serviceClass non può essere null!');
         
     }
 

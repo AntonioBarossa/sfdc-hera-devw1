@@ -43,8 +43,21 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         } else {
             List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReading(1, true, caseList[0].Id);
         }
-        
+    }
+
+    /**@Francesco Vitiello 20/10/2021
+     * Added TestSetup to PClick Settings
+     */
+    @TestSetup
+    static void setup(){        
+
         HDT_UTL_DataFactoryTst.pClickCasePhase();
+
+        //PHASE ENABLE
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
     }
     
     
@@ -78,11 +91,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
-        //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
-        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
-        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
@@ -130,12 +138,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
-        
-        //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
-        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
-        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
@@ -187,11 +189,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
-        //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
-        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
-        
         //TESTING
         Test.startTest();
         
@@ -238,11 +235,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
-        
-        //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
-        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         Test.startTest();
@@ -291,11 +283,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
-        
-        //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
-        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','','','');
         
         //TESTING
         Boolean caught = false;
@@ -443,12 +430,6 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         //WEBSERVICE MOCK
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
         
-        //PHASE ENABLE
-        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
-        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari OK', 'Bozza', rtId, rtName,'A','','','');
-        //HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Check preliminari OK', rtId, rtName,'A','','','');
-        
         //TESTING
         Test.startTest();
         
@@ -543,6 +524,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
                     //PREPARING RESPONSE
                     Map<String, Object> data = new Map<String, Object>();
                     data.put('message', 'data fuori finestra acquisibile');
+                    data.put('outcome', 'OK');
                     
                     Map<String, Object> body = new Map<String, Object>();
                     body.put('data', data);

@@ -9,7 +9,7 @@ public class HDT_SRV_AttachmentTst{
 	@TestSetup
 	static void setup(){
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 	}
 
 	@isTest
@@ -39,7 +39,7 @@ public class HDT_SRV_AttachmentTst{
 
 		System.assertEquals('test', tAttach.Name, 'Attachment not inserted');
 
-		System.assertNotEquals(null, tAttach.ParentId);
+		System.assertNotEquals(null, tAttach.ParentId, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -64,7 +64,7 @@ public class HDT_SRV_AttachmentTst{
 
 		System.assertEquals('test', tContVers.Title, 'Content version not inserted');
 
-		System.assertNotEquals(null, tContVers.Title);
+		System.assertNotEquals(null, tContVers.Title, 'Value of parameter is not matching');
 
 		Test.stopTest();
 	}

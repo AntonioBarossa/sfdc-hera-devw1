@@ -24,7 +24,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
         {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
         {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:false},
+        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
         {id: 7, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false},
         {id: 8, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
         {id: 9, name: "readingDigitNumber", label:"Cifre Lettura", type: "text", value: null, disabled:true, visible:false}
@@ -140,6 +140,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
+            var indexSerialNumberEle = this.registerObj.findIndex(p => p.name === 'readingSerialNumber');
+            this.registerObj[indexSerialNumberEle].disabled = !this.isProcessReading;
         } else if (this.commodity === 'Gas') {
             this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
         }
@@ -224,8 +226,8 @@ export default class HdtSelfReadingRegister extends LightningElement {
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
                     } 
                 });
-            } else if (this.rowObj.id === 'Meter') {
-                // Per l'autolettura da processo richiedo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
+            } else if (this.rowObj.id === 'Meter' || (this.isVisible && this.commodity === 'Energia Elettrica')) {
+                // Per l'autolettura da processo GAS richiediamo le obbligatorietà solo sul registro del Misuratore, poichè non sappiamo a priori se c'è anche un Correttore.
                 this.registerObj.forEach(element => {
                     if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
                         this.advanceError = 'Impossibile procedere: il campo ' + element.label + ' deve essere valorizzato.';

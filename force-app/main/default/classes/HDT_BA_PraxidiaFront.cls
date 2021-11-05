@@ -9,6 +9,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
     List<HDT_WRP_CampaignPraxidia.wrapToIterate> dtos = new List<HDT_WRP_CampaignPraxidia.wrapToIterate>();
     HDT_QR_Order qrOrder = new HDT_QR_Order();
     HDT_QR_Case caseQr = new HDT_QR_Case();
+    HDT_SRV_ContentVersion contentSRV = new HDT_SRV_ContentVersion();
     HDT_QR_Contact contactQr = new HDT_QR_Contact();
     List<HDT_WRP_CampaignPraxidia.front> wrapFrontList = new List<HDT_WRP_CampaignPraxidia.front>();
     String header = 'ID_CLIENTE_SBL_SAP;ID_CLIENTE_SAP;ID_CLIENTE_SBL;CODICE_FISCALE;CODICE_FISCALE_SBL;COGNOME;NOME;NOME_SBL;RAGIONE_SOCIALE;RAGIONE_SOCIALE_SBL;NAZIONALITA;CATEGORIA_SBL;ID_CATEGORIA_CLIENTE;SEGMENTO;FLG_PRIVACY_GENERALE;TELEFONO_SBL;TELEFONO_FISSO_2;CELLULARE_2;CELLULARE_SBL;MAIL_SBL;DATA_VALIDITA_A;DATA_VALIDITA_DA;CODICE_RDS;CODICE_SERVIZIO;TIPO_RDS;SOTTOTIPO_RDS;AREA_RDS;ARGOMENTO_RDS;STATO_RDS;CODICE_ACR;POSTAZIONE;GRUPPO_CREATORE;GRUPPO_ASSEGNATARIO;CREAZIONE_DI;CANALE_DI_ACQUISIZIONE;DATA_RICEVIMENTO;STATO_RDO;ID_RDO;ID_ORDINE;TIPO_ORDINE;TIPO_PASSAGGIO;SETTORE_MERCEOLOGICO;TIPO_OPERAZIONE;DF_TIPO_OPERAZIONE_SR;X_CONN_ID;INDIRIZZO_EMAIL_CONTATTO;PROCEDURA\n';
@@ -33,7 +34,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
     { 
         List<Order> ordList = new List<Order>();
         List<Case> csList = new List<Case>();
-        List<Contact> listContact = new List<Contact>();
+        // List<Contact> listContact = new List<Contact>(); //! Variable was not used
         List<String> accountIdList = new List<String>();
         Map<id,Contact> assignAccountIdCont = new Map<id,Contact>();
         for(HDT_WRP_CampaignPraxidia.wrapToIterate wr :wrapIterable){
@@ -134,8 +135,8 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
                 fr2.argomentoRds = 'ND';
                 fr2.statoRds = wr.o.Phase__c != null ? wr.o.Phase__c : '';
                 fr2.codiceAcr = '';//wr.o.Account.ACRSegmentation__c;
-                fr2.postazione = '';//wr.o.Station__c;
-                fr2.gruppoCreatore = '';//wr.o.CreatorGroup__c;
+                fr2.postazione = wr.o.LoginWorkstation__c;
+                fr2.gruppoCreatore = wr.o.CreatorGroup__c;
                 fr2.gruppoAssegnatario = 'ND';
                 fr2.creazioneDi = wr.o.Createdby.Name;
                 fr2.canaleDiAcquisizione = wr.o.Channel__c != null ? wr.o.Channel__c : '';
@@ -215,7 +216,7 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
         cv.VersionData = generateFileBlob;
         cv.Title = 'PraxidiaFrontOffice';
         cv.PathOnClient = 'PraxidiaFrontOffice.csv';
-        HDT_SRV_Attachment.insertContentVersion(cv);
+        contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
         cnt.ContentDocumentId = cv2.ContentDocumentId;

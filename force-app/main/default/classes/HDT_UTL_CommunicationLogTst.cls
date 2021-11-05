@@ -14,7 +14,7 @@ public with sharing class HDT_UTL_CommunicationLogTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, acc[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, acc[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
     }
 
     @isTest
@@ -26,8 +26,8 @@ public with sharing class HDT_UTL_CommunicationLogTst {
 
         Test.startTest();
         CommunicationLog__c communicationLog = new HDT_UTL_CommunicationLog().instanceCommunicationLog('cluster', 'process', 'phase', 'status', 'motivazioneCausale', tOrder.Id, tCase.Id,  tContact.Id, tAccount.Id, 'company', 'companyOwner');
-        System.assertEquals(communicationLog != null, true);
-        System.assertNotEquals(communicationLog == null, true);
+        System.assertEquals(communicationLog != null, true,'Instance Communication Log OK');
+        System.assertNotEquals(communicationLog == null, true,'Instance Communication Log OK');
         Test.stopTest();
     }
 }

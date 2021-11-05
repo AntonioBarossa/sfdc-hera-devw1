@@ -10,7 +10,7 @@ public class HDT_QR_ContactTst{
 	static void setup(){
 
 		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<Contact> conList=HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+		HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
 
 	}
 
@@ -34,7 +34,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals('test', testContact.FirstName, 'Contact First Name is wrong');
 
-		System.assertNotEquals('', testContact.FirstName);
+		System.assertNotEquals('', testContact.FirstName,'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -50,7 +50,6 @@ public class HDT_QR_ContactTst{
 		              LIMIT 1];
 
 
-		List<Individual> indList=new List<Individual>();
 		Individual indTest=new Individual();
 		indTest.LastName='test';
 
@@ -78,7 +77,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals('HC', testContactList[0].Company__c, 'Contact Company is wrong');
 
-		System.assertNotEquals('', testContactList[0].Company__c);
+		System.assertNotEquals('', testContactList[0].Company__c, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -107,7 +106,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals('test@test.com', testContactList[0].Email, 'Contact Email is wrong');
 
-		System.assertNotEquals('', testContactList[0].Email);
+		System.assertNotEquals('', testContactList[0].Email, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -136,7 +135,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.Id, testContactList[0].Id, 'Contact ID is wrong');
 
-		System.assertNotEquals('', testContactList[0].Id);
+		System.assertNotEquals('', testContactList[0].Id, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -160,7 +159,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.Id, testContactList[0], 'Contact ID is wrong');
 
-		System.assertNotEquals('', testContactList[0]);
+		System.assertNotEquals('', testContactList[0], 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -188,7 +187,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.Id, testContactList[0].Id, 'Contact ID is wrong');
 
-		System.assertNotEquals('', testContactList[0].Id);
+		System.assertNotEquals('', testContactList[0].Id, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -216,7 +215,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.Id, testContactList[0].Id, 'Contact ID is wrong');
 
-		System.assertNotEquals('', testContactList[0].Id);
+		System.assertNotEquals('', testContactList[0].Id, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -245,7 +244,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.Id, testContact.Id, 'Contact is wrong');
 
-		System.assertNotEquals(null, testContact);
+		System.assertNotEquals(null, testContact, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -283,7 +282,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.LastName, testContactList[0].Name, 'Contact Name is wrong');
 
-		System.assertNotEquals('', testContactList[0].Name);
+		System.assertNotEquals('', testContactList[0].Name, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -313,7 +312,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.MailingLatitude, testContact.MailingLatitude, 'Contact Mailing Latitude is wrong');
 
-		System.assertNotEquals(null, testContact.MailingLatitude);
+		System.assertNotEquals(null, testContact.MailingLatitude, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -341,7 +340,7 @@ public class HDT_QR_ContactTst{
 
 		System.assertEquals(tcon.AccountId, testContactList[0].AccountId, 'Contact AccountId is wrong');
 
-		System.assertNotEquals(null, testContactList[0].AccountId);
+		System.assertNotEquals(null, testContactList[0].AccountId, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}

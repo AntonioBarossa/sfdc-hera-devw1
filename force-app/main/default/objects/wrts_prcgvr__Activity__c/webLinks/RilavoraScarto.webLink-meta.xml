@@ -16,5 +16,6 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/flow/HDT_FL_ActivityOrderPhase?activityId={!wrts_prcgvr__Activity__c.Id}</url>
+    <url>/flow/HDT_FL_ActivityOrderPhase?activityId={!wrts_prcgvr__Activity__c.Id}
+&amp;retURL=/lightning/r/Order/{!wrts_prcgvr__Activity__c.OrderId__c}/view</url>
 </WebLink>

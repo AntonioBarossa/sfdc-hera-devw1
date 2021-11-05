@@ -167,6 +167,12 @@
                 <default>false</default>
                 <label>Risoluzione NO Contatore</label>
             </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Subentro</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Case</controllingFieldValue>

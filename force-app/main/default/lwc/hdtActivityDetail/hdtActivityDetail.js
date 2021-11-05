@@ -8,12 +8,13 @@ export default class HdtActivityDetail extends NavigationMixin(LightningElement)
     @api recordId;
     @track show=false;
     @track objectList=[];
-    @track activeSections=['Order','Activity','Case'];
+    @track activeSections=['Order','Activity','Case','Account']; //>>> marco.arci@webresults.it Aggiunta sezione Account aperta
 
     //START>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
     caseId;
     orderId;
     //END>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
+    accountId; //>>>marco.arci@webresults.it Aggiunta AccountId
 
     connectedCallback(){
        this.loadContext();
@@ -33,7 +34,7 @@ export default class HdtActivityDetail extends NavigationMixin(LightningElement)
                 for(var i in objectMap[key].fieldList){
                     //campi.push(objectMap[key].fieldList[i].wrts_prcgvr__Field__c);
                     //START>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
-                    if(!['Id', 'id', 'CaseNumber', 'OrderNumber'].includes(objectMap[key].fieldList[i].wrts_prcgvr__Field__c)){
+                    if(!['Id', 'id', 'CaseNumber', 'OrderNumber','Name'].includes(objectMap[key].fieldList[i].wrts_prcgvr__Field__c)){ //>>>marco.arci@webresults.it Aggiunta AccountName
                         campi.push({isLink: false, fieldName:objectMap[key].fieldList[i].wrts_prcgvr__Field__c});
                     }
                     //END>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
@@ -51,6 +52,12 @@ export default class HdtActivityDetail extends NavigationMixin(LightningElement)
                         campi.push({isLink: true, fieldName:'CaseNumber', fieldValue:objectMap[key].objectName});
                     }
                     //END>> costanzo.lomele@webresults.it 18/09/21 - OrderNumber/CaseNumber cliccabile
+                    //>>>START marco.arci@webresults.it Aggiunta Account linkabile
+                    if(key=='Account'){
+                        this.accountId = objectMap[key].objectId;
+                        campi.push({isLink: true, fieldName:'Name', fieldValue:objectMap[key].objectName});
+                    }
+                    //>>>END marco.arci@webresults.it Aggiunta Account linkabile
                     this.objectList.push({api:key, label:key , fields:campi, id:objectMap[key].objectId});
                 }
             }
@@ -77,8 +84,8 @@ export default class HdtActivityDetail extends NavigationMixin(LightningElement)
         this[NavigationMixin.Navigate]({
             'type': 'standard__recordPage',
             'attributes': {
-                'recordId': clickedField == 'CaseNumber' ? this.caseId : (clickedField == 'OrderNumber' ? this.orderId : null),
-                'objectApiName': clickedField == 'CaseNumber' ? 'Case' : (clickedField == 'OrderNumber' ? 'Order' : null),
+                'recordId': clickedField == 'CaseNumber' ? this.caseId : (clickedField == 'OrderNumber' ? this.orderId : (clickedField == 'Name' ? this.accountId : null)), //>>> marco.arci@webresults.it Aggiunta AccountId
+                'objectApiName': clickedField == 'CaseNumber' ? 'Case' : (clickedField == 'OrderNumber' ? 'Order' : (clickedField == 'Name' ? 'Account' : null)), //>>> marco.arci@webresults.it Aggiunta Account 
                 'actionName': 'view'
             }
         });

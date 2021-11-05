@@ -45,7 +45,7 @@ public class HDT_BA_VasEngineSenderTst {
                 Test.startTest();
          List<Order> myOrder = [SELECT Id, Name,EffectiveDate,Status,PowerQuote__c,ValidityDateEstimate__c,Phase__c from Order];
          HDT_BA_VasEngineSender vs = new HDT_BA_VasEngineSender();
-         Id batchId = Database.executeBatch(vs);
+         Database.executeBatch(vs);
                 Test.stopTest();
          List<Order> myUpOrd = [SELECT Id, Name,EffectiveDate,Status,PowerQuote__c,ValidityDateEstimate__c,Phase__c from Order];
 

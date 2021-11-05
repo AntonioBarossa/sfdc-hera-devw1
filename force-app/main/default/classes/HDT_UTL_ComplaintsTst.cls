@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    30/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_ComplaintsTst {
 
@@ -47,7 +52,7 @@ public with sharing class HDT_UTL_ComplaintsTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(inputs != null);
+        System.assert(inputs != null, 'Attenzione, inputs non può essere null!');
         
     }
 

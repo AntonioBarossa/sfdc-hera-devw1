@@ -646,6 +646,20 @@
         <value>Associazione massiva prodotti opzione</value>
     </labels>
     <labels>
+        <fullName>ProdRuleAssociationNotification_DeleteTitle</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdRuleAssociationNotification_DeleteTitle</shortDescription>
+        <value>Rimozione massiva regole prodotti</value>
+    </labels>
+    <labels>
+        <fullName>ProdRuleAssociationNotification_Title</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ProdRuleAssociationNotification_Title</shortDescription>
+        <value>Associazione massiva regole prodotti</value>
+    </labels>
+    <labels>
         <fullName>ProdOptAssociationCreateTitle</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -664,14 +678,14 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>ProdOptAssociationCreateSection</shortDescription>
-        <value>Su questi elementi puoi associare il prodotto opzione</value>
+        <value>Su queste offerte commerciali puoi associare il prodotto opzione</value>
     </labels>
     <labels>
         <fullName>ProdOptAssociationDeleteSection</fullName>
         <language>it</language>
         <protected>false</protected>
         <shortDescription>ProdOptAssociationDeleteSection</shortDescription>
-        <value>Da questi elementi puoi eliminare il prodotto opzione</value>
+        <value>Da queste offerte commerciali puoi eliminare il prodotto opzione</value>
     </labels>
     <labels>
         <fullName>ProdOptAssociationConfirmSelection</fullName>
@@ -868,5 +882,12 @@
         <protected>false</protected>
         <shortDescription>ConfRuleConfirmFilterCreateBody</shortDescription>
         <value>Attenzione! In questo modo la regola verrà associata a tutti i prodotti ottenuti applicando il filtro, vuoi procedere?</value>
+    </labels>
+    <labels>
+        <fullName>Cpq_ProductAssociation_EnabledProfile</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Cpq_ProductAssociation_EnabledProfile</shortDescription>
+        <value>Attenzione! Non possiedi i privilegi per questa funzionalità.</value>
     </labels>
 </CustomLabels>

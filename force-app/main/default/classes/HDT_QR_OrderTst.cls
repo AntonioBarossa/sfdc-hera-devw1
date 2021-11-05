@@ -59,7 +59,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecordBySale.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecordBySale.isEmpty());
+		System.assertNotEquals(true, getRecordBySale.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -80,7 +80,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrdersRecord.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrdersRecord.isEmpty());
+		System.assertNotEquals(true, getOrdersRecord.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -101,7 +101,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecordBySaleFilterRecordType.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecordBySaleFilterRecordType.isEmpty());
+		System.assertNotEquals(true, getRecordBySaleFilterRecordType.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -119,7 +119,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecordById==null, 'Order not found');
-		System.assertNotEquals(true, getRecordById==null);
+		System.assertNotEquals(true, getRecordById==null, 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -137,7 +137,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderById==null, 'Order not found');
-		System.assertNotEquals(true, getOrderById==null);
+		System.assertNotEquals(true, getOrderById==null, 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -155,7 +155,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderByIdForSaleCallout.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrderByIdForSaleCallout.isEmpty());
+		System.assertNotEquals(true, getOrderByIdForSaleCallout.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -176,7 +176,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecordsByIds.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecordsByIds.isEmpty());
+		System.assertNotEquals(true, getRecordsByIds.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -194,7 +194,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getChildOrdersByParentId.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getChildOrdersByParentId.isEmpty());
+		System.assertNotEquals(true, getChildOrdersByParentId.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -215,7 +215,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getChildOrdersByParentIds.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getChildOrdersByParentIds.isEmpty());
+		System.assertNotEquals(true, getChildOrdersByParentIds.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -233,7 +233,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getChildOrdersByParentIdAllStatus.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getChildOrdersByParentIdAllStatus.isEmpty());
+		System.assertNotEquals(true, getChildOrdersByParentIdAllStatus.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -251,18 +251,13 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecordByIdFilterStatus.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecordByIdFilterStatus.isEmpty());
+		System.assertNotEquals(true, getRecordByIdFilterStatus.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
 	static void testgetActiveRecordsByAccountId(){
 
 		Test.startTest();
-
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
 
 		List<Order> tOrder=[SELECT Id, Name
 		                    FROM Order 
@@ -273,13 +268,14 @@ public class HDT_QR_OrderTst{
 		torder[0].ParentOrder__c=null;
 
 		update tOrder;
-
-		List<Order> getActiveRecordsByAccountId=orderQr.getActiveRecordsByAccountId(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		                       
+		List<Order> getActiveRecordsByAccountId=orderQr.getActiveRecordsByAccountId(acc);
 
 		Test.stopTest();
 
 		System.assertEquals(false, getActiveRecordsByAccountId.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getActiveRecordsByAccountId.isEmpty());
+		System.assertNotEquals(true, getActiveRecordsByAccountId.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -287,47 +283,32 @@ public class HDT_QR_OrderTst{
 
 		Test.startTest();
 
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
-		List<Order> getRecordsbyAccountId=orderQr.getRecordsByAccountId(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		List<Order> getRecordsbyAccountId=orderQr.getRecordsByAccountId(acc);
 
 		Test.stopTest();
 
 		System.assertEquals(false, getRecordsbyAccountId.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecordsbyAccountId.isEmpty());
+		System.assertNotEquals(true, getRecordsbyAccountId.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
 	static void testgetActiveRecordsByAccountIdNotParent(){
 
 		Test.startTest();
-
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
-		List<Order> getActiveRecByAccIdNotParent=orderQr.getActiveRecordsByAccountIdNotParent(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		List<Order> getActiveRecByAccIdNotParent=orderQr.getActiveRecordsByAccountIdNotParent(acc);
 
 		Test.stopTest();
 
 		System.assertEquals(false, getActiveRecByAccIdNotParent.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getActiveRecByAccIdNotParent.isEmpty());
+		System.assertNotEquals(true, getActiveRecByAccIdNotParent.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
 	static void testgetRecordsForVasSelection(){
 
 		Test.startTest();
-
-		List<Account> tAccount=[SELECT Id, VATNumber__c
-		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'
-		                        LIMIT 1];
-
 
 		List<Order> tOrder=[SELECT Id, Name
 		                    FROM Order 
@@ -337,13 +318,13 @@ public class HDT_QR_OrderTst{
 		tOrder[0].Status='In Lavorazione';
 
 		update tOrder;
-
-		List<Order> getRecsForVasSaleSelection=orderQr.getRecordsForVasSelection(tAccount[0].Id);
+		String acc = [SELECT Id FROM Account][0].id;
+		List<Order> getRecsForVasSaleSelection=orderQr.getRecordsForVasSelection(acc);
 
 		Test.stopTest();
 
 		System.assertEquals(false, getRecsForVasSaleSelection.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecsForVasSaleSelection.isEmpty());
+		System.assertNotEquals(true, getRecsForVasSaleSelection.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -361,7 +342,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecByOrderNumber.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecByOrderNumber.isEmpty());
+		System.assertNotEquals(true, getRecByOrderNumber.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -379,7 +360,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecByOrderId.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecByOrderId.isEmpty());
+		System.assertNotEquals(true, getRecByOrderId.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -400,7 +381,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecsByOrdersIdsBulk.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecsByOrdersIdsBulk.isEmpty());
+		System.assertNotEquals(true, getRecsByOrdersIdsBulk.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -425,7 +406,7 @@ public class HDT_QR_OrderTst{
 			Test.stopTest();
 
 			System.assertEquals(false, getRoleNamebyRoleId==null, 'User role not found');
-			System.assertNotEquals(true, getRoleNamebyRoleId==null);
+			System.assertNotEquals(true, getRoleNamebyRoleId==null, 'Value of parameter is not matching');
 		}
 	}
 
@@ -444,7 +425,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getDates==null, 'Order not found');
-		System.assertNotEquals(true, getDates==null);
+		System.assertNotEquals(true, getDates==null, 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -465,7 +446,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecsByIdWithFields.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getRecsByIdWithFields.isEmpty());
+		System.assertNotEquals(true, getRecsByIdWithFields.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -487,7 +468,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderCreatedYesterday.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrderCreatedYesterday.isEmpty());
+		System.assertNotEquals(true, getOrderCreatedYesterday.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -505,7 +486,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getRecTypeDevNameById==null, 'Order not found');
-		System.assertNotEquals(true, getRecTypeDevNameById==null);
+		System.assertNotEquals(true, getRecTypeDevNameById==null, 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -523,7 +504,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderFromComfQualityResult.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrderFromComfQualityResult.isEmpty());
+		System.assertNotEquals(true, getOrderFromComfQualityResult.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -536,7 +517,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderByUsernamePassword.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrderByUsernamePassword.isEmpty());
+		System.assertNotEquals(true, getOrderByUsernamePassword.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -554,7 +535,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getChildOrderDocActivityByParentId.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getChildOrderDocActivityByParentId.isEmpty());
+		System.assertNotEquals(true, getChildOrderDocActivityByParentId.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -572,7 +553,7 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderForActiveMonitoringCheck.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrderForActiveMonitoringCheck.isEmpty());
+		System.assertNotEquals(true, getOrderForActiveMonitoringCheck.isEmpty(), 'Value of parameter is not matching');
 	}
 
 	@isTest
@@ -590,6 +571,58 @@ public class HDT_QR_OrderTst{
 		Test.stopTest();
 
 		System.assertEquals(false, getOrderForComfort.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, getOrderForComfort.isEmpty());
+		System.assertNotEquals(true, getOrderForComfort.isEmpty(), 'Value of parameter is not matching');
+	}
+    
+	@isTest static void testGetPodOrderFromQuote(){
+
+        String quote =[SELECT Id FROM SBQQ__Quote__c][0].id;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getPodOrderFromQuote(quote);
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
+	}
+    
+	@isTest static void testGetRecordsByAccountIdCopContratto(){
+
+        String acc = [SELECT Id FROM Account][0].id;
+        
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+        ord.ContractSigned__c = true;
+        ord.Status = 'In Lavorazione';
+        update ord;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getRecordsByAccountIdCopContratto(acc, true);
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
+	}
+    
+	@isTest static void testGetRecordsByAccountIdCopContrattoSignatureMethod(){
+
+        String acc = [SELECT Id FROM Account][0].id;
+        
+        Order ord = [Select id FROM Order WHERE Username__c='test'];
+        ord.Status = 'In Lavorazione';
+        ord.SignatureMethod__c = 'Cartacea';
+        update ord;
+		
+		Test.startTest();
+        
+		List<Order> orders = orderQr.getRecordsByAccountIdCopContrattoSignatureMethod(acc, 'Cartacea');
+
+		Test.stopTest();
+
+		System.assertEquals(1, orders.size(), 'Order not found');
+		System.assertNotEquals(null, orders, 'Order not found');
 	}
 }

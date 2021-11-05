@@ -1,34 +1,35 @@
+<!--
+  @description       : Component for launching script from Activity record page
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-10-05
+  @last modified by  : gabriele.rota@webresults.it
+-->
 <aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
 
     <aura:attribute name="recordId" type="String" />
 
-    <aura:attribute name="orderId" type="String" />
-    <aura:attribute name="isLoading" type="Boolean" default="true"/>
-    <aura:attribute name="activity" type="Object"/>
-    <aura:attribute name="recordLoadError" type="String"/>
-    <aura:attribute name="scriptName" type="String"/>
+    <!--Workaround for setting modal width-->
+    <aura:html tag="style">
+        .slds-modal__container {
+            min-width: 64vw;
+        }
+    </aura:html>
 
-    <lightning:navigation aura:id="navService"/>
+    <lightning:tabset>
+        <lightning:tab label="Script">
+            <c:hdtManageScriptModal recordId="{!v.recordId}"
+                activityId="{!v.recordId}"
+                onclose="{!c.handleCloseAction}"
+                onconfirm="{!c.handleCloseAction}">
+            </c:hdtManageScriptModal>
+        </lightning:tab>
 
-    <force:recordData aura:id="recordLoader"
-        recordId="{!v.recordId}"
-        fields="Type__c,Order__c"
-        targetFields="{!v.activity}"
-        targetError="{!v.recordLoadError}"
-        recordUpdated="{!c.recordUpdated}"
-    />
-
-    <aura:if isTrue="{!v.isLoading}">
-        <lightning:spinner alternativeText="Loading" variant="brand" size="medium" />
-    </aura:if>
-
-    <aura:if isTrue="{!v.scriptName}">
-        <c:hdtManageScriptModal scriptProcessName="{!v.scriptName}"
-            recordId="{!v.orderId}"
-            isInsideModal="true"
-            openModal="true"
-            onclose="{!c.handleCloseAction}">
-        </c:hdtManageScriptModal>
-    </aura:if>
+        <lightning:tab label="Riepilogo">
+            <c:hdtOrdersForComfortQualityList activityId="{!v.recordId}"
+                onresultevent="{!c.handleResultEvent}">
+            </c:hdtOrdersForComfortQualityList>
+        </lightning:tab>
+    </lightning:tabset>
 
 </aura:component>	

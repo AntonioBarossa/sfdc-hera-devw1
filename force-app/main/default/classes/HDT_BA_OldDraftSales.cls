@@ -16,8 +16,9 @@ public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sOb
 
         String numberOfDays = setNumberOfDays();
         Date d = date.today();
-        Date d2 = d.addDays(-Integer.valueOf(numberOfDays));
-        String query = 'SELECT Id, Status__c, CreatedDate, (SELECT Id, SBQQ__Status__c from Quotes__r where SBQQ__Status__c !=  \'Cancelled\' AND SBQQ__Status__c != \'Rejected\'), (SELECT Id, StageName from Opportunities__r where StageName != \'Closed Lost\' AND stagename != \'Closed Cancelled\') from Sale__c where Status__c=\'Bozza\' and CreatedDate <= :d2';
+        Date dPast;
+        dPast = d.addDays(-Integer.valueOf(numberOfDays));
+        String query = 'SELECT Id, Status__c, CreatedDate, (SELECT Id, SBQQ__Status__c from Quotes__r where SBQQ__Status__c !=  \'Cancelled\' AND SBQQ__Status__c != \'Rejected\'), (SELECT Id, StageName from Opportunities__r where StageName != \'Closed Lost\' AND stagename != \'Closed Cancelled\') from Sale__c where Status__c=\'Bozza\' and CreatedDate <= :dPast';
         return Database.getQueryLocator(query);
         
     }
@@ -55,7 +56,7 @@ public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sOb
     }
 
     public void finish(Database.BatchableContext bc) {
-        
+        System.debug('FinishRequiredForBatch');
     }
 
     public String setNumberOfDays() {

@@ -26,7 +26,7 @@ public class HDT_UTL_UtilsTst{
 
 		System.runAs(internal){
 
-			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 
 		}
     }
@@ -55,7 +55,7 @@ public class HDT_UTL_UtilsTst{
 
 		System.assertEquals(false, testReturn.isEmpty(), 'Return is wrong');
 
-		System.assertNotEquals(true, testReturn.isEmpty());
+		System.assertNotEquals(true, testReturn.isEmpty(), 'Return is wrong');
 
 		Test.stopTest();
 	}
@@ -75,7 +75,7 @@ public class HDT_UTL_UtilsTst{
 
 		System.assertEquals(true, testReturn.isAlphanumeric(), 'Return is wrong');
 
-		System.assertNotEquals(false, testReturn.isAlphanumeric());
+		System.assertNotEquals(false, testReturn.isAlphanumeric(), 'Return is wrong');
 
 		Test.stopTest();
 	}

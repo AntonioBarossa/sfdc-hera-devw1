@@ -23,7 +23,7 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> getCsvBody(String selectedProcessName) {
-
+        //System.debug('HDT_LC_MassiveLoader.getCsvBody : '+selectedProcessName);
         Map<String, Object> response = new Map<String, Object>();
         
         try {
@@ -76,9 +76,9 @@ public with sharing class HDT_LC_MassiveLoader {
         try {
 
             List<Map<String, String>> processesPicklist = new List<Map<String, String>>()            ;
-            
-
-            for (HDT_MassiveLoaderProcess__mdt massiveLoaderProcess : massiveLoaderProcessQr.getAllRecords()) {
+            List<HDT_MassiveLoaderProcess__mdt> listProcess = massiveLoaderProcessQr.getAllRecords();
+            listProcess.sort();
+            for (HDT_MassiveLoaderProcess__mdt massiveLoaderProcess : listProcess) {
 
                 processesPicklist.add(new Map<String, String>{'value' => massiveloaderProcess.DeveloperName, 'label' => massiveloaderProcess.MasterLabel});
 
@@ -122,7 +122,6 @@ public with sharing class HDT_LC_MassiveLoader {
     public static Map<String, Object> createMassiveLoaderRequest(String selectedProcessName) {
 
         Map<String, Object> response = new Map<String, Object>();
-
         try {
 
             HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
@@ -156,21 +155,26 @@ public with sharing class HDT_LC_MassiveLoader {
 
     @AuraEnabled
     public static Map<String, Object> checkCsv(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
-
+       /* System.debug('HDT_LC_MassiveLoader.checkCsv');
+        System.debug('fileName: '+fileName);
+        System.debug('contentVersionId: '+contentVersionId);
+        System.debug('selectedProcessName: '+selectedProcessName );
+        System.debug('massiveLoaderRequestId: '+massiveLoaderRequestId );*/
         Map<String, Object> response = new Map<String, Object>();
-
+        List<MassiveLoaderRequestItem__c> listRequestItem = new List<MassiveLoaderRequestItem__c>();
         try {
 
             HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(selectedProcessName);
 
             ContentVersion uploadedFile = contentVersionQr.getRecordById(contentVersionId);
             Boolean deleteUploadedFile = false;
+            System.debug('selectedProcessName '+selectedProcessName);
 
-            if (fileName.toUpperCase() == (selectedProcess.MasterLabel + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION).toUpperCase()) {                
-
+            if (fileName.equalsIgnoreCase(selectedProcess.DeveloperName   + '.' + constantsUtl.MASSIVLOADER_FILE_EXTENTION)) {                
                 if(uploadedFile.FileType.toUpperCase() == constantsUtl.MASSIVLOADER_FILE_EXTENTION.toUpperCase()) {
-
-                    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcessName);
+                    System.debug('selectedProcessName '+selectedProcessName);
+                    List<StaticResource> staticResources = staticResourceQr.getRecordByName(selectedProcess.DeveloperName );
+                    System.debug('staticResources '+staticResources.size());
                     Integer expectedNumberOfFields = staticResources.get(0).Body.toString().split(',').size();
 
                     String fileBody = uploadedFile.VersionData.toString();
@@ -180,13 +184,24 @@ public with sharing class HDT_LC_MassiveLoader {
 
                     //List<List<String>> file = new List<List<String>>();
                     for (String fileRow : fileBody.split('\n')) {
+                        fileRow=fileRow.replaceAll(',,', ',null,');
                         List<String> rowFields = fileRow.split(',');
-                        
+                        System.debug('row size '+rowFields.size());
+                        System.debug('expectedNumberOfFields '+expectedNumberOfFields);
                         if (rowFields.size() != expectedNumberOfFields) {
+                            System.debug('problemi con la riga  '+fileLines);
+           
                             parsingError = true;
                             break;
                         }
-
+                       if (fileLines>0) {
+                        //no header
+                        MassiveLoaderRequestItem__c tempRequestItem=new MassiveLoaderRequestItem__c();
+                        tempRequestItem.Data__c                 =   fileRow;
+                        tempRequestItem.MassiveLoaderRequest__c =   massiveLoaderRequestId;
+                        listRequestItem.add(tempRequestItem);
+                       }
+                       
                         fileLines ++;
                         
                     }
@@ -198,14 +213,28 @@ public with sharing class HDT_LC_MassiveLoader {
                         
                         deleteUploadedFile = true;
 
-                    } else {
+                    } 
+                    else {
                         
                         MassiveLoaderRequest__c request = new MassiveLoaderRequest__c(Id = massiveLoaderRequestId, 
-                                                                                      TotalRequest__c = fileLines,
-                                                                                      Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE, 
-                                                                                      Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO);
+                                                                                      TotalRequest__c = fileLines-1,
+                                                                                      Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE 
+                                                                                      //Phase__c = constantsUtl.MASSIVLOADER_PHASE_FILENONPROCESSATO
+                                                                                      );
                                                                                       
+                        if (listRequestItem!=null && listRequestItem.size()>0) {
+                            insert listRequestItem;
+                            integer  numberRequestProcessing= database.countQuery('SELECT count() FROM MassiveLoaderRequest__c WHERE  Status__c =\'In Lavorazione\'');
+
+                            if (numberRequestProcessing==0 && !test.isRunningTest()) {
+                                request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
+                                HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
+                                Database.executeBatch(processReq,1);
+                            }
+                        }
                         massiveLoaderRequestSrv.updateRequestRecord(new List<MassiveLoaderRequest__c>{request});
+                        list <MassiveLoaderRequest__c> lrequest=[SELECT Id,Name  FROM MassiveLoaderRequest__c WHERE Id=:massiveLoaderRequestId  WITH SECURITY_ENFORCED LIMIT 1];
+                        response.put('reqName',lrequest.get(0).Name );
 
                         response.put('error', false);
 

@@ -1,0 +1,42 @@
+<aura:component controller ="HDT_LC_EscalationController" implements="force:lightningQuickAction,force:hasRecordId">
+    <aura:attribute name="parentEntityField" type="String"/>
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="showMalfunctionFields" type="Boolean"/>
+    <aura:attribute name="showForm" type="Boolean"/>
+    <aura:attribute name="showSpinner" type="Boolean"/>
+
+    <aura:handler name="init" value="{! this }" action="{! c.doGetRecordData }" />
+
+    <div class="slds-is-relative">
+        <aura:if isTrue="{! v.showForm }">
+            <lightning:recordEditForm aura:id="recordEditForm" objectApiName="wrts_prcgvr__Activity__c" recordTypeId="{! v.recordTypeId }" onsubmit="{! c.onRecordSubmit }" onsuccess="{! c.onSuccess }">
+                <lightning:inputField fieldName="Type__c" required="true" onchange="{! c.onTypeChange }"/>
+                <lightning:inputField fieldName="Subject__c" required="true"/>
+                <lightning:inputField fieldName="Note__c" required="true"/>
+                <aura:if isTrue="{! v.showMalfunctionFields }">
+                    <lightning:inputField fieldName="MalfunctionDate__c" required="true"/>
+                    <lightning:inputField fieldName="MalfunctionDescription__c" required="true"/>
+                    <lightning:inputField fieldName="MalfunctioningFeature__c" required="true"/>
+                    <lightning:inputField fieldName="MalfunctionsCount__c" required="true"/>
+                    <lightning:inputField fieldName="CustomerImpact__c" required="true"/>
+                    <lightning:inputField fieldName="OperationImpacts__c" required="true"/>
+                    <lightning:inputField fieldName="ExpectedBehavior__c" required="true"/>
+                    <lightning:inputField fieldName="AnomalyExample__c" required="true"/>
+                </aura:if>
+                <div class="slds-align_absolute-center">
+                    <lightning:button class="slds-m-top_small" type="submit" label="Salva"/>
+                </div>
+            </lightning:recordEditForm>
+            
+            <aura:if isTrue="{! v.showSpinner }">
+                <div class="slds-spinner_container">
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--small" role="alert">
+                        <span class="slds-assistive-text">Loading...</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+        </aura:if>
+    </div>
+</aura:component>

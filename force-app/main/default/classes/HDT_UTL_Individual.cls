@@ -52,7 +52,7 @@
     }
     public static List<Individual> createIndividualContact (List<Contact> contactIds) {
         HDT_SRV_Contact contactSrv= new HDT_SRV_Contact();
-        HDT_QR_Contact contactQr = new HDT_QR_Contact();
+        //HDT_QR_Contact contactQr = new HDT_QR_Contact();
         //List<Contact> contacts = contactQr.getRecordsById(contactIds);
         List<Individual> inds= new List<Individual>();
         List<Contact> updateContacts= new List<Contact>();
@@ -67,11 +67,11 @@
             wr.i = individual;*/
         }
         List<Individual> indv= HDT_SRV_Individual.createRecord(mapCheck.values());
-        System.debug('********PREIndividual');
+      //  System.debug('********PREIndividual');
         for(Contact c :contactIds){
-            System.debug('********IntoIndividual');
+          //  System.debug('********IntoIndividual');
             if(mapCheck.get(c.Id) != null){
-                System.debug('********Into2Individual:' + mapCheck.get(c.Id).id);
+             //   System.debug('********Into2Individual:' + mapCheck.get(c.Id).id);
                 c.IndividualId = mapCheck.get(c.Id).id;
                 updateContacts.add(c);
             }
@@ -82,10 +82,15 @@
                 }
             }*/
         }
-        contactSrv.updateRecord(updateContacts);
+        // HRAWRM-881 Start 14/10/2021
+        if (updateContacts!=null&&updateContacts.size()>0) {
+            contactSrv.updateRecord(updateContacts);
+
+        }
+        // HRAWRM-881 End 14/10/2021
         return indv;
     }
-    public class wrapContactIndi{
+    public class WrapContactIndi{
         public Contact c;
         public Individual i;
     }

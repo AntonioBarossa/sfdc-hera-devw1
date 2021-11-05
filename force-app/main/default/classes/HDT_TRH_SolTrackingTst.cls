@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    06/09/2021
+*/
+
 @isTest
 public with sharing class HDT_TRH_SolTrackingTst {
 
@@ -47,7 +52,7 @@ public with sharing class HDT_TRH_SolTrackingTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myList != null);        
+        System.assert(myList != null, 'Attenzione, myList non può essere null!');        
     }
 
 }

@@ -1,16 +1,22 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date 24/06/2021
+* @description HDT_BA_PraxidiaReclami
+* @history Lorenzo – 24/06/2021 – created class
+*/
 public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Database.Stateful,Database.AllowsCallouts{
 
     HDT_QR_Case caseQr = new HDT_QR_Case();
     HDT_QR_Contact contactQr = new HDT_QR_Contact();
     List<Case> dtos = new List<Case>();
+    HDT_SRV_ContentVersion contentSRV = new HDT_SRV_ContentVersion();
     List<HDT_WRP_CampaignPraxidia.reclami> wrapReclamiList = new List<HDT_WRP_CampaignPraxidia.reclami>();
     List<String> caseIdList = new List<String>();
     String header = 'ID_JOB;RDS_RIGA;ACR;SOCIETA;ASSEGNATARIO;GRUPPO;DATA_RICEVIMENTO;DATA_CHIUSURA;TIPO;SERVIZIO;TIPO_FORNITURA;CATEGORIA_CLIENTE;CODICE_CLIENTE;STATO_PRATICA;CANALE_DI_RICEZIONE;REITERATA;EP_SOTTOTIPO;EP_CAUSALE;EP_CLASSIFICAZIONE;TE_SOL;TE_LAV;FUORI_STD_AEEGSI;CHIAMATA;BRAND;SEGMENTO;COMUNE_CORRETTO;ISTAT_CORRETTO;PROVINCIA;DIRITTO_RETTIFICA;FLUSSO_PRATICA;CANALE_DI_USCITA;EMAIL_USCITA;RICHIESTE_PARERI\n';
     String generateFile = header;
     public Iterable<Case> start(Database.BatchableContext context) {
 
-        List<Case> dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
-
+        dtos = caseQr.getRecordCreatedLastWeekEqualsBy('Reclami');
         return this.dtos;
     }
 
@@ -72,8 +78,8 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
 
     }
     public void finish(Database.BatchableContext context) {
-        System.debug('BeforeEnter');
-        For(HDT_WRP_CampaignPraxidia.reclami fr : wrapReclamiList){
+        System.debug('BeforeEnter:' + wrapReclamiList);
+        for(HDT_WRP_CampaignPraxidia.reclami fr : wrapReclamiList){
             String rowFile = '';
             rowFile = fr.idJob = ';';
             rowFile = rowFile + fr.rdsRiga + ';' ;
@@ -117,7 +123,7 @@ public class HDT_BA_PraxidiaReclami implements Database.Batchable<Case>, Databas
         cv.VersionData = generateFileBlob;
         cv.Title = 'PraxidiaReclami';
         cv.PathOnClient = 'PraxidiaReclami.csv';
-        HDT_SRV_Attachment.insertContentVersion(cv);
+        contentSRV.insertRecords(new List<ContentVersion>{cv});
        /* ContentVersion cv2 = [Select id,contentDocumentId from ContentVersion Where id = :cv.id][0];
         ContentDocumentLink cnt = new ContentDocumentLink();
         cnt.ContentDocumentId = cv2.ContentDocumentId;

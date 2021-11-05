@@ -10,7 +10,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 	@testSetup
 	static void setup(){
 
-		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 	}
 
 	@isTest
@@ -20,14 +20,14 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		String tObjectType=HDT_UTL_SobjectUtils.getSobjectTypeName(tObjList);
 
 		Test.stopTest();
 
 		System.assertEquals('Account', tObjectType, 'SObject type Name is wrong');
-		System.assertNotEquals('', tObjectType);
+		System.assertNotEquals('', tObjectType, 'SObject type Name is wrong');
 	}
 
 	@isTest
@@ -37,7 +37,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<Account> tAccount=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		List<Id> idList=new List<Id>();
 		idList.add(tAccount[0].Id);
@@ -47,7 +47,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Test.stopTest();
 
 		System.assertEquals('Account', tObjectType, 'SObject type Name is wrong');
-		System.assertNotEquals('', tObjectType);
+		System.assertNotEquals('', tObjectType, 'SObject type Name is wrong');
 	}
 
 	@isTest
@@ -57,7 +57,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.VATNumber__c.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
@@ -66,8 +66,8 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		Test.stopTest();
 
-		System.assertEquals('12345678901', listNotNull[0], 'return is wrong');
-		System.assertNotEquals('', listNotNull[0]);
+		System.assertEquals('12345678100', listNotNull[0], 'return is wrong');
+		System.assertNotEquals('', listNotNull[0], 'return is wrong');
 	}
 
 	@isTest
@@ -77,7 +77,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.VATNumber__c.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
@@ -87,7 +87,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, setNotNullByField.isEmpty(), 'return is wrong');
-		System.assertNotEquals(true, setNotNullByField.isEmpty());
+		System.assertNotEquals(true, setNotNullByField.isEmpty(), 'return is wrong');
 	}
 
 	@isTest
@@ -97,7 +97,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.Id.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
@@ -107,7 +107,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, setIdByField.isEmpty(), 'return is wrong');
-		System.assertNotEquals(true, setIdByField.isEmpty());
+		System.assertNotEquals(true, setIdByField.isEmpty(), 'return is wrong');
 	}
 
 	@isTest
@@ -117,7 +117,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.Id.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
@@ -127,7 +127,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, mapTwoFields.isEmpty(), 'return is wrong');
-		System.assertNotEquals(true, mapTwoFields.isEmpty());
+		System.assertNotEquals(true, mapTwoFields.isEmpty(), 'return is wrong');
 	}
 
 	@isTest
@@ -137,7 +137,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.Id.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
@@ -147,7 +147,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, mapByFieldAndSobject.isEmpty(), 'return is wrong');
-		System.assertNotEquals(true, mapByFieldAndSobject.isEmpty());
+		System.assertNotEquals(true, mapByFieldAndSobject.isEmpty(), 'return is wrong');
 	}
 
 	@isTest
@@ -157,7 +157,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.Id.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
@@ -167,7 +167,7 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, mapByFieldAndList.isEmpty(), 'return is wrong');
-		System.assertNotEquals(true, mapByFieldAndList.isEmpty());
+		System.assertNotEquals(true, mapByFieldAndList.isEmpty(), 'return is wrong');
 	}
 
 	@isTest
@@ -177,18 +177,18 @@ public with sharing class HDT_UTL_SobjectUtilsTst{
 
 		List<SObject> tObjList=[SELECT Id, VATNumber__c
 		                        FROM Account
-		                        WHERE VATNumber__c='12345678901'];
+		                        WHERE VATNumber__c='12345678100'];
 
 		Schema.DescribeFieldResult describe=Account.Id.getDescribe();
 		Schema.sObjectField fieldDesc=describe.getSObjectField();
 
-		Map<String, Schema.SObjectField> fieldMap=Schema.SObjectType.Account.fields.getMap();
+		Schema.SObjectType.Account.fields.getMap();
 
 		Map<String, Set<String>> mapFieldAndSet=HDT_UTL_SobjectUtils.mapFieldAndSet(tObjList, fieldDesc, fieldDesc);
 
 		Test.stopTest();
 
 		System.assertEquals(false, mapFieldAndSet.isEmpty(), 'return is wrong');
-		System.assertNotEquals(true, mapFieldAndSet.isEmpty());
+		System.assertNotEquals(true, mapFieldAndSet.isEmpty(), 'return is wrong');
 	}
 }

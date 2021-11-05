@@ -48,9 +48,9 @@ public class HDT_WS_TransitionWinBackTst {
         anotherResponse.result.add(transitionOb1);
         anotherResponse.result.add(transitionOb2);
         
-        System.assertEquals('test', anotherResponse.result[0].pod, 'Value of the field pod successfully set');
+        System.assertEquals('test', anotherResponse.result[0].pod, 'Value of the field pod not set');
         
-        System.assertNotEquals(null, response, 'The method successfully returned a response');
+        System.assertNotEquals(null, response, 'The method did not return a response');
         
     }
 }

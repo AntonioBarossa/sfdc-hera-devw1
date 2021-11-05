@@ -2,7 +2,9 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckResidenzialeFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;), false,
+    <errorConditionFormula>IF(OR(AND(IsMigrated__c = True,RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;)),
+					RecordType.DeveloperName = &quot;HDT_RT_Partner&quot;,
+					AND(ISPICKVAL(CustomerAccountStatus__c, &quot;Prospect&quot;), IsSOL__c = true)), false,
 		
 			IF(AND(RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,  OR( AND(ISBLANK(FiscalCode__c),NOT(IsWrongFiscalData__c)), NOT(BillingIsAddressVerified__c) ,ISPICKVAL(Category__c, &quot;&quot;),ISPICKVAL(CustomerMarking__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),true , false)
 		)</errorConditionFormula>
