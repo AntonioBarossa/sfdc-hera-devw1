@@ -51,8 +51,8 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
 
             Test.stopTest();
 
-            System.assertEquals(true, orders.isEmpty(), 'Order successfully updated.');
-            System.assertNotEquals(false, orders.isEmpty(), 'Order update failed.');
+            System.assertEquals(false, orders.isEmpty(), 'Order successfully updated.');
+            System.assertNotEquals(true, orders.isEmpty(), 'Order update failed.');
         }
     }
 
@@ -88,20 +88,15 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
  
         System.runAs(u){
             
-            boolean finito = false;
- 
             Test.startTest();
-
            
             trigHnd.setMaxLoopCount(100);
             trigHnd.clearMaxLoopCount();
 
             Test.stopTest();
-            
-            finito = true;
 
-            System.assertEquals(true, finito, 'Test not finished');
-            System.assertNotEquals(false, finito, 'Test not finished');
+            System.assertEquals(-1, HDT_TRH_TriggerHandler.loopCountMap.get('HDT_TRH_TriggerHandler').getMax(), 'Max has not been cleared');
+            System.assertNotEquals(100, HDT_TRH_TriggerHandler.loopCountMap.get('HDT_TRH_TriggerHandler').getMax(), 'Max has not been cleared');
         }
     }
 
@@ -112,22 +107,22 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
  
         System.runAs(u){
             
-            boolean finito = false;
- 
             Test.startTest();
-
            
-            HDT_TRH_TriggerHandler.bypass('Order');
-            HDT_TRH_TriggerHandler.clearBypass('Order');
-            HDT_TRH_TriggerHandler.isBypassed('Order');
+            HDT_TRH_TriggerHandler.bypass('HDT_TRH_Order');
+            Boolean bypassed = HDT_TRH_TriggerHandler.isBypassed('HDT_TRH_Order');
+            HDT_TRH_TriggerHandler.clearBypass('HDT_TRH_Order');
+            Boolean notBypassed = HDT_TRH_TriggerHandler.isBypassed('HDT_TRH_Order');
+
+            HDT_TRH_TriggerHandler.bypass('HDT_TRH_Account');
             HDT_TRH_TriggerHandler.clearAllBypasses();
+            Boolean notBypassed2 = HDT_TRH_TriggerHandler.isBypassed('HDT_TRH_Account');
 
             Test.stopTest();
             
-            finito = true;
-            
-            System.assertEquals(true, finito, 'Test not finished');
-            System.assertNotEquals(false, finito, 'Test not finished');
+            System.assertEquals(true, bypassed, 'Bypass is not working properly');
+            System.assertNotEquals(true, notBypassed, 'Bypass is not working properly');
+            System.assertNotEquals(true, notBypassed2, 'Bypass is not working properly');
         }
     }
 
@@ -142,12 +137,8 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
 
             HDT_TRH_TriggerHandler.HDT_TRH_LoopCount loopCount = new HDT_TRH_TriggerHandler.HDT_TRH_LoopCount();
            
-            loopCount.increment();
-            loopCount.exceeded();
-            Integer testMax =loopCount.getMax();
-            loopCount.getCount();
             loopCount.setMax(10);
-            testMax = loopCount.getMax();
+            Integer testMax = loopCount.getMax();
             Boolean exceeded = loopCount.increment();
             Integer testCount = loopCount.getCount();
 
@@ -158,7 +149,7 @@ public with sharing class HDT_TRH_TriggerHandlerTst {
             Test.stopTest();
 
             System.assertEquals(10, testMax, 'Max Count is wrong.');
-            System.assertEquals(false, exceeded, 'Count is exceeded');
+            System.assertNotEquals(true, exceeded, 'Count is exceeded');
             System.assertEquals(1, testCount, 'Count is wrong');
             System.assertEquals(true, testExc, 'Not Exceeded');
         }
