@@ -4,6 +4,7 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria, Queueable{
     private List<wrts_prcgvr__Activity__c> newActivities;
     private List<wrts_prcgvr__Activity__c> oldActivities;
