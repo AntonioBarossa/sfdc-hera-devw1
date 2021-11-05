@@ -54,7 +54,7 @@ public with sharing class HDT_UTL_LeadTst{
 			System.debug('hdt = '+hdt);
 
 			System.assertEquals(ld.StreetName__c, hdt.Civico, 'return is wrong');
-			System.assertNotEquals(ld.Country, hdt.Civico);
+			System.assertNotEquals(ld.Country, hdt.Civico, 'return is wrong');
 
 			Test.stopTest();
 		}
@@ -72,17 +72,12 @@ public with sharing class HDT_UTL_LeadTst{
 
 			Test.startTest();
 
-			Lead ld=[SELECT id, Company__c, Country
-			         FROM Lead
-			         WHERE Country='IT'
-			         LIMIT 1];
-
 			Map<String, String> hdt=HDT_UTL_Lead.getBlackListMap();
 
 			System.debug('hdt = '+hdt);
 
 			System.assertEquals(true, hdt.isEmpty(), 'return is wrong');
-			System.assertNotEquals(false, hdt.isEmpty());
+			System.assertNotEquals(false, hdt.isEmpty(), 'return is wrong');
 
 			Test.stopTest();
 		}
@@ -120,7 +115,7 @@ public with sharing class HDT_UTL_LeadTst{
 			System.debug('ldupdt = '+ldupdt);
 
 			System.assertEquals('testUpdate', ldupdt.FirstName, 'Lead not updated');
-			System.assertNotEquals('testLead', ldupdt.FirstName);
+			System.assertNotEquals('testLead', ldupdt.FirstName, 'Lead not updated');
 
 			Test.stopTest();
 		}
@@ -153,7 +148,7 @@ public with sharing class HDT_UTL_LeadTst{
 			System.debug('hdt = '+hdt);
 
 			System.assertEquals(true, hdt, 'return is wrong');
-			System.assertNotEquals(false, hdt);
+			System.assertNotEquals(false, hdt, 'return is wrong');
 
 			Test.stopTest();
 		}

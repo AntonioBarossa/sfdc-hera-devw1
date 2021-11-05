@@ -30,17 +30,28 @@ public with sharing class HDT_UTL_VasManagement {
     * @param caseId 
     * @return HDT_WRP_VASDisactivationReq 
     **/
-    public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id caseId) {
-        Case currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
-            Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
-            FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
-        
-        Id orderId = currentCase.Order__c;
-        if (String.isBlank(orderId)) {
-            orderId = currentCase.Asset.SBQQ__OrderProduct__r.OrderId;
-        }
-        if (String.isBlank(orderId)) {
-            orderId = currentCase.Subscription__r.SBQQ__Contract__r.SBQQ__Order__c;
+    public static HDT_WRP_VASDisactivationReq getDeactivationRequest(Id sobjId) {
+        String objectName = ((Id) sobjId).getSobjectType().getDescribe().getName();
+        Id orderId;
+        Case currentCase;
+        switch on objectName{
+            when 'Case'{
+                Id caseId = sobjId;
+                currentCase = [SELECT CaseNumber, VasStatus__c, Order__c, Asset.SBQQ__OrderProduct__r.OrderId,
+                Subscription__r.SBQQ__Contract__r.SBQQ__Order__c
+                FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED LIMIT 1];
+            
+                orderId = currentCase.Order__c;
+                if (String.isBlank(orderId)) {
+                    orderId = currentCase.Asset.SBQQ__OrderProduct__r.OrderId;
+                }
+                if (String.isBlank(orderId)) {
+                    orderId = currentCase.Subscription__r.SBQQ__Contract__r.SBQQ__Order__c;
+                }
+            }when 'Order'{
+                orderId=sobjId;
+                currentCase= new Case(VasStatus__c='ANNUL PER RIPENS');
+            }
         }
 
         Order currentOrder = getOrderData(orderId);
@@ -136,7 +147,7 @@ public with sharing class HDT_UTL_VasManagement {
             List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
             intestatario = joinStringValues(strValues);
 
-            servizioIp = currentOrder.CommercialProduct__c;
+            servizioIp = currentOrder.CommercialProduct__c?.abbreviate(30);
             versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
             keyServizio = currentOrder.OrderNumber;
 
@@ -150,7 +161,7 @@ public with sharing class HDT_UTL_VasManagement {
         **/
         public HDT_WRP_VASReq(Order currentOrder, Case currentCase) {
             this(currentOrder);
-            this.keyServizio = currentCase.CaseNumber;
+            //this.keyServizio = currentCase.CaseNumber;
         }
     }
 
@@ -162,6 +173,7 @@ public with sharing class HDT_UTL_VasManagement {
         String nrContrattoIp;
         String numDocRif;
         String statoPratica;
+        Date dataDecorrenza;//temp 01/20/21
 
         /**
         * @description Constructor with order and case
@@ -175,6 +187,11 @@ public with sharing class HDT_UTL_VasManagement {
 
             //numDocRif = null
             statoPratica = currentCase.VasStatus__c;
+
+            dataCessazione = Date.today();
+
+            dataDecorrenza = Date.today();//temp 01/20/21
+            
         }
     }
 
@@ -221,17 +238,18 @@ public with sharing class HDT_UTL_VasManagement {
             OrderItem parentOrderItem;
             items = new List<HDT_WRP_VASActivationReqItem>();
             for (OrderItem ordItem:currentOrder.OrderItems) {
-                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
-                items.add(reqItem);
-
                 if (String.isBlank(ordItem.SBQQ__RequiredBy__c)) {
                     parentOrderItem = ordItem;
+                    continue;
                 }
+                HDT_WRP_VASActivationReqItem reqItem = new HDT_WRP_VASActivationReqItem(ordItem);
+                items.add(reqItem);
             }
 
             contractAccountSap = currentOrder.ContractAccountCode__c;
             dataAttivazione = String.isNotBlank(currentOrder.VasServiceActivationDate__c?.format())? currentOrder.VasServiceActivationDate__c : Date.today();
-            nrRate = parentOrderItem?.Product2?.NumberRateMonthly__c;
+            Decimal tempRate = parentOrderItem?.Product2?.NumberRateMonthly__c ;
+            nrRate = tempRate!=null? tempRate : 0;
             importo = currentOrder.SBQQ__Quote__r?.SBQQ__ListAmount__c;
 
             importoIvaInclusa = currentOrder.SBQQ__Quote__r?.ListAmountVAT__c;

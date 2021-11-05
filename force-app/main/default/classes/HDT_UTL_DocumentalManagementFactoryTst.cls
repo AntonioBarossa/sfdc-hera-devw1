@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    28/09/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_DocumentalManagementFactoryTst {
 
@@ -34,7 +39,7 @@ public with sharing class HDT_UTL_DocumentalManagementFactoryTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(classString != null);
+        System.assert(classString != null, 'Attenzione, classString non può essere null!');
         
     }
 

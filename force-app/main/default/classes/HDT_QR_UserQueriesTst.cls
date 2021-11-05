@@ -15,9 +15,6 @@ public with sharing class HDT_QR_UserQueriesTst {
         User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
         internalUser.UserPermissionsMarketingUser=true;
         insert internalUser;
-        System.runAs(internalUser) {
-            //your testSetup       
-        }
     }
 
     @isTest
@@ -27,7 +24,7 @@ public with sharing class HDT_QR_UserQueriesTst {
             Test.startTest(); 
             List<User> testUser = HDT_QR_UserQueries.getRoleAndProfile(tUser.Id);
             System.assertEquals(false, testUser == null, 'testUser not populated correctly');
-            System.assertNotEquals(true, testUser == null);
+            System.assertNotEquals(true, testUser == null, 'Value of parameter is not matching');
             Test.stopTest();
         }
     }
@@ -39,7 +36,7 @@ public with sharing class HDT_QR_UserQueriesTst {
 
             User testUser = HDT_QR_UserQueries.getCurrentUser(tUser.Id);
             System.assertEquals(false, testUser == null, 'testUser not populated correctly');
-            System.assertNotEquals(true, testUser == null);
+            System.assertNotEquals(true, testUser == null, 'Value of parameter is not matching');
             
             Test.stopTest();
         }
@@ -52,7 +49,7 @@ public with sharing class HDT_QR_UserQueriesTst {
 
             User testUser = HDT_QR_UserQueries.getCurrentUser('tUserTestId');
             System.assertEquals(true, testUser == null, 'testUser not populated correctly');
-            System.assertNotEquals(false, testUser == null);
+            System.assertNotEquals(false, testUser == null, 'Value of parameter is not matching');
             Test.stopTest();
         }
     }

@@ -26,8 +26,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize security access instance
-    * @param String fields - Fields to check for access
-    * @param String crud - crud operation passed as a string (create, read, update, delete)
+    * @param fields - Fields to check for access
+    * @param crud - crud operation passed as a string (create, read, update, delete)
     */
     public void checkAccessInit(String fields, String crud){
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fields, crud);
@@ -37,7 +37,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
-     * @param String fields
+     * @param fields
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
@@ -47,7 +47,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020
     * @description Check if current user has create permission on object and specified fields
-    * @param String fields - Fields to check for access
+    * @param fields - Fields to check for access
     */
     public void checkCreateAccess(String fields){
         checkAccessInit(fields, CREATEPERMISSION);
@@ -56,9 +56,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create SaleServiceItem__c record
-     * @param ServicePoint__c servicePoint
-     * @param Sale__c sale
-     * @param Map<String,String> extraParams - params needed for special cases
+     * @param servicePoint
+     * @param sale
+     * @param extraParams - params needed for special cases
      * @return SaleServiceItem__c saleServiceItem
      */
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
@@ -69,7 +69,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         //Get servicePoint data start
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'SwitchInWinback__c,ServicePointCode__c,SupplyType__c,SupplyTypeTemp__c,distributor__r.Code__c,CommoditySector__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
         servicePoint = existingServicePoint[0];
         //Get servicePoint data end
 
@@ -96,7 +96,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         
         if (extraParams != null) {
             if (extraParams.get('AllowChangeUse__c') != null && extraParams.get('AllowChangeUse__c') == 'true') {
-                contractReference = extraParams.get('contractReference');
+                if(extraParams.get('contractReference') != null){
+                    contractReference = extraParams.get('contractReference');
+                }
                 amendmentAllowed = false;
                 allowChangeUse = true;
             }
@@ -178,7 +180,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = existingSaleServiceItems[0].Opportunity__c,
                 Quote__c = existingSaleServiceItems[0].Quote__c,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name=servicePoint.ServicePointCode__c
             );
         } else {
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
@@ -209,7 +212,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SupplyCity__c = servicePoint.SupplySAPCityCode__c,
                 AmendmentAllowed__c = amendmentAllowed && !isTransition,
                 isTransition__c = isTransition,
-                ContractReference__c = contractReference,
+                //ContractReference__c = contractReference,
                 AllowChangeUse__c = allowChangeUse,
                 UseCategory__c = servicePoint.UseCategory__c,
                 ConsumptionRangeEE__c = consumptionRangeEle,
@@ -227,7 +230,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SuperUser__c = helperMethods.isSuperUser() ? 'Y' : 'N',
                 SBQQ__PricebookId__c = getPricebookId(servicePoint)
             );
-
+            if(contractReference != null){
+                newQuote.ContractReference__c = contractReference;
+            }
             /** Andrei Necsulescu - 27/08/2021
              *  New quote Profile__c logic using custom permission
              */
@@ -254,7 +259,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = newOpportunity.Id,
                 Quote__c = newQuote.Id,
-                ServicePoint__c = servicePoint.Id
+                ServicePoint__c = servicePoint.Id,
+                Name = servicePoint.ServicePointCode__c
             );
         }
 
@@ -278,7 +284,11 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         return newSaleServiceItem;
     }
 
-
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update multiple SaleServiceItem__c records
+     * @param records
+     */
     public void updateRecords(List<SaleServiceItem__c> records){
         HDT_UTL_DatabaseService.updateSObject(records);
     }
@@ -286,7 +296,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Delete multiple SaleServiceItem__c records
-     * @param List<SaleServiceItem__c>
+     * @param records
      */
     public void deleteRecords(List<SaleServiceItem__c> records){
         HDT_UTL_DatabaseService.deleteSObject(records);
@@ -295,8 +305,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if Service Point is already confirmed for current Sale__c and Opportunity
-     * @param List<SaleServiceItem__c> saleServiceItems
-     * @param String servicePointId
+     * @param saleServiceItems
+     * @param servicePointId
      * @return Boolean
      */
     private Boolean isServicePointConfirmed(List<SaleServiceItem__c> saleServiceItems, String servicePointId){
@@ -312,8 +322,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Group records by Opportunity
-     * @param List<Opportunity>
-     * @param List<SaleServiceItem__c>
+     * @param oppsList
+     * @param itemsList
      * @return List<List<SaleServiceItem__c>>
      */
     public List<List<SaleServiceItem__c>> groupRecordsByOpportunity(List<Opportunity> oppsList, List<SaleServiceItem__c> itemsList){
@@ -342,8 +352,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if amendment is allowed for this tile creation
-     * @param ServicePoint__c servicePoint
-     * @param Sale__c sale
+     * @param servicePoint
+     * @param sale
      * @return Boolean
      */
     private Boolean isAmendmentAllowed(ServicePoint__c servicePoint, Sale__c sale){
@@ -372,14 +382,14 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         String name='';
         switch on sp.commoditySector__c{
             when 'Gas'{
-                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyTypeTemp__c=='Domestico' || sp.SupplyTypeTemp__c=='A-Domestico'){
                     Name = 'Gas Domestico (A-Domestico)';
                 }else{
                     Name = 'Gas Non Domestico (B-Condominio, C-Aziende di pubblica utilità, D-Altri usi)';
                 }
             }
             when 'Energia Elettrica'{
-                if(sp.SupplyType__c=='Domestico' || sp.SupplyType__c=='A-Domestico'){
+                if(sp.SupplyTypeTemp__c=='Domestico' || sp.SupplyTypeTemp__c=='A-Domestico'){
                     Name = 'Energia Elettrica Domestico';
                 }else{
                     Name = 'Energia Elettrica Non Domestico';

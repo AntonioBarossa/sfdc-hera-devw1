@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_SalesCriteriaManager implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
 
     HDT_UTL_PostSalesCriteriaManager criteriaUtl = new HDT_UTL_PostSalesCriteriaManager();
@@ -6,8 +7,8 @@ global inherited sharing class HDT_SRV_SalesCriteriaManager implements wrts_prcg
 
         Map<String, Object> argsMap = (Map<String, Object>) args;
 
-        SObject transition = (SObject) argsMap.get('transition');
-        SObject action = (SObject) argsMap.get('action');
+        //SObject transition = (SObject) argsMap.get('transition');
+        //SObject action = (SObject) argsMap.get('action');
         String method = (String) argsMap.get('method');
         SObject sender = (SObject) argsMap.get('record');
 

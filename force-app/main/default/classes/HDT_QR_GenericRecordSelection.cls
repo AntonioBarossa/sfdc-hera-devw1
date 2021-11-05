@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_QR_GenericRecordSelection {
 
     public List<HDT_Generic_Record_Selection__mdt>  getConfigurationByName(String searchKey) {
@@ -42,16 +43,21 @@ public with sharing class HDT_QR_GenericRecordSelection {
             }
 
             query = 'FIND \'' + String.escapeSingleQuotes(soslSearchTerm) + '\' IN ALL FIELDS RETURNING ' + objectName + '(' + query + ')';
-            system.debug('query => '+query);
+            system.debug(LoggingLevel.DEBUG, 'query => '+query);
             sObjectsList = Search.query(query);
 
-            system.debug('sObjectsList => '+sObjectsList);
+            //system.debug('sObjectsList => '+sObjectsList);
 
         }
 
         return sObjectsList;
     }
-
+    /**@frpanico 25/10/2021
+     * Inserita Annotazione @SuppressWarning
+     * Alla query viene fatto l'escape lato client
+     * Eseguirlo nuovamente lato server comporta il fallimento della query
+     */
+    @suppressWarnings('PMD.ApexSOQLInjection')
     public List<sObject> executeSoqlQuery(String fields, String filters, String limitStr, String objectName) {
         String query;
 
@@ -71,11 +77,11 @@ public with sharing class HDT_QR_GenericRecordSelection {
             if(String.isNotBlank(limitStr)) {
                 query += ' LIMIT ' + limitStr;
             }
-
-            system.debug('query => '+ query);
+            
+            System.debug(LoggingLevel.DEBUG, 'query => '+ query);
             sObjectList = Database.query(query);
 
-            system.debug('sObjectList => '+sObjectList);
+            //system.debug('sObjectList => '+sObjectList);
 
         }
 

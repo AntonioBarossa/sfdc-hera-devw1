@@ -1,10 +1,11 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount')
 public class HDT_SRV_DocumentalManagement{
 	
 	public static String generateRequest(String recordId, String context, String formParams){
 		
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagement - generateRequest';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
 		
 		String payload = '';
 		String body = '';
@@ -14,7 +15,7 @@ public class HDT_SRV_DocumentalManagement{
 		
 		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
-		System.debug(debugString + ' - Superato blocco 1');
+		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 1');
 		
 		//estrae Body da Documento (con Name = context) e lo formatta come HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
@@ -22,7 +23,7 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//inserito per gestire la documentazione anticipata che si basa su single Order. Sfrutta il Context4 per recuperare la struttura del payload e il context5 per la struttura record
 		documentalContext = context.equalsIgnoreCase('DocumentazioneAnticipata')?'Context5':documentalContext;
-		System.debug(debugString + ' - Superato blocco 2');
+		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 2');
 		
 		//Viene estratto un Custom Metadata apposito identificato dal documentalContext. 
 		HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject integrationObjConfig =  HDT_UTL_IntegrationObject.getIntegrationObjectConfiguration('HDT_IntegrationObject__mdt', 'Id, JSON__c', 'DeveloperName = \'Documentale_'+ documentalContext + '\'', 'JSON__c');
@@ -36,7 +37,7 @@ public class HDT_SRV_DocumentalManagement{
 		//Restituisce una lista in cui, per ogni order è presente una mappa dove sono stati suddivisi per tipologia i record inseriti indistintamente in recordsList.
 		List<Map<String, List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList, documentalContext);
 		formParamsMap.put('Contesto', context);
-		System.debug(debugString + ' - Superato blocco 3');
+		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 3');
 		
 		//sub-processing della lista di mappe realizzata al punto precedente.
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
@@ -51,16 +52,16 @@ public class HDT_SRV_DocumentalManagement{
 			
 			Blob payloadBlob = Blob.valueOf(payload);
 			payload = EncodingUtil.base64Encode(payloadBlob);
-			System.debug('Paylod ' + payload);
+			System.debug(LoggingLevel.DEBUG, 'Paylod ' + payload);
 			
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
-		System.debug(debugString + ' - Superato blocco 4');
+		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 4');
 		
 		body = composeJson(recordId, driverPayloadListMap, formParamsMap, recordObjectsListMap[0]);
-		System.debug('Body ' + body);
+		System.debug(LoggingLevel.DEBUG, 'Body ' + body);
 		
 		return body;
 	}
@@ -100,7 +101,7 @@ public class HDT_SRV_DocumentalManagement{
 		gen.writeEndObject();
 
 		String body = gen.getAsString();
-		System.debug('Postel body: ' + body);
+		System.debug(LoggingLevel.DEBUG, 'Postel body: ' + body);
 		return body;
 	}
 
@@ -146,7 +147,7 @@ public class HDT_SRV_DocumentalManagement{
 			body = gen.getAsString();
 		}
 
-		System.debug('GetEnvelopeRequest body: ' + body);
+		System.debug(LoggingLevel.DEBUG, 'GetEnvelopeRequest body: ' + body);
 		return body;
 	}
 
@@ -173,7 +174,7 @@ public class HDT_SRV_DocumentalManagement{
 		gen.writeEndObject();
 
 		String body = gen.getAsString();
-		System.debug('Intesa body: ' + body);
+		System.debug(LoggingLevel.DEBUG, 'Intesa body: ' + body);
 		return body;
 	}
 
@@ -200,7 +201,7 @@ public class HDT_SRV_DocumentalManagement{
 		gen.writeEndObject();
 
 		String body = gen.getAsString();
-		System.debug('Intesa body: ' + body);
+		System.debug(LoggingLevel.DEBUG, 'Intesa body: ' + body);
 		return body;
 	}
 
@@ -224,11 +225,15 @@ public class HDT_SRV_DocumentalManagement{
 	public static String createPublicLink(String recordId,String base64,String fileName){
 		try {
 			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
-			ContentDocumentLink cl = HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*ContentDocumentLink cl = */HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
 			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id,fileName);
 			return publicLink;
 		} catch (Exception ex) {
-			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 			return null;
 		}
 	}
@@ -303,25 +308,28 @@ public class HDT_SRV_DocumentalManagement{
 		HttpResponse response = http.send(request);
 		if (response.getStatusCode() == 200) {
 			Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-			System.debug('Response: ' + results);
+			System.debug(LoggingLevel.DEBUG, 'Response: ' + results);
 			if (results.containsKey('data')) {
 				Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(results.get('data')));
 				transactionId = (String) data.get('transactionId');
 			}
 			
-			System.debug('Received the following transactionId: ' + transactionId);
+			System.debug(LoggingLevel.DEBUG, 'Received the following transactionId: ' + transactionId);
 		}
 		return transactionId;
 	}
 	public static SObject getSobjectFromTransactionId(String transactionId){
-		if(String.isBlank(transactionId)) return null;
+		if(String.isBlank(transactionId)){ 
+			return null;
+		}
+		
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
-				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
+				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
 				return orderList[0];
 			}
 		}else{
@@ -332,13 +340,18 @@ public class HDT_SRV_DocumentalManagement{
 	public static void updateSobjectFromDocusign(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
 		if(record != null){
 			String status = requestBody.status;
-			String processType = (String)record.get('DocumentalProcessType__c');
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			//String processType = (String)record.get('DocumentalProcessType__c');
 			String cluster = (String)record.get('Cluster__c');
+			String caseType = (String)record.get('Type');
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio>();
 			List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData = new List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData>();
 			if(requestBody.listOfRadioGroup != null && requestBody.listOfRadioGroup.size()>0){
 				listOfRadio.addAll(requestBody.listOfRadioGroup);
-				System.debug(requestBody.listOfRadioGroup);
+				System.debug(LoggingLevel.DEBUG, requestBody.listOfRadioGroup);
 			}
 			if(requestBody.listOfDataText != null && requestBody.listOfDataText.size()>0){
 				listOfData.addAll(requestBody.listOfDataText);
@@ -350,6 +363,9 @@ public class HDT_SRV_DocumentalManagement{
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
+					if ('Rimborso'.equalsIgnoreCase(caseType) || 'Piano Rateizzazione'.equalsIgnoreCase(caseType)){
+						HDT_UTL_Case.createActivity((Id)record.get('Id'), 'Validazione Firma OTP', 'Validazione Firma OTP', 'Validazione Firma OTP');
+					}				
 				}else{
 					//Che fase documentale settare?
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
@@ -360,9 +376,9 @@ public class HDT_SRV_DocumentalManagement{
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');					
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
-				}else{
+				}/*else{
 					//Che fase documentale settare?			
-				}
+				}*/
 			}
 			handleRadioGroup(record,listOfRadio);
 			handleDataText(record,listOfData);
@@ -372,9 +388,13 @@ public class HDT_SRV_DocumentalManagement{
 
 	public static void logDocusignError(SObject record,HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody){
 		if(record != null && requestBody != null){
-			String status = requestBody.status;
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentate variabili non utilizzate.
+			*/
+			/*String status = requestBody.status;
 			String processType = (String)record.get('DocumentalProcessType__c');
-			String cluster = (String)record.get('Cluster__c');
+			String cluster = (String)record.get('Cluster__c');*/
 			Id recordId = (Id)record.get('Id');
 			HDT_UTL_DocumentalManagement.createDocumentalActivityForError(requestBody.outcomeDescription, recordId, requestBody.envelopeId, record);
 		}
@@ -391,7 +411,7 @@ public class HDT_SRV_DocumentalManagement{
 					try {
 						HDT_UTL_DatabaseService.insertSObject(documentalActivity);
 					} catch (Exception ex) {
-						System.debug('Errore DML: ' + ex.getMessage());
+						System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 					}
 				}
 			}
@@ -404,17 +424,19 @@ public class HDT_SRV_DocumentalManagement{
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
 				Contact caseContact = (Contact) caseRecord.Contact;
-				individualId = caseContact.IndividualId;
+				if (caseContact != null){
+					individualId = caseContact.IndividualId;
+				}
 			}else{
 				Order orderRecord = (Order) record;
 				Contact orderContact = (Contact) orderRecord.Contact__r;
-				if (orderContact == null){
-					System.debug('Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
-					return;
+				if (orderContact != null){
+					individualId = orderContact.IndividualId;
+				}else{
+					System.debug(LoggingLevel.DEBUG, 'Impossibile aggiornare flag privacy, nessun riferimento di Contact su Order: ' + (String) record.get('Id'));
 				}
 			}
 			Individual individualRecord = new Individual();
-			individualRecord.Id = individualId;
 
 			if(record.getSobjectType() == Case.getSobjectType()){
 				//Settare phase del case in completata
@@ -422,7 +444,11 @@ public class HDT_SRV_DocumentalManagement{
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
-					String privacyCompany;
+					/*
+						@Author: Davide Viola - 19/10/2021
+						Description: PMD -> Commentata variabile non utilizzata.
+					*/
+					//String privacyCompany;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -434,24 +460,29 @@ public class HDT_SRV_DocumentalManagement{
 							record.put('MarketingPrivacy__c', value);
 							individualRecord.MarketingPrivacy__c = value;
 							individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
-							individualRecord.PrivacyMarketingChoiceSource__c = 'post-sales';
+							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
 							individualRecord.MarketingPrivacyVersion__c = privacyVersion;
 						}else if (singleRadio.groupName.indexOf('radio2') > -1) {
 							record.put('ProfilingPrivacy__c', value);
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
-							individualRecord.PrivacyProfilingChoiceSource__c = 'post-sales';
+							individualRecord.PrivacyProfilingChoiceSource__c = 'CONTRATTO';
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
 					}
 				}
-				HDT_UTL_DatabaseService.updateSObject(individualRecord);
 			}else{
-				//in caso di order aggiornare privacy individual
+				Boolean datiCatastaliCompilati = false;
+				//Boolean leggeOttantaCompilata = false; // TODO: come si chiamano i radio button della legge 80?
 				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
 					List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 					String privacyVersion;
-					String privacyCompany;
+					/*
+						@Author: Davide Viola - 19/10/2021
+						Description: PMD -> Commentata variabile non utilizzata.
+					*/
+					//String privacyCompany;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
 							privacyVersion = singleAttachment.Version__c;
@@ -468,15 +499,30 @@ public class HDT_SRV_DocumentalManagement{
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
+						// Verifica radiobutton nei modulo opzionali (dati catastali, legge 80)
+						if (singleRadio.groupName.equalsIgnoreCase('DTC_radio1') && singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+							datiCatastaliCompilati = true;
+						}
 					}
 				}
 				try {
-					HDT_UTL_DatabaseService.updateSObject(individualRecord);
+					if (datiCatastaliCompilati){ // TODO: gestire anche leggeOttantaCompilata
+						record.put('IsDocusignAttachment__c', True);
+						HDT_UTL_DatabaseService.updateSObject(record);
+					}
 				}catch(Exception ex){
-					System.debug('Errore DML: ' + ex.getMessage());
+					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}
-			
+
+			if (individualId != null){
+				individualRecord.Id = individualId;
+				try {
+					HDT_UTL_DatabaseService.updateSObject(individualRecord);
+				}catch(Exception ex){
+					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
+				}
+			}
 		}
 	}
 	private static void handleDataText(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyData> listOfData){
@@ -494,10 +540,10 @@ public class HDT_SRV_DocumentalManagement{
 
 		if (!registries.isEmpty()){
 			try {
-				System.debug('# dati catastali da inserire: ' + registries.size());
+				System.debug(LoggingLevel.DEBUG, '# dati catastali da inserire: ' + registries.size());
 				HDT_UTL_DatabaseService.insertSObject(registries);
 			}catch(Exception ex){
-				System.debug('Errore DML: ' + ex.getMessage());
+				System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 			}
 		}
 	}
@@ -514,7 +560,11 @@ public class HDT_SRV_DocumentalManagement{
 			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
-				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+				try{
+					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+				}catch(Exception ex){
+					System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+				}
 			}
 			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
@@ -526,7 +576,7 @@ public class HDT_SRV_DocumentalManagement{
 				}
 			}
 		}catch(Exception ex){
-			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	private static String composeJson(String recordId, List<Map<String,Object>> driverPayloadListMap,Map<String,Object> formParams,Map<String,List<sObject>> inputs){
@@ -574,7 +624,7 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			documentalRequest.deliverPackageRequest = sPackageRequest;
 		}catch(Exception ex){
-			System.debug(ex.getMessage() + ' Line: ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, ex.getMessage() + ' Line: ' + ex.getLineNumber());
 		}
 		return JSON.serialize(documentalRequest);
 	}
@@ -627,7 +677,7 @@ public class HDT_SRV_DocumentalManagement{
 			templateInfo.templateId = docusignCustomSettings.TemplateId__c;
 			signInfo.template = templateInfo;
 		} catch (Exception ex) {
-			System.debug('Error in method addDocusingInformation ' + ex.getLineNumber() + ' ' + ex.getMessage());
+			System.debug(LoggingLevel.DEBUG, 'Error in method addDocusingInformation ' + ex.getLineNumber() + ' ' + ex.getMessage());
 		}
 		return signInfo;
 	}
@@ -636,10 +686,14 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagement - generateDriver';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
 		
-		List<Map<String,String>> driverListMap = new List<Map<String,String>>();
-		Map<String,String> driverMap = new Map<String,String>();
+		/*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*List<Map<String,String>> driverListMap = new List<Map<String,String>>();
+		Map<String,String> driverMap = new Map<String,String>();*/
 		String value = '';
 		
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver driver = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver();
@@ -683,7 +737,7 @@ public class HDT_SRV_DocumentalManagement{
 				}else{
 					value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 				}
-				//System.debug('Value for ' + payloadField + ' is : ' + value);
+				//System.debug(LoggingLevel.DEBUG, 'Value for ' + payloadField + ' is : ' + value);
 				driver.name = payloadField;
 				driver.value = value;
 				driverList.add(new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver(driver));
@@ -696,7 +750,7 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagement - generatePayload';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
 		
 		String[] payloadArray = new List<String>();
 		String payload = '';
@@ -704,8 +758,12 @@ public class HDT_SRV_DocumentalManagement{
 		String div='|';
 		String fineRiga='\n';
 		String value = '';
-		Map<String,String> context = new Map<String,String>();
-		Map<String,String> iteratorContext = new Map<String,String>();
+		/*
+            @Author: Davide Viola - 19/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Map<String,String> context = new Map<String,String>();
+		Map<String,String> iteratorContext = new Map<String,String>();*/
 		Integer countRecords = 1;
 		
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
@@ -759,8 +817,9 @@ public class HDT_SRV_DocumentalManagement{
 						payloadArray.add(value);
 					}
 					//VERIFICO SE HO SETTATO UN VALORE DIVERSO DA NULL, UTILIZZO LA VARIABILE recordNull PER CAPIRE SE TUTTO IL RECORD è COMPOSTO DA | VUOTI
-					if(value != '' || defaultVal != '')
+					if(value != '' || defaultVal != ''){
 						recordNull = false;
+					}
 				}
 				if(!recordNull){
 					payloadArray.add(fineRiga);
@@ -791,7 +850,7 @@ public class HDT_SRV_DocumentalManagement{
 		
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagement - generatePayloadEstrattoConto';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
 		
 		String payload = '';
 		String div='|';
@@ -809,12 +868,16 @@ public class HDT_SRV_DocumentalManagement{
 			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
 			List<Object> secondoLivelloList = new List<Object>();
 			Map<String, Object> secondoLivello = new Map<String, Object>();
-			System.debug(primolivello);
+			System.debug(LoggingLevel.DEBUG, primolivello);
 			
 			//Inizializzo le variabili con i valori del primo record
 			String previousCa = (String)primolivello.get('contoContrattuale');
 			String previousModPagamento = (String)primolivello.get('modalitaPagamentoCA');
-			String previousSocieta = (String)primolivello.get('societa');
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			//String previousSocieta = (String)primolivello.get('societa');
 			Double residuoTotale = 0.0;
 			String payloadRecordOttantuno = '';
 			Integer i = -1;
@@ -977,7 +1040,7 @@ public class HDT_SRV_DocumentalManagement{
 			//payload = EncodingUtil.base64Encode(payloadBlob);
 			
 		} catch (Exception ex) {
-			System.debug('Errore nella generazione del Payload EC ' + ex.getMessage() + ' at line: ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella generazione del Payload EC ' + ex.getMessage() + ' at line: ' + ex.getLineNumber());
 		}
 		return payload.substring(0, payload.length() - fineRiga.length());
 	}
@@ -991,7 +1054,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 		
 		//DEBUG
 		String debugString = 'HDT_SRV_DocumentalManagement - generatePayloadGestioneCredito';
-		System.debug(debugString);
+		System.debug(LoggingLevel.DEBUG, debugString);
 		
 		String payload = '';
 		String div='|';
@@ -1008,9 +1071,13 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			String documents = (String) formParams.get('EstrattoConto');
 			List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documents);
 			Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
-			List<Object> secondoLivelloList = new List<Object>();
-			Map<String, Object> secondoLivello = new Map<String, Object>();
-			System.debug(primolivello);
+			/*
+				@Author: Davide Viola - 19/10/2021
+				Description: PMD -> Commentata variabile non utilizzata.
+			*/
+			/*List<Object> secondoLivelloList = new List<Object>();
+			Map<String, Object> secondoLivello = new Map<String, Object>();*/
+			System.debug(LoggingLevel.DEBUG, primolivello);
 			
 			Boolean ordineDiPagamento = false;
 
@@ -1171,7 +1238,7 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			//payload = EncodingUtil.base64Encode(payloadBlob);
 
 		} catch (Exception ex) {
-			System.debug('Errore nella generazione del Payload GC ' + ex.getMessage() + ' at line: ' + ex.getLineNumber());
+			System.debug(LoggingLevel.DEBUG, 'Errore nella generazione del Payload GC ' + ex.getMessage() + ' at line: ' + ex.getLineNumber());
 		}
 		return payload.substring(0, payload.length() - fineRiga.length());
 	}
@@ -1219,34 +1286,43 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
 			List<HDT_WRP_SignModeConfiguration> signSendConfigurationList = new List<HDT_WRP_SignModeConfiguration>();
 			HDT_WRP_SignModeConfiguration signSendConfiguration = new HDT_WRP_SignModeConfiguration();
 			List<HDT_SignModeSettings__mdt> signModeSettingsList = HDT_QR_DocumentalConfiguration.getSignModeSettings(processType,source);
-			System.debug('signModeSettingsList: ' + signModeSettingsList);
+			System.debug(LoggingLevel.DEBUG, 'signModeSettingsList: ' + signModeSettingsList);
 			for(HDT_SignModeSettings__mdt singleRecord : signModeSettingsList){
-				System.debug('processing sign mode: ' + singleRecord.SignMode__c);
+				System.debug(LoggingLevel.DEBUG, 'processing sign mode: ' + singleRecord.SignMode__c);
 				sendMode = new Map<String,String>();
 				signMode = new Map<String,String>();
 				signSendConfiguration = new HDT_WRP_SignModeConfiguration();
 				signMode.put('label', singleRecord.SignMode__c);
 				signMode.put('value', singleRecord.SignMode__c);
 				signSendConfiguration.signMode = new Map<String,String>(signMode);
-				if(singleRecord.SendMode1__c != null && singleRecord.SendMode1__c != ''){
-					System.debug('adding send mode: ' + singleRecord.SendMode1__c);
-					sendMode.put('label',singleRecord.SendMode1__c);
-					sendMode.put('value',singleRecord.SendMode1__c);
-					Map<String,String> prova = new Map<String,String>(sendMode);
-					signSendConfiguration.sendMode.add(prova);
-				}
-				if(singleRecord.SendMode2__c != null && singleRecord.SendMode2__c != ''){
-					System.debug('adding send mode: ' + singleRecord.SendMode2__c);
-					sendMode.put('label',singleRecord.SendMode2__c);
-					sendMode.put('value',singleRecord.SendMode2__c);
+
+				if (source == 'Sportello' && singleRecord.SignMode__c == 'Cartacea'){ // workaround per non far esplodere il numero di configurazioni in HDT_SignModeSettings__mdt
+					System.debug(LoggingLevel.DEBUG, 'forcing send mode Stampa Cartacea');
+					sendMode.put('label','Stampa Cartacea');
+					sendMode.put('value','Stampa Cartacea');
 					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
+				} else {
+					if(singleRecord.SendMode1__c != null && singleRecord.SendMode1__c != ''){
+						System.debug(LoggingLevel.DEBUG, 'adding send mode: ' + singleRecord.SendMode1__c);
+						sendMode.put('label',singleRecord.SendMode1__c);
+						sendMode.put('value',singleRecord.SendMode1__c);
+						Map<String,String> prova = new Map<String,String>(sendMode);
+						signSendConfiguration.sendMode.add(prova);
+					}
+					if(singleRecord.SendMode2__c != null && singleRecord.SendMode2__c != ''){
+						System.debug(LoggingLevel.DEBUG, 'adding send mode: ' + singleRecord.SendMode2__c);
+						sendMode.put('label',singleRecord.SendMode2__c);
+						sendMode.put('value',singleRecord.SendMode2__c);
+						signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
+					}
+					if(singleRecord.SendMode3__c != null && singleRecord.SendMode3__c != ''){
+						System.debug(LoggingLevel.DEBUG, 'adding send mode: ' + singleRecord.SendMode3__c);
+						sendMode.put('label',singleRecord.SendMode3__c);
+						sendMode.put('value',singleRecord.SendMode3__c);
+						signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
+					}
 				}
-				if(singleRecord.SendMode3__c != null && singleRecord.SendMode3__c != ''){
-					System.debug('adding send mode: ' + singleRecord.SendMode3__c);
-					sendMode.put('label',singleRecord.SendMode3__c);
-					sendMode.put('value',singleRecord.SendMode3__c);
-					signSendConfiguration.sendMode.add(new Map<String,String>(sendMode));
-				}
+
 				signSendConfigurationList.add(new HDT_WRP_SignModeConfiguration(signSendConfiguration));
 			}
 			configurationJson = JSON.serialize(signSendConfigurationList);
@@ -1255,6 +1331,31 @@ Genera la porzione di payload relativa alla vista Gestione Credito.
         }
         return configurationJson;
     }
+
+	public static void logEmailForAccountStatement(String recordId, String formParams) {
+		if (String.isBlank(recordId) || String.isBlank(formParams)){
+			System.debug(LoggingLevel.WARN, 'Invalid inputs for logEmailForAccountStatement method');
+			return;
+		}
+
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String email = (String) formParamsMap.get('email');
+
+		if (String.isBlank(email)) {
+			System.debug(LoggingLevel.WARN, 'logEmailForAccountStatement: empty email');
+			return;
+		}
+
+		Account acc = new Account();
+		acc.Id = recordId;
+		acc.LastUsedPostelEmail__c = email;
+
+		try {
+			HDT_UTL_DatabaseService.updateSObject(acc);
+		} catch(Exception ex) {
+			System.debug(LoggingLevel.DEBUG, 'DLM error: ' + ex.getMessage());
+		}
+	}
 
 	public class HDT_WRP_SignModeConfiguration{
 		Map<String,String> signMode;

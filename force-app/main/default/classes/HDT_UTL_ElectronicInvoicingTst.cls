@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    01/10/2021
+*/
+
 @isTest
 public with sharing class HDT_UTL_ElectronicInvoicingTst {
 
@@ -102,7 +107,7 @@ public with sharing class HDT_UTL_ElectronicInvoicingTst {
         Test.stopTest();
         
         //ASSERTS
-        System.assert(myElectronicInvoicing != null);
+        System.assert(myElectronicInvoicing != null, 'Attenzione, myElectronicInvoicing non può essere null!');
         
     }
 

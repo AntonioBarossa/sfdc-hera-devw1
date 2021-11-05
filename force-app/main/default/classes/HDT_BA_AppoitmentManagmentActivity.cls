@@ -3,12 +3,15 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
     public Date dt= Date.today();
     public List<wrts_prcgvr__Activity__c> activitiesToInsert = new List<wrts_prcgvr__Activity__c>();
     HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
-
+    //
     public Database.QueryLocator start(Database.BatchableContext bc) {
         Id recType= qrRecordType.getRecordTypeIdByName('HDT_RT_DistributorAppointment');
         Date dtEmail= dt.addDays(3);
         Date dtSms= dt.addDays(1);
-        String query = 'SELECT Id, AppointmentDate__c,Email__c, Mobile__c,Account__c FROM wrts_prcgvr__Activity__c Where Status__c IN (\'Appuntamento confermato\',\'Modifica confermata\') AND (RecordTypeId= :recType) AND (Type__c= \'Presa Appuntamento\') AND ( (Mobile__c!= NULL AND AppointmentDate__c<= :dtSms AND AppointmentDate__c >= :dt) OR (Email__c !=NULL AND AppointmentDate__c<= : dtEmail AND AppointmentDate__c >= :dt))';
+        System.debug('RecordType id: '+recType);
+        System.debug('dtEmail value: '+dtEmail);
+        System.debug('dtSms value: '+dtSms);
+        String query = 'SELECT Id, AppointmentDate__c,DateTimeRef__c, Email__c, Mobile__c,Account__c FROM wrts_prcgvr__Activity__c Where Status__c IN (\'Appuntamento confermato\',\'Modifica confermata\') AND (RecordTypeId= :recType) AND (Type__c= \'Presa Appuntamento\') AND ( (Mobile__c!= NULL AND AppointmentDate__c<= :dtSms AND AppointmentDate__c >= :dt) OR (Email__c !=NULL AND AppointmentDate__c<= : dtEmail AND AppointmentDate__c >= :dt))';
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext bc, List<wrts_prcgvr__Activity__c> scope){
@@ -30,7 +33,7 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
         List<et4ae5__IndividualEmailResult__c> ier = [Select Id, DateTimeRef__c, et4ae5__Opened__c , Activity__c From et4ae5__IndividualEmailResult__c Where Activity__c IN :actvIds ];
         
         Map<Id,et4ae5__IndividualEmailResult__c> emailResults= new Map<Id,et4ae5__IndividualEmailResult__c>();
-        for(et4ae5__IndividualEmailResult__c e: emailResults.values()){
+        for(et4ae5__IndividualEmailResult__c e: ier){
             emailResults.put(e.Activity__c,e);
         }
 
@@ -78,8 +81,4 @@ public with sharing class HDT_BA_AppoitmentManagmentActivity implements Database
     public void finish(Database.BatchableContext bc){
         insert activitiesToInsert;
     }
-
-    public void execute(SchedulableContext sc){
-
-    } 
 }

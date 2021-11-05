@@ -24,6 +24,7 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
     ];
 
     @api isHide = false;
+    @track reiteklink;
 
     iconName = '';
     agentStatus = '';
@@ -50,6 +51,10 @@ export default class HdtCampaignTelesellingToolbar extends NavigationMixin(Light
             this.spinner = false;           
         }, 1000);*/
 
+    }
+
+    handleGetReitekLink(event){
+        this.reiteklink = event.detail.reiteklink;
     }
 
     closeModal(){

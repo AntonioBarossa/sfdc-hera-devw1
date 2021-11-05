@@ -10,7 +10,7 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
     }
 
 
-    public void execute(Database.BatchableContext BC, List<Order> scope) {
+    public void execute(Database.BatchableContext bc, List<Order> scope) {
         for(Order o : scope){
             o.Phase__c='Preventivo scaduto';
         }
@@ -18,7 +18,7 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
     }
 
     public void finish(Database.BatchableContext bc){
-		System.debug('Finish HDT_BA_OrderEstimateExpiration');
+		return;
 	}
 
     public void execute(SchedulableContext ctx){

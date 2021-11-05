@@ -3,52 +3,237 @@
     <actionCalls>
         <name>go_to_new_activity_acton</name>
         <label>Vai a Nuova Attività</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>402</locationX>
+        <locationY>2342</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>activity.Id</elementReference>
+                <elementReference>forwarding_activity.Id</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
-        <name>forwarding_activity_set</name>
-        <label>Prepara Activity di Riassegnazione</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <name>add_activities_to_lists_assignment</name>
+        <label>Aggiungi Attività a Liste</label>
+        <locationX>314</locationX>
+        <locationY>1430</locationY>
         <assignmentItems>
-            <assignToReference>activity.Type__c</assignToReference>
+            <assignToReference>activities_to_insert</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>forwarding_activity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>activities_to_update</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>parent_activity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>activities_loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>add_recordId_to_list_assignment</name>
+        <label>Aggiungi RecordId a Lista</label>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>ids</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>insert_note</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>forwarding_activity_set</name>
+        <label>Compila Attività di Inoltro</label>
+        <locationX>314</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>forwarding_activity.Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Gestione Agenzia</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>activity.ParentActivity__c</assignToReference>
+            <assignToReference>forwarding_activity.ParentActivity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>activities_loop</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>activity.RecordTypeId</assignToReference>
+            <assignToReference>forwarding_activity.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordtype_get.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>forwarding_activity.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>note_input</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>forwarding_activity_create</targetReference>
+            <targetReference>suspend_parent_activity</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>id_save_assignment</name>
+        <label>Salva ID</label>
+        <locationX>490</locationX>
+        <locationY>2126</locationY>
+        <assignmentItems>
+            <assignToReference>forwarding_activity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>select_created_activity_loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>select_created_activity_loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>suspend_parent_activity</name>
+        <label>Sospendi Attività Madre</label>
+        <locationX>314</locationX>
+        <locationY>1310</locationY>
+        <assignmentItems>
+            <assignToReference>parent_activity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>activities_loop</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>parent_activity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospesa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>add_activities_to_lists_assignment</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>massive_forwarding_decision</name>
+        <label>Inoltro Massivo?</label>
+        <locationX>226</locationX>
+        <locationY>1886</locationY>
+        <defaultConnector>
+            <targetReference>select_created_activity_loop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>massive_forwarding_yes_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>massive_operation_decision</name>
+        <label>Operazione Massiva?</label>
+        <locationX>226</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>record_selected_decision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>massive_operation_no_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>add_recordId_to_list_assignment</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>record_selected_decision</name>
+        <label>Record Selezionati?</label>
+        <locationX>402</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>empt_selection_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>record_selected_yes_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ids</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>insert_note</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <interviewLabel>Activity - Inoltro ad Agenzia {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Inoltro ad Agenzia</label>
+    <loops>
+        <name>activities_loop</name>
+        <label>Loop su Attività</label>
+        <locationX>226</locationX>
+        <locationY>1070</locationY>
+        <collectionReference>ids</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>forwarding_activity_set</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>forwarding_activity_create</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>select_created_activity_loop</name>
+        <label>Seleziona Attività Creata</label>
+        <locationX>402</locationX>
+        <locationY>2006</locationY>
+        <collectionReference>activities_to_insert</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>id_save_assignment</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>go_to_new_activity_acton</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -71,21 +256,21 @@
     <recordCreates>
         <name>forwarding_activity_create</name>
         <label>Crea Attività di Inoltro</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>226</locationX>
+        <locationY>1646</locationY>
         <connector>
-            <targetReference>activity_pause</targetReference>
+            <targetReference>suspend_parent_activities</targetReference>
         </connector>
-        <inputReference>activity</inputReference>
+        <inputReference>activities_to_insert</inputReference>
     </recordCreates>
     <recordLookups>
         <name>recordtype_get</name>
         <label>RecordType</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>226</locationX>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>forwarding_activity_set</targetReference>
+            <targetReference>activities_loop</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -108,34 +293,36 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>activity_pause</name>
-        <label>Sospendi Attività</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <name>suspend_parent_activities</name>
+        <label>Sospendi Attività Inoltrate</label>
+        <locationX>226</locationX>
+        <locationY>1766</locationY>
         <connector>
-            <targetReference>go_to_new_activity_acton</targetReference>
+            <targetReference>massive_forwarding_decision</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>wrts_prcgvr__Status__c</field>
-            <value>
-                <stringValue>Sospesa</stringValue>
-            </value>
-        </inputAssignments>
-        <object>wrts_prcgvr__Activity__c</object>
+        <inputReference>activities_to_update</inputReference>
     </recordUpdates>
+    <screens>
+        <name>empt_selection_screen</name>
+        <label>Screen - Selezione Vuota</label>
+        <locationX>490</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>empt_selection_text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;&lt;u&gt;Attenzione&lt;/u&gt;&lt;/b&gt;&lt;u style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;,&lt;/u&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(56, 56, 56); font-size: 14px;&quot;&gt;Impossibile proseguire: nessun record è stato selezionato. Selezionare almeno un record per Inoltrare ad Agenzia.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>insert_note</name>
         <label>Inserisci Note</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>226</locationX>
+        <locationY>830</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -143,23 +330,55 @@
             <targetReference>recordtype_get</targetReference>
         </connector>
         <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <isRequired>false</isRequired>
-            <objectFieldReference>activity.Note__c</objectFieldReference>
+            <name>note_input</name>
+            <fieldText>Note</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>insert_note</targetReference>
+            <targetReference>massive_operation_decision</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <variables>
-        <name>activity</name>
+        <name>activities_to_insert</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>activities_to_update</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>forwarding_activity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>wrts_prcgvr__Activity__c</objectType>
+    </variables>
+    <variables>
+        <name>ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>parent_activity</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

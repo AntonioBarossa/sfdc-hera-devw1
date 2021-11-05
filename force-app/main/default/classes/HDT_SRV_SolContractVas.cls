@@ -1,10 +1,14 @@
 public with sharing class HDT_SRV_SolContractVas {
     public static HDT_WRP_SolContractVas handleRequest(String accountId){
         HDT_WRP_SolContractVas response = new HDT_WRP_SolContractVas();
-        if(String.isBlank(accountId))return response;
+        if(String.isBlank(accountId)){
+            return response;
+        }
         
         List<SObject> contractWithOffer = HDT_QR_SolContractVas.getContractWithOffer(accountId);
-        if(contractWithOffer.size()==0) return response;
+        if(contractWithOffer.size()==0) {
+            return response;
+        }
         Set<String> offerSet = new Set<String>();
         
         for(Contract singleContract : (List<Contract>) contractWithOffer){
@@ -13,7 +17,9 @@ public with sharing class HDT_SRV_SolContractVas {
             offerSet.add(singleProduct.ProductCode);
         }
         List<SObject> productOptionList = HDT_QR_SolContractVas.getProductOptionVas(offerSet);
-        if (productOptionList.size()==0) return response;
+        if (productOptionList.size()==0) {
+            return response;
+        }
         HDT_WRP_SolContractVas.HDT_WRP_Vas singleVas = new HDT_WRP_SolContractVas.HDT_WRP_Vas();
         Map<String,Sobject> offerWithVasMap = new Map<String,Sobject>();
         for(SBQQ__ProductOption__c singleOption : (List<SBQQ__ProductOption__c>)productOptionList){

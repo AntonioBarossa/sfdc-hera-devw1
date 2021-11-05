@@ -1,4 +1,3 @@
-
 /*
  * File: hdtManageScriptModal.js
  * Project: HERA
@@ -17,54 +16,109 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import isDecisionalScript from '@salesforce/apex/HDT_LC_DecisionalScriptController.isDecisionalScript';
+import templateModal from './templateModal.html';
+import templateStandard from './templateStandard.html';
+
+import getScriptConfig from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptConfig';
+
+const columns = [
+    {label: 'Nome Script', fieldName: 'scriptName', type: 'text'},
+    {label: 'Stato', fieldName: 'status', type: 'text'},
+    {type: 'button', initialWidth: 120, typeAttributes:{
+            label: 'Avvia', 
+            title: 'Avvia',
+            name: 'startScript', 
+            value: 'startScript',
+            iconName: 'utility:call',
+            disabled: {fieldName :'completed'}
+        }
+    }
+];
 
 export default class HdtManageScriptModal extends LightningElement {
 
-    @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
-    @api buttonLabel;
-    @api childAdditionalInfo="";//API field of child Record you want to show info in the title
+    @api activityId;
+    @api childAdditionalInfo='';//API field of child Record you want to show info in the title
     @api linkReitek;
     @api hasLink;
-    @api isInsideModal = false;
-    @api openModal = false;
-    isDecisional;
+    @api modal = false;
+    openModal = false;
+    isLoading = false;
 
-    get hasScriptType() {
-        return (this.isDecisional!=null);
+    scriptConfig;
+    scriptConfigs;
+    columns = columns;
+
+    render() {
+        return this.modal ? templateModal : templateStandard;
     }
     
     connectedCallback(){
-        if (this.openModal) {
-            this.checkScriptType();
-        }
+        this.loadScriptConfig();
     }
 
+    @api
     showModal(){
-        this.checkScriptType();
+        this.openModal = true;
+        this.loadScriptConfig();
     }
 
     closeModal(){
+        console.log("closeModal");
         this.openModal = false;
-    }
-
-    handleCloseEvt(){
-        console.log("handleCloseEvt");
         this.dispatchEvent(new CustomEvent('close'));
     }
 
-    checkScriptType() {
-        return isDecisionalScript({processName: this.scriptProcessName}).then(isDecisional => {
-            this.isDecisional = isDecisional;
-            this.openModal = true;
-        },error => {
-            this.dispatchEvent(new ShowToastEvent({
-                variant: 'error',
-                title: 'Non è stato possibile determinare il tipo dello script',
-                message: error
-            }));
+    confirmModal(evt){
+        /*console.log("confirmModal");
+        this.openModal = false;
+        this.dispatchEvent(new CustomEvent('confirm'));*/
+
+        let scriptConfigs = this.scriptConfigs;
+        scriptConfigs.forEach(scriptConfig => {
+            if (scriptConfig.scriptName === this.scriptConfig.scriptName) {
+                scriptConfig.status = 'Completato';
+                scriptConfig.completed = true;
+            }
         });
+        this.scriptConfigs = scriptConfigs;
+        this.scriptConfig = null;
     }
 
+    handleRowAction(event){
+        let scriptConfig = event.detail.row;
+        let action = event.detail.action;
+
+        if (action.value === 'startScript') {
+            this.scriptConfig = scriptConfig;
+        }
+    }
+
+    loadScriptConfig(){
+        if (this.recordId) {
+            this.isLoading = true;
+            getScriptConfig({recordId: this.recordId}).then(scriptConfigs => {
+                
+                if (scriptConfigs.length>0) {
+                    scriptConfigs.forEach(scriptConfig => {
+                        scriptConfig.status = 'Da Completare';
+                        scriptConfig.completed = false;
+                    });
+                    console.log(JSON.stringify(scriptConfigs));
+                    this.scriptConfigs = scriptConfigs;
+                }
+
+                this.isLoading = false;
+            },error => {
+                console.log(error);
+                const evt = new ShowToastEvent({
+                    title: 'Errore caricamento Script',
+                    message: 'Non è stato possibile recuperare le informazioni relative agli script',
+                    variant: 'error'
+                });
+                this.dispatchEvent(evt);
+            });
+        }
+    }
 }

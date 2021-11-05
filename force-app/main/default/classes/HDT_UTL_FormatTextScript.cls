@@ -12,6 +12,8 @@
 
 
 public with sharing virtual class HDT_UTL_FormatTextScript {
+
+    private static final String EMPTY_PLACEHOLDER = '[Vuoto]';
     
     protected String regEx= '\\{\\{[\\xa0\\s]?+([A-Za-z0-9_.]+)[\\xa0\\s]?+\\}\\}';
     //'<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
@@ -19,7 +21,8 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     //protected String rightIncapsulatingData= '}}';
 
     private Boolean isFirstSection=true;
-    private Map<String,HDT_CallScriptValue__mdt> overrideMap = new Map<String,HDT_CallScriptValue__mdt>();
+    @TestVisible
+    private Map<String,List<HDT_CallScriptValue__mdt>> overrideMap = new Map<String,List<HDT_CallScriptValue__mdt>>();
     private Map<String,String> constantMap = new Map<String,String>();
 
     public HDT_UTL_FormatTextScript(){
@@ -58,14 +61,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
         String query = makeSelectStatement(fieldsToQuery);
         Sobject genericSObject;
-        if(STRING.isNotBlank(query)){
-            query+=
-                //'FROM wrts_prcgvr__Activity__c where Id = \''+
-                ' FROM '+objectName+' where Id = \''+
-                recordId+'\' LIMIT 1';
-            system.debug(query);
+        if(String.isNotBlank(query)){
             try{
-                genericSObject = (SObject) Database.query(query);
+                genericSObject = (SObject) Database.query(
+                    String.escapeSingleQuotes(query) + ' FROM '+String.escapeSingleQuotes(objectName)+' WHERE Id = :recordId LIMIT 1'
+                );
             }catch(Exception e){
                 throw new HDT_UTL_FormatTextScriptException(
                         'ERRORE DATABASE QUERY, SOQL: # '
@@ -88,7 +88,15 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
     protected String getBoldFieldValue(String fieldPath, SObject relation){
-        return '<b>'+getFieldValue( fieldPath,  relation)+'</b>';
+
+        String fieldValue = getFieldValue(fieldPath,  relation);
+
+        //overriding empty values with placeholder
+        if (String.isBlank(fieldValue) || fieldValue=='null') {
+            fieldValue = EMPTY_PLACEHOLDER;
+        }
+
+        return '<b>'+fieldValue+'</b>';
     }
 
 
@@ -112,30 +120,39 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             fieldOrRelation = relationshipNames[indexParentField];
 
             if(indexParentField!=relationshipNames.size()-1){
-                relation=relation.getSobject(fieldOrRelation);
-            }else{
-                if(relation==null){
-                    fieldValue='*valore mancante*';
-                    return fieldValue ;
+                SObject parent = relation.getSobject(fieldOrRelation);
+                if (parent==null) {
+                    break;
                 }
+                else {
+                    relation = parent;
+                }
+            }else{
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
                                             .get(fieldOrRelation)
                                             .getDescribe()
                                             .getType().name();
-                system.debug(dataFieldType);
                 switch on dataFieldType{
                     when 'STRING'{
-                        fieldValue= (String) relation.get(fieldOrRelation);
+                        fieldValue = (String) relation.get(fieldOrRelation);
                     }
                     when 'DATETIME'{
-                        fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
+                        Datetime dt = (Datetime) relation.get(fieldOrRelation);
+                        if (dt!=null) {
+                            fieldValue = dt.format('dd/MM/yyyy');
+                        }
                     }
                     when 'DATE'{
-                        DateTime tempDate = (DATE) relation.get(fieldOrRelation);
-                        fieldValue= tempDate.day()+'/'+tempDate.month()+'/'+tempDate.year();
+                        Date d = (Date) relation.get(fieldOrRelation);
+                        if (d!=null){
+                            DateTime tempDate = DateTime.newInstance(d.year(), d.month(), d.day());
+                            fieldValue = tempDate.format('dd/MM/yyyy');
+                        }
+                    }when 'CURRENCY'{
+                        fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
                     }
                     when else {
-                        fieldValue= STRING.valueOf(relation.get(fieldOrRelation));
+                        fieldValue = STRING.valueOf(relation.get(fieldOrRelation));
                     }
                 }
                 
@@ -149,7 +166,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             switch on scriptValue.Type__c {
                 when 'OVERRIDE'{
                     String key = scriptValue.ObjectName__c+'-'+scriptValue.FieldName__c;
-                    overrideMap.put( key.toLowerCase(), scriptValue );
+                    List<HDT_CallScriptValue__mdt> overrideValues = (overrideMap.containsKey(key.toLowerCase()))?
+                        overrideMap.get(key.toLowerCase()):
+                        new List<HDT_CallScriptValue__mdt>();
+                    overrideValues.add(scriptValue);
+                    overrideMap.put( key.toLowerCase(), overrideValues );
                 }
                 when 'CONSTANT'{
                     constantMap.put( scriptValue.ConstantName__c.toLowerCase(), scriptValue.Value__c );
@@ -157,20 +178,19 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             }
         }
     }
-
+	@TestVisible
     private String overwriteValue(String fieldValue, String sobjectApiName, String fieldApiName){
-        //controlla su CS o CMT se il valore va sovrascritto (ossia se c'è una corrispondenza tra fieldApiName e ObjectApiName),
-        // se sì converti in decimal, aumenta, riconverti in stringa, altrimenti rimanda indietro il valore che ti è arrivato
 
-        System.debug('overwriteValue: '+fieldValue);
+        //reading overrides from HDT_CallScriptValue__mdt
         String key = sobjectApiName+'-'+fieldApiName;
         if (overrideMap.containsKey(key.toLowerCase())) {
-            System.debug('containsKey: '+key);
-            HDT_CallScriptValue__mdt overrideValue = overrideMap.get(key.toLowerCase());
+            List<HDT_CallScriptValue__mdt> overrideValues = overrideMap.get(key.toLowerCase());
             List<String> formatParams = new List<String>{fieldValue};
 
-            if (String.isBlank(overrideValue.ValueToOverride__c) || overrideValue.ValueToOverride__c==fieldValue) {
-                fieldValue = String.format(overrideValue.Value__c, formatParams);
+            for (HDT_CallScriptValue__mdt overrideValue:overrideValues) {
+                if (String.isBlank(overrideValue.ValueToOverride__c) || overrideValue.ValueToOverride__c==fieldValue) {
+                    fieldValue = String.format(overrideValue.Value__c, formatParams);
+                }
             }
         }
 
@@ -178,11 +198,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
 
-    protected List<String> getDataBinded(String Text){
+    protected List<String> getDataBinded(String text){
         //this method catches all dynamic fields in the text
         //generally can be used to extract all regex occurence in a string
         List<String> bindedFields = new List<String>();
-        Matcher matcher=Pattern.compile(regEx).matcher(Text);
+        Matcher matcher=Pattern.compile(regEx).matcher(text);
          
         while(matcher.find()){
             //String preFormatData = matcher.group(0);
@@ -190,7 +210,6 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
             //bindedFields.add(preFormatData.trim().toLowerCase());
             bindedFields.add(matcher.group(1).toLowerCase());
         }
-        system.debug(bindedFields);
         return bindedFields;
     }
 
@@ -201,10 +220,26 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         Set<String> fieldsToSelect = new Set<String>();
         //fieldsToSelect.addAll(listFields);
         for(String field : listFields){
-            if((!field.startsWith('globaltag') && !field.startsWith('constant')) || field.startsWith('globaltag.redirlink')){//exclude global tags from query
-                //querySelectStatement=querySelectStatement+', '+field;
-                fieldsToSelect.add(field.removeStart('globaltag.redirlink.'));
+
+            Boolean isConstant = field.startsWith('constant');
+            Boolean isGlobalTag = field.startsWith('globaltag');
+
+            if (isGlobalTag){
+                if (field.startsWith('globaltag.redirlink') || field.startsWith('globaltag.modificaprivacy') || field.startsWith('globaltag.varanagcliente')) {
+                    field = field.removeStart('globaltag.redirlink.');
+                    field = field.removeStart('globaltag.modificaprivacy.');
+                    field = field.removeStart('globaltag.varanagcliente.');
+                }
+                else {
+                    continue;
+                }
             }
+
+            if (isConstant) {
+                continue;
+            }
+
+            fieldsToSelect.add( field.trim() );
         }
         querySelectStatement = String.join(new List<String>(fieldsToSelect), ', ');
         if(String.isBlank(querySelectStatement)){
@@ -221,7 +256,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
         String tagValue='';
         switch on tagName{
             when 'today'{
-                tagValue=Date.Today().format();
+                tagValue = Date.Today().format();
+            }
+            when 'now'{
+                tagValue = Datetime.now().format('HH:mm');
             }
             when 'section__d'{
                 //maybe deprecated, you can safely remove this when output and isFirstSection class variable
@@ -240,6 +278,28 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 idToRedirect = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.redirlink.'), relation);
                 return '<a href="/'+idToRedirect+'" target="_blank">'+linkLabel+'</a>';
             }
+            when 'modificaprivacy' {
+                //{{globaltag.modificaprivacy.AccountId}}
+                if (constantMap.containsKey(tagName)) {
+                    String accountId = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.modificaprivacy.'), relation);
+                    String link = String.format(constantMap.get(tagName), new List<String>{accountId});
+                    return '<a href="'+link+'" target="_blank">Modifica Privacy</a>';
+                }
+                else {
+                    return '*Costante '+tagName+' non trovata*';
+                }
+            }
+            when 'varanagcliente' {
+                //{{globaltag.varanagcliente.AccountId}}
+                if (constantMap.containsKey(tagName)) {
+                    String accountId = getFieldValue(String.join(relationshipNames, '.').removeStart('globaltag.varanagcliente.'), relation);
+                    String link = String.format(constantMap.get(tagName), new List<String>{accountId});
+                    return '<a href="'+link+'" target="_blank">Variazione Anagrafica Cliente</a>';
+                }
+                else {
+                    return '*Costante '+tagName+' non trovata*';
+                }
+            }
             when 'username'{
                 return UserInfo.getName();
             }
@@ -247,9 +307,10 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 tagValue='*valore mancante*';
             }
         }
+        
         return ''+tagValue+'';
     }
-
+	@TestVisible
     private String getConstantValue(List<String> relationshipNames){
         String constantName = relationshipNames[1];
         String key = constantName.toLowerCase();

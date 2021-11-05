@@ -22,11 +22,26 @@
                 <default>false</default>
                 <label>DiscardReason__c</label>
             </value>
+            <value>
+                <fullName>Description</fullName>
+                <default>false</default>
+                <label>Description</label>
+            </value>
+            <value>
+                <fullName>DiscardReason__c​</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>DiscardReason__c​</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Case</controllingFieldValue>
-            <controllingFieldValue>Order</controllingFieldValue>
             <valueName>DiscardDescription__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Case</controllingFieldValue>
+            <controllingFieldValue>Order</controllingFieldValue>
+            <valueName>Description</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Order</controllingFieldValue>

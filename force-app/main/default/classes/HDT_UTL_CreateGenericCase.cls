@@ -2,6 +2,12 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
     //HDT_QR_CreateGenericCase cgcQr = new HDT_QR_CreateGenericCase();
 
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public List<Case> createCaseFromCase(Map<String, Object> inputs){
 
         String recordTypeId = (String) inputs.get('recordTypeId');
@@ -42,13 +48,13 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
                 }
             }catch(Exception e){
-                System.debug('Exception--> '+e.getMessage());
+                System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
 
             }
 
         }
         
-        System.debug('RecordTypeId' +recordTypeId);
+        System.debug(LoggingLevel.DEBUG,'RecordTypeId' +recordTypeId);
 
         childCase.put('Phase__c', 'Bozza');
         childCase.put('Status', 'New');
@@ -85,6 +91,13 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
      * - type
      * - inputSObj
      */
+
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public Case createCaseFromOrder(Map<String, Object> inputs){
 
         String recordTypeId = (String) inputs.get('recordTypeId');
@@ -93,7 +106,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         Order parentOrder = (Order) inputs.get('inputSObj');
 
         if (String.isBlank(recordTypeId) || String.isBlank(caseCluster) || String.isBlank(caseType) || parentOrder == null) {
-            System.debug('HDT_UTL_CreateGenericCase::createCaseFromOrder - invalid inputs: ' + inputs);
+            System.debug(LoggingLevel.DEBUG,'HDT_UTL_CreateGenericCase::createCaseFromOrder - invalid inputs: ' + inputs);
             return null;
         }
 
@@ -168,6 +181,13 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
      * - accountId
      * - contactId
      */
+
+    /*
+    * @Author: Salvatore A. Sarà 21/10/2021
+    * Risoluzione "Debug Should Use Logging Level"
+    * Risoluzione "Avoid debug statements since they impact on performance"
+    */
+    @SuppressWarnings('PMD.AvoidDebugStatements')
     public Case createCase(Map<String, Object> inputs){
 
         String recordTypeId = (String) inputs.get('recordTypeId');
@@ -180,7 +200,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String herokuCode = (String) inputs.get('HerokuPracticeCode__c');
 
         if (String.isBlank(recordTypeId) || String.isBlank(accountId) || String.isBlank(caseCluster) || String.isBlank(caseType)) {
-            System.debug('HDT_UTL_CreateGenericCase::createCase - invalid inputs: ' + inputs);
+            System.debug(LoggingLevel.DEBUG,'HDT_UTL_CreateGenericCase::createCase - invalid inputs: ' + inputs);
             return null;
         }
 
@@ -200,6 +220,5 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         return newCase;
     }
-
 
 }

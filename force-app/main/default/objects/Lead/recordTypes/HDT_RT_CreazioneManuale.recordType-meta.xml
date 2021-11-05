@@ -136,10 +136,10 @@
             <fullName>HC</fullName>
             <default>false</default>
         </values>
-        <!-- <values>
+        <values>
             <fullName>HC%2BHCM%2BEENE</fullName>
             <default>false</default>
-        </values> -->
+        </values>
         <values>
             <fullName>HCM</fullName>
             <default>false</default>
@@ -2514,11 +2514,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>APP My Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>chat</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>ecc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>landing page proattivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>landing page standard</fullName>
             <default>false</default>
         </values>
         <values>

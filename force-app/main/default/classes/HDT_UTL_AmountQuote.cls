@@ -24,8 +24,9 @@ public inherited sharing class HDT_UTL_AmountQuote {
 
     Date manufactureDate = inputs[0].manufactureYear;
     String year = '';
-    if(inputs[0].manufactureYear != null)
+    if(inputs[0].manufactureYear != null){
       year = String.valueOf(manufactureDate.year());
+    }
 
     //Call to the relative query class 
     return HDT_QR_AmountQuote.queryAmount(distributor, city, cal, existCorrector, mark,commodity,processType,year);

@@ -1,13 +1,13 @@
 public without sharing class HDT_LC_CanaleIVRNoShare {
     public List<Order>  getOrderByUsernamePassword(String username, String password) {
         List<Order> listOrder = [
-            SELECT Username__c, Password__c  FROM Order WHERE Username__c = :username AND Password__c = :password 
+            SELECT Username__c, Password__c,UniqueAutentication__c  FROM Order WHERE Username__c = :username AND Password__c = :password WITH SECURITY_ENFORCED
         ];
 
         return listOrder;
     }
 	public DocumentalActivity__c  getActivityByOrder(String orderId) {
-        List<DocumentalActivity__c> dl = [SELECT Id, OrderId__c FROM DocumentalActivity__c where orderId__c = :orderId];
+        List<DocumentalActivity__c> dl = [SELECT Id, OrderId__c FROM DocumentalActivity__c where orderId__c = :orderId WITH SECURITY_ENFORCED];
 
         return  dl[0];
     }

@@ -2,9 +2,65 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 
     public ServicePoint__c sp;
     private HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+
+    private static final List<String> BONUS_KEYS = new List<String>{'BONUSGAS','BONUS_INIZ','BONUS_FINE','TIPO_BONUS'};
+
+    private static final Map<String, Schema.SObjectField> E150_SERVICEPOINT_MAP = new Map<String, Schema.SObjectField>{
+        'PUNTODISPACCIAMENTO' => ServicePoint__c.DispatchingPoint__c,
+        'TIPO_MISURATORE' => ServicePoint__c.CorrectorType__c,
+        'DATA_REGIME_2G' => ServicePoint__c.RegimeDate2G__c,
+        'TRATTAMENTO_DT' => ServicePoint__c.DistributorTreatment__c,
+        'K_ATT' => ServicePoint__c.kActive__c,
+        'K_REATT' => ServicePoint__c.kReactive__c,
+        'K_POT' => ServicePoint__c.kPower__c,
+        'MATR_MIS_ATTIVA_NEW' => ServicePoint__c.MeterActiveSN__c,
+        'MATR_MIS_REATTIVA_NEW' => ServicePoint__c.MeterReactiveSN__c,
+        'MATR_MIS_POTENZA_NEW' => ServicePoint__c.MeterPowerSN__c,
+        'DATA_INST_ATT' => ServicePoint__c.InstallationDateActive__c,
+        'DATA_INST_REA' => ServicePoint__c.InstallationDateReactive__c,
+        'DATA_INST_POT' => ServicePoint__c.InstallationDatePower__c,
+        'CIFRE_ATTIVA' => ServicePoint__c.DigitNumberActive__c,
+        'CIFRE_REATTIVA' => ServicePoint__c.DigitNumberReactive__c,
+        'CIFRE_POT' => ServicePoint__c.DigitNumberPower__c,
+        'GRUPPO_MIS' => ServicePoint__c.MeterGroup__c,
+        'FORFAIT' => ServicePoint__c.Forfait__c,
+        'SERV_TUTELA' => ServicePoint__c.MarketTypeCode__c,
+        'GRUPPO_MIS_DT' => ServicePoint__c.MeterGroup__c
+    };
+
+    private static final Map<String, Schema.SObjectField> E351_SERVICEPOINT_MAP = new Map<String, Schema.SObjectField>{
+        'TRATTAMENTO_DT' => ServicePoint__c.DistributorTreatment__c,
+        'N_CIFRE_MIS' => ServicePoint__c.MeterDigitNumber__c,
+        'MATR_CONV' => ServicePoint__c.CorrectorSN__c,
+        'N_CIFRE_CONV' => ServicePoint__c.CorrectorDigitNumber__c,
+        'COEFF_CORRETTIVO' => ServicePoint__c.CorrectiveCoefficient__c,
+        'RACCOLTA' => ServicePoint__c.Collection__c,
+        'VOL_ANNUO_SOST' => ServicePoint__c.AnnualVolumeReplacement__c,
+        'CLASSE_GRUPPO_MIS' => ServicePoint__c.MeterClass__c,
+        'PRE_CONV' => ServicePoint__c.CorrectorWithdrawal__c,
+        'GRUPPO_MIS_INT' => ServicePoint__c.MeterGroup__c
+    };
+
+    Map<String, Schema.SObjectField> E300_SERVICEPOINT_MAP = new Map<String, Schema.SObjectField>{
+        'N_CIFRE_MIS' => ServicePoint__c.MeterDigitNumber__c,
+        'CLASSE_GRUPPO_MIS' => ServicePoint__c.MeterClass__c,
+        'ANNO_FABB_MIS' => ServicePoint__c.MeterYear__c,
+        'SEGN_MIS_AVVIO' => ServicePoint__c.MeterSignal__c,
+        'MATR_CONV' => ServicePoint__c.CorrectorSN__c,
+        'N_CIFRE_CONV' => ServicePoint__c.CorrectorDigitNumber__c,
+        'SEGN_CONV' => ServicePoint__c.CorrectorSignal__c,
+        'COEFF_CORRETTIVO' => ServicePoint__c.CorrectiveCoefficient__c,
+        'ACC_MIS' => ServicePoint__c.MeterAccessible__c,
+        'PRESS_MIS' => ServicePoint__c.Pressure__c,
+        'MAX_PRELIEVO_ORA' => ServicePoint__c.MaxHourWithdrawal__c,
+        'CONS_ANNUO' => ServicePoint__c.AnnualConsumption__c,
+        'DATA_SCAD_DS' => ServicePoint__c.OrderDueDate__c,
+        'MESE_RIN' => ServicePoint__c.RenewalMonth__c
+    };
+
 //NON TOCCARE
     public void handleE154Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso E154');
+        System.debug(LoggingLevel.DEBUG, 'flusso E154');
         if (!String.isBlank(mapRequestFields.get('IMP_PREV_DIST'))) {
             ord.EstimateAmount__c = Decimal.valueOf(mapRequestFields.get('IMP_PREV_DIST'));
             ord.QuotationType__c = 'Analitico';
@@ -25,72 +81,14 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
     }
 //NON TOCCARE
 
-
     public void handleE150Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso E150');
-        if (!String.isBlank(mapRequestFields.get('PUNTODISPACCIAMENTO'))) {
-            sp.DispatchingPoint__c = mapRequestFields.get('PUNTODISPACCIAMENTO');
-        }
-        if (!String.isBlank(mapRequestFields.get('TIPO_MISURATORE'))) {
-            sp.CorrectorType__c = mapRequestFields.get('TIPO_MISURATORE');
-        }
-        if (!String.isBlank(mapRequestFields.get('DATA_REGIME_2G'))) {
-            sp.RegimeDate2G__c = mapRequestFields.get('DATA_REGIME_2G');
-        }
-        if (!String.isBlank(mapRequestFields.get('TRATTAMENTO_DT'))) {
-            sp.DistributorTreatment__c = mapRequestFields.get('TRATTAMENTO_DT');
-        }
-        if (!String.isBlank(mapRequestFields.get('K_ATT'))) {
-            sp.kActive__c = mapRequestFields.get('K_ATT');
-        }
-        if (!String.isBlank(mapRequestFields.get('K_REATT'))) {
-            sp.kReactive__c = mapRequestFields.get('K_REATT');
-        }
-        if (!String.isBlank(mapRequestFields.get('K_POT'))) {
-            sp.kPower__c = mapRequestFields.get('K_POT');
-        }
-        if (!String.isBlank(mapRequestFields.get('MATR_MIS_ATTIVA_NEW'))) {
-            sp.MeterActiveSN__c = mapRequestFields.get('MATR_MIS_ATTIVA_NEW');
-        }
-        if (!String.isBlank(mapRequestFields.get('MATR_MIS_REATTIVA_NEW'))) {
-            sp.MeterReactiveSN__c = mapRequestFields.get('MATR_MIS_REATTIVA_NEW');
-        }
-        if (!String.isBlank(mapRequestFields.get('MATR_MIS_POTENZA_NEW'))) {
-            sp.MeterPowerSN__c = mapRequestFields.get('MATR_MIS_POTENZA_NEW');
-        }
-        if (!String.isBlank(mapRequestFields.get('DATA_INST_ATT'))) {
-            sp.InstallationDateActive__c = mapRequestFields.get('DATA_INST_ATT');
-        }
-        if (!String.isBlank(mapRequestFields.get('DATA_INST_REA'))) {
-            sp.InstallationDateReactive__c = mapRequestFields.get('DATA_INST_REA');
-        }
-        if (!String.isBlank(mapRequestFields.get('DATA_INST_POT'))) {
-            sp.InstallationDatePower__c = mapRequestFields.get('DATA_INST_POT');
-        }
-        if (!String.isBlank(mapRequestFields.get('CIFRE_ATTIVA'))) {
-            sp.DigitNumberActive__c = mapRequestFields.get('CIFRE_ATTIVA');
-        }
-        if (!String.isBlank(mapRequestFields.get('CIFRE_REATTIVA'))) {
-            sp.DigitNumberReactive__c = mapRequestFields.get('CIFRE_REATTIVA');
-        }
-        if (!String.isBlank(mapRequestFields.get('CIFRE_POT'))) {
-            sp.DigitNumberPower__c = mapRequestFields.get('CIFRE_POT');
-        }
-        if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS'))) {
-            sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('FORFAIT'))) {
-            sp.Forfait__c = mapRequestFields.get('FORFAIT');
-        }
+        System.debug(LoggingLevel.DEBUG, 'flusso E150');
+
+        mapServicePointData(mapRequestFields, E150_SERVICEPOINT_MAP);
+        
         if (!String.isBlank(mapRequestFields.get('CODICE_TARIFFA'))) {
             ord.FareCode__c = mapRequestFields.get('CODICE_TARIFFA');
         }
-        if (!String.isBlank(mapRequestFields.get('SERV_TUTELA'))) {
-            sp.MarketTypeCode__c = mapRequestFields.get('SERV_TUTELA');
-        }
-        if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_DT'))) {
-            sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_DT');
-        }  
 
         //HRAWRM-471
         if(!String.isBlank(mapRequestFields.get('TEMP_ES_PREV'))) {
@@ -101,39 +99,12 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
     }
 
     public void handlE351Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso 351');
-        if (!String.isBlank(mapRequestFields.get('TRATTAMENTO_DT'))) {
-            sp.DistributorTreatment__c = mapRequestFields.get('TRATTAMENTO_DT');
-        }
+        System.debug(LoggingLevel.DEBUG, 'flusso 351');
+
+        mapServicePointData(mapRequestFields, E351_SERVICEPOINT_MAP);
+        
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
             ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('N_CIFRE_MIS'))) {
-            sp.MeterDigitNumber__c = mapRequestFields.get('N_CIFRE_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('MATR_CONV'))) {
-            sp.CorrectorSN__c = mapRequestFields.get('MATR_CONV');
-        }
-        if (!String.isBlank(mapRequestFields.get('N_CIFRE_CONV'))) {
-            sp.CorrectorDigitNumber__c = mapRequestFields.get('N_CIFRE_CONV');
-        }
-        if (!String.isBlank(mapRequestFields.get('COEFF_CORRETTIVO'))) {
-            sp.CorrectiveCoefficient__c = mapRequestFields.get('COEFF_CORRETTIVO');
-        }
-        if (!String.isBlank(mapRequestFields.get('RACCOLTA'))) {
-            sp.Collection__c = mapRequestFields.get('RACCOLTA');
-        }
-        if (!String.isBlank(mapRequestFields.get('VOL_ANNUO_SOST'))) {
-            sp.AnnualVolumeReplacement__c = mapRequestFields.get('VOL_ANNUO_SOST');
-        }
-        if (!String.isBlank(mapRequestFields.get('CLASSE_GRUPPO_MIS'))) {
-            sp.MeterClass__c = mapRequestFields.get('CLASSE_GRUPPO_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('PRE_CONV'))) {
-            sp.CorrectorWithdrawal__c = mapRequestFields.get('PRE_CONV');
-        }
-        if (!String.isBlank(mapRequestFields.get('GRUPPO_MIS_INT'))) {
-            sp.MeterGroup__c = mapRequestFields.get('GRUPPO_MIS_INT');
         }
 
         //HRAWRM-471
@@ -144,78 +115,26 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         updateServicePoint();
     }
 
-
-
     public void handlE300Flow(Map<String, String> mapRequestFields, Order ord){
-        system.debug('flusso 300');
-        List<String> bonusData = new List<String>();
+        System.debug(LoggingLevel.DEBUG, 'flusso 300');
+
+        mapServicePointData(mapRequestFields, E300_SERVICEPOINT_MAP);
+
         if (!String.isBlank(mapRequestFields.get('MATR_MIS'))) {
             ord.MeterSN__c = mapRequestFields.get('MATR_MIS');
         }
-        if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
-            //ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
-        }
-        if (!String.isBlank(mapRequestFields.get('N_CIFRE_MIS'))) {
-            sp.MeterDigitNumber__c = mapRequestFields.get('N_CIFRE_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('CLASSE_GRUPPO_MIS'))) {
-            sp.MeterClass__c = mapRequestFields.get('CLASSE_GRUPPO_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('ANNO_FABB_MIS'))) {
-            sp.MeterYear__c = mapRequestFields.get('ANNO_FABB_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('SEGN_MIS_AVVIO'))) {
-            sp.MeterSignal__c = mapRequestFields.get('SEGN_MIS_AVVIO');
-        }
-        if (!String.isBlank(mapRequestFields.get('MATR_CONV'))) {
-            sp.CorrectorSN__c = mapRequestFields.get('MATR_CONV');
-        }
-        if (!String.isBlank(mapRequestFields.get('N_CIFRE_CONV'))) {
-            sp.CorrectorDigitNumber__c = mapRequestFields.get('N_CIFRE_CONV');
-        }
-        if (!String.isBlank(mapRequestFields.get('SEGN_CONV'))) {
-            sp.CorrectorSignal__c = mapRequestFields.get('SEGN_CONV');
-        }
-        if (!String.isBlank(mapRequestFields.get('COEFF_CORRETTIVO'))) {
-            sp.CorrectiveCoefficient__c = mapRequestFields.get('COEFF_CORRETTIVO');
-        }
-        if (!String.isBlank(mapRequestFields.get('ACC_MIS'))) {
-            sp.MeterAccessible__c = mapRequestFields.get('ACC_MIS');
-        }
-        if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
+        /*if (!String.isBlank(mapRequestFields.get('TIPO_PDR'))) {
+            ord.SupplyType__c = mapRequestFields.get('TIPO_PDR');
+        }*/
+        /*if (!String.isBlank(mapRequestFields.get('COD_PROF_PREL'))) {
             //Gestire caso CLASSE_PRELIEVO
             //sp.WithdrawalClass__c = mapRequestFields.get('COD_PROF_PREL');
-        }
+        }*/
         if (!String.isBlank(mapRequestFields.get('COD_REMI'))) {
             ord.RemiCode__c = mapRequestFields.get('COD_REMI');
         }
-        if (!String.isBlank(mapRequestFields.get('PRESS_MIS'))) {
-            sp.Pressure__c =Decimal.valueOf( mapRequestFields.get('PRESS_MIS'));
-        }
-        if (!String.isBlank(mapRequestFields.get('MAX_PRELIEVO_ORA'))) {
-            sp.MaxHourWithdrawal__c = mapRequestFields.get('MAX_PRELIEVO_ORA');
-        }
-        if (!String.isBlank(mapRequestFields.get('CONS_ANNUO'))) {
-            sp.AnnualConsumption__c = Decimal.valueOf( mapRequestFields.get('CONS_ANNUO'));
-        }
-        if (!String.isBlank(mapRequestFields.get('DATA_SCAD_DS'))) {
-            sp.OrderDueDate__c = mapRequestFields.get('DATA_SCAD_DS');
-        }
-        if (!String.isBlank(mapRequestFields.get('BONUSGAS'))) {
-            bonusData.add(mapRequestFields.get('BONUSGAS'));
-        }
-        if (!String.isBlank(mapRequestFields.get('BONUS_INIZ'))) {
-            bonusData.add(mapRequestFields.get('BONUS_INIZ'));
-        }
-        if (!String.isBlank(mapRequestFields.get('BONUS_FINE'))) {
-            bonusData.add(mapRequestFields.get('BONUS_FINE'));
-        }
-        if (!String.isBlank(mapRequestFields.get('MESE_RIN'))) {
-            sp.RenewalMonth__c = mapRequestFields.get('MESE_RIN');
-        }
-        if (!String.isBlank(mapRequestFields.get('TIPO_BONUS'))) {
-            bonusData.add(mapRequestFields.get('TIPO_BONUS'));
-        }
+
+        List<String> bonusData = getBonusData(mapRequestFields);
         if (bonusData.size()>0) {
             ord.BonusData__c = String.join(bonusData, ';');
         }
@@ -259,11 +178,48 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
         return Date.newInstance(yr, mth, dy);
     }
 
+    /**
+    * @description Reading bonus data from request
+    * @author gabriele.rota@webresults.it | 2021-10-22 
+    * @param mapRequestFields 
+    **/
+    private static List<String> getBonusData(Map<String, String> mapRequestFields) {
+        List<String> bonusData = new List<String>();
+        for (String bonusKey:BONUS_KEYS) {
+            if (String.isNotBlank(mapRequestFields.get(bonusKey))) {
+                bonusData.add(mapRequestFields.get(bonusKey));
+            }
+        }
+        return bonusData;
+    }
+
+    /**
+    * @description Mapping request to Service Point
+    * @author gabriele.rota@webresults.it | 2021-10-22 
+    * @param mapRequestFields 
+    * @param spMap 
+    **/
+    private void mapServicePointData(Map<String, String> mapRequestFields, Map<String, Schema.SObjectField> spMap) {
+        for (String key:spMap.keySet()) {
+            String keyValue = mapRequestFields.get(key);
+            Schema.SObjectField field = spMap.get(key);
+            Boolean isNumber = (field.getDescribe().getType()==Schema.DisplayType.Double);
+
+            if (String.isNotBlank(keyValue)) {
+                if (isNumber) {
+                    sp.put(field, Decimal.valueOf(keyValue));
+                }
+                else {
+                    sp.put(field, keyValue);
+                }
+            }
+        }
+    }
+
     private void updateServicePoint(){
         try{
             ServicePointSrv.updateRecord(sp);
         }catch(Exception e){
-            system.debug('Exception Update ServicePoint');
             throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating ServicePoint - '+e.getMessage());
         }
     }

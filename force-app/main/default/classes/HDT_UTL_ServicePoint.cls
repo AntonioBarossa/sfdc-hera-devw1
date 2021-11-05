@@ -1,14 +1,19 @@
+/**
+ * @author Luca Molino (luca.molino@engdb.com.br)
+ * @date 23/03/2021
+ * @description HDT_UTL_ServicePoint Class
+ * @history Luca Molino – 23/03/2021 – Created Class
+ */
 public with sharing class HDT_UTL_ServicePoint {
 
     private static HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType(); //21/08/2021 - gabriele.rota@webresults.it
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
-    public HDT_UTL_ServicePoint() {
-
-    }
+    private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
 
 
     @AuraEnabled
-	public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+	public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){//
 		
 			servicePoint__c spNew = new servicePoint__c();
 			if(sp!= null){
@@ -29,27 +34,7 @@ public with sharing class HDT_UTL_ServicePoint {
             system.debug('*******responseArrichh:' +  response);
             system.debug('*******responseArrichhMap:' +  mapRes);
 
-		
-					
-	/*	if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			spNew.MeterClass__c = mapRes.get('CALIBRO1');
-		}
-		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
-			spNew.RemiCode__c = mapRes.get('CODICEREMI');
-		}
 
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
-		}
-
-	/*	if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
-			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
-		}*/
-
-		/*if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
-			spNew.RequestPhase__c  = mapRes.get('FASE');
-		}
-*/
     if(mapRes.get('IMPOSTE')!=null){
         if(mapRes.get('DESCRCOMM')=='Gas'){
             spNew.ExciseGas__c  = mapRes.get('IMPOSTE') != null ? mapRes.get('IMPOSTE') : 'ALTRO';
@@ -87,7 +72,6 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RemiCode__c = mapRes.get('CODICEREMI');
 		}
         if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			//spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4' : 'G6' ;
            if(mapRes.get('CALIBRO1')=='GRT005'){
             spNew.MeterClass__c = 'G10';
 
@@ -159,7 +143,6 @@ public with sharing class HDT_UTL_ServicePoint {
 
 				//campi fornitura
 				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
-					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
                     Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
                     spNew.Distributor__c = a.id;
                     System.debug('SOLILLO');
@@ -243,7 +226,6 @@ public with sharing class HDT_UTL_ServicePoint {
 					spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
-					//spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
                     Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
                     System.debug('POTENZACONTRATTUALE****************' + mapRes.get('POTENZACONTRATTUALE'));
                     spNew.PowerContractual__c = d.setScale(0);
@@ -254,7 +236,6 @@ public with sharing class HDT_UTL_ServicePoint {
                     System.debug('POTENZATECNICA1****************' + mapRes.get('POTENZATECNICA'));
                     
                     Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
-                    //spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.'))) ;
                     spNew.PowerAvailable__c  =d.setScale(1);
 
                     System.debug('POTENZATECNICA****************' + d.setScale(1));
@@ -306,6 +287,13 @@ public with sharing class HDT_UTL_ServicePoint {
                 && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))
                 ){
                     spNew.SupplyisAddressVerified__c = true;
+                }
+
+                if(mapRes.get('BP') != null){
+                    List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
+                    if (!accBp.isEmpty()) {
+                        spNew.Account__c = accBp[0].Id;
+                    }
                 }
 
 
@@ -390,8 +378,32 @@ public with sharing class HDT_UTL_ServicePoint {
     return result;
     }
 	
-	
-	
+	public static void updateServicePointImplantAndSupplytype(Set<String> servicePointIdListSet){
+        List<String> listServiceId = new List<String>();
+        listServiceId.addAll(servicePointIdListSet);
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordByIdList(listServiceId,'Id,SupplyTypeTemp__c,ImplantTypeTemp__c');
+        for(servicePoint__c sr : servicePointList){
+            sr.supplytype__c = sr.supplytypeTemp__c;
+            sr.implantType__c = sr.implanttypetemp__c;
+        }
+        serviceSrv.updateRecordRemiCode(servicePointList);
+    }
+    public static void blockblankonfield(List<ServicePoint__c> oldList , List<ServicePoint__c> newList){
+        Map<String,ServicePoint__c> oldMap = new Map<String,Servicepoint__c>();
+        for(ServicePoint__c srvO : oldList){
+            oldMap.put(srvO.id,srvO);
+        }
+        for(ServicePoint__c srv : newList){
+            if(srv.SupplyType__c == null || srv.ImplantType__c == null){ 
+                if(srv.SupplyType__c == null && oldMap.get(srv.id).supplyType__c != null){
+                    srv.SupplyType__c = oldMap.get(srv.id).supplyType__c;
+                }
+                if(srv.ImplantType__c == null && oldMap.get(srv.id).ImplantType__c != null){
+                    srv.ImplantType__c = oldMap.get(srv.id).ImplantType__c;
+                }
+            }
+        }
+    }
 	@AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject mapFieldsAddressWithWrapObject(Map<String,String> mapObject,Map<String,Boolean> mapBooleanObject,Map<String,String> mapApiName){
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject START');

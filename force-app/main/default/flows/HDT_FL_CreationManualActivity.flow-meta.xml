@@ -3,12 +3,12 @@
     <actionCalls>
         <name>CreatActivityPClick</name>
         <label>CreatActivityPClick</label>
-        <locationX>837</locationX>
-        <locationY>300</locationY>
+        <locationX>772</locationX>
+        <locationY>318</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>ScreenEsito</targetReference>
+            <targetReference>Update_with_opening_notes</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -45,8 +45,8 @@
     <actionCalls>
         <name>Redirect_to_activity</name>
         <label>Redirect to activity</label>
-        <locationX>1262</locationX>
-        <locationY>353</locationY>
+        <locationX>1247</locationX>
+        <locationY>268</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -62,15 +62,8 @@
     <assignments>
         <name>SetFields</name>
         <label>SetFields</label>
-        <locationX>638</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>Activity.Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Approvazione Quote</stringValue>
-            </value>
-        </assignmentItems>
+        <locationX>602</locationX>
+        <locationY>274</locationY>
         <assignmentItems>
             <assignToReference>Activity.Account__c</assignToReference>
             <operator>Assign</operator>
@@ -87,6 +80,29 @@
         </assignmentItems>
         <connector>
             <targetReference>CreatActivityPClick</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_with_opening_notes</name>
+        <label>Update with opening notes</label>
+        <locationX>919</locationX>
+        <locationY>417</locationY>
+        <assignmentItems>
+            <assignToReference>Activity.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newActivityId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Activity.OpeningNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Note_di_apertura_text</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_activity</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -134,11 +150,21 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordUpdates>
+        <name>Update_activity</name>
+        <label>Update activity</label>
+        <locationX>972</locationX>
+        <locationY>234</locationY>
+        <connector>
+            <targetReference>ScreenEsito</targetReference>
+        </connector>
+        <inputReference>Activity</inputReference>
+    </recordUpdates>
     <screens>
         <name>Nuova_Attivita</name>
         <label>Nuova Attività</label>
-        <locationX>525</locationX>
-        <locationY>220</locationY>
+        <locationX>463</locationX>
+        <locationY>204</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -178,6 +204,12 @@
                     <elementReference>AccountId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -192,14 +224,20 @@
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <fields>
+            <name>Note_di_apertura_text</name>
+            <fieldText>Note di apertura</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>ScreenEsito</name>
         <label>Screen Esito</label>
-        <locationX>1045</locationX>
-        <locationY>301</locationY>
+        <locationX>1123</locationX>
+        <locationY>134</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

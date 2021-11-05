@@ -806,7 +806,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>Get_Case.Type</elementReference>
+                    <stringValue>Preventivo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

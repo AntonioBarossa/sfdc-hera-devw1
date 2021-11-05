@@ -1,94 +1,708 @@
 /**
- * @author Marco Arci (marco.arci@webresults.it)
- * @date 22/07/2021
- * @description HDT_UTL_ScartiTst - Test Class of HDT_UTL_Scarti
- * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
- */
+ * Header of the class "HDT_UTL_ScartiTst"
+ * @author Cesare Bagnolini, cesare.bagnolini@webresults.it
+ * @version 1.0
+ * @description: Apex Test Class of the relative Apex Class "HDT_UTL_Scarti"
+ * @history
+ * @Created 07/10/2021
+ * Modified By:
+ **/
+
 @isTest
-public with sharing class HDT_UTL_ScartiTst {
+public class HDT_UTL_ScartiTst {
+
+    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+
     @TestSetup
-    static void makeData(){
-        List<wrts_prcgvr__ActivityTemplate__c> multipleTemplates= new list<wrts_prcgvr__ActivityTemplate__c>();
-        wrts_prcgvr__ActivityTemplate__c canoneTemplate= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CAR002__CANONE_RAI');
-        wrts_prcgvr__ActivityTemplate__c bonusTemplate= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_FAT011__BONUS_SOCIALE');
-        wrts_prcgvr__ActivityTemplate__c documentalTemplatePost= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES');
-        wrts_prcgvr__ActivityTemplate__c documentalTemplateSales= new wrts_prcgvr__ActivityTemplate__c(Name='CBS_CRP003__SCARTI_DOCUMENTALI_SALES');
-        multipleTemplates.add(canoneTemplate);
-        multipleTemplates.add(bonusTemplate);
-        multipleTemplates.add(documentalTemplatePost);
-        multipleTemplates.add(documentalTemplateSales);
-        insert(multipleTemplates);
+    static void makedata(){
+        
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserPermissionsMarketingUser=true;
 
-        List<Account> multipleAccounts= new list<Account>();
-        Account CanoneAccount= new Account(Name='CanoneAccount', CustomerCode__c='clienteidcanone',CompanyOwner__c='HERA COMM',CustomerMarking__c='Condominio', Category__c='Grandi Condomini',VATNumber__c='testiva123',BillingStreetName__c='via generica',BillingStreetNumber__c='16',BillingCity='città',BillingState='provincia',BillingPostalCode='00000',BillingCountry='nazione',BillingIsAddressVerified__c=true,SBQQ__PreserveBundle__c=true,ActiveMonitoring__c=false,BillingAddressIsForeign__c=false,ConsentSignature__c=false,DataLimitation__c=false,IsActive__c=false,IsDocumentAcquired__c=false,IsMigrated__c=false,IsVATGroupJoined__c=false,IsWrongFiscalData__c=true,SBQQ__AssetQuantitiesCombined__c=false,SBQQ__CoTermedContractsCombined__c=false,SBQQ__IgnoreParentContractedPrices__c=false);
-        Account BonusAccount= new Account(Name='BonusAccount', CustomerCode__c='clienteidbonus',CompanyOwner__c='HERA COMM',CustomerMarking__c='Condominio', Category__c='Grandi Condomini', VATNumber__c='123testiva',BillingStreetName__c='via generica',BillingStreetNumber__c='12',BillingCity='città',BillingState='provincia',BillingPostalCode='00000',BillingCountry='nazione',BillingIsAddressVerified__c=true,SBQQ__PreserveBundle__c=true,ActiveMonitoring__c=false,BillingAddressIsForeign__c=false,ConsentSignature__c=false,DataLimitation__c=false,IsActive__c=false,IsDocumentAcquired__c=false,IsMigrated__c=false,IsVATGroupJoined__c=false,IsWrongFiscalData__c=true,SBQQ__AssetQuantitiesCombined__c=false,SBQQ__CoTermedContractsCombined__c=false,SBQQ__IgnoreParentContractedPrices__c=false);
-        multipleAccounts.add(CanoneAccount);
-        multipleAccounts.add(BonusAccount);
-        insert(multipleAccounts);
-    }
+        insert internalUser;
 
-    @isTest private static void setLookupFieldsTst(){
-        wrts_prcgvr__Activity__c canoneActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidcanone', Type__c='Canone RAI');
-        wrts_prcgvr__Activity__c bonusActivity= new wrts_prcgvr__Activity__c(BPCode__c='clienteidbonus', Type__c='Bonus sociale');
-        list<wrts_prcgvr__Activity__c> dataActivities= new list<wrts_prcgvr__Activity__c>();
-        dataActivities.add(canoneActivity);
-        dataActivities.add(bonusActivity);
-        List<wrts_prcgvr__Activity__c> results=HDT_UTL_Scarti.setLookupFields(dataActivities);
-        Account canoneId=[SELECT Id FROM Account WHERE CustomerCode__c='clienteidcanone'];
-        Account bonusId=[SELECT Id FROM Account WHERE CustomerCode__c='clienteidbonus'];
-        system.assertEquals(canoneId.Id, results[0].Account__c, 'canone: lookup account');
-        system.assertEquals(bonusId.Id, results[1].Account__c, 'bonus: lookup account');
+        System.runAs(internalUser){
+            
+            HDT_UTL_DataFactoryTst.pClickInstance();
+            HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            HDT_UTL_DataFactoryTst.pClickCasePhase();
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza',constants.ORDER_RECORDTYPEID_DEFAULT,constants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT);
+            
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            Id accId = accs[0].id; 
+            
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,true,accId,'Bozza'); 
+            
+            Id pricebookId = Test.getStandardPricebookId();            
+            
+            List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
+            
+            List<Individual> individuals = HDT_UTL_DataFactoryTst.createIndividual(2,true);
+            
+            List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
+            contacts[0].Company__c='MMS';
+            contacts[0].IndividualId = individuals[0].id;
+            insert contacts;
+            
+            List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
+            Id pointId = points[0].id;   
+            
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,true);
+            Id productId = products[0].id; 
+            
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,pricebookId);
+            Id entryId = entries[0].id;
+                        
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1,false,accId,sales,pricebookId);
+            orders[0].CausalCode__c = 'testCausalCode';
+            orders[0].DiscardReason__c = 'testCatalog';
+            orders[0].Contact__c = contacts[0].id;
+            orders[0].PhoneNumber__c ='3461357661';
+            orders[0].Email__c = 'email@nuova.it';
+            orders[0].ProcessType__c = 'Connessione con Attivazione';
+            insert orders;
+            Id orderId = orders[0].id;
+            
+            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);            
+                     
+            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, contacts[0].id, null, contracts[0].Id, orders[0].Id);
+            cases[0].DiscardDescription__c = 'testdescription';
+            cases[0].type = 'Consegna copia chiave GdM';
+            cases[0].TraderPracticeCode__c = 'testcode';
+            cases[0].TrackingDiscardPhase__c = 'testphase';
+            insert cases;       
+                        
+            List<wrts_prcgvr__FieldsTemplate__c> fieldTemplates = HDT_UTL_DataFactoryTst.createFieldsTemplate(4,false);
+            fieldTemplates[0].wrts_prcgvr__Code__c = 'e88f26f9-a32f-439f-b258-db04fadd3994';
+            fieldTemplates[0].wrts_prcgvr__ObjectType__c= 'Order';
+            fieldTemplates[1].wrts_prcgvr__Code__c= '424cd628-7cc0-4b1f-b727-7e095aedc068';
+            fieldTemplates[1].wrts_prcgvr__ObjectType__c= 'Order';
+            fieldTemplates[2].wrts_prcgvr__Code__c= 'db7818bf-1c29-4de0-bd88-83d69447aabb';
+            fieldTemplates[2].wrts_prcgvr__ObjectType__c= 'Order';
+            fieldTemplates[3].wrts_prcgvr__Code__c= 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
+            fieldTemplates[3].wrts_prcgvr__ObjectType__c= 'Order';
+            insert fieldTemplates;
+            
+            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(6,false);
+            activityTemplates[0].Name = 'CBS_ATT006__AMMISSIBILITA_KO';
+            activityTemplates[0].wrts_prcgvr__Code__c = 'e88f26f9-a32f-439f-b258-db04fadd3994';
+            activityTemplates[0].wrts_prcgvr__FieldsTemplate__c= fieldTemplates[0].id;
+            activityTemplates[0].wrts_prcgvr__ObjectType__c = 'Order';            
+            activityTemplates[1].Name = 'CBS_HER004__ERRORE_INVIO_A_SAP_POSTSALES';
+            activityTemplates[2].Name = 'CBS_HER001__ESITO_NON_ELABORATO_DA_DLSII_POSTSALES';
+            activityTemplates[2].wrts_prcgvr__Code__c = '424cd628-7cc0-4b1f-b727-7e095aedc068';
+            activityTemplates[2].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[3].Name = 'CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES';
+            activityTemplates[4].Name = 'CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
+            activityTemplates[4].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[4].wrts_prcgvr__Code__c = 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
+            activityTemplates[5].Name = 'CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
+            activityTemplates[5].wrts_prcgvr__Code__c = 'db7818bf-1c29-4de0-bd88-83d69447aabb';
+            activityTemplates[5].wrts_prcgvr__ObjectType__c = 'Order';
+            insert activityTemplates;
 
-        wrts_prcgvr__ActivityTemplate__c canoneTemplateId=[SELECT Id FROM wrts_prcgvr__ActivityTemplate__c WHERE Name='CBS_CAR002__CANONE_RAI'];
-        wrts_prcgvr__ActivityTemplate__c bonusTemplateId=[SELECT Id FROM wrts_prcgvr__ActivityTemplate__c WHERE Name='CBS_FAT011__BONUS_SOCIALE'];
-        system.assertEquals(canoneTemplateId.Id, results[0].wrts_prcgvr__ActivityTemplate__c, 'canone: lookup template');
-        system.assertEquals(bonusTemplateId.Id, results[1].wrts_prcgvr__ActivityTemplate__c, 'bonus: lookup template');
-    }
+            List<wrts_prcgvr__ActivityAction__c> activityActions = HDT_UTL_DataFactoryTst.createActivityAction(1,false,activityTemplates[0].id);
+            activityActions[0].wrts_prcgvr__Field__c = '{!Type__c}';
+            activityActions[0].wrts_prcgvr__Value__c = 'ActivityTypeTest';
+            insert activityActions;
+            
+            List<wrts_prcgvr__ActivityAction__c> activityActions2 = HDT_UTL_DataFactoryTst.createActivityAction(1,false,activityTemplates[3].id);
+            activityActions2[0].wrts_prcgvr__Field__c = '{!Type__c}';
+            activityActions2[0].wrts_prcgvr__Value__c = 'ActivityTypeTest';
+            insert activityActions2;
+            
+            List<DiscardAnnullmentRule__c> rules = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Order');
+            rules[0].ActivityType__c = 'Esito KO da DL';
+            rules[0].ControllingField__c = 'DiscardReason__c';
+            rules[0].ControllingValue__c = 'testCatalog';
+            rules[0].ProcessField__c = 'ProcessType__c';
+            rules[0].ProcessValue__c = 'Connessione con Attivazione';
+            insert rules;
+            
+            List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
+            rulesCase[0].ActivityType__c = 'Ammissibilità KO';
+            rulesCase[0].ControllingField__c = 'DiscardDescription__c';
+            rulesCase[0].ControllingValue__c = 'testdescription';
+            rulesCase[0].ProcessField__c = 'Type';
+            rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
+            insert rulesCase;
+            
+            List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
+            activities[0].Order__c = orders[0].id;
+            activities[0].Status__c = 'Creata';
+            activities[0].NewEmail__c = 'yes@no.it';
+            activities[0].NewMobile__c = '3334441122';
+            activities[0].DiscardCategory__c = 'Anonima';
+            activities[0].type__c = 'Contattare il cliente';
+            activities[0].Case__c = cases[0].id;            
+            activities[1].Case__c = cases[0].id;
+            activities[1].DiscardCategory__c = 'Anonima';
+            activities[1].Status__c = 'Creata';
+            activities[2].NewEmail__c = 'activityCase@no.it';
+            activities[2].Case__c = cases[0].id;   
+            activities[3].NewEmail__c = 'activityOrder@no.it';
+            activities[3].Order__c = orders[0].id;
+            insert activities;
+                        
+            List<ContactPointPhone> phones = HDT_UTL_DataFactoryTst.createContactPointPhone(2,false,individuals[0].id);
+            phones[0].TelephoneNumber = 'oldPhone';
+            phones[0].Status__c = 'Verificato';
+            phones[1].ParentId = individuals[0].id;
+            phones[1].TelephoneNumber = 'oldPhone';
+            phones[1].Status__c = 'Non Verificato';          
+            insert phones;
+            
+            List<ContactPointEmail> mails = HDT_UTL_DataFactoryTst.createContactPointEmail(2,false,individuals[0].id);
+            mails[0].EmailAddress = 'old@Email.it';
+            mails[0].Status__c = 'Verificato';
+            mails[1].ParentId = individuals[0].id;
+            mails[1].EmailAddress = 'old@Email.it';
+            mails[1].Status__c = 'Non Verificato';
+            insert mails;
+            
+            List<et4ae5__Automated_Send__c> sends = HDT_UTL_DataFactoryTst.createTriggeredSend(1,true);
+            
+            List<et4ae5__IndividualEmailResult__c> results = HDT_UTL_DataFactoryTst.createIndividualEmailResult(2,false,sends[0].id); 
+            results[0].BounceSubCategory__c = 'some';
+            results[1].OrderID__c = orders[0].id;
+            insert results;
+            
+            List<SMSTracking__c> tracks =  HDT_UTL_DataFactoryTst.createSmsTracking(1, false, contacts[0].id);
+            tracks[0].Undelivered__c = true;
+            insert tracks;
+                        
+        }
+     }
+   
     
-    /*
-    @isTest private static void executeTst(){
+    @isTest private static void evaluateTrue(){
+        
+        Order record = [Select id from Order limit 1];
+        
         Map<String, Object> argsMap = new Map<String, Object>{'transition'=>null,
                                                               'action'=>null,
-                                                              'method'=>'checkActivityCreation(Canone)',
+                                                              'method'=>'checkActivityCreation___CBS_ATT006__AMMISSIBILITA_KO',
+            												  'record'=>record,
+                                                              'sender'=>null};
+                                                                  
+        HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
+        boolean b = classInstance.evaluate(argsMap);
+        
+        System.assertEquals(true, b, 'evaluate did not work correctly');
+        System.assertNotEquals(null, b, 'evaluate did not work correctly');
+    }
+    
+    @isTest private static void evaluateFalse(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        Map<String, Object> argsMap = new Map<String, Object>{'transition'=>null,
+                                                              'action'=>null,
+                                                              'method'=>'checkAnnullment___CBS_ATT006__AMMISSIBILITA_KO',
+            												  'record'=>record,
                                                               'sender'=>null};
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
-        classInstance.execute(argsMap);
+        boolean b = classInstance.evaluate(argsMap);
+        
+        System.assertEquals(false, b, 'evaluate did not work correctly');
+        System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
-    */
+    
+    @isTest private static void evaluateNull(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        Map<String, Object> argsMap = new Map<String, Object>{
+            'transition'=>null,
+            'action'=>null,
+            'method'=>'nullvalue___CBS_ATT006__AMMISSIBILITA_KO',
+            'record'=>record,
+            'sender'=>null};
+                
+        HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
+        boolean b = classInstance.evaluate(argsMap);
+        
+        System.assertEquals(null, b, 'evaluate did not work correctly');
+        System.assertNotEquals(true, b, 'evaluate did not work correctly');
+    }
+    
+    @isTest static void invokeScartiAction1(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
+        
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'chiudiAttivita';
+        input.objectId = record.id;
+        input.templateName = 'templateName';
+        inputs.add(input);
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
+        
+        System.assertEquals('OK', outputs[0].esito, 'invokeScartiAction did not work correctly');
+        System.assertNotEquals(null, outputs[0], 'invokeScartiAction did not work correctly');
 
-    @isTest private static void createScartoForMarketingCloudTst(){
-        Account fakeAccount= new Account(Name='nameAccount', CustomerCode__c='clienteiddocumental',CompanyOwner__c='HERA COMM',CustomerMarking__c='Condominio', Category__c='Grandi Condomini', VATNumber__c='ivafaketest',BillingStreetName__c='via generica',BillingStreetNumber__c='15',BillingCity='città',BillingState='provincia',BillingPostalCode='00000',BillingCountry='nazione',BillingIsAddressVerified__c=true,SBQQ__PreserveBundle__c=true,ActiveMonitoring__c=false,BillingAddressIsForeign__c=false,ConsentSignature__c=false,DataLimitation__c=false,IsActive__c=false,IsDocumentAcquired__c=false,IsMigrated__c=false,IsVATGroupJoined__c=false,IsWrongFiscalData__c=true,SBQQ__AssetQuantitiesCombined__c=false,SBQQ__CoTermedContractsCombined__c=false,SBQQ__IgnoreParentContractedPrices__c=false);
-        insert fakeAccount;
-        list<SObject> objectRelations= new list<SObject>();
-        case fakeCase= new case(Status='New',Origin='Phone');
-        order fakeOrder= new order(Status='Draft',EffectiveDate=date.today(),AccountId=fakeAccount.Id);
-        objectRelations.add(fakeCase);
-        objectRelations.add(fakeOrder);
-        insert objectRelations;
-        contact fakeContact= new contact(LastName='cognome');
-        insert fakeContact;
-        et4ae5__Automated_Send__c fakeSend= new et4ae5__Automated_Send__c();
-        insert fakeSend;
-        list<SObject> toInsert= new list<SObject>();
-        et4ae5__IndividualEmailResult__c emailScarto= new et4ae5__IndividualEmailResult__c(BounceSubCategory__c='errore',OrderID__c=fakeOrder.Id,et4ae5__Contact__c=fakeContact.Id,et4ae5__TriggeredSendDefinition__c=fakeSend.Id);
-        SMSTracking__c smsScarto= new SMSTracking__c(Undelivered__c=true,CaseID__c=fakeCase.Id,ActionDateTime__c=date.today(),MessageID__c=57,Mobile__c='(517)-424-5199',MobileMessageTrackingID__c=10,ModifiedDateTime__c=date.today());
-        toInsert.add(emailScarto);
-        toInsert.add(smsScarto);
-        insert toInsert;
+    }
+    
+    @isTest static void invokeScartiAction2(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
+        
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'annullaPratica';
+        input.objectId = record.id;
+        input.templateName = 'templateName';
+        inputs.add(input);
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
+      
+        System.assertEquals('OK', outputs[0].esito, 'invokeScartiAction did not work correctly');
+        System.assertNotEquals(null, outputs[0], 'invokeScartiAction did not work correctly');
 
-        Map<Id,SObject> oldMap = new Map<Id,SObject>(); 
-        et4ae5__IndividualEmailResult__c emailScartoOld = new et4ae5__IndividualEmailResult__c(BounceSubCategory__c='Unknown bounce',OrderID__c=fakeOrder.Id,et4ae5__Contact__c=fakeContact.Id,et4ae5__TriggeredSendDefinition__c=fakeSend.Id);
-        SMSTracking__c smsScartoOld = new SMSTracking__c(Undelivered__c=true,CaseID__c=fakeCase.Id,ActionDateTime__c=date.today(),MessageID__c=57,Mobile__c='(517)-424-5199',MobileMessageTrackingID__c=10,ModifiedDateTime__c=date.today());
-        oldMap.put(emailScartoOld.Id, emailScartoOld);
-        oldMap.put(smsScartoOld.Id, smsScartoOld);
+    }
+    
+    @isTest static void invokeScartiAction3(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
+        
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'annullaContratti';
+        input.objectId = record.id;
+        input.templateName = 'templateName';
+        inputs.add(input);
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
+      
+        System.assertEquals('OK', outputs[0].esito, 'invokeScartiAction did not work correctly');
+        System.assertNotEquals(null, outputs[0], 'invokeScartiAction did not work correctly');
 
-        HDT_UTL_Scarti.createScartoForMarketingCloud(toInsert,oldMap);
+    }
+    
+    @isTest static void invokeScartiAction4(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
+        
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'createActivityByObjectIdAndTemplateName';
+        input.objectId = record.id;
+        input.templateName = 'CBS_ATT006__AMMISSIBILITA_KO';
+        inputs.add(input);
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
+      
+        System.assertEquals('OK', outputs[0].esito, 'invokeScartiAction did not work correctly');
+        System.assertNotEquals(null, outputs[0], 'invokeScartiAction did not work correctly');
 
-        list<wrts_prcgvr__Activity__c> verifyActivity = [SELECT Id, wrts_prcgvr__ObjectId__c
-                                                         FROM wrts_prcgvr__Activity__c
-                                                         WHERE (wrts_prcgvr__ObjectId__c = :fakeOrder.Id 
-                                                         OR wrts_prcgvr__ObjectId__c = :fakeCase.Id)];
+    }
+        
+    @isTest static void invokeScartiAction5(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
+        
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'createActivityByObjectIdAndTemplateName';
+        input.objectId = record.id;
+        input.templateName = 'wrongtemplatename';
+        inputs.add(input);
+        
+        List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
+      
+        System.assertEquals('KO', outputs[0].esito, 'invokeScartiAction did not work correctly');
+        System.assertNotEquals(null, outputs[0], 'invokeScartiAction did not work correctly');
 
-        system.assert(verifyActivity.size()==2);
+    }
+    
+    @isTest static void createAttivitaTracciaturaHeroku(){
+        
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Richiesta non identificata');
+
+        mapp.put('UTENZA','userprova');
+        mapp.put('DATA_EVENTO',String.valueof(System.today()));
+        mapp.put('ERROR_MESSAGE','descrizione scarto');
+            
+
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }
+    
+    @isTest static void createAttivitaTracciaturaHeroku2(){
+        
+        Order record = [Select id from Order];
+        
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Esito non elaborato');
+        mapp.put('UTENZA','userprova');
+        mapp.put('DATA_EVENTO',String.valueof(System.today()));
+        mapp.put('ERROR_MESSAGE','descrizione scarto');
+        mapp.put('RECORD_ID',record.id);
+        mapp.put('PROCESS_CATEGORY','postsales');
+        mapp.put('COUNTER','1.1');
+        mapp.put('COD_PRAT_UTENTE','codice1');
+        mapp.put('CMP','codice2');
+        mapp.put('NOTE_ERR','codice3');
+        mapp.put('STEP_ERR','codice4');
+        mapp.put('NOTA_HK','codice5');
+                                                                                          
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }
+
+    @isTest static void createAttivitaTracciaturaHeroku3(){
+               
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Esito non elaborato');
+        mapp.put('UTENZA','testutenza');
+        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
+        mapp.put('ERROR_MESSAGE','erroretest');
+        mapp.put('RECORD_ID','O-pizza');
+        mapp.put('PROCESS_CATEGORY','sales');
+        
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }   
+    
+    @isTest static void createActivityByObjectIdAndTemplateNameBulk(){
+        
+        Order record = [Select id from Order limit 1];
+        
+        List<String> ids = new List<String>();
+        ids.add(record.id);
+        
+        List<wrts_prcgvr__Activity__c> activities = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(ids, 'CBS_ATT006__AMMISSIBILITA_KO');
+        
+        System.assertEquals(1, activities.size(), 'createActivityByObjectIdAndTemplateNameBulk did not work correctly');
+        System.assertNotEquals(null, activities, 'createActivityByObjectIdAndTemplateNameBulk did not work correctly');
+        
+    }
+    
+    @isTest static void updateContactForScartoDocumentale(){
+        
+        Account acc = [Select id from Account LIMIT 1];
+        
+        Contact cont = [Select id, IndividualId from Contact Limit 1];
+        
+        Individual ind = [Select id from Individual  where id =: cont.IndividualId limit 1];
+        
+        List<ContactPointPhone> cpp = [Select id, ParentId from ContactPointPhone];
+        for(ContactPointPhone c : cpp){
+            c.parentId = ind.id;
+        }
+        update cpp;
+        
+        List<ContactPointEmail> cpe = [Select id, ParentId from ContactPointEmail];
+        for(ContactPointEmail c : cpe){
+            c.parentId = ind.id;
+        }
+        update cpe;
+        
+        HDT_UTL_Scarti.updateContactForScartoDocumentale(acc.id,'oldPhone', 'old@Email.it', 'newPhone',  'new@Mail.it');
+        
+        List<ContactPointEmail> mails = [Select EmailAddress From ContactPointEmail Where Status__c = 'Non verificato'];
+        List<ContactPointPhone> phones = [Select TelephoneNumber From ContactPointPhone Where Status__c = 'Non verificato'];
+            
+        System.assertEquals(2, mails.size(), 'updateContactForScartoDocumentale did not work correctly');
+        System.assertEquals(2, phones.size(), 'updateContactForScartoDocumentale did not work correctly');
+        
+    }
+    
+    @isTest static void updateContactForScartoDocumentale2(){
+        
+        Account acc = [Select id from Account LIMIT 1];
+        
+        Contact cont = [Select id, IndividualId from Contact Limit 1];
+        
+        Individual ind = [Select id from Individual  where id =: cont.IndividualId limit 1];
+        
+        List<ContactPointPhone> cpp = [Select id, ParentId from ContactPointPhone where Status__c = 'Non verificato'];
+        for(ContactPointPhone c : cpp){
+            c.parentId = ind.id;
+        }
+        update cpp;
+        
+        List<ContactPointEmail> cpe = [Select id, ParentId from ContactPointEmail where Status__c = 'Non verificato'];
+        for(ContactPointEmail c : cpe){
+            c.parentId = ind.id;
+        }
+        update cpe;
+        
+        HDT_UTL_Scarti.updateContactForScartoDocumentale(acc.id,'oldPhone', 'old@Email.it', 'newPhone',  'new@Mail.it');
+        
+        List<ContactPointEmail> mails = [Select EmailAddress From ContactPointEmail Where EmailAddress = 'new@Mail.it'];
+        List<ContactPointPhone> phones = [Select TelephoneNumber From ContactPointPhone Where TelephoneNumber = 'newPhone'];
+            
+        System.assertEquals(1, mails.size(), 'updateContactForScartoDocumentale did not work correctly');
+        System.assertEquals(1, phones.size(), 'updateContactForScartoDocumentale did not work correctly');
+        
+    }
+    
+    @isTest static void createScartoForMarketingCloud(){
+        
+        List<et4ae5__IndividualEmailResult__c> individualEmailResults = [Select id,BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c = null];
+        
+        individualEmailResults[0].BounceSubCategory__c = 'changed';
+        
+        update individualEmailResults;
+        
+        String newBounceSubCategory = [Select BounceSubCategory__c From et4ae5__IndividualEmailResult__c limit 1].BounceSubCategory__c;
+        
+        System.assertEquals('changed', newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
+        System.assertNotEquals(null, newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
+        
+    }
+    
+    @isTest static void createScartoForMarketingCloud2(){
+        
+        List<et4ae5__IndividualEmailResult__c> individualEmailResults = [Select id,BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c != null ];
+        
+        individualEmailResults[0].BounceSubCategory__c = 'changed';
+        
+        update individualEmailResults;
+        
+        String newBounceSubCategory = [Select BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c != null limit 1].BounceSubCategory__c;
+        
+        System.assertEquals('changed', newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
+        System.assertNotEquals(null, newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
+        
+    }
+    
+    @isTest static void createScartoForMarketingCloud3(){
+        
+        List<SMSTracking__c> trackings = [Select id,Undelivered__c From SMSTracking__c];
+        
+        trackings[0].Undelivered__c = false;
+        
+        update trackings;
+        
+        Boolean newUndelivered = [Select Undelivered__c From SMSTracking__c ].Undelivered__c;
+        
+        System.assertEquals(false, newUndelivered, 'createScartoForMarketingCloud did not work correctly');
+        System.assertNotEquals(true, newUndelivered, 'createScartoForMarketingCloud did not work correctly');
+        
+    }
+    
+    @isTest static void checkForEsitiIntermedi(){
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id,DiscardCategory__c,Case__c,Order__c, wrts_prcgvr__ObjectId__c From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+            
+        HDT_UTL_Scarti.checkForEsitiIntermedi(activities);
+        
+        List<wrts_prcgvr__Activity__c> relatedAct = [Select id,status__c,wrts_prcgvr__Status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
+        
+        System.assertEquals('Not Started', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
+        System.assertNotEquals(null, relatedAct, 'checkForEsitiIntermedi did not work correctly');
+        
+    }
+    
+    @isTest static void handleMRRInboundRequest(){
+        
+        HDT_WRP_MrrRequest mrRequest = new HDT_WRP_MrrRequest();
+        
+        List<HDT_WRP_MrrRequest.HDT_WRP_Field> fields = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldAttivita = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldAttivita.fieldType = 'fieldType';
+        fieldAttivita.name = 'ATTIVITA';
+        fieldAttivita.value = 'Richiesta non identificata.';
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldFase = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldFase.fieldType = 'fieldType';
+        fieldFase.name = 'FASE';
+        fieldFase.value = 'Completata';
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldRecordOrder = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldRecordOrder.fieldType = 'fieldType';
+        fieldRecordOrder.name = 'RECORD_ID';
+        fieldRecordOrder.value = [Select id from order].id;
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldRecordCase = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldRecordCase.fieldType = 'fieldType';
+        fieldRecordCase.name = 'RECORD_ID';
+        fieldRecordCase.value = [Select id from Case].id;
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldPizza = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldPizza.fieldType = 'fieldType';
+        fieldPizza.name = 'RECORD_ID';
+        fieldPizza.value = 'O-pizza';
+        
+        fields.add(fieldAttivita);
+        fields.add(fieldFase);
+        fields.add(fieldRecordOrder);
+        fields.add(fieldRecordCase);
+        fields.add(fieldPizza);
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Header head = new HDT_WRP_MrrRequest.HDT_WRP_Header();
+        head.requestId = 'requestId';
+        head.requestTimeStamp = 'requestTimeStamp';
+        head.requestType = 'requestType';
+        head.fields = fields;       
+        
+        List<HDT_WRP_MrrRequest.HDT_WRP_Object> objs = new List<HDT_WRP_MrrRequest.HDT_WRP_Object>();
+        HDT_WRP_MrrRequest.HDT_WRP_Object ob = new HDT_WRP_MrrRequest.HDT_WRP_Object();
+        ob.fields = fields;
+        ob.id = 'obid';
+        ob.name = 'obname';       
+        ob.objectType = 'obtype';
+        objs.add(ob);
+        
+        HDT_WRP_MrrRequest.HDT_WRP_Request req = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        req.code = 'code';
+        req.description = 'description';
+        req.header = head;
+        req.objects = objs;
+
+        List<HDT_WRP_MrrRequest.HDT_WRP_Request> reqs = new List<HDT_WRP_MrrRequest.HDT_WRP_Request>();
+        reqs.add(req);
+        mrRequest.requests = reqs;
+        
+        Test.startTest();
+
+        HDT_UTL_Scarti.handleMRRInboundRequest(mrRequest.requests);
+        
+        Test.stopTest();
+        
+        System.assertEquals('code', mrRequest.requests[0].code, 'handleMRRInboundRequest did not work correctly');
+        System.assertNotEquals(null, mrRequest.requests, 'handleMRRInboundRequest did not work correctly');
+        
+    }      
+
+    @isTest static void updatePraticaForScartoDocumentaleQueueException(){
+               
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it' LIMIT 1];       
+        act.NewEmail__c = 'forse@bo.it';
+        update act;
+                
+        List<Order> ords = [Select Email__c From Order Where Email__c ='forse@bo.it'];
+        System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
+        List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
+    	System.assertEquals(1, jobs.size(), 'expecting one queued job');
+               
+    }
+    
+    @isTest static void updatePraticaForScartoDocumentaleQueueOrder(){
+               
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'activityOrder@no.it' LIMIT 1];       
+        act.NewEmail__c = 'forse@bo.it';
+        update act;
+                
+        List<Order> ords = [Select Email__c From Order Where Email__c ='forse@bo.it'];
+        System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
+        List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
+    	System.assertEquals(1, jobs.size(), 'expecting one queued job');
+               
+    }
+    
+    @isTest static void checkDiscardAnnullmentRuleCase(){
+        
+        String caseId = [Select Id From Case Limit 1].id;
+        
+        Test.startTest();
+        
+        Boolean b = HDT_UTL_Scarti.checkDiscardAnnullmentRule(caseId, 'Ammissibilità KO');
+        
+        Test.stopTest();
+        
+        System.assertEquals(true, b, 'checkDiscardAnnullmentRule did not work correctly');
+        System.assertNotEquals(null, b, 'checkDiscardAnnullmentRule did not work correctly');
+    }
+    
+    @isTest static void checkDiscardAnnullmentRuleOrder(){
+        
+        String orderId = [Select Id From Order Limit 1].id;
+        
+        Test.startTest();
+        
+        Boolean b = HDT_UTL_Scarti.checkDiscardAnnullmentRule(orderId, 'Esito KO da DL');
+        
+        Test.stopTest();
+        
+        System.assertEquals(true, b, 'checkDiscardAnnullmentRule did not work correctly');
+        System.assertNotEquals(null, b, 'checkDiscardAnnullmentRule did not work correctly');
+    }
+    
+    @isTest static void chiudiAttivitaCase(){
+        
+        String caseId = [Select Id From Case Limit 1].id;
+        
+        Test.startTest();
+        
+        HDT_UTL_Scarti.chiudiAttivita(caseId);
+        
+        Test.stopTest();
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id, Status__c, wrts_prcgvr__Status__c from wrts_prcgvr__Activity__c where case__c =: caseId];
+        
+        System.assertEquals('Chiusa', activities[0].Status__c, 'chiudiAttivitaCase did not work correctly');
+        System.assertNotEquals('Aperta', activities[0].wrts_prcgvr__Status__c, 'chiudiAttivitaCase did not work correctly');
+
+    }
+        
+    @isTest static void annullaPraticaCase(){
+        
+        String caseId = [Select Id From Case Limit 1].id;
+        
+        Test.startTest();
+        
+        HDT_UTL_Scarti.annullaPratica(caseId);
+        
+        Test.stopTest();
+        
+        List<Case> cases = [Select id, CancellationReason__c, Status From Case Where id =: caseId];
+        
+        System.assertEquals('Closed', cases[0].Status, 'annullaPraticaCase did not work correctly');
+        System.assertNotEquals('', cases[0].CancellationReason__c, 'annullaPraticaCase did not work correctly');
+
+    }
+    
+    @isTest static void handleEditButtonPress(){
+        Map<Id,wrts_prcgvr__Activity__c> activityOldMap = new Map<Id,wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> activityOld = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        for(wrts_prcgvr__Activity__c a : activityOld){
+            activityOldMap.put(a.id,a);
+        }
+        
+        List<wrts_prcgvr__Activity__c> activityNew = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c, Type__c, DiscardWorked__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        activityNew[0].wrts_prcgvr__Status__c = 'Completed';
+        activityNew[0].RecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+        
+        HDT_UTL_Scarti.handleEditButtonPress(activityNew, activityOldMap);
+        
+        List<wrts_prcgvr__Activity__c> activityAfter = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c, Type__c, DiscardWorked__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals('Not Started', activityAfter[0].wrts_prcgvr__Status__c, 'handleEditButtonPress did not work correctly');
+        System.assertNotEquals(null, activityAfter[0].DiscardWorked__c, 'handleEditButtonPress did not work correctly');
     }
 }

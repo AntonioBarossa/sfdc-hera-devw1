@@ -17,13 +17,15 @@
  //Domestico;Non Domestico
  //Recuperare alcuni campi da OrderItem
 
-
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_ServiceTwentySix {
 
     private static Set<String> prodFields;
     private static HDT_QR_Sobject utl = new HDT_QR_Sobject();
     private static Id ordId;
-   
+
+    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description', 'product2.description'};
+
     private inherited sharing class HDT_QR_Sobject extends HDT_UTL_FormatTextScript{
 
         private List<SObject> getSObj(Set<Id> listIds, List<String> fieldsToQuery, String fromCondition){
@@ -32,29 +34,31 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             if(STRING.isNotBlank(query)){
                 query+=
                 fromCondition;
-                system.debug(query);
+                System.debug(LoggingLevel.DEBUG, query);
                 //mapSobjs = new Map<id, SObject>( (List<SObject>) Database.query(query));
-                lSobjs= (List<SObject>) Database.query(query);
+                lSobjs= (List<SObject>) Database.query(String.escapeSingleQuotes(query));
             }
             return lSobjs;
         }
 
         private Map<id, Product2> getProducts(Set<Id> listIds, List<String> fieldsToQuery){
             Map<id, Product2> mapProducts = new Map<id, Product2>((List<Product2>) getSObj(listIds, fieldsToQuery, ' FROM Product2 where Id IN :listIds'));
-            system.debug(mapProducts.keyset());
+            //system.debug(mapProducts.keyset());
             return mapProducts;
         }
 
         private Map<id, OrderItem> getOrdItemsByOrdId(Set<Id> listIds, List<String> fieldsToQuery){
             Map<id, OrderItem> mapOrdItems = new Map<id, OrderItem>((List<OrderItem>) getSObj(listIds, fieldsToQuery, ' FROM OrderItem where OrderId IN :listIds'));
-            system.debug(mapOrdItems.keyset());
+            //system.debug(mapOrdItems.keyset());
             return mapOrdItems;
         }
 
 
 
         private String dinamicFieldValue(String fieldPath, SObject relation){
-            return getFieldValue(fieldPath, relation);
+            String retValue = getFieldValue(fieldPath, relation);
+            //retValue = fieldPath.equalsIgnoreCase('DurationVAS__c')? '999999' : retValue;
+            return retValue=='null'? '' : retValue;
         }
     }
     
@@ -63,9 +67,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         String field;
         String value;
         String flag;
-        public HDT_WRP_Position(String Name, String Value){
-            this.field=Name;
-            this.Value=Value;
+        public HDT_WRP_Position(String name, String value){
+            this.field=name;
+            this.value=value;
         }
     }
 
@@ -83,7 +87,9 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             this.tipoOperazione='ATT';//order.ActivationMode__c;
             this.tipoFornitura=(new Set<String>{'Domestico', 'A-Domestico'}.contains(order.SupplyType__c)) ? 'Domestico' : 'Non Domestico';
         }
-        public HDT_WRP_DtoServiceTwentySix(){}
+        public HDT_WRP_DtoServiceTwentySix(){
+            return;
+        }
     }
 
 
@@ -100,19 +106,19 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
 
-    public HDT_WRP_DtoServiceTwentySix startProcess(Id OrderId){
+    public HDT_WRP_DtoServiceTwentySix startProcess(Id orderId){
         //this method starts the process, it gets an OrderId and he queries related OrderItems
         //If there's already a query on order items (or on Order), modify this method to get that list
-        ordId=OrderId;
+        ordId=orderId;
         Order order = [SELECT 
-                        (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description FROM OrderItems), 
+                        (SELECT Product2.Family, Product2.Name, Product2.ConstraintDiscountPercentage__c, Product2.ConstraintDiscountEurGiorno__c, Product2.ConstraintExemption__c, Description, Product2.Description FROM OrderItems), 
                         CommodityFormula__c, OrderNumber, ServicePointCode__c, ActivationMode__c,
                         HerokuPracticeCode__c, SupplyType__c, SupplyTypeTechnical__c
-                        FROM Order WHERE Id=:OrderId WITH SECURITY_ENFORCED];
+                        FROM Order WHERE Id=:orderId WITH SECURITY_ENFORCED];
 
         HDT_WRP_DtoServiceTwentySix dto = new HDT_WRP_DtoServiceTwentySix(order);
 
-        system.debug('1 '+order.OrderItems.size());
+        //system.debug('1 '+order.OrderItems.size());
 
 
         List<OrderItem> items = order.OrderItems;
@@ -122,7 +128,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
             /* [SELECT Order.CommodityFormula__c, Product2.Family, Order.OrderNumber, Order.ServiePointCode__c, 
                 Order.HerokuPracticeCode__c, Order.SupplyType__c, Order.SupplyTypeTechnical__c, Order.ActivationMode__c
             FROM OrderItem WHERE OrderId=:OrderId WITH SECURITY_ENFORCED]; */
-        system.debug('2');
+        //system.debug('2');
 
         Map<String, List<OrderItem>> familyToOccurrencies = new Map<String, List<OrderItem>>();
         //this map is used to connect a family to a list of items. 
@@ -131,19 +137,19 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         //the size of each list is the number of occurence that family has
         for(OrderItem item : items){
             if(!familyToOccurrencies.containsKey(item.Product2.Family)){
-                system.debug('3');
+                //system.debug('3');
                 familyToOccurrencies.put(item.Product2.Family, new List<OrderItem>());
             }
             familyToOccurrencies.get(item.Product2.Family).add(item);
         }
-        system.debug(order.CommodityFormula__c);
-        system.debug(familyToOccurrencies.keyset());
+        //system.debug(order.CommodityFormula__c);
+        //system.debug(familyToOccurrencies.keyset());
 
         List<Service26Config__c> configs = getConfigs(order.CommodityFormula__c, familyToOccurrencies.keyset());
         //getting list of configurationObjects, they contains only the families we are interested but 
         //They may have more occurrence than we need
         if(!configs.isEmpty()){
-            system.debug('4');
+            //system.debug('4');
             dto.elements=getPositions(configs, familyToOccurrencies);
         }
         return dto;
@@ -151,7 +157,7 @@ public with sharing class HDT_UTL_ServiceTwentySix {
 
 
 
-
+    @SuppressWarnings('PMD.CyclomaticComplexity')
     private List<HDT_WRP_Position> getPositions(List<Service26Config__c> configs, Map<String, List<OrderItem>> familyToOccurrencies){
         prodFields = ((SObject)Type.forName('Schema','Product2').newInstance())
                                     .getSObjectType().getDescribe().fields.getMap().keySet();//Set of all order api name fields
@@ -162,21 +168,22 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         Map<String, List<Service26Config__c>> familyToOperando = new Map<String, List<Service26Config__c>>(); 
         //this map key gonna be a clean set of families to the corresponding operandos, ordered by occurrency asc 
         //The for loop below populate familyOperando Map, list of all products id to query and all fields to query
-        system.debug('5a');
+        //system.debug('5a');
         for(Service26Config__c operando : configs){
             if(!familyToOperando.containsKey(operando.ProductFamily__c)){
                 familyToOperando.put(operando.ProductFamily__c, new List<Service26Config__c>());
             }
             familyToOperando.get(operando.ProductFamily__c).add(operando);
             if(operando.Occurrence__c==1){
-                system.debug('5b');
+                //system.debug('5b');
                 for(orderItem item : familyToOccurrencies.get(operando.ProductFamily__c)){
                     productIds.add(item.Product2Id);
                 }
                 for(Service26Config__c position : Operando.Service26Configs__r){
+                    //system.debug('ivaste '+json.serialize(position));
                     if(prodFields.contains(Position.Field__c?.toLowerCase())){
                         fieldsToQuery.add(Position.Field__c?.toLowerCase());
-                    }else if(Position.Field__c?.startsWith('OrderItem.')){
+                    }else if(STring.isNotBlank(Position.Field__c) && Position.Field__c.startsWith('OrderItem.')){
                         ordItemFields.add(Position.Field__c.split('OrderItem\\.')[1].toLowerCase());
                     }
                 }
@@ -225,42 +232,38 @@ public with sharing class HDT_UTL_ServiceTwentySix {
         return positionsToReturn;
     }
 
-
-    private String getFieldValue(String posField, SObject relatedProduct, SObject OrdItem){
+    @TestVisible
+    private String getFieldValue(String posField, SObject relatedProduct, SObject ordItem){
         if(STRING.isBlank(posField)){
             return '';
         }        
         if(posField?.startsWith('CustomCheck.')){
-            return getCustomChecks(posField, OrdItem);
+            return getCustomChecks(posField, ordItem);
         }
         if(posField?.startsWith('OrderItem.')){
             //Fatti Mappa Product->OrderItem e accattati il campo, splitta per 'OrderItem.''
             return utl.dinamicFieldValue(posField?.split('OrderItem\\.')[1], ordItem);
         }
         if(prodFields.contains(posField.toLowerCase())){
-            return STRING.valueOf(relatedProduct.get(posField));
+            //return STRING.valueOf(relatedProduct.get(posField));
+            return utl.dinamicFieldValue(posField, relatedProduct);
         }
         return posField;
     }
 
-    private String getCustomChecks(String posField, SObject OrdItem){
+    private String getCustomChecks(String posField, SObject ordItem){
         switch on posField.split('\\.')[1]{
             when 'isAnalisiConsumi'{
-                return utl.dinamicFieldValue('Product2.Description', OrdItem).containsIgnoreCase('analisi consumi') ? 'x' : '';
+                return utl.dinamicFieldValue('Product2.Description', ordItem).containsIgnoreCase('analisi consumi') ? 'X' : '';
             }
             when 'isConstraint'{
-                Boolean check = String.isBlank( utl.dinamicFieldValue('Product2.ConstraintExemption__c', OrdItem) );
-                check=check && String.isBlank( utl.dinamicFieldValue('Product2.ConstraintDiscountEurGiorno__c', OrdItem) );
-                check=check && String.isBlank( utl.dinamicFieldValue('Product2.ConstraintDiscountPercentage__c', OrdItem) );
+                Boolean check = String.isBlank( utl.dinamicFieldValue('Product2.ConstraintExemption__c', ordItem) );
+                check=check && String.isBlank( utl.dinamicFieldValue('Product2.ConstraintDiscountEurGiorno__c', ordItem) );
+                check=check && String.isBlank( utl.dinamicFieldValue('Product2.ConstraintDiscountPercentage__c', ordItem) );
                 return check? '' : 'x';
             }
         }
         return '';
 
     }
-    private static List<String> ordItemFields = new List<String>{'product2.family', 'product2.name', 'product2.constraintdiscountpercentage__c', 'product2.constraintdiscounteurgiorno__c', 'product2.constraintexemption__c', 'description'};
-
-
-
-
 }

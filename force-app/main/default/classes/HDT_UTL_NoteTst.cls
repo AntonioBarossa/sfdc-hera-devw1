@@ -9,7 +9,7 @@ public class HDT_UTL_NoteTst{
 	@TestSetup
 	static void setup(){
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 	}
 
 	@isTest
@@ -32,7 +32,7 @@ public class HDT_UTL_NoteTst{
 		System.debug('tContentNote = '+tContentNote);
 
 		System.assertEquals(true, String.isNotEmpty(tContentNote.Id), 'Content Note not inserted');
-		System.assertNotEquals(false, String.isNotEmpty(tContentNote.Id));
+		System.assertNotEquals(false, String.isNotEmpty(tContentNote.Id), 'Content Note not inserted');
 		Test.stopTest();
 	}
 
@@ -56,7 +56,7 @@ public class HDT_UTL_NoteTst{
 		System.debug('tContentNote = '+tContentNote);
 
 		System.assertEquals(true, String.isNotEmpty(tContentNote.Id), 'Content Note not inserted');
-		System.assertNotEquals(false, String.isNotEmpty(tContentNote.Id));
+		System.assertNotEquals(false, String.isNotEmpty(tContentNote.Id), 'Content Note not inserted');
 		Test.stopTest();
 	}
 }

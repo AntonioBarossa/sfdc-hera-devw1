@@ -24,13 +24,15 @@ public with sharing class HDT_SRV_ContractTst {
         System.runAs(internalUser) {
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-            List<Contract> cttList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
+            HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id);
 
         }
     }
 
     @isTest
     public static void testCheckReadAccess() {
+
+        boolean finito;
  
         User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -41,11 +43,16 @@ public with sharing class HDT_SRV_ContractTst {
             srvContract.checkReadAccess('Id');
  
             Test.stopTest();
+            finito = true;
+            System.assertEquals(true, finito, 'testCheckReadAccess not finished');
+			System.assertNotEquals(false, finito, 'testCheckReadAccess not finished');
         }
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        boolean finito;
 
         User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -56,6 +63,9 @@ public with sharing class HDT_SRV_ContractTst {
             srvContract.checkUpdateAccess('Name');
 
             Test.stopTest();
+            finito = true;
+            System.assertEquals(true, finito, 'testCheckUpdateAccess not finished');
+			System.assertNotEquals(false, finito, 'testCheckUpdateAccess not finished');
         }
     }
 

@@ -30,25 +30,13 @@ public inherited sharing class HDT_SRV_CreateGenericCase {
         if(inputs.get('inputSObj') instanceof SObject){
 
             SObject inputSobj = (SObject) inputs.get('inputSObj');
-
             switch on inputSobj{
-
                 when Case newCase{
-
                     newCases = cgcUtl.createCaseFromCase(inputs);
-
                 }
-
             }
-
             HDT_UTL_DatabaseService.insertSObject(newCases);
-
             createdCaseId = newCases[0].Id;
-
-        }else{
-
-            //blank code
-
         }
 
         return createdCaseId;

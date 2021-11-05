@@ -115,22 +115,6 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>Accorpamento_Campi</name>
-        <label>Accorpamento Campi</label>
-        <locationX>4009</locationX>
-        <locationY>1476</locationY>
-        <assignmentItems>
-            <assignToReference>GetCaseAggiornato.DistributorNote__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DistributorNoteFormula</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>InRete_o_ExtraRete</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
         <locationX>1690</locationX>
@@ -1143,7 +1127,7 @@
                 <leftValueReference>hdtBillingProfileSelector.results</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2156,6 +2140,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>wrts_prcgvr__ActivityTemplate__c</field>
             <value>
                 <elementReference>GetActivityTemplate.Id</elementReference>
@@ -2410,11 +2400,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>4009</locationX>
-        <locationY>1356</locationY>
+        <locationX>4021</locationX>
+        <locationY>1375</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Accorpamento_Campi</targetReference>
+            <targetReference>InRete_o_ExtraRete</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4861,7 +4851,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <elementReference>previousButton</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>

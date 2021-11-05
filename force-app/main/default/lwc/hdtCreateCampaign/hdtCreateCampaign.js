@@ -213,7 +213,7 @@ export default class HdtCreateCampaign extends LightningElement {
         console.log('category: '+category);
         console.log('status: '+status);
 
-        if ('Campagna Outbound'==category || 'Campagne CRM'==category && status!='Bozza') {
+        if (('Campagna Outbound'==category || 'Campagna CRM'==category) && status!='Bozza') {
             this.processTypeFieldRequired=true;
         }
         else{

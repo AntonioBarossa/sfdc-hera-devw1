@@ -1,7 +1,10 @@
 ({
     doInit: function(component, event, helper) {
         var action = component.get("c.completeCase");
-        action.setParams({'caseId': component.get("v.recordId")});
+        var myPageRef = component.get("v.pageReference");
+        var caseId = myPageRef.state.c__recordId;
+        console.log(caseId);
+        action.setParams({'caseId': caseId});
         action.setCallback(this,function(response){
         	var state = response.getState();
             if (state === "SUCCESS") {                

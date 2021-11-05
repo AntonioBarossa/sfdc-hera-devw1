@@ -14,4 +14,21 @@ public with sharing class HDT_SRV_ContentDocumentLink {
         return cdl;
         
     }
+
+    public ContentDocumentLink createRecordNoInsert(String linkedEntityId, String contentDocumentId, String shareType) {
+        ContentDocumentLink cdl = New ContentDocumentLink();
+        cdl.LinkedEntityId = linkedEntityId;
+        cdl.ContentDocumentId = contentDocumentId;
+        cdl.shareType = shareType;
+       // HDT_UTL_DatabaseService.insertSObject(cdl);
+        return cdl;
+        
+    }
+    
+
+    public List<ContentDocumentLink> insertRecords(List<ContentDocumentLink> listContent) {
+        HDT_UTL_DatabaseService.insertSObject(listContent);
+        return listContent;
+        
+    }
 }

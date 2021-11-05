@@ -52,9 +52,9 @@ public class HDT_WS_RichCreBpCaResponseTst {
         
         Test.stopTest();
         
-        System.assertEquals(s, res.data.rdo, 'Value of the field rdo successfully set');
+        System.assertEquals(s, res.data.rdo, 'Value of the field rdo not set');
         
-        System.assertNotEquals(null, res.data, 'Value of the field dataResponseWrap successfully set');
+        System.assertNotEquals(null, res.data, 'Value of the field dataResponseWrap not set');
         
     }
 }

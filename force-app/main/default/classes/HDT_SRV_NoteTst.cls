@@ -9,8 +9,8 @@ public class HDT_SRV_NoteTst{
 	@TestSetup
 	static void setup(){
 
-		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<ContentVersion> contVerTstList=HDT_UTL_DataFactoryTst.createContentVers(1, true);
+		HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+		HDT_UTL_DataFactoryTst.createContentVers(1, true);
 	}
 
 	@isTest
@@ -33,7 +33,7 @@ public class HDT_SRV_NoteTst{
 
 		System.assertEquals('test', tContentNote.title, 'Content Note not inserted');
 
-		System.assertNotEquals(null, tContentNote.Id);
+		System.assertNotEquals(null, tContentNote.Id, 'Content Note not inserted');
 
 		Test.stopTest();
 	}
@@ -68,7 +68,7 @@ public class HDT_SRV_NoteTst{
 
 		System.assertEquals(false, tContentDocLink.IsDeleted, 'Content Document Link not inserted');
 
-		System.assertNotEquals(null, tContentDocLink.Id);
+		System.assertNotEquals(null, tContentDocLink.Id, 'Content Document Link not inserted');
 
 		Test.stopTest();
 	}

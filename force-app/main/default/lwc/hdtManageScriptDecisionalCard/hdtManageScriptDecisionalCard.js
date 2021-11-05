@@ -7,6 +7,7 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
 
     @api scriptProcessName;//Script Process
     @api recordId;//record starting Object
+    @api activityId;
     @api childAdditionalInfo="";//API field of child Record you want to show info in the title
 
     isLoading = false;
@@ -88,14 +89,27 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
 
     loadScriptPage() {
         this.isLoading = true;
+        console.log("loadScriptPage", this.recordId);
         return getScriptPage({
             processName : this.scriptProcessName, 
             recordId : this.recordId, 
             pageIndex : this.pageHistory[ this.historyIndex ]
         }).then(page => {
             console.log("scriptPage", JSON.stringify(page));
-            this.scriptPage = page;
-            this.isLoading = false;
+            if(page){
+                if (page.sectionText) {
+                    this.scriptPage = page;
+                    this.isLoading = false;
+                }
+                else {
+                    this.pageHistory[ this.pageHistory.length-1 ] = page.nextSection;
+                    this.loadScriptPage();
+                }
+            }else{
+                this.showToast('error', 'Non è disponibile lo script per questa campagna!');
+                this.closeModal();
+            }
+            
         },error => {
             console.log(error.body.message);
             this.showGenericErrorToast();
@@ -105,15 +119,14 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
     saveRecLink(){
         this.isLoading = true;
         let link = this._linkReitek;
-        link = "http://recording-link--test/"+new Date().getTime();
-        saveReitekLink({recordId : this.recordId, reitekLink: link})
+        saveReitekLink({recordId : this.recordId, activityId: this.activityId, reitekLink: link})
             .then(() => {
                 this.dispatchEvent(new ShowToastEvent({
                     variant: "success",
                     title: "Link Salvato",
                     message: "L'operazione di salvataggio del link è andata a buon fine"
                 }));
-                this.closeModal();
+                this.confirm();
             }).catch(error => {
                 console.log(error);
                 this.showGenericErrorToast();
@@ -124,6 +137,10 @@ export default class HdtManageScriptDecisionalCard extends LightningElement {
 
     closeModal(){
         this.dispatchEvent(new CustomEvent('close'));
+    }
+
+    confirm(){
+        this.dispatchEvent(new CustomEvent('confirm'));
     }
 
     enableConfirmButton(){

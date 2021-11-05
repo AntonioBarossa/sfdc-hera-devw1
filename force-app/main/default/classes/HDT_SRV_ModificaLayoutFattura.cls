@@ -1,11 +1,15 @@
+/**@frpanico 15/10/2021
+ * Per implementare interfaccia di PClick il modifier deve essere global
+ */
+@SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
 global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
-
+    
     global Object execute(Object args) {
 
-        System.debug('HDT_SRV_ModificaLayoutFattura callout action');
+        System.debug(LoggingLevel.DEBUG, 'HDT_SRV_ModificaLayoutFattura callout action');
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responsePclick = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
-        Map<String,Object> arg = new Map<String,Object>();
-        List<Case> caseToUpdate = new List<Case>();
+        //Map<String,Object> arg = new Map<String,Object>();
+        //List<Case> caseToUpdate = new List<Case>();
         Case currentCase = new Case();
         Map<String,Object> argsMap = (Map<String,Object>) args;
         String method = (String) argsMap.get('method');
@@ -15,10 +19,10 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         HttpRequest request = new HttpRequest();
         Http http = new Http();
         HttpResponse response = new HttpResponse();
-        String result;
+        //String result;
         String recordId;
-        String depositMode;
-        String process;
+        // String depositMode;
+        // String process;
         String requestBody;
         HDT_WRP_RequestBody bodyWrp = new HDT_WRP_RequestBody();
         HDT_WRP_Position positions = new HDT_WRP_Position();
@@ -27,15 +31,17 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
         recordId = (String) obj.get('Id');
         currentCase.Id = recordId;
         bodyWrp.rds = (String) obj.get('CaseNumber');
-        System.debug('contratti -> ' +(String) obj.get('ContractCode__c'));
-        System.debug('dettaglioBolletta -> ' + (Boolean) obj.get('ElementDetail__c'));
+        
+        System.debug(LoggingLevel.DEBUG, 'contratti -> ' +(String) obj.get('ContractCode__c'));
         positions.contratti = (String) obj.get('ContractCode__c');
+        
+        System.debug(LoggingLevel.DEBUG, 'dettaglioBolletta -> ' + (Boolean) obj.get('ElementDetail__c'));
         positions.dettaglioBolletta = (Boolean) obj.get('ElementDetail__c') ? 'Y' : 'N';
+        
         bodyWrp.posizioni = positions;
         requestBody = JSON.serialize(bodyWrp);
         
         try{
-
             request.setEndpoint(endpoint);
             request.setMethod('POST');
             request.setBody(requestBody);
@@ -45,11 +51,14 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
 
             response = http.send(request);
 
-        }catch(Exception e){
-
-            //blank code
-
+        } catch (Exception e){
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception TypeName: ' + e.getTypeName());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception Message: ' + e.getMessage());
+            System.debug(LoggingLevel.DEBUG, 'execute - Exception StackTraceString: ' + e.getStackTraceString());
+            response = null;
+            
         }
+        System.debug(LoggingLevel.DEBUG, 'response -> ' + response);
 
         if(response != null){
             currentCase = manageResponse(response, recordId);

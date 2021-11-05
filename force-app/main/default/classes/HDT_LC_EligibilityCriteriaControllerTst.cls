@@ -160,6 +160,11 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         System.assertEquals(true, criteriaRecord.success, 'success != true');
         System.assert(!String.isBlank(criteriaRecord.eligibilityId), 'eligibilityId == null');
 
+        //montors fix
+        Id prodId = criteria.Product__c;
+        delete criteria;
+        HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion criteriaRecord2 = HDT_LC_EligibilityCriteriaController.getExistingCriteria(prodId);
+
         Test.stopTest();
 
     }
@@ -182,7 +187,7 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         Test.stopTest();
 
     }
-
+    
     @isTest
     static void getExistingCriteriaWithProductWithoutCrit(){
 
@@ -366,6 +371,17 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         System.assertEquals(false, muniObj2.eligibleForAllCities, 'eligibleForAllCities != false');
         System.assert(muniObj2.treeNotAvailableItemList.size() > 0, 'treeNotAvailableItemList.size() == 0');
 
+        criteria.EligibleForAllCities__c = false;
+        update criteria;
+
+        EligibleMunicipality__c muni = new EligibleMunicipality__c();
+        muni.Name = 'Agrigento';
+        muni.AreaCode__c = 'AG';
+        muni.JSONCode__c = '{"value":"AG","label":"Agrigento","isEnabled":true,"cityAvailable":[],"cityRemoved":[{"value":"84036","label":"San Giovanni Gemini"},{"value":"84034","label":"Sambuca di Sicilia"},{"value":"84033","label":"Ribera"},{"value":"84032","label":"Realmonte"},{"value":"84031","label":"Ravanusa"},{"value":"84030","label":"Raffadali"},{"value":"84029","label":"Racalmuto"},{"value":"84028","label":"Porto Empedocle"},{"value":"84027","label":"Palma di Montechiaro"},{"value":"84026","label":"Naro"},{"value":"84025","label":"Montevago"},{"value":"84024","label":"Montallegro"},{"value":"84023","label":"Menfi"},{"value":"84022","label":"Lucca Sicula"},{"value":"84021","label":"Licata"},{"value":"84020","label":"Lampedusa e Linosa"},{"value":"84019","label":"Joppolo Giancaxio"},{"value":"84018","label":"Grotte"},{"value":"84017","label":"Favara"},{"value":"84016","label":"Comitini"},{"value":"84015","label":"Cianciana"},{"value":"84014","label":"Cattolica Eraclea"},{"value":"84013","label":"Castrofilippo"},{"value":"84012","label":"Casteltermini"},{"value":"84011","label":"Canicattì"},{"value":"84010","label":"Campobello di Licata"},{"value":"84009","label":"Cammarata"},{"value":"84008","label":"Camastra"},{"value":"84007","label":"Caltabellotta"},{"value":"84006","label":"Calamonaci"},{"value":"84005","label":"Burgio"},{"value":"84004","label":"Bivona"},{"value":"84003","label":"Aragona"},{"value":"84002","label":"Alessandria della Rocca"},{"value":"84001","label":"Agrigento"},{"value":"84035","label":"San Biagio Platani"},{"value":"84043","label":"Villafranca Sicula"},{"value":"84042","label":"Siculiana"},{"value":"84041","label":"Sciacca"},{"value":"84040","label":"Santo Stefano Quisquina"},{"value":"84039","label":"SantAngelo Muxaro"},{"value":"84038","label":"Santa Margherita di Belice"},{"value":"84037","label":"Santa Elisabetta"}]}';
+        muni.EligibilityCriteria__c = criteria.Id;
+        insert muni;
+        HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj muniObj3 = HDT_LC_EligibilityCriteriaController.getEligibilityCriteriaRecord(criteria.Id);
+
         Test.stopTest();
     }
 
@@ -386,6 +402,12 @@ public class HDT_LC_EligibilityCriteriaControllerTst {
         System.assertEquals(true, secondResult, 'secondResult != true');
 
         Test.stopTest();
+    }
+
+    @isTest
+    static void setSaveResponse(){
+        HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
+        HDT_LC_EligibilityCriteriaCtrlHelper.setSaveResponse(saveResponse, 'stringMessage', false);
     }
 
 }

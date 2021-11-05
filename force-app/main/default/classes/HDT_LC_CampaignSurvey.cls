@@ -1,3 +1,10 @@
+/**
+* @author Lorenzo (lorenzo.gulotta@webresults.it)
+* @date July/2021
+* @description HDT_LC_CampaignSurvey
+* @history Lorenzo – July/2021 – created class 
+*/
+
 public with sharing class HDT_LC_CampaignSurvey {
     private static HDT_QR_Contact contactQR = new HDT_QR_Contact();
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();

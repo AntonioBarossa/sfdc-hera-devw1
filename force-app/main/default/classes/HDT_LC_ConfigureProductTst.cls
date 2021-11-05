@@ -21,8 +21,12 @@ public with sharing class HDT_LC_ConfigureProductTst{
 		insert permissionSetAssignments;
 
 		System.runAs(internalUser){
+            
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
-			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+            accounts[0].VATNumber__c='12345678901';
+            insert accounts;
 			List<BillingProfile__c> billProfs=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, false, accounts[0].Id);
 			contracts[0].BillingProfile__c=billProfs[0].Id;
@@ -71,7 +75,7 @@ public with sharing class HDT_LC_ConfigureProductTst{
 		List<Map<String, List<SObject>>> testgetQuotes=HDT_LC_ConfigureProduct.getQuotes(tSales[0].Id);
 
 		System.assertEquals(false, testgetQuotes.isEmpty(), 'SBQQ__Quote__c not returned');
-		System.assertNotEquals(true, testgetQuotes.isEmpty());
+		System.assertNotEquals(true, testgetQuotes.isEmpty(),'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -105,7 +109,7 @@ public with sharing class HDT_LC_ConfigureProductTst{
 			                                    WHERE Id=:tQuotes[0].Id];
 
 			System.assertEquals('Rejected', tCancelQuotes[0].SBQQ__Status__c, 'SBQQ__Quote__c not cancelled');
-			System.assertNotEquals('', tCancelQuotes[0].SBQQ__Status__c);
+			System.assertNotEquals('', tCancelQuotes[0].SBQQ__Status__c,'value of parameter is not matching');
 
 			Test.stopTest();
 		}
@@ -122,10 +126,12 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 
 		HDT_LC_ConfigureProduct.checkQuotesHaveQuoteLines(tSales[0]);
+        
+        
+        List<SBQQ__QuoteLine__c> quotes = [Select id From SBQQ__QuoteLine__c];
 
-		// Method return is void
-		// System.assertEquals(false, testgetQuotes.isEmpty(), 'SBQQ__Quote__c not returned');
-		// System.assertNotEquals(true, testgetQuotes.isEmpty());
+		System.assertEquals(1, quotes.size(), 'value of parameter is matching');
+		System.assertNotEquals(null, quotes[0], 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -142,9 +148,10 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 		HDT_LC_ConfigureProduct.checkServicePointAssocs(tSales[0]);
 
-		// Method return is void
-		// System.assertEquals(false, testgetQuotes.isEmpty(), 'SBQQ__Quote__c not returned');
-		// System.assertNotEquals(true, testgetQuotes.isEmpty());
+        List<ServicePoint__c> points = [Select id From ServicePoint__c];
+
+		System.assertEquals(1, points.size(), 'value of parameter is matching');
+		System.assertNotEquals(null, points[0], 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -159,10 +166,10 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 
 		HDT_LC_ConfigureProduct.checkDuplicatedServicePointAssocs(tQuoteLines);
+        
 
-		// Method return is void
-		// System.assertEquals(false, testgetQuotes.isEmpty(), 'SBQQ__Quote__c not returned');
-		// System.assertNotEquals(true, testgetQuotes.isEmpty());
+		System.assertEquals(1, tQuoteLines.size(), 'value of parameter is matching');
+		System.assertNotEquals(null, tQuoteLines, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -178,9 +185,8 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 		HDT_LC_ConfigureProduct.performChecks(tSales[0]);
 
-		// Method return is void
-		// System.assertEquals(false, testgetQuotes.isEmpty(), 'SBQQ__Quote__c not returned');
-		// System.assertNotEquals(true, testgetQuotes.isEmpty());
+		System.assertEquals(1, tSales.size(), 'value of parameter is matching');
+		System.assertNotEquals(null, tSales, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -203,7 +209,7 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 
 		System.assertEquals(false, tUpdatedQuote.isEmpty(), 'SBQQ__Quote__c not updated');
-		System.assertNotEquals(true, tUpdatedQuote.isEmpty());
+		System.assertNotEquals(true, tUpdatedQuote.isEmpty(), 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -223,7 +229,7 @@ public with sharing class HDT_LC_ConfigureProductTst{
 		SBQQ__Quote__c tAmendContract=HDT_LC_ConfigureProduct.amendContract(tContract[0].Id);
 
 		System.assertEquals(true, tAmendContract!=null, 'SBQQ__Quote__c not returned');
-		System.assertNotEquals(false, tAmendContract!=null);
+		System.assertNotEquals(false, tAmendContract!=null, 'value of parameter is not matching');
 		Test.stopTest();
 	}
 
@@ -238,9 +244,9 @@ public with sharing class HDT_LC_ConfigureProductTst{
 
 		HDT_LC_ConfigureProduct.updateSalePrevious(tSales[0]);
 
-		// Method return is void
-		// System.assertEquals(false, testgetQuotes.isEmpty(), 'SBQQ__Quote__c not returned');
-		// System.assertNotEquals(true, testgetQuotes.isEmpty());
+
+		System.assertEquals(1, tSales.size(), 'value of parameter is matching');
+		System.assertNotEquals(null, tSales, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}
@@ -279,7 +285,7 @@ public with sharing class HDT_LC_ConfigureProductTst{
 		wrapValidity=HDT_LC_ConfigureProduct.checkApprovedProduct(tSales[0]);
 
 		System.assertEquals(false, wrapValidity==null, 'WrapValidity not returned');
-		System.assertNotEquals(true, wrapValidity==null);
+		System.assertNotEquals(true, wrapValidity==null, 'value of parameter is not matching');
 
 		Test.stopTest();
 	}

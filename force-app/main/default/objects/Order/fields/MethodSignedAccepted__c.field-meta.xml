@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>IWR</fullName>
+                <fullName>IVR</fullName>
                 <default>false</default>
-                <label>IWR</label>
+                <label>IVR</label>
             </value>
             <value>
                 <fullName>Comfort call</fullName>
@@ -21,8 +21,19 @@
                 <label>Comfort call</label>
             </value>
             <value>
+                <fullName>firma digitale</fullName>
+                <default>false</default>
+                <label>firma digitale</label>
+            </value>
+            <value>
+                <fullName>web assistito</fullName>
+                <default>false</default>
+                <label>web assistito</label>
+            </value>
+            <value>
                 <fullName>Web</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Web</label>
             </value>
         </valueSetDefinition>

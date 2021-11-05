@@ -7,12 +7,12 @@
         <value xsi:type="xsd:string">{
 &quot;objectName&quot;: &quot;Order&quot;,
 &quot;controllingField&quot;:&quot;ParentOrder__c&quot;,
-&quot;fields&quot;: &quot;DocumentalProcessType__c,ShippingStreetName__c,ResidentialStreetName__c,ContractId,Cluster__c, Subprocess__c,ProcessType__c, CommodityFormula__c, Channel__c, Market__c, SupplyType__c, SupplyCity__c, DistributorFormula__c, Status, Phase__c, Username__c, PaymentMode__c, Id, ImplantType__c, BillingStreetName__c, BillingStreetNumber__c, BillingPlace__c, BillingCity__c, BillingPostalCode__c, BillingProvince__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyState__c, CreatedDate, ContractAccountCode__c, ShippingMail__c, DeliveryAddress__c, InvoiceEmailAddress__c, BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c, BankAccountSignatoryFiscalCode__c, EffectiveDate__c, ServicePointCodeFormula__c, SupplyAddressFormula__c, SupplyCountry__c, IbanCountry__c, IbanCIN_IBAN__c, IbanCIN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, PowerCommitted__c, AnnualConsumption__c, WithdrawalClass__c, MeterSN__c, PreviousTrader__c, SAPImplantCode__c, SurfaceServed__c, SapContractCode__c, VAT__c, SupplyCityCode__c, MarketOrigin__c, RequestOption__c, VoltageLevel__c, Pressure__c, Caliber__c, Resident__c, ShippingStreetNumberExtension__c, PowerAvailable__c, RequestPhase__c, TemporaryConnectionStartDate__c, TemporaryConnectionEndDate__c, UseTypeEnergy__c, Email__c, PhoneNumber__c, TotalAmount, RemiCode__c, SignedDate__c, CustomerLastName__c, CustomerName__c, CustomerFiscalCode__c, CustomerVATNumber__c, InvoiceCertifiedEmailAddress__c,SalesCompany__c,OrderNumber&quot;,
+&quot;fields&quot;: &quot;DocumentalProcessType__c,SignatureMethod__c,ShippingAddressFormula__c,DocSendingMethod__c,ShippingStreetName__c,ResidentialStreetName__c,ContractId,Cluster__c, Subprocess__c,ProcessType__c, CommodityFormula__c, Channel__c, Market__c, SupplyType__c, SupplyCity__c, DistributorFormula__c, Status, Phase__c, Username__c, PaymentMode__c, Id, ImplantType__c, BillingStreetName__c,QuotationType__c,BillingStreetNumber__c, BillingPlace__c, BillingCity__c, BillingPostalCode__c, BillingProvince__c, SupplyStreetName__c, SupplyStreetNumber__c, SupplyPostalCode__c, SupplyState__c, CreatedDate, ContractAccountCode__c, ShippingMail__c, DeliveryAddress__c, InvoiceEmailAddress__c, BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c, BankAccountSignatoryFiscalCode__c, EffectiveDate__c, ServicePointCodeFormula__c, SupplyAddressFormula__c, SupplyCountry__c, IbanCountry__c, IbanCIN_IBAN__c, IbanCIN__c, IbanABI__c, IbanCAB__c, IbanCodeNumber__c, PowerCommitted__c, AnnualConsumption__c, WithdrawalClass__c, MeterSN__c, PreviousTrader__c, SAPImplantCode__c, SurfaceServed__c, SapContractCode__c, VAT__c, SupplyCityCode__c, MarketOrigin__c, RequestOption__c, VoltageLevel__c, Pressure__c, Caliber__c, Resident__c, ShippingStreetNumberExtension__c, PowerAvailable__c, RequestPhase__c, TemporaryConnectionStartDate__c, TemporaryConnectionEndDate__c, UseTypeEnergy__c, Email__c, PhoneNumber__c, TotalAmount, RemiCode__c, SignedDate__c, CustomerLastName__c, CustomerName__c, CustomerFiscalCode__c, CustomerVATNumber__c, InvoiceCertifiedEmailAddress__c,SalesCompany__c,OrderNumber&quot;,
 &quot;condition&quot;:&quot;Phase__c != &apos;Annullato&apos;&quot;,
 &quot;relatedObject&quot;: [
 {
 &quot;objectName&quot;: &quot;OrderItem&quot;,
-&quot;fields&quot;: &quot;Id, ProductName__c,ProductFamily__c,ProductVersion__c,Quantity,IVA__c,PriceNet__c,PriceNetDiscounted__c&quot;,
+&quot;fields&quot;: &quot;Id, ProductName__c,ProductFamily__c,ProductVersion__c,Quantity,IVA__c,PriceNet__c,PriceNetDiscounted__c,UnitPrice&quot;,
 &quot;relation&quot;: &quot;OrderItems&quot;
 }
 ],
@@ -34,7 +34,7 @@
 },
 {
 &quot;objectName&quot;: &quot;Order&quot;,
-&quot;fields&quot;: &quot;Cluster__c,Subprocess__c,OrderNumber,DocSendingMethod__c,SignatureMethod__c&quot;,
+&quot;fields&quot;: &quot;Cluster__c,Subprocess__c,OrderNumber,DocSendingMethod__c,SignatureMethod__c,Username__c,ShippingAddressFormula__c,ShippingStreetName__c,ShippingStreetNumber__c,ShippingStreetNumberExtension__c,ShippingCity__c,ShippingProvince__c,ShippingPostalCode__c,ShippingPlace__c&quot;,
 &quot;relation&quot;: &quot;ParentOrder__r&quot;
 }
 ]

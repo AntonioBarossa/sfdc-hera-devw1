@@ -1,4 +1,6 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_WS_DocumentalIntegration {
+    
     public static HDT_WRP_DocumentalResponse submitRequest(String body){
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         try{
@@ -8,21 +10,24 @@ public with sharing class HDT_WS_DocumentalIntegration {
             req.setBody(body);
             req.setHeader('Content-Type','application/json');
             req.setTimeout(120000);
+            
             Http http = new Http();
             HTTPResponse res = http.send(req);
-            System.debug('Engage1 response: ' + res.getBody());
+            // da scommentare solo per debug temporanei, la response può essere molto grande e causare un heap size exception.
+            //System.debug(LoggingLevel.DEBUG, 'Engage1 response: ' + res.getBody());
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('data')) {
-                System.debug(JSON.serialize(responseBodyMap.get('data')));
+                System.debug(LoggingLevel.DEBUG, JSON.serialize(responseBodyMap.get('data')));
                 documentalResponse = (HDT_WRP_DocumentalResponse) JSON.deserialize(JSON.serialize(responseBodyMap.get('data')), HDT_WRP_DocumentalResponse.class);
             }
             documentalResponse.responseCode = res.getStatusCode();
             documentalResponse.responseStatus =  res.getStatus();             
-        }catch(Exception ex){
-            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
-        }     
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        }
+
         return documentalResponse;
-   }
+    }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetAttachmentRequest(String body){
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
@@ -42,15 +47,16 @@ public with sharing class HDT_WS_DocumentalIntegration {
             }
             postelResponse.responseCode = res.getStatusCode();
             postelResponse.responseStatus =  res.getStatus();
-        }catch(Exception ex){
-            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
         }
+
         return postelResponse;
     }
 
     public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse submitGetEnvelopePostelRequest(String body){
         
-        System.debug('HDT_WS_DocumentalIntegration - submitGetEnvelopePostelRequest');
+        System.debug(LoggingLevel.DEBUG, 'HDT_WS_DocumentalIntegration - submitGetEnvelopePostelRequest');
         HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
         try{
             HttpRequest req = new HttpRequest();
@@ -67,9 +73,10 @@ public with sharing class HDT_WS_DocumentalIntegration {
             }
             postelResponse.responseCode = res.getStatusCode();
             postelResponse.responseStatus =  res.getStatus();
-        }catch(Exception ex){
-            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
-            System.debug('ex StackTraceString: ' + ex.getStackTraceString());
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'ex StackTraceString: ' + ex.getStackTraceString());
+            
         }
         return postelResponse;
     }
@@ -94,7 +101,12 @@ public with sharing class HDT_WS_DocumentalIntegration {
                 String status = (String) responseData.get('status');
                 switch on status {
                     when 'ERROR' {
-                        throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
+                        String zipBaseSixtyFour = (String) responseData.get('zipBase64');
+                        if (String.isBlank(zipBaseSixtyFour)) {
+                            throw new HDT_UTL_HeraException('Errore Intesa nel recupero della Busta archiviata.');
+                        } else {
+                            responseWrap.content = zipBaseSixtyFour;
+                        }
                     }
                     when 'PROGRESS' {
                         String zipBaseSixtyFour = (String) responseData.get('zipBase64');
@@ -116,7 +128,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             }
 
         }catch(Exception ex){
-            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             throw ex;
         }
         return responseWrap;
@@ -135,7 +147,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             HTTPResponse res = http.send(req);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('errorDetails')) {
-                System.debug(JSON.serialize(responseBodyMap.get('errorDetails')));
+                System.debug(LoggingLevel.DEBUG, 'submitResendDocusignEnvelopeRequest - errorDetails: ' + JSON.serialize(responseBodyMap.get('errorDetails')));
                 List<Object> errors = (List<Object>) responseBodyMap.get('errorDetails');
                 if (errors != null && !errors.isEmpty()) {
                     Map<String, Object> errorObj = (Map<String, Object>) errors[0];
@@ -149,7 +161,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             responseWrap.responseCode = res.getStatusCode();
             responseWrap.responseStatus =  res.getStatus();
         }catch(Exception ex){
-            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             throw ex;
         }
         return responseWrap;
@@ -168,7 +180,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             HTTPResponse res = http.send(req);
             Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
             if (responseBodyMap.containsKey('errorDetails')) {
-                System.debug(JSON.serialize(responseBodyMap.get('errorDetails')));
+                System.debug(LoggingLevel.DEBUG, 'submitDiscardDocusignEnvelopeRequest - errorDetails: ' + JSON.serialize(responseBodyMap.get('errorDetails')));
                 List<Object> errors = (List<Object>) responseBodyMap.get('errorDetails');
                 if (errors != null && !errors.isEmpty()) {
                     Map<String, Object> errorObj = (Map<String, Object>) errors[0];
@@ -182,7 +194,7 @@ public with sharing class HDT_WS_DocumentalIntegration {
             responseWrap.responseCode = res.getStatusCode();
             responseWrap.responseStatus =  res.getStatus();
         }catch(Exception ex){
-            System.debug('Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            System.debug(LoggingLevel.DEBUG, 'Errore WS ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
             throw ex;
         }
         return responseWrap;

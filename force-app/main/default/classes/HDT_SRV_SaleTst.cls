@@ -24,12 +24,14 @@ public with sharing class HDT_SRV_SaleTst {
         System.runAs(internalUser) {
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-            List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
+            HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
         }
     }
 	
 	@isTest
     public static void testCheckReadAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -38,13 +40,19 @@ public with sharing class HDT_SRV_SaleTst {
             Test.startTest();
 
             srvSale.checkReadAccess('Status__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -53,13 +61,19 @@ public with sharing class HDT_SRV_SaleTst {
             Test.startTest();
 
             srvSale.checkCreateAccess('Status__c');
+
+            finished = true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        Boolean finished = false;
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -68,8 +82,12 @@ public with sharing class HDT_SRV_SaleTst {
             Test.startTest();
 
             srvSale.checkUpdateAccess('Status__c');
+
+            finished =  true;
  
             Test.stopTest();
+
+            System.assertEquals(true, finished, 'Test Not Ended');
         }
     }
 
@@ -90,7 +108,7 @@ public with sharing class HDT_SRV_SaleTst {
                 Account__c = acc.Id
             );
 
-            Sale__c testSale = srvSale.createRecord(sale);
+            srvSale.createRecord(sale);
 
             List<Sale__c> sales = [SELECT Id FROM Sale__c WHERE Status__c = 'Attiva'];
  

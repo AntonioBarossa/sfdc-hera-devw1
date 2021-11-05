@@ -1,12 +1,13 @@
 public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObject>, Database.Stateful {
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
+    private static HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
 
     public List<Order> ordersToUpdate = new List<Order>();
     public List<wrts_prcgvr__Activity__c> callActivities = new List<wrts_prcgvr__Activity__c>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -15,9 +16,26 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>>orders: ' + orders);
         system.debug('>>orders count: ' + orders.size());
 
+        List<String> notCancelNonBillable = new List<String>{
+            'Completata',
+            'Comunicazione verso Motore VAS OK',
+            'Accettato Motore VAS',
+            'Comunicazione verso Motore VAS'
+        };
+
+        List<String> notCancelBillable = new List<String>{
+            'Comunicazione verso Heroku Ok',
+            'Completata',
+            'Comunicazione verso Heroku'
+        };
+
+        RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+
+        List<wrts_prcgvr__Activity__c> activityVas = new List<wrts_prcgvr__Activity__c>();
+
         Map<String,wrts_prcgvr__Activity__c> mapActivitiesParent = new Map<String,wrts_prcgvr__Activity__c>(); //in order not to get duplicate activities associated to same Parent Order
 
-        List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
+        // List<CampaignMember> campaignMembersInsert = new List<CampaignMember>();
         // Set<CampaignMember> campaignMembersUpdateAdd = new Set<CampaignMember>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
 
@@ -49,19 +67,52 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>> ordersAlreadyAssigned: ' + ordersAlreadyAssigned);
         system.debug('>> ordersAlreadyAssigned size: ' + ordersAlreadyAssigned.size());
 
+        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+
+        String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
+
+        List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
+
         for (Order ord : orders) {
 
             Date startDate = ord.WizardCompletedDate__c;
+            system.debug('>>>startDate before: ' + ord.Id + ' <:> ' + startDate);
+
+            for (ComfortQualityCall__c cqc : docValidList) {
+                if (
+                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c)
+                    && cqc.Process__c == ord.RecordType.DeveloperName
+                    && cqc.Channel__c == ord.Channel__c
+                    && cqc.CustomerType__c == ord.CustomerCategory__c
+                    && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
+                ) {
+                    startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
+                    break;
+                }
+            }
+
+            system.debug('>>>startDate after: ' + ord.Id + ' <:> ' + startDate);
 
             if (startDate.daysBetween(dueDate) > 50) { //check number of days passed after being signed as quality
                 
                 Order ordToUpd = new Order(Id = ord.Id);
 
-                if (ord.ActivityQualityToBeCanceled__c) {
+                if ((ord.ActivityQualityToBeCanceled__c || isMonitoringList.contains(ord.AgencyCode__c))
+                    && (ord.IsVAS__c && !notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c))) {
                     ordToUpd.Phase__c = 'Annullato';
                     ordToUpd.Status = 'Activated';
                 } else {
                     ordToUpd.QualityCall__c = false;
+                }
+
+                if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c))
+                    || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
+                    activityVas.add(new wrts_prcgvr__Activity__c(
+                        RecordTypeId = rc.Id,
+                        Account__c = ord.AccountId,
+                        Order__c = ord.Id,
+                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
+                    ));
                 }
                 
                 ordersToUpdate.add(ordToUpd);
@@ -80,10 +131,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         
                         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
                                 RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                                Account__c = ord.AccountId,
+                                // Account__c = ord.AccountId, //should not be shown on Account related activities
                                 Type__c = 'Quality Call',
                                 Status__c = 'Creata',
-                                OwnerId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id
+                                OwnerId = comfortQualityQueId,
+                                ActivatedDate__c = ord.ActivatedDate,
+                                LoginChannel__c = ord.LoginChannel__c
                         );
         
                         if (ord.QualityCallUnique__c) {
@@ -202,6 +255,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         system.debug('>>campaignMembersUpdate: ' + campaignMembersUpdate.values());
         if(!campaignMembersUpdate.isEmpty()){
             update campaignMembersUpdate.values();
+        }
+
+        if (!activityVas.isEmpty()) {
+            insert activityVas;
         }
 
     }

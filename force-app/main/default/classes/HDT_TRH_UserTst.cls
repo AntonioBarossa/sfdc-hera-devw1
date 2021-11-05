@@ -22,7 +22,7 @@ public with sharing class HDT_TRH_UserTst{
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 			Id doorToDoorUserId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_DOOR2DOOR_PARTNER_NAME);
-			User tUser=HDT_UTL_DataFactoryTst.createCommunityUser(contacts[0], doorToDoorUserId, true);
+			HDT_UTL_DataFactoryTst.createCommunityUser(contacts[0], doorToDoorUserId, true);
 
 			test.stopTest();
 
@@ -31,7 +31,7 @@ public with sharing class HDT_TRH_UserTst{
 			                          WHERE Id=:accounts[0].Id];
 
 			System.assertEquals(true, updatedAcc[0].Published__c, 'Related Account not Updated');
-			System.assertNotEquals(false, updatedAcc[0].Published__c);
+			System.assertNotEquals(false, updatedAcc[0].Published__c, 'Related Account not Updated');
 		}
 	}
 }

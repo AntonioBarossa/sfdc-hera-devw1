@@ -18,10 +18,6 @@ public with sharing class HDT_TRH_IndividualTst {
         internalUser.UserPermissionsMarketingUser=true;
  
         insert internalUser;
- 
-        System.runAs(internalUser) {
-            //seu testSetup
-        }
     }
     @isTest
     static void testBeforeInsert() {
@@ -30,8 +26,8 @@ public with sharing class HDT_TRH_IndividualTst {
             Test.startTest();
             List<Individual> idv = HDT_UTL_DataFactoryTst.createIndividual(1, true);
 
-            System.assert(idv != null);
-            System.assertNotEquals(null, idv, 'Individual is null');
+            System.assertEquals(true, idv != null,'Individual is not created');
+            System.assertNotEquals(null, idv, 'Individual is not created');
             Test.stopTest();
         }
     }

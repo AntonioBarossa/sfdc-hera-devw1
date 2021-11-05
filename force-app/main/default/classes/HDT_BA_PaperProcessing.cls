@@ -8,15 +8,15 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
 
-    public String paperProcessingId;
+    public List<String> paperProcessingIds = new List<String>();
     public List<CampaignMember> campaignMembers;
     public String contentVersionId;
     public list<String> contentVersionIdList = new List<String>();
     //public List<Contract> contractList = new List<Contract>();
     //public Map<String, Contract> cmContract = new Map<String, Contract>();
     //public List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
-    public HDT_BA_PaperProcessing(String paperProcessingId) {
-        this.paperProcessingId = paperProcessingId;
+    public HDT_BA_PaperProcessing(List<String> paperProcessingIds) {
+        this.paperProcessingIds = paperProcessingIds;
       //  this.campaignMembers = campaignMemberQr.getCampaignMembersForPaperProcessing(paperProcessingId);
       //  Map<String, String> cmContractRef = new Map<String, String>();
       //  for (CampaignMember cm : this.campaignMembers) {
@@ -37,17 +37,18 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
-        String query = 'SELECT Id,PaperProcess__c,ContactId,LeadId,Contact.Account.CustomerCode__c,Contact.Company__c,Lead.Company__c,Contact.FirstName,Contact.LastName,Lead.FirstName,Lead.LastName,Contact.FiscalCode__c,Lead.FiscalCode__c,Contact.VATNumber__c,Lead.VATNumber__c,Contact.MailingStreetName__c,Lead.Street,Contact.MailingStreetNumber__c,Lead.StreetNumber__c,Contact.MailingPostalCode,Lead.PostalCode,Contact.MailingCity,Lead.City,Contact.MailingState,Lead.State,Contact.MailingCountry,Lead.Country,ContractReference__c,Campaign.PaperCampaignParameter__r.LetterType__c,Campaign.PaperCampaignParameter__r.ShippingMode__c,Campaign.PaperCampaignParameter__r.Aggregation__c,Campaign.PaperCampaignParameter__r.Lot__c,Campaign.PaperCampaignParameter__r.LotDate__c,Campaign.PaperCampaignParameter__r.Field2__c,Campaign.PaperCampaignParameter__r.Field3__c,Campaign.PaperCampaignParameter__r.Field4__c,Campaign.PaperCampaignParameter__r.Field5__c,Campaign.PaperCampaignParameter__r.Field6__c,Campaign.PaperCampaignParameter__r.Field7__c,Campaign.PaperCampaignParameter__r.Field8__c,Campaign.PaperCampaignParameter__r.Field9__c,Campaign.PaperCampaignParameter__r.Field10__c,Campaign.PaperCampaignParameter__r.Field11__c,Campaign.PaperCampaignParameter__r.Field12__c,Campaign.PaperCampaignParameter__r.Field13__c,Campaign.PaperCampaignParameter__r.Field14__c,Campaign.PaperCampaignParameter__r.Field15__c,Campaign.PaperCampaignParameter__r.Field16__c,Campaign.PaperCampaignParameter__r.Field17__c,Campaign.PaperCampaignParameter__r.Field18__c,Campaign.PaperCampaignParameter__r.Field19__c,Campaign.PaperCampaignParameter__r.Field20__c,Campaign.PaperCampaignParameter__r.Field21__c,Campaign.PaperCampaignParameter__r.Field22__c,Campaign.PaperCampaignParameter__r.Field23__c,Campaign.PaperCampaignParameter__r.Field24__c,Campaign.PaperCampaignParameter__r.Field25__c,Campaign.PaperCampaignParameter__r.Field26__c,Campaign.PaperCampaignParameter__r.Field27__c,Campaign.PaperCampaignParameter__r.Field28__c,Campaign.PaperCampaignParameter__r.Field29__c,Campaign.PaperCampaignParameter__r.Field30__c,Campaign.PaperCampaignParameter__r.Field31__c,Campaign.PaperCampaignParameter__r.Field32__c,Campaign.PaperCampaignParameter__r.Field33__c,Campaign.PaperCampaignParameter__r.Field34__c,Campaign.PaperCampaignParameter__r.Field35__c,Campaign.PaperCampaignParameter__r.Field36__c,Campaign.PaperCampaignParameter__r.Field37__c,Campaign.PaperCampaignParameter__r.Field38__c,Campaign.PaperCampaignParameter__r.Field39__c,Campaign.PaperCampaignParameter__r.Field40__c FROM CampaignMember WHERE CampaignId IN(SELECT Campaign__c FROM PaperProcessing__c WHERE id =:paperProcessingId) AND PaperProcess__c =:paperProcessingId';
+        String query = 'SELECT Id,PaperProcess__c,ContactId,LeadId,Contact.Account.CustomerCode__c,Contact.Company__c,Lead.Company__c,Contact.FirstName,Contact.LastName,Lead.FirstName,Lead.LastName,Contact.FiscalCode__c,Lead.FiscalCode__c,Contact.VATNumber__c,Lead.VATNumber__c,Contact.MailingStreetName__c,Lead.Street,Contact.MailingStreetNumber__c,Lead.StreetNumber__c,Contact.MailingPostalCode,Lead.PostalCode,Contact.MailingCity,Lead.City,Contact.MailingState,Lead.State,Contact.MailingCountry,Lead.Country,ContractReference__c,Campaign.PaperCampaignParameter__r.LetterType__c,Campaign.PaperCampaignParameter__r.ShippingMode__c,Campaign.PaperCampaignParameter__r.Aggregation__c,Campaign.PaperCampaignParameter__r.Lot__c,Campaign.PaperCampaignParameter__r.LotDate__c,Campaign.PaperCampaignParameter__r.Field2__c,Campaign.PaperCampaignParameter__r.Field3__c,Campaign.PaperCampaignParameter__r.Field4__c,Campaign.PaperCampaignParameter__r.Field5__c,Campaign.PaperCampaignParameter__r.Field6__c,Campaign.PaperCampaignParameter__r.Field7__c,Campaign.PaperCampaignParameter__r.Field8__c,Campaign.PaperCampaignParameter__r.Field9__c,Campaign.PaperCampaignParameter__r.Field10__c,Campaign.PaperCampaignParameter__r.Field11__c,Campaign.PaperCampaignParameter__r.Field12__c,Campaign.PaperCampaignParameter__r.Field13__c,Campaign.PaperCampaignParameter__r.Field14__c,Campaign.PaperCampaignParameter__r.Field15__c,Campaign.PaperCampaignParameter__r.Field16__c,Campaign.PaperCampaignParameter__r.Field17__c,Campaign.PaperCampaignParameter__r.Field18__c,Campaign.PaperCampaignParameter__r.Field19__c,Campaign.PaperCampaignParameter__r.Field20__c,Campaign.PaperCampaignParameter__r.Field21__c,Campaign.PaperCampaignParameter__r.Field22__c,Campaign.PaperCampaignParameter__r.Field23__c,Campaign.PaperCampaignParameter__r.Field24__c,Campaign.PaperCampaignParameter__r.Field25__c,Campaign.PaperCampaignParameter__r.Field26__c,Campaign.PaperCampaignParameter__r.Field27__c,Campaign.PaperCampaignParameter__r.Field28__c,Campaign.PaperCampaignParameter__r.Field29__c,Campaign.PaperCampaignParameter__r.Field30__c,Campaign.PaperCampaignParameter__r.Field31__c,Campaign.PaperCampaignParameter__r.Field32__c,Campaign.PaperCampaignParameter__r.Field33__c,Campaign.PaperCampaignParameter__r.Field34__c,Campaign.PaperCampaignParameter__r.Field35__c,Campaign.PaperCampaignParameter__r.Field36__c,Campaign.PaperCampaignParameter__r.Field37__c,Campaign.PaperCampaignParameter__r.Field38__c,Campaign.PaperCampaignParameter__r.Field39__c,Campaign.PaperCampaignParameter__r.Field40__c FROM CampaignMember WHERE CampaignId IN(SELECT Campaign__c FROM PaperProcessing__c WHERE id IN :paperProcessingIds) AND PaperProcess__c IN :paperProcessingIds';
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext BC, List<CampaignMember> scope) {
         List<HDT_WRP_PaperProcessing> ppWrapList = new List<HDT_WRP_PaperProcessing>();
+        Map<String,List<HDT_WRP_PaperProcessing>> mapLabCartListWrap = new Map<String,List<HDT_WRP_PaperProcessing>>();
         for(CampaignMember cm : scope) { 
             //cm.PaperProcess__c = paperProcessingId;
             //campaignMembers.add(cm);
             HDT_WRP_PaperProcessing ppwrap =  new HDT_WRP_PaperProcessing();
-            ppwrap.CRM_communication_Id =this.paperProcessingId+'_'+cm.id;
+            ppwrap.CRM_communication_Id =cm.PaperProcess__c+'_'+cm.id;
             ppwrap.codCliente = cm.Contact.Account.CustomerCode__c;
             ppwrap.nome = (cm.Contact.FirstName != '' && cm.Contact.FirstName != null) ? cm.Contact.FirstName : cm.Lead.FirstName;
             ppwrap.cognome = (cm.Contact.LastName != '' && cm.Contact.LastName != null) ? cm.Contact.LastName : cm.Lead.LastName;
@@ -117,9 +118,15 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
             ppwrap.campo40 = cm.Campaign.PaperCampaignParameter__r.Field40__c;
 
             ppWrapList.add(ppwrap);
+            if(mapLabCartListWrap.get(cm.PaperProcess__c) == null){
+                mapLabCartListWrap.put(cm.PaperProcess__c,new List<HDT_WRP_PaperProcessing>{ppwrap});
+            }
+            else{
+                mapLabCartListWrap.get(cm.PaperProcess__c).add(ppwrap);
+            }
+            //String fileName = 'Report_Clienti_' + cm.PaperProcess__c + date.today().year() + date.today().month() + date.today().day();
         }
-        String fileName = 'Report_Clienti_' + this.paperProcessingId + date.today().year() + date.today().month() + date.today().day();
-        contentVersionIdList.add(HDT_UTL_PaperProcessing.generateFile(ppWrapList, this.paperProcessingId, fileName));
+        contentVersionIdList = HDT_UTL_PaperProcessing.generateFile(mapLabCartListWrap);
         //update campaignMembers;
         System.debug('------ '+ppWrapList.size());
     }
@@ -131,8 +138,8 @@ public with sharing class HDT_BA_PaperProcessing implements Database.Batchable<s
         HDT_BA_CalloutBatch baSend = new HDT_BA_CalloutBatch();
         baSend.typeCallout = 'Comunicazione Cartacea';
         baSend.dtos = contentVersionIdList;
-        baSend.filezipName = 'Lavorazione_Cartacea_'+ paperProcessingId;
-        Database.executebatch(baSend, 100);
+        baSend.filezipName = 'Lavorazione_Cartacea_'+ paperProcessingIds;
+        Database.executebatch(baSend, 80);
 
         //String filezipName = 'Comunicazioni';
        // String type = 'Comunicazione Cartacea';

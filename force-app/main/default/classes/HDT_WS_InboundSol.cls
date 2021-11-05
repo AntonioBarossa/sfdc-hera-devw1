@@ -18,6 +18,9 @@ global with sharing class HDT_WS_InboundSol {
             when 'compatibility' {
                 HDT_SRV_GenericSolHandler.checkCompatibility(caseId,phase);
             }
+            when 'installment'{
+                HDT_SRV_GenericSolHandler.handleInstallment(caseId);
+            }
             when else {
                 HDT_SRV_GenericSolHandler.dataEnrichment(caseId);
             }

@@ -13,7 +13,7 @@ public class HDT_QR_RateCategoryTst{
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
-			List<RateCategory__c> rateCategs=HDT_UTL_DataFactoryTst.createRateCategoty(1, true);
+			HDT_UTL_DataFactoryTst.createRateCategoty(1, true);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class HDT_QR_RateCategoryTst{
 			test.stopTest();
 
 			System.assertEquals(true, tRateCat[0].Id!=null, 'RateCategory not found');
-			System.assertNotEquals(false, tRateCat[0].Id!=null);
+			System.assertNotEquals(false, tRateCat[0].Id!=null, 'Value of parameter is not matching');
 		}
 	}
 }

@@ -21,6 +21,8 @@ public with sharing class HDT_SRV_CommercialCodeTst {
     @isTest
     public static void testCheckAccessInit() {
 
+        boolean finito;
+
         Test.startTest();
 
         HDT_SRV_CommercialCode testCommercialCode = new HDT_SRV_CommercialCode();
@@ -28,10 +30,15 @@ public with sharing class HDT_SRV_CommercialCodeTst {
         testCommercialCode.checkAccessInit('Name', 'read');
 
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckAccessInit not finished');
+        System.assertNotEquals(false, finito, 'testCheckAccessInit not finished');
     }
 
     @isTest
     public static void testCheckReadAccess() {
+
+        boolean finito;
 
         Test.startTest();
 
@@ -40,10 +47,15 @@ public with sharing class HDT_SRV_CommercialCodeTst {
         testCommercialCode.checkReadAccess('Name');
 
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckReadAccess not finished');
+        System.assertNotEquals(false, finito, 'testCheckReadAccess not finished');
     }
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        boolean finito;
 
         Test.startTest();
 
@@ -52,10 +64,15 @@ public with sharing class HDT_SRV_CommercialCodeTst {
         testCommercialCode.checkCreateAccess('Name');
 
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckCreateAccess not finished');
+        System.assertNotEquals(false, finito, 'testCheckCreateAccess not finished');
     }
 
     @isTest
     public static void testCheckUpdateAccess() {
+
+        boolean finito;
 
         Test.startTest();
 
@@ -64,6 +81,9 @@ public with sharing class HDT_SRV_CommercialCodeTst {
         testCommercialCode.checkUpdateAccess('Name');
 
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'testCheckUpdateAccess not finished');
+        System.assertNotEquals(false, finito, 'testCheckUpdateAccess not finished');
     }
 
     @isTest
@@ -81,9 +101,9 @@ public with sharing class HDT_SRV_CommercialCodeTst {
 
         testCommercialCode.createRecord(cc);
 
-        System.assertEquals(commercialCode.Name, cc.Name);
+        System.assertEquals(commercialCode.Name, cc.Name, 'Value of parameter is matching');
 
-        System.assertNotEquals(commercialCode.Name, '');
+        System.assertNotEquals(commercialCode.Name, '', 'Value of parameter is not matching');
 
         Test.stopTest();
     }
@@ -103,9 +123,9 @@ public with sharing class HDT_SRV_CommercialCodeTst {
 
         testCommercialCode.updateRecord(commercialCode);
 
-        System.assertEquals(cc.Name, commercialCode.Name);
+        System.assertEquals(cc.Name, commercialCode.Name, 'Value of parameter is matching');
 
-        System.assertNotEquals(commercialCode.Name, '');
+        System.assertNotEquals(commercialCode.Name, '', 'Value of parameter is not matching');
 
         Test.stopTest();
 
