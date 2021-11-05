@@ -27,7 +27,7 @@ public with sharing class HDT_LC_CloneCanceledOrderTst {
         List<ServiceRequest__c> serReq = HDT_UTL_DataFactoryTst.createServiceRequest(1, false);
         serReq[0].Order__c = orderList[2].Id;
         insert serReq;
-        List<Sale__c> salesList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
+        HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
     }
     @isTest
     public static void cloneOrderServiceRequestNotEmptyTest(){
@@ -47,7 +47,7 @@ public with sharing class HDT_LC_CloneCanceledOrderTst {
     psa.PermissionSetId = ps.Id;
     insert psa;
         System.runAs(internalUser){
-        Boolean hasCustomPermission = FeatureManagement.checkPermission('HDT_CP_CloneCanceledOrder');
+        FeatureManagement.checkPermission('HDT_CP_CloneCanceledOrder');
         Date tod = Date.today();
         Date canDate2 = tod.addDays(60);
         List<Order> orderList = [SELECT Id, IsCloned__c FROM Order WHERE CancellationRequestDate__c = :canDate2 LIMIT 1];
@@ -77,7 +77,7 @@ public with sharing class HDT_LC_CloneCanceledOrderTst {
     insert psa;
         System.runAs(internalUser){
             try{
-        Boolean hasCustomPermission = FeatureManagement.checkPermission('HDT_CP_CloneCanceledOrder');
+        FeatureManagement.checkPermission('HDT_CP_CloneCanceledOrder');
         Date tod = Date.today();
         Date canDate1 = tod.addDays(-100);
         List<Order> orderList = [SELECT Id FROM Order WHERE CancellationRequestDate__c = :canDate1 LIMIT 1];

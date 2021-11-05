@@ -41,12 +41,12 @@ public with sharing class HDT_UTL_BrandSalesCompanyTst{
 
 			String fieldsMatrice=HDT_UTL_BrandSalesCompany.getFieldsMatrice('testCommomSupply', 'testService', 'testSalesCo', 'testMarketType');
 
-			String fieldsMatriceKo=HDT_UTL_BrandSalesCompany.getFieldsMatrice('testKO', 'testKO', 'testKO', 'testKO');
+			HDT_UTL_BrandSalesCompany.getFieldsMatrice('testKO', 'testKO', 'testKO', 'testKO');
 
 			test.stopTest();
 
 			System.assertEquals('testCorpBrand', fieldsMatrice, 'CorporateBrand not returned');
-			System.assertNotEquals('', fieldsMatrice);
+			System.assertNotEquals('', fieldsMatrice, 'getFieldsMatrice did not work correctly');
 		}
 	}
 }

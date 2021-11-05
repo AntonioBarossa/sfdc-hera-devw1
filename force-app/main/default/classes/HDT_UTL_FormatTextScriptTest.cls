@@ -104,27 +104,42 @@ public class HDT_UTL_FormatTextScriptTest {
         String stringaToday = script.getGlobalTagValues(new List<String>{'test0','today'}, null);
         System.assertEquals(Date.Today().format(), stringaToday, 'GetGlobalTagValues did not work correctly');
         System.assertNotEquals(null, stringaToday, 'GetGlobalTagValues did not work correctly');
-        
-        String stringaPrivacy = script.getGlobalTagValues(new List<String>{'test0','modificaprivacy'}, null);
-        System.assertEquals('*Costante modificaprivacy non trovata*', stringaPrivacy, 'GetGlobalTagValues did not work correctly');
-        System.assertNotEquals(null, stringaPrivacy, 'GetGlobalTagValues did not work correctly');
-        
-        String stringaVara = script.getGlobalTagValues(new List<String>{'test0','varanagcliente'}, null);
-        System.assertEquals('*Costante varanagcliente non trovata*', stringaVara, 'GetGlobalTagValues did not work correctly');
-        System.assertNotEquals(null, stringaVara, 'GetGlobalTagValues did not work correctly');
     }
     
-    @isTest static void overwriteValue(){
+        @isTest static void overwriteValue(){
         HDT_UTL_FormatTextScript script = new HDT_UTL_FormatTextScript();
         List<HDT_CallScriptValue__mdt> metas = new List<HDT_CallScriptValue__mdt>();
-        HDT_CallScriptValue__mdt meta = new HDT_CallScriptValue__mdt(ValueToOverride__c = 'ciao');
+        HDT_CallScriptValue__mdt meta = new HDT_CallScriptValue__mdt(Value__c = 'Blank');
         metas.add(meta);
         script.overrideMap = new Map<String,List<HDT_CallScriptValue__mdt>>();
         script.overrideMap.put('key1-key2',metas);
-        String result = script.overwriteValue('test', 'key1', 'key2');
-        
-        System.assertEquals('test', result, 'overwriteValue did not work correctly');
+        String result = script.overwriteValue('test', 'key1', 'key2');       
+        System.assertEquals('Blank', result, 'overwriteValue did not work correctly');
         System.assertNotEquals(null, result, 'overwriteValue did not work correctly');
+    }
+    
+    @isTest public static void testScriptWithoutDataBindingException(){
+        Exception ex;
+        String msg;
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script', ScriptType__c='Processo');
+        insert config;
+        ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript', ParentSection__c=config.id);
+        insert configChild;
+        HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput();
+        inp.recordId=configChild.id;
+        inp.textScript='test';
+        String formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
+        system.assertEquals(formattedText, 'test', 'Data is not get right');
+        inp.textScript='{{globaltag.redirlink}}';
+        try{
+        	formattedText =HDT_UTL_FormatTextScriptInvocable.formatScript(new List<HDT_UTL_FormatTextScriptInvocable.HDT_WRP_FlowInput>{inp})[0];
+        }catch(Exception e){
+            ex = e;
+            msg = e.getMessage();
+        }
+        System.assertEquals('ERRORE', msg.substring(0,6), 'formatScript did not work correctly');
+        System.assertNotEquals(null, ex, 'formatScript did not work correctly');
+		
     }
     
 }

@@ -13,7 +13,7 @@ public with sharing class HDT_TRH_LeadTst{
 		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
-		List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
+		HDT_UTL_DataFactoryTst.createIndividual(1, true);
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
          	leads[0].VATNumber__c = '12345678100';
             leads[0].CustomerMarking__c= 'Azienda';
@@ -42,7 +42,7 @@ public with sharing class HDT_TRH_LeadTst{
 			                          LIMIT 1];
 			convLead.setConvertedStatus(convertStatus.MasterLabel);
 
-			Database.LeadConvertResult lcr=Database.convertLead(convLead);
+			Database.convertLead(convLead);
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('BP_CA', 'test.com', 'post', 'testUser');
             HDT_UTL_DataFactoryTst.createWebServiceCredential('testUser', '12345', 'usernameTest');
 

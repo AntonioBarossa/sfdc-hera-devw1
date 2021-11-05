@@ -135,8 +135,7 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
-      
-        //System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
 
     }
     @isTest
@@ -152,7 +151,7 @@ public with sharing class HDT_BA_ProcessRequestItemTst {
         Database.executeBatch(processReq,1)                                                                                           ;
         test.stopTest()                                                                                                               ;
         MassiveLoaderRequestItem__c ms=[SELECT  Id, IsDeleted, Name, MassiveLoaderRequest__c, Account__c, Data__c, Lead__c, StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c   WHERE MassiveLoaderRequest__c=:req.Id];
-      
-        //System.assertEquals('Chiuso', ms.Status__c,  ms.Status__c);
+
+        System.assertEquals('Errore', ms.Status__c,  ms.Status__c);
     }
 }

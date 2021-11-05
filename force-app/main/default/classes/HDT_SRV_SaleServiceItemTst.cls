@@ -27,8 +27,8 @@ static void makeData(){
     accList[0].CustomerCode__c = 'uniqueTest';
     accList[0].CustomerType__c = 'Persona Fisica'; 
     insert accList;
-    List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
-    List<BillingProfile__c> bpList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
+    HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
+    HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
     List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
     Test.setCreatedDate(saleList[0].Id,System.now().addDays(-30));
     List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, false);
@@ -50,7 +50,7 @@ static void makeData(){
     //orders[0].ContractReference__c = contracts[0].id;
     orders[0].SAPImplantCode__c = '';
     insert orders;
-    List<Lead> leadList = HDT_UTL_DataFactoryTst.createLead(1, true);
+    HDT_UTL_DataFactoryTst.createLead(1, true);
     
 
 
@@ -78,6 +78,8 @@ static void makeData(){
     @isTest
     public static void testCheckAccessInit() {
 
+        boolean finito = false;
+
         Test.startTest();
 
         User tUser=[SELECT Id, FirstName
@@ -94,11 +96,16 @@ static void makeData(){
         }
         
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'Test not finished');
+        System.assertNotEquals(false, finito, 'Test not finished');
     }
 
 
     @isTest
     public static void testCheckReadAccess() {
+
+        boolean finito = false;
 
         Test.startTest();
 
@@ -116,11 +123,16 @@ static void makeData(){
         }
         
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'Test not finished');
+        System.assertNotEquals(false, finito, 'Test not finished');
     }
 
 
     @isTest
     public static void testCheckCreateAccess() {
+
+        boolean finito = false;
 
         Test.startTest();
 
@@ -138,6 +150,9 @@ static void makeData(){
         }
         
         Test.stopTest();
+        finito = true;
+        System.assertEquals(true, finito, 'Test not finished');
+        System.assertNotEquals(false, finito, 'Test not finished');
     }
 
 

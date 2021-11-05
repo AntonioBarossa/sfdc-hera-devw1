@@ -40,7 +40,7 @@ public class HDT_BA_LeadWebServiceReitekSendTst {
 
 
          HDT_BA_LeadWebServiceReitekSend le = new HDT_BA_LeadWebServiceReitekSend();
-        Id batchId = Database.executeBatch(le);
+        Database.executeBatch(le);
         Test.stopTest();
           List<CampaignMember> myCampaignMemb = [SELECT Id, leadId,contactId from CampaignMember];
 

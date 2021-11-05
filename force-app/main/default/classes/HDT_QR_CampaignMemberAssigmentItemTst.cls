@@ -14,8 +14,7 @@ public with sharing class HDT_QR_CampaignMemberAssigmentItemTst {
 	static void setup(){
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<CampaignMemberAssigment__c> campaignMemeberAssignmentList = HDT_UTL_DataFactoryTst.createCampaignMemberAssigment(1, true,true, 'CampaignMemberAssigmentNameTest');
-        List<CampaignMemberAssigmentItem__c> campaignMemeberAssignmentItemList;
-        campaignMemeberAssignmentItemList = HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true,accList[0].Id,campaignMemeberAssignmentList[0].Id,'Preview',10);
+        HDT_UTL_DataFactoryTst.createCampaignMemberAssigmentItem(1, true,accList[0].Id,campaignMemeberAssignmentList[0].Id,'Preview',10);
     }
     
     @isTest
