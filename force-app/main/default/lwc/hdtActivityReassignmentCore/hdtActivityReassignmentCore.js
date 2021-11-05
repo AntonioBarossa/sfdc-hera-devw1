@@ -15,6 +15,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
     workGroups;
     assignees;
     assigneeId;
+    showSpinner;
     get searchingWorkGroup() {
         return (this.assigneeId != undefined);
     }
@@ -31,7 +32,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
             this.idList = [this.recordId];
         }
         if(this.assignToMeMode) {
-            this.handleButtonClick();
+            this.doAssignToMe();
         }
     }
 
@@ -60,10 +61,10 @@ export default class hdtActivityReassignmentCore extends LightningElement {
         this.assignees = undefined;
         this.assigneesSearched = false;
         this.assigneeId = agentId;
-        // this.template.querySelector('[data-id="button1"]').classList.toggle('slds-hidden');
     }
 
     async selectWorkGroup(event) {
+        this.showSpinner = true;
         this.handleReassignResult(await reassignActivity({
             idList: this.idList,
             assigneeId: this.assigneeId,
@@ -77,6 +78,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
         const dataset = event.currentTarget.dataset;
 
         if(dataset.wrapperid) {
+            this.showSpinner = true;
             this.handleReassignResult(await reassignActivity({
                 idList: this.idList,
                 assigneeId: dataset.id,
@@ -88,6 +90,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
             if(await isDynamicWorkGroup({loginChannel: dataset.loginchannel})) {
                 this.toggleWorkGroupSearch(dataset.id);
             } else {
+                this.showSpinner = true;
                 this.handleReassignResult(await reassignActivity({
                     idList: this.idList,
                     assigneeId: dataset.id,
@@ -99,7 +102,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
         }
     }
 
-    async handleButtonClick() {
+    async doAssignToMe() {
         try {
             const currentUser = await getCurrentUser();
             if(await isDynamicWorkGroup({loginChannel: currentUser.LoginChannel__c})) {

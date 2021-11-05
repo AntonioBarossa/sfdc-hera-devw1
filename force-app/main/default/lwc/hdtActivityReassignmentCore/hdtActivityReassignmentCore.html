@@ -1,12 +1,8 @@
 <template>
-    <!-- <div class="slds-grid slds-wrap slds-grid slds-page-header forceRelatedListCardHeader custom-header">
-        <lightning-icon icon-name="action:change_owner" size="medium" class="slds-m-right_medium"></lightning-icon>
-        <span class="slds-page-header__title">
-            Strumento di Riassegnazione
-        </span>
-    </div> -->
-    <!-- <div class="slds-box slds-theme_default custom-body"> -->
-    <div class="slds-box slds-theme_default">
+    <div class="slds-box slds-theme_default slds-is-relative">
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
         <div class="flex">
             <template if:false={searchingWorkGroup}>
                 <div class="grow" onkeyup={handleAssigneeSearch}>
@@ -18,7 +14,6 @@
                     <lightning-input type="search" variant="label-hidden" placeholder="Ricerca Gruppo di Lavoro"></lightning-input>
                 </div>
             </template>
-            <!-- <lightning-button data-id="button1" variant="brand" label="Assegna a Me" onclick={handleButtonClick} class="slds-m-left_x-small" visibility="hidden"></lightning-button> -->
         </div>
         <template if:true={assigneesNotFound}>
             <div class="slds-m-top_x-small">
