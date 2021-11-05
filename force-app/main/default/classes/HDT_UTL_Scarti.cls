@@ -54,6 +54,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                                                                 'HDT_RT_Annullamento' => 'CBS_ANN001__ESITO_KO_DA_SAP',
                                                                                                 'HDT_RT_FatturazioneConsumi' => 'CBS_FAT010__ESITO_KO_DA_SAP',
                                                                                                 'HDT_RT_Disattivazioni' => 'CBS_DIS001__ESITO_KO_DA_SAP',
+                                                                                                'HDT_RT_PostSalesVAS' => 'CBS_DIS001__ESITO_KO_DA_SAP',
                                                                                                 'HDT_RT_Autolettura' => 'CBS_AUT002__ESITO_KO_DA_SAP',
                                                                                                 'HDT_RT_VerificheEle' => 'CBS_VER001__ESITO_KO_DA_SAP',
                                                                                                 'HDT_RT_Morosita' => 'CBS_MOR001__ESITO_KO_DA_SAP'};
@@ -409,7 +410,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                             FROM Case
                                                             WHERE Id IN :caseIds OR CaseNumber IN :caseNumbers]);
                 for(Id curId : casesMap.keySet()){
-                    requestData = dataForKOSAPHandling.get(curId);
+                    //requestData = dataForKOSAPHandling.get(curId);
+                    if(dataForKOSAPHandling.get(curId) != null){ requestData = dataForKOSAPHandling.get(curId); }
+                    else { requestData = dataForKOSAPHandling.get(casesMap.get(curId).CaseNumber); }
                     wrts_prcgvr__Activity__c newAct = createActivityByObjectIdAndTemplateName(curId, TRACCIAMENTOKOSAPPOSTSALES.get(casesMap.get(curId).RecordType.DeveloperName));
                     for(String curActField : TRACCIAMENTOMAPPING.keySet()){
                         if(requestData.get(TRACCIAMENTOMAPPING.get(curActField)) != null){
