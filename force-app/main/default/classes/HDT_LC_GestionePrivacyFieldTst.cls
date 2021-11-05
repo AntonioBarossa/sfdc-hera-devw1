@@ -62,7 +62,7 @@ public with sharing class HDT_LC_GestionePrivacyFieldTst{
 			                        LIMIT 1];
 
 			System.assertEquals(true, tIndividual.Id!=null, 'Individual not updated');
-			System.assertNotEquals(false, tIndividual.Id!=null);
+			System.assertNotEquals(false, tIndividual.Id!=null, 'Individual not updated');
 		}
 	}
 }

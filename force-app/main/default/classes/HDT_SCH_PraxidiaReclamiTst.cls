@@ -35,7 +35,7 @@ public class HDT_SCH_PraxidiaReclamiTst {
         
         Test.startTest();
         HDT_SCH_PraxidiaReclami pr = new HDT_SCH_PraxidiaReclami();
-        String jobID = System.schedule('Label of the job', CRON_EXP , pr);
+        System.schedule('Label of the job', CRON_EXP , pr);
         Test.stopTest();
         
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];

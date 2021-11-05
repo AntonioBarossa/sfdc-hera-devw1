@@ -20,7 +20,6 @@ public class HDT_LC_ModificaContrattiBpTst {
 
     @IsTest
     static void testUpdateBpDataOnCase(){
-    HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     List<Case> caseList = [SELECT Id, ContactId, AccountId, AssetId, SourceId, BusinessHoursId, ParentId, RecordTypeId, OwnerId, CreatedById, LastModifiedById, ExistingInstallmentPlanUnpaid__c, PaidAmount__c, Resident__c, ComparePaidToPay__c, ResidenceChangeDate__c, ClientIdentificationDate__c, AlternativeAddress__c, RowIdSiebel__c, QuotationValidityDate__c, TotalResidue__c, TotalPaidCustomer__c, TotalPaidCustomerToPay__c, DocumentResidue__c, ServiceRequestID__c, PowerReductionDate__c, PraxidiaAccuracyandCompleteness__c, PraxidiaClarityValue__c, PraxidiaClarityandUnderstanding__c, PraxidiaCourtesyValue__c, PraxidiaDateOutcome__c, PraxidiaDissatisfiedCustomer__c, PraxidiaFCR__c, PraxidiaNPS__c, PraxidiaNote__c, PraxidiaOverrallSatisfaction__c, PraxidiaResolutionNeed__c, PraxidiaSatisfactionRequired__c, PraxidiaTimeliness__c, PraxidiaVerbatim__c, PraxidiaWaitValue__c, BillingCityCode__c, BillingCity__c, BillingCountry__c, BillingIsAddressVerified__c, BillingPlace__c, BillingPostalCode__c, BillingProvince__c, BillingStreetCode__c, BillingStreetName__c, BillingStreetNumberExtension__c, BillingStreetNumber__c, BillingStreetToponym__c, IntegrationId__c, EndValidityDate__c, PraxidiaResolution__c FROM case];
     Map<String, Object> bpData = new Map<string, Object>{
         'Zero'=>caseList[0],
