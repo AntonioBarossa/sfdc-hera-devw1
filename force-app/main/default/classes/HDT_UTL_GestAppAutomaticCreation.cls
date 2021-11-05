@@ -1,4 +1,5 @@
-public inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+@SuppressWarnings('PMD.AvoidGlobalModifier')
+global inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
     Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},
@@ -22,7 +23,7 @@ public inherited sharing class HDT_UTL_GestAppAutomaticCreation implements wrts_
     };
     HDT_Qr_RecordType rcQr =  new  HDT_Qr_RecordType();
     HDT_SRV_ActivityCustom actSrv = new  HDT_SRV_ActivityCustom();
-    public Object execute(Object args) {
+    global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         String method = (String) argsMap.get('method');
         SObject obj = (sObject) argsMap.get('sender');
