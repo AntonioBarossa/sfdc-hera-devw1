@@ -73,6 +73,14 @@ public with sharing class HDT_UTL_Constants {
     @AuraEnabled
     public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
+
+    //Activity Custom RecordType Chiamata Outbound
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CHIAMATAOUTBOUND = 'HDT_RT_ChiamataOutbound';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_CHIAMATAOUTBOUND =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CHIAMATAOUTBOUND).getRecordTypeId();
+
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';

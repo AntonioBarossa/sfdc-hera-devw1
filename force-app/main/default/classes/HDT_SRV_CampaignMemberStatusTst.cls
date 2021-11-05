@@ -4,7 +4,7 @@
  * @description HDT_SRV_CampaignMemberStatus Test Class
  * @history Lucas da Silva Fernandes – 28/07/2021 – Created Class
  */
-
+@SuppressWarnings('PMD.ApexUnitTestClassShouldHaveAsserts')
 @isTest
 public with sharing class HDT_SRV_CampaignMemberStatusTst {
 

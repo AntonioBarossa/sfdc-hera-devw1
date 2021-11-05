@@ -14,7 +14,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 		HDT_UTL_DataFactoryTst.pClickInstance();
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
@@ -78,6 +78,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 
 			System.assertEquals(false, checkAccOrderisRes.isEmpty(), 'Return is wrong');
 			System.assertNotEquals(true, checkAccOrderisRes.isEmpty(), 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 
@@ -106,7 +107,9 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			test.stopTest();
 
 			System.assertEquals(tOrder[0].SignedDate__c, getMaxAfterthoughtDate, 'Date is wrong');
+
 			System.assertNotEquals(false, getMaxAfterthoughtDate==tOrder[0].SignedDate__c, 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 
@@ -148,7 +151,9 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			                          LIMIT 1];
 
 			System.assertEquals(updatedOrder[0].SignedDate__c, getDateSentToSii, 'Date is wrong');
+
 			System.assertNotEquals(false, getDateSentToSii==updatedOrder[0].SignedDate__c, 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 
@@ -201,7 +206,9 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			test.stopTest();
 
 			System.assertEquals(tFulDatMat[0].ActivationDate__c, getEffectiveDate, 'Date is wrong');
+
 			System.assertNotEquals(false, getEffectiveDate==tFulDatMat[0].ActivationDate__c, 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 }

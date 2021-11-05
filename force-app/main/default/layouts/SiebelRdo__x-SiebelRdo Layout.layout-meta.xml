@@ -1470,7 +1470,11 @@
                 <field>X_VASCHE_ACCUMULO__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
+                <field>MODIFIEDDATE_AZURE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>AZ_ImportDatetime__c</field>
             </layoutItems>
         </layoutColumns>
@@ -1534,8 +1538,8 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
+        <fields>TIPO_ATTIVITA__c</fields>
         <fields>COD_ALLEGATO__c</fields>
-        <fields>DisplayUrl</fields>
         <fields>CREATED__c</fields>
         <relatedList>SiebelDocumentActivity__x.ID_RDO__c</relatedList>
         <sortField>CREATED__c</sortField>
@@ -1545,12 +1549,15 @@
         <excludeButtons>New</excludeButtons>
         <fields>ExternalId</fields>
         <fields>DISPLAY_NAME__c</fields>
+        <fields>CREATED__c</fields>
         <fields>CFG_STATE_CD__c</fields>
         <fields>CHAR_VAL__c</fields>
         <fields>DATE_VAL__c</fields>
         <fields>NUM_VAL__c</fields>
         <fields>REQUIRED_FLG__c</fields>
         <relatedList>SiebelRdoAttribute__x.ORDER_ITEM_ID__c</relatedList>
+        <sortField>CREATED__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

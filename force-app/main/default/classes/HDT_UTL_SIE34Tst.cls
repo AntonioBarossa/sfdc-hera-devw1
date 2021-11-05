@@ -14,13 +14,13 @@ public with sharing class HDT_UTL_SIE34Tst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+        HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> cases = HDT_UTL_DataFactoryTst.createCaseMorosita(5, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.createCaseMorosita(5, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
      }
 
     @isTest
-	public static void testCreateBodySIE34_2MME(){
+	public static void testCreateBodySie2mme(){
 
         Boolean finished = false;
 
@@ -41,12 +41,12 @@ public with sharing class HDT_UTL_SIE34Tst {
 
 
        List<Case> listCase = Database.query(query);
-       String body0  ='';
-       body0=HDT_UTL_SIE34.createBodySIE34_2MMEle(body0,listCase);
-       System.assertEquals(true, body0.length()>0, 'Error in BodySIE34_2MMEle');
-       String body1  ='';
-       body1=HDT_UTL_SIE34.createBodySIE34_2MMGas(body1,listCase);
-       System.assertEquals(true, body1.length()>0, 'Error in BodySIE34_2MMEle');
+       String bodyEle  ='';
+       bodyEle=HDT_UTL_SIE34.createBodySIE34_2MMEle(bodyEle,listCase);
+       System.assertEquals(true, bodyEle.length()>0, 'Error in BodySIE34_2MMEle');
+       String bodyGas  ='';
+       bodyGas=HDT_UTL_SIE34.createBodySIE34_2MMGas(bodyGas,listCase);
+       System.assertEquals(true, bodyGas.length()>0, 'Error in BodySIE34_2MMEle');
         
         finished = true;
 
@@ -57,7 +57,7 @@ public with sharing class HDT_UTL_SIE34Tst {
     }
 
     @isTest
-	public static void testCreateBodySIE34_2SME(){
+	public static void testCreateBodySie2sme(){
 
         Boolean finished = false;
 
@@ -77,12 +77,12 @@ public with sharing class HDT_UTL_SIE34Tst {
        Test.startTest();
 
        List<Case> listCase = Database.query(query);
-       String body2  ='';
-       body2=HDT_UTL_SIE34.createBodySIE34_2SMEEle(body2,listCase);
-       System.assertEquals(true, body2.length()>0, 'Error in BodySIE34_2SMEEle');
-       String body3  ='';
-       body3=HDT_UTL_SIE34.createBodySIE34_2SMEGas(body3,listCase);
-       System.assertEquals(true, body3.length()>0, 'Error in BodySIE34_2SMEEGas');
+       String bodyEle  ='';
+       bodyEle=HDT_UTL_SIE34.createBodySIE34_2SMEEle(bodyEle,listCase);
+       System.assertEquals(true, bodyEle.length()>0, 'Error in BodySIE34_2SMEEle');
+       String bodyGas  ='';
+       bodyGas=HDT_UTL_SIE34.createBodySIE34_2SMEGas(bodyGas,listCase);
+       System.assertEquals(true, bodyGas.length()>0, 'Error in BodySIE34_2SMEEGas');
         
         finished = true;
 
@@ -92,4 +92,3 @@ public with sharing class HDT_UTL_SIE34Tst {
 
     }
 }
-

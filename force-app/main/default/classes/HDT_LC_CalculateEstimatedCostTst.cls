@@ -47,7 +47,7 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
 
         Test.stopTest();
     }
-
+    
 //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this Test Method
 
 /**
@@ -70,18 +70,19 @@ public with sharing class HDT_LC_CalculateEstimatedCostTst {
                             WHERE Status = 'Draft'
                             LIMIT 1];
 
-        HDT_LC_CalculateEstimatedCost.getExtimatedCost(updateOrder);
+    HDT_LC_CalculateEstimatedCost.getExtimatedCost(updateOrder);
 
-        
-        System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
+    
+    System.assertEquals(1000.00, updateOrder.EstimateAmount__c, 'EstimateAmount__c not correct!');
 
-        System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'getExtimatedCost did not work correctly');
+    System.assertNotEquals(2000.00, updateOrder.EstimateAmount__c, 'getExtimatedCost did not work correctly');
 
-        Test.stopTest();
-    }
+    Test.stopTest();
+}
 //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Added this Test Method
 //** [START MOD 21/10/2021] @Author:Cesare Bagnolini WR (cesare.bagnolini@webresults.it) @Description: Added this Test Method
-    @isTest static void testGetFixedQuotes(){
+    @isTest 
+    public static void testGetFixedQuotes(){
         
         Order updateOrder = [SELECT id, Status, EstimateAmount__c, PowerQuote__c, AdministrativeBurden__c, EstimatedVAT__c, ValidityDateEstimate__c, 
                              Phase__c, RecordTypeId, recordType.DeveloperName, PowerRequested__c, PowerAvailable__c, VoltageLevel__c, PowerCommitted__c,

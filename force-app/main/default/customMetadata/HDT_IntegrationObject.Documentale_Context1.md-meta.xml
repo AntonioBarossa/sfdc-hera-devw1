@@ -34,7 +34,7 @@
 },
 {
 &quot;objectName&quot;: &quot;Order&quot;,
-&quot;fields&quot;: &quot;Cluster__c,Subprocess__c,OrderNumber,DocSendingMethod__c,SignatureMethod__c,Username__c,ShippingAddressFormula__c,ShippingStreetName__c,ShippingStreetNumber__c,ShippingStreetNumberExtension__c,ShippingCity__c,ShippingProvince__c,ShippingPostalCode__c,ShippingPlace__c&quot;,
+&quot;fields&quot;: &quot;Cluster__c,PhoneNumber__c,ShippingMail__c,Subprocess__c,OrderNumber,DocSendingMethod__c,SignatureMethod__c,Username__c,ShippingAddressFormula__c,ShippingStreetName__c,ShippingStreetNumber__c,ShippingStreetNumberExtension__c,ShippingCity__c,ShippingProvince__c,ShippingPostalCode__c,ShippingPlace__c&quot;,
 &quot;relation&quot;: &quot;ParentOrder__r&quot;
 }
 ]
