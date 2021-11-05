@@ -1,4 +1,4 @@
-public inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements wrts_prcgvr.Interfaces_1_0.IApexAction{
+global inherited sharing class HDT_UTL_GestAppAutomaticCreationCase implements wrts_prcgvr.Interfaces_1_0.IApexAction{
     
     Map<String,Map<String,Boolean>> mapDistributorProcess = new Map<String,Map<String,Boolean>>
     { 'SubentrosuGdMchiuso' => new Map<String,Boolean>{'InRete' => true,'Acegas' => true},

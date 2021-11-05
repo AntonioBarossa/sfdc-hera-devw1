@@ -3,7 +3,7 @@
  * @description HDT_UTL_ServiceCatalogProfileCriteria - 
  */
 
- public inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
+ global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
     HDT_QR_PermissionSet permQr = new HDT_QR_PermissionSet();
     public boolean evaluate(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;

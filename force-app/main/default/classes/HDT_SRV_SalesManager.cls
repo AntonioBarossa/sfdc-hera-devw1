@@ -8,7 +8,7 @@
  * HISTORY:
  */
 
-public inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
+global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
     
     private static final String VAS_SERVICE_TYPE = 'VAS Servizio';
     private static final String ORDER_PHASE_WAIT_FOR_AFTERTHOUGHT = 'In attesa tempi di ripensamento';

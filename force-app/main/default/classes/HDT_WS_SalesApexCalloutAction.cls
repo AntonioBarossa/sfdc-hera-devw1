@@ -4,7 +4,7 @@
 * @description HDT_WS_SalesApexCalloutAction – Callout action for custom behavior of Sales Phase Manager
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
-public inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     @Testvisible
     private static HDT_WS_SalesApexCalloutActionMock mock;
