@@ -4,12 +4,13 @@
 * @description HDT_WS_SalesApexCalloutAction – Callout action for custom behavior of Sales Phase Manager
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
-public inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+@SuppressWarnings('PMD.AvoidGlobalModifier')
+global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     @Testvisible
     private static HDT_WS_SalesApexCalloutActionMock mock;
 
-    public Object execute(Object args) {
+    global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
         String idTemplate = (String)transition.get('wrts_prcgvr__CalloutTemplate__c');
