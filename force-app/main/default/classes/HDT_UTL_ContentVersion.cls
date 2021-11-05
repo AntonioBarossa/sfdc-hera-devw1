@@ -1,5 +1,5 @@
 public with sharing class HDT_UTL_ContentVersion {
-    private static  HDT_QR_ContentDocument QrContentDocument =new HDT_QR_ContentDocument();
+    private static  HDT_QR_ContentDocument qrContentDocument =new HDT_QR_ContentDocument();
 
     public static Id makeFile(String body,String fileName,String fileTitle){
         Blob generateFileBlob   = Blob.valueof(body);
