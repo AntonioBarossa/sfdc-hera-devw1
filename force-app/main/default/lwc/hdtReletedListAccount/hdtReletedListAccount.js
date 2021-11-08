@@ -122,6 +122,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         this.addressContactDetails=requiredToggle;
         this.disableToggleContactDetails=requiredToggle;
         toggleContact.checked=requiredToggle;
+        this.isVerified=currentRole==='Amministratore condominio'&& this.addressContactDetails==false?false:true;
     }
     @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
