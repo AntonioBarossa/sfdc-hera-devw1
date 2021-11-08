@@ -53,10 +53,18 @@ public class HDT_SRV_DocumentalManagement{
 			}
 
 			//nuova logica per campo settore merceologico
-			if ('Context1'.equalsIgnoreCase(documentalContext) || 'Context2'.equalsIgnoreCase(documentalContext)){
-				String objectName = 'Context1'.equalsIgnoreCase(documentalContext)? 'Order' : 'Case';
+			String objectName = '';
+			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
+				objectName = 'Case';
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
+				objectName='Order';
+			}
+			else {
+				objectName=context;
+			}
+			if ('Case'.equalsIgnoreCase(objectName) || 'Order'.equalsIgnoreCase(objectName)){
 				String retrivedValue = HDT_UTL_DocumentalManagement.getValue(objectName, 'CommodityFormula__c', 0, recordObjectsListMap[i], formParamsMap);
-				switch on retrievedValue {
+				switch on retrivedValue {
 					when  'Gas' {
 						retrivedValue = '#GAS';
 					}
@@ -71,10 +79,7 @@ public class HDT_SRV_DocumentalManagement{
 					settoreMerceologico += retrivedValue;
 				}
 			}
-			
-
-			
-
+			//fine logica per campo settore merceologico
 			Blob payloadBlob = Blob.valueOf(payload);
 			payload = EncodingUtil.base64Encode(payloadBlob);
 			System.debug(LoggingLevel.DEBUG, 'Paylod ' + payload);
@@ -694,8 +699,7 @@ public class HDT_SRV_DocumentalManagement{
 			String userTimeZone = UserInfo.getTimeZone().getDisplayName(); 
 			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
 			String processType = 'Plico contrattuale';
-			Datetime dataCreazioneDocumento = Datetime.now(); 
-			Datetime dataCaricamentoDocumento = Datetime.now();
+			Datetime today = Datetime.now(); 
 			String rds = String.isNotBlank(rdsCase)? rdsCase : rdsOrder;
 			if(String.isNotBlank(processTypeCase)){
 				processType = processTypeCase;
@@ -708,10 +712,10 @@ public class HDT_SRV_DocumentalManagement{
 			customerInfo.emailSubject = 'HERA - ' + processType;
 			//@ealpi nuovi campi inviati
 			customerInfo.rds = rds;
-			customerInfo.dataCreazioneDocumento = dataCreazioneDocumento.format('yyyy-MM-dd HH:mm:ss', userTimeZone);
-			customerInfo.dataCaricamentoDocumento = dataCaricamentoDocumento.format('yyyy-MM-dd HH:mm:ss', userTimeZone);
-			customerInfo.lastName = lastName;
-			customerInfo.firstName = firstName;
+			customerInfo.dataCreazioneDocumento = today.format('yyyy-MM-dd HH:mm:ss');
+			customerInfo.dataCaricamentoDocumento = today.format('yyyy-MM-dd HH:mm:ss');
+			customerInfo.cognomeRagSociale = lastName;
+			customerInfo.nomeRagSoc = firstName;
 			if (formParams.containsKey('SettMerceologico')){
 				customerInfo.settoreMerceologico = (String)formParams.get('SettMerceologico');
 			}
