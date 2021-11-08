@@ -455,6 +455,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(this.contactAddress['Flag Verificato'] !=null){
                 this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = this.contactAddress['Flag Verificato'];
                 this.isVerified2 = this.contactAddress['Flag Verificato'];
+                
             }
         }
     }
@@ -646,16 +647,17 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
        if(isValidated){
             console.log("LOG8");
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+            this.getAccountAdress();
             //HRAWRM-933 Start 08/11/2021
             if (this.addressContactDetails) {
                 this.contactAddress =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
                 this.getContactAdress();
-                if (!this.isVerified2) {
+                if (this.isVerified2==false) {
                     this.isVerified=false;
                 }
             }
             //HRAWRM-933 End 08/11/2021
-            this.getAccountAdress();
+            
             if(this.isVerified){
                 console.log("LOG9");
                 var isEmpty=false;
