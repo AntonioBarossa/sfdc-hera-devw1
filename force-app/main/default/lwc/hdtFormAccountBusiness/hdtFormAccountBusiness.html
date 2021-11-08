@@ -189,8 +189,7 @@
                                     </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="tel" data-id="mobilePhoneNumber" label="Cellulare" 
-                                    maxlength="11">
+                                    <lightning-input type="tel" data-id="mobilePhoneNumber" label="Cellulare" max-length="11">
                                     </lightning-input>
                                 </div>
                             </div>
@@ -209,8 +208,8 @@
                                     </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso" 
-                                    maxlength="11">
+                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso" max-length="11"
+                               >
                                     </lightning-input>
                                 </div>
                             </div>
@@ -355,7 +354,7 @@
                                         <div
                                             class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                             <lightning-combobox data-id="role" name="role" label="Ruolo"
-                                                placeholder="Seleziona Ruolo" options={ruoloOptions} required>
+                                                placeholder="Seleziona Ruolo" options={ruoloOptions} onchange={handleChangeRole} required>
                                             </lightning-combobox>
                                         </div>
                                          <div
@@ -369,7 +368,30 @@
                                 </div>
 
                             </div>
+                            <!--HRAWRM-933 Start 08/11/2021-->
+                            <div class="slds-grid slds-grid_vertical">
+                                <div class="slds-col slds-grid">
+                                    <div
+                                        class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-input type="toggle" label="Indirizzo Anagrafiche Referente" name="toggleContactDetails" data-id="toggleContactDetails"
+                                        disabled={disableToggleContactDetails} onchange={handleToggleContactDetails}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <template if:true={addressContactDetails}>
+                                <lightning-card title="Indirizzo Referente">
+                                    <div class="slds-p-left_x-large slds-p-right_x-large">
+                                        <c-hdt-target-object-address-fields-res objectapiname={currentObjectApiName}>
+                                        </c-hdt-target-object-address-fields-res>
+                                    </div>
+    
+                                </lightning-card>
+    
+    
+                            </template>
                         </div>
+                        <!--HRAWRM-933 End 08/11/2021-->
                         <div class="slds-m-top_x-large">
                             <h3 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
                                 Contatti Referente</h3>
@@ -381,13 +403,13 @@
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix" label="Prefisso Cellulare"
-                                        placeholder="Seleziona prefisso" value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions}
+                                        placeholder="Seleziona prefisso" value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions} 
                                         required>
                                     </lightning-combobox>
                                 </div>
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                    <lightning-input type="tel" data-id="mobilePhone" label="Cellulare" >
+                                    <lightning-input type="tel" data-id="mobilePhone" label="Cellulare" max-length="11" >
                                     </lightning-input>
                                 </div>
 
@@ -404,8 +426,8 @@
                                     </div>
                                     <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                        <lightning-input type="tel"  data-id="contactPhoneNumber" label="Telefono Fisso"
-                                        maxlength="11">
+                                        <lightning-input type="tel"  data-id="contactPhoneNumber" label="Telefono Fisso" max-length="11"
+                                       >
                                         </lightning-input>
                                     </div>
 
