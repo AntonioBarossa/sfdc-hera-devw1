@@ -130,12 +130,13 @@ export default class hdtActivityReassignmentCore extends LightningElement {
 
     handleReassignResult(errorMessage) {
         if(errorMessage) {
+            if(errorMessage.includes("TRANSFER_REQUIRES_READ") || errorMessage.includes("INSUFFICIENT_ACCESS_OR_READONLY")) {
+                errorMessage = "L'utente a cui si è selezionato non dispone dei permessi sufficenti su uno o più record che si è cercato di riassegnare.";
+            }
+
             if(this.recordId) {
-                if(errorMessage.includes("TRANSFER_REQUIRES_READ")) {
-                    this.showToast("error", "Riassegnazione fallita", "L'assegnatario selezionato non ha visibilità sul record corrente.");
-                } else {
-                    this.showToast("error", "Errore", errorMessage);
-                }
+                this.showToast("error", "Errore", errorMessage);
+                this.closeModal();
             } else {
                 this.handleListButtonError("ERRORE", errorMessage);
             }
