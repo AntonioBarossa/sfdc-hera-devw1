@@ -173,6 +173,7 @@
                                 <h4>Almeno un dato di contatto è obbligatorio</h4>
                         </div> 
                         <div class="slds-grid slds-grid_vertical">
+
                             <div class="slds-col slds-grid">
                                 <!-- <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
@@ -181,14 +182,14 @@
                                 </div> -->
                                 <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-combobox data-id="phonePrefix2" name="phonePrefix2" label="Prefisso telefono cliente"
-                                            placeholder="Seleziona prefisso" value={phonePrefixValue2} default="+39" options={phonePrefixOptions}
+                                        <lightning-combobox data-id="mobilephonePrefix2" name="mobilephonePrefix2" label="Prefisso Cellulare"
+                                            placeholder="Seleziona prefisso" value={mobilephonePrefix2} default="+39" options={phonePrefixOptions}
                                             required>
                                         </lightning-combobox>
                                     </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Cliente" 
+                                    <lightning-input type="tel" data-id="mobilePhoneNumber" label="Cellulare" 
                                     maxlength="11">
                                     </lightning-input>
                                 </div>
@@ -201,14 +202,14 @@
                                 </div> -->
                                 <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-combobox data-id="mobilephonePrefix2" name="mobilephonePrefix2" label="Prefisso telefono cellulare cliente"
-                                            placeholder="Seleziona prefisso" value={mobilephonePrefix2} default="+39" options={phonePrefixOptions}
+                                        <lightning-combobox data-id="phonePrefix2" name="phonePrefix2" label="Prefisso Telefono Fisso"
+                                            placeholder="Seleziona prefisso" value={phonePrefixValue2} default="+39" options={phonePrefixOptions}
                                             required>
                                         </lightning-combobox>
                                     </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="tel" data-id="mobilePhoneNumber" label="Telefono Cellulare Cliente" 
+                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso" 
                                     maxlength="11">
                                     </lightning-input>
                                 </div>
@@ -379,7 +380,7 @@
                             <div class="slds-col slds-grid">
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix" label="Prefisso cellulare"
+                                    <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix" label="Prefisso Cellulare"
                                         placeholder="Seleziona prefisso" value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions}
                                         required>
                                     </lightning-combobox>
@@ -396,7 +397,7 @@
                                     
                                     <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-combobox data-id="phonePrefix" name="phonePrefix" label="Prefisso telefono fisso"
+                                        <lightning-combobox data-id="phonePrefix" name="phonePrefix" label="Prefisso Telefono Fisso"
                                             placeholder="Seleziona prefisso" value={phonePrefixValue} options={phonePrefixOptions}
                                             required>
                                         </lightning-combobox>
