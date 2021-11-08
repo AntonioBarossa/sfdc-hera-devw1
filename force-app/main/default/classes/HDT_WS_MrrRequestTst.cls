@@ -196,7 +196,7 @@ public with sharing class HDT_WS_MrrRequestTst {
               
 		List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
         
-        List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].id, 'Bozza');
+        HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].id, 'Bozza');
         
         Id myOrder = [Select id From Order][0].id;
 

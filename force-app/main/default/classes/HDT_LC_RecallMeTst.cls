@@ -101,8 +101,6 @@ private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
         Test.setMock(HttpCalloutMock.class, mock);
         List<CampaignMember> cmpList = [SELECT Id, Ecid__c FROM CampaignMember];
         Date dt = Date.today();
-        String start = String.valueOf(Date.today());
-        DateTime startRange = Datetime.valueOfGMT(start + ' 00:00:00');
         System.debug('User id longggg'+UserInfo.getUserId());
         Test.startTest();
         String response = HDT_LC_RecallMe.postAppointmentEcid(dt, 'test as always', 1243576, '48fe5165a40c49aa9bf4b3d9bca2552f', cmpList[0].Ecid__c, cmpList[0].Id);

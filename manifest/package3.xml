@@ -1,322 +1,158 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Attributi_Ordine_Siebel_Record_Page</members>
-        <members>Attributi_RDO_Siebel_Record_Page</members>
-        <members>Ordine_Siebel_Record_Page</members>
-        <members>RDO_Siebel_Record_Page</members>
-        <members>RDS_Siebel_Record_Page1</members>
+        <members>Attivit_Documentale_Siebel_Record_Page1</members>
+        <members>HDT_Activity_Default_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Account-Account Distributori</members>
-        <members>Account-Account Layout</members>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Account-SBQQ__CPQ Account Layout</members>
-        <members>Case-Case Layout</members>
-        <members>Case-HDT_PraticaInVolo</members>
-        <members>CaseClose-Close Case Layout</members>
+        <members>AccountContactRelation-Account Contact Relationship Layout</members>
+        <members>Asset-Asset Layout</members>
         <members>SiebelActivity__x-SiebelActivity Layout</members>
-        <members>SiebelContact__x-SiebelContact Layout</members>
-        <members>SiebelContract__x-SiebelContract Layout</members>
-        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
-        <members>SiebelOrderAttribute__x-SiebelOrderAttribute Layout</members>
-        <members>SiebelOrder__x-SiebelOrder Layout</members>
-        <members>SiebelRdoAttribute__x-SiebelRdoAttribute Layout</members>
+        <members>SiebelDocumentActivity__x-SiebelDocumentActivity Layout</members>
         <members>SiebelRdo__x-SiebelRdo Layout</members>
-        <members>SiebelRdsAttribute__x-SiebelRdsAttribute Layout</members>
         <members>SiebelRds__x-SiebelRds Layout</members>
         <members>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_GestioneScarti</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
+        <members>ConnectorEntityController</members>
+        <members>ConnectorEntityController_Test</members>
         <members>HDT_ActivityCustomTst</members>
-        <members>HDT_BA_AccountBpCaCalloutTst</members>
-        <members>HDT_BA_AttributesContactTst</members>
-        <members>HDT_BA_AttributesLeadTst</members>
-        <members>HDT_BA_CampaignBollettaTst</members>
-        <members>HDT_BA_ComfortCall</members>
+        <members>HDT_BA_AppoitmentManagmentActivityTst</members>
         <members>HDT_BA_ComfortCallTst</members>
-        <members>HDT_BA_CommercialCodeTst</members>
-        <members>HDT_BA_ConsentContactTest</members>
-        <members>HDT_BA_ConsentContactTst</members>
-        <members>HDT_BA_ConsentLeadTst</members>
-        <members>HDT_BA_CustomerLifeCycleTst</members>
-        <members>HDT_BA_ErrorRequestItemTst</members>
-        <members>HDT_BA_ImportFubFileTst</members>
-        <members>HDT_BA_LeadExpiredTest</members>
-        <members>HDT_BA_LeadWebServiceReitekSendTst</members>
-        <members>HDT_BA_OldDraftSalesTest</members>
-        <members>HDT_BA_PraxidiaFront</members>
-        <members>HDT_BA_PraxidiaReclami</members>
-        <members>HDT_BA_PraxidiaReclamiTst</members>
-        <members>HDT_BA_ProcessRequestItemTst</members>
-        <members>HDT_BA_PublicValidation</members>
-        <members>HDT_BA_QualityCall</members>
-        <members>HDT_BA_QualityCallTst</members>
-        <members>HDT_BA_QueueAssignment</members>
-        <members>HDT_BA_SuspendedActivitiesEmailAlertTst</members>
-        <members>HDT_BA_VasEngineSender</members>
-        <members>HDT_BA_VasEngineSenderTst</members>
-        <members>HDT_LCP_CreateDistributorApointmentTst</members>
-        <members>HDT_LC_AccountAlertsTst</members>
-        <members>HDT_LC_AccountSelezionaRecordtypeTst</members>
-        <members>HDT_LC_AccountVasOrdersViewTst</members>
-        <members>HDT_LC_ActivityReassignmentTool</members>
-        <members>HDT_LC_AdvancedSearchTst</members>
-        <members>HDT_LC_ApplyBillingProfileModalTst</members>
-        <members>HDT_LC_BillingProfileFormTst</members>
-        <members>HDT_LC_CalculateEstimatedCostTst</members>
-        <members>HDT_LC_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_CanaleIVRNoShareTst</members>
-        <members>HDT_LC_CaseDocumentValidationTst</members>
-        <members>HDT_LC_ChildOrderProcessDetailsTst</members>
-        <members>HDT_LC_ChildOrderProcessTst</members>
-        <members>HDT_LC_CloneArticleTst</members>
-        <members>HDT_LC_CloneCanceledOrderTst</members>
-        <members>HDT_LC_CompleteCaseTst</members>
-        <members>HDT_LC_ConfigurePaymentMethodsTst</members>
-        <members>HDT_LC_CtToolbar</members>
-        <members>HDT_LC_DocumentSignatureManager</members>
-        <members>HDT_LC_DownloadAttachmentAzureTst</members>
-        <members>HDT_LC_ManageBillingProfileTst</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_OrderDossierWizardTst</members>
-        <members>HDT_LC_OrdersForComfortQualityList</members>
-        <members>HDT_LC_PaperCampaignGetFile</members>
-        <members>HDT_LC_ProcessesContainerTst</members>
-        <members>HDT_LC_QuoteAmendContract</members>
-        <members>HDT_LC_QuoteAmendContractTst</members>
-        <members>HDT_LC_RecordEditFormSalesTst</members>
-        <members>HDT_LC_ReportNavigatorControllerTst</members>
-        <members>HDT_LC_ResumeCommercialBonusTst</members>
-        <members>HDT_LC_ResumeSaleControllerTst</members>
-        <members>HDT_LC_SaleServiceContainerTst</members>
-        <members>HDT_LC_SaleServiceItemsTilesTst</members>
-        <members>HDT_LC_ScriptTesterControllerTst</members>
-        <members>HDT_LC_SellingWizardControllerTst</members>
-        <members>HDT_LC_SendCertificationRequest</members>
-        <members>HDT_LC_ServicePointCustomSettingsTst</members>
-        <members>HDT_LC_StoricizzazioneClienteTst</members>
-        <members>HDT_LC_TargetObjectCreateFormTst</members>
-        <members>HDT_QBL_BpCaRequestTst</members>
-        <members>HDT_QBL_DiscardDocusignEnvManagement</members>
-        <members>HDT_QBL_SIE34_3File2Tst</members>
-        <members>HDT_QBL_SIE34_3Tst</members>
+        <members>HDT_BA_OldDraftSalesTst</members>
+        <members>HDT_BA_VasSupplierTable</members>
+        <members>HDT_CampaignTst</members>
+        <members>HDT_ContactTst</members>
+        <members>HDT_IndividualTst</members>
+        <members>HDT_LC_AccountSelectorController</members>
+        <members>HDT_LC_ActivityIvaAcciseTst</members>
+        <members>HDT_LC_AdvancedSearchOriginal</members>
+        <members>HDT_LC_CambioUsoTst</members>
+        <members>HDT_LC_CampaignSurveyTst</members>
+        <members>HDT_LC_ChildOrderProcessActionsTst</members>
+        <members>HDT_LC_CopiaContrattoTst</members>
+        <members>HDT_LC_FormAccountBusiness</members>
+        <members>HDT_LC_GestionePrivacyFieldTst</members>
+        <members>HDT_LC_ModificaContrattiBpTst</members>
+        <members>HDT_LC_RecallMeCreateFormTst</members>
+        <members>HDT_LC_RecallMeTst</members>
+        <members>HDT_LC_RequestVisitD2DCreateFormTst</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_LeadTst</members>
+        <members>HDT_OpportunityTst</members>
+        <members>HDT_OrderTst</members>
+        <members>HDT_QBL_AnagAlignmentTst</members>
+        <members>HDT_QBL_SIE34_1EE</members>
+        <members>HDT_QBL_SIE34_1Gas</members>
+        <members>HDT_QBL_SIE34_2MM</members>
+        <members>HDT_QBL_SIE34_2SME</members>
+        <members>HDT_QBL_SIE34_3</members>
+        <members>HDT_QBL_SIE34_3File2</members>
         <members>HDT_QBL_SIE34_6</members>
-        <members>HDT_QBL_SIE34_6Tst</members>
+        <members>HDT_QBL_SIE34_7</members>
         <members>HDT_QBL_SIE34_7Tst</members>
-        <members>HDT_QR_ActivityCustomTst</members>
-        <members>HDT_QR_AgentMatrixTst</members>
-        <members>HDT_QR_BrandSalesCompanyTst</members>
-        <members>HDT_QR_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_QR_CampaignMemberStatusMetadataTst</members>
-        <members>HDT_QR_CampaignMemberTst</members>
-        <members>HDT_QR_Case</members>
         <members>HDT_QR_ContactTst</members>
+        <members>HDT_QR_ContentDocument</members>
+        <members>HDT_QR_ContentDocumentTst</members>
         <members>HDT_QR_Contract</members>
-        <members>HDT_QR_ContractTst</members>
-        <members>HDT_QR_FileTemplateTst</members>
-        <members>HDT_QR_HelperTst</members>
-        <members>HDT_QR_MatrixCompatibilityMapTst</members>
         <members>HDT_QR_Order</members>
-        <members>HDT_QR_OrderTst</members>
-        <members>HDT_QR_RateCategoryTst</members>
-        <members>HDT_QR_SaleServiceItemTst</members>
-        <members>HDT_QR_SaleTst</members>
-        <members>HDT_QR_ServicePoint</members>
-        <members>HDT_QR_ServicePointTst</members>
-        <members>HDT_QR_UserQueriesTst</members>
-        <members>HDT_QR_UserQueriesWithoutSharingTst</members>
-        <members>HDT_SCH_ActivityVoRefuse</members>
-        <members>HDT_SCH_ChiusuraForzataCreditCheckTst</members>
-        <members>HDT_SCH_LeadExpiredSchedulerTst</members>
-        <members>HDT_SCH_ProcessRequestItemTst</members>
-        <members>HDT_SCH_QueueAssignmentSchedulerTst</members>
-        <members>HDT_SCH_SuspendedActivitiesTst</members>
-        <members>HDT_SRV_AccountContactRelationTst</members>
-        <members>HDT_SRV_AccountTst</members>
+        <members>HDT_QR_PaymentCommunicationTst</members>
+        <members>HDT_QuoteTst</members>
+        <members>HDT_SCH_PraxidiaFrontTst</members>
+        <members>HDT_SCH_PraxidiaReclamiTst</members>
+        <members>HDT_SCH_ProcessRequestItem</members>
         <members>HDT_SRV_ActivityCustomTst</members>
-        <members>HDT_SRV_AttachmentTst</members>
-        <members>HDT_SRV_BillingProfileTst</members>
-        <members>HDT_SRV_CampaignMemberStatusTst</members>
-        <members>HDT_SRV_CampaignMemberTst</members>
-        <members>HDT_SRV_CommercialCodeTst</members>
-        <members>HDT_SRV_Contact</members>
-        <members>HDT_SRV_ContactPointEmailTst</members>
-        <members>HDT_SRV_ContactPointPhoneTst</members>
-        <members>HDT_SRV_ContactPointTst</members>
-        <members>HDT_SRV_ContactTst</members>
-        <members>HDT_SRV_ContentDocumentLink</members>
-        <members>HDT_SRV_ContentVersion</members>
-        <members>HDT_SRV_ContractTst</members>
-        <members>HDT_SRV_DocumentalManagementFacade</members>
-        <members>HDT_SRV_DocumentalManagementFacadeTst</members>
-        <members>HDT_SRV_IndividualTst</members>
-        <members>HDT_SRV_InteractionTst</members>
-        <members>HDT_SRV_LeadTst</members>
-        <members>HDT_SRV_MassiveLoaderRequestTst</members>
-        <members>HDT_SRV_NoteTst</members>
-        <members>HDT_SRV_OpportunityTst</members>
-        <members>HDT_SRV_OrderTst</members>
-        <members>HDT_SRV_ProductTst</members>
-        <members>HDT_SRV_QuoteLineGroupTst</members>
-        <members>HDT_SRV_QuoteLineTst</members>
-        <members>HDT_SRV_QuoteTst</members>
-        <members>HDT_SRV_SaleServiceItemTst</members>
-        <members>HDT_SRV_SaleTst</members>
+        <members>HDT_SRV_BillableVasDeactivationTest</members>
+        <members>HDT_SRV_CampaignTst</members>
+        <members>HDT_SRV_CommunicationLogTst</members>
+        <members>HDT_SRV_ContentDocumentLinkTst</members>
+        <members>HDT_SRV_DocumentalManagement</members>
         <members>HDT_SRV_SalesManager</members>
         <members>HDT_SRV_SalesManagerTst</members>
-        <members>HDT_SRV_ScriptManagerTst</members>
-        <members>HDT_SRV_ServicePointTst</members>
-        <members>HDT_SRV_ServiceRequestTst</members>
-        <members>HDT_SmsTrackingTst</members>
-        <members>HDT_SubscriptionTst</members>
-        <members>HDT_TRH_ActivityCustomTst</members>
-        <members>HDT_TRH_AssetTst</members>
-        <members>HDT_TRH_BillingProfileTst</members>
-        <members>HDT_TRH_Campaign</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_TRH_ContactTst</members>
-        <members>HDT_TRH_Contract</members>
-        <members>HDT_TRH_ContractTst</members>
-        <members>HDT_TRH_IndividualEmailResultTst</members>
-        <members>HDT_TRH_IndividualTst</members>
-        <members>HDT_TRH_Lead</members>
-        <members>HDT_TRH_LeadTst</members>
-        <members>HDT_TRH_QuoteTst</members>
+        <members>HDT_SRV_VoltureChangeDispatcher</members>
+        <members>HDT_TRH_TaskTst</members>
         <members>HDT_TRH_TriggerHandler</members>
         <members>HDT_TRH_TriggerHandlerTst</members>
-        <members>HDT_TRH_UserTst</members>
-        <members>HDT_UTL_AccountTst</members>
-        <members>HDT_UTL_ActivityCustomTst</members>
-        <members>HDT_UTL_AgentMatrixTst</members>
-        <members>HDT_UTL_BrandSalesCompanyTst</members>
-        <members>HDT_UTL_CalculateFiscalCodeTst</members>
-        <members>HDT_UTL_CampaignMemberAssigmentItemTst</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CommunicationLogTst</members>
-        <members>HDT_UTL_CompanyOwnerTst</members>
+        <members>HDT_UTL_ActivityCustomProcessTst</members>
+        <members>HDT_UTL_CampaignMember</members>
         <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_DatabaseServiceNoShare</members>
-        <members>HDT_UTL_DatabaseServiceNoShareTst</members>
-        <members>HDT_UTL_DatabaseServiceTst</members>
-        <members>HDT_UTL_DocumentalManagement</members>
-        <members>HDT_UTL_EmailProtocolReceiver</members>
-        <members>HDT_UTL_EmailProtocolReceiverTst</members>
-        <members>HDT_UTL_FormatTextScriptTest</members>
+        <members>HDT_UTL_ContentVersion</members>
+        <members>HDT_UTL_DataFactoryTst</members>
+        <members>HDT_UTL_DependenciesTestWithData</members>
         <members>HDT_UTL_GestAppAutomaticCreation</members>
         <members>HDT_UTL_GestAppAutomaticCreationCase</members>
-        <members>HDT_UTL_GestAppAutomaticCreationCaseTst</members>
-        <members>HDT_UTL_GestionePrivacyTst</members>
-        <members>HDT_UTL_IndividualTst</members>
-        <members>HDT_UTL_LeadTst</members>
-        <members>HDT_UTL_NoteTst</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_PaperProcessing</members>
+        <members>HDT_UTL_Order</members>
+        <members>HDT_UTL_OrderProcessAssignment</members>
         <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_PayloadManagementTst</members>
-        <members>HDT_UTL_PrClickEndSubscriptionBulk</members>
-        <members>HDT_UTL_ProcessExecution</members>
-        <members>HDT_UTL_QuoteProcessTst</members>
-        <members>HDT_UTL_SIE34</members>
-        <members>HDT_UTL_SIE34Tst</members>
-        <members>HDT_UTL_SalesTst</members>
+        <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_UTL_PrClickDoubleTransactionTst</members>
+        <members>HDT_UTL_Scarti</members>
         <members>HDT_UTL_ScartiTst</members>
-        <members>HDT_UTL_SecurityAccessTst</members>
-        <members>HDT_UTL_ServiceCatalogOrFilterTst</members>
+        <members>HDT_UTL_ServiceCatalogOrFilter</members>
+        <members>HDT_UTL_ServiceCatalogOrFilterProcessTst</members>
         <members>HDT_UTL_ServiceCatalogProfileCriteria</members>
-        <members>HDT_UTL_ServiceCatalogProfileCriteriaTst</members>
-        <members>HDT_UTL_ServicePointTst</members>
-        <members>HDT_UTL_ServiceTwentySix</members>
-        <members>HDT_UTL_ServiceTwentySixTst</members>
-        <members>HDT_UTL_SobjectUtilsTst</members>
-        <members>HDT_UTL_SubscriptionProcess</members>
-        <members>HDT_UTL_SwtichInProcessTst</members>
-        <members>HDT_UTL_UtilsTst</members>
-        <members>HDT_VFC_ForzaturaChiusuraCreditCheckTst</members>
-        <members>HDT_WRP_AddressObjectTst</members>
-        <members>HDT_WRP_AttributesTst</members>
-        <members>HDT_WRP_CampaignPraxidiaTst</members>
-        <members>HDT_WRP_MrrResponseTst</members>
-        <members>HDT_WS_CampagenDmDmpDataResponseTst</members>
-        <members>HDT_WS_CampaignBollettaTst</members>
-        <members>HDT_WS_HerokuAddressSearchTst</members>
-        <members>HDT_WS_MotoreVasTst</members>
+        <members>HDT_WS_HTTPServiceCall</members>
+        <members>HDT_WS_MrrRequestTst</members>
+        <members>HDT_WS_SIE34DataRequest</members>
         <members>HDT_WS_SalesApexCalloutAction</members>
-        <members>HDT_WS_SalesApexCalloutActionMock</members>
         <members>HDT_WS_SalesApexCalloutActionTst</members>
+        <members>HDT_WS_VoltureChangeManager</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.CustomerRequestDate__c</members>
-        <members>Order.MarketingPrivacy__c</members>
-        <members>Order.ProfilingPrivacy__c</members>
-        <members>SiebelActivity__x.AZ_ImportDatetime__c</members>
-        <members>SiebelActivity__x.X_ORA_DL_A__c</members>
-        <members>SiebelContract__x.IMPIANTO_INSTALL_DT__c</members>
-        <members>SiebelCustomer__x.ATTRIB_04__c</members>
-        <members>SiebelDocumentLink__x.LAST_UPD_BY__c</members>
-        <members>SiebelDocumentLink__x.LAST_UPD__c</members>
-        <members>SiebelOrderAttribute__x.AZ_ImportDatetime__c</members>
-        <members>SiebelOrderAttribute__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelOrderAttribute__x.PAR_ROW_ID__c</members>
-        <members>SiebelOrder__x.ATTRIB_35__c</members>
-        <members>SiebelOrder__x.ATTRIB_36__c</members>
-        <members>SiebelOrder__x.ATTRIB_37__c</members>
-        <members>SiebelOrder__x.ID_POSIZIONE_SUPERIORE__c</members>
-        <members>SiebelOrder__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelOrder__x.SHIP_ADDR_ID__c</members>
-        <members>SiebelOrder__x.X_COGNOME_BP_ALTERN__c</members>
-        <members>SiebelOrder__x.X_IND_BP_ALTERN_ID__c</members>
-        <members>SiebelRdoAttribute__x.ATTR_NAME__c</members>
-        <members>SiebelRdoAttribute__x.DATA_TYPE_CD__c</members>
-        <members>SiebelRdoAttribute__x.HIDDEN_FLG__c</members>
-        <members>SiebelRdoAttribute__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelRdoAttribute__x.REQUIRED_FLG__c</members>
-        <members>SiebelRdo__x.AZ_ImportDatetime__c</members>
-        <members>SiebelRdo__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelRdo__x.ORDER_ID__c</members>
-        <members>SiebelRdsAttribute__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelRdsAttribute__x.PAR_ROW_ID__c</members>
-        <members>SiebelRds__x.MODIFIEDDATE_AZURE__c</members>
-        <members>wrts_prcgvr__Activity__c.Process__c</members>
+        <members>SiebelActivity__x.TODO_PLAN_END_DT__c</members>
+        <members>SiebelActivity__x.TODO_PLAN_START_DT__c</members>
+        <members>SiebelDocumentActivity__x.ID_RDO__c</members>
+        <members>SiebelDocumentActivity__x.ID_RDS__c</members>
+        <members>SiebelDocumentActivity__x.MODIFIEDDATE_AZURE__c</members>
+        <members>SiebelDocumentActivity__x.RDS__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtCtToolbarContainer</members>
-        <members>hdtDocumentSignatureManagerFlow</members>
-        <members>hdtInputFieldComboboxCanellation</members>
-        <members>hdtViewPdfForPaperless</members>
+        <members>hdtActivityReassignToMe</members>
+        <members>hdtActivityReassignmentCore</members>
+        <members>hdtActivityReassignmentTool</members>
+        <members>hdtFormAccountBusiness</members>
+        <members>hdtFormAccountResidenziale</members>
+        <members>hdtReletedListAccount</members>
+        <members>hdtSelezFornituraFlow</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>wrts_prcgvr__Activity__c.Inoltra_ad_Agenzia_Massivo</members>
-        <name>WebLink</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
         <members>Hera Standard User OneShot</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>Arricchimento_Dati</members>
+        <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>Aggiornamento_Data_Sol</members>
+        <members>HDT_FL_ActivityAccountLinker</members>
+        <members>HDT_FL_ActivityCarryPriority</members>
         <members>HDT_FL_ActivityForwardToAgency</members>
-        <members>HDT_FL_Autoelettrica</members>
-        <members>HDT_FL_GestioneInnescoDocumentalePaperless</members>
-        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Modifica_Privacy</members>
+        <members>HDT_FL_ActivityNotification</members>
+        <members>HDT_FL_ActivitySetRecordTypeSportello</members>
+        <members>HDT_FL_ActivitySetStartDate</members>
+        <members>HDT_FL_ActivityTrackerAccount</members>
+        <members>HDT_FL_ActivityTrackerActivity</members>
+        <members>HDT_FL_ActivityTrackerCase</members>
+        <members>HDT_FL_ActivityTrackerContact</members>
+        <members>HDT_FL_ActivityTrackerContactPointEmail</members>
+        <members>HDT_FL_ActivityTrackerContactPointPhone</members>
+        <members>HDT_FL_ActivityTrackerIndividual</members>
+        <members>HDT_FL_ActivityTrackerLead</members>
+        <members>HDT_FL_ActivityTrackerOpportunity</members>
+        <members>HDT_FL_ActivityTrackerOrder</members>
+        <members>HDT_FL_ActivityTrackerQuote</members>
+        <members>HDT_FL_GestioneMorosita_Contenitore</members>
+        <members>HDT_FL_GestioneReclami_TriggerAfterContenitore</members>
+        <members>HDT_FL_LinkQueueToWrapper</members>
+        <members>HDT_FL_PostSalesVAS</members>
         <name>Flow</name>
     </types>
     <version>49</version>

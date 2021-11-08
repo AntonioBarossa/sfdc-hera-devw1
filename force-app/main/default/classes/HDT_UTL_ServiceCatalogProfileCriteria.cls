@@ -3,9 +3,10 @@
  * @description HDT_UTL_ServiceCatalogProfileCriteria - 
  */
 
+@SuppressWarnings('PMD.AvoidGlobalModifier')
  global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
     HDT_QR_PermissionSet permQr = new HDT_QR_PermissionSet();
-    public boolean evaluate(Object args) {
+    global boolean evaluate(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
  		//Map<String,HDT_ServiceCatalogProfileFilter__mdt> listMet = HDT_ServiceCatalogProfileFilter__mdt.getAll();
         //String userId = userinfo.getUserId();

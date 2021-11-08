@@ -223,7 +223,25 @@ public with sharing class HDT_UTL_Constants {
 
     //Hera internal Profiles
     @AuraEnabled
-    public final String SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';    
+    public final String SYSTEM_ADMINISTRATOR_NAME {
+        get{
+
+            switch on System.UserInfo.getLanguage() {
+                when 'en_US' {
+                    return 'System Administrator';
+                } when 'it' {
+                    return 'Amministratore del sistema';
+                } when else {
+                    return 'System Administrator';
+                }
+            }
+            
+        }
+        set{
+            SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';
+        }
+    }
+
     @AuraEnabled
     public final String HERA_M2M_INTEGRATION_NAME = 'Hera M2M Integration User';
     @AuraEnabled

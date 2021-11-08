@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
+        <application>HDT_MassiveLoader</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>Hera_Service_Console</application>
         <default>true</default>
         <visible>true</visible>
@@ -16,11 +21,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>SBQQ__QuoteQuickly</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>Sales_Leadership</application>
         <default>false</default>
         <visible>false</visible>
@@ -32,6 +32,11 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__AllTabSet</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__AppLauncher</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
@@ -53,7 +58,7 @@
     <applicationVisibilities>
         <application>standard__Insights</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningBolt</application>
@@ -81,6 +86,11 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>standard__OnlineSales</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>standard__Platform</application>
         <default>false</default>
         <visible>false</visible>
@@ -102,16 +112,6 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__ServiceConsole</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>trailheadapp__Trailhead_Tracker</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>wrts_prcgvr__ProcessClick</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
@@ -35464,4 +35464,12 @@
         <enabled>true</enabled>
         <name>SendCustomNotifications</name>
     </userPermissions>
+    <pageAccesses>
+        <apexPage>HDT_VF_ActivityReassignToMeMassive</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>HDT_VF_ActivityReassignmentToolMassive</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </Profile>
