@@ -58,6 +58,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     fieldsToUpdate= {};
     fieldsToUpdateContact={};//HRAWRM-933 Start 08/11/2021
     isVerified= false;
+    isVerified2= false;
+
     @api RecordTypeId;
     @track companyOptions;
     @track customerTypeOptions;
@@ -452,7 +454,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
             if(this.contactAddress['Flag Verificato'] !=null){
                 this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = this.contactAddress['Flag Verificato'];
-                this.isVerified = this.contactAddress['Flag Verificato'];
+                this.isVerified2 = this.contactAddress['Flag Verificato'];
             }
         }
     }
@@ -648,6 +650,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if (this.addressContactDetails) {
                 this.contactAddress =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
                 this.getContactAdress();
+                if (!this.isVerified) {
+                    this.isVerified=false;
+                }
             }
             //HRAWRM-933 End 08/11/2021
             this.getAccountAdress();
