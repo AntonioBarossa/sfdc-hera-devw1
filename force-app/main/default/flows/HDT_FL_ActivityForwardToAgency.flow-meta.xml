@@ -3,8 +3,8 @@
     <actionCalls>
         <name>go_to_new_activity_acton</name>
         <label>Vai a Nuova Attività</label>
-        <locationX>402</locationX>
-        <locationY>2342</locationY>
+        <locationX>1272</locationX>
+        <locationY>2846</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>add_activities_to_lists_assignment</name>
         <label>Aggiungi Attività a Liste</label>
-        <locationX>314</locationX>
-        <locationY>1430</locationY>
+        <locationX>1184</locationX>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>activities_to_insert</assignToReference>
             <operator>Add</operator>
@@ -43,8 +43,8 @@
     <assignments>
         <name>add_recordId_to_list_assignment</name>
         <label>Aggiungi RecordId a Lista</label>
-        <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationX>832</locationX>
+        <locationY>326</locationY>
         <assignmentItems>
             <assignToReference>ids</assignToReference>
             <operator>Add</operator>
@@ -59,8 +59,8 @@
     <assignments>
         <name>forwarding_activity_set</name>
         <label>Compila Attività di Inoltro</label>
-        <locationX>314</locationX>
-        <locationY>1190</locationY>
+        <locationX>1184</locationX>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>forwarding_activity.Type__c</assignToReference>
             <operator>Assign</operator>
@@ -96,8 +96,8 @@
     <assignments>
         <name>id_save_assignment</name>
         <label>Salva ID</label>
-        <locationX>490</locationX>
-        <locationY>2126</locationY>
+        <locationX>1360</locationX>
+        <locationY>2630</locationY>
         <assignmentItems>
             <assignToReference>forwarding_activity.Id</assignToReference>
             <operator>Assign</operator>
@@ -112,8 +112,8 @@
     <assignments>
         <name>suspend_parent_activity</name>
         <label>Sospendi Attività Madre</label>
-        <locationX>314</locationX>
-        <locationY>1310</locationY>
+        <locationX>1184</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>parent_activity.Id</assignToReference>
             <operator>Assign</operator>
@@ -135,8 +135,8 @@
     <decisions>
         <name>massive_forwarding_decision</name>
         <label>Inoltro Massivo?</label>
-        <locationX>226</locationX>
-        <locationY>1886</locationY>
+        <locationX>1096</locationX>
+        <locationY>2390</locationY>
         <defaultConnector>
             <targetReference>select_created_activity_loop</targetReference>
         </defaultConnector>
@@ -157,10 +157,10 @@
     <decisions>
         <name>massive_operation_decision</name>
         <label>Operazione Massiva?</label>
-        <locationX>226</locationX>
-        <locationY>158</locationY>
+        <locationX>1096</locationX>
+        <locationY>206</locationY>
         <defaultConnector>
-            <targetReference>record_selected_decision</targetReference>
+            <targetReference>permissionset_get</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Si</defaultConnectorLabel>
         <rules>
@@ -182,10 +182,10 @@
     <decisions>
         <name>record_selected_decision</name>
         <label>Record Selezionati?</label>
-        <locationX>402</locationX>
-        <locationY>278</locationY>
+        <locationX>1184</locationX>
+        <locationY>686</locationY>
         <defaultConnector>
-            <targetReference>empt_selection_screen</targetReference>
+            <targetReference>empty_selection_screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -204,13 +204,38 @@
             <label>Si</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>user_is_supervisor_decision</name>
+        <label>L&apos;Utente è Supervisore?</label>
+        <locationX>1360</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>unauthorized_user_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>user_is_supervisor_yes_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>permissionset_assignment_get</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>record_selected_decision</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <interviewLabel>Activity - Inoltro ad Agenzia {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Inoltro ad Agenzia</label>
     <loops>
         <name>activities_loop</name>
         <label>Loop su Attività</label>
-        <locationX>226</locationX>
-        <locationY>1070</locationY>
+        <locationX>1096</locationX>
+        <locationY>1574</locationY>
         <collectionReference>ids</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -223,8 +248,8 @@
     <loops>
         <name>select_created_activity_loop</name>
         <label>Seleziona Attività Creata</label>
-        <locationX>402</locationX>
-        <locationY>2006</locationY>
+        <locationX>1272</locationX>
+        <locationY>2510</locationY>
         <collectionReference>activities_to_insert</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -243,7 +268,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -256,18 +281,69 @@
     <recordCreates>
         <name>forwarding_activity_create</name>
         <label>Crea Attività di Inoltro</label>
-        <locationX>226</locationX>
-        <locationY>1646</locationY>
+        <locationX>1096</locationX>
+        <locationY>2150</locationY>
         <connector>
             <targetReference>suspend_parent_activities</targetReference>
         </connector>
         <inputReference>activities_to_insert</inputReference>
     </recordCreates>
     <recordLookups>
+        <name>permissionset_assignment_get</name>
+        <label>Permission Set Assignment</label>
+        <locationX>1360</locationX>
+        <locationY>446</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>user_is_supervisor_decision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>permissionset_get.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetAssignment</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>permissionset_get</name>
+        <label>Permission Set</label>
+        <locationX>1360</locationX>
+        <locationY>326</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>permissionset_assignment_get</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_OmniSupervisorPermissionSet</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>recordtype_get</name>
         <label>RecordType</label>
-        <locationX>226</locationX>
-        <locationY>950</locationY>
+        <locationX>1096</locationX>
+        <locationY>1454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>activities_loop</targetReference>
@@ -295,24 +371,25 @@
     <recordUpdates>
         <name>suspend_parent_activities</name>
         <label>Sospendi Attività Inoltrate</label>
-        <locationX>226</locationX>
-        <locationY>1766</locationY>
+        <locationX>1096</locationX>
+        <locationY>2270</locationY>
         <connector>
             <targetReference>massive_forwarding_decision</targetReference>
         </connector>
         <inputReference>activities_to_update</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>empt_selection_screen</name>
+        <name>empty_selection_screen</name>
         <label>Screen - Selezione Vuota</label>
-        <locationX>490</locationX>
-        <locationY>398</locationY>
+        <locationX>1272</locationX>
+        <locationY>806</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>empt_selection_text</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;&lt;u&gt;Attenzione&lt;/u&gt;&lt;/b&gt;&lt;u style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;,&lt;/u&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(56, 56, 56); font-size: 14px;&quot;&gt;Impossibile proseguire: nessun record è stato selezionato. Selezionare almeno un record per Inoltrare ad Agenzia.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>empty_selection_text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; color: rgb(56, 56, 56);&quot;&gt;ATTENZIONE&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(56, 56, 56);&quot;&gt;Nessun record selezionato.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -321,8 +398,8 @@
     <screens>
         <name>insert_note</name>
         <label>Inserisci Note</label>
-        <locationX>226</locationX>
-        <locationY>830</locationY>
+        <locationX>1096</locationX>
+        <locationY>1334</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -338,9 +415,25 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>unauthorized_user_screen</name>
+        <label>Screen - Utente non Autorizzato</label>
+        <locationX>1536</locationX>
+        <locationY>686</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>unauthorized_user_text</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(56, 56, 56); font-size: 18px;&quot;&gt;ATTENZIONE&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(56, 56, 56); font-size: 14px;&quot;&gt;L&apos;utente non è autorizzato a usare questa funzionalità.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>100</locationX>
-        <locationY>0</locationY>
+        <locationX>970</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>massive_operation_decision</targetReference>
         </connector>

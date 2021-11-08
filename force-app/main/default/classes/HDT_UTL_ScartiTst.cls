@@ -64,7 +64,7 @@ public class HDT_UTL_ScartiTst {
             insert orders;
             Id orderId = orders[0].id;
             
-            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);            
+            HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);            
                      
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, contacts[0].id, null, contracts[0].Id, orders[0].Id);
             cases[0].DiscardDescription__c = 'testdescription';
@@ -84,7 +84,7 @@ public class HDT_UTL_ScartiTst {
             fieldTemplates[3].wrts_prcgvr__ObjectType__c= 'Order';
             insert fieldTemplates;
             
-            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(6,false);
+            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(8,false);
             activityTemplates[0].Name = 'CBS_ATT006__AMMISSIBILITA_KO';
             activityTemplates[0].wrts_prcgvr__Code__c = 'e88f26f9-a32f-439f-b258-db04fadd3994';
             activityTemplates[0].wrts_prcgvr__FieldsTemplate__c= fieldTemplates[0].id;
@@ -100,6 +100,12 @@ public class HDT_UTL_ScartiTst {
             activityTemplates[5].Name = 'CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
             activityTemplates[5].wrts_prcgvr__Code__c = 'db7818bf-1c29-4de0-bd88-83d69447aabb';
             activityTemplates[5].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[6].Name = 'CBS_ATT001__ESITO_KO_DA_SAP';
+            activityTemplates[6].wrts_prcgvr__Code__c = 'b466bf37-4f13-4b39-97fd-e085b3d49651';
+            activityTemplates[6].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[7].Name = 'CBS_MOR001__ESITO_KO_DA_SAP';
+            activityTemplates[7].wrts_prcgvr__Code__c = '02c4450f-d1cc-4cd4-b53b-f7bb82027158';
+            activityTemplates[7].wrts_prcgvr__ObjectType__c = 'Case';
             insert activityTemplates;
 
             List<wrts_prcgvr__ActivityAction__c> activityActions = HDT_UTL_DataFactoryTst.createActivityAction(1,false,activityTemplates[0].id);
@@ -112,21 +118,21 @@ public class HDT_UTL_ScartiTst {
             activityActions2[0].wrts_prcgvr__Value__c = 'ActivityTypeTest';
             insert activityActions2;
             
-            List<DiscardAnnullmentRule__c> rules = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Order');
-            rules[0].ActivityType__c = 'Esito KO da DL';
-            rules[0].ControllingField__c = 'DiscardReason__c';
-            rules[0].ControllingValue__c = 'testCatalog';
-            rules[0].ProcessField__c = 'ProcessType__c';
-            rules[0].ProcessValue__c = 'Connessione con Attivazione';
-            insert rules;
+            List<DiscardAnnullmentRule__c> rules = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,true,'Order');
+            //rules[0].ActivityType__c = 'Esito KO da DL';
+            //rules[0].ControllingField__c = 'DiscardReason__c';
+            //rules[0].ControllingValue__c = 'testCatalog';
+            //rules[0].ProcessField__c = 'ProcessType__c';
+            //rules[0].ProcessValue__c = 'Connessione con Attivazione';
+            //insert rules;
             
-            List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
-            rulesCase[0].ActivityType__c = 'Ammissibilità KO';
-            rulesCase[0].ControllingField__c = 'DiscardDescription__c';
-            rulesCase[0].ControllingValue__c = 'testdescription';
-            rulesCase[0].ProcessField__c = 'Type';
-            rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
-            insert rulesCase;
+            List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,true,'Case');
+           // rulesCase[0].ActivityType__c = 'Ammissibilità KO';
+           // rulesCase[0].ControllingField__c = 'DiscardDescription__c';
+           // rulesCase[0].ControllingValue__c = 'testdescription';
+           // rulesCase[0].ProcessField__c = 'Type';
+           // rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
+           // insert rulesCase;
             
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
             activities[0].Order__c = orders[0].id;
@@ -394,6 +400,53 @@ public class HDT_UTL_ScartiTst {
         System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
         System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
         
+    }
+    
+    @isTest static void createAttivitaTracciaturaHeroku4Order(){
+        
+        Order record = [Select id from Order];
+        
+        record.RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+        update record;
+               
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Errore lavorazione SAP');
+        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
+        mapp.put('ERROR_MESSAGE','erroretest');
+        mapp.put('RECORD_ID',record.id);
+        
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }
+    
+    @isTest static void createAttivitaTracciaturaHeroku4Case(){
+        
+        Case record = [Select id from Case];
+                       
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Errore lavorazione SAP');
+        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
+        mapp.put('ERROR_MESSAGE','erroretest');
+        mapp.put('RECORD_ID',record.id);
+        
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
     }   
     
     @isTest static void createActivityByObjectIdAndTemplateNameBulk(){
@@ -528,7 +581,7 @@ public class HDT_UTL_ScartiTst {
         
     }
     
-    @isTest static void handleMRRInboundRequest(){
+    @isTest static void handleMrrInboundRequest(){
         
         HDT_WRP_MrrRequest mrRequest = new HDT_WRP_MrrRequest();
         

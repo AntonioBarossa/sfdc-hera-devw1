@@ -22,6 +22,7 @@
     background-color: gainsboro;
 }
 
-.vertical-list {
-    flex-direction: column;
+.custom-title {
+    color: rgb(56,56,56) !important;
+    font-size: 18px !important;
 }
