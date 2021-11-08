@@ -27,7 +27,7 @@ public class HDT_WS_HTTPServiceCall {
         req.setBody(JSON.serialize(request));
         System.debug('*********Request:' + req.getBody());
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-		String r;
+		//String r;
         try{
             System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);

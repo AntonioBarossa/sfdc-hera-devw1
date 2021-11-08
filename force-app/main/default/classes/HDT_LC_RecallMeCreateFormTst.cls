@@ -12,7 +12,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
     @TestSetup
     static void myData(){
         List<Account> accList       = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+        HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Campaign> campaignList = HDT_UTL_DataFactoryTst.createCampaign(1, false);
         campaignList[0].Category__c = 'Campagna Outbound';
         campaignList[0].Channel__c  = 'Bolletta'; 
@@ -101,7 +101,7 @@ public with sharing class HDT_LC_RecallMeCreateFormTst {
         String con = [Select id FROM Contact][0].id;
         String cam = [Select id FROM Campaign][0].id;
         
-        List<CampaignMemberLeadAssigment__c> camMemLeadAss = new List<CampaignMemberLeadAssigment__c>();
+        new List<CampaignMemberLeadAssigment__c>();
         CampaignMemberLeadAssigment__c cmlA = new CampaignMemberLeadAssigment__c();
         cmlA.Name               = 'prova';
         cmlA .Agency__c         =  acc;

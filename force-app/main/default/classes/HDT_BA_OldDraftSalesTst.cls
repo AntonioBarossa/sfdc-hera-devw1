@@ -27,7 +27,7 @@ public with sharing class HDT_BA_OldDraftSalesTst {
         ord.BillingProfile__c= bpList[0].Id;
         ord.ServicePoint__c= spList[0].Id;
         update ord;
-        List<CS_DaysToExpiration__c> testCS = HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'20','Vendita');
+        HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'20','Vendita');
     }
     
     @isTest
@@ -36,7 +36,7 @@ public with sharing class HDT_BA_OldDraftSalesTst {
         Sale__c sale = [SELECT Id, Status__c,CancellationReason__c from Sale__c limit 1];
 
         HDT_BA_OldDraftSales oldSales = new HDT_BA_OldDraftSales();
-        Id batchId = Database.executeBatch(oldSales);
+        Database.executeBatch(oldSales);
                 
         Test.stopTest();
         

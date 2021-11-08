@@ -36,7 +36,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Attiva');
 			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id, 'Bozza');
-			List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
+			HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
 			List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, false, accounts[0].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
 			cases[0].Channel__c='testChannel';
 			insert cases;
@@ -80,13 +80,13 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			tOrder[0].Status = 'In Lavorazione';
 			update tOrder;
 			List<Order> getAccOrder=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto firmato');
-			List<Order> getAccOrder1=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto non firmato');
-			List<Order> getAccOrder2=HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia della registrazione');
+			HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia contratto non firmato');
+			HDT_LC_CopiaContratto.getAccountOrder(tAccount[0].Id, 'Copia della registrazione');
 
 			test.stopTest();
 
 			System.assertEquals(false, getAccOrder.isEmpty(), 'Order returned');
-			System.assertNotEquals(true, getAccOrder.isEmpty());
+			System.assertNotEquals(true, getAccOrder.isEmpty(), 'getAccountOrder did not work correctly');
 		}
 	}
 
@@ -112,7 +112,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			test.stopTest();
 
 			System.assertEquals(false, getOrderChild.isEmpty(), 'Order not returned');
-			System.assertNotEquals(true, getOrderChild.isEmpty());
+			System.assertNotEquals(true, getOrderChild.isEmpty(), 'getOrderChild did not work correctly');
 		}
 	}
 
@@ -144,15 +144,15 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			                    LIMIT 1];
 
 			string confirmAction=HDT_LC_CopiaContratto.confirmAction(tCase[0], tAccount[0].Id, tOrder[0].Id, 'testChannel', 'Copia della registrazione', 'E-Mail');
-			string confirmAction1=HDT_LC_CopiaContratto.confirmAction(tCase[0], tAccount[0].Id, tOrder[0].Id, 'testChannel', 'Copia contratto non firmato', 'E-Mail');
+			HDT_LC_CopiaContratto.confirmAction(tCase[0], tAccount[0].Id, tOrder[0].Id, 'testChannel', 'Copia contratto non firmato', 'E-Mail');
 
-			List<DocumentSendTracking__c> docSendTrack=HDT_UTL_DataFactoryTst.createDocumentSendTracking(1, tOrder[0].Id, tCase[0].Id);
-			string confirmAction2=HDT_LC_CopiaContratto.confirmAction(tCase[0], tAccount[0].Id, tOrder[0].Id, 'Inbound', 'Copia contratto non firmato', 'Posta Cartacea');
+			HDT_UTL_DataFactoryTst.createDocumentSendTracking(1, tOrder[0].Id, tCase[0].Id);
+			HDT_LC_CopiaContratto.confirmAction(tCase[0], tAccount[0].Id, tOrder[0].Id, 'Inbound', 'Copia contratto non firmato', 'Posta Cartacea');
 
 			test.stopTest();
 
 			System.assertEquals('Invio registrazione', confirmAction, 'return is wrong');
-			System.assertNotEquals('', confirmAction);
+			System.assertNotEquals('', confirmAction, 'confirmAction did not work correctly');
 		}
 	}
 
@@ -183,7 +183,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			                    WHERE Name='testOrderName0'
 			                    LIMIT 1];
 
-			string confirmActionDraft=HDT_LC_CopiaContratto.confirmActionDraft(tCase[0], tAccount[0].Id, tOrder[0].Id, 'testChannel', 'Copia della registrazione', 'E-Mail');
+			HDT_LC_CopiaContratto.confirmActionDraft(tCase[0], tAccount[0].Id, tOrder[0].Id, 'testChannel', 'Copia della registrazione', 'E-Mail');
 
 			test.stopTest();
 
@@ -193,7 +193,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			                  LIMIT 1];
 
 			System.assertEquals(true, updatedCase!=null, 'Case not updated');
-			System.assertNotEquals(false, updatedCase!=null);
+			System.assertNotEquals(false, updatedCase!=null, 'confirmActionDraft did not work correctly');
 		}
 	}
 
@@ -219,7 +219,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			test.stopTest();
 
 			System.assertEquals(true, chiudiAttivit, 'Case or ActivityCustom not updated');
-			System.assertNotEquals(false, chiudiAttivit);
+			System.assertNotEquals(false, chiudiAttivit, 'chiudiAttivit did not work correctly');
 		}
 	}
 
@@ -245,7 +245,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 			test.stopTest();
 
 			System.assertEquals(true, chiudiAttivitNoCase, 'ActivityCustom not updated');
-			System.assertNotEquals(false, chiudiAttivitNoCase);
+			System.assertNotEquals(false, chiudiAttivitNoCase, 'chiudiAttivitNoCase did not work correctly');
 		}
 	}
 }
