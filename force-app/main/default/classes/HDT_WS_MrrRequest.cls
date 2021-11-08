@@ -60,7 +60,7 @@ global with sharing class HDT_WS_MrrRequest {
             }
 
             if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
-                HDT_SRV_BillableVasDeactivation.testHandler(requestBody.requests[0]);
+                HDT_SRV_BillableVasDeactivation.handlerAsyncronousNotify(requestBody.requests[0]);
                 //HDT_SRV_BillableVasDeactivation billableVasHndlr = new HDT_SRV_BillableVasDeactivation(requestBody.requests[0]);
                 if (requestBody.requests[0].header.requestType=='NOTIF_VAS') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(requestBody.requests[0], mrrResponseItem);
@@ -154,6 +154,6 @@ global with sharing class HDT_WS_MrrRequest {
     }
 
 
-    public virtual class CustomMessageException extends Exception{}
+    public virtual class CustomMessageException extends Exception{} //NOPMD
 
 }

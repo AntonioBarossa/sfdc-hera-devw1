@@ -16,9 +16,6 @@ public with sharing class HDT_QR_UserQueriesWithoutSharingTst {
         User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
         internalUser.UserPermissionsMarketingUser=true;
         insert internalUser;
-        System.runAs(internalUser) {
-            //your testSetup       
-        }
     }
 
     @isTest

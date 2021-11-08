@@ -5,6 +5,7 @@
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
 
+@SuppressWarnings('PMD.ExcessivePublicCount,PMD.TooManyFields')
 public with sharing class HDT_UTL_Constants {
 
     @AuraEnabled
@@ -66,12 +67,20 @@ public with sharing class HDT_UTL_Constants {
     public final String ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT =
     Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_DISTRIBUTORAPPOINTMENT).getRecordTypeId();
 
-            //Activity Custom RecordType comfort quality call
-            @AuraEnabled
-            public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL = 'HDT_RT_ComfortQualityCall';
-            @AuraEnabled
-            public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
-            Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
+    //Activity Custom RecordType comfort quality call
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL = 'HDT_RT_ComfortQualityCall';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_COMFORTQUALITYCALL).getRecordTypeId();
+
+    //Activity Custom RecordType Chiamata Outbound
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CHIAMATAOUTBOUND = 'HDT_RT_ChiamataOutbound';
+    @AuraEnabled
+    public final String ACTIVITYCUSTOM_RECORDTYPEID_CHIAMATAOUTBOUND =
+    Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get(ACTIVITYCUSTOM_RECORDTYPE_DEVELOPERNAME_CHIAMATAOUTBOUND).getRecordTypeId();
+
     //Order RecordType Default
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT = 'HDT_RT_Default';
@@ -214,7 +223,25 @@ public with sharing class HDT_UTL_Constants {
 
     //Hera internal Profiles
     @AuraEnabled
-    public final String SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';    
+    public final String SYSTEM_ADMINISTRATOR_NAME {
+        get{
+
+            switch on System.UserInfo.getLanguage() {
+                when 'en_US' {
+                    return 'System Administrator';
+                } when 'it' {
+                    return 'Amministratore del sistema';
+                } when else {
+                    return 'System Administrator';
+                }
+            }
+            
+        }
+        set{
+            SYSTEM_ADMINISTRATOR_NAME = 'System Administrator';
+        }
+    }
+
     @AuraEnabled
     public final String HERA_M2M_INTEGRATION_NAME = 'Hera M2M Integration User';
     @AuraEnabled

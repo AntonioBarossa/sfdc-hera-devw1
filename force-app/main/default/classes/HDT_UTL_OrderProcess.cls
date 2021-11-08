@@ -35,6 +35,37 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
     }
 
+    public static List<Order> updateChildOrderIvr(Map<String,Order> oldMap, Map<String,Order> newMap) {
+        List<String> orderParentList = new List<String>();
+        List<Order> childrenToUpdate = new List<Order>();
+        for(Order ord : newMap.values()) {
+            if(oldMap.get(ord.id).MethodSignedAccepted__c == null && ord.MethodSignedAccepted__c == 'IVR' && ord.SignedDate__c != null) {
+                orderParentList.add(ord.Id);
+            }
+        }
+
+        List<order> childOrder = orderQr.getChildOrdersByParentIds(orderParentList);
+        for(Order child : childOrder){
+            Order ord = new Order();
+            ord.id = child.id;
+            ord.SignedDate__c = newMap.get(child.ParentOrder__c).SignedDate__c;
+            ord.MethodSignedAccepted__c = 'IVR';
+            if (ord.ProcessType__c == 'Subentro Ele' || ord.ProcessType__c == 'Cambio Offerta Gas' || ord.ProcessType__c == 'Cambio Offerta Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Ele' || ord.ProcessType__c == 'Aggiunta Sconti o Bonus VAS Gas') {
+                ord.Phase__c = 'Comunicazione verso Heroku';
+                childrenToUpdate.add(ord);
+            } else if(ord.ProcessType__c == 'Switch in Ele' || ord.ProcessType__c == 'Switch in Gas') {
+                if (ord.WaiverRightAfterthought__c == 'No' && ord.WizardCompletedDate__c.daysBetween(Date.today()) > 14 ) {
+                    ord.Phase__c = 'In attesa tempi ripensamento';
+                } else {
+                    ord.Phase__c = 'Comunicazione verso Heroku';
+                }
+                childrenToUpdate.add(ord);
+            }
+
+        }
+        return childrenToUpdate;
+    }
+
     public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
         for(Order newOrder : (List<Order>) newMap.values()) {
@@ -217,6 +248,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(ordersFullList != null && !ordersFullList.isEmpty()){
             childOrdersDocValid.addAll(ordersFullList);
+        }
+        List<Order> ivrChildren = updateChildOrderIvr(orderMapOld, orderMapNew);
+        if(ivrChildren != null && !ivrChildren.isEmpty()){
+            childOrdersDocValid.addAll(ivrChildren);
         }
         if (!childOrdersDocValid.isEmpty()) {
             orderSrv.updateRecords(childOrdersDocValid);
@@ -893,9 +928,22 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             {
                 orderNew.Status = 'Annullato';
             }
+            /**@frpanico 22/10/2021
+             * Si entra nello skip soltanto se la fase di partenza non e' di annullamento
+             * Dunque non sono previste activity
+             */
 			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
-				orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
-                return true;
+                if((oldPhase.indexOf('Annullamento - ') == -1 && oldPhase.indexOf('Ripensamento - ') == -1)
+                    || newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato'))
+                {
+				    orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
+                    return true;
+                }
+                return false;
+            /**@frpanico 22/10/2021
+             * Si entra nello skip soltanto se la fase di arrivo non e' di annullamento
+             * Dunque non sono previste activity
+             */
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 orderNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+orderNew.PhaseStory__c;
 				return true;

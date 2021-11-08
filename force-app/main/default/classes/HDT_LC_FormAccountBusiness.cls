@@ -13,12 +13,13 @@ public with sharing class HDT_LC_FormAccountBusiness {
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
     private static HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
     @AuraEnabled
-    public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress){
+    public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress,Map<String,String> contactAddress){
 
         String name;
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
+      // System.debug('pino'+dataAccount.get('fiscalCode'));
         Map<String, String> infoData = new Map<String, String>();
         infoData.put('lastName'     , dataAccount.get('lastName')   );
         infoData.put('firstName'    , dataAccount.get('firstName')  );
@@ -57,7 +58,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         }
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
-        System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
+      //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
         if (!account.CustomerMarking__c.containsIgnoreCase('Condomini')&& !account.CustomerMarking__c.containsIgnoreCase('Associazione')) { //HRAWRM-775
 
            
@@ -112,7 +113,17 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 }
                 if(personCon.Phone ==null && String.isNotBlank(dataAccount.get('contactPhoneNumber'))){
                     c.put('Phone', dataAccount.get('contactPhoneNumber'));
+                } 
+                //HRAWRM-933 Start 08/11/2021
+                for(String s: contactAddress.keySet()){
+                    if('MailingIsAddressVerified__c' == s){
+                        personCon.put(s, contactAddress.get(s) == 'true' ? true : false);
+                    }
+                    else{
+                        personCon.put(s, contactAddress.get(s));
+                    }
                 }
+                //HRAWRM-933 End 08/11/2021
                 contactSrv.checkUpdateAccess(c);
                 contactSrv.updateRecord(c);
 
@@ -209,6 +220,16 @@ public with sharing class HDT_LC_FormAccountBusiness {
             Account accPerson= accountSrv.createRecord(accountPerson);
 
             Contact personContact= new Contact(AccountId= accPerson.Id,LastName= accountPerson.LastName__c,FirstName=accountPerson.FirstName__c ,Birthcity__c= dataAccount.get('birthplace'),Birthdate= birthdate,FiscalCode__c= accountPerson.FiscalCode__c,Email= accountPerson.PrimaryEmail__c,Fax= accountPerson.FAX__c,MobilePhonePrefix__c= accountPerson.MobilePhonePrefix__c, MobilePhone= accountPerson.MobilePhone__c ,PhonePrefix__c= accountPerson.PhonePrefix__c, Phone= accountPerson.Phone ,Profession__c= accountPerson.Profession__c);
+           //HRAWRM-933 Start 08/11/2021
+            for(String s: contactAddress.keySet()){
+                if('MailingIsAddressVerified__c' == s){
+                    personContact.put(s, contactAddress.get(s) == 'true' ? true : false);
+                }
+                else{
+                    personContact.put(s, contactAddress.get(s));
+                }
+            }
+            //HRAWRM-933 End 08/11/2021
             contactSrv.checkCreateAccess(personContact);
             Contact personCont= contactSrv.createRecord(personContact);
             //Start HRDTR-00_HRAWRM-455 07/09/2021

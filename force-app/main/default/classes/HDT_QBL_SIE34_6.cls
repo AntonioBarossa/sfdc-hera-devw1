@@ -33,10 +33,14 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
        String status                  = 'success'   ;
        String errorMessage            = ''          ;
  
-       String condition = '  ';
+       String condition = '  LastModifiedDate >=:filterDate  ';
        String query     = 'SELECT DistributorNote__c,Account.LastName__c,CaseNumber,CreatedDate,SubProcess__c,Account.CustomerCode__c,Account.VATNumber__c,Account.FiscalCode__c,Contact.MobilePhone,Contact.FAX,Contact.Email,Contact.FirstName,Contact.LastName,Account.BillingStreetName__c,Account.BillingStreetNumber__c,Account.BillingPostalCode,Account.BillingCity,Account.BillingState,FirstName__c,LastName__c,ComplaintEntryChannel__c,ServicePoint__r.SupplyStreet__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyCityCode__c,BillingProfile__r.InvoicingStreetName__c,BillingProfile__r.InvoicingStreetNumber__c,BillingProfile__r.InvoicingCity__c,BillingProfile__r.InvoicingProvince__c,BillingProfile__r.PaymentMethod__c,BillingProfile__r.BankName__c,BillingProfile__r.BankAgency__c,BillingProfile__r.IbanCountry__c,BillingProfile__r.IbanCIN_IBAN__c,BillingProfile__r.IbanCIN__c,BillingProfile__r.IbanABI__c,BillingProfile__r.IbanCAB__c,BillingProfile__r.IbanCodeNumber__c,BillingProfile__r.BankAccountSignatoryLastName__c,PODPDRFormula__c,CommodityFormula__c,AnnualConsumption__c,AtecoCode__c,ServicePointType__c,TensionOption__c,PowerContractualFormula__c,Power__c ,Voltage__c,DistributorCode__c,Distributor__c,VATPercentage__c,Taxes__c,Account.BillingStreetNumberExtension__c,Account.BillingPlace__c,ServicePoint__r.SupplyStreetNumberExtension__c,ServicePoint__r.SupplyPlace__c,BillingProfile__r.InvoicingStreetNumberExtension__c,BillingProfile__r.InvoicingPlace__c,BillingProfile__r.InvoicingAddressFormula__c,CreatedBy.Name,PhoneNumber__c,Disconnectable__c,DisconnectibilityType__c,Account.Category__c,Mobile__c,RemoteManagementSystem__c,CustomerRequestDate__c,Amount__c,QuotationNumber__c,ConnectionType__c,UseTypeEnergy__c,Account.CustomerType__c,DisplacementDistance__c,BillingProfile__r.BillSendingMethod__c,BillingProfile__r.InvoiceEmailAddress__c,Account.FirstName__c,BillingProfile__r.ContractAccountCode__c,BillingProfile__r.BankAccountSignatoryFirstName__c,BillingProfile__r.BankAccountSignatoryFiscalCode__c,BillingProfile__r.InvoicingPostalCode__c,BillingProfile__r.InvoiceCertifiedEmailAddress__c,BillingProfile__r.SendCertifiedEmailConsentDate__c FROM Case ';
-       String separator = ';';
- 
+       
+       // Delete Start old File
+       String title                   = 'OUT_RDS_PIATTE' ;
+       HDT_UTL_ContentVersion.deleteFiles(title)         ;
+       // Delete End old File
+       String separator = ';'                            ;
     
        try {
           
@@ -282,18 +286,18 @@ public with sharing class HDT_QBL_SIE34_6 implements Queueable  {
              }
           }
           if (listCase!=null && listCase.size()>0 ) {
-             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_RDS_PIATTE.txt','OUT_RDS_PIATTE'));
+             contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_RDS_PIATTE.txt',title));
           }
           if(!Test.isRunningTest()){
             System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
           }
-       } 
-       catch (Exception e) {
+       } catch (Exception e) {
           errorMessage=e.getMessage();
           status='failed';
           if(!Test.isRunningTest()){
             System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,new List<String>()));
          }
+         
        }
       
     }

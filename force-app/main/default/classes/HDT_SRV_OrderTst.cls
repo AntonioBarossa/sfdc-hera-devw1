@@ -20,7 +20,7 @@ public class HDT_SRV_OrderTst{
 			HDT_UTL_DataFactoryTst.pClickInstance();
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Bozza');
+			HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Bozza');
 		}
 	}
 
@@ -328,8 +328,6 @@ public class HDT_SRV_OrderTst{
 			Date tBusinessDay=orderSrv.addBusinessDay(Date.today(), 5);
 
 			Test.stopTest();
-
-			Date tDate=Date.today().addDays(5);
 
 			System.assertEquals(true, tBusinessDay>Date.today(), 'Date not updated');
 			System.assertNotEquals(null, tBusinessDay, 'Date not updated');

@@ -24,8 +24,13 @@ public with sharing class HDT_QBL_SIE34_2MM implements Queueable  {
  
  
     public void execute(QueueableContext context) {
-       String status                  = 'success'   ;
-       String errorMessage            = ''          ;
+       String status                  = 'success'              ;
+       String errorMessage            = ''                     ;
+       // Delete Start old File
+       String title                   = 'PP_OUT_PREVENTIVI_MM' ;
+       HDT_UTL_ContentVersion.deleteFiles(title);
+      // Delete End old File
+
        //query PP(EE)OUT_PREVENTIVI_SME
        String conditionEle = '  WHERE Cluster__c =\'Preventivi\' AND Status =\'Closed\' AND LastModifiedDate >=:filterDate  ';
        String queryEle    = 'SELECT Contract__r.ContractSalesCompany__c,BillingProfile__r.InvoicingCountry__c,BillingProfile__r.ContractAccountCode__c,Account.LastName__c,Account.BillingCity,Account.BillingPlace__c, Account.BillingPostalCode,Account.BillingState,Account.BillingStreetName__c,Account.BillingStreetNumberExtension__c, Account.BillingStreetNumber__c, Account.Category__c, Account.CustomerCode__c,'+
@@ -64,7 +69,7 @@ public with sharing class HDT_QBL_SIE34_2MM implements Queueable  {
 
       
          if (String.isNotBlank(body)) {
-            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_MM.txt','PP_OUT_PREVENTIVI_MM'));
+            contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'PP_OUT_PREVENTIVI_MM.txt',title));
          }
          System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));
        } 

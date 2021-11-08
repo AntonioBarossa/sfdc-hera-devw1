@@ -503,7 +503,7 @@ public with sharing class HDT_UTL_LeadProcess {
                         HDT_WS_InvioNumerazioni.callService(macroactivity, l.MobilePhone);
                     }      
                     if(mapRequestFields.get('FILE') != null && mapRequestFields.get('FILE') != ''){
-                        ContentDocumentLink cdl = new ContentDocumentLink();
+                        //ContentDocumentLink cdl = new ContentDocumentLink();
                         HDT_QR_ContentVersion conDocQr = new HDT_QR_ContentVersion();
                         ContentVersion cvdl = conDocQr.getRecordById(mapRequestFields.get('FILE'));
                         cdlSrv.createRecord(l.id,cvdl.contentDocumentId,'C');
@@ -781,9 +781,9 @@ public with sharing class HDT_UTL_LeadProcess {
             if(isValidated){
                 HDT_QR_Contact conQr = new HDT_QR_Contact();
                 String contactId = '';
-                ContactPointEmail cntE = HDT_QR_ContactPoint.searchContactPointEmailSOL(mapRequestFields.get('EMAIL'));
-                if(cntE != null ){
-                    Contact con = conQr.getContactsByIndividual(cntE.parentId);
+                ContactPointEmail cntEmail = HDT_QR_ContactPoint.searchContactPointEmailSOL(mapRequestFields.get('EMAIL'));
+                if(cntEmail != null ){
+                    Contact con = conQr.getContactsByIndividual(cntEmail.parentId);
                     contactId = con != null ? con.id : '';
                 }
                 
@@ -863,6 +863,7 @@ public with sharing class HDT_UTL_LeadProcess {
                     
                     Individual indv= indvQr.getRecordById(ctl.IndividualId, 'Id, MarketingPrivacy__c, MarketingPrivacyVersion__c, PrivacyMarketingChoiceSource__c,PrivacyMarketingConsentInitiative__c, MarketingCompanyConsent__c,PrivacyMarketingChoiceDate__c');
                     indv.MarketingPrivacy__c= mapRequestFields.get('CONSENSOMARKETING');
+                    indv.PrivacyMarketingConsentInitiative__c= mapRequestFields.get('INIZIATIVACONSMARK'); // HRAWRM-919 25/10/2021
                     indv.MarketingCompanyConsent__c= mapRequestFields.get('COMPANYCONSENSOMARKETING');
                     indv.MarketingPrivacyVersion__c= mapRequestFields.get('VERSINFOMARKET');
                     indv.PrivacyMarketingChoiceSource__c= mapRequestFields.get('FONTECONSENSOMRK');

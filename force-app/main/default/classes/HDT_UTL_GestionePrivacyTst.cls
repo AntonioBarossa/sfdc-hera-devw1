@@ -27,7 +27,7 @@ public class HDT_UTL_GestionePrivacyTst {
         leadsList[0].IsAddressVerified__c = true;        
         insert leadsList;
                     
-        List<ContactPointPhone> cpp = HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, leadsList[0].IndividualId);
+        HDT_UTL_DataFactoryTst.createContactPointPhone(1, true, leadsList[0].IndividualId);
         List<ContactPointEmail> cpe = HDT_UTL_DataFactoryTst.createContactPointEmail(1, false, leadsList[0].IndividualId);
         cpe[0].Status__c='Verificato';
         cpe[0].EmailAddress='test@gmail.com';
@@ -103,7 +103,7 @@ public class HDT_UTL_GestionePrivacyTst {
 			                          LIMIT 1];
 			convLead.setConvertedStatus(convertStatus.MasterLabel);
 
-			Database.LeadConvertResult lcr=Database.convertLead(convLead);
+			Database.convertLead(convLead);
         List<Lead> leads = [SELECT Id,MobilePhone,MobilePhonePrefix__c,ConvertedContactId,Phone,Email,IndividualId, PhonePrefix__c FROM Lead Where isConverted=true];
 		leads[0].IndividualId= oldLead[0].IndividualId;
         HDT_UTL_GestionePrivacy.updateContactPointFromObjectLead(leads,oldLead);
@@ -379,7 +379,7 @@ public class HDT_UTL_GestionePrivacyTst {
 			                          LIMIT 1];
 			convLead.setConvertedStatus(convertStatus.MasterLabel);
 
-			Database.LeadConvertResult lcr=Database.convertLead(convLead);
+			Database.convertLead(convLead);
 
         HDT_UTL_GestionePrivacy.convertLeadPrivacy(con.Id,l.Id);
         
@@ -456,9 +456,6 @@ public class HDT_UTL_GestionePrivacyTst {
         conts[0].IndividualId=null;
         update conts;
         System.debug('conts*****'+conts);
-
-        List<Contact> conts1 = [SELECT Id,IndividualId FROM Contact];
-        System.debug('conts1*****'+conts1);
         List<String> contactIds= new List<String>();
 		contactIds.add(conts[0].Id);
         List<String> mobPhones= new List<String>();

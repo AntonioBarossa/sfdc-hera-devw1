@@ -31,6 +31,9 @@ public with sharing class HDT_WRP_AttributesTst {
             Test.startTest();
 
             HDT_WRP_Attributes att = new HDT_WRP_Attributes();
+
+            System.assertEquals('', att.email, 'HDT_WRP_Attributes did not work correctly');
+            System.assertNotEquals(null, att, 'HDT_WRP_Attributes did not work correctly');
  
             Test.stopTest();
         }

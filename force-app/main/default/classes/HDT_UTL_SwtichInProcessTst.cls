@@ -14,7 +14,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 		HDT_UTL_DataFactoryTst.pClickInstance();
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.HERA_SYSTEM_ADMINISTRATOR_NAME);
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
@@ -49,8 +49,8 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			fullfillDateMtx[0].Commodity__c='Energia Elettrica';
 			fullfillDateMtx[0].VoltageLevel__c='BT';
 			fullfillDateMtx[0].SupplyType__c='Non Domestico';
-			fullfillDateMtx[0].FulfillmentDateFrom__c=Date.newInstance(2021, 09, 11);
-			fullfillDateMtx[0].FulfillmentDateTo__c=Date.newInstance(2021, 10, 10);
+			fullfillDateMtx[0].FulfillmentDateFrom__c=Date.today();
+			fullfillDateMtx[0].FulfillmentDateTo__c=Date.today();
 			fullfillDateMtx[0].ActivationDate__c=Date.newInstance(2021, 11, 01);
 			insert fullfillDateMtx;
 		}
@@ -77,7 +77,8 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			test.stopTest();
 
 			System.assertEquals(false, checkAccOrderisRes.isEmpty(), 'Return is wrong');
-			System.assertNotEquals(true, checkAccOrderisRes.isEmpty());
+			System.assertNotEquals(true, checkAccOrderisRes.isEmpty(), 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 
@@ -106,7 +107,9 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			test.stopTest();
 
 			System.assertEquals(tOrder[0].SignedDate__c, getMaxAfterthoughtDate, 'Date is wrong');
-			System.assertNotEquals(false, getMaxAfterthoughtDate==tOrder[0].SignedDate__c);
+
+			System.assertNotEquals(false, getMaxAfterthoughtDate==tOrder[0].SignedDate__c, 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 
@@ -139,7 +142,7 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			tOrderRes[0].DocSendingMethod__c='Cartacea';
 
 			Date getDateSentToSii=HDT_UTL_SwtichInProcess.getDateSentToSii(tOrder[0]);
-			Date getDateSentToSiiRes=HDT_UTL_SwtichInProcess.getDateSentToSii(tOrderRes[0]);
+			HDT_UTL_SwtichInProcess.getDateSentToSii(tOrderRes[0]);
 
 			test.stopTest();
 
@@ -148,7 +151,9 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			                          LIMIT 1];
 
 			System.assertEquals(updatedOrder[0].SignedDate__c, getDateSentToSii, 'Date is wrong');
-			System.assertNotEquals(false, getDateSentToSii==updatedOrder[0].SignedDate__c);
+
+			System.assertNotEquals(false, getDateSentToSii==updatedOrder[0].SignedDate__c, 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 
@@ -196,12 +201,14 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 			update tOrderRes;
 
 			Date getEffectiveDate=HDT_UTL_SwtichInProcess.getEffectiveDate(tOrder[0]);
-			Date getEffectiveDateRes=HDT_UTL_SwtichInProcess.getEffectiveDate(tOrderRes[0]);
+			HDT_UTL_SwtichInProcess.getEffectiveDate(tOrderRes[0]);
 
 			test.stopTest();
 
 			System.assertEquals(tFulDatMat[0].ActivationDate__c, getEffectiveDate, 'Date is wrong');
-			System.assertNotEquals(false, getEffectiveDate==tFulDatMat[0].ActivationDate__c);
+
+			System.assertNotEquals(false, getEffectiveDate==tFulDatMat[0].ActivationDate__c, 'HDT_UTL_SwtichInProcess did not work correctly');
+
 		}
 	}
 }

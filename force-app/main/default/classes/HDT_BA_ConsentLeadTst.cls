@@ -33,47 +33,47 @@ public class HDT_BA_ConsentLeadTst {
             }
             update inds;
             
-            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(1,true);  
+            List<Lead> leadsMail = HDT_UTL_DataFactoryTst.createLead(1,true);  
             Integer i=0;
-            for(Lead l : leads){
+            for(Lead l : leadsMail){
                 l.FirstName='FirstNameTest' + i;
                 l.LastName='LastNameTest' + i;
                 l.Email='email@'+3+'.it';
                 l.IndividualId=inds[1].id;
                 i++;
             }
-            update leads;
+            update leadsMail;
         
-            List<Lead> leads2 = HDT_UTL_DataFactoryTst.createLead(50,true);        
+            List<Lead> leadsNoMail = HDT_UTL_DataFactoryTst.createLead(50,true);        
             i=0;
-            for(Lead l : leads2){
+            for(Lead l : leadsNoMail){
                 l.FirstName='FirstNameTest2' + i;
                 l.LastName='LastNameTest2' + i;
                 l.IndividualId=inds[0].id;
                 i++;
             }
-            update leads2;
+            update leadsNoMail;
     
-            List<Lead> leads3 = HDT_UTL_DataFactoryTst.createLead(50,true);
+            List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(50,true);
             i=0;
-            for(Lead l : leads3){
+            for(Lead l : leads){
                 l.FirstName='FirstNameTest3' + i;
                 l.LastName='LastNameTest3' + i;
                 l.Email='indirizzo@'+i+'.it';
                 l.IndividualId=inds[1].id;
                 i++;
             }
-            update leads3;
+            update leads;
         
-            List<Lead> leads4 = HDT_UTL_DataFactoryTst.createLead(10,true);        
+            List<Lead> leadsDuplicate = HDT_UTL_DataFactoryTst.createLead(10,true);        
             i=0;
-            for(Lead l : leads4){
+            for(Lead l : leadsDuplicate){
                 l.FirstName='FirstNameTest4' + i;
                 l.LastName='LastNameTest4' + i;
                 l.IndividualId=inds[1].id;
                 i++;
             }
-            update leads4;
+            update leadsDuplicate;
             
         
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
@@ -90,10 +90,10 @@ public class HDT_BA_ConsentLeadTst {
                 i++;
             }
             insert contacts;
-            List<Contact> contacts2 = HDT_UTL_DataFactoryTst.createContact(50,false,accId);
+            List<Contact> contactsDuplicate = HDT_UTL_DataFactoryTst.createContact(50,false,accId);
 
             i=0;
-            for(Contact c: contacts2){
+            for(Contact c: contactsDuplicate){
                 c.FirstName='test2'+i;
                 c.LastName='tester2'+i;
                 c.Email='email@'+i+'.it';
@@ -101,7 +101,7 @@ public class HDT_BA_ConsentLeadTst {
                 c.Company__c='MMS';
                 i++;
             }    
-            insert contacts2;
+            insert contactsDuplicate;
         
         
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('CampagenDmDmpData','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
@@ -110,7 +110,7 @@ public class HDT_BA_ConsentLeadTst {
 	}
     
     @isTest
-    static void test1(){         
+    static void testSet(){         
         
         String paramRunId = 'someid';
         
@@ -120,7 +120,7 @@ public class HDT_BA_ConsentLeadTst {
         Test.startTest();
         HDT_BA_ConsentLead cl = new HDT_BA_ConsentLead(paramRunId);
         cl.setEmailContactProcessed=setEmailContactProcessed;
-        Id batchId = Database.executeBatch(cl,200);
+        Database.executeBatch(cl,200);
         Test.stopTest();
 
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
@@ -128,13 +128,13 @@ public class HDT_BA_ConsentLeadTst {
         
     }
     @isTest
-    static void test2(){         
+    static void testParam(){         
         
         String paramRunId = 'someid';
         
         Test.startTest();
         HDT_BA_ConsentLead cl = new HDT_BA_ConsentLead(paramRunId);
-        Id batchId = Database.executeBatch(cl,200);
+        Database.executeBatch(cl,200);
         Test.stopTest();
 
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];
@@ -142,7 +142,7 @@ public class HDT_BA_ConsentLeadTst {
         
     }
     @isTest
-    static void test3(){
+    static void testParamSet(){
         String paramRunId = '123456789';
         
         Set<String> setEmailContactProcessed = new Set<String>();
@@ -150,7 +150,7 @@ public class HDT_BA_ConsentLeadTst {
         
         Test.startTest();
         HDT_BA_ConsentLead cl = new HDT_BA_ConsentLead(paramRunId);
-        Id batchId = Database.executeBatch(cl,200);
+        Database.executeBatch(cl,200);
         Test.stopTest();
 
         List <ContentVersion> lista = [Select id from ContentVersion where Title LIKE 'heradmp_firstpartydata_%'];

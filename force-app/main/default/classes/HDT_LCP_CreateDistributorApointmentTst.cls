@@ -9,13 +9,14 @@ public class HDT_LCP_CreateDistributorApointmentTst {
 
     @TestSetup
     static void requiredData(){
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+        HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
     }
    @isTest
     public static void createActivityFromCaseTest(){
@@ -48,7 +49,7 @@ public class HDT_LCP_CreateDistributorApointmentTst {
     public static void createActivityNegativeTest(){
         try{
            Test.startTest();
-           Map<String, Object> response = HDT_LCP_CreateDistributorApointment.createActivity(null);
+           HDT_LCP_CreateDistributorApointment.createActivity(null);
            Test.stopTest();
         }
         catch(Exception e){

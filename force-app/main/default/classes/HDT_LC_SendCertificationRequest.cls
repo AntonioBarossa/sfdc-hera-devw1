@@ -22,7 +22,6 @@ public with sharing class HDT_LC_SendCertificationRequest {
             Boolean needsUpdate = false;
             
             String fields = 'Id, Status__c, SendToMarketingCloud__c, Contact__c, ParentId ';
-            List<SObject> recordsToUpdate = new List<SObject>();
 
             sObject contactPointRecord = HDT_QR_ContactPoint.getContactPointByIdAndObjectType(objectapiname, recordId, fields);
 

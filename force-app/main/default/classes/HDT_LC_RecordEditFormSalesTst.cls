@@ -39,7 +39,7 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
             accounts[0].FiscalCode__c='SXSRLA45H28H501K';
             insert accounts;
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
+			HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].id, 'Attiva');
 			List<ServicePoint__c> servpoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].id);
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].id);
@@ -129,8 +129,6 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 
 		Boolean confirm=HDT_LC_RecordEditFormSales.confirmForApproval(tCase.Id, tAccount.Id);
 
-		System.debug('confirm = '+confirm);
-
 		System.assertEquals(false, confirm, 'Custom Activity not returned');
 		System.assertNotEquals(true, confirm, 'value of parameter is not matching');
 		Test.stopTest();
@@ -177,17 +175,12 @@ public with sharing class HDT_LC_RecordEditFormSalesTst{
 
 			String result = HDT_LC_RecordEditFormSales.savePractice(tCase2.Id, tAccount.Id, caseobj);
             
-            String result2 = HDT_LC_RecordEditFormSales.savePractice(tCase.Id, tAccount.Id, caseobj);
-
-
-			Case tCaseUpdt=[SELECT Id, Phase__c
-			                FROM Case
-			                WHERE Id=:tCase.Id];
+            String anotherResult = HDT_LC_RecordEditFormSales.savePractice(tCase.Id, tAccount.Id, caseobj);
 
 			System.assertEquals('success', result, 'value of parameter is matching');
 			System.assertNotEquals(null, result, 'value of parameter is not matching');
-            System.assertEquals('success2', result2, 'value of parameter is matching');
-			System.assertNotEquals(null, result2, 'value of parameter is not matching');
+            System.assertEquals('success2', anotherResult, 'value of parameter is matching');
+			System.assertNotEquals(null, anotherResult, 'value of parameter is not matching');
 			Test.stopTest();
 		}
 	}

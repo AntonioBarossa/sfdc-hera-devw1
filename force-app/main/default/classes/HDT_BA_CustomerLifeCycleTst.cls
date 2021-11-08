@@ -53,12 +53,12 @@ public with sharing class HDT_BA_CustomerLifeCycleTst {
         Database.executeBatch(new HDT_BA_CustomerLifeCycle());
         Test.stopTest();
         List<Account> accounts = [SELECT Id, CustomerLifeCycleGas__c, CustomerLifeCycleWaste__c, CustomerLifeCycleWater__c, CustomerLifeCycleEnergy__c, CustomerLifeCycleNonEnergy__c FROM Account ORDER BY Name ASC];
-        System.assertEquals('WELCOME', accounts[0].CustomerLifeCycleGas__c);
-        System.assertEquals('ONBOARDING', accounts[1].CustomerLifeCycleWaste__c);
-        System.assertEquals('ONBOARDING', accounts[0].CustomerLifeCycleWater__c);
-        System.assertEquals('ENGAGEMENT', accounts[0].CustomerLifeCycleEnergy__c);
+        System.assertEquals('WELCOME', accounts[0].CustomerLifeCycleGas__c,'This is the value provided on the field');
+        System.assertEquals('ONBOARDING', accounts[1].CustomerLifeCycleWaste__c,'This is the value provided on the field');
+        System.assertEquals('ONBOARDING', accounts[0].CustomerLifeCycleWater__c,'This is the value provided on the field');
+        System.assertEquals('ENGAGEMENT', accounts[0].CustomerLifeCycleEnergy__c,'This is the value provided on the field');
         // System.assertEquals('LOST', accounts[0].CustomerLifeCycleNonEnergy__c);
-        System.assertEquals(null, accounts[1].CustomerLifeCycleEnergy__c);
-        System.assertEquals(null, accounts[1].CustomerLifeCycleNonEnergy__c);  // FIELD NOT POPULATED IN MAKE DATA - SHOULD NOT BE UPDATED BY BATCH
+        System.assertEquals(null, accounts[1].CustomerLifeCycleEnergy__c,'This field is not provided');
+        System.assertEquals(null, accounts[1].CustomerLifeCycleNonEnergy__c,'This field is not provided');  // FIELD NOT POPULATED IN MAKE DATA - SHOULD NOT BE UPDATED BY BATCH
     }
 }

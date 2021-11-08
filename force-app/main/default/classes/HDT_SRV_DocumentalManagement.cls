@@ -326,7 +326,7 @@ public class HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
 				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
@@ -357,11 +357,15 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			
 			if(record.getSobjectType() == Case.getSobjectType()){
+				String caseType = (String)record.get('Type');
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
+					if ('Rimborso'.equalsIgnoreCase(caseType) || 'Piano Rateizzazione'.equalsIgnoreCase(caseType)){
+						HDT_UTL_Case.createActivity((Id)record.get('Id'), 'Validazione Firma OTP', 'Validazione Firma OTP', 'Validazione Firma OTP');
+					}				
 				}else{
 					//Che fase documentale settare?
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
@@ -632,10 +636,10 @@ public class HDT_SRV_DocumentalManagement{
 		try {
 			//signInfo
 			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
-			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','PhoneNumber__c',0,inputs,formParams);
 			String telephoneNumber = '+39';
 			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
-			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
+			String emailOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','ShippingMail__c',0,inputs,formParams);
 			if(String.isNotBlank(telephoneNumberCase)){
 				telephoneNumber = telephoneNumber + telephoneNumberCase;
 			}else {

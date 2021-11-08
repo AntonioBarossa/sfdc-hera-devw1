@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>AZ_ImportDatetime</label>
+    <label>Data importazione Archivio</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

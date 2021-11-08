@@ -13,7 +13,7 @@ public with sharing class HDT_QR_FileTemplateTst {
 
         List<FileTemplate__c> ftList = HDT_UTL_DataFactoryTst.createFileTemplate(1, true);
 
-        List<FileTemplateColumn__c> ftcList = HDT_UTL_DataFactoryTst.createFileTemplateColumn(1, true, ftList[0].Id);
+        HDT_UTL_DataFactoryTst.createFileTemplateColumn(1, true, ftList[0].Id);
         
     }
 

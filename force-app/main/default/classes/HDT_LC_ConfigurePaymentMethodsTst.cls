@@ -11,6 +11,8 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
 
     @TestSetup
     static void setup(){
+
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
         
         Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
  
@@ -21,6 +23,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
         insert internalUser;
  
         System.runAs(internalUser) {
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
             //seu testSetup   
             List<Account> accountList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accountList[0].id, 'Bozza');
@@ -47,7 +50,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
             Sale__c tSale = [SELECT Id FROM Sale__c LIMIT 1];
             
             new HDT_LC_ConfigurePaymentMethods();
-            Boolean sucessAcc = HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
+            HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
             
             System.assertEquals('No', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');
             System.assertNotEquals('Si', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');
@@ -69,7 +72,7 @@ public with sharing class HDT_LC_ConfigurePaymentMethodsTst {
             Sale__c tSale = [SELECT Id FROM Sale__c LIMIT 1];
             
             new HDT_LC_ConfigurePaymentMethods();
-            Boolean failAcc = HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
+            HDT_LC_ConfigurePaymentMethods.disableBotton(tAccount.Id, tSale);
             
             System.assertEquals('Si', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');
             System.assertNotEquals('No', tActivityCust.Approved__c, 'tActivityCust Approved__c not populated correctly');

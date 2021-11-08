@@ -21,7 +21,7 @@ public with sharing class HDT_SRV_RecordShareTst {
         User standardUser = HDT_UTL_DataFactoryTst.createInternalUser(standardUserProfileId, true);
  
         internalUser.UserPermissionsMarketingUser=true;
-        internalUser.FirstName = 'test Adm User';
+        internalUser.FirstName = 'test Admin User';
         insert internalUser;
 
         System.runAs(internalUser) {
