@@ -38,11 +38,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
             this.idList = [this.recordId];
         }
         if(!this.idList[0]) {
-            this.status = {
-                error: true,
-                title: "ATTENZIONE",
-                message: "Nessun record selezionato."
-            } 
+            this.handleListButtonError("ATTENZIONE", "Nessun record selezionato.");
         }
         if(this.assignToMeMode) {
             this.doAssignToMe();
@@ -56,6 +52,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
                 this.assigneesSearched = true;
             } catch (err) {
                 console.log("### ERROR: " + err);
+                this.handleListButtonError("ERRORE", err);
             }
         }
     }
@@ -66,6 +63,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
                 this.workGroups = await getWorkGroups({queryString: event.target.value});
             } catch (err) {
                 console.log("### ERROR: " + err);
+                this.handleListButtonError("ERRORE", err);
             }
         }
     }
@@ -132,10 +130,14 @@ export default class hdtActivityReassignmentCore extends LightningElement {
 
     handleReassignResult(errorMessage) {
         if(errorMessage) {
-            if(errorMessage.includes("TRANSFER_REQUIRES_READ")) {
-                this.showToast("error", "Riassegnazione fallita", "L'assegnatario selezionato non ha visibilità sul record corrente.");
+            if(this.recordId) {
+                if(errorMessage.includes("TRANSFER_REQUIRES_READ")) {
+                    this.showToast("error", "Riassegnazione fallita", "L'assegnatario selezionato non ha visibilità sul record corrente.");
+                } else {
+                    this.showToast("error", "Errore", errorMessage);
+                }
             } else {
-                this.showToast("error", "Errore", errorMessage);
+                this.handleListButtonError("ERRORE", errorMessage);
             }
         } else {
             if(this.recordId) {
@@ -147,14 +149,12 @@ export default class hdtActivityReassignmentCore extends LightningElement {
             }
         }
     }
-    
-    goBack() {
-        window.history.back();
-    }
 
     toggleHoveredClass(event) {
         this.template.querySelector(`[data-id="${event.currentTarget.dataset.id}"]`).classList.toggle("hovered");
     }
+
+    // MODAL
 
     refreshPage() {
         getRecordNotifyChange([{recordId: this.recordId}]);
@@ -170,5 +170,19 @@ export default class hdtActivityReassignmentCore extends LightningElement {
             title: title,
             message: message
         }));
+    }
+
+    // LIST BUTTONS
+
+    handleListButtonError(title, message) {
+        this.status = {
+            error: true,
+            title: title,
+            message: message
+        };
+    }
+
+    goBack() {
+        window.history.back();
     }
 }
