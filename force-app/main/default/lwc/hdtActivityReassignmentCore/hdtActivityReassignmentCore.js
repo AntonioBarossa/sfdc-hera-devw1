@@ -51,7 +51,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
                 this.assignees = await getAssignees({queryString: event.target.value});
                 this.assigneesSearched = true;
             } catch (err) {
-                console.log("### ERROR: " + err);
+                console.error(err);
                 this.handleListButtonError("ERRORE", err);
             }
         }
@@ -62,7 +62,7 @@ export default class hdtActivityReassignmentCore extends LightningElement {
             try {
                 this.workGroups = await getWorkGroups({queryString: event.target.value});
             } catch (err) {
-                console.log("### ERROR: " + err);
+                console.error(err);
                 this.handleListButtonError("ERRORE", err);
             }
         }
