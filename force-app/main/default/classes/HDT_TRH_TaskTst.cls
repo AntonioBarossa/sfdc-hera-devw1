@@ -9,6 +9,7 @@ public with sharing class HDT_TRH_TaskTst {
     
     //DEBUG
     public static final String TEST_NAME = 'HDT_TRH_TaskTst';
+    private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
     
     
     //TEST SETUP
@@ -29,7 +30,7 @@ public with sharing class HDT_TRH_TaskTst {
         
         String uniqueUserName = 'systemAdmin' + DateTime.now().getTime() + '@testorg.com';
         // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        Profile p = [SELECT Id FROM Profile WHERE Name =: utlConstants.SYSTEM_ADMINISTRATOR_NAME ];
         User u = new User(Alias = 'sysAdmin', Email='systemadministrator@testorg.com',
         EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
         LocaleSidKey='en_US', ProfileId = p.Id,
