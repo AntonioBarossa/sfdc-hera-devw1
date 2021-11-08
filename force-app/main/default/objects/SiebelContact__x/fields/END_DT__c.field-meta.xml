@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>END_DT</label>
+    <label>Data fine validità</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>
