@@ -328,7 +328,9 @@ public inherited sharing class HDT_QR_Order {
             SignatoryType__c,
             SendCertifiedEmailConsentDate__c,
             CreateContractAccount__c,
-            IbanCountry__c
+            IbanCountry__c,
+            CommercialProductVersion__c,
+            CommercialProductCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

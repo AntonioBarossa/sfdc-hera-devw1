@@ -50,6 +50,8 @@ public class HDT_QR_ContactTst{
 		              LIMIT 1];
 
 
+		
+		
 		Individual indTest=new Individual();
 		indTest.LastName='test';
 
@@ -268,7 +270,7 @@ public class HDT_QR_ContactTst{
 		tcon.OwnerId=ownerId;
 		tcon.MailingLatitude=41.90396;
 		tcon.MailingLongitude=12.479154999999999;
-		tcon.LastName='fabricio.nunes@heravendita.com.devwrnunes';
+		tcon.LastName=ownerName;
 		tcon.FirstName='';
 
 		update tcon;
