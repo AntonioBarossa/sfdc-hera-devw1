@@ -124,7 +124,7 @@
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <lightning-combobox data-id="role" name="role" label="Ruolo"
-                                        placeholder="Seleziona Ruolo" options={roleOptions} required>
+                                        placeholder="Seleziona Ruolo" options={roleOptions} onchange={handleChangeRole} required>
                                     </lightning-combobox>
                                 </div>
 
@@ -142,9 +142,9 @@
 
                     <lightning-card title="Indirizzi">
                         <lightning-input type="toggle" label="Inserisci Indirizzo" name="insertAddress"
-                            data-id="insertAddress" value={insertAddress} onchange={handleInsertAddressAddRes}>
+                            data-id="toggleContactDetails"  onchange={handleToggleContactDetails}  disabled={disableToggleContactDetails} >
                         </lightning-input>
-                        <template if:true={insertAddress}>
+                        <template if:true={addressContactDetails}>
                             <div class="slds-p-left_x-large slds-p-right_x-large">
                                 <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}>
                                 </c-hdt-target-object-address-fields>
@@ -167,7 +167,7 @@
                             </div>
                             <div
                                 class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                <lightning-input type="tel" data-id="mobilePhone" label="Cellulare">
+                                <lightning-input type="tel" data-id="mobilePhone" label="Cellulare" max-length="11">
                                 </lightning-input>
                             </div>
 
@@ -182,7 +182,7 @@
                             </div>
                             <div
                                 class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso">
+                                <lightning-input type="tel" data-id="phoneNumber" label="Telefono Fisso" max-length="11">
                                 </lightning-input>
                             </div>
 
