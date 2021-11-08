@@ -12,6 +12,7 @@ public virtual class HDT_TRH_TriggerHandler {
   private static final String LIST_SEPARATOR = ';';
 
   // static map of handlername, times run() was invoked
+  @TestVisible
   private static Map<String, HDT_TRH_LoopCount> loopCountMap;
   private static Set<String> bypassedHandlers;
 
