@@ -650,7 +650,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if (this.addressContactDetails) {
                 this.contactAddress =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
                 this.getContactAdress();
-                if (!this.isVerified) {
+                if (!this.isVerified2) {
                     this.isVerified=false;
                 }
             }
