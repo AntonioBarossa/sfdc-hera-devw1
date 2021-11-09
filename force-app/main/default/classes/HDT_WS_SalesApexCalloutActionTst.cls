@@ -29,9 +29,6 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
 			HDT_UTL_DataFactoryTst.pClickCasePhase();
 			HDT_UTL_DataFactoryTst.pClickOrderPhase();
             
-            String rtName=constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
-			String rtId=constants.CASE_RECORDTYPEID_MOROSITA;
-            
 			List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             
             List<BillingProfile__c> billings = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accs[0].Id);
@@ -56,13 +53,13 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
             cases[0].DiscardDescription__c = 'zero';
             insert cases;
             
-			List<DocumentSelected__c> documents = HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) cases[0].Id, billings[0].ContractAccountCode__c);
+			HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) cases[0].Id, billings[0].ContractAccountCode__c);
 
 			List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,true);
 
             List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,pricebookId);
 
-			List<OrderItem> ordItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].Id, points[0].Id, products[0].id, entries[0].id);
+			HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].Id, points[0].Id, products[0].id, entries[0].id);
             
 			List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', '{"name":"Order","label":"Order","sObjectType":"Order","queryable":true,"fields":[{"name":"AccountId","label":"Account ID"},{"name":"OrderNumber","label":"Order Number"}],"objects":[{"name":"AccountId","label":"Account ID","sObjectType":"Account","relationshipName":"Account","queryable":true,"fields":[{"name":"Name","label":"Account Name"}],"objects":[]}]}', 'Callout_Template.json');
 			List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates=HDT_UTL_DataFactoryTst.createCalloutTemplate(1, true, 'Callout_Prova', 'prova', true, 'Order', 'Flat', contentVersionList[0].ContentDocumentId);

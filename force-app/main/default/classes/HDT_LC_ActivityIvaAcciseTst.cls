@@ -10,7 +10,7 @@ public class HDT_LC_ActivityIvaAcciseTst {
     @TestSetup
     static void myData(){
      List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-     List<wrts_prcgvr__Activity__c> actCustomList = HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accList[0].Id);
+     HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accList[0].Id);
     }
     
     @isTest

@@ -9,7 +9,7 @@ global inherited sharing class HDT_UTL_ServiceCatalogOrFilter implements wrts_pr
         System.debug('************VALUE:'+ sb.Id.getSObjectType().getDescribe().getName());
         String objectType = sb.Id.getSObjectType().getDescribe().getName();
         //Map<String,HDT_ServiceCatalogProfileFilter__mdt> listMet = HDT_ServiceCatalogProfileFilter__mdt.getAll();
-        SObject action = (SObject) argsMap.get('action'); //phase transition detail
+        //SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
         boolean res = true;
         if(objectType == 'Case'){

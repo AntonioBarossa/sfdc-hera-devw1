@@ -62,7 +62,7 @@ public with sharing class HDT_QBL_SIE34_7Tst {
 		}
 	}
 
-     static testmethod void testQueueable(){
+     @isTest static void testQueueable(){
 
         Boolean finished = false;
 
