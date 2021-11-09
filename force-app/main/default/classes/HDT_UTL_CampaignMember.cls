@@ -170,7 +170,7 @@ public with sharing class HDT_UTL_CampaignMember {
             //execute batch for each campaign
             if (allMembers.size() > 0) {
                 HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(allMembers);
-                ID batchProcessId = Database.executeBatch(ccBatch, 200);
+                Database.executeBatch(ccBatch, 200);
             }
         }
     }

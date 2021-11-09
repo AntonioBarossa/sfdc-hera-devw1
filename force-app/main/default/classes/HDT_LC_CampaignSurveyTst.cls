@@ -42,7 +42,7 @@ public with sharing class HDT_LC_CampaignSurveyTst {
 
             Test.startTest(); 
             Account tAccount = [SELECT Id FROM Account LIMIT 1];
-            SurveyCRM__c newAccount = HDT_LC_CampaignSurvey.getSurvey('Account', tAccount.Id);
+            HDT_LC_CampaignSurvey.getSurvey('Account', tAccount.Id);
 
             System.assertEquals(true, tAccount != null, 'tAccount Id is not null');
 			System.assertNotEquals(true, tAccount == null, 'tAccount Id is null');
@@ -56,9 +56,8 @@ public with sharing class HDT_LC_CampaignSurveyTst {
         System.runAs(tUser){
 
             Test.startTest(); 
-            Account tAccount = [SELECT Id FROM Account LIMIT 1];
             CampaignMember tCampaignMember = [SELECT Id FROM CampaignMember LIMIT 1];
-            SurveyCRM__c newCampaignMember = HDT_LC_CampaignSurvey.getSurvey('campaignmember', tCampaignMember.Id);
+            HDT_LC_CampaignSurvey.getSurvey('campaignmember', tCampaignMember.Id);
             
             System.assertEquals(true, tCampaignMember != null, 'tCampaignMember Id is not null');
 			System.assertNotEquals(true, tCampaignMember == null, 'tCampaignMember Id is null');
@@ -71,7 +70,6 @@ public with sharing class HDT_LC_CampaignSurveyTst {
         System.runAs(tUser){
 
             Test.startTest(); 
-            Account tAccount = [SELECT Id FROM Account LIMIT 1];
             CampaignMember tCampaignMember = [SELECT Id FROM CampaignMember LIMIT 1];
             SurveyCRM__c newCampaignMember = HDT_LC_CampaignSurvey.getSurvey('surveyNull', tCampaignMember.Id);
             
@@ -87,12 +85,11 @@ public with sharing class HDT_LC_CampaignSurveyTst {
 
             Test.startTest(); 
 
-            Account tAccount = [SELECT Id FROM Account LIMIT 1];
             Campaign tCampaign = [SELECT Id FROM Campaign LIMIT 1];
             Map<String, String> responses = new Map<String, String>();
             responses.put('Response1__c', 'FF0000');
             responses.put('Response2__c', '0000A0');
-            SurveyResponse__c newSurveyResponse = HDT_LC_CampaignSurvey.saveSurveyResponse(responses, tCampaign.Id);
+            HDT_LC_CampaignSurvey.saveSurveyResponse(responses, tCampaign.Id);
             
             System.assertEquals(true, tCampaign != null, 'tCampaign Id is not null');
 			System.assertNotEquals(true, tCampaign == null, 'tCampaign Id is null');

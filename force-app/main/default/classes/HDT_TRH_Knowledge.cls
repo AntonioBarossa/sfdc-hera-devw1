@@ -1,4 +1,12 @@
-public inherited sharing class HDT_TRH_Knowledge {
+public inherited sharing class HDT_TRH_Knowledge extends HDT_TRH_TriggerHandler {
+
+    public override void beforeUpdate(){
+        this.handleUpdate();
+    }
+
+    public override void afterUpdate(){
+        this.handleUpdate();
+    }
     
     @SuppressWarnings('PMD.CyclomaticComplexity')
     public void handleUpdate() {
