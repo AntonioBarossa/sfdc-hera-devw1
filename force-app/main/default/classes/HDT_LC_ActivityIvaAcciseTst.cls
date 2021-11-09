@@ -9,6 +9,7 @@ public class HDT_LC_ActivityIvaAcciseTst {
     
     @TestSetup
     static void myData(){
+     HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
      List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
      HDT_UTL_DataFactoryTst.createActivityCustom(1, true, accList[0].Id);
     }

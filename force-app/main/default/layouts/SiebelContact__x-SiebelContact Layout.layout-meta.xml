@@ -48,11 +48,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_RAG_SOCIALE__c</field>
+                <field>END_DT__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>X_PART_IVA__c</field>
+                <field>ROW_ID_CONTACT__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -91,6 +91,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ATTRIB_46__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_RAG_SOCIALE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X_PART_IVA__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

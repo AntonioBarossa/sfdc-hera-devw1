@@ -1,159 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Attivit_Documentale_Siebel_Record_Page1</members>
-        <members>HDT_Activity_Default_Record_Page</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>AccountContactRelation-Account Contact Relationship Layout</members>
-        <members>Asset-Asset Layout</members>
-        <members>SiebelActivity__x-SiebelActivity Layout</members>
-        <members>SiebelDocumentActivity__x-SiebelDocumentActivity Layout</members>
-        <members>SiebelRdo__x-SiebelRdo Layout</members>
-        <members>SiebelRds__x-SiebelRds Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</members>
+        <members>Case-HDT_AllineamentoAnagrafica</members>
+        <members>SiebelContact__x-SiebelContact Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>ConnectorEntityController</members>
-        <members>ConnectorEntityController_Test</members>
-        <members>HDT_ActivityCustomTst</members>
-        <members>HDT_BA_AppoitmentManagmentActivityTst</members>
-        <members>HDT_BA_ComfortCallTst</members>
-        <members>HDT_BA_OldDraftSalesTst</members>
+        <members>ConnectorSettingsController</members>
+        <members>ConnectorSettingsController_Test</members>
+        <members>HDT_BA_PostSalesMasterBatch</members>
+        <members>HDT_BA_PublicValidationTst</members>
         <members>HDT_BA_VasSupplierTable</members>
-        <members>HDT_CampaignTst</members>
-        <members>HDT_ContactTst</members>
-        <members>HDT_IndividualTst</members>
-        <members>HDT_LC_AccountSelectorController</members>
+        <members>HDT_LC_AccountStatementCtrlHelper</members>
+        <members>HDT_LC_AccountStatementCtrlUtility</members>
         <members>HDT_LC_ActivityIvaAcciseTst</members>
-        <members>HDT_LC_AdvancedSearchOriginal</members>
-        <members>HDT_LC_CambioUsoTst</members>
-        <members>HDT_LC_CampaignSurveyTst</members>
+        <members>HDT_LC_ActivityReassignmentTool</members>
         <members>HDT_LC_ChildOrderProcessActionsTst</members>
-        <members>HDT_LC_CopiaContrattoTst</members>
-        <members>HDT_LC_FormAccountBusiness</members>
-        <members>HDT_LC_GestionePrivacyFieldTst</members>
-        <members>HDT_LC_ModificaContrattiBpTst</members>
-        <members>HDT_LC_RecallMeCreateFormTst</members>
-        <members>HDT_LC_RecallMeTst</members>
-        <members>HDT_LC_RequestVisitD2DCreateFormTst</members>
-        <members>HDT_LC_SaleVas</members>
-        <members>HDT_LeadTst</members>
-        <members>HDT_OpportunityTst</members>
-        <members>HDT_OrderTst</members>
-        <members>HDT_QBL_AnagAlignmentTst</members>
+        <members>HDT_LC_DownloadAttachmentAzure</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
         <members>HDT_QBL_SIE34_1EE</members>
-        <members>HDT_QBL_SIE34_1Gas</members>
-        <members>HDT_QBL_SIE34_2MM</members>
-        <members>HDT_QBL_SIE34_2SME</members>
-        <members>HDT_QBL_SIE34_3</members>
-        <members>HDT_QBL_SIE34_3File2</members>
-        <members>HDT_QBL_SIE34_6</members>
         <members>HDT_QBL_SIE34_7</members>
-        <members>HDT_QBL_SIE34_7Tst</members>
-        <members>HDT_QR_ContactTst</members>
-        <members>HDT_QR_ContentDocument</members>
-        <members>HDT_QR_ContentDocumentTst</members>
-        <members>HDT_QR_Contract</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_PaymentCommunicationTst</members>
-        <members>HDT_QuoteTst</members>
-        <members>HDT_SCH_PraxidiaFrontTst</members>
-        <members>HDT_SCH_PraxidiaReclamiTst</members>
+        <members>HDT_QR_AnagAlignment</members>
+        <members>HDT_QR_Case</members>
+        <members>HDT_QR_PostSalesMasterBatch</members>
+        <members>HDT_SCH_ActivityVoRefuse</members>
         <members>HDT_SCH_ProcessRequestItem</members>
-        <members>HDT_SRV_ActivityCustomTst</members>
-        <members>HDT_SRV_BillableVasDeactivationTest</members>
-        <members>HDT_SRV_CampaignTst</members>
-        <members>HDT_SRV_CommunicationLogTst</members>
-        <members>HDT_SRV_ContentDocumentLinkTst</members>
         <members>HDT_SRV_DocumentalManagement</members>
-        <members>HDT_SRV_SalesManager</members>
-        <members>HDT_SRV_SalesManagerTst</members>
-        <members>HDT_SRV_VoltureChangeDispatcher</members>
-        <members>HDT_TRH_TaskTst</members>
-        <members>HDT_TRH_TriggerHandler</members>
-        <members>HDT_TRH_TriggerHandlerTst</members>
-        <members>HDT_UTL_ActivityCustomProcessTst</members>
-        <members>HDT_UTL_CampaignMember</members>
-        <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_ContentVersion</members>
-        <members>HDT_UTL_DataFactoryTst</members>
-        <members>HDT_UTL_DependenciesTestWithData</members>
-        <members>HDT_UTL_GestAppAutomaticCreation</members>
-        <members>HDT_UTL_GestAppAutomaticCreationCase</members>
-        <members>HDT_UTL_Order</members>
-        <members>HDT_UTL_OrderProcessAssignment</members>
-        <members>HDT_UTL_PayloadManagement</members>
-        <members>HDT_UTL_PostSalesManager</members>
-        <members>HDT_UTL_PrClickDoubleTransactionTst</members>
-        <members>HDT_UTL_Scarti</members>
-        <members>HDT_UTL_ScartiTst</members>
-        <members>HDT_UTL_ServiceCatalogOrFilter</members>
-        <members>HDT_UTL_ServiceCatalogOrFilterProcessTst</members>
-        <members>HDT_UTL_ServiceCatalogProfileCriteria</members>
-        <members>HDT_WS_HTTPServiceCall</members>
-        <members>HDT_WS_MrrRequestTst</members>
-        <members>HDT_WS_SIE34DataRequest</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
-        <members>HDT_WS_SalesApexCalloutActionTst</members>
-        <members>HDT_WS_VoltureChangeManager</members>
+        <members>HDT_SRV_SalesHandler</members>
+        <members>HDT_TRH_Knowledge</members>
+        <members>HDT_TRH_KnowledgeTst</members>
+        <members>HDT_TRH_NewsNotificationCenter</members>
+        <members>HDT_TRH_VoltureChangeManagerUpdSobjTst</members>
+        <members>HDT_TRH_VoltureChangeManagerUpdateSobj</members>
+        <members>HDT_UTL_CreateGenericCase</members>
+        <members>HDT_UTL_DatabaseServiceSystemMode</members>
+        <members>HDT_UTL_ServiceCatalogOrFilterProcess</members>
+        <members>HDT_WRP_AccountStatement</members>
+        <members>HDT_WRP_DocumentalRequest</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>SiebelActivity__x.TODO_PLAN_END_DT__c</members>
-        <members>SiebelActivity__x.TODO_PLAN_START_DT__c</members>
-        <members>SiebelDocumentActivity__x.ID_RDO__c</members>
-        <members>SiebelDocumentActivity__x.ID_RDS__c</members>
-        <members>SiebelDocumentActivity__x.MODIFIEDDATE_AZURE__c</members>
-        <members>SiebelDocumentActivity__x.RDS__c</members>
+        <members>SiebelActivity__x.X_ORA_DL_A__c</members>
+        <members>SiebelContact__x.END_DT__c</members>
+        <members>SiebelContact__x.FST_NAME__c</members>
+        <members>SiebelContact__x.LineageID_CONTACT__c</members>
+        <members>SiebelContact__x.LineageID__c</members>
+        <members>SiebelContact__x.MODIFIEDDATE_AZURE_CONTACT__c</members>
+        <members>SiebelContact__x.ROW_ID_CONTACT__c</members>
+        <members>SiebelContact__x.ROW_ID__c</members>
+        <members>SiebelRdo__x.X_COSTO_IN_LOCO_DL__c</members>
+        <members>SiebelRdo__x.X_COSTO_IN_LOCO__c</members>
+        <members>SiebelRdo__x.X_COSTO_SERVIZIO__c</members>
+        <members>SiebelRdo__x.X_IMPORTO_DEBITO__c</members>
+        <members>SiebelRdo__x.X_IMPORTO_DIRITTI_FISSI__c</members>
+        <members>SiebelRdo__x.X_IMPORTO_PRESTAZIONE__c</members>
+        <members>SiebelRdo__x.X_IMPORTO_PREVENTIVO__c</members>
+        <members>SiebelRdo__x.X_IMPORTO_PREV_DISTR__c</members>
+        <members>SiebelRdo__x.X_IMPORTO_PREV_RAPIDO__c</members>
+        <members>SiebelRds__x.OU_ADDR_ID__c</members>
+        <members>SiebelRds__x.PER_ADDR_ID__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtActivityReassignToMe</members>
+        <members>SBQQ__Subscription__c-it</members>
+        <name>CustomObjectTranslation</name>
+    </types>
+    <types>
         <members>hdtActivityReassignmentCore</members>
-        <members>hdtActivityReassignmentTool</members>
-        <members>hdtFormAccountBusiness</members>
-        <members>hdtFormAccountResidenziale</members>
-        <members>hdtReletedListAccount</members>
-        <members>hdtSelezFornituraFlow</members>
+        <members>hdtDownloadAttachmentAzure</members>
+        <members>hdtOrderDossierWizardActions</members>
+        <members>hdtVOActivityValidation</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Hera Standard User OneShot</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <name>Profile</name>
+        <members>HDT_Knowledge</members>
+        <members>HDT_NewsNotificationCenter</members>
+        <members>HDT_VoltureChangeManagerUpdateSobjEvt</members>
+        <name>ApexTrigger</name>
     </types>
     <types>
-        <members>HDT_IntegrationObject.Documentale_Context1</members>
+        <members>HDT_ColumnsFirstLevel.Bonus_Sociale</members>
         <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>Aggiornamento_Data_Sol</members>
-        <members>HDT_FL_ActivityAccountLinker</members>
-        <members>HDT_FL_ActivityCarryPriority</members>
-        <members>HDT_FL_ActivityForwardToAgency</members>
-        <members>HDT_FL_ActivityNotification</members>
-        <members>HDT_FL_ActivitySetRecordTypeSportello</members>
-        <members>HDT_FL_ActivitySetStartDate</members>
-        <members>HDT_FL_ActivityTrackerAccount</members>
-        <members>HDT_FL_ActivityTrackerActivity</members>
-        <members>HDT_FL_ActivityTrackerCase</members>
-        <members>HDT_FL_ActivityTrackerContact</members>
-        <members>HDT_FL_ActivityTrackerContactPointEmail</members>
-        <members>HDT_FL_ActivityTrackerContactPointPhone</members>
-        <members>HDT_FL_ActivityTrackerIndividual</members>
-        <members>HDT_FL_ActivityTrackerLead</members>
-        <members>HDT_FL_ActivityTrackerOpportunity</members>
-        <members>HDT_FL_ActivityTrackerOrder</members>
-        <members>HDT_FL_ActivityTrackerQuote</members>
-        <members>HDT_FL_GestioneMorosita_Contenitore</members>
-        <members>HDT_FL_GestioneReclami_TriggerAfterContenitore</members>
-        <members>HDT_FL_LinkQueueToWrapper</members>
-        <members>HDT_FL_PostSalesVAS</members>
-        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

@@ -25,7 +25,7 @@ public with sharing class HDT_TRH_VoltureChangeManagerUpdSobjTst
     }
 
     @IsTest
-    static void runTst()
+    static void myMethodTst()
     {
         List<Order> orderList = [SELECT Id, Phase__c FROM Order];
         orderList[0].Phase__c = HDT_SRV_VoltureChangeManager.publishUpdatePhase;

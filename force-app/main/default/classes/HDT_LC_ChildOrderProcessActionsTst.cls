@@ -40,6 +40,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','In Lavorazione',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Accettazione Voltura',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Accettazione Voltura','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
 
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
@@ -65,6 +67,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Da Inviare',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
             
 
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettazione Voltura','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
@@ -73,7 +77,6 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Comunicazione verso Heroku',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_TEMPORANEANUOVAATT);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
@@ -291,9 +294,10 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         tOrder2[2].ProcessType__c='';
     	HDT_LC_ChildOrderProcessActions.save(tOrder2[2],m2);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[2].Id].EffectiveDate__c;
-
-       // //system.assertEquals((Date)  m2.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        list<Order> expectedResult = [SELECT  Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,Status,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,EffectiveDate__c  FROM Order WHERE id=:tOrder2[2].id] ;
+        System.assertEquals(expectedResult.get(0).status, 'In Lavorazione', 'In Lavorazione');
 
         Test.stopTest();
 
@@ -320,7 +324,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Test Subentro
       // system.debug('Test Subentro');
         Map<String,Object> m = new Map<String,Object>();
-        m.put('EffectiveDate', Date.today().addDays(11));
+        m.put('EffectiveDate', Date.today());
 
         cQualityCall[0].Process__c = tOrder2[0].RecordType.DeveloperName;
         cQualityCall[0].Channel__c = tOrder2[0].Channel__c;
@@ -342,9 +346,11 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
-
-       // //system.assertEquals((Date)  m.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c  FROM Order WHERE Id =: tOrder2[0].Id];
+        System.assertEquals(System.today(), expectedResult.get(0).EffectiveDate__c, System.today());
 
         Test.stopTest();
 
@@ -393,13 +399,16 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Test AttivazioneConModifica
       // system.debug('Test AttivazioneConModifica');
         Map<String,Object> m3 = new Map<String,Object>();
-        m3.put('EffectiveDate__c', Date.today().addDays(11));
+        m3.put('EffectiveDate__c', Date.today());
 		tOrder2[3].QuotationType__c='Rapido';
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[3].Id].EffectiveDate__c;
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c  FROM Order WHERE Id =: tOrder2[0].Id];
+        System.assertEquals(System.today(), expectedResult.get(0).EffectiveDate__c, System.today());
 
-        //system.assertEquals((Date)  m3.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
 
         Test.stopTest();
 
@@ -425,6 +434,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         update accountList;
         m3.put('EffectiveDate__c', Date.today().addDays(11));
         tOrder2[1].VATfacilitationFlag__c=true;
+        tOrder2[1].QuotationType__c='Rapido';
+
         update tOrder2;
         HDT_LC_ChildOrderProcessActions.save(tOrder2[1],m3);
         m3.put('VATfacilitationFlag__c',true);
@@ -436,6 +447,152 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             System.assertEquals(true, true, 'Caricare documento per iva e accise');
 
         }
+        Test.stopTest();
+
+    }
+    @isTest
+	static void testSaveM2(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,false,'HERA COMM','Persona fisica','Famiglie');
+        List<Order> listToDelete =[SELECT ID FROM ORDER where id NOT IN:tOrder2];
+        delete listToDelete;
+        Test.startTest();
+
+        //Test AttivazioneConModifica
+      // system.debug('Test AttivazioneConModifica');
+        Map<String,Object> m3 = new Map<String,Object>();
+        accountList.get(0).Id=tOrder2.get(0).AccountId;
+        update accountList;
+        m3.put('EffectiveDate__c', Date.today().addDays(11));
+        tOrder2[0].VATfacilitationFlag__c=true;
+        tOrder2[0].QuotationType__c='Rapido';
+
+        Id recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE).getRecordTypeId();
+
+        tOrder2[0].recordTypeId=recordTypeId;
+        tOrder2[0].Phase__c='Bozza';
+        tOrder2[0].QuotationType__c='Rapido';
+        update tOrder2[0];
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c,QuickQuote__c  FROM Order WHERE Id =: tOrder2[0].Id];
+        System.assertEquals('Richiesto', expectedResult.get(0).QuickQuote__c, 'Richiesto');
+
+        Test.stopTest();
+
+    }
+    @isTest
+	static void testSaveM3(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,false,'HERA COMM','Persona fisica','Famiglie');
+        List<Order> listToDelete =[SELECT ID FROM ORDER where id NOT IN:tOrder2];
+        delete listToDelete;
+        Test.startTest();
+
+        //Test AttivazioneConModifica
+      // system.debug('Test AttivazioneConModifica');
+        Map<String,Object> m3 = new Map<String,Object>();
+        accountList.get(0).Id=tOrder2.get(0).AccountId;
+        update accountList;
+        m3.put('EffectiveDate__c', Date.today().addDays(11));
+        tOrder2[0].VATfacilitationFlag__c=true;
+        Id recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA).getRecordTypeId();
+
+        tOrder2[0].recordTypeId=recordTypeId;
+        tOrder2[0].Phase__c='Bozza';
+        tOrder2[0].QuotationType__c='Rapido';
+
+        update tOrder2[0];
+        tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE).getRecordTypeId();
+
+        tOrder2[0].recordTypeId=recordTypeId;
+        tOrder2[0].Phase__c='Bozza';
+
+        update tOrder2[0];
+        tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c,QuickQuote__c  FROM Order WHERE Id =: tOrder2[0].Id];
+        System.assertEquals('Richiesto', expectedResult.get(0).QuickQuote__c, 'Richiesto');
+
+        Test.stopTest();
+
+    }
+    @isTest
+	static void testSaveM4(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        List<Order> listToDelete =[SELECT ID FROM ORDER where id NOT IN:tOrder2];
+        delete listToDelete;
+        Test.startTest();
+        Map<String,Object> m3 = new Map<String,Object>();
+        m3.put('EffectiveDate__c', Date.today().addDays(11));
+        tOrder2[0].VATfacilitationFlag__c=true;
+        tOrder2[0].QuotationType__c='Rapido';
+
+        Id recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA).getRecordTypeId();
+
+        tOrder2[0].recordTypeId=recordTypeId;
+        tOrder2[0].Phase__c='Bozza';
+        update tOrder2[0];
+        tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE).getRecordTypeId();
+
+        tOrder2[0].recordTypeId=recordTypeId;
+        tOrder2[0].Phase__c='Bozza';
+
+        update tOrder2[0];
+        tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c  FROM Order];
+        System.assertEquals('Richiesto', expectedResult.get(0).QuickQuote__c, 'Richiesto');
+
         Test.stopTest();
 
     }
@@ -465,9 +622,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m4);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[4].Id].EffectiveDate__c;
-
-        //system.assertEquals((Date)  m4.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
+        System.assertEquals( m4.get('EffectiveDate__c'),expectedResult,  m4.get('EffectiveDate__c'));
 
         Test.stopTest();
 
@@ -493,9 +649,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[5],m5);
 
-        String expectedResult = [SELECT Instance326__c  FROM Order WHERE Id =: tOrder2[0].Id].Instance326__c;
-
-        //system.assertEquals('Richiesto', expectedResult, 'The Order was not saved correctly');
+        String expectedResult = [SELECT Instance326__c  FROM Order WHERE Id =: tOrder2[5].Id].Instance326__c;
+        System.assertEquals('Richiesto', expectedResult, 'Richiesto');
 
         Test.stopTest();
 
@@ -522,9 +677,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m6);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[6].Id].EffectiveDate__c;
-
-        //system.assertEquals((Date)  m6.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
+        System.assertEquals( m6.get('EffectiveDate__c'), expectedResult, m6.get('EffectiveDate__c'));
 
         Test.stopTest();
 
@@ -548,9 +702,12 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         m7.put('EffectiveDate__c', Date.today().addDays(11));
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m7);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c  FROM Order];
+        System.assertEquals('Richiesto', expectedResult.get(0).QuickQuote__c, 'Richiesto');
 
-        //system.assertEquals((Date)  m7.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
 
         Test.stopTest();
     }
@@ -611,7 +768,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
 
-        //system.assertEquals((Date)  m.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        System.assertEquals(  m.get('EffectiveDate__c'), expectedResult, m.get('EffectiveDate__c'));
 
         Test.stopTest();
 
@@ -639,9 +796,9 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m1);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[1].Id].EffectiveDate__c;
-
-       //system.assertEquals((Date)  m1.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
+       System.assertEquals(  m1.get('EffectiveDate__c'), expectedResult, m1.get('EffectiveDate__c'));
+  
 
         Test.stopTest();
 
@@ -669,9 +826,12 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 		tOrder2[3].QuotationType__c='Rapido';
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[3].Id].EffectiveDate__c;
+        List<Order> expectedResult = [SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c  FROM Order];
+        System.assertEquals('Richiesto', expectedResult.get(0).QuickQuote__c, 'Richiesto');
 
-        //system.assertEquals((Date)  m3.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
 
         Test.stopTest();
 
@@ -698,10 +858,9 @@ public class HDT_LC_ChildOrderProcessActionsTst {
     
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m4);
 
-        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[4].Id].EffectiveDate__c;
+        Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
 
-        //system.assertEquals((Date)  m4.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
-
+        System.assertEquals(  m4.get('EffectiveDate__c'), expectedResult, m4.get('EffectiveDate__c'));
         Test.stopTest();
 
     }
@@ -730,35 +889,35 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[5].Id].EffectiveDate__c;
 
-        //system.assertEquals((Date)  m5.get('EffectiveDate__c'), expectedResult, 'The Order was not saved correctly');
+        System.assertEquals(  m5.get('EffectiveDate__c'), expectedResult, m5.get('EffectiveDate__c'));
 
         Test.stopTest();
 
     }
 
-    @isTest
-    static void testSaveRes6(){
+    // @isTest
+    // static void testSaveRes6(){
         
-    	//Start Test
+    // 	//Start Test
      
-  	     List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
-         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,DocumentLow80__c,
-         Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
-         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
-         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
-       // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
-         Test.startTest();
+  	//      List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+    //      ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,DocumentLow80__c,
+    //      Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+    //      ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+    //      FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
+    //    // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
+    //      Test.startTest();
 
-         //Test TemporaneaNuovaAtt
-       // system.debug('Test TemporaneaNuovaAtt');
-  		 Map<String,Object> m6 = new Map<String,Object>();
+    //      //Test TemporaneaNuovaAtt
+    //    // system.debug('Test TemporaneaNuovaAtt');
+  	// 	 Map<String,Object> m6 = new Map<String,Object>();
 
-         tOrder2[0].Account.RecordType.DeveloperName = 'HDT_RT_Residenziale';
+    //      tOrder2[0].Account.RecordType.DeveloperName = 'HDT_RT_Residenziale';
 
-         HDT_LC_ChildOrderProcessActions.save(tOrder2[6],m6);
+    //      HDT_LC_ChildOrderProcessActions.save(tOrder2[6],m6);
         
-        Test.stopTest();
-     }
+    //     Test.stopTest();
+    //  }
   /*
         @isTest
 	static void testSaveRes7(){
@@ -812,7 +971,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
     String cancellationReason = [SELECT CancellationReason__c FROM Order WHERE Id =: tOrder[0].Id].CancellationReason__c;
 
-    //system.assertEquals(cancellationReason, reason, 'The Order was not canceled properly');
+    System.assertEquals(reason, cancellationReason, reason);
     
     Test.stopTest();
 }
@@ -829,8 +988,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 		                    LIMIT 1];
         Decimal fixedFee = HDT_LC_ChildOrderProcessActions.getFixedFee(tOrder[0].id,'HDT_RT_Attivazione');
 
-      // system.debug('fixedFee ' + fixedFee);
-
+        System.assertEquals(53.3610, fixedFee,53.3610);
 
         Test.stopTest();
     }
@@ -851,8 +1009,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             //Test Account
 
             String marketingOrigin = [SELECT MarketOrigin__c FROM Order WHERE Id =: tOrder[0].Id].MarketOrigin__c;
-
-            //system.assertEquals(tOrder[0].MarketOrigin__c, marketingOrigin, 'The Order draft was not saved properly');
+            System.assertEquals('Libero', marketingOrigin, 'Libero');
 
         Test.stopTest();
 
@@ -874,8 +1031,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_LC_ChildOrderProcessActions.saveDraft('Account',tAccount[0]);
 
             String updatedEmail = [SELECT PrimaryEmail__c FROM Account WHERE Id =: tAccount[0].Id].PrimaryEmail__c;
-
-            //system.assertEquals(tAccount[0].PrimaryEmail__c, updatedEmail, 'The Account draft was not saved properly');
+            System.assertEquals(tAccount[0].PrimaryEmail__c, updatedEmail, 'test.primary@email.com');
         
         Test.stopTest();
 
@@ -905,7 +1061,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
             Decimal updatedConsumption = [SELECT AnnualConsumption__c FROM ServicePoint__c WHERE Id =: tService[0].Id].AnnualConsumption__c;
 
-            //system.assertEquals(tService[0].AnnualConsumption__c, updatedConsumption, 'The Service Point draft was not saved properly');
+            System.assertEquals(tService[0].AnnualConsumption__c, updatedConsumption, 69);
 
         Test.stopTest();
         
@@ -936,7 +1092,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
             String marketingOrigin = [SELECT MarketOrigin__c FROM Order WHERE Id =: tOrder[0].Id].MarketOrigin__c;
 
-            //system.assertEquals(tOrder[0].MarketOrigin__c, marketingOrigin, 'The Order draft was not saved properly');
+            System.assertEquals(tOrder[0].MarketOrigin__c, marketingOrigin, 'Libero');
 
         Test.stopTest();
 
@@ -956,7 +1112,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         String updatedEmail = [SELECT PrimaryEmail__c FROM Account WHERE Id =: tAccount[0].Id].PrimaryEmail__c;
 
-        //system.assertEquals(tAccount[0].PrimaryEmail__c, updatedEmail, 'The Account draft was not saved properly');
+        System.assertEquals(tAccount[0].PrimaryEmail__c, updatedEmail, 'The Account draft was not saved properly');
 
     }
         
@@ -984,7 +1140,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
         Decimal updatedConsumption = [SELECT AnnualConsumption__c FROM ServicePoint__c WHERE Id =: tService[0].Id].AnnualConsumption__c;
 
-        //system.assertEquals(tService[0].AnnualConsumption__c, updatedConsumption, 'The Service Point draft was not saved properly');
+        System.assertEquals(tService[0].AnnualConsumption__c, updatedConsumption, 'The Service Point draft was not saved properly');
 
 
         Test.stopTest();
