@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>IND BP ALTERN ID</label>
+    <label>Indirizzo destinatario divergente</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

@@ -24,4 +24,11 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>CancellationReason__c</picklist>
+        <values>
+            <fullName>Annullato per no conferma cliente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

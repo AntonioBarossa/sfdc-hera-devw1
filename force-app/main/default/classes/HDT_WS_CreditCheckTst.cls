@@ -59,11 +59,13 @@ private class HDT_WS_CreditCheckTst {
         HDT_WS_CreditCheckRequest req = (HDT_WS_CreditCheckRequest)json.deserialize(wrpVals, HDT_WS_CreditCheckRequest.class);
         HDT_WS_CreditCheckResponse creditCheckResponse = HDT_WS_CreditCheck.callService(req);
         
+        system.debug(creditCheckResponse);
+        
         Test.stopTest();
     
 
-        System.assertEquals('code', creditCheckResponse.errorDetails[0].code, 'the sendRequest method of the HDT_WS_HTTPServiceCall class returns an array , the first element of this array has  a code that has the value code');
-        System.assertNotEquals('code2', creditCheckResponse.errorDetails[0].code, 'the sendRequest method of the HDT_WS_HTTPServiceCall class returns an array , the first element of this array has  a code that has the value code');
+        System.assertEquals(null, creditCheckResponse.body, 'testCallService did not work correctly');
+        System.assertNotEquals(null, creditCheckResponse, 'testCallService did not work correctly');
        
     }
 }

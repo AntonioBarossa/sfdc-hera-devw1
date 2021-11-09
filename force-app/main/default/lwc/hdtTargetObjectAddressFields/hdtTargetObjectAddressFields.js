@@ -969,7 +969,15 @@ handleAddressValues(servicepointretrieveddata){
                 this.stato = servicepointretrieveddata[key] ;
                 this.theRecord['Stato'] = servicepointretrieveddata[key] ;
             break;
+            case 'stato':
+                this.stato = servicepointretrieveddata[key] ;
+                this.theRecord['Stato'] = servicepointretrieveddata[key] ;
+            break;
             case 'Provincia':
+                this.provincia= servicepointretrieveddata[key] ;
+                this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
+            break;
+            case 'provincia':
                 this.provincia= servicepointretrieveddata[key] ;
                 this.theRecord['Provincia'] = servicepointretrieveddata[key] ;
             break;
@@ -977,7 +985,15 @@ handleAddressValues(servicepointretrieveddata){
                 this.comune= servicepointretrieveddata[key] ;
                 this.theRecord['Comune'] = servicepointretrieveddata[key] ;
             break;
+            case 'comune':
+                this.comune= servicepointretrieveddata[key] ;
+                this.theRecord['Comune'] = servicepointretrieveddata[key] ;
+            break;
             case 'CAP':
+                this.cap = servicepointretrieveddata[key] ;
+                this.theRecord['CAP'] = servicepointretrieveddata[key] ;
+            break;
+            case 'cap':
                 this.cap = servicepointretrieveddata[key] ;
                 this.theRecord['CAP'] = servicepointretrieveddata[key] ;
             break;
@@ -985,7 +1001,16 @@ handleAddressValues(servicepointretrieveddata){
                 this.via = servicepointretrieveddata[key] ;
                 this.theRecord['Via'] = servicepointretrieveddata[key] ;
             break;
+            case 'via':
+                this.via = servicepointretrieveddata[key] ;
+                this.theRecord['Via'] = servicepointretrieveddata[key] ;
+            break;
             case 'Civico':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.civico = servicepointretrieveddata[key] ;
+                this.theRecord['Civico'] = servicepointretrieveddata[key] ;
+            break;
+            case 'civico':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.civico = servicepointretrieveddata[key] ;
                 this.theRecord['Civico'] = servicepointretrieveddata[key] ;
@@ -995,9 +1020,19 @@ handleAddressValues(servicepointretrieveddata){
                 this.estenscivico = servicepointretrieveddata[key] ;
                 this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
             break;
+            case 'estensCivico':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.estensCivico = servicepointretrieveddata[key] ;
+                this.theRecord['Estens.Civico'] = servicepointretrieveddata[key] ;
+            break;
             case 'CodiceComuneSAP':
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.codcomunesap = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
+            break;
+            case 'codiceComuneSAP':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codComuneSAP = servicepointretrieveddata[key] ;
                 this.theRecord['Codice Comune SAP'] = servicepointretrieveddata[key] ;
             break;
             case 'CodiceViaStradarioSAP':
@@ -1005,7 +1040,17 @@ handleAddressValues(servicepointretrieveddata){
                 this.codstradariosap = servicepointretrieveddata[key] ;
                 this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
             break;
+            case 'codiceViaStradarioSAP':
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.codStradarioSAP = servicepointretrieveddata[key] ;
+                this.theRecord['Codice Via Stradario SAP'] = servicepointretrieveddata[key] ;
+            break;
             case 'IndirizzoEstero':
+                this.IndEstero = servicepointretrieveddata[key] ;
+                this.theRecord['Indirizzo Estero'] = this.IndEstero;
+
+            break;
+            case 'indirizzoEstero':
                 this.IndEstero = servicepointretrieveddata[key] ;
                 this.theRecord['Indirizzo Estero'] = this.IndEstero;
 
@@ -1017,7 +1062,17 @@ handleAddressValues(servicepointretrieveddata){
                 this.theRecord['Flag Verificato'] = this.flagverificato;
 
             break;
+            case 'flagVerificato':
+
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.flagVerificato = servicepointretrieveddata[key] ;
+                this.theRecord['Flag Verificato'] = this.flagVerificato;
+
+            break;
             case 'AbilitaVerifica':
+                this.disableVerifIndiButton = servicepointretrieveddata[key];
+            break;
+            case 'abilitaVerifica':
                 this.disableVerifIndiButton = servicepointretrieveddata[key];
             break;
             case 'Localita':
@@ -1025,6 +1080,13 @@ handleAddressValues(servicepointretrieveddata){
                 console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
                 this.localita = servicepointretrieveddata[key] ;
                 this.theRecord['Localita'] = this.localita;
+
+            break;
+            case 'localita':
+
+                console.log('servicepointretrieveddata[key] *************************************'+JSON.stringify(servicepointretrieveddata[key]));
+                this.Localita = servicepointretrieveddata[key] ;
+                this.theRecord['Localita'] = this.Localita;
 
             break;
         }

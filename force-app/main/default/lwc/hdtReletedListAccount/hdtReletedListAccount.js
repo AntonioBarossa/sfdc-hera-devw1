@@ -12,34 +12,13 @@ import EDUCATIONALQUALIFICATION from '@salesforce/schema/Contact.DegreeOfStudies
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
-
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertContact from '@salesforce/apex/HDT_LC_ReletedListAccount.insertContact';
 import contactList from '@salesforce/apex/HDT_LC_ReletedListAccount.getContList';
 import getRecordTypeAccount from '@salesforce/apex/HDT_LC_ReletedListAccount.getRecordTypeAccount';
 import {refreshApex} from '@salesforce/apex';
 
-// const columns = [
-//     { label: 'Nome', fieldName: 'contact.Name' },
- 
-//     { label: 'Dettagli' ,type: "button", initialWidth: 150,typeAttributes: {  
-//         label: 'Dettagli',
-//         title: 'Dettagli',  
-//         name:  'Dettagli',  
-//         value: 'Dettagli',  
-//         disabled: false,
-//         variant:'brand-outline',  
-//     }},
-// ];
-/**
- * Wire adapter for values for a picklist field.
- *
- * https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_wire_adapters_picklist_values
- *
- * @param fieldApiName The picklist field's object-qualified API name.
- * @param recordTypeId The record type ID. Pass '012000000000000AAA' for the master record type.
- */
-//const VAR_RECORDTYPEID='012000000000000AAA';
+
 const ERROR_VARIANT='error';
 const SUCCESS_VARIANT='success';
 const DISMISSABLE_VARIANT='dismissable';
@@ -62,7 +41,8 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     @api markingValue;
     @api categoryValue;
     disabled=false;
-    insertAddress = false;
+    disableToggleContactDetails=false;
+    addressContactDetails = false;
     currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
@@ -125,12 +105,9 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         });
     }
     //HRAWRM-853 Start 12/10/2021
-    handleInsertAddressAddRes(event){
-    
-        this.insertAddress=event.target.checked;;
-        console.log("this.insertAddress : " + this.insertAddress);
-        if (!this.insertAddress) {
-            console.log('this.accountAddress');
+    handleToggleContactDetails(event){
+        this.addressContactDetails=event.target.checked;;
+        if (!this.addressContactDetails) {
             this.isVerified=true;
         }
         else{
@@ -138,7 +115,15 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         }
 
     }    //HRAWRM-853 End 12/10/2021
-
+    handleChangeRole(event){ 
+        let currentRole=event.target.value;
+        let toggleContact= this.template.querySelector('[data-id="toggleContactDetails"]');
+        let requiredToggle=currentRole==='Amministratore condominio'?true:false;
+        this.addressContactDetails=requiredToggle;
+        this.disableToggleContactDetails=requiredToggle;
+        toggleContact.checked=requiredToggle;
+        this.isVerified=this.addressContactDetails==true?false:true;
+    }
     @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId' ,fieldApiName: PHONE_PREFIX })
     phonePrefixGetOptions({error, data}) {
         if (data) {
@@ -329,7 +314,6 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
     }
 
     handleSave(){
-        console.log('record id : '+ this.recordId);
         this.disabled=true;
         var isValidated=true;
         this.spinner=true;
@@ -363,7 +347,6 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
         }
-        console.log('LENGTH:'+ this.fiscalcode + '-:' + this.fiscalCode.value.length);
         if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
             if(this.fiscalCode.value.length != 16){
                 isValidated=false;
@@ -397,7 +380,7 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             console.log('validato');
             //HRAWRM-853 Start 12/10/2021
 
-            if (this.insertAddress) {
+            if (this.addressContactDetails) {
                 this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
                 this.getAccountAdress();  
             }

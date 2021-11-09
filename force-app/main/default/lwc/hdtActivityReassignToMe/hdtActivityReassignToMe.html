@@ -1,15 +1,3 @@
 <template>
-    <div class="flex vertical-list">
-        <template if:true={showSearchBar}>
-            <div class="grow" onkeyup={handleWorkGroupSearch}>
-                <lightning-input type="search" variant="label-hidden" placeholder="Ricerca Gruppo di Lavoro"></lightning-input>
-            </div>
-            <template for:each={workGroups} for:item="group" class="slds-scrollable_y">
-                <div key={group.name} data-id={group.name} data-workgroup={group.name} data-agency={group.agency} onclick={selectWorkGroup} onmouseover={toggleHoveredClass} onmouseout={toggleHoveredClass} class="grow slds-theme_default slds-m-top_x-small">
-                    <lightning-icon icon-name="standard:groups" class="slds-m-right_medium"></lightning-icon>
-                    {group.name}
-                </div>
-            </template>
-        </template>
-    </div>
+    <c-hdt-activity-reassignment-core record-id={recordId} id-list={idList} assign-to-me-mode={assignToMeMode} onclose={closeModal}></c-hdt-activity-reassignment-core>
 </template>

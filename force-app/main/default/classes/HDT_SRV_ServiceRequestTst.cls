@@ -133,7 +133,7 @@ public with sharing class HDT_SRV_ServiceRequestTst {
                 ServicePointCode__c = 'servicePointCodeTest'
             );
 
-            ServiceRequest__c srTest = HDT_SRV_ServiceRequest.createRecord(sr);
+            HDT_SRV_ServiceRequest.createRecord(sr);
 
             List<ServiceRequest__c> srList = [SELECT Id FROM ServiceRequest__c WHERE ProcessType__c = 'Informative'];
  

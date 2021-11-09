@@ -11,13 +11,18 @@ public with sharing class HDT_LC_DownloadAttachmentAzure {
      * @return String
      */
     @AuraEnabled
-    public static String getUrlNameDocumentLink(String rId){
+    public static Map<String,String> getUrlNameDocumentLink(String rId){
         try {
             //if (Schema.sObjectType.SiebelDocumentLink__x.fields.FILE_NAME__c.isAccessible()) {
             //    // Update contact phone number
             //    return '';
             // }
-            return [SELECT NOME_FILE_DOWNLOAD__c FROM SiebelDocumentLink__x WHERE ID =:rId WITH SECURITY_ENFORCED LIMIT 1].NOME_FILE_DOWNLOAD__c;
+            SiebelDocumentLink__x objectDLink = [SELECT NOME_FILE_DOWNLOAD__c, FILE_NAME__c, FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId WITH SECURITY_ENFORCED LIMIT 1];
+            Map<String,String> nameFile = new Map<String,String>();
+            nameFile.put('NOME_FILE_DOWNLOAD__c', objectDLink.NOME_FILE_DOWNLOAD__c);
+            nameFile.put('FILE_NAME__c', objectDLink.FILE_NAME__c);
+            nameFile.put('FILE_EXT__c', objectDLink.FILE_EXT__c);
+            return nameFile;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -32,7 +37,13 @@ public with sharing class HDT_LC_DownloadAttachmentAzure {
     @AuraEnabled
     public static Boolean getExtensionFile(String rId){
         try {
-            String extension = [SELECT FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId LIMIT 1].FILE_EXT__c; //get estensione
+            
+            //String extension = [SELECT FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId];	//get estensione
+            
+            List<SiebelDocumentLink__x> records = HDT_UTL_ObjectManagerTst.records([SELECT FILE_EXT__c FROM SiebelDocumentLink__x WHERE ID =:rId]);
+            String extension = (String)records[0].get('FILE_EXT__c');
+            
+            
             if('URL'.equalsIgnoreCase(extension) || ''.equalsIgnoreCase(extension)){    //check estensione
                 return false;
             }else{

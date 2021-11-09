@@ -21,6 +21,8 @@ public with sharing class HDT_LC_ConfigureProductTst{
 		insert permissionSetAssignments;
 
 		System.runAs(internalUser){
+            
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
 			List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
             accounts[0].VATNumber__c='12345678901';

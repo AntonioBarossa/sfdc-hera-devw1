@@ -1,7 +1,6 @@
 import { LightningElement,track, api, wire} from 'lwc';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-
 import CUSTOMERTYPE_FIELD from '@salesforce/schema/Account.CustomerType__c';
 import CONTACT_OBJECT from '@salesforce/schema/Contact';
 import COMPANY_FIELD from '@salesforce/schema/Contact.Company__c';
@@ -20,6 +19,10 @@ import getFromFiscalCode2 from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumbe
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountBusiness.insertAccount';
 import checkRole from '@salesforce/apex/HDT_UTL_Account.checkIsBackoffice';
+
+const ERROR_VARIANT='error';
+const SUCCESS_VARIANT='success';
+const DISMISSABLE_VARIANT='dismissable';
 export default class HdtFormAccountBusiness extends NavigationMixin(LightningElement) {
 
     @api showCompanyOwner = false;
@@ -41,6 +44,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @api categoryOptions = [];
     @api customerData = [];
     @api categoryData = [];
+    addressContactDetails=false;//HRAWRM-933 Start 08/11/2021
+    disableToggleContactDetails=false;//HRAWRM-933 Start 08/11/2021
     requiredVat=true;
     requiredFiscalCode=false;
     customerType='Organizzazione';
@@ -49,8 +54,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     birthPlace;
     currentObjectApiName = 'Account';
     accountAddress;
+    contactAddress;//HRAWRM-933 Start 08/11/2021
     fieldsToUpdate= {};
+    fieldsToUpdateContact={};//HRAWRM-933 Start 08/11/2021
     isVerified= false;
+    isVerified2= false;
+
     @api RecordTypeId;
     @track companyOptions;
     @track customerTypeOptions;
@@ -159,9 +168,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.customerTypeOptions = data;
             data.values.forEach(function callbackFn(element, index) {
                 
-            console.log(JSON.stringify(element.value));   
              if(element.value!='Persona Fisica'){
-                    
                 customTypeOptions.push(element);
             }
                 
@@ -173,8 +180,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     };
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
-    // @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOMERTYPE_FIELD })
-    // customerTypeOptions;
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: PROFESSION })
     professionOptions;
 
@@ -204,7 +209,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     connectedCallback(){
         this.currentObjectApiName= 'Account';
     }
-
+    //HRAWRM-933 Start 08/11/2021
+    handleChangeRole(event){ 
+        let currentRole=event.target.value;
+        let toggleContact= this.template.querySelector('[data-id="toggleContactDetails"]');
+        let requiredToggle=currentRole==='Amministratore condominio'?true:false;
+        this.addressContactDetails=requiredToggle;
+        this.disableToggleContactDetails=requiredToggle;
+        toggleContact.checked=requiredToggle;
+    }
+    handleToggleContactDetails(event){
+        this.addressContactDetails=event.target.checked;
+    }
+    //HRAWRM-933 End 08/11/2021
     handleCompanyOwnerChange(event) {
         
         let key = this.customerData.controllerValues[event.target.value];
@@ -221,7 +238,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             for (let i = 0; i < 20; i++) {
                 arrayToRemove.push('D'+i+' -');
             }
-            console.log(JSON.stringify(element.value));
             var startSubString=element.value;
             startSubString=element.label.substring(0, 4);
             if(!arrayToRemove.includes(startSubString)){
@@ -318,33 +334,38 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
            calculateFiscalCode({infoData: information}).then((response) => {
             if(response == null){
               //  this.showError(errorMsg);
-                const event = new ShowToastEvent({
-                message: 'Comune inserito NON presente a sistema',
-                variant: 'error',
-                mode: 'dismissable'
-                });
-                this.dispatchEvent(event);
+                // const event = new ShowToastEvent({
+                // message: 'Comune inserito NON presente a sistema',
+                // variant: 'error',
+                // mode: 'dismissable'
+                // });
+                // this.dispatchEvent(event);
                 this.spinner=false;
-            }else{
+                this.toastMessage('Comune inserito non presente a sistema',ERROR_VARIANT,DISMISSABLE_VARIANT);
+            }
+            else{
                 this.personFiscalCode.value= response;
                 this.spinner=false;
             }
             }).catch((errorMsg) => {
                 this.showError(errorMsg);
-                const event = new ShowToastEvent({
-                    message: this.errorMessage,
-                    variant: 'error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(event);
+                // const event = new ShowToastEvent({
+                //     message: this.errorMessage,
+                //     variant: 'error',
+                //     mode: 'dismissable'
+                // });
+                // this.dispatchEvent(event);
+                this.toastMessage(this.errorMessage,ERROR_VARIANT,DISMISSABLE_VARIANT);
             });   
-        }else{
-            const event = new ShowToastEvent({
-                message: 'Inserire le Informazioni Mancanti',
-                variant: 'error',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(event);
+        }
+        else{
+            // const event = new ShowToastEvent({
+            //     message: 'Inserire le Informazioni Mancanti',
+            //     variant: 'error',
+            //     mode: 'dismissable'
+            // });
+            // this.dispatchEvent(event);
+            this.toastMessage('Inserire le Informazioni Mancanti',ERROR_VARIANT,DISMISSABLE_VARIANT);
         }
     }
 
@@ -392,6 +413,53 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
         }
     }
+    //HRAWRM-933 Start 08/11/2021
+    getContactAdress(){
+
+        if(this.contactAddress!= undefined){
+    
+            if(this.contactAddress['Via'] != null){
+                this.fieldsToUpdateContact['MailingStreet'] = this.contactAddress['Via'];
+                this.fieldsToUpdateContact['MailingStreetName__c'] = this.contactAddress['Via'];
+            }
+            if(this.contactAddress['Comune'] != null){
+                this.fieldsToUpdateContact['MailingCity'] = this.contactAddress['Comune'];
+            }
+            if(this.contactAddress['CAP'] != null){
+                this.fieldsToUpdateContact['MailingPostalCode'] = this.contactAddress['CAP'];
+            }
+            if(this.contactAddress['Stato'] != null){
+                this.fieldsToUpdateContact['MailingCountry'] = this.contactAddress['Stato'];
+            }
+            if(this.contactAddress['Provincia'] != null){
+                this.fieldsToUpdateContact['MailingState'] = this.contactAddress['Provincia'];
+            }
+            if(this.contactAddress['Codice Comune SAP'] != null){
+                this.fieldsToUpdateContact['MailingCityCode__c'] = this.contactAddress['Codice Comune SAP'];
+            }
+            if(this.contactAddress['Codice Via Stradario SAP'] != null){
+                this.fieldsToUpdateContact['MailingStreetCode__c'] = this.contactAddress['Codice Via Stradario SAP'];
+            }
+            if(this.contactAddress['Estens.Civico'] != null){
+                this.fieldsToUpdateContact['MailingStreetNumberExtension__c'] = this.contactAddress['Estens.Civico'];
+            }
+            if(this.contactAddress['Civico'] != null){
+                this.fieldsToUpdateContact['MailingStreetNumber__c'] = this.contactAddress['Civico'];
+            }
+            if(this.contactAddress['Localita'] != null){
+                this.fieldsToUpdateContact['MailingPlace__c'] = this.contactAddress['Localita'];
+            }
+            if(this.contactAddress['Codice Localita'] != null){
+                this.fieldsToUpdateContact['MailingPlaceCode__c'] = this.contactAddress['Codice Localita'];
+            }
+            if(this.contactAddress['Flag Verificato'] !=null){
+                this.fieldsToUpdateContact['MailingIsAddressVerified__c'] = this.contactAddress['Flag Verificato'];
+                this.isVerified2 = this.contactAddress['Flag Verificato'];
+                
+            }
+        }
+    }
+    //HRAWRM-933 End 08/11/2021
 
     handleSave(){
 
@@ -442,11 +510,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         var messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         var dataAccount;
-        console.log('@@@@ fiscalCode'+fiscalCode.value);
         if ((this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')) && (fiscalCode.value== undefined||fiscalCode.value.trim()=='')) {
           
-          
-           console.log('@@@@ Marcatura'+this.markingValue);
             if(!fiscalCode.reportValidity()){
                 isValidated=false;
             }
@@ -489,28 +554,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!phonePrefix.reportValidity()){
             isValidated=false;
         }
-        
-        // if(!district.reportValidity()){
-        //     isValidated=false;
-        // }
-        // if(!address.reportValidity()){
-        //     isValidated=false;
-        // }
-        // if(!location.reportValidity()){
-        //     isValidated=false;
-        // }
-        // if(!myAddress.reportValidity()){
-        //     isValidated=false;
-        // }
-        // if(!numberFax.reportValidity()){
-        //     isValidated=false;
-        // }
-        // if(!houseNumber.reportValidity()){
-        //     isValidated=false;
-        // }
-        // if(!postalCode.reportValidity()){
-        //     isValidated=false;
-        // }
         if(!firstName.reportValidity()){
             isValidated=false;
         } 
@@ -518,9 +561,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             isValidated=false;
         } 
         console.log("LOG3");
-      /*  if(!legalForm.reportValidity()){
-            isValidated=false;
-        }*/
         if(!phoneNumber.reportValidity() && !mobilephoneNumber.reportValidity() && !email.reportValidity()){
             isValidated=false;
         }
@@ -617,6 +657,16 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             console.log("LOG8");
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             this.getAccountAdress();
+            //HRAWRM-933 Start 08/11/2021
+            if (this.addressContactDetails) {
+                this.contactAddress =this.template.querySelector("c-hdt-target-object-address-fields-res").handleAddressFields();
+                this.getContactAdress();
+                if (this.isVerified2==false) {
+                    this.isVerified=false;
+                }
+            }
+            //HRAWRM-933 End 08/11/2021
+            
             if(this.isVerified){
                 console.log("LOG9");
                 var isEmpty=false;
@@ -646,7 +696,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             this.gender=fiscData[keyCode].gender;//HRDTR-00_HRAWRM-761 28/09/2021
                         }
                         if(this.birthDate || this.birthDate.trim()==''){
-                            console.log('this.birthDate: '+this.birthDate);
                             //this.birthDate= fiscData.birthDate;
                             this.birthDate=fiscData[keyCode].birthDate;//HRDTR-00_HRAWRM-761 28/09/2021
                         }
@@ -696,15 +745,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         console.log("LOG14");
                         insertAccount({
                             dataAccount: dataAccount,
-                            accountAddress: this.fieldsToUpdate
+                            accountAddress: this.fieldsToUpdate,
+                            contactAddress: this.fieldsToUpdateContact //HRAWRM-933 Start 08/11/2021
                         }).then((response) => {
                             console.log("LOG15");
-                            const event = new ShowToastEvent({
-                                message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
-                                variant: 'success',
-                                mode: 'dismissable'
-                            });
-                            this.dispatchEvent(event);
+                            // const event = new ShowToastEvent({
+                            //     message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
+                            //     variant: 'success',
+                            //     mode: 'dismissable'
+                            // });
+                            // this.dispatchEvent(event);
+                            this.spinner=false;
+                            this.toastMessage('Account creato con successo!',SUCCESS_VARIANT,DISMISSABLE_VARIANT);
+
                             this.showModal= false;
                             this[NavigationMixin.Navigate]({
                                 type: 'standard__recordPage',
@@ -716,23 +769,28 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             });
                         }).catch((errorMsg) => {
                             this.showError(errorMsg);
-                            const event = new ShowToastEvent({
-                                message: this.errorMessage,
-                                variant: 'error',
-                                mode: 'dismissable'
-                            });
+                            // const event = new ShowToastEvent({
+                            //     message: this.errorMessage,
+                            //     variant: 'error',
+                            //     mode: 'dismissable'
+                            // });
                             this.spinner=false;
-                            this.dispatchEvent(event);
+                            this.toastMessage(this.errorMessage,ERROR_VARIANT,DISMISSABLE_VARIANT);
+
+                            // this.dispatchEvent(event);
                         });
                     }).catch((errorMsg) => {
                         console.log("LOG12Error");
-                        const event = new ShowToastEvent({
-                            message: 'Inserire un codice fiscale valido',
-                            variant: 'error',
-                            mode: 'dismissable'
-                        });
-                        this.dispatchEvent(event);
+                        // const event = new ShowToastEvent({
+                        //     message: 'Inserire un codice fiscale valido',
+                        //     variant: 'error',
+                        //     mode: 'dismissable'
+                        // });
+                        // this.dispatchEvent(event);
                         this.spinner=false;
+                        this.toastMessage('Inserire un codice fiscale valido',ERROR_VARIANT,DISMISSABLE_VARIANT);
+
+               
                     });
                 }else{
                     var prova = this.personFiscalCode.value;//.replace(/ /g,"");
@@ -740,7 +798,6 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     getFromFiscalCode2({
                         fiscalCodes : prova
                     }).then((response) => {
-                    console.log("*******PRI");
                     console.log("LOG16");
                     dataAccount={
                         "businessName" : businessName.value,
@@ -784,14 +841,18 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     console.log("LOG17");
                     insertAccount({
                         dataAccount: dataAccount,
-                        accountAddress: this.fieldsToUpdate
+                        accountAddress: this.fieldsToUpdate,
+                        contactAddress: this.fieldsToUpdateContact
                     }).then((response) => {
-                        const event = new ShowToastEvent({
-                            message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
-                            variant: 'success',
-                            mode: 'dismissable'
-                        });
-                        this.dispatchEvent(event);
+                        // const event = new ShowToastEvent({
+                        //     message: 'Account creato con successo!', // ambiguita in caso si creano due account //? In accordo con lorenzo viene rimosso il Nome dell Account
+                        //     variant: 'success',
+                        //     mode: 'dismissable'
+                        // });
+                        // this.dispatchEvent(event);
+                        this.spinner=false;
+                        this.toastMessage('Account creato con successo!',SUCCESS_VARIANT,DISMISSABLE_VARIANT);
+
                         this.showModal= false;
                         this[NavigationMixin.Navigate]({
                             type: 'standard__recordPage',
@@ -803,44 +864,49 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         });
                     }).catch((errorMsg) => {
                         this.showError(errorMsg);
-                        const event = new ShowToastEvent({
-                            message: this.errorMessage,
-                            variant: 'error',
-                            mode: 'dismissable'
-                        });
+                        // const event = new ShowToastEvent({
+                        //     message: this.errorMessage,
+                        //     variant: 'error',
+                        //     mode: 'dismissable'
+                        // });
                         this.spinner=false;
-                        this.dispatchEvent(event);
+                        // this.dispatchEvent(event);
+                        this.toastMessage(this.errorMessage,ERROR_VARIANT,DISMISSABLE_VARIANT);
+
                     });
                 }).catch((errorMsg) => {
                     console.log("LOG12Error");
-                    const event = new ShowToastEvent({
-                        message: 'Inserire un codice fiscale valido',
-                        variant: 'error',
-                        mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
+                    // const event = new ShowToastEvent({
+                    //     message: 'Inserire un codice fiscale valido',
+                    //     variant: 'error',
+                    //     mode: 'dismissable'
+                    // });
+                    // this.dispatchEvent(event);
                     this.spinner=false;
+                    this.toastMessage('Inserire un codice fiscale valido',ERROR_VARIANT,DISMISSABLE_VARIANT);
                 });
                 } 
                  
             }else{
                 console.log("LOG18");
-                const event = new ShowToastEvent({
-                    message: " L\'indirizzo non è stato verificato! ",
-                    variant: 'error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(event);
+                // const event = new ShowToastEvent({
+                //     message: " L\'indirizzo non è stato verificato! ",
+                //     variant: 'error',
+                //     mode: 'dismissable'
+                // });
+                // this.dispatchEvent(event);
                 this.spinner=false;
+                this.toastMessage("L\'indirizzo non è stato verificato!",ERROR_VARIANT,DISMISSABLE_VARIANT);
             }
         }else{
-            const event = new ShowToastEvent({
-                message: messageError,
-                variant: 'error',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(event);
+            // const event = new ShowToastEvent({
+            //     message: messageError,
+            //     variant: 'error',
+            //     mode: 'dismissable'
+            // });
+            // this.dispatchEvent(event);
             this.spinner=false;
+            this.toastMessage(messageError,ERROR_VARIANT,DISMISSABLE_VARIANT);
         }
             
     }
@@ -862,10 +928,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     handleVatChange(event){
         let inputVal = event.target.value;
         if(!isFinite(inputVal)) {
-        event.target.value = inputVal.toString().slice(0,-1);
+            event.target.value = inputVal.toString().slice(0,-1);
+        }
     }
-    }
-    
+    //HRAWRM-933 Start 08/11/2021
+    toastMessage(myMessage,myVariant,myDismissable){
+        const event = new ShowToastEvent({
+            message:myMessage,
+            variant: myVariant,
+            mode: myDismissable
+        });
+        this.dispatchEvent(event);
+    }    
+    //HRAWRM-933 End 08/11/2021
 
     
 }

@@ -21,8 +21,8 @@ public with sharing class HDT_QR_BillingProfileTst {
         Test.startTest();
         BillingProfile__c testBp = new HDT_QR_BillingProfile().getRecordById(billingProfile.Id);
 
-		System.assert(testBp != null);
-		System.assertNotEquals(null, testBp);
+		System.assert(testBp != null, 'getRecordById did not work correctly');
+		System.assertNotEquals(null, testBp, 'getRecordById did not work correctly');
 
         Test.stopTest();
     }
@@ -32,8 +32,8 @@ public with sharing class HDT_QR_BillingProfileTst {
         Test.startTest();
         List<BillingProfile__c> testBp = new HDT_QR_BillingProfile().getRecordsByAccount('accountId Test');
 
-        System.assert(testBp.isEmpty());
-		System.assertNotEquals(new List<BillingProfile__c>{new BillingProfile__c()}, testBp);
+        System.assert(testBp.isEmpty(), 'getRecordsByAccount did not work correctly');
+		System.assertNotEquals(new List<BillingProfile__c>{new BillingProfile__c()}, testBp, 'getRecordsByAccount did not work correctly');
         Test.stopTest();
     }
 
@@ -43,8 +43,8 @@ public with sharing class HDT_QR_BillingProfileTst {
 
         Test.startTest();
         BillingProfile__c testBp = new HDT_QR_BillingProfile().getRecordByContractAccount(billingProfile.ContractAccountCode__c);
-        System.assert(testBp != null);
-		System.assertNotEquals(null, testBp);
+        System.assert(testBp != null, 'getRecordByContractAccountSucess did not work correctly');
+		System.assertNotEquals(null, testBp, 'getRecordByContractAccountSucess did not work correctly');
 
         Test.stopTest();
     }
@@ -53,8 +53,8 @@ public with sharing class HDT_QR_BillingProfileTst {
     public static void testGetRecordByContractAccountFail(){
         Test.startTest();
         BillingProfile__c testBp = new HDT_QR_BillingProfile().getRecordByContractAccount('Test Fail');
-        System.assert(testBp == null);
-		System.assertNotEquals(new BillingProfile__c(), testBp);
+        System.assert(testBp == null, 'getRecordByContractAccountFail did not work correctly');
+		System.assertNotEquals(new BillingProfile__c(), testBp, 'getRecordByContractAccountFail did not work correctly');
         Test.stopTest();
     }
     

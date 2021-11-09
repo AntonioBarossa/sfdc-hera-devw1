@@ -49,7 +49,7 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
             quotes[0].SBQQ__Status__c = 'Accepted';
             insert quotes;
 
-            List<SaleServiceItem__c> ssItem = HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quotes[0].Id, spList[0].Id);
+            HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quotes[0].Id, spList[0].Id);
         }
     }
 

@@ -4,6 +4,7 @@ import getExtensionFile from '@salesforce/apex/HDT_LC_DownloadAttachmentAzure.ge
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';  //Modifica>>> marco.arci@webresults.it 22/09/21
 export default class Fdt_Alessio_test extends LightningElement {
     @track searchKey= '';
+    @track fileName= '';
     @track base_url = 'https://archiviazione.azurewebsites.net/sbldownload/';
     @track extension = false;       //Modifica 12/10/21 marco.arci@webresults.it true= cliccabile, false= non cliccabile
 
@@ -13,9 +14,10 @@ export default class Fdt_Alessio_test extends LightningElement {
         console.log('-----log_Start');
         getUrlNameDocumentLink({rId:this.recordId})
         .then(r=>{
-            console.log('-----log_first then');
-            this.searchKey = r;
-            let url = this.base_url + r;
+            console.log('-----log_first then', r);
+            this.searchKey = r.NOME_FILE_DOWNLOAD__c;
+            this.fileName= r.FILE_NAME__c +'.'+ r.FILE_EXT__c;
+            let url = this.base_url + this.searchKey;
             console.log(url);
             let data = { method: 'GET',
                             Accept:'*/*',
@@ -46,18 +48,25 @@ export default class Fdt_Alessio_test extends LightningElement {
                               reader.releaseLock();
                             
                         }
-                      })
+                    })
                 )
                 
                 .then(rs => new Response(rs))
                 // Create an object URL for the response
-                .then(response => response.blob())
+                .then(response => {
+                    console.log(JSON.stringify(response));
+                    console.log(JSON.stringify(response.headers));
+                    console.log(JSON.stringify(response.body));
+                    console.log(JSON.stringify(response.status));
+                    return response.blob();
+                    
+                    })
                 .then(blob => URL.createObjectURL(blob))
                 // Update image
                 .then(url => {
                     var link=document.createElement('a');
                     link.href=url;
-                    link.download=this.searchKey+".jpeg";
+                    link.download=this.fileName;
                     link.click();
                 })
                 //START Modifica>>> marco.arci@webresults.it 22/09/21

@@ -22,7 +22,7 @@ public class HDT_QBL_BpCaRequestTst {
 		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);  
         HDT_QBL_BpCaRequest testim = new HDT_QBL_BpCaRequest(accList[0],conList[0]);
         Test.startTest();   
-        String res = System.enqueueJob(testim);
+        System.enqueueJob(testim);
         Test.stopTest();
         System.assertEquals(true, testim !=null, 'An error has occurred!');
       }

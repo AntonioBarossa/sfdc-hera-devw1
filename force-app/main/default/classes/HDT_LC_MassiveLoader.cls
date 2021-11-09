@@ -226,7 +226,7 @@ public with sharing class HDT_LC_MassiveLoader {
                             insert listRequestItem;
                             integer  numberRequestProcessing= database.countQuery('SELECT count() FROM MassiveLoaderRequest__c WHERE  Status__c =\'In Lavorazione\'');
 
-                            if (numberRequestProcessing==0) {
+                            if (numberRequestProcessing==0 && !test.isRunningTest()) {
                                 request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INLAVORAZIONE;
                                 HDT_BA_ProcessRequestItem processReq = new HDT_BA_ProcessRequestItem(listRequestItem.get(0).MassiveLoaderRequest__c); 
                                 Database.executeBatch(processReq,1);

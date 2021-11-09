@@ -15,7 +15,7 @@ public with sharing class HDT_TRH_AssetTst {
 
         Test.startTest();
         
-        List<Asset> assetList = HDT_UTL_DataFactoryTst.createAsset(1, true);
+        HDT_UTL_DataFactoryTst.createAsset(1, true);
 
         Asset assetTest = [SELECT Id FROM Asset WHERE Name = 'testAsset0' LIMIT 1];
         

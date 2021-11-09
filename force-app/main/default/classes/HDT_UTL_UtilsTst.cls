@@ -26,7 +26,7 @@ public class HDT_UTL_UtilsTst{
 
 		System.runAs(internal){
 
-			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 
 		}
     }

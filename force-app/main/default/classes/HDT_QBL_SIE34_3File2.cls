@@ -19,7 +19,10 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
        String status     = 'success'            ;
        String condition  = ' WHERE Cluster__c IN (\'Disattivazioni\',\'Morosità\') AND Type=\'Interruzione Fornitura\' AND Status !=\'Closed\' AND LastModifiedDate >=:filterDate ';
        String query = 'SELECT Contract__r.ContractSalesCompany__c,CancellationReasonCode__c,ServicePoint__r.SupplyStreetNumberExtension__c,Account.BillingStreetNumberExtension__c,Account.BillingCity,Account.BillingPlace__c,Account.BillingPostalCode, Account.BillingState, Account.BillingStreetName__c,Account.BillingStreetNumber__c, Account.CustomerCode__c,Account.FirstName__c, Account.FiscalCode__c,Account.LastName__c, Account.VATNumber__c,CASE.CaseNumber, CausalCode__c,CommodityFormula__c,SalesCompany__c,CreatedBy.Name,Distributor__c,NotPerformedBefore__c,PhoneNumber__c,PODPDRFormula__c,ServicePoint__r.MeterType__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.SupplyPlace__c,ServicePoint__r.SupplyPostalCode__c,ServicePoint__r.SupplyProvince__c,ServicePoint__r.SupplyStreetNumber__c,ServicePoint__r.SupplyStreet__c,SubProcess__c,VATPercentage__c,DeliveryAddress__c,Contract__c, BillingProfile__r.InvoicingAddressFormula__c,Subscription__r.SBQQ__ProductName__c FROM Case';
-
+       // Delete Start old File
+       String title                   = 'OUT_CESSAZIONE_FUORI_RETE' ;
+       HDT_UTL_ContentVersion.deleteFiles(title);
+       // Delete End old File
        String separator  = ';';
     
          try {
@@ -84,7 +87,7 @@ public with sharing class HDT_QBL_SIE34_3File2 implements Queueable  {
                   }
                }
                if (listCase!=null && listCase.size()>0 ) {
-                  contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_FUORI_RETE.txt','OUT_CESSAZIONE_FUORI_RETE'));
+                  contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_CESSAZIONE_FUORI_RETE.txt',title));
                }
                if(!Test.isRunningTest()){
                   System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType, errorMessage,contentVersionIds));
