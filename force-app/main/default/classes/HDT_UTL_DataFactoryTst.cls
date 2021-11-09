@@ -3081,12 +3081,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
         for (Integer i=0; i<amount; i++){
             
             DiscardAnnullmentRule__c rule = new DiscardAnnullmentRule__c(
-                ActivityType__c = 'ActivityTypeTest',
-                ControllingField__c = 'ControllingFieldTest',
+                ActivityType__c = 'Esito KO da DL',
+                ControllingField__c = 'Description',
                 ControllingValue__c = 'ControllingValueTest',
                 ParentObject__c = parentObject,
-                ProcessField__c = 'ProcessFieldTest',
-                ProcessValue__c = 'ProcessValueTest'
+                ProcessField__c = 'ProcessType__c',
+                ProcessValue__c = '	Sospensione Fornitura'
             );
             
             rules.add(rule);
@@ -3263,6 +3263,27 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return activityCustomList;
+	}
+
+
+	public static List<et4ae5__SendDefinition__c> createSendDefinition(Integer amount, Boolean doInsert,Id campaignId){
+
+		List<et4ae5__SendDefinition__c> sdList =new List<et4ae5__SendDefinition__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__SendDefinition__c sd = new et4ae5__SendDefinition__c();
+			sd.et4ae5__Campaign__c= campaignId;
+			sd.et4ae5__FromName__c= 'test' + i;
+
+			sdList.add(sd);
+		}
+
+		if (doInsert){
+			insert sdList;
+		}
+
+		return sdList;
 	}
 
 }

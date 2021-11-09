@@ -18,10 +18,7 @@ public class HDT_WS_CampaignBollettaTst {
     }
     
 	@isTest
-    static void test1(){
-        
-        String contentversionid = 'test';
-        String surveyType = 'test';
+    static void test(){
         
         Test.startTest();
         

@@ -27,7 +27,7 @@ public with sharing class HDT_LC_CambioUsoTst {
             List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true); 
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accountList[0].Id);
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accountList[0].Id, 'Bozza');
-            List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accountList[0].Id, contactList[0].Id, servPointList[0].Id, contractList[0].Id, orderList[0].Id);
+            HDT_UTL_DataFactoryTst.createCase(1, true, accountList[0].Id, contactList[0].Id, servPointList[0].Id, contractList[0].Id, orderList[0].Id);
     
         }
     }

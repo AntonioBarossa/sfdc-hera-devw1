@@ -13350,6 +13350,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.isMultipleQuoteOffer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DocumentReceiptDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14721,6 +14726,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ReminderComfortCall__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.MarketingPrivacy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ProfilingPrivacy__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -31605,6 +31620,10 @@
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_Call</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_CCheckNew</layout>

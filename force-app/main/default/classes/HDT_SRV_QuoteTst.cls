@@ -30,7 +30,7 @@ public with sharing class HDT_SRV_QuoteTst {
             List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
             List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-            List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, true, orderList[0].Id, oppList[0].Id, saleList[0].Id, 'Amendment');
+            HDT_UTL_DataFactoryTst.createQuote(1, true, orderList[0].Id, oppList[0].Id, saleList[0].Id, 'Amendment');
         }
     }
 	
@@ -117,7 +117,7 @@ public with sharing class HDT_SRV_QuoteTst {
                 Sale__c = sale.Id
             );
 
-            SBQQ__Quote__c testQuote = srvQuote.createRecord(quote);
+            srvQuote.createRecord(quote);
 
             List<SBQQ__Quote__c> quoteList = [SELECT Id FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'In Review'];
  

@@ -64,8 +64,7 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 
-        List<Order> childOrder;
-        childOrder = HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
+        HDT_UTL_DataFactoryTst.createChildOrder(1, true, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
 
     }
 
@@ -81,8 +80,7 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         Map<String, Object> mapAttiva = HDT_LC_OrderDossierWizard.controllerInit(saleAttiva.Id);
 
-        Map<String, Object> mapBozza;
-        mapBozza = HDT_LC_OrderDossierWizard.controllerInit(saleBozza.Id);
+        HDT_LC_OrderDossierWizard.controllerInit(saleBozza.Id);
 
         System.assertEquals(6, mapAttiva.size(), 'controllerInit did not work correctly');
 

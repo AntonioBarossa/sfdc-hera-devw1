@@ -104,7 +104,7 @@ public with sharing class HDT_UTL_ScriptWrappers {
             return false;
         }
 
-        public Boolean checkEqual(String actualFieldValue) {
+        private Boolean checkEqual(String actualFieldValue) {
             Boolean areStringsEqual;
             if ('null'.equalsIgnoreCase(valueToCheck)) {//null means "empty string"
                 areStringsEqual = String.isBlank(actualFieldValue);
@@ -115,7 +115,7 @@ public with sharing class HDT_UTL_ScriptWrappers {
             return areStringsEqual;
         }
 
-        public Boolean checkLike(String actualFieldValue) {
+        private Boolean checkLike(String actualFieldValue) {
             return actualFieldValue.containsIgnoreCase(valueToCheck);
         }
     }

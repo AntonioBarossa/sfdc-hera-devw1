@@ -143,26 +143,34 @@ export default class HdtCtToolbarContainer extends NavigationMixin(LightningElem
                 this.uuid = this.toolbarAttributes.id;
                 callData = event.detail.CallData;
                 //get ecid value from callData
-                if(this.toolbarAttributes != null && this.toolbarAttributes == 'inbound'){
+                console.log('******preIF Inbound');
+                if(this.toolbarAttributes != null && this.toolbarAttributes.type == 'inbound'){
+                    console.log('******postIF Inbound2');
                     let username;
                     let password;
-                    for (let i = 0; i < this.toolbarAttributes.callData.length; i++) {
-                        if (dataArray[i].fieldName == 'SF_USERNAME') {
-                            username = dataArray[i].value;
+                    for (let i = 0; i < this.toolbarAttributes.CallData.length; i++) {
+                        console.log('******postIF Inbound21');
+                        if (this.toolbarAttributes.CallData[i].name == 'SF_USERNAME') {
+                            console.log('******postIF Inbound21');
+                            username = this.toolbarAttributes.CallData[i].value;
                         }
-                        if (dataArray[i].fieldName == 'SF_PASSWORD') {
-                            password = dataArray[i].value;
+                        if (this.toolbarAttributes.CallData[i].name == 'SF_PASSWORD') {
+                            password = this.toolbarAttributes.CallData[i].value;
                         }
                     }
+                    console.log('******postIF Inbound3');
+                    console.log('******postIF Inbound3:' + username);
+                    console.log('******postIF Inbound3:' + password);
                     let searchparams2 = 'filter={"filter":{"uuid":"' + this.uuid + '"},"sort":{"startTs":-1},"index":0}'   ; 
                     let searchparams = encodeURI(searchparams2);
                     let reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?' + searchparams;//this.regLink.replace(url.searchParams.get('filter'), newparams);
                     createActivityInbound({
                         //startCall: startCallDateTime,
-                        'registrationLink': reiteklink,
+                        'reiteklink': reiteklink,
                         'username' : username,
                         'password' : password
                     }).then(data => {
+                        console.log('******postIF Inbound4');
                         console.log('******createActivity --- OrderId - ' + JSON.stringify(data));
                         // this.activityId = data.Id;
                         // console.log('CAMPAINGCHECK:' + this.campaignMemberId);

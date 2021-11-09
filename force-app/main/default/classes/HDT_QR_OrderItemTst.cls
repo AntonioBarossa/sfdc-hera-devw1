@@ -172,26 +172,16 @@ public with sharing class HDT_QR_OrderItemTst {
         
         Test.startTest();
 
-        String orderId = String.valueOf([SELECT Id FROM Order].Id);
-
-        Product2 prod = [SELECT Id, Name FROM Product2];
-
-        prod.Name = 'Analisi Consumi';
-
+        Product2 prod = [SELECT Id, Name, Family FROM Product2];
+        prod.Family = 'VAS Fatturabili';
         update prod;
-
-        List<OrderItem> oiList = new List<OrderItem>();
-
-        System.debug('Order IDs: '+ orderId);
-
+        
+        List<Order> orderList = [SELECT Id FROM Order LIMIT 1];
         HDT_QR_OrderItem qrOi = new HDT_QR_OrderItem();
+        List<OrderItem> oiList = qrOi.getAnalisiConsumi(orderList[0].Id);
 
-        oiList = qrOi.getAnalisiConsumi(orderId);
-
-        System.debug('oiList: '+ oiList);
-
-        System.assertEquals(orderId, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
-        System.assertNotEquals(orderId, null, 'Order IDs mismatch.');
+        System.assertEquals(orderList[0].Id, String.valueOf(oiList[0].OrderId), 'Order IDs match.');
+        System.assertNotEquals(orderList[0].Id, null, 'Order IDs mismatch.');
 
         Test.stopTest();
     }

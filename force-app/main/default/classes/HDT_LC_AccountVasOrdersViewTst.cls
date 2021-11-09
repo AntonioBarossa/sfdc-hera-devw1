@@ -13,7 +13,7 @@ public with sharing class HDT_LC_AccountVasOrdersViewTst {
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         Order ord = new Order();
         ord.AccountId = accList[0].Id;
-        ord.RecordTypeId ='0121X000002NNTaQAO';
+        ord.RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
         ord.Status = 'In Lavorazione';
         ord.EffectiveDate = Date.today();
         insert ord;

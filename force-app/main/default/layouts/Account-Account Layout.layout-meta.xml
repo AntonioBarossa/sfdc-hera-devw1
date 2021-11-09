@@ -129,7 +129,7 @@
             <fields>CONTRACT.CONTRACT_NUMBER</fields>
             <relatedList>RelatedContractList</relatedList>
         </relatedLists>
-                <!-- <relatedLists>
+        <!-- <relatedLists>
             <fields>CONTACT.FULL_NAME</fields>
             <fields>ACCCONRELATION.ROLES</fields>
             <relatedList>RelatedAccountContactRelationList</relatedList>

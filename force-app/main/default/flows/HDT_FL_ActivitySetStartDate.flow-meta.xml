@@ -4,8 +4,8 @@
     <assignments>
         <name>set_activity_start_date</name>
         <label>Imposta Data Inizio Attività</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationX>308</locationX>
+        <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>$Record.ActivityStartTime__c</assignToReference>
             <operator>Assign</operator>
@@ -14,6 +14,28 @@
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>ExistRecord</name>
+        <label>ExistRecord?</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>set_activity_start_date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAutomationRecord</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Exist</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>now</name>
         <dataType>DateTime</dataType>
@@ -40,11 +62,67 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>GetAutomationRecord</name>
+        <label>GetAutomationRecord</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ExistRecord</targetReference>
+        </connector>
+        <filterLogic>1 AND ( 2 OR 3 ) AND (4 AND 5 ) AND 6</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_FL_ActivitySetStartDate</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>BEFORE_INSERT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipDueDateTime__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_AutomationToggle__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>set_activity_start_date</targetReference>
+            <targetReference>GetAutomationRecord</targetReference>
         </connector>
         <object>wrts_prcgvr__Activity__c</object>
         <recordTriggerType>Create</recordTriggerType>

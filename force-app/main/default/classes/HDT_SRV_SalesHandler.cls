@@ -572,7 +572,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
                     try {
                         Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
-                        System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_7(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_7'));
                         RestContext.response.statusCode = 200;
                     } catch (Exception e) {
                         mapError(e.getMessage(),responseField,responseFieldError,responseObject,mrrResponseItem);
@@ -585,7 +585,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     List<String> listFieldsReq =new List<String>{'runId','updatedFrom'};
                     try {
                         Map<String,String> localMapRequestFields =requiredFields(listFieldsReq, request);
-                        System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_3'));
+                        System.enqueueJob(new HDT_QBL_SIE34_6(localMapRequestFields.get('runId'),localMapRequestFields.get('updatedFrom'), 'SIE34_6'));
                         RestContext.response.statusCode = 200;
                     } 
                     catch (Exception e) {
