@@ -255,9 +255,13 @@ public inherited sharing class HDT_QR_Case {
         }
         return childCases;
     }
-    public List<Case> getCaseByAccountid(String accountid, string type)
+    /**@frpanico 22/10/2021
+     * modified input parameter from String type to Set<String> types
+     * To query records with different types
+     */
+    public List<Case> getCaseByAccountid(String accountid, Set<String> types)
     {
-        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type = :type AND isClosed = false WITH SECURITY_ENFORCED];
+        return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type IN :types AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
 }

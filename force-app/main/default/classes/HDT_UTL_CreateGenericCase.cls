@@ -169,6 +169,10 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.VatNumber__c = parentOrder.CustomerVATNumber__c;
         newCase.FiscalCode__c = parentOrder.CustomerFiscalCode__c;
         newCase.Resident__c = parentOrder.Resident__c;
+        if (parentOrder.Contact__c != null) {
+            newCase.PhoneNumber__c = parentOrder.Contact__r.MobilePhone != null ? parentOrder.Contact__r.MobilePhone : parentOrder.Contact__r.Phone;
+            newCase.Email__c = parentOrder.Contact__r.Email;
+        }
 
         return newCase;
     }

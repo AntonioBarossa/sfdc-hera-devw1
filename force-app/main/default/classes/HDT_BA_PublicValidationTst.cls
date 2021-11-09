@@ -10,12 +10,14 @@ public with sharing class HDT_BA_PublicValidationTst {
 
     @TestSetup
     static void setup(){
-        
+        String rt =	Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
 		HDT_UTL_DataFactoryTst.pClickOrderPhase();
         List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
 		List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
-		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
+		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
+        orders[0].RecordTypeId =rt;
+        insert orders;
 		HDT_UTL_DataFactoryTst.createChildOrder(1, true, accList[0].Id, sales, orders[0].Id, conList[0].Id);
         HDT_UTL_DataFactoryTst.createVocalOrderPublicConfirm(1,true,'Nuova',orders[0].Id);
 	}

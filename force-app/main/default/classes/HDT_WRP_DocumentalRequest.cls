@@ -61,6 +61,13 @@ public class HDT_WRP_DocumentalRequest{
         public string emailSubject { get; set; }
         public string email { get; set; }
         public string name { get; set; }
+        public string nomeRagSoc { get; set; }
+        public string cognomeRagSociale { get; set; }
+        public string dataCreazioneDocumento { get; set; }
+        public string dataCaricamentoDocumento { get; set; }
+        public string rds { get; set; }
+        public string tipoDocumentoStampa { get; set; }
+        public string settoreMerceologico { get; set; }
     }
 
     public class HDT_WRP_DocumentalTemplate
