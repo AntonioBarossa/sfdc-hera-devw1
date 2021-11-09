@@ -3,6 +3,7 @@
  * @description HDT_UTL_ServiceCatalogProfileCriteria - 
  */
 
+@SuppressWarnings('PMD.AvoidGlobalModifier')
  global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements wrts_prcgvr.Interfaces_1_2.IApexCriteria {
     HDT_QR_PermissionSet permQr = new HDT_QR_PermissionSet();
     global boolean evaluate(Object args) {

@@ -20,10 +20,10 @@ public with sharing class HDT_QR_MatrixCompatibilityMapTst {
  
         insert internalUser;
  
-        System.runAs(internalUser) {
-            //seu testSetup  
+        // System.runAs(internalUser) {
+        //     //seu testSetup  
 
-        }
+        // }
     }
 
     @isTest
@@ -33,8 +33,8 @@ public with sharing class HDT_QR_MatrixCompatibilityMapTst {
             Test.startTest();
 
             List<HDT_MatrixCompatibilityMap__mdt> newMatrix = HDT_QR_MatrixCompatibilityMap.getProcessTypeMap('Rimozione Impianto','Case');
-            System.assertEquals(true, newMatrix[0].Id != null); 
-            System.assertNotEquals(false, newMatrix[0].Id != null);
+            System.assertEquals(true, newMatrix[0].Id != null,'The Matrix is empty'); 
+            System.assertNotEquals(false, newMatrix[0].Id != null, 'The Matrix has no records');
 
             Test.stopTest();
         }

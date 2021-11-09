@@ -2,10 +2,11 @@
  * Dispatcher class that implements the ProcessClick PhaseManager custom Apex Action interface
  * call the relative methods based on the input method passed from ProcessClick
  */
-public with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr.Interfaces_1_0.IApexAction
+@SuppressWarnings('PMD.AvoidGlobalModifier')
+global with sharing class HDT_SRV_VoltureChangeDispatcher implements wrts_prcgvr.Interfaces_1_0.IApexAction
 {
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
-    public Object execute(Object args)
+    global Object execute(Object args)
     {
         Map<String, Object> argsMap = (Map<String,Object>)args;
         String method = (String)argsMap.get('method');

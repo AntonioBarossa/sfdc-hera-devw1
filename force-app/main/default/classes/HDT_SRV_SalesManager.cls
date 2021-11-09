@@ -7,7 +7,7 @@
  * -----
  * HISTORY:
  */
-
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_SRV_SalesManager implements wrts_prcgvr.Interfaces_1_0.IApexAction {
     
     private static final String VAS_SERVICE_TYPE = 'VAS Servizio';

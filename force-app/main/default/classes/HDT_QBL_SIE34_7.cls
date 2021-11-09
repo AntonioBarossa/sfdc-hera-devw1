@@ -32,10 +32,13 @@ public with sharing class HDT_QBL_SIE34_7 implements Queueable  {
     public void execute(QueueableContext context) {
        String status                  = 'success'   ;
        String errorMessage            = ''          ;
-       String condition = ' WHERE Order.ProcessType__c = \'VAS\' AND Order.Phase__c = \'Completata\' ';
+       String condition = ' WHERE Order.ProcessType__c = \'VAS\' AND Order.Phase__c = \'Completata\' AND LastModifiedDate >=:filterDate';
        String query     = 'SELECT Id,ContinuityChangeOffer__c,DurationVas__c,PriceNet__c,PriceNetDiscounted__c,Quantity,DiscountEurMWh__c,VasActivationDate__c,BillingMode__c,PaymentMode__c,Order.BillingPostalCode__c ,Order.BillingCity__c ,Order.BillingStreetName__c ,Order.BillingProvince__c ,Order.CustomerCode__c,Order.Account.FiscalCode__c,Order.EndDate,Order.EffectiveDate__c,Order.SignedDate__c,Order.Email__c,Order.CustomerVATNumber__c,Order.VAT__c ,Order.ServicePointCodeFormula__c,Order.OrderNumber,Order.PhoneNumber__c,Order.CommercialProductVersion__c FROM OrderItem ';
-       String separator = ';';
- 
+       // Delete Start old File
+       String title                   = 'OUT_VAS'              ;
+       HDT_UTL_ContentVersion.deleteFiles(title)               ;
+       // Delete End old File
+       String separator = ';'                                  ;
     
        try {
           
@@ -113,7 +116,7 @@ public with sharing class HDT_QBL_SIE34_7 implements Queueable  {
              }
           }
           if (listOrderItem!=null && listOrderItem.size()>0 ) {
-               contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_VAS.txt','OUT_VAS'));
+               contentVersionIds.add(HDT_UTL_ContentVersion.makeFile(body,'OUT_VAS.txt',title));
           }
           if(!Test.isRunningTest()){
             System.enqueueJob(new HDT_QBL_SIE34CallService(runId,status, fileType,errorMessage,contentVersionIds));

@@ -60,7 +60,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         Test.startTest();
         Sale__c tSale = [SELECT Id, Agency__c, Campaign__c FROM Sale__c LIMIT 1];
         ServicePoint__c tServicePoint = [SELECT Id, RecordType.DeveloperName, SupplyCity__c, MarketOrigin__c, SupplyProvince__c, MeterType__c, UseCategory__c  FROM ServicePoint__c LIMIT 1];
-        SBQQ__Quote__c tQuote = [SELECT Id, Login__c, LoginGroup__c, Role__c, Profile__c, NewClient__c, ResidentDeliveryAddress__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c, AmendmentAllowed__c FROM SBQQ__Quote__c WHERE AmendmentAllowed__c = false];
+        //SBQQ__Quote__c tQuote = [SELECT Id, Login__c, LoginGroup__c, Role__c, Profile__c, NewClient__c, ResidentDeliveryAddress__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c, AmendmentAllowed__c FROM SBQQ__Quote__c WHERE AmendmentAllowed__c = false];
         Map<String,String> tMapString = new Map<String,String>();
         tMapString.put('login', 'loginTest');
         tMapString.put('loginGroup', 'loginGroupTest');
@@ -114,7 +114,7 @@ public with sharing class HDT_QR_SaleServiceItemTst {
     
         List<SaleServiceItem__c> testSaleServItem = qrSaleServItem.getSaleByServicePoint(tServicePoint.Id);
         System.assertEquals(false, testSaleServItem.isEmpty(), 'testSaleServItem not populated correctly');
-        System.assertNotEquals(true, testSaleServItem.isEmpty());
+        System.assertNotEquals(true, testSaleServItem.isEmpty(), 'getSaleByServicePoint did not work correctly');
         Test.stopTest();
     }
     @isTest

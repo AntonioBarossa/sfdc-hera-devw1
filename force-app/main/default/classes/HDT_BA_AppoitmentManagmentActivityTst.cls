@@ -69,12 +69,9 @@ public class HDT_BA_AppoitmentManagmentActivityTst {
         Test.startTest();
         
         HDT_BA_AppoitmentManagmentActivity appManage = new HDT_BA_AppoitmentManagmentActivity();
-        Id batchId = Database.executeBatch(appManage);
+        Database.executeBatch(appManage);
         Test.stopTest();
         List<wrts_prcgvr__Activity__c> actList = [SELECT Id,Status__c,Account__c,Name FROM wrts_prcgvr__Activity__c ];
-        
-        List<SMSTracking__c> sms = [SELECT Id, DateTimeRef__c, Undelivered__c, Activity__c FROM SMSTracking__c ];
-        List<et4ae5__IndividualEmailResult__c> ier = [SELECT Id, DateTimeRef__c, et4ae5__Opened__c , Activity__c FROM et4ae5__IndividualEmailResult__c];
 
         System.assertEquals(true, actList.size() > 0, 'Created and insert Activity');
         System.assertNotEquals(true, actList.size() == 0, 'Created and insert Activity');

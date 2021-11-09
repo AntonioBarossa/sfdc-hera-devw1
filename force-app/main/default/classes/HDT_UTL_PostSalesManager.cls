@@ -136,6 +136,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.BillingStreetName__c = currentCase.BillingStreetName__c;
                 acc.BillingStreetNumber__c = currentCase.BillingStreetNumber__c;
                 acc.BillingStreetNumberExtension__c = currentCase.BillingStreetNumberExtension__c;
+                acc.IsWrongFiscalData__c = false;
                 objToUpdate = acc;
             }
             when 'Variazione Gruppo IVA' {

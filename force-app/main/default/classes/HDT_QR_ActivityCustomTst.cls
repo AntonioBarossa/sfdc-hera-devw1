@@ -112,7 +112,7 @@ public with sharing class HDT_QR_ActivityCustomTst{
 	}
 
 	@isTest
-	public static void testgetRecordByIdS(){
+	public static void testgetRecordByIds(){
 		Test.startTest();
 
 		List<wrts_prcgvr__Activity__c> tActivityCust=[SELECT Id, Status__c

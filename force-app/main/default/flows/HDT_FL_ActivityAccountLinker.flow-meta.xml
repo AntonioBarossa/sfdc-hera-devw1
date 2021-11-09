@@ -5,7 +5,7 @@
         <name>account_counter_increase</name>
         <label>Contatore</label>
         <locationX>479</locationX>
-        <locationY>2375</locationY>
+        <locationY>2615</locationY>
         <assignmentItems>
             <assignToReference>counter</assignToReference>
             <operator>Add</operator>
@@ -28,7 +28,7 @@
         <name>assign_to_account</name>
         <label>Assegna a Account</label>
         <locationX>259</locationX>
-        <locationY>2711</locationY>
+        <locationY>2951</locationY>
         <assignmentItems>
             <assignToReference>$Record.Account__c</assignToReference>
             <operator>Assign</operator>
@@ -41,7 +41,7 @@
         <name>assign_to_lead</name>
         <label>Assegna a Lead</label>
         <locationX>787</locationX>
-        <locationY>2591</locationY>
+        <locationY>2831</locationY>
         <assignmentItems>
             <assignToReference>$Record.Lead__c</assignToReference>
             <operator>Assign</operator>
@@ -54,7 +54,7 @@
         <name>contact_counter_increase</name>
         <label>Contatore</label>
         <locationX>743</locationX>
-        <locationY>1679</locationY>
+        <locationY>1919</locationY>
         <assignmentItems>
             <assignToReference>contact_counter</assignToReference>
             <operator>Add</operator>
@@ -77,7 +77,7 @@
         <name>lead_counter_increase</name>
         <label>Contatore</label>
         <locationX>1007</locationX>
-        <locationY>2255</locationY>
+        <locationY>2495</locationY>
         <assignmentItems>
             <assignToReference>counter</assignToReference>
             <operator>Add</operator>
@@ -100,7 +100,7 @@
         <name>link_activity_to_contact_by_fiscal_code</name>
         <label>Assegna Contatto a Activity</label>
         <locationX>391</locationX>
-        <locationY>2015</locationY>
+        <locationY>2255</locationY>
         <assignmentItems>
             <assignToReference>$Record.Contact__c</assignToReference>
             <operator>Assign</operator>
@@ -116,7 +116,7 @@
         <name>Set_Account_and_Contact</name>
         <label>Assegna Account e Contact</label>
         <locationX>50</locationX>
-        <locationY>911</locationY>
+        <locationY>1151</locationY>
         <assignmentItems>
             <assignToReference>$Record.Account__c</assignToReference>
             <operator>Assign</operator>
@@ -136,7 +136,7 @@
         <name>account_found_decision</name>
         <label>Account trovato?</label>
         <locationX>380</locationX>
-        <locationY>551</locationY>
+        <locationY>791</locationY>
         <defaultConnector>
             <targetReference>get_contact</targetReference>
         </defaultConnector>
@@ -161,7 +161,7 @@
         <name>contact_found_decision</name>
         <label>Contatto trovato?</label>
         <locationX>182</locationX>
-        <locationY>791</locationY>
+        <locationY>1031</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>contact_yes_outcome</name>
@@ -180,10 +180,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>ExistRecord</name>
+        <label>ExistRecord?</label>
+        <locationX>220</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Find_Client_By</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAutomationToggle</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Find_Client_By</name>
         <label>Identifica cliente per:</label>
         <locationX>655</locationX>
-        <locationY>311</locationY>
+        <locationY>551</locationY>
         <defaultConnectorLabel>Manualmente</defaultConnectorLabel>
         <rules>
             <name>BP_Code</name>
@@ -234,7 +256,7 @@
         <name>single_account_found</name>
         <label>Account Univoco?</label>
         <locationX>391</locationX>
-        <locationY>2591</locationY>
+        <locationY>2831</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>single_account_found_yes</name>
@@ -256,7 +278,7 @@
         <name>single_contact_found</name>
         <label>Contatto univoco trovato?</label>
         <locationX>655</locationX>
-        <locationY>1895</locationY>
+        <locationY>2135</locationY>
         <defaultConnector>
             <targetReference>get_lead</targetReference>
         </defaultConnector>
@@ -281,7 +303,7 @@
         <name>single_lead_found</name>
         <label>Lead Univoco?</label>
         <locationX>919</locationX>
-        <locationY>2471</locationY>
+        <locationY>2711</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>single_lead_found_yes</name>
@@ -305,7 +327,7 @@
         <name>account_counter_loop</name>
         <label>Conta Account</label>
         <locationX>391</locationX>
-        <locationY>2255</locationY>
+        <locationY>2495</locationY>
         <collectionReference>get_account_by_contact</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -319,7 +341,7 @@
         <name>contact_counter_loop</name>
         <label>Conta Contatti</label>
         <locationX>655</locationX>
-        <locationY>1559</locationY>
+        <locationY>1799</locationY>
         <collectionReference>get_contact</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -333,7 +355,7 @@
         <name>lead_counter_loop</name>
         <label>Conta Lead</label>
         <locationX>919</locationX>
-        <locationY>2135</locationY>
+        <locationY>2375</locationY>
         <collectionReference>get_lead</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -366,7 +388,7 @@
         <name>account_by_bp_code</name>
         <label>Account</label>
         <locationX>380</locationX>
-        <locationY>431</locationY>
+        <locationY>671</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>account_found_decision</targetReference>
@@ -388,7 +410,7 @@
         <name>get_account_by_contact</name>
         <label>Account</label>
         <locationX>391</locationX>
-        <locationY>2135</locationY>
+        <locationY>2375</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>account_counter_loop</targetReference>
@@ -418,7 +440,7 @@
         <name>get_contact</name>
         <label>Contatto</label>
         <locationX>655</locationX>
-        <locationY>1439</locationY>
+        <locationY>1679</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>contact_counter_loop</targetReference>
@@ -490,7 +512,7 @@
         <name>get_contact_by_account</name>
         <label>Contact</label>
         <locationX>182</locationX>
-        <locationY>671</locationY>
+        <locationY>911</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>contact_found_decision</targetReference>
@@ -527,7 +549,7 @@
         <name>get_lead</name>
         <label>Lead</label>
         <locationX>919</locationX>
-        <locationY>2015</locationY>
+        <locationY>2255</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>lead_counter_loop</targetReference>
@@ -594,11 +616,67 @@
         <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetAutomationToggle</name>
+        <label>GetAutomationToggle</label>
+        <locationX>220</locationX>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ExistRecord</targetReference>
+        </connector>
+        <filterLogic>1 AND ( 2 OR 3 ) AND (4 AND 5 ) AND 6</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_FL_ActivityAccountLinker</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>BEFORE_INSERT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipDueDateTime__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_AutomationToggle__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
-        <locationX>529</locationX>
+        <locationX>94</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Find_Client_By</targetReference>
+            <targetReference>GetAutomationToggle</targetReference>
         </connector>
         <filterLogic>(1 OR 2) AND 3 AND 4 AND 5</filterLogic>
         <filters>

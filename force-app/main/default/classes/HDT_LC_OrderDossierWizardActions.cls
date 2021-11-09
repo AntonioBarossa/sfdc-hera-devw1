@@ -21,7 +21,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         Map<Id, Order> mapChildOrders = new Map<Id, Order>(childOrders);
         List<Order> ordersToUpdate = new List<Order>();
-        List<Order> childOrdersToUpdate = new List<Order>();
         
         Order orderToUpdate = new Order(
             Id = orderParent.Id
@@ -128,7 +127,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     }
 
     @AuraEnabled
-    public static void save2(Order orderParent,boolean isPlicoSend){
+    public static void save2(Order orderParent,boolean isPlicoSend){ 
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -156,6 +155,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Activated';
         }
+
+        //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
+        orderToUpdate.SignMode__c = orderParent.SignMode__c;
       /*  if(isPlicoSend){
           //  orderToUpdate.Phase__c = 'Plico da inviare';
           orderToUpdate.Phase__c = 'Documentazione da validare';

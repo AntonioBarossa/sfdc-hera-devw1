@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
 
     /**@frpanico 13/10/2021
@@ -9,7 +10,7 @@ global with sharing class HDT_WS_VoltureChangeManager implements wrts_prcgvr.Int
     private static HDT_UTL_VoltureChangeManager voltureChangeManagerUtl = new HDT_UTL_VoltureChangeManager();  
     private static HDT_SRV_VoltureChangeManager voltureChangeManagerSrv = new HDT_SRV_VoltureChangeManager();
 
-    public Object execute(Object args)
+    global Object execute(Object args)
     {   
         /* Variable Declaration */
         Map<String,Object> argsMap = (Map<String,Object>)args;

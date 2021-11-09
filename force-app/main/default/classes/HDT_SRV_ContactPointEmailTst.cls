@@ -4,7 +4,7 @@
  * @description HDT_SRV_ContactPointPhone Test Classes
  * @history Lucas Fernandes 08/09/2021 – Created Class
  */
-
+@SuppressWarnings('PMD.ApexUnitTestClassShouldHaveAsserts')
 @isTest
 public with sharing class HDT_SRV_ContactPointEmailTst {
 
@@ -24,7 +24,7 @@ public with sharing class HDT_SRV_ContactPointEmailTst {
         System.runAs(internalUser) {
  
             List<Individual> ind = HDT_UTL_DataFactoryTst.createIndividual(1, true);
-            List<ContactPointEmail> cpeList = HDT_UTL_DataFactoryTst.createContactPointEmail(1, true, ind[0].Id);   
+            HDT_UTL_DataFactoryTst.createContactPointEmail(1, true, ind[0].Id);   
         }
     }
 	

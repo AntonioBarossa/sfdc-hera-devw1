@@ -40,7 +40,6 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(6, true, accounts[0].Id, 'Attiva');
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(6, false, accounts[0].Id, sales, pricebook[0].Id);
-			id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
 			id orderTemporaneaNuovaAtt=utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
 			id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
@@ -152,7 +151,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 		Test.stopTest();
 
 		System.assertEquals(false, tActivityCustom.isEmpty(), 'Order not found');
-		System.assertNotEquals(true, tActivityCustom.isEmpty());
+		System.assertNotEquals(true, tActivityCustom.isEmpty(), 'createActivityAccise did not work correctly');
 	}
 
 	@isTest
@@ -182,10 +181,6 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test5Conessione1'];
-
-			List<Order> tOrder5=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
-			                    FROM Order
-			                    WHERE CreditCheckDescription__c='test6Temporanea'];
 
 			try{
 
@@ -238,11 +233,6 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrder=[SELECT Id, Name, AccountId
-			                    FROM Order
-			                    WHERE Name='testOrderName0'
-			                    LIMIT 1];
-
 			List<Order> tOrderConnessione=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test5Conessione1'
@@ -274,7 +264,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals(false, quoteTypeWrp.quoteCode==null, 'quoteTypeWrp return is Wrong');
-			System.assertNotEquals(true, quoteTypeWrp.quoteCode==null);
+			System.assertNotEquals(true, quoteTypeWrp.quoteCode==null, 'getQuoteTypeMtd did not work correctly');
 		}
 	}
 
@@ -300,7 +290,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals('test1', retrievedOrderCreditCheck.CreditCheckDescription__c, 'Wrong Order returned');
-			System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c);
+			System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c, 'retrieveOrderCreditCheck did not work correctly');
 		}
 	}
 
@@ -321,19 +311,19 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			                    WHERE Name='testOrderName0'
 			                    LIMIT 1];
 
-			Integer voltureEffectiveDataCheckOK=HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck(tOrder[0].EffectiveDate__c);
+			HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck(tOrder[0].EffectiveDate__c);
 
 			tOrder[0].EffectiveDate__c=Date.today().addDays(10);
 
 			update tOrder;
 
-			Integer voltureEffectiveDataCheckKO=HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck(tOrder[0].EffectiveDate__c);
+			Integer voltureEffectiveDataCheckKo=HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck(tOrder[0].EffectiveDate__c);
 
 
 			Test.stopTest();
 
-			System.assertEquals(0, voltureEffectiveDataCheckKO, 'Effective Date Check is wrong');
-			System.assertNotEquals(1, voltureEffectiveDataCheckKO);
+			System.assertEquals(0, voltureEffectiveDataCheckKo, 'Effective Date Check is wrong');
+			System.assertNotEquals(1, voltureEffectiveDataCheckKo, 'voltureEffectiveDateCheck did not work correctly');
 		}
 	}
 
@@ -359,7 +349,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals(false, orderGetDates.Id==null, 'Order returned is Wrong');
-			System.assertNotEquals(true, orderGetDates.Id==null);
+			System.assertNotEquals(true, orderGetDates.Id==null, 'getDates did not work correctly');
 		}
 	}
 }

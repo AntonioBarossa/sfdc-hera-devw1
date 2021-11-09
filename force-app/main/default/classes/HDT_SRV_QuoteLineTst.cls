@@ -33,7 +33,7 @@ public class HDT_SRV_QuoteLineTst{
 
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, accounts[0].Id, 'Bozza');
 
-			List<ServicePoint__c> servicePoints=HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+			HDT_UTL_DataFactoryTst.createServicePoint(1, true);
 
 			List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(1, false);
 			products[0].Family='VAS Opzione prodotto';
@@ -42,7 +42,7 @@ public class HDT_SRV_QuoteLineTst{
 
 			Id pricebookId=Test.getStandardPricebookId();
 
-			List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
+			HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookId);
 
 			List<BillingProfile__c> billingProfiles=HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accounts[0].Id);
 

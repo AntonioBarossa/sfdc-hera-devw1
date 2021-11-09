@@ -156,7 +156,7 @@ public without sharing class HDT_UTL_DatabaseServiceNoShare {
         return false;
     }
 
-    enum DmlOperation { //NOPMD
+    enum DmlOperation { 
         DML_INSERT,
         DML_UPDATE,
         DML_UPSERT,
