@@ -14,7 +14,7 @@ public with sharing class HDT_SCH_SuspendedActivitiesTst {
 
         Test.startTest();
         HDT_SCH_SuspendedActivities sAct = new HDT_SCH_SuspendedActivities();
-        String jobId = System.schedule('Job', cron , sAct);
+        System.schedule('Job', cron , sAct);
         Test.stopTest();
 
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];

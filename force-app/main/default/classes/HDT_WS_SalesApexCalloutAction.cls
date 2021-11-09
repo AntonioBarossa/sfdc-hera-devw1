@@ -4,7 +4,12 @@
 * @description HDT_WS_SalesApexCalloutAction – Callout action for custom behavior of Sales Phase Manager
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+
+    @Testvisible
+    private static HDT_WS_SalesApexCalloutActionMock mock;
+
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
@@ -18,7 +23,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         headerAddValue.name = 'PROCESS_CATEGORY';
         headerAddValue.value = 'sales';
         list<wrts_prcgvr.MRR_1_0.field> headerAttributetoAdd = new list<wrts_prcgvr.MRR_1_0.field>{headerAddValue};
-        Object templateMap = argsMap.get('templateMap');
+        //Object templateMap = argsMap.get('templateMap');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
 
         //custom logic ...
@@ -107,11 +112,18 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             try{
 
                 map<String,String> fieldValueResponse = new map<String,String>();
-                wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+                wrts_prcgvr.MRR_1_0.MultiResponse responseService;
+                if (Test.isRunningTest()){
+                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)mock.respond(action);
+                     responseService = responseServiceTemp;
+                }else{
+                     wrts_prcgvr.MRR_1_0.MultiResponse responseServiceTemp = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
+                     responseService = responseServiceTemp;
+                } 
 
                 System.debug('********MRRequest:' + responseService);
-                System.debug('********description:' + responseService.responses[0].description);
-                System.debug('********objects:' + responseService.responses[0].objects);            
+                //System.debug('********description:' + responseService.responses[0].description);
+                //System.debug('********objects:' + responseService.responses[0].objects);            
                 //for()
              //   responseService.responses[0].objects[0].objects[0].objectType == 'OrderItem'
              //   responseService.responses[0].objects[0].objects[0].fields[0].name = 'TEMPLATENAME'
@@ -245,6 +257,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }
+                                            ord.PreviousCompany__c = fieldValueResponse.get('Z_RAGSOC_CC');
                                         }
                                         when 'Esito KO da SII' {
                                             ord.PrecheckReasonSII__c = fieldValueResponse.get('TESTO_ERRR');

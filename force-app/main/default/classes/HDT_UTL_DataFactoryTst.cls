@@ -6,7 +6,8 @@
  * @history Lucas Fernandes 05/08/2021 – Created 'createAccountShare' method
  */
 
- @isTest
+@SuppressWarnings('PMD.NcssTypeCount,PMD.ExcessivePublicCount')
+@isTest
 public with sharing class HDT_UTL_DataFactoryTst{
 
 	private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
@@ -1139,6 +1140,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		}
 
 		return quoteList;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 6/10/2021
+     */
+    public static List<SBQQ__Quote__c> createEmptyQuote(Integer amount, Boolean doInsert){
+
+		List<SBQQ__Quote__c> quotes = new List<SBQQ__Quote__c>();
+
+		for(Integer i = 0; i < amount; i++) {
+			quotes.add(new SBQQ__Quote__c());
+		}
+
+		if(doInsert) {
+			insert quotes;
+		}
+
+		return quotes;
 	}
 
 	public static List<Pricebook2> createPricebook(Integer amount, Boolean doInsert){
@@ -2448,7 +2468,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	}
 
 
-	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> Rows ){
+	public static MassiveLoaderRequest__c createMassiveLoaderRequest (String processName,List<String> rows ){
 		HDT_QR_MassiveLoaderProcess massiveLoaderProcessQr = new HDT_QR_MassiveLoaderProcess()						;
         HDT_MassiveLoaderProcess__mdt selectedProcess 	   = massiveLoaderProcessQr.getRecordByName(processName)	;
 		MassiveLoaderRequest__c massiveLoaderRequest 	   = new MassiveLoaderRequest__c()							;
@@ -2570,9 +2590,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				CompanyOwner__c='HERA COMM',
 				ContactID__c=contactId,
 				ActionDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
-				MessageID__c=12321421,
+				MessageID__c='12321421',
 				Mobile__c='234234234',
-				MobileMessageTrackingID__c=12343143,
+				MobileMessageTrackingID__c='12343143',
 				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
 			);
 			
@@ -2951,7 +2971,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	 * @author Valere (valere@noeli-it.net)
 	 * @date 05/10/2021
 	 */
-	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithSalesCompany(Integer amount, Boolean doInsert,Map<String,Object> params){
+	public static List<MatriceRemiCode__c> createMatriceRemiCodeWithParams(Integer amount, Boolean doInsert,Map<String,Object> params){
 
 		List<MatriceRemiCode__c> matriceRemiCode=new List<MatriceRemiCode__c>();
 	  
@@ -3061,12 +3081,12 @@ public with sharing class HDT_UTL_DataFactoryTst{
         for (Integer i=0; i<amount; i++){
             
             DiscardAnnullmentRule__c rule = new DiscardAnnullmentRule__c(
-                ActivityType__c = 'ActivityTypeTest',
-                ControllingField__c = 'ControllingFieldTest',
+                ActivityType__c = 'Esito KO da DL',
+                ControllingField__c = 'Description',
                 ControllingValue__c = 'ControllingValueTest',
                 ParentObject__c = parentObject,
-                ProcessField__c = 'ProcessFieldTest',
-                ProcessValue__c = 'ProcessValueTest'
+                ProcessField__c = 'ProcessType__c',
+                ProcessValue__c = '	Sospensione Fornitura'
             );
             
             rules.add(rule);
@@ -3129,4 +3149,141 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 		return vocalOrders;
 	}
+
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 14/10/2021
+	 */
+	public static List<Case> createCaseWithParams(Integer amount, Boolean doInsert, Map<String,Object> params){
+			
+		List<Case> caseList=new List<Case>();
+		
+		String rtId=utlConstants.CASE_RECORDTYPEID_MOROSITA;
+
+		for (Integer i=0; i<amount; i++){
+
+			Case testCase=new Case();
+			testCase.Phase__c='Bozza';
+			testCase.Subject='test';
+			testCase.Type='BP/CA - errata categoria';
+			testCase.Subprocess__c='Account';
+			testCase.HerokuPracticeCode__c='21313232132132';
+			testCase.RecordTypeId=rtId;
+			testCase.CompanyOwner__c='HERA COMM';
+			for(String key:params.keySet()){
+				testCase.put(key, params.get(key));
+			}
+			caseList.add(testCase);
+		}
+
+		if (doInsert) {
+
+			insert caseList;
+
+		}
+
+		return caseList;
+	}
+
+	/**
+     * @author Valere (valere@noeli-it.net)
+     * @date 16/09/2021
+     * @description createCampaignWithParams Method
+     * @history valere - 16/09/2021– Created method
+     */
+	public static List<Campaign> createCampaignWithParams(Integer amount, Boolean doInsert,Map<String,String> params){
+
+		List<Campaign> campaignList=new List<Campaign>();
+
+		for (Integer i=0; i<amount; i++){
+			Campaign cp=new Campaign();
+
+			for(String key :params.keySet()) {
+				cp.put(key, params.get(key));
+			}
+			
+			campaignList.add(cp);
+		}
+
+		if (doInsert){
+
+			insert campaignList;
+		}
+
+		return campaignList;
+	}
+
+	/**
+     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)
+     * @date 28/10/2021
+     * @description createCampaignWithParams Method
+     * @history Name - dd/mm/yyyy– Description
+     */
+	public static List<PaperCampaignParameter__c> createPaperCampaignParameter(Integer amount, Boolean doInsert) {
+
+		List<PaperCampaignParameter__c> paperCampaignPars = new List<PaperCampaignParameter__c>();
+
+		for(Integer i = 0; i < amount; i++) {
+
+			paperCampaignPars.add(new PaperCampaignParameter__c(Name = 'PaperCampaignParameterName' + i));
+		}
+
+		if(doInsert) {
+			insert paperCampaignPars;
+		}
+
+		return paperCampaignPars;
+	}
+
+	
+	/**
+	 * @author Valere (valere@noeli-it.net)
+	 * @date 08/10/2021
+	**/
+	public static List<wrts_prcgvr__Activity__c> createActivityWithParams(Integer amount, Boolean doInsert, Id accId,Map<String,Object> params){
+
+		List<wrts_prcgvr__Activity__c> activityCustomList=new List<wrts_prcgvr__Activity__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
+
+			actCustom.Account__c=accId;
+
+			for (String key : params.keySet()) {
+				actCustom.put(key, params.get(key));
+			}
+
+			activityCustomList.add(actCustom);
+		}
+
+		if (doInsert){
+
+			insert activityCustomList;
+		}
+
+		return activityCustomList;
+	}
+
+
+	public static List<et4ae5__SendDefinition__c> createSendDefinition(Integer amount, Boolean doInsert,Id campaignId){
+
+		List<et4ae5__SendDefinition__c> sdList =new List<et4ae5__SendDefinition__c>();
+
+		for (Integer i=0; i<amount; i++){
+
+			et4ae5__SendDefinition__c sd = new et4ae5__SendDefinition__c();
+			sd.et4ae5__Campaign__c= campaignId;
+			sd.et4ae5__FromName__c= 'test' + i;
+
+			sdList.add(sd);
+		}
+
+		if (doInsert){
+			insert sdList;
+		}
+
+		return sdList;
+	}
+
 }

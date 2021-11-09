@@ -33,14 +33,14 @@ public with sharing class HDT_WS_MrrRequestTst {
     }
 
     @isTest
-    private static Void postNotifEsScarti() {
+    private static Void postWSLead_Callback() {
 
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
 
         req.requestURI = 'services/apexrest/MRRInboundService';
         req.httpMethod = 'POST';
-        req.requestBody = Blob.valueOf('{"header":null,"requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"NOTIF_ES","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"COD_PRAT_UTENTE","value":"A00000001222"},{"fieldType":"TEXT","name":"RECORD_ID","value":"5003N000008q5AAQAY"},{"fieldType":"TEXT","name":"ATTIVITA","value":"Esito non elaborato"},{"fieldType":"TEXT","name":"METHOD","value":"esito_intermedio"},{"fieldType":"TEXT","name":"UTENZA","value":"utente_hera"},{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+        req.requestBody = Blob.valueOf('{"header":null,"requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"WSLead_Callback","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"COD_PRAT_UTENTE","value":"A00000001222"},{"fieldType":"TEXT","name":"RECORD_ID","value":"5003N000008q5AAQAY"},{"fieldType":"TEXT","name":"ATTIVITA","value":"WRONG"},{"fieldType":"TEXT","name":"METHOD","value":"esito_intermedio"},{"fieldType":"TEXT","name":"UTENZA","value":"utente_hera"},{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
 
         RestContext.request = req;
         RestContext.response = res;
@@ -49,7 +49,7 @@ public with sharing class HDT_WS_MrrRequestTst {
 
         System.debug(RestContext.response.responseBody.toString());
         
-        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType NOTIF_ES failed');
+        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType WSLead_Callback failed');
     }
 
     @isTest
@@ -123,8 +123,9 @@ public with sharing class HDT_WS_MrrRequestTst {
         //System.assertEquals(400, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
 
         //** [START MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
-        System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
+        //System.assertEquals(200, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
         //** [END MOD 2021-08-03] @Author:Luca Belometti WR (luca.belometti@webresults.it) @Description: Changed Status
+        System.assertEquals(500, RestContext.response.statusCode, 'Rest API requestType RICH_PASS should fail');
     }
 
     @isTest
@@ -188,6 +189,32 @@ public with sharing class HDT_WS_MrrRequestTst {
         System.debug(RestContext.response.responseBody.toString());
         
         System.assertEquals(400, RestContext.response.statusCode, 'Apex JSON error, should fail');
+    }
+    
+    @isTest
+    private static Void postCustomException() {
+              
+		List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
+        
+        HDT_UTL_DataFactoryTst.createOrder(1, true, accs[0].id, 'Bozza');
+        
+        Id myOrder = [Select id From Order][0].id;
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+
+        req.requestURI = 'services/apexrest/MRRInboundService';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf('{"header":null,"requests":[{"header":{"requestId":"A00000001222","requestTimestamp":null,"requestType":"NOTIF_ES","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"sales"}]},"objects":[{"fields":[{"fieldType":"TEXT","name":"COD_PRAT_UTENTE","value":"A00000001222"},{"fieldType":"TEXT","name":"RECORD_ID","value":"'+myOrder+'"},{"fieldType":"TEXT","name":"FASE","value":"Completata"},{"fieldType":"TEXT","name":"ATTIVITA","value":"WRONG"},{"fieldType":"TEXT","name":"METHOD","value":"esito_intermedio"},{"fieldType":"TEXT","name":"UTENZA","value":"utente_hera"},{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}],"id":null,"name":null,"objectType":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"DATA_EVENTO","value":"2021-06-22 12:44:31"}]}]}]}]}');
+
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        HDT_WS_MrrRequest.doPost();
+
+        System.debug(RestContext.response.responseBody.toString());
+        
+        System.assertEquals(500, RestContext.response.statusCode, 'should fail throwing a Custom Exception');
     }
 
 }

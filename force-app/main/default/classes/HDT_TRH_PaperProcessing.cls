@@ -4,7 +4,7 @@
 * @description HDT_TRH_PaperProcessing
 * @history Lorenzo – 24/06/2021 – created class
 */
-public class HDT_TRH_PaperProcessing extends HDT_TRH_TriggerHandler {
+public inherited sharing class HDT_TRH_PaperProcessing extends HDT_TRH_TriggerHandler {
     public override void beforeInsert(){
         System.debug('beforeInsert');
         HDT_UTL_PaperProcessing.generateName(trigger.new);
@@ -16,6 +16,7 @@ public class HDT_TRH_PaperProcessing extends HDT_TRH_TriggerHandler {
         List<PaperProcessing__c> listPaper = trigger.new;
         HDT_BA_PaperCampaignTargeting ba = new HDT_BA_PaperCampaignTargeting(listPaper);
         id bId = Database.executeBatch(ba);
+        system.debug('Batch id: '+bId);
         //HDT_UTL_PaperProcessing.exportFile(trigger.new);
     }
     

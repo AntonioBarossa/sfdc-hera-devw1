@@ -5,8 +5,12 @@ public inherited sharing class HDT_WS_DocumentaryInvoices {
 
         HDT_WRP_ReturnObj returnObj = new HDT_WRP_ReturnObj();
 
-        Integer initialLimit = Limits.getHeapSize();
-        Datetime startTime = Datetime.now();
+        /*
+            @Author: Davide Viola - 20/10/2021
+            Description: PMD -> Commentate variabili non utilizzate.
+        */
+        /*Integer initialLimit = Limits.getHeapSize();
+        Datetime startTime = Datetime.now();*/
 
         //HttpRequest req = new HttpRequest();
 

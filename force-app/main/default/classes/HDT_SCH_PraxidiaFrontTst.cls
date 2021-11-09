@@ -35,7 +35,7 @@ public class HDT_SCH_PraxidiaFrontTst {
         
         Test.startTest();
         HDT_SCH_PraxidiaFront pf = new HDT_SCH_PraxidiaFront();
-        String jobID = System.schedule('Label of the job', CRON_EXP , pf);
+        System.schedule('Label of the job', CRON_EXP , pf);
         Test.stopTest();
         
         List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];

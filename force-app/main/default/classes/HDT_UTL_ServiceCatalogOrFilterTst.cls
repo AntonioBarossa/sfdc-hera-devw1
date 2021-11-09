@@ -31,7 +31,7 @@ public class HDT_UTL_ServiceCatalogOrFilterTst {
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;
             
-            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1,true,accId,null,null,null,null);
+            HDT_UTL_DataFactoryTst.createCase(1,true,accId,null,null,null,null);
             
             AccountStatementFilter__c asf = new AccountStatementFilter__c();
             insert asf;
@@ -40,7 +40,7 @@ public class HDT_UTL_ServiceCatalogOrFilterTst {
      }
 
   	@isTest
-	static void test1(){
+	static void testCase(){
         
         Case c = [Select id From Case];
         Wrts_prcgvr__PhaseTransition__c myTransition = [Select id from Wrts_prcgvr__PhaseTransition__c];
@@ -64,7 +64,7 @@ public class HDT_UTL_ServiceCatalogOrFilterTst {
     }
     
     @isTest
-	static void test2(){
+	static void testAccount(){
         
         AccountStatementFilter__c acc = [Select id From AccountStatementFilter__c];
         Wrts_prcgvr__PhaseTransition__c myTransition = [Select id from Wrts_prcgvr__PhaseTransition__c];

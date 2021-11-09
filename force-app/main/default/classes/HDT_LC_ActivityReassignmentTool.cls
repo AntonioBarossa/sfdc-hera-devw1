@@ -1,3 +1,10 @@
+/**
+ * @author Lorenzo Rollo (lorenzo.rollo@everis.com)
+ * @date 14/06/2021
+ * @description HDT_LC_ActivityReassignmentTool
+ * @history Name – Date – Description
+ */
+
 public with sharing class HDT_LC_ActivityReassignmentTool {
     private static Set<String> dynamicWorkGroupChannels = new Set<String> {
         'Assistente web',
@@ -44,7 +51,7 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
         List<Map<String,String>> results = new List<Map<String,String>>();
         queryString = '%' + queryString + '%';
         User currentUser = getCurrentUser();
-        List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :currentUser.Id AND PermissionSet.Name = 'HDT_OmniSupervisorPermissionSet' WITH SECURITY_ENFORCED];
+        List<PermissionSetAssignment> assignments = new HDT_QR_PermissionSet().getPermissionSetAssignmentByName('HDT_OmniSupervisorPermissionSet', currentUser.Id);
         if(!assignments.isEmpty()) {
             for(User user : [SELECT Id, Name, LoginChannel__c, CreatorGroup__c, UserCompany__c FROM User WHERE UserCompany__c = :currentUser.UserCompany__c AND Name LIKE :queryString WITH SECURITY_ENFORCED]) {
                 results.add(new Map<String,String>{
@@ -73,39 +80,50 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     }
 
     @AuraEnabled
-    public static String reassignActivity(String recordId, String assigneeId, String wrapperId, String workGroup, String agency) {
+    public static String reassignActivity(List<String> idList, String assigneeId, String wrapperId, String workGroup, String agency) {
         try {
-            wrts_prcgvr__Activity__c activity = [SELECT Id, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id = :recordId WITH SECURITY_ENFORCED];
-            if(activity.Type__c == 'Gestione Agenzia' && activity.ParentActivity__c != null) {
-                if(
-                    activity.ParentActivity__r.Order__c != null &&
-                    activity.ParentActivity__r.Order__r.Agency__c != null &&
-                    activity.ParentActivity__r.Order__r.Agency__c != agency
-                ) {
-                    return 'La coda selezionata non è gestita dall\'Agenzia corretta.';
+            List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+            List<wrts_prcgvr__Activity__c> parentActivitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
+            Set<Id> parentActivitiesIds = new Set<Id>();
+
+            for(wrts_prcgvr__Activity__c activity : [SELECT Id, Name, Type__c, ParentActivity__c, ParentActivity__r.Order__r.Agency__c FROM wrts_prcgvr__Activity__c WHERE Id IN :idList WITH SECURITY_ENFORCED]) {
+                if(activity.Type__c == 'Gestione Agenzia' && activity.ParentActivity__c != null) {
+                    if(
+                        activity.ParentActivity__r.Order__c != null &&
+                        activity.ParentActivity__r.Order__r.Agency__c != null &&
+                        activity.ParentActivity__r.Order__r.Agency__c != agency
+                    ) {
+                        return 'L\'Attività ' + activity.Name +' deve essere assegnata all\'Agenzia ' + activity.ParentActivity__r.Order__r.Agency__c;
+                    }
+                    if(!parentActivitiesIds.contains(activity.ParentActivity__c)) {
+                        parentActivitiesIds.add(activity.ParentActivity__c);
+                        parentActivitiesToUpdate.add(new wrts_prcgvr__Activity__c(
+                            Id = activity.ParentActivity__c,
+                            wrts_prcgvr__Status__c = 'Aperta'
+                        ));
+                    }
                 }
-                HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
-                    Id = activity.ParentActivity__c,
-                    wrts_prcgvr__Status__c = 'Aperta'
-                ));
+
+                activity = new wrts_prcgvr__Activity__c(
+                    Id = activity.Id,
+                    AssigneeType__c = 'Utente',
+                    OwnerId = assigneeId,
+                    WorkGroup__c = workGroup,
+                    Agency__c = agency,
+                    ManuallyReassigned__c = true,
+                    Queue__c = null
+                );
+
+                if(String.isNotBlank(wrapperId)) {
+                    activity.AssigneeType__c = 'Coda';
+                    activity.Queue__c = wrapperId;
+                }
+
+                activitiesToUpdate.add(activity);
             }
 
-            activity = new wrts_prcgvr__Activity__c(
-                Id = recordId,
-                AssigneeType__c = 'Utente',
-                OwnerId = assigneeId,
-                WorkGroup__c = workGroup,
-                Agency__c = agency,
-                ManuallyReassigned__c = true,
-                Queue__c = null
-            );
-
-            if(String.isNotBlank(wrapperId)) {
-                activity.AssigneeType__c = 'Coda';
-                activity.Queue__c = wrapperId;
-            }
-
-            HDT_UTL_DatabaseService.updateSObject(activity);
+            HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
+            HDT_UTL_DatabaseService.updateSObject(parentActivitiesToUpdate);
 
             return null;
         } catch (Exception e) {
@@ -114,9 +132,9 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
     }
 
     @AuraEnabled
-    public static String assignToMe(String recordId) {
+    public static String assignToMe(List<String> idList) {
         User currentUser = getCurrentUser();
 
-        return reassignActivity(recordId, UserInfo.getUserId(), null, currentUser.CreatorGroup__c, currentUser.UserCompany__c);
+        return reassignActivity(idList, UserInfo.getUserId(), null, currentUser.CreatorGroup__c, currentUser.UserCompany__c);
     }
 }

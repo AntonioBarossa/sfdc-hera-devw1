@@ -90,7 +90,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>RecordTypeId</field>
+                <field>RecordTypeName__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -512,9 +512,6 @@
         <relatedList>SiebelRds__x.CST_OU_ID_SALESFORCE__c</relatedList>
         <sortField>CREATED__c</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

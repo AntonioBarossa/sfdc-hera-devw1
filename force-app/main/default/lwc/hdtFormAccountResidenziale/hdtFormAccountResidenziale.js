@@ -234,19 +234,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     
     handleCopyAddRes(event){
      let copy=event.target.checked;
-     
-        // if (copy) {
-        //   this.accountAddressRes=this.accountAddress;    
-      
-
-        // }
-        // else{
-        //     this.accountAddressRes=[];
-         
-        // }
         this.disableCopyRes=!copy;
         console.log('disableCopyRes '+this.disableCopyRes);
     }
+    
     handleCalculation(){
         
         var isValidated= true;

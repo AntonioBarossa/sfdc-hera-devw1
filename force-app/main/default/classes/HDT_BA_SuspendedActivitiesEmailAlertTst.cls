@@ -7,6 +7,8 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
     @testSetup
     static void setup(){
 
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+
         Id adminUserProfileId = HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
 
         User internalUser = HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
@@ -26,7 +28,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         
         List<wrts_prcgvr__Activity__c> testActivity = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acctId);
         //testActivity[0].owner.Name = 'Marco Arci';
-        testActivity[0].SuspensionDueDate__c = system.today(); 
+        testActivity[0].SuspensionDueDate__c = system.now().addMinutes(30);
         testActivity[0].Status__c = 'Sospesa'; 
         testActivity[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';
         insert testActivity;         
@@ -50,4 +52,5 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         system.assertNotEquals('', users[0].id , 'List of  users with ownerId of wrts_prcgvr__Activity__c is Empty' );
 
     }
+    
 }

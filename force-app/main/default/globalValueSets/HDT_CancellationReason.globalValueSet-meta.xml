@@ -180,6 +180,11 @@
         <default>false</default>
         <label>Delibera ARERA 155/2020</label>
     </customValue>
+    <customValue>
+        <fullName>Registrazione non conforme</fullName>
+        <default>false</default>
+        <label>Registrazione non conforme</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

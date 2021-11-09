@@ -13,8 +13,8 @@ public with sharing class HDT_UTL_RecordShareTst {
 	@TestSetup
 	static void setup(){
         Id standardUserProfileId = HDT_UTL_DataFactoryTst.getProfileId('Hera Standard User');
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        User userList = HDT_UTL_DataFactoryTst.createInternalUser(standardUserProfileId,true);
+        HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        HDT_UTL_DataFactoryTst.createInternalUser(standardUserProfileId,true);
     }
 
     @isTest

@@ -26,6 +26,7 @@ public class HDT_UTL_ScartiTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            HDT_UTL_DataFactoryTst.pClickCasePhase();
             HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza',constants.ORDER_RECORDTYPEID_DEFAULT,constants.ORDER_RECORDTYPE_DEVELOPERNAME_DEFAULT);
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
@@ -55,16 +56,19 @@ public class HDT_UTL_ScartiTst {
                         
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1,false,accId,sales,pricebookId);
             orders[0].CausalCode__c = 'testCausalCode';
-            orders[0].Catalog__c = 'testCatalog';
+            orders[0].DiscardReason__c = 'testCatalog';
             orders[0].Contact__c = contacts[0].id;
             orders[0].PhoneNumber__c ='3461357661';
             orders[0].Email__c = 'email@nuova.it';
+            orders[0].ProcessType__c = 'Connessione con Attivazione';
             insert orders;
             Id orderId = orders[0].id;
             
-            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);            
+            HDT_UTL_DataFactoryTst.createOrderItem(1,true,orderId,pointId,productId,entryId);            
                      
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, contacts[0].id, null, contracts[0].Id, orders[0].Id);
+            cases[0].DiscardDescription__c = 'testdescription';
+            cases[0].type = 'Consegna copia chiave GdM';
             cases[0].TraderPracticeCode__c = 'testcode';
             cases[0].TrackingDiscardPhase__c = 'testphase';
             insert cases;       
@@ -80,7 +84,7 @@ public class HDT_UTL_ScartiTst {
             fieldTemplates[3].wrts_prcgvr__ObjectType__c= 'Order';
             insert fieldTemplates;
             
-            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(6,false);
+            List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(8,false);
             activityTemplates[0].Name = 'CBS_ATT006__AMMISSIBILITA_KO';
             activityTemplates[0].wrts_prcgvr__Code__c = 'e88f26f9-a32f-439f-b258-db04fadd3994';
             activityTemplates[0].wrts_prcgvr__FieldsTemplate__c= fieldTemplates[0].id;
@@ -96,6 +100,12 @@ public class HDT_UTL_ScartiTst {
             activityTemplates[5].Name = 'CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
             activityTemplates[5].wrts_prcgvr__Code__c = 'db7818bf-1c29-4de0-bd88-83d69447aabb';
             activityTemplates[5].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[6].Name = 'CBS_ATT001__ESITO_KO_DA_SAP';
+            activityTemplates[6].wrts_prcgvr__Code__c = 'b466bf37-4f13-4b39-97fd-e085b3d49651';
+            activityTemplates[6].wrts_prcgvr__ObjectType__c = 'Order';
+            activityTemplates[7].Name = 'CBS_MOR001__ESITO_KO_DA_SAP';
+            activityTemplates[7].wrts_prcgvr__Code__c = '02c4450f-d1cc-4cd4-b53b-f7bb82027158';
+            activityTemplates[7].wrts_prcgvr__ObjectType__c = 'Case';
             insert activityTemplates;
 
             List<wrts_prcgvr__ActivityAction__c> activityActions = HDT_UTL_DataFactoryTst.createActivityAction(1,false,activityTemplates[0].id);
@@ -109,29 +119,36 @@ public class HDT_UTL_ScartiTst {
             insert activityActions2;
             
             List<DiscardAnnullmentRule__c> rules = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Order');
-            rules[0].ControllingField__c = 'Catalog__c';
-            rules[0].ProcessField__c = 'CausalCode__c';
-            rules[0].ProcessValue__c = 'testCausalCode';
+            rules[0].ActivityType__c = 'Esito KO da DL';
+            rules[0].ControllingField__c = 'DiscardReason__c';
             rules[0].ControllingValue__c = 'testCatalog';
+            rules[0].ProcessField__c = 'ProcessType__c';
+            rules[0].ProcessValue__c = 'Connessione con Attivazione';
             insert rules;
             
-            List<DiscardAnnullmentRule__c> rules2 = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
-            rules2[0].ControllingField__c = 'TraderPracticeCode__c';
-            rules2[0].ProcessField__c = 'TrackingDiscardPhase__c';
-            rules2[0].ProcessValue__c = 'testphase';
-            rules2[0].ControllingValue__c = 'testcode';
-            insert rules2;
+            List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
+            rulesCase[0].ActivityType__c = 'Ammissibilità KO';
+            rulesCase[0].ControllingField__c = 'DiscardDescription__c';
+            rulesCase[0].ControllingValue__c = 'testdescription';
+            rulesCase[0].ProcessField__c = 'Type';
+            rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
+            insert rulesCase;
             
-            List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(2,false,accId);
+            List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
             activities[0].Order__c = orders[0].id;
             activities[0].Status__c = 'Creata';
             activities[0].NewEmail__c = 'yes@no.it';
             activities[0].NewMobile__c = '3334441122';
             activities[0].DiscardCategory__c = 'Anonima';
+            activities[0].type__c = 'Contattare il cliente';
             activities[0].Case__c = cases[0].id;            
             activities[1].Case__c = cases[0].id;
             activities[1].DiscardCategory__c = 'Anonima';
             activities[1].Status__c = 'Creata';
+            activities[2].NewEmail__c = 'activityCase@no.it';
+            activities[2].Case__c = cases[0].id;   
+            activities[3].NewEmail__c = 'activityOrder@no.it';
+            activities[3].Order__c = orders[0].id;
             insert activities;
                         
             List<ContactPointPhone> phones = HDT_UTL_DataFactoryTst.createContactPointPhone(2,false,individuals[0].id);
@@ -160,12 +177,12 @@ public class HDT_UTL_ScartiTst {
             List<SMSTracking__c> tracks =  HDT_UTL_DataFactoryTst.createSmsTracking(1, false, contacts[0].id);
             tracks[0].Undelivered__c = true;
             insert tracks;
-                       
+                        
         }
      }
    
     
-    @isTest private static void evaluate(){
+    @isTest private static void evaluateTrue(){
         
         Order record = [Select id from Order limit 1];
         
@@ -178,11 +195,11 @@ public class HDT_UTL_ScartiTst {
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
         boolean b = classInstance.evaluate(argsMap);
         
-        System.assertEquals(false, b, 'evaluate did not work correctly');
+        System.assertEquals(true, b, 'evaluate did not work correctly');
         System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
     
-    @isTest private static void evaluate2(){
+    @isTest private static void evaluateFalse(){
         
         Order record = [Select id from Order limit 1];
         
@@ -194,11 +211,11 @@ public class HDT_UTL_ScartiTst {
         HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
         boolean b = classInstance.evaluate(argsMap);
         
-        System.assertEquals(true, b, 'evaluate did not work correctly');
+        System.assertEquals(false, b, 'evaluate did not work correctly');
         System.assertNotEquals(null, b, 'evaluate did not work correctly');
     }
     
-    @isTest private static void evaluate3(){
+    @isTest private static void evaluateNull(){
         
         Order record = [Select id from Order limit 1];
         
@@ -216,35 +233,17 @@ public class HDT_UTL_ScartiTst {
         System.assertNotEquals(true, b, 'evaluate did not work correctly');
     }
     
-    @isTest private static void evaluate4(){
-        
-        Case record = [Select id from Case limit 1];
-        
-        Map<String, Object> argsMap = new Map<String, Object>{
-            'transition'=>null,
-            'action'=>null,
-            'method'=>'checkActivityCreation___CBS_HER008__ELIMINATO_ESITO_IN_SCARTO_SALES',
-            'record'=>record,
-            'sender'=>null};
-                
-        HDT_UTL_Scarti classInstance = new HDT_UTL_Scarti();
-        boolean b = classInstance.evaluate(argsMap);
-        
-        System.assertEquals(false, b, 'evaluate did not work correctly');
-        System.assertNotEquals(null, b, 'evaluate did not work correctly');
-    }
-    
     @isTest static void invokeScartiAction1(){
         
         Order record = [Select id from Order limit 1];
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
         
-        HDT_UTL_Scarti.HDT_UTL_FlowInputs input1 = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
-        input1.methodName = 'chiudiAttivita';
-        input1.objectId = record.id;
-        input1.templateName = 'templateName';
-        inputs.add(input1);
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'chiudiAttivita';
+        input.objectId = record.id;
+        input.templateName = 'templateName';
+        inputs.add(input);
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
         
@@ -259,11 +258,11 @@ public class HDT_UTL_ScartiTst {
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
         
-        HDT_UTL_Scarti.HDT_UTL_FlowInputs input2 = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
-        input2.methodName = 'annullaPratica';
-        input2.objectId = record.id;
-        input2.templateName = 'templateName';
-        inputs.add(input2);
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'annullaPratica';
+        input.objectId = record.id;
+        input.templateName = 'templateName';
+        inputs.add(input);
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
       
@@ -278,11 +277,11 @@ public class HDT_UTL_ScartiTst {
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
         
-        HDT_UTL_Scarti.HDT_UTL_FlowInputs input3 = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
-        input3.methodName = 'annullaContratti';
-        input3.objectId = record.id;
-        input3.templateName = 'templateName';
-        inputs.add(input3);
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'annullaContratti';
+        input.objectId = record.id;
+        input.templateName = 'templateName';
+        inputs.add(input);
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
       
@@ -297,11 +296,11 @@ public class HDT_UTL_ScartiTst {
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
         
-        HDT_UTL_Scarti.HDT_UTL_FlowInputs input4 = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
-        input4.methodName = 'createActivityByObjectIdAndTemplateName';
-        input4.objectId = record.id;
-        input4.templateName = 'CBS_ATT006__AMMISSIBILITA_KO';
-        inputs.add(input4);
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'createActivityByObjectIdAndTemplateName';
+        input.objectId = record.id;
+        input.templateName = 'CBS_ATT006__AMMISSIBILITA_KO';
+        inputs.add(input);
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
       
@@ -316,11 +315,11 @@ public class HDT_UTL_ScartiTst {
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
         
-        HDT_UTL_Scarti.HDT_UTL_FlowInputs input5 = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
-        input5.methodName = 'createActivityByObjectIdAndTemplateName';
-        input5.objectId = record.id;
-        input5.templateName = 'wrongtemplatename';
-        inputs.add(input5);
+        HDT_UTL_Scarti.HDT_UTL_FlowInputs input = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
+        input.methodName = 'createActivityByObjectIdAndTemplateName';
+        input.objectId = record.id;
+        input.templateName = 'wrongtemplatename';
+        inputs.add(input);
         
         List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
       
@@ -329,33 +328,16 @@ public class HDT_UTL_ScartiTst {
 
     }
     
-    @isTest static void invokeScartiAction6(){
-        
-        Case record = [Select id from Case limit 1];
-        
-        List<HDT_UTL_Scarti.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Scarti.HDT_UTL_FlowInputs>();
-        
-        HDT_UTL_Scarti.HDT_UTL_FlowInputs input1 = new HDT_UTL_Scarti.HDT_UTL_FlowInputs();
-        input1.methodName = 'chiudiAttivita';
-        input1.objectId = record.id;
-        input1.templateName = 'templateName';
-        inputs.add(input1);
-        
-        List<HDT_UTL_Scarti.HDT_UTL_FlowOutputs> outputs = HDT_UTL_Scarti.invokeScartiAction(inputs);
-        
-        System.assertEquals('OK', outputs[0].esito, 'invokeScartiAction did not work correctly');
-        System.assertNotEquals(null, outputs[0], 'invokeScartiAction did not work correctly');
-        
-    }
-    
     @isTest static void createAttivitaTracciaturaHeroku(){
         
         List<Map<String,String>> arg = new List<Map<String,String>>();
         Map<String,String> mapp = new Map<String,String>();
         mapp.put('ATTIVITA','Richiesta non identificata');
-        mapp.put('UTENZA','testutenza');
-        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
-        mapp.put('ERROR_MESSAGE','erroretest');
+
+        mapp.put('UTENZA','userprova');
+        mapp.put('DATA_EVENTO',String.valueof(System.today()));
+        mapp.put('ERROR_MESSAGE','descrizione scarto');
+            
 
         arg.add(mapp);
         
@@ -367,6 +349,105 @@ public class HDT_UTL_ScartiTst {
         System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
         
     }
+    
+    @isTest static void createAttivitaTracciaturaHeroku2(){
+        
+        Order record = [Select id from Order];
+        
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Esito non elaborato');
+        mapp.put('UTENZA','userprova');
+        mapp.put('DATA_EVENTO',String.valueof(System.today()));
+        mapp.put('ERROR_MESSAGE','descrizione scarto');
+        mapp.put('RECORD_ID',record.id);
+        mapp.put('PROCESS_CATEGORY','postsales');
+        mapp.put('COUNTER','1.1');
+        mapp.put('COD_PRAT_UTENTE','codice1');
+        mapp.put('CMP','codice2');
+        mapp.put('NOTE_ERR','codice3');
+        mapp.put('STEP_ERR','codice4');
+        mapp.put('NOTA_HK','codice5');
+                                                                                          
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }
+
+    @isTest static void createAttivitaTracciaturaHeroku3(){
+               
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Esito non elaborato');
+        mapp.put('UTENZA','testutenza');
+        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
+        mapp.put('ERROR_MESSAGE','erroretest');
+        mapp.put('RECORD_ID','O-pizza');
+        mapp.put('PROCESS_CATEGORY','sales');
+        
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }
+    
+    @isTest static void createAttivitaTracciaturaHeroku4Order(){
+        
+        Order record = [Select id from Order];
+        
+        record.RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+        update record;
+               
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Errore lavorazione SAP');
+        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
+        mapp.put('ERROR_MESSAGE','erroretest');
+        mapp.put('RECORD_ID',record.id);
+        
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }
+    
+    @isTest static void createAttivitaTracciaturaHeroku4Case(){
+        
+        Case record = [Select id from Case];
+                       
+        List<Map<String,String>> arg = new List<Map<String,String>>();
+        Map<String,String> mapp = new Map<String,String>();
+        mapp.put('ATTIVITA','Errore lavorazione SAP');
+        mapp.put('DATA_EVENTO',String.valueOf(system.today()));
+        mapp.put('ERROR_MESSAGE','erroretest');
+        mapp.put('RECORD_ID',record.id);
+        
+        arg.add(mapp);
+        
+        HDT_UTL_Scarti.createAttivitaTracciaturaHeroku(arg);
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals(1, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        System.assertNotEquals(null, activities.size(), 'createAttivitaTracciaturaHeroku did not work correctly');
+        
+    }   
     
     @isTest static void createActivityByObjectIdAndTemplateNameBulk(){
         
@@ -489,41 +570,52 @@ public class HDT_UTL_ScartiTst {
     
     @isTest static void checkForEsitiIntermedi(){
         
-        List<wrts_prcgvr__Activity__c> activities = [Select id,DiscardCategory__c,Case__c,Order__c From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        List<wrts_prcgvr__Activity__c> activities = [Select id,DiscardCategory__c,Case__c,Order__c, wrts_prcgvr__ObjectId__c From wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
             
         HDT_UTL_Scarti.checkForEsitiIntermedi(activities);
         
         List<wrts_prcgvr__Activity__c> relatedAct = [Select id,status__c,wrts_prcgvr__Status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
         
-        System.assertEquals('Chiusa', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
+        System.assertEquals('Not Started', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
         System.assertNotEquals(null, relatedAct, 'checkForEsitiIntermedi did not work correctly');
         
     }
     
-    @isTest static void handleMRRInboundRequest(){
+    @isTest static void handleMrrInboundRequest(){
         
         HDT_WRP_MrrRequest mrRequest = new HDT_WRP_MrrRequest();
         
         List<HDT_WRP_MrrRequest.HDT_WRP_Field> fields = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
-        HDT_WRP_MrrRequest.HDT_WRP_Field field1 = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
-        field1.fieldType = 'fieldType';
-        field1.name = 'ATTIVITA***';
-        field1.value = 'Richiesta non identificata***';
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldAttivita = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldAttivita.fieldType = 'fieldType';
+        fieldAttivita.name = 'ATTIVITA';
+        fieldAttivita.value = 'Richiesta non identificata.';
         
-        HDT_WRP_MrrRequest.HDT_WRP_Field field2 = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
-        field2.fieldType = 'fieldType';
-        field2.name = 'FASE';
-        field2.value = 'Completata';
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldFase = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldFase.fieldType = 'fieldType';
+        fieldFase.name = 'FASE';
+        fieldFase.value = 'Completata';
         
-        HDT_WRP_MrrRequest.HDT_WRP_Field field3 = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
-        field3.fieldType = 'fieldType';
-        field3.name = 'RECORD_ID';
-        field3.value = 'O-00100327';
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldRecordOrder = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldRecordOrder.fieldType = 'fieldType';
+        fieldRecordOrder.name = 'RECORD_ID';
+        fieldRecordOrder.value = [Select id from order].id;
         
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldRecordCase = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldRecordCase.fieldType = 'fieldType';
+        fieldRecordCase.name = 'RECORD_ID';
+        fieldRecordCase.value = [Select id from Case].id;
         
-        fields.add(field1);
-        fields.add(field2);
-        fields.add(field3);
+        HDT_WRP_MrrRequest.HDT_WRP_Field fieldPizza = new HDT_WRP_MrrRequest.HDT_WRP_Field();      
+        fieldPizza.fieldType = 'fieldType';
+        fieldPizza.name = 'RECORD_ID';
+        fieldPizza.value = 'O-pizza';
+        
+        fields.add(fieldAttivita);
+        fields.add(fieldFase);
+        fields.add(fieldRecordOrder);
+        fields.add(fieldRecordCase);
+        fields.add(fieldPizza);
         
         HDT_WRP_MrrRequest.HDT_WRP_Header head = new HDT_WRP_MrrRequest.HDT_WRP_Header();
         head.requestId = 'requestId';
@@ -560,10 +652,7 @@ public class HDT_UTL_ScartiTst {
         
     }      
 
-    @isTest static void updatePraticaForScartoDocumentaleQueue(){
-                
-        HDT_UTL_Scarti sca = new HDT_UTL_Scarti();
-        ID jobID = System.enqueueJob(sca);
+    @isTest static void updatePraticaForScartoDocumentaleQueueException(){
                
         wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it' LIMIT 1];       
         act.NewEmail__c = 'forse@bo.it';
@@ -572,8 +661,101 @@ public class HDT_UTL_ScartiTst {
         List<Order> ords = [Select Email__c From Order Where Email__c ='forse@bo.it'];
         System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
         List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
-    	System.assertEquals(2, jobs.size(), 'expecting one queued job');
-        System.assertNotEquals(null, jobID, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
+    	System.assertEquals(1, jobs.size(), 'expecting one queued job');
                
-    }        
+    }
+    
+    @isTest static void updatePraticaForScartoDocumentaleQueueOrder(){
+               
+        wrts_prcgvr__Activity__c act = [Select id from wrts_prcgvr__Activity__c where NewEmail__c = 'activityOrder@no.it' LIMIT 1];       
+        act.NewEmail__c = 'forse@bo.it';
+        update act;
+                
+        List<Order> ords = [Select Email__c From Order Where Email__c ='forse@bo.it'];
+        System.assertNotEquals(null, ords, 'updatePraticaForScartoDocumentaleQueue did not work correctly');
+        List<AsyncApexJob> jobs = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'Queueable'];
+    	System.assertEquals(1, jobs.size(), 'expecting one queued job');
+               
+    }
+    
+    @isTest static void checkDiscardAnnullmentRuleCase(){
+        
+        String caseId = [Select Id From Case Limit 1].id;
+        
+        Test.startTest();
+        
+        Boolean b = HDT_UTL_Scarti.checkDiscardAnnullmentRule(caseId, 'Ammissibilità KO');
+        
+        Test.stopTest();
+        
+        System.assertEquals(true, b, 'checkDiscardAnnullmentRule did not work correctly');
+        System.assertNotEquals(null, b, 'checkDiscardAnnullmentRule did not work correctly');
+    }
+    
+    @isTest static void checkDiscardAnnullmentRuleOrder(){
+        
+        String orderId = [Select Id From Order Limit 1].id;
+        
+        Test.startTest();
+        
+        Boolean b = HDT_UTL_Scarti.checkDiscardAnnullmentRule(orderId, 'Esito KO da DL');
+        
+        Test.stopTest();
+        
+        System.assertEquals(true, b, 'checkDiscardAnnullmentRule did not work correctly');
+        System.assertNotEquals(null, b, 'checkDiscardAnnullmentRule did not work correctly');
+    }
+    
+    @isTest static void chiudiAttivitaCase(){
+        
+        String caseId = [Select Id From Case Limit 1].id;
+        
+        Test.startTest();
+        
+        HDT_UTL_Scarti.chiudiAttivita(caseId);
+        
+        Test.stopTest();
+        
+        List<wrts_prcgvr__Activity__c> activities = [Select id, Status__c, wrts_prcgvr__Status__c from wrts_prcgvr__Activity__c where case__c =: caseId];
+        
+        System.assertEquals('Chiusa', activities[0].Status__c, 'chiudiAttivitaCase did not work correctly');
+        System.assertNotEquals('Aperta', activities[0].wrts_prcgvr__Status__c, 'chiudiAttivitaCase did not work correctly');
+
+    }
+        
+    @isTest static void annullaPraticaCase(){
+        
+        String caseId = [Select Id From Case Limit 1].id;
+        
+        Test.startTest();
+        
+        HDT_UTL_Scarti.annullaPratica(caseId);
+        
+        Test.stopTest();
+        
+        List<Case> cases = [Select id, CancellationReason__c, Status From Case Where id =: caseId];
+        
+        System.assertEquals('Closed', cases[0].Status, 'annullaPraticaCase did not work correctly');
+        System.assertNotEquals('', cases[0].CancellationReason__c, 'annullaPraticaCase did not work correctly');
+
+    }
+    
+    @isTest static void handleEditButtonPress(){
+        Map<Id,wrts_prcgvr__Activity__c> activityOldMap = new Map<Id,wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> activityOld = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        for(wrts_prcgvr__Activity__c a : activityOld){
+            activityOldMap.put(a.id,a);
+        }
+        
+        List<wrts_prcgvr__Activity__c> activityNew = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c, Type__c, DiscardWorked__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        activityNew[0].wrts_prcgvr__Status__c = 'Completed';
+        activityNew[0].RecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+        
+        HDT_UTL_Scarti.handleEditButtonPress(activityNew, activityOldMap);
+        
+        List<wrts_prcgvr__Activity__c> activityAfter = [Select id, RecordTypeId, wrts_prcgvr__Status__c, DiscardCategory__c, Type__c, DiscardWorked__c from wrts_prcgvr__Activity__c where NewEmail__c = 'yes@no.it'];
+        
+        System.assertEquals('Not Started', activityAfter[0].wrts_prcgvr__Status__c, 'handleEditButtonPress did not work correctly');
+        System.assertNotEquals(null, activityAfter[0].DiscardWorked__c, 'handleEditButtonPress did not work correctly');
+    }
 }

@@ -58,10 +58,6 @@ public with sharing class HDT_BA_PraxidiaReclamiTst {
             orders = [SELECT Id, CreatedDate FROM Order WHERE Phase__c = 'Bozza'];
             cases = [SELECT Id, CreatedDate, AccountId, CompanyOwner__c, creatorGroup__c, CustomerRequestDate__c, ClosedDate, cluster__c, commodityFormula__c, SupplyType__c, Account.category__c, Account.customerCode__c, status, origin, IsReiteration__c, subprocess__c, CustomerRequestNumberDay__c, IndemnityConfirmed__c, Account.segment__c, ServicePoint__r.SupplyCity__c, CorrectionRight__c, parentId, MotivatedResponseSendMode__c, phase__c FROM Case WHERE Phase__c = 'Bozza'];
 
-            List<BusinessHours> bhs=[SELECT Id FROM BusinessHours WHERE IsDefault=true];
-
-            Iterable<Case> itCase = [SELECT Id, CreatedDate, AccountId, CompanyOwner__c, creatorGroup__c, CustomerRequestDate__c, ClosedDate, cluster__c, commodityFormula__c, SupplyType__c, Account.category__c, Account.customerCode__c, status, origin, IsReiteration__c, subprocess__c, CustomerRequestNumberDay__c, IndemnityConfirmed__c, Account.segment__c, ServicePoint__r.SupplyCity__c, CorrectionRight__c, parentId, MotivatedResponseSendMode__c, phase__c FROM Case WHERE Phase__c = 'Bozza'];
-
             HDT_BA_PraxidiaReclami pr = new HDT_BA_PraxidiaReclami();
 
             Database.BatchableContext btCont;

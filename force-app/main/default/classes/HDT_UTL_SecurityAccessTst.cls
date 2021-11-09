@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_SecurityAccessTst {
  
         System.runAs(internalUser) {
  
-            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         }
     }
 	
@@ -38,7 +38,7 @@ public with sharing class HDT_UTL_SecurityAccessTst {
  
             Test.startTest();
 
-            List<Account> accList = [SELECT Id, BillingCityCode__c FROM Account WHERE CompanyOwner__c = 'HERA COMM'];
+            String msg;
             
             HDT_UTL_SecurityAccess saRead = new HDT_UTL_SecurityAccess('Account', 'BillingCityCode__c', 'read');
             HDT_UTL_SecurityAccess saCreate = new HDT_UTL_SecurityAccess('Account', 'BillingCityCode__c', 'create');
@@ -55,12 +55,16 @@ public with sharing class HDT_UTL_SecurityAccessTst {
                 saUpdate.checkSecurityAccess();
                 saDelete.checkSecurityAccess();
                 saUpdateFail.checkSecurityAccess();
+                saUpsert.checkSecurityAccess();
+                saDefault.checkSecurityAccess();
                 
             } catch (Exception e) {
-                System.debug('Exception: ' +e);
+                msg = e.getMessage();
             }
  
             Test.stopTest();
+            System.assertEquals('Script-thrown exception', msg, 'HDT_UTL_SecurityAccess did not work correctly');
+            System.assertNotEquals(null, saDelete, 'HDT_UTL_SecurityAccess did not work correctly');
         }
     }
 }

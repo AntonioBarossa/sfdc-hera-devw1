@@ -4,8 +4,8 @@
     <assignments>
         <name>Aumenta_Counter</name>
         <label>Aumenta Counter</label>
-        <locationX>798</locationX>
-        <locationY>695</locationY>
+        <locationX>1100</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterLavorazione</assignToReference>
             <operator>Add</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>Aumenta_Counter_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1062</locationX>
-        <locationY>695</locationY>
+        <locationX>1364</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterSospeso</assignToReference>
             <operator>Add</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>Aumenta_Counter_0_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1326</locationX>
-        <locationY>695</locationY>
+        <locationX>1628</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterRispostaInviata</assignToReference>
             <operator>Add</operator>
@@ -73,8 +73,8 @@
     <assignments>
         <name>Aumenta_Counter_0_0_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1590</locationX>
-        <locationY>695</locationY>
+        <locationX>1892</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterAnnullato</assignToReference>
             <operator>Add</operator>
@@ -96,8 +96,8 @@
     <assignments>
         <name>Aumenta_Counter_0_0_0_0_0</name>
         <label>Aumenta Counter</label>
-        <locationX>1854</locationX>
-        <locationY>695</locationY>
+        <locationX>2156</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterChiuso</assignToReference>
             <operator>Add</operator>
@@ -119,8 +119,8 @@
     <assignments>
         <name>Aumenta_Counter_1</name>
         <label>Aumenta Counter</label>
-        <locationX>2118</locationX>
-        <locationY>695</locationY>
+        <locationX>2420</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CounterElements</assignToReference>
             <operator>Add</operator>
@@ -133,10 +133,32 @@
         </connector>
     </assignments>
     <decisions>
+        <name>ExistRecord</name>
+        <label>ExistRecord?</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <defaultConnector>
+            <targetReference>Get_Case_nel_Contenitore</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAutomationToggle</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Quale_Fase</name>
         <label>Quale Fase?</label>
-        <locationX>1458</locationX>
-        <locationY>575</locationY>
+        <locationX>1760</locationX>
+        <locationY>815</locationY>
         <defaultConnector>
             <targetReference>Aumenta_Counter_1</targetReference>
         </defaultConnector>
@@ -241,8 +263,8 @@
     <decisions>
         <name>Quale_Fase_deve_andare_il_Contenitore</name>
         <label>Quale Fase deve andare il Contenitore?</label>
-        <locationX>710</locationX>
-        <locationY>1007</locationY>
+        <locationX>1012</locationX>
+        <locationY>1247</locationY>
         <defaultConnectorLabel>Nessun cambio</defaultConnectorLabel>
         <rules>
             <name>Contenitore_In_Lavorazione</name>
@@ -368,8 +390,8 @@
     <loops>
         <name>Loop_sui_case_nel_Contenitore</name>
         <label>Loop sui case nel Contenitore</label>
-        <locationX>710</locationX>
-        <locationY>455</locationY>
+        <locationX>1012</locationX>
+        <locationY>695</locationY>
         <collectionReference>Get_Case_nel_Contenitore</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -401,8 +423,8 @@
     <recordLookups>
         <name>Get_Case_nel_Contenitore</name>
         <label>Get Case nel Contenitore</label>
-        <locationX>710</locationX>
-        <locationY>335</locationY>
+        <locationX>1012</locationX>
+        <locationY>575</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_sui_case_nel_Contenitore</targetReference>
@@ -419,11 +441,67 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetAutomationToggle</name>
+        <label>GetAutomationToggle</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ExistRecord</targetReference>
+        </connector>
+        <filterLogic>1 AND ( 2 OR 3 ) AND ( 4 AND 5 ) AND 6</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_FL_GestioneReclami_TriggerAfterContenitore</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>AFTER_INSERT;AFTER_UPDATE</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipDueDateTime__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_AutomationToggle__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Passa_In_Annullato</name>
         <label>Passa In Annullato</label>
-        <locationX>842</locationX>
-        <locationY>1127</locationY>
+        <locationX>1144</locationX>
+        <locationY>1367</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -456,8 +534,8 @@
     <recordUpdates>
         <name>Passa_In_Chiuso</name>
         <label>Passa In Chiuso</label>
-        <locationX>1106</locationX>
-        <locationY>1127</locationY>
+        <locationX>1408</locationX>
+        <locationY>1367</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -496,8 +574,8 @@
     <recordUpdates>
         <name>Passa_In_Lavorazione</name>
         <label>Passa In Lavorazione</label>
-        <locationX>50</locationX>
-        <locationY>1127</locationY>
+        <locationX>352</locationX>
+        <locationY>1367</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -536,8 +614,8 @@
     <recordUpdates>
         <name>Passa_In_Risposta_Inviata</name>
         <label>Passa In Risposta Inviata</label>
-        <locationX>578</locationX>
-        <locationY>1127</locationY>
+        <locationX>880</locationX>
+        <locationY>1367</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -570,8 +648,8 @@
     <recordUpdates>
         <name>Passa_In_Sospesa</name>
         <label>Passa In Sospesa</label>
-        <locationX>314</locationX>
-        <locationY>1127</locationY>
+        <locationX>616</locationX>
+        <locationY>1367</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -602,10 +680,10 @@
         <object>Case</object>
     </recordUpdates>
     <start>
-        <locationX>584</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Case_nel_Contenitore</targetReference>
+            <targetReference>GetAutomationToggle</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

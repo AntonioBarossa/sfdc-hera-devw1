@@ -40,6 +40,8 @@ public class HDT_SRV_DocumentalManagement{
 		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 3');
 		
 		//sub-processing della lista di mappe realizzata al punto precedente.
+		//nuovo campo Customer Info settoreMerceologico
+		String settoreMerceologico = '';
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], driverStructure, formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure, formParamsMap);
@@ -49,7 +51,35 @@ public class HDT_SRV_DocumentalManagement{
 			}else if(context.equalsIgnoreCase('GC')){
 				payload += generatePayloadGestioneCredito(formParamsMap);
 			}
-			
+
+			//nuova logica per campo settore merceologico
+			String objectName = '';
+			if(context.equalsIgnoreCase('EC') || context.equalsIgnoreCase('GC') || context.equalsIgnoreCase('Account')){
+				objectName = 'Case';
+			}else if(context.equalsIgnoreCase('DocumentazioneAnticipata')){
+				objectName='Order';
+			}
+			else {
+				objectName=context;
+			}
+			if ('Case'.equalsIgnoreCase(objectName) || 'Order'.equalsIgnoreCase(objectName)){
+				String retrivedValue = HDT_UTL_DocumentalManagement.getValue(objectName, 'CommodityFormula__c', 0, recordObjectsListMap[i], formParamsMap);
+				switch on retrivedValue {
+					when  'Gas' {
+						retrivedValue = '#GAS';
+					}
+					when  'Energia Elettrica' {
+						retrivedValue = '#ELE';
+					}
+					when else {
+						retrivedValue = '';
+					}
+				}
+				if (String.isNotEmpty(retrivedValue) && !settoreMerceologico.contains(retrivedValue)) {
+					settoreMerceologico += retrivedValue;
+				}
+			}
+			//fine logica per campo settore merceologico
 			Blob payloadBlob = Blob.valueOf(payload);
 			payload = EncodingUtil.base64Encode(payloadBlob);
 			System.debug(LoggingLevel.DEBUG, 'Paylod ' + payload);
@@ -57,6 +87,9 @@ public class HDT_SRV_DocumentalManagement{
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
+		}
+		if (String.isNotEmpty(settoreMerceologico)){
+			formParamsMap.put('SettMerceologico',settoreMerceologico.substring(1));
 		}
 		System.debug(LoggingLevel.DEBUG, debugString + ' - Superato blocco 4');
 		
@@ -326,7 +359,7 @@ public class HDT_SRV_DocumentalManagement{
 		SObject docSendTracking = HDT_QR_DocumentalConfiguration.getDocumentSendTracking(transactionId);
 		if(docSendTracking != null){
 			if(docSendTracking.get('Case__c') != null){
-				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
+				List<SObject> caseList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact.IndividualId,Type FROM Case WHERE Id = \''+(String)docSendTracking.get('Case__c')+'\'', 'Case');
 				return caseList[0];
 			}else {
 				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,AccountId,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,Contact__r.IndividualId FROM Order WHERE Id = \''+(String)docSendTracking.get('Order__c')+'\'', 'Order');
@@ -357,11 +390,15 @@ public class HDT_SRV_DocumentalManagement{
 			}
 			
 			if(record.getSobjectType() == Case.getSobjectType()){
+				String caseType = (String)record.get('Type');
 				if(status.equalsIgnoreCase('completed')){
 					record.put('DocumentalPhase__c','Plico firmato');
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
 						record.put('Phase__c','Preventivo accettato');
 					}
+					if ('Rimborso'.equalsIgnoreCase(caseType) || 'Piano Rateizzazione'.equalsIgnoreCase(caseType)){
+						HDT_UTL_Case.createActivity((Id)record.get('Id'), 'Validazione Firma OTP', 'Validazione Firma OTP', 'Validazione Firma OTP');
+					}				
 				}else{
 					//Che fase documentale settare?
 					if(cluster.equalsIgnoreCase('Preventivi') || cluster.equalsIgnoreCase('Verifiche')){
@@ -631,11 +668,13 @@ public class HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate templateInfo = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalTemplate();
 		try {
 			//signInfo
+			String rdsCase = HDT_UTL_DocumentalManagement.getValue('Case', 'CaseNumber', 0, inputs, formParams);
+			String rdsOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder', 'OrderNumber', 0, inputs, formParams);
 			String telephoneNumberCase = HDT_UTL_DocumentalManagement.getValue('Case','PhoneNumber__c',0,inputs,formParams);
-			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('Order','PhoneNumber__c',0,inputs,formParams);
+			String telephoneNumberOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','PhoneNumber__c',0,inputs,formParams);
 			String telephoneNumber = '+39';
 			String emailCase = HDT_UTL_DocumentalManagement.getValue('Case','Email__c',0,inputs,formParams);
-			String emailOrder = HDT_UTL_DocumentalManagement.getValue('Order','ShippingMail__c',0,inputs,formParams);
+			String emailOrder = HDT_UTL_DocumentalManagement.getValue('ParentOrder','ShippingMail__c',0,inputs,formParams);
 			if(String.isNotBlank(telephoneNumberCase)){
 				telephoneNumber = telephoneNumber + telephoneNumberCase;
 			}else {
@@ -655,8 +694,13 @@ public class HDT_SRV_DocumentalManagement{
 			String vatCode = HDT_UTL_DocumentalManagement.getValue('Account','VATNumber__c',0,inputs,formParams);
 			String fiscalCode = HDT_UTL_DocumentalManagement.getValue('Account','FiscalCode__c',0,inputs,formParams);
 			String accountName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','Name',0,inputs,formParams);
+			String firstName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','FirstName',0,inputs,formParams);
+			String lastName = HDT_UTL_DocumentalManagement.getValue('PrimaryContact','LastName',0,inputs,formParams);
+			String userTimeZone = UserInfo.getTimeZone().getDisplayName(); 
 			String processTypeCase = HDT_UTL_DocumentalManagement.getValue('Case','DocumentalProcessType__c',0,inputs,formParams);
 			String processType = 'Plico contrattuale';
+			Datetime today = Datetime.now(); 
+			String rds = String.isNotBlank(rdsCase)? rdsCase : rdsOrder;
 			if(String.isNotBlank(processTypeCase)){
 				processType = processTypeCase;
 			}
@@ -666,6 +710,15 @@ public class HDT_SRV_DocumentalManagement{
 			customerInfo.vatNumber = vatCode;
 			customerInfo.creationUrl = creationUrl;
 			customerInfo.emailSubject = 'HERA - ' + processType;
+			//@ealpi nuovi campi inviati
+			customerInfo.rds = rds;
+			customerInfo.dataCreazioneDocumento = today.format('yyyy-MM-dd HH:mm:ss');
+			customerInfo.dataCaricamentoDocumento = today.format('yyyy-MM-dd HH:mm:ss');
+			customerInfo.cognomeRagSociale = lastName;
+			customerInfo.nomeRagSoc = firstName;
+			if (formParams.containsKey('SettMerceologico')){
+				customerInfo.settoreMerceologico = (String)formParams.get('SettMerceologico');
+			}
 			signInfo.customerInfo = customerInfo;
 
 			//template

@@ -348,6 +348,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String newDescription = nowDateFormat + ': ' + activity + '\n';
                 currentCase.Description = newDescription + '\n' + currentDescription;
             }
+
+            //Il currentCase.Phase__c viene modificato all'inizio di questo ramo dell'if, ed è valorizzato con il nextPhase
+            if('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK DL'.equalsIgnoreCase(currentCase.Phase__c)){
+                createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
+                //Se la fase è in Annullato allora non viene cambiata.
+                if ('Annullato'.equalsIgnoreCase(currentPhase)){
+                    currentCase.Phase__c = currentPhase; 
+                }
+            }
+
         }else if(method.equalsIgnoreCase('esito_finale')){
             //HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
@@ -454,7 +464,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
     private void handleAfterNotify(Case currentCase, String storno, String activity){
         currentCase = hpsmQr.getCaseRecord(currentCase.Id);
-        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || currentCase.Phase__c == 'Annullato'){
+        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII' || (currentCase.Phase__c == 'Annullato' && !'Closed'.equalsIgnoreCase(currentCase.Status))){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             updateFuture(JSON.serialize(currentCase));

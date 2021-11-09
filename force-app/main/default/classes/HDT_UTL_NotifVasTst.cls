@@ -25,7 +25,8 @@ public with sharing class HDT_UTL_NotifVasTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             HDT_UTL_DataFactoryTst.pClickCasePhase();
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore Vas', 'Bozza', constants.ORDER_RECORDTYPEID_VAS, 'HDT_RT_VAS');
- 
+			HDT_UTL_DataFactoryTst.newPhaseTransition('Accettato Motore Vas', 'Bozza', constants.CASE_RECORDTYPEID_POST_SALES_VAS, 'HDT_RT_PostSalesVAS');
+            
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             List<Contact> cttList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
             
@@ -41,6 +42,7 @@ public with sharing class HDT_UTL_NotifVasTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<SBQQ__Subscription__c> scList = HDT_UTL_DataFactoryTst.createSubscription(1, true, accList[0].Id, contractList[0].Id, spList[0].Id);
             List<Asset> assetList = HDT_UTL_DataFactoryTst.createAsset(1, true, 'HERA COMM');
+            
             List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].Id, cttList[0].Id, spList[0].Id, contractList[0].Id, orderList[0].Id);
             caseList[0].RecordTypeId = constants.CASE_RECORDTYPEID_POST_SALES_VAS;
             caseList[0].AssetId = assetList[0].Id;
@@ -157,10 +159,11 @@ public with sharing class HDT_UTL_NotifVasTst {
                 req.httpMethod = 'POST';
                 RestContext.request = req;
                 RestContext.response = res;
-                
+                mrrResponseItem.objects= new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();
                 HDT_UTL_NotifVas.handleVasNotify(request, mrrResponseItem);
             } catch (Exception e) {
-                System.debug(e);
+                System.debug('test exc1 '+e);
+                system.debug(e.getStackTraceString());
             }
 
             try {
@@ -190,13 +193,16 @@ public with sharing class HDT_UTL_NotifVasTst {
                 request.objects = objectList;
     
                 HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
-                
+                mrrResponseItem.objects= new List<HDT_WRP_MrrResponse.HDT_WRP_Object>();               
+
                 HDT_UTL_NotifVas.handleVasNotify(request, mrrResponseItem);
             } catch (Exception e) {
-                System.debug(e);
+                System.debug('test exc2 '+e);
+                system.debug(e.getStackTraceString());
             }
-
             Test.stopTest();
+            Case postSaleVasCase = [Select Phase__c from Case WHERE RecordTypeId = :constants.CASE_RECORDTYPEID_POST_SALES_VAS];
+			system.AssertEquals(postSaleVasCase.Phase__c, 'Accettato Motore VAS', 'Unexpected Case Phase');
         }
     }
 }

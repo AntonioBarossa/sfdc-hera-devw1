@@ -20,16 +20,6 @@ public static void setup(){
 
     insert internalUser;  
     System.runAs(internalUser){
-
-        id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-        id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
-        id orderSubentro=utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
-        id orderSwitchIn=utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-        id orderAttivazione=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
-        id orderAttivazioneConModifica=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA;
-        id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-        id orderTemporaneaNuovaAtt=utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
-
         
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
@@ -75,46 +65,45 @@ public static void setup(){
             orderss[0].Phase__c = 'Bozza';
             update orderss;
             
-            Group g = new Group(Name = 'test', DeveloperName = 'HDT_QUE_ComfortQuality');
+            new Group(Name = 'test', DeveloperName = 'HDT_QUE_ComfortQuality');
             
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaigns[0].Name = 'Comfort Campaign';
             insert campaigns;
-            Id campaignId = campaigns[0].id;
             
-            List<Order> orders2 = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
-            orders2[0].qualityCall__c = true;
-            orders2[0].DateComfortCall__c = System.today() - 3;
-            orders2[0].ComfortCallDaysDue__c = 6.2;
-            orders2[0].ParentOrder__c = parentOrderId;
-            orders2[0].Contact__c = anotherContactId;
-            insert orders2;
-            orders2[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-            orders2[0].Phase__c = 'In attesa conferma cliente';
-            update orders2;
+            List<Order> moreOrders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
+            moreOrders[0].qualityCall__c = true;
+            moreOrders[0].DateComfortCall__c = System.today() - 3;
+            moreOrders[0].ComfortCallDaysDue__c = 6.2;
+            moreOrders[0].ParentOrder__c = parentOrderId;
+            moreOrders[0].Contact__c = anotherContactId;
+            insert moreOrders;
+            moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            moreOrders[0].Phase__c = 'In attesa conferma cliente';
+            update moreOrders;
         
-            List<Order> orders3 = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
-			orders3[0].Username__c='test';
-			orders3[0].Password__c='test1';
-			orders3[0].NotRegisteredMeterCase__c=true;
-			orders3[0].EffectiveDate__c=date.today();
-			orders3[0].PowerCommitted__c=2;
-			orders3[0].ImplantType__c='13A0-Usi di Abitazione BT';
-			orders3[0].RequestOption__c='Domestici-TD';
-			orders3[0].CreditCheckDescription__c='test1';
-			orders3[0].QualityCall__c=true;  
-        	orders3[0].ComfortCallDaysDue__c=null;
-			orders3[0].WizardCompletedDate__c=date.today();
-        	orders3[0].QualityCallUnique__c=false;
-            orders3[0].ParentOrder__c = parentOrderId;
-            orders3[0].Contact__c = contactId;
-            insert orders3;
-            orders3[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-            orders3[0].Phase__c = 'Bozza';
-            update orders3;
+            List<Order> ordersToday = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
+			ordersToday[0].Username__c='test';
+			ordersToday[0].Password__c='test1';
+			ordersToday[0].NotRegisteredMeterCase__c=true;
+			ordersToday[0].EffectiveDate__c=date.today();
+			ordersToday[0].PowerCommitted__c=2;
+			ordersToday[0].ImplantType__c='13A0-Usi di Abitazione BT';
+			ordersToday[0].RequestOption__c='Domestici-TD';
+			ordersToday[0].CreditCheckDescription__c='test1';
+			ordersToday[0].QualityCall__c=true;  
+        	ordersToday[0].ComfortCallDaysDue__c=null;
+			ordersToday[0].WizardCompletedDate__c=date.today();
+        	ordersToday[0].QualityCallUnique__c=false;
+            ordersToday[0].ParentOrder__c = parentOrderId;
+            ordersToday[0].Contact__c = contactId;
+            insert ordersToday;
+            ordersToday[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+            ordersToday[0].Phase__c = 'Bozza';
+            update ordersToday;
         List<Contract> con = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
         List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
-        List<Case> case1 = HDT_UTL_DataFactoryTst.createCaseDocumentale(1,true,accId,contactId,sp[0].Id,con[0].Id,orderss[0].Id);
+        HDT_UTL_DataFactoryTst.createCaseDocumentale(1,true,accId,contactId,sp[0].Id,con[0].Id,orderss[0].Id);
        	List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(1,true,accId);
         List<Campaign> campaign = HDT_UTL_DataFactoryTst.createCampaign(1,true);
         campaign[0].Name='Quality Campaign';
@@ -132,7 +121,7 @@ public static void testQualityCallExecute(){
 
 	
     HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
-    Id batchId = Database.executeBatch(batch,200);
+    Database.executeBatch(batch,200);
 
     test.stopTest();
     

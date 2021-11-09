@@ -42,10 +42,10 @@ public with sharing class HDT_QR_BrandSalesCompanyTst {
         System.runAs(tUser){
             Test.startTest();   
             BrandSalesCompany__c tBrandSalesCompany = [SELECT Id, CommonSupply__c, Service__c, SalesCompany__c, MarketType__c FROM BrandSalesCompany__c WHERE CommonSupply__c = 'testCommomSupply' LIMIT 1]; 
-            List<BrandSalesCompany__c> newBrandSalesCom = new HDT_QR_BrandSalesCompany().getMatriceBrandById(tBrandSalesCompany.CommonSupply__c, tBrandSalesCompany.Service__c, tBrandSalesCompany.SalesCompany__c, tBrandSalesCompany.MarketType__c);
+            new HDT_QR_BrandSalesCompany().getMatriceBrandById(tBrandSalesCompany.CommonSupply__c, tBrandSalesCompany.Service__c, tBrandSalesCompany.SalesCompany__c, tBrandSalesCompany.MarketType__c);
             Test.stopTest();
             System.assertEquals('testCommomSupply', tBrandSalesCompany.CommonSupply__c, 'CommonSupply__c   not returned');
-            System.assertNotEquals('', tBrandSalesCompany.CommonSupply__c);
+            System.assertNotEquals('', tBrandSalesCompany.CommonSupply__c, 'CommonSupply__c   not returned');
         }
     }
 }

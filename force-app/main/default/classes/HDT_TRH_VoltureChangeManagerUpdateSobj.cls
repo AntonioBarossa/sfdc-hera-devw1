@@ -1,14 +1,20 @@
 /**@frpanico 19/10/2021
  * Trigger Handler class for the HDT_VoltureChangeManagerSobj trigger
  */
-public with sharing class HDT_TRH_VoltureChangeManagerUpdateSobj {
+public with sharing class HDT_TRH_VoltureChangeManagerUpdateSobj extends HDT_TRH_TriggerHandler {
+
+
+    public override void afterInsert(){
+        this.myMethod();
+    }
+
 
     /**@frpanico 19/10/2021
      * The method runs through platform events HDT_PEV_VoltureChangeManagerUpdateSObj on trigger.new
      * deserialize the sobject from the field SerializedSobj__c and add it to the List<SObject>
      * Update the List<Sobject>
      */
-    public void run()
+    public void myMethod()
     {
         if(Trigger.new != null && Trigger.new.size() > 0)
         {

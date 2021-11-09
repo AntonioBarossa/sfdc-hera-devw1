@@ -93,6 +93,25 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'SUBS_VAS_SERVIZIO':{
+        label : 'VAS Servizio',
+        sObjectName: 'SBQQ__Subscription__c',
+        emptyMessage: 'Non ci sono subscriptions',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.ContractNumber = item.SBQQ__Contract__r !== undefined ? item.SBQQ__Contract__r.ContractNumber : '';
+                item.PodPdr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = (item.SBQQ__Contract__r !== undefined && item.SBQQ__Contract__r.ServicePoint__r !== undefined)?
+                    item.SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     //Segnalazioni VAS - START
     'CONTRACTS_VAS':{
         label : 'Contratti',

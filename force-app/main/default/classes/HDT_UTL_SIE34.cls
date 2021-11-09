@@ -1380,6 +1380,7 @@ public with sharing class HDT_UTL_SIE34 {
                 body=body+'\n'+row; 
             }
         }
+        
         return body;
     }
     

@@ -15,9 +15,13 @@ public inherited sharing class HDT_TRH_DocumentalActivity extends HDT_TRH_Trigge
             List<DocumentalActivity__c> docActivityList = (List<DocumentalActivity__c>) trigger.new;
             Set<String> parentSetCase = new Set<String>();
             Set<String> parentSetOrder = new Set<String>();
-            Set<String> recordSet = new Set<String>();
+            /*
+                @Author: Davide Viola - 20/10/2021
+                Description: PMD -> Commentate variabili non utilizzate.
+            */
+            /*Set<String> recordSet = new Set<String>();
+            Map<String,Id> caseNumberIdMap = new Map<String,Id>();*/
             Map<String,Id> numberIdMap = new Map<String,Id>();
-            Map<String,Id> caseNumberIdMap = new Map<String,Id>();
             for(DocumentalActivity__c single : docActivityList){
                 if(single.ParentProcessId__c != null && single.ParentProcessId__c.indexOf('C-') > -1){
                     parentSetCase.add(single.ParentProcessId__c);

@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Flag Hidden</label>
+    <label>Flag Nascosto</label>
     <length>1</length>
     <required>false</required>
     <type>Text</type>

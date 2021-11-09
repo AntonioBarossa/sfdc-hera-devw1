@@ -31,6 +31,14 @@
                 <behavior>Readonly</behavior>
                 <field>OrderId__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SignatureDescription__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MogaCreatedDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -57,6 +65,10 @@
                 <behavior>Readonly</behavior>
                 <field>ErrorDescription__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SignatureCode__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -82,11 +94,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>DocumentalActivity__c.HDT_ShowOriginalDocument</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>DocumentalActivity__c.HDT_ShowArchivedAttachment</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -100,6 +107,11 @@
             <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>DocumentalActivity__c.HDT_ShowOriginalDocument</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
