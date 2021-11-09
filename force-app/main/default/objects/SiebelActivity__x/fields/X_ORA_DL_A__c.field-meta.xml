@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ora DL</label>
+    <label>Ora DL a</label>
     <length>10</length>
     <required>false</required>
     <type>Text</type>

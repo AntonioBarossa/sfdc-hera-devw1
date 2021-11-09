@@ -387,6 +387,14 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 secondLevelSize = recordsList[0].secondoLivelloInformativo.size();
             }
 
+            /**@frapnico 22/10/2021
+             * Changed order of execution to let the Account__c field be passed 
+             * inside the Multiple/Single record checks
+             */
+            serviceCatalog.DocumentSelected__c = records;
+            serviceCatalog.Account__c = recordId;
+            serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
+            
             //if(recordsList.size() > 1){
             if(firstLevelSize > 1 || secondLevelSize > 1){
                 System.debug(LoggingLevel.DEBUG, '>>> Multiple Records');
@@ -394,11 +402,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             } else {
                 System.debug(LoggingLevel.DEBUG, '>>> Single Records');
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog, tabValue);
-            }
-
-            serviceCatalog.DocumentSelected__c = records;
-            serviceCatalog.Account__c = recordId;
-            serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
+            }           
 
             Boolean upsertResult = HDT_UTL_DatabaseService.upsertSObjectExternalId(new List<SObject>{serviceCatalog}, 'AccountStatementFilter__c', 'UpsertKey__c');
 

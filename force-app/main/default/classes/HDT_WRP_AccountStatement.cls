@@ -159,6 +159,12 @@ public class HDT_WRP_AccountStatement {
         public String fatturaPrescritta;
         public String DEL_569;
         public String documentoPareggio;
+        /**@frpanico 21/10/2021
+         * Added new parameter for "bonusSociale"
+         * Added new parameter for "dataScadenza"
+         */
+        public String bonusSociale;
+        public String dataScadenza;
         public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativo;
         public List<HDT_WRP_SecondLevelObj> secondoLivelloInformativoF2;
     }

@@ -176,12 +176,12 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 		//	throw new WrtsException(System.Label.AtLeastOneQueryFilterMustBeSet);
 		}
 
-		User u; //= (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
+		//User u; //= (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
 		/*if(u.CompanyDivisionEnforced__c && String.isNotBlank(u.CompanyDivisionId__c)) {
 			companyDivision = u.CompanyDivisionId__c;
 		}*/
 
-		String text = '%' + searchText.replaceAll(' ', '%') + '%';
+		//String text = '%' + searchText.replaceAll(' ', '%') + '%';
 		Set<String> fieldSet = pointFieldSet;
 		fieldSet.addAll(fields);
 		String query = 'SELECT ' + String.join(new List<String>(fieldSet), ', ') + ' FROM ServicePoint__c ';
@@ -203,7 +203,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 		if(String.isNotBlank(searchText)) {
 			if(String.isBlank(accountId)) {
 				searchFilters.add('CurrentSupply__r.Account__r.Name LIKE :text');
-				String reverseText = '%' + reverseWords(searchText).replaceAll(' ', '%') + '%';
+				//String reverseText = '%' + reverseWords(searchText).replaceAll(' ', '%') + '%';
 				searchFilters.add('CurrentSupply__r.Account__r.Name LIKE :reverseText');
 				searchFilters.add('CurrentSupply__r.Account__r.Key__c LIKE :text');
 			}
@@ -227,7 +227,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 		query += ' LIMIT 50000';
 		List<ServicePoint__c> result;
 		if(Schema.SObjectType.ServicePoint__c.isAccessible()) {
-			result= Database.query(query);
+			result= Database.query(String.escapeSingleQuotes(query));
 		}
 		return result;
 	}
@@ -239,7 +239,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 			//throw new WrtsException(System.Label.AtLeastOneQueryFilterMustBeSet);
 		}
 
-		User u ;//= (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
+		//User u ;//= (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
 		/*if(u.CompanyDivisionEnforced__c && String.isNotBlank(u.CompanyDivisionId__c)) {
 			companyDivision = u.CompanyDivisionId__c;
 		}*/
@@ -313,7 +313,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 
 		query += ' LIMIT 50000';
 		if(Schema.SObjectType.ServicePoint__c.isAccessible()) {
-			result = Database.query(query);
+			result = Database.query(String.escapeSingleQuotes(query));
 		}
 		return result;
 	}

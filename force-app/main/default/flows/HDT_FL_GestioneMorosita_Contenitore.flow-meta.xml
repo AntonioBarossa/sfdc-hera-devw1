@@ -4,8 +4,8 @@
     <assignments>
         <name>AddCounter</name>
         <label>AddCounter</label>
-        <locationX>748</locationX>
-        <locationY>1031</locationY>
+        <locationX>1188</locationX>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>BozzaCounter</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>AddCounter_0</name>
         <label>AddCounter</label>
-        <locationX>1144</locationX>
-        <locationY>1031</locationY>
+        <locationX>1584</locationX>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>FinaleCounter</assignToReference>
             <operator>Add</operator>
@@ -36,8 +36,8 @@
     <assignments>
         <name>ChangePhaseContenitore</name>
         <label>ChangePhaseContenitore</label>
-        <locationX>594</locationX>
-        <locationY>1799</locationY>
+        <locationX>1034</locationX>
+        <locationY>2063</locationY>
         <assignmentItems>
             <assignToReference>GetParentRecord.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -59,8 +59,8 @@
     <assignments>
         <name>ChangePhaseContenitore_0_0</name>
         <label>ChangePhaseContenitore</label>
-        <locationX>1122</locationX>
-        <locationY>1919</locationY>
+        <locationX>1562</locationX>
+        <locationY>2183</locationY>
         <assignmentItems>
             <assignToReference>GetParentRecord.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -82,8 +82,8 @@
     <assignments>
         <name>GetCollectionSize</name>
         <label>GetCollectionSize</label>
-        <locationX>660</locationX>
-        <locationY>671</locationY>
+        <locationX>1100</locationX>
+        <locationY>935</locationY>
         <assignmentItems>
             <assignToReference>CollectionSize</assignToReference>
             <operator>AssignCount</operator>
@@ -98,8 +98,8 @@
     <assignments>
         <name>RaiseFinalCaseFlag</name>
         <label>RaiseFinalCaseFlag</label>
-        <locationX>1012</locationX>
-        <locationY>1271</locationY>
+        <locationX>1452</locationX>
+        <locationY>1535</locationY>
         <assignmentItems>
             <assignToReference>FlagFinalCase</assignToReference>
             <operator>Assign</operator>
@@ -114,8 +114,8 @@
     <decisions>
         <name>ContenitoreChiuso</name>
         <label>ContenitoreChiuso?</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>572</locationX>
+        <locationY>695</locationY>
         <defaultConnector>
             <targetReference>GetChildCases</targetReference>
         </defaultConnector>
@@ -136,8 +136,8 @@
     <decisions>
         <name>ContenitoreInLavorazione</name>
         <label>ContenitoreInLavorazione</label>
-        <locationX>990</locationX>
-        <locationY>1799</locationY>
+        <locationX>1430</locationX>
+        <locationY>2063</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseContenitore_0_0</targetReference>
         </defaultConnector>
@@ -158,8 +158,8 @@
     <decisions>
         <name>CounterSwitchPhase</name>
         <label>CounterSwitchPhase</label>
-        <locationX>1100</locationX>
-        <locationY>911</locationY>
+        <locationX>1540</locationX>
+        <locationY>1175</locationY>
         <defaultConnector>
             <targetReference>LoopChildCases</targetReference>
         </defaultConnector>
@@ -210,10 +210,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>ExistRecord</name>
+        <label>ExistRecord?</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <defaultConnector>
+            <targetReference>GetParentRecord</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAutomationToggle</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>FinalCase</name>
         <label>FinalCase?</label>
-        <locationX>1144</locationX>
-        <locationY>1151</locationY>
+        <locationX>1584</locationX>
+        <locationY>1415</locationY>
         <defaultConnector>
             <targetReference>LoopChildCases</targetReference>
         </defaultConnector>
@@ -237,8 +259,8 @@
     <decisions>
         <name>SwitchPhaseContenitore</name>
         <label>SwitchPhaseContenitore</label>
-        <locationX>660</locationX>
-        <locationY>1679</locationY>
+        <locationX>1100</locationX>
+        <locationY>1943</locationY>
         <defaultConnector>
             <targetReference>ContenitoreInLavorazione</targetReference>
         </defaultConnector>
@@ -290,8 +312,8 @@
     <loops>
         <name>LoopChildCases</name>
         <label>LoopChildCases</label>
-        <locationX>660</locationX>
-        <locationY>791</locationY>
+        <locationX>1100</locationX>
+        <locationY>1055</locationY>
         <collectionReference>GetChildCases</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -321,10 +343,66 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>GetAutomationToggle</name>
+        <label>GetAutomationToggle</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ExistRecord</targetReference>
+        </connector>
+        <filterLogic>1 AND ( 2 OR 3 ) AND ( 4 AND 5 ) AND 6</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_FL_GestioneMorosita_Contenitore</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>AFTER_UPDATE</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipDueDateTime__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_AutomationToggle__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetChildCases</name>
         <label>GetChildCases</label>
-        <locationX>660</locationX>
-        <locationY>551</locationY>
+        <locationX>1100</locationX>
+        <locationY>815</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetCollectionSize</targetReference>
@@ -344,8 +422,8 @@
     <recordLookups>
         <name>GetParentRecord</name>
         <label>GetParentRecord</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationX>572</locationX>
+        <locationY>575</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ContenitoreChiuso</targetReference>
@@ -365,15 +443,15 @@
     <recordUpdates>
         <name>AggiornaCaseContenitore</name>
         <label>AggiornaCaseContenitore</label>
-        <locationX>660</locationX>
-        <locationY>2231</locationY>
+        <locationX>1100</locationX>
+        <locationY>2495</locationY>
         <inputReference>GetParentRecord</inputReference>
     </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>GetParentRecord</targetReference>
+            <targetReference>GetAutomationToggle</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

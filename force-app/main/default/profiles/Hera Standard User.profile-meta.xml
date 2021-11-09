@@ -35464,4 +35464,12 @@
         <enabled>true</enabled>
         <name>SendCustomNotifications</name>
     </userPermissions>
+    <pageAccesses>
+        <apexPage>HDT_VF_ActivityReassignToMeMassive</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>HDT_VF_ActivityReassignmentToolMassive</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
 </Profile>

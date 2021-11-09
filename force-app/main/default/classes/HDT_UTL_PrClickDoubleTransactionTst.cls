@@ -29,8 +29,8 @@ public class HDT_UTL_PrClickDoubleTransactionTst {
 
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
-            List<Order> orders  = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
-            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, true, accId, null, null, null, null);
+            HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');
+            HDT_UTL_DataFactoryTst.createCase(1, true, accId, null, null, null, null);
 
         }
     }

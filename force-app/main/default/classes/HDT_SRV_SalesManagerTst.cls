@@ -30,9 +30,8 @@ public class HDT_SRV_SalesManagerTst {
             List<Contact> contact = HDT_UTL_DataFactoryTst.createContact(1,true,accounts[0].Id);
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<Contract> contract = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-            List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1,true,accounts[0].Id,contact[0].Id,spList[0].Id,contract[0].Id,orders[0].Id);
+            HDT_UTL_DataFactoryTst.createCase(1,true,accounts[0].Id,contact[0].Id,spList[0].Id,contract[0].Id,orders[0].Id);
         
-        id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
         id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
         id orderSubentro=utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
         id orderSwitchIn=utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
@@ -184,8 +183,8 @@ public class HDT_SRV_SalesManagerTst {
     
         @isTest
     public static void testHDT_QBL_AsycnronousCallout(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
-        Map<String, Object> argsMap = new Map<String, Object>() ;
+        new HDT_SRV_SalesManager();
+
         List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
 
 		HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout async = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout(order[0].Id,'activation');
@@ -202,9 +201,7 @@ public class HDT_SRV_SalesManagerTst {
     
             @isTest
     public static void testHDT_QBL_AsycnronousUpdate(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
         
-        Map<String, Object> argsMap = new Map<String, Object>() ;
         List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
 
 		HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(order[0].Id,'In attesa conferma cliente');
@@ -237,10 +234,7 @@ public class HDT_SRV_SalesManagerTst {
     
     @isTest
     public static void testHDT_QBL_AsycnronousUpdate2(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
-        
-        Map<String, Object> argsMap = new Map<String, Object>() ;
-        
+           
         List<Case> c =[SELECT Id,Status FROM Case WHERE Status='In Lavorazione'LIMIT 1];
         HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async4 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(c[0].Id,'In attesa conferma cliente');
 		System.enqueueJob(async4);
@@ -252,9 +246,6 @@ public class HDT_SRV_SalesManagerTst {
     
         @isTest
     public static void testHDT_QBL_AsycnronousUpdate3(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
-        
-        Map<String, Object> argsMap = new Map<String, Object>() ;
         
         List<ServicePoint__c> s =[SELECT Id FROM ServicePoint__c LIMIT 1];
         HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async5 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(s[0].Id,'In attesa conferma cliente');

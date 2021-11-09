@@ -76,8 +76,6 @@ public class HDT_UTL_ActivityCustomProcessTst {
     
     @isTest static void createActivityForCreditCheck(){
         
-        String rt = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_VisitaD2D').getRecordTypeId();
-        
         Order oldCustomer = [SELECT id, OutgoingCreditCheckResult__c, ServicePoint__r.Account__c, CreditCheckDescription__c, Contact__c, CommentForDL__c, 
                              OwnerId, CvpId__c, CvpCgs__c, CvpErrorCode__c, CvpErrorDescription__c, CvpErrorSource__c, CvpRiskRating__c, IncomingCreditCheckResult__c, AccountId
                              FROM Order];
