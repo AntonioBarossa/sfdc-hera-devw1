@@ -15,13 +15,13 @@ public class HDT_QBL_AnagAlignmentTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].EffectiveDate__c = Date.today()-5;
         insert ordList;
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
-        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
+        HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
+        HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
     }
-
-    public static testMethod void testExecute(){
+    @isTest
+    public static void testExecute(){
         
         String rtName = 'HDT_RT_AllineamentoAnagrafica';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
@@ -50,12 +50,12 @@ public class HDT_QBL_AnagAlignmentTst {
         Test.stopTest();
         //Mi aspetto che a sistema sia stato salvato un record di case con valorizzati i campi formula:
         List<Case> newCaseList = [SELECT Id, PODPDRFormula__c, ContractCode__c FROM Case];
-        System.assertEquals(newCaseList.size(), 1);
-        System.assertEquals(newCaseList[0].PODPDRFormula__c, 'testServicePointCode');
-        System.assertEquals(newCaseList[0].ContractCode__c, '3011913470');
+        System.assertEquals(1, newCaseList.size(),'case List is null');
+        System.assertEquals('testServicePointCode', newCaseList[0].PODPDRFormula__c , 'PODPDRFormula__c is not assigned correctly');
+        System.assertEquals('3011913470', newCaseList[0].ContractCode__c , 'ContractCode__c is not assigned correclty');
     }
-
-    public static testMethod void testExecuteWithoutRecords(){
+    @isTest
+    public static void testExecuteWithoutRecords(){
         
         List<Case> caseList = new List<Case>();
         HDT_QBL_AnagAlignment anagAlign = new HDT_QBL_AnagAlignment(caseList);
@@ -65,10 +65,10 @@ public class HDT_QBL_AnagAlignmentTst {
         Test.stopTest();
         //Mi aspetto che non abbia creato nessun record.
         List<Case> newCaseList = [SELECT Id, PODPDRFormula__c, ContractCode__c FROM Case];
-        System.assertEquals(newCaseList.size(), 0);
+        System.assertEquals(newCaseList.size(), 0, '');
     }
-
-    public static testMethod void testExecuteException(){
+    @isTest
+    public static void testExecuteException(){
         
         String rtName = 'HDT_RT_AllineamentoAnagrafica';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AllineamentoAnagrafica').getRecordTypeId();
@@ -88,8 +88,8 @@ public class HDT_QBL_AnagAlignmentTst {
         Test.stopTest();
         //Il processo è andato in Eccezione fallendo l'arrichimento dati. Quindi mi aspetto che sia stato creato il case ma senza altri campi popolati.
         List<Case> newCaseList = [SELECT Id, PODPDRFormula__c, ContractCode__c FROM Case];
-        System.assertEquals(newCaseList.size(), 1);
-        System.assertEquals(newCaseList[0].PODPDRFormula__c, null);
-        System.assertEquals(newCaseList[0].ContractCode__c, null);
+        System.assertEquals(newCaseList.size(), 1,'');
+        System.assertEquals(true ,newCaseList[0].PODPDRFormula__c == null, 'PODPDRFormula__c is not Null');
+        System.assertEquals(true, newCaseList[0].ContractCode__c == null, 'ContractCode__c is not Null');
     }
 }

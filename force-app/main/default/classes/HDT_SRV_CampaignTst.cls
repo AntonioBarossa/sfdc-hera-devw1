@@ -13,7 +13,7 @@ public class HDT_SRV_CampaignTst{
 		              FROM Profile
 		              WHERE Name='Marketing User'].Id;
 
-		User crmUser=new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName='herauser@test.com'+DateTime.now().getTime(), UserPermissionsMarketingUser=true, IsActive=true);
+		new User(Alias='crmuser', FirstName='FirstName', LastName='LastName', Email='crmuser@test.com', EmailEncodingKey='UTF-8', LanguageLocaleKey='it', LocaleSidKey='it', ProfileId=profileId, TimeZoneSidKey='Europe/Rome', UserName='herauser@test.com'+DateTime.now().getTime(), UserPermissionsMarketingUser=true, IsActive=true);
 	}
 
 	@isTest
