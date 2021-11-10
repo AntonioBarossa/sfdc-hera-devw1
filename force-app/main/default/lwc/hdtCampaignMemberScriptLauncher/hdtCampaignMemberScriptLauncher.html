@@ -1,0 +1,12 @@
+<!--
+  @description       : Component for launching script from Campaign Member record page
+  @author            : gabriele.rota@webresults.it
+  @group             : WR
+  @last modified on  : 2021-11-10
+  @last modified by  : gabriele.rota@webresults.it
+-->
+<template>
+    <lightning-button label="Script Aiuto Vendita" onclick={showModal} variant="neutral"></lightning-button>
+
+    <c-hdt-manage-script-modal record-id={campMemberId} modal></c-hdt-manage-script-modal>
+</template>

@@ -418,12 +418,6 @@ public inherited sharing class HDT_LC_CampaignsController {
         
         
     }
-
-    @AuraEnabled(cacheable=true)
-    public static String getScriptNameFromCampaign(String memberId){
-        List<CampaignMember> lcs = [select id, Campaign.ScriptConfig__r.Name from CampaignMember where id=:memberId WITH SECURITY_ENFORCED LIMIT 1];
-        return lcs.isEmpty()? '' : lcs[0].Campaign.ScriptConfig__r.Name;
-    }
     
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){

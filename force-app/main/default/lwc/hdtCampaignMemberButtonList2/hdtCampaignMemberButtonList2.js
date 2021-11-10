@@ -2,16 +2,12 @@ import { LightningElement, track, api, wire } from 'lwc';
 import Survey from '@salesforce/resourceUrl/survey';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getScriptNameFromCampaign from '@salesforce/apex/HDT_LC_CampaignsController.getScriptNameFromCampaign';
-
-
 
 export default class hdtCampaignMemberButtonList2 extends NavigationMixin(LightningElement) {
     @api objectApiName;
     @api recordId;
     @api reiteklink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}';
     @track surveyIcon;
-    @wire(getScriptNameFromCampaign, {memberId: '$recordId'}) scriptName;
 
     connectedCallback() {
         this.surveyIcon = Survey + "/survey.png";
@@ -33,15 +29,5 @@ export default class hdtCampaignMemberButtonList2 extends NavigationMixin(Lightn
       }//End  HRAWRM-544 10-09-2021
     surveyClick() {
         this.template.querySelector('c-hdt-campaign-survey').openModal();
-    }
-
-    scriptHelpSaleClick() {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Non è disponibile lo script per questa campagna',
-                message: '',
-                variant: 'error'
-            })
-        );
     }
 }

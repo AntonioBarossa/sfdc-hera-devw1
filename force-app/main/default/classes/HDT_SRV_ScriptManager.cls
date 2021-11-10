@@ -2,13 +2,16 @@
  * @description       : Service class for Script CB
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-09-29
+ * @last modified on  : 2021-11-09
  * @last modified by  : gabriele.rota@webresults.it
 **/
 public inherited sharing class HDT_SRV_ScriptManager {
 
     private static final String ORDER_RT_VAS = 'HDT_RT_VAS';
     private static final String DECISIONAL_TYPE = 'Decisionale';
+
+    @TestVisible
+    private static List<HDT_ScriptPerCommOffer__mdt> scriptsMapping = Test.isRunningTest() ? new List<HDT_ScriptPerCommOffer__mdt>() : HDT_ScriptPerCommOffer__mdt.getAll().values();
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
@@ -29,6 +32,9 @@ public inherited sharing class HDT_SRV_ScriptManager {
             }
             when 'wrts_prcgvr__Activity__c'{
                 configs = getActivityScriptConfig(recordId);
+            }
+            when 'CampaignMember'{
+                configs = getCampaignMemberScriptConfig(recordId);
             }
         }
 
@@ -61,10 +67,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
         Set<String> scriptNames = getOrderScriptsFromMetadata(parentOrder.SignatureMethod__c, offerCodes);
         List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
         for (String scriptName:scriptNames) {
-            HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
-            config.scriptTarget = orderParentId;
-            config.scriptName = scriptName;
-            configs.add(config);
+            configs.add(new HDT_WRP_ScriptConfig(orderParentId, scriptName));
         }
         return configs;
     }
@@ -82,10 +85,24 @@ public inherited sharing class HDT_SRV_ScriptManager {
         Set<String> scriptNames = getActivityScriptsFromMetadata(activity.Type__c);
         List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
         for (String scriptName:scriptNames) {
-            HDT_WRP_ScriptConfig config = new HDT_WRP_ScriptConfig();
-            config.scriptTarget = activity.Order__c;
-            config.scriptName = scriptName;
-            configs.add(config);
+            configs.add(new HDT_WRP_ScriptConfig(activity.Order__c, scriptName));
+        }
+        return configs;
+    }
+
+    /**
+    * @description Get script name and target for given campaign member
+    * @author gabriele.rota@webresults.it | 2021-11-09 
+    * @param campMemberId  
+    * @return List<HDT_WRP_ScriptConfig>
+    **/
+    private static List<HDT_WRP_ScriptConfig> getCampaignMemberScriptConfig(Id campMemberId){
+
+        CampaignMember campMember = [SELECT Campaign.ScriptConfig__r.Name FROM CampaignMember WHERE Id=:campMemberId WITH SECURITY_ENFORCED LIMIT 1];
+
+        List<HDT_WRP_ScriptConfig> configs = new List<HDT_WRP_ScriptConfig>();
+        if (campMember.Campaign.ScriptConfig__r!=null) {
+            configs.add(new HDT_WRP_ScriptConfig(campMemberId, campMember.Campaign.ScriptConfig__r.Name));
         }
         return configs;
     }
@@ -120,7 +137,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
     **/
     private static Set<String> getOrderScriptsFromMetadata(String signatureMethod, Set<String> offerCodes) {
         Set<String> scriptNames = new Set<String>();
-        for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
+        for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:scriptsMapping) {
             if (scriptPerOffer.Object__c=='Order' && scriptPerOffer.SignatureMethod__c==signatureMethod) {
                 if (signatureMethod!='Vocal Order' || offerCodes.contains(scriptPerOffer.OfferCode__c)) {
                     scriptNames.add(scriptPerOffer.ScriptName__c);
@@ -137,7 +154,7 @@ public inherited sharing class HDT_SRV_ScriptManager {
     **/
     private static Set<String> getActivityScriptsFromMetadata(String activityType) {
         Set<String> scriptNames = new Set<String>();
-        for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:HDT_ScriptPerCommOffer__mdt.getAll().values()) {
+        for (HDT_ScriptPerCommOffer__mdt scriptPerOffer:scriptsMapping) {
             if (scriptPerOffer.Object__c=='Activity' && scriptPerOffer.ActivityType__c==activityType) {
                 scriptNames.add(scriptPerOffer.ScriptName__c);
             }
@@ -149,5 +166,10 @@ public inherited sharing class HDT_SRV_ScriptManager {
         @AuraEnabled public String scriptName {get;set;}
         @AuraEnabled public Id scriptTarget {get;set;}
         @AuraEnabled public Boolean isScriptDecisional {get;set;}
+
+        public HDT_WRP_ScriptConfig(Id scrTarget, String scrName) {
+            this.scriptTarget = scrTarget;
+            this.scriptName = scrName;
+        }
     }
 }

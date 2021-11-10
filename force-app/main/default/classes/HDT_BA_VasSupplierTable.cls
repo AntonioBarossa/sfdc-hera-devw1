@@ -228,7 +228,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         Id rtCaseDisattVas = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PostSalesVAS').getRecordTypeId();
         List<Asset> assetsToUpdate = new List<Asset>();
         List<SBQQ__Subscription__c> subsToUpdate = new List<SBQQ__Subscription__c>();
-        Map<Id, Id> assetToAccountKoFornitore = new Map<Id, Id>();
+        Map<Id, Id> assetToOrderKoFornitore = new Map<Id, Id>();
+        Map<Id, Id> assetMigratedKoFornitore = new Map<Id, Id>();
         Map<Id, Id> assetToAccountEsitiFornitore = new Map<Id, Id>();
         List<sobject> relatedSobjectsToInsert = new List<sobject>();
         List<Case> casesDisattVas = new List<Case>();
@@ -241,7 +242,13 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                 assetsToUpdate.add((Asset)record);
                 switch on String.valueOf(record.get('VasSupplierStatus__c')){
                     when 'TEL - CLT NON TROVATO', 'CLIENTE NON TROVATO', 'DA RICHIAMARE', 'KO FORNITORE', 'IN RIASSORTIMENTO', 'USCITA A VUOTO' {
-                        assetToAccountKoFornitore.put((Id) record.get('id'), (ID) record.get('AccountId'));
+                        id sobjToRelateActivity = (ID) record.getSobject('SBQQ__OrderProduct__r')?.get('OrderId');
+                        if(sobjToRelateActivity!=null){
+                            //assetToAccountKoFornitore.put((Id) record.get('id'), (ID) record.get('AccountId'));
+                            assetToOrderKoFornitore.put((Id) record.get('id'), sobjToRelateActivity);
+                        }else{
+                            assetMigratedKoFornitore.put((Id) record.get('id'),(Id) record.get('id'));
+                        }
                     }
                     when 'CONSEGNA/Installazione RIFIUTATA', 'INSTALLAZIONE FALLITA', 'RESO (PRODOTTO)', 'RIFIUTATO preventivamente' {
                         Case disattCase = new Case(AssetId=(Id) record.get('id'), RecordTypeId=rtCaseDisattVas);
@@ -270,7 +277,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
             recordIdsPerCode.put((Id)record.get('Id'), recordsPerCode.get(record) );
         }
 
-        relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToAccountKoFornitore, 'CBS_ATT003__KO_FORNITORE', 'HDT_RT_Default'));
+        relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToOrderKoFornitore, 'CBS_ATT003__KO_FORNITORE', 'HDT_RT_Default'));
+        //relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetMigratedKoFornitore, 'Template KO_FORNITORE ', 'HDT_RT_Default'));
         relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToAccountEsitiFornitore, 'VAS001_GESTIONE_ESITI_FORNITORE', ''));
         relatedSobjectsToInsert.addAll(casesDisattVas);
         if(!relatedSobjectsToInsert.isEmpty()){
@@ -384,7 +392,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         for(wrts_prcgvr__Activity__c act : activities){
             act.Asset__c = accToAssets.get((ID) act.wrts_prcgvr__ObjectId__c).remove(0);
             act.recordTypeId=rtDefault!=null? rtDefault : act.recordTypeId;
-            act.Account__c=(ID) act.wrts_prcgvr__ObjectId__c;
+            act.Account__c=((ID) act.wrts_prcgvr__ObjectId__c).getSobjectType().getDescribe().getName().equalsIgnoreCase('Account')? (ID) act.wrts_prcgvr__ObjectId__c : null;
         }
         return activities;
     }
