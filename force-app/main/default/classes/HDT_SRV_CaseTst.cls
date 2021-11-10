@@ -31,41 +31,74 @@ static void makeData(){
     @IsTest
     static void testCheckAccessInitCreat(){
         HDT_SRV_Case testingCrudCreate = new HDT_SRV_Case();
-        Test.startTest();
-        testingCrudCreate.checkAccessInit('IbanABI__c','create');
-        Test.stopTest();
+        
+        try{
+            Test.startTest();
+            testingCrudCreate.checkAccessInit('IbanABI__c','create');
+            Test.stopTest();
+        }
+        catch(exception e){
+            system.assertEquals(true, string.isBlank(e.getMessage()), 'The user does not have create access');
+        }
     }
 
     @IsTest
     static void testCheckAccessInitRead(){
         HDT_SRV_Case testingCrudRead = new HDT_SRV_Case();
-        Test.startTest();
+        
+        try{
+            Test.startTest();
         testingCrudRead.checkReadAccess('IbanABI__c');
         Test.stopTest();
+        }
+        catch(exception e){
+            system.assertEquals(true, string.isBlank(e.getMessage()), 'The user does not have read access');
+        }
     }
 
     @IsTest
     static void testCheckAccessInitUpdate(){
         HDT_SRV_Case testingCrudUpdate = new HDT_SRV_Case();
-        Test.startTest();
-        testingCrudUpdate.checkUpdateAccess('IbanABI__c');
-        Test.stopTest();
+        
+        try{
+            Test.startTest();
+            testingCrudUpdate.checkUpdateAccess('IbanABI__c');
+            Test.stopTest();
+        }
+        catch(exception e){
+            system.assertEquals(true, string.isBlank(e.getMessage()), 'The user does not have update access');
+        }
+        
+        
     }
 
     @IsTest
     static void testCheckAccessInitDelete(){
         HDT_SRV_Case testingCrudDelete = new HDT_SRV_Case();
-        Test.startTest();
-        testingCrudDelete.checkAccessInit('IbanABI__c','Delete');
-        Test.stopTest();
+        
+        try{
+            Test.startTest();
+            testingCrudDelete.checkAccessInit('IbanABI__c','Delete');
+            Test.stopTest();
+        }
+        catch(exception e){
+            system.assertEquals(true, string.isBlank(e.getMessage()), 'The user does not have Delete access');
+        }
     }
 
     @IsTest
     static void testCheckCreateAccess(){
         HDT_SRV_Case testingCrudDelete = new HDT_SRV_Case();
-        Test.startTest();
-        testingCrudDelete.checkCreateAccess('IbanABI__c');
-        Test.stopTest();
+        
+        try{
+            Test.startTest();
+            testingCrudDelete.checkCreateAccess('IbanABI__c');
+            Test.stopTest();
+        }
+        catch(exception e){
+            system.assertEquals(true, string.isBlank(e.getMessage()), 'The user does not have Create access');
+        }
+        
     }
 
     @IsTest
