@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>MODIFIEDDATE_AZURE_CONTACT</label>
+    <label>Data modifica Azure (Contatto)</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>
