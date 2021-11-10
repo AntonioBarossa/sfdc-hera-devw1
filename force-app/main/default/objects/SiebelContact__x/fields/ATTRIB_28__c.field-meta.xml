@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ROW_ID_CONTACT__c</fullName>
-    <description>ROW_ID_CONTACT</description>
-    <externalDeveloperName>ROW_ID_CONTACT</externalDeveloperName>
+    <fullName>ATTRIB_28__c</fullName>
+    <description>ATTRIB_28</description>
+    <externalDeveloperName>ATTRIB_28</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Siebel row Id (Contatto)</label>
-    <length>15</length>
+    <label>Nato il</label>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>
