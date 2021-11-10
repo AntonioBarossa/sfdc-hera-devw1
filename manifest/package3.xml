@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_LC_CampaignsController</members>
-        <members>HDT_LC_CampaignsControllerTst</members>
-        <members>HDT_LC_HdtScriptManagementModal</members>
-        <members>HDT_SRV_CaseTst</members>
-        <members>HDT_SRV_ScriptManager</members>
-        <members>HDT_SRV_ScriptManagerTst</members>
-        <members>HDT_UTL_NotifVasHelper</members>
-        <members>HDT_UTL_PrClickEndSubscriptionBulkTst</members>
-        <members>HDT_UTL_ServiceTwentySixTst</members>
+        <members>SiebelContact__x.All1</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>SiebelContact__x-SiebelContact Layout</members>
+        <members>SiebelCustomer__x-SiebelCustomer Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_OneShotAdmin</members>
+        <members>HDT_RecordingField</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_BA_SuspendedActivitiesEmailAlertTst</members>
+        <members>HDT_BA_VasSupplierTable</members>
+        <members>HDT_LC_DownloadAttachmentAzure</members>
+        <members>HDT_LC_RecallMe</members>
+        <members>HDT_QBL_SIE34_2MMTstMck</members>
+        <members>HDT_QR_ActivityCustom</members>
+        <members>HDT_SRV_SalesManagerTst</members>
+        <members>HDT_UTL_ActivityCustomProcessTst</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>hdtCampaignMemberButtonList2</members>
-        <members>hdtCampaignMemberScriptLauncher</members>
-        <members>hdtManageScriptModal</members>
+        <members>SiebelContact__x.LineageID_CONTACT__c</members>
+        <members>SiebelContact__x.MODIFIEDDATE_AZURE_CONTACT__c</members>
+        <members>SiebelContact__x.PERSON_ID__c</members>
+        <members>SiebelContact__x.ROW_ID_CONTACT__c</members>
+        <members>SiebelContact__x.ROW_ID__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>hdtCambioUso</members>
+        <members>hdtDownloadAttachmentAzure</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_SuspensionDays.Blocco_Sollecito_Interessi</members>
-        <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>HDT_FL_ActivitySetStartDate</members>
-        <members>HDT_FL_GestionePagamenti_BloccoSollecitoInteressi</members>
-        <name>Flow</name>
-    </types>
-    <types>
-        <members>Account.CheckBusinessFields</members>
-        <members>Account.CheckResidenzialeFields</members>
-        <name>ValidationRule</name>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera Standard User OneShot</members>
+        <members>Hera Standard User</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
     </types>
     <version>49</version>
 </Package>
