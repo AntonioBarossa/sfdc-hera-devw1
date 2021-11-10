@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ROW_ID_CONTACT</label>
+    <label>Siebel row Id (Contatto)</label>
     <length>15</length>
     <required>false</required>
     <type>Text</type>

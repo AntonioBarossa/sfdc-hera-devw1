@@ -39,19 +39,8 @@ public virtual inherited sharing class HDT_LC_HdtScriptManagementModal extends H
 
     @AuraEnabled
     public static void saveReitekLink(String recordId, String activityId, String reitekLink){
-        //Temporary mock
-        if (String.isBlank(reitekLink)) {
-            reitekLink = 'https://herapresfdc.cloudando.com/ctreplay/externalView/search?filter={"filter":{"ecid":"saashrapp|1|123|17"},"sort":{"startTs":-1},"index":0}';
-        }
-
-        if (String.isNotBlank(activityId)) {
-            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-            activity.Id = activityId;
-            activity.RecordingLink__c = reitekLink;
-            update activity;
-            //activitySrv.updateRecord(activity);
-            //Using update because users are not allowed to edit Actiivity (temporary)
-        }
+        //link is saved automatically
+        return;
     }
 
     private List<HDT_UTL_ScriptWrappers.HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){

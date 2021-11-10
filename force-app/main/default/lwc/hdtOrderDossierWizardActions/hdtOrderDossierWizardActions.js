@@ -13,6 +13,8 @@ import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
 import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
+//Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
+import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
 
 export default class hdtOrderDossierWizardActions extends NavigationMixin(LightningElement) {
     
@@ -36,7 +38,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     }
 
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -173,14 +175,20 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         try{
             var sendMode = this.parentOrder.fields.DocSendingMethod__c.value;
             var signMode = this.parentOrder.fields.SignatureMethod__c.value; 
+            var oldSignMode = this.parentOrder.fields.SignMode__c.value;
             if(sendMode.localeCompare('Stampa Cartacea')===0){
                 sendMode = 'Sportello';
+            }
+            var discardOldEnvelope = false;
+            if (signMode.localeCompare('OTP Remoto') === 0 && oldSignMode && oldSignMode.localeCompare('OTP Coopresenza') === 0){
+                discardOldEnvelope = true;
             }
             var formParams = {
                 sendMode : sendMode,
                 signMode : signMode,      
                 mode : 'Print',
-                Archiviato : 'Y'
+                Archiviato : 'Y',
+                DiscardOldEnvelope : discardOldEnvelope
             }
             sendDocument({
                 recordId: this.recordId,
@@ -238,6 +246,10 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleSave2(){
         this.loading = true;
+        //Impedisco l'errore "TypeError: 'set' on proxy: trap returned falsish for property 'SignMode__c'"
+        this.orderParentRecord = JSON.parse(JSON.stringify(this.orderParentRecord))
+        //Se l'invio va a buon fine il signMode utilizzato viene sallvato nel campo SignMode.
+        this.orderParentRecord.SignMode__c = this.parentOrder.fields.SignatureMethod__c.value;
         save2({orderParent: this.orderParentRecord,isPlicoSend:true}).then(data =>{
             this.loading = false;
 

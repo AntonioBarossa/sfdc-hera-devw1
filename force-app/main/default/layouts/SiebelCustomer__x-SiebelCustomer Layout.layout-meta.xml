@@ -429,7 +429,6 @@
     <quickActionList/>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>ExternalId</fields>
         <fields>SR_NUM__c</fields>
         <fields>CREATED__c</fields>
         <fields>INS_PRODUCT__c</fields>
@@ -441,7 +440,6 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>ExternalId</fields>
         <fields>ASSET_NUM__c</fields>
         <fields>STATUS_CD__c</fields>
         <fields>IMPIANTO_PROD_CATG_CD__c</fields>
@@ -454,7 +452,6 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>ExternalId</fields>
         <fields>LAST_NAME__c</fields>
         <fields>FST_NAME__c</fields>
         <fields>REFERENCE_TYPE_CD__c</fields>
