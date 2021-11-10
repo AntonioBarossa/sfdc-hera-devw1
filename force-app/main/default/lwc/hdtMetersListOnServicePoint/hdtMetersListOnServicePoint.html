@@ -2,39 +2,27 @@
 
     <article class="slds-card slds-card_boundary">
         <div class="slds-page-header slds-grid">
-            <div class="slds-page-header__row">
-                <div class="slds-page-header__col-title">
-                    <div class="slds-media">
-                        <div class="slds-media__figure">
-                            <lightning-icon icon-name="standard:planogram" alternative-text="Misuratori" title="Misuratori" size="small" ></lightning-icon>
-                        </div>
-                        <div class="slds-media__body">
-                            <div class="slds-page-header__name">
-                                <div class="slds-page-header__name-title">
-                                    <h3>
-                                        <span class="slds-page-header__title slds-truncate" title="Elenco Misuratori">Elenco Misuratori</span>
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:planogram" alternative-text="Misuratori" title="Misuratori" size="small" ></lightning-icon>
                 </div>
-            </div>
-            <!--<div class="slds-page-header__row">
-                <div class="slds-page-header__col-meta">
-                    <p class="slds-page-header__meta-text">items retrieved</p>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span>{title}</span>
+                    </h2>
                 </div>
-            </div>-->
+            </header>
         </div>
-
+    
         <template if:false={spinner} >
-            <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-card__body slds-m-top_none slds-border_top">
                 <template if:false={error} >
-                    <div style="height: 300px;">
+                    <div class={tableHeightCss} >
                         <lightning-datatable
                                 key-field="assetNumber"
                                 data={data}
                                 columns={columns}
+                                show-row-number-column
                                 hide-checkbox-column
                         ></lightning-datatable>
                     </div>
@@ -51,13 +39,11 @@
                 </template>
             </div>
         </template>
-
+    
         <template if:true={spinner} >
-            <div class="exampleHolder">
-                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-            </div>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
-
+    
     </article>
 
 </template>

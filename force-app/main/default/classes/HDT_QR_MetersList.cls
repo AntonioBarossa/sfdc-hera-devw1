@@ -5,6 +5,7 @@ public inherited sharing class HDT_QR_MetersList {
         metersListColumnTable = [
             SELECT DeveloperName, MasterLabel
             FROM HDT_MetersListColumnTable__mdt
+            ORDER BY Order__c
         ];
         return metersListColumnTable;
     }
