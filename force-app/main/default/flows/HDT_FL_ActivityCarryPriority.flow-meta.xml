@@ -4,8 +4,8 @@
     <assignments>
         <name>carry_case_priority</name>
         <label>Riporta Priorità Case</label>
-        <locationX>50</locationX>
-        <locationY>551</locationY>
+        <locationX>242</locationX>
+        <locationY>791</locationY>
         <assignmentItems>
             <assignToReference>$Record.wrts_prcgvr__Priority__c</assignToReference>
             <operator>Assign</operator>
@@ -17,8 +17,8 @@
     <assignments>
         <name>carry_order_priority</name>
         <label>Riporta Priorità Ordine</label>
-        <locationX>314</locationX>
-        <locationY>551</locationY>
+        <locationX>506</locationX>
+        <locationY>791</locationY>
         <assignmentItems>
             <assignToReference>$Record.wrts_prcgvr__Priority__c</assignToReference>
             <operator>Assign</operator>
@@ -30,8 +30,8 @@
     <decisions>
         <name>case_or_order_decision</name>
         <label>Case o Order?</label>
-        <locationX>182</locationX>
-        <locationY>311</locationY>
+        <locationX>374</locationX>
+        <locationY>551</locationY>
         <defaultConnector>
             <targetReference>order_get</targetReference>
         </defaultConnector>
@@ -50,6 +50,28 @@
                 <targetReference>case_get</targetReference>
             </connector>
             <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ExistRecord</name>
+        <label>ExistRecord?</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>case_or_order_decision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAutomationToggle</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Exist</label>
         </rules>
     </decisions>
     <interviewLabel>Activi {!$Flow.CurrentDateTime}</interviewLabel>
@@ -76,8 +98,8 @@
     <recordLookups>
         <name>case_get</name>
         <label>Case</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationX>242</locationX>
+        <locationY>671</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>carry_case_priority</targetReference>
@@ -97,10 +119,66 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetAutomationToggle</name>
+        <label>GetAutomationToggle</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ExistRecord</targetReference>
+        </connector>
+        <filterLogic>1 AND ( 2 OR 3 ) AND (4 AND 5 ) AND 6</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_FL_ActivityCarryPriority</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>BEFOR_INSERT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipDueDateTime__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_AutomationToggle__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>order_get</name>
         <label>Order</label>
-        <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationX>506</locationX>
+        <locationY>671</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>carry_order_priority</targetReference>
@@ -120,10 +198,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>case_or_order_decision</targetReference>
+            <targetReference>GetAutomationToggle</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
         <filters>

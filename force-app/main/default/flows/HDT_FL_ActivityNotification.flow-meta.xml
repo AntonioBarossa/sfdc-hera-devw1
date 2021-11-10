@@ -4,8 +4,8 @@
     <assignments>
         <name>mark_new_activity_0</name>
         <label>Marchia Nuova Attività</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationX>242</locationX>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>Notification.isNew__c</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>populate_notification</name>
         <label>Popola Notifica</label>
-        <locationX>182</locationX>
-        <locationY>647</locationY>
+        <locationX>374</locationX>
+        <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>Notification.Id__c</assignToReference>
             <operator>Assign</operator>
@@ -69,10 +69,32 @@
         </connector>
     </assignments>
     <decisions>
+        <name>ExistRecord</name>
+        <label>ExistRecord?</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <defaultConnector>
+            <targetReference>is_insert_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAutomationToggle</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>is_insert_0</name>
         <label>E&apos; Inserimento?</label>
-        <locationX>182</locationX>
-        <locationY>311</locationY>
+        <locationX>374</locationX>
+        <locationY>575</locationY>
         <defaultConnector>
             <targetReference>populate_notification</targetReference>
         </defaultConnector>
@@ -117,15 +139,71 @@
     <recordCreates>
         <name>Send_Notification</name>
         <label>Invia Notifica</label>
-        <locationX>182</locationX>
-        <locationY>767</locationY>
+        <locationX>374</locationX>
+        <locationY>1031</locationY>
         <inputReference>Notification</inputReference>
     </recordCreates>
+    <recordLookups>
+        <name>GetAutomationToggle</name>
+        <label>GetAutomationToggle</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ExistRecord</targetReference>
+        </connector>
+        <filterLogic>1 AND ( 2 OR 3 ) AND ( 4 AND 5) AND 6</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_FL_ActivityNotification</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipUsernames__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>AFTER_INSERT; AFTER_UPDATE</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipEvents__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>*</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SkipDueDateTime__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_AutomationToggle__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>is_insert_0</targetReference>
+            <targetReference>GetAutomationToggle</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

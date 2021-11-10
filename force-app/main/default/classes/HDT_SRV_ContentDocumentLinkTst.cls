@@ -15,9 +15,9 @@ public with sharing class HDT_SRV_ContentDocumentLinkTst{
 
 		System.runAs(internalUser){
 
-			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+			HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
 			List<Campaign> campaignList=HDT_UTL_DataFactoryTst.createCampaign(1, true);
-			List<ContentVersion> contVersion=HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'test', 'TestContentData', 'Test.jpg');
+			HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'test', 'TestContentData', 'Test.jpg');
 			List<PaperProcessing__c> paperProcessingList=HDT_UTL_DataFactoryTst.createPaperProcessing(1, false, 'TestPaperProc', campaignList[0].Id);
 			paperProcessingList[0].Status__c='Bozza';
 			insert paperProcessingList;
@@ -48,7 +48,7 @@ public with sharing class HDT_SRV_ContentDocumentLinkTst{
 			test.stopTest();
 
 			System.assertEquals(true, tCreatedRecord.Id!=null, 'ContentDocumentLink not created');
-			System.assertNotEquals(false, tCreatedRecord.Id!=null);
+			System.assertNotEquals(false, tCreatedRecord.Id!=null, 'ContentDocumentLink not created');
 		}
 	}
 }

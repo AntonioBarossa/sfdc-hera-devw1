@@ -118,21 +118,21 @@ public class HDT_UTL_ScartiTst {
             activityActions2[0].wrts_prcgvr__Value__c = 'ActivityTypeTest';
             insert activityActions2;
             
-            List<DiscardAnnullmentRule__c> rules = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,true,'Order');
-            //rules[0].ActivityType__c = 'Esito KO da DL';
-            //rules[0].ControllingField__c = 'DiscardReason__c';
-            //rules[0].ControllingValue__c = 'testCatalog';
-            //rules[0].ProcessField__c = 'ProcessType__c';
-            //rules[0].ProcessValue__c = 'Connessione con Attivazione';
-            //insert rules;
+            List<DiscardAnnullmentRule__c> rules = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Order');
+            rules[0].ActivityType__c = 'Esito KO da DL';
+            rules[0].ControllingField__c = 'DiscardReason__c';
+            rules[0].ControllingValue__c = 'testCatalog';
+            rules[0].ProcessField__c = 'ProcessType__c';
+            rules[0].ProcessValue__c = 'Connessione con Attivazione';
+            insert rules;
             
-            List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,true,'Case');
-           // rulesCase[0].ActivityType__c = 'Ammissibilità KO';
-           // rulesCase[0].ControllingField__c = 'DiscardDescription__c';
-           // rulesCase[0].ControllingValue__c = 'testdescription';
-           // rulesCase[0].ProcessField__c = 'Type';
-           // rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
-           // insert rulesCase;
+            List<DiscardAnnullmentRule__c> rulesCase = HDT_UTL_DataFactoryTst.createDiscardAnnullmentRule(1,false,'Case');
+            rulesCase[0].ActivityType__c = 'Ammissibilità KO';
+            rulesCase[0].ControllingField__c = 'DiscardDescription__c';
+            rulesCase[0].ControllingValue__c = 'testdescription';
+            rulesCase[0].ProcessField__c = 'Type';
+            rulesCase[0].ProcessValue__c = 'Consegna copia chiave GdM';
+            insert rulesCase;
             
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
             activities[0].Order__c = orders[0].id;
