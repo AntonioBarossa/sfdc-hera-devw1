@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>L&apos;ultima data in cui il contratto è valido.</help>
     <label>Data di Fine</label>
     <name>SBQQ__EndDate__c</name>
 </CustomFieldTranslation>
