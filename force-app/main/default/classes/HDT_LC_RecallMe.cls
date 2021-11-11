@@ -18,15 +18,15 @@ public with sharing class HDT_LC_RecallMe {
         Long startDate = startRange.getTime();
         Long endDate = startRange.addDays(1).getTime();
         String appointmentType = 'PERSONAL_PHONECALL';
-        Datetime dt = Datetime.now();
+       // Datetime dt = Datetime.now();
       //  Long l = dt.getTime();
       //  system.debug(l);
       //  system.debug(DateTime.newInstance(l));
-        Datetime myNow = Datetime.now();
-        Long gettimeMyNow = myNow.getTime();
+       // Datetime myNow = Datetime.now();
+       // Long gettimeMyNow = myNow.getTime();
        // DateTime myDateTimeStandard = DateTime.newInstance(1970, 1, 1, 0, 0, 0);
        // Long gettimeMyDateTimeStandard = myDateTimeStandard.getTime();
-        Long token=967*(gettimeMyNow);
+       // Long token=967*(gettimeMyNow);
         //system.debug(Token);
 
        // Long token;

@@ -50,10 +50,6 @@
                 <behavior>Readonly</behavior>
                 <field>END_DT__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ROW_ID_CONTACT__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -277,6 +273,10 @@
                 <behavior>Readonly</behavior>
                 <field>PERSON_ID__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ROW_ID_CONTACT__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -294,6 +294,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MODIFIEDDATE_AZURE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MODIFIEDDATE_AZURE_CONTACT__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
