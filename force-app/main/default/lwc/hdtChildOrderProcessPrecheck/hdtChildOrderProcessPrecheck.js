@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.init';
 import next from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.next';
 import checkVasAndCommodity from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkVasAndCommodity';
+import checkContendibilita from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkContendibilita';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 
@@ -30,6 +31,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     serviceRequest;
     creditCheckFields = [];
     creditCheckResult = {};
+    service = '';
 
     get isNotBillable(){
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
@@ -296,6 +298,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     handleSelectProcess(event){
         
+        this.showEsitoCheck = false;
+
         // if(event.target.value == 'Prima Attivazione In delibera') {
         //     console.log('handleSelectProcess: ' + JSON.stringify(event.detail.value));
         //     this.deliberation = 'In Delibera';
@@ -308,8 +312,19 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         //     this.disabledDeliberation = true;
         // }
 
-        this.selectedProcessObject = this.processesReference.filter(el => el.processType === event.target.value)[0];
-        this.checkCompatibilityProcess();
+        this.selectedProcessObject = this.processesReference.filter(el =>  el.processType === event.target.value)[0];
+
+        if((event.target.value === 'Prima Attivazione' || event.target.value === 'Subentro Gas') && this.service === 'Gas') {
+            this.checkContendibilitaPodPdr();
+            this.showEsitoCheck = true;
+
+            if(this.precheck === true){
+                this.checkCompatibilityProcess();
+            }
+        }else{
+            this.checkCompatibilityProcess();
+        }
+
     }
 
     goToNextStep(extraParams){
@@ -408,6 +423,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         console.log('CallBack start');
         this.deliberation = this.order.Deliberation__c;
+        this.service = this.order.ServicePoint__r.CommoditySector__c;
+
+        console.log('COMMODITY: ' + this.service);
 
         if (this.order.RecordType.DeveloperName === 'HDT_RT_Default') {
             console.log('enter default');
@@ -423,6 +441,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     this.options.push({label: el.processType, value: el.processType});
                 });
                 
+                //Inseriti temporaneamente valori cablati per sviluppo su DEV2
+                this.options.push({label: 'Subentro Ele', value: 'Subentro Ele'});
+                this.options.push({label: 'Prima Attivazione', value: 'Prima Attivazione'});
+                this.processesReference.push({"commodity":"HDT_RT_Ele","processCode":"A10","processType":"Subentro Ele","recordType":"HDT_RT_Subentro"});
+                this.processesReference.push({"commodity":"HDT_RT_Gas","processCode":"A10","processType":"Prima Attivazione","recordType":"HDT_RT_Attivazione"});
     
                 if (this.options.length === 1) {
                     this.selectedProcessObject = this.processesReference[0];
@@ -832,5 +855,33 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
 
         console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - END');
+    }
+
+    /**@Author: Salvatore Alessandro Sarà 01/11/2021
+     * Richiamo Servizio per check contendibilità
+     **/ 
+    checkContendibilitaPodPdr(){
+        this.loaded = false;
+        let array = [];
+        checkContendibilita({order: this.order})
+            .then((result) => {
+                array = result;
+                console.log('checkContendibilita - Esito: ' + array['ESITO']);
+                console.log('checkContendibilita - Codice Scarto: ' + array['DES_ERR_AEEG']);
+                this.precheck = array['ESITO'];
+                this.causale = array['DES_ERR_AEEG'];
+                this.loaded = true;
+            })
+            .catch(error => {
+                this.loaded = true;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
     }
 }
