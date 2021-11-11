@@ -213,7 +213,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }
             }
             else {
-                wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'));
+                Date d = System.today();
+                Date dataAnnullRich = d.addDays(30); 
+                wrts_prcgvr__Activity__c act2 = new wrts_prcgvr__Activity__c(account__c = act.account__c,wrts_prcgvr__Status__c= 'Aperta',order__c = act.order__c,type__c='Documenti non validati',recordtypeid=rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali'),RequestedCancellationDate__c=dataAnnullRich);
                 activityCustomSrv.createRecord(act2);
                 res = 'Creata';
             }    

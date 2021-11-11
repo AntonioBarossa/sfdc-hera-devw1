@@ -90,9 +90,37 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             'KO definitivo'
         };
 
+        List<String> notCancelNonBillable = new List<String>{
+            'Completata',
+            'Comunicazione verso Motore VAS OK',
+            'Accettato Motore VAS',
+            'Comunicazione verso Motore VAS'
+        };
+
+        List<String> notCancelBillable = new List<String>{
+            'Comunicazione verso Heroku Ok',
+            'Completata',
+            'Comunicazione verso Heroku'
+        };
+
         List<Order> ordToCheck = orderQr.getOrderForComfort(ordId);
 
-        if (notCancelPhase.contains(ordToCheck[0].Phase__c)) {
+        if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
+            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
+                activitySrv.updateRecord(new wrts_prcgvr__Activity__c(
+                    Id = activityId,
+                    Status__c = 'Esitata',
+                    ContactResult__c	 = 'Annullato'
+                ));
+
+                RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
+                activitySrv.createRecord(new wrts_prcgvr__Activity__c(
+                    RecordTypeId= rc.Id,
+                    Cluster__c = 'Attivazioni',
+                    Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
+                    Note__c = 'Non è stato possibile procedere all’annullamento, inserire un case di Annullamento contratti'
+                ));
+            }
             throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
         } else {
 
@@ -108,16 +136,6 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 Status__c = 'Esitata',
                 ContactResult__c	 = 'Annullato'
             ));
-
-            if ('Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal)) {
-                RecordType rc= rctype.getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c');
-                activitySrv.createRecord(new wrts_prcgvr__Activity__c(
-                    RecordTypeId= rc.Id,
-                    Cluster__c = 'Attivazioni',
-                    Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c
-                ));
-            }
-
         }
     }
 
