@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Predictive</fullName>
+        <fullName>PREDICTIVE</fullName>
         <default>false</default>
-        <label>Predictive</label>
+        <label>PREDICTIVE</label>
     </customValue>
     <customValue>
-        <fullName>Preview</fullName>
+        <fullName>PREVIEW</fullName>
         <default>false</default>
-        <label>Preview</label>
+        <label>PREVIEW</label>
     </customValue>
     <masterLabel>Processing Type</masterLabel>
     <sorted>false</sorted>
