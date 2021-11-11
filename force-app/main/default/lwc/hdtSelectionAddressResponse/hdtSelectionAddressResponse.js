@@ -37,7 +37,7 @@ export default class HdtSelectionAddressResponse extends LightningElement {
     totalPage = 0;
     preloading = false;
     confirmButtonDisabled=true;
-    prevrowtosend=[];
+    @api prevrowtosend=[];
     @track submitedAddressFields = {};
     @api prevwrapaddressobject ;
     @track openForm=false;
