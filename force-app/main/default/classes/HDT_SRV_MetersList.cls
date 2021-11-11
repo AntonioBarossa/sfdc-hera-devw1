@@ -32,14 +32,14 @@ public inherited sharing class HDT_SRV_MetersList {
         con.continuationMethod = 'processResponse';
         con.state = recordId;
 
-        List<HDT_ServicePointMetersList__mdt> metadataList;
+        /*List<HDT_ServicePointMetersList__mdt> metadataList;
         metadataList = HDT_QR_MetersList.getNamedCredential(metadataList, 'MetersList');
 
         if(metadataList.size() == 0){
             throw new AuraHandledException('Non sono presenti i metadati');
         }
 
-        System.debug(LoggingLevel.DEBUG, '>>> metadataList: ' + String.valueOf(metadataList[0]));
+        System.debug(LoggingLevel.DEBUG, '>>> metadataList: ' + String.valueOf(metadataList[0]));*/
 
         String body = createHttpBody(recordId);
 
@@ -50,7 +50,8 @@ public inherited sharing class HDT_SRV_MetersList {
         System.debug(LoggingLevel.DEBUG, '>>> body: ' + body);
 
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(metadataList[0].Endpoint__c);
+        //req.setEndpoint(metadataList[0].Endpoint__c);
+        req.setEndpoint('callout:meterLocationSearch');
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
         req.setbody(body);
