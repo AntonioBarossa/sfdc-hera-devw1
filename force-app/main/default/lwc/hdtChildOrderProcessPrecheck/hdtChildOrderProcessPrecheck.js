@@ -440,12 +440,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 data.forEach(el => {
                     this.options.push({label: el.processType, value: el.processType});
                 });
-                
-                //Inseriti temporaneamente valori cablati per sviluppo su DEV2
-                this.options.push({label: 'Subentro Ele', value: 'Subentro Ele'});
-                this.options.push({label: 'Prima Attivazione', value: 'Prima Attivazione'});
-                this.processesReference.push({"commodity":"HDT_RT_Ele","processCode":"A10","processType":"Subentro Ele","recordType":"HDT_RT_Subentro"});
-                this.processesReference.push({"commodity":"HDT_RT_Gas","processCode":"A10","processType":"Prima Attivazione","recordType":"HDT_RT_Attivazione"});
     
                 if (this.options.length === 1) {
                     this.selectedProcessObject = this.processesReference[0];
