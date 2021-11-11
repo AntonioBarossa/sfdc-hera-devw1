@@ -112,6 +112,11 @@
         <label>Vendita TopBusiness</label>
     </customValue>
     <customValue>
+        <fullName>Agenzie</fullName>
+        <default>false</default>
+        <label>Agenzie</label>
+    </customValue>
+    <customValue>
         <fullName>Social</fullName>
         <default>false</default>
         <isActive>false</isActive>

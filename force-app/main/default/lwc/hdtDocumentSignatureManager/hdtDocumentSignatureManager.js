@@ -4,6 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.getSignSendMode';
 
+const signModeAgenzie = 'Contratto già firmato';
+const sendModeAgenzie = 'Posta Cartacea';
 export default class HdtDocumentSignatureManager extends NavigationMixin(LightningElement) {
     //ProcessType: Required. For Sale pass the subtype, for post sales pass the value of the CaseType
     //The variable is used to calculate Modalità Firma & Modalità Spedizione Combobox Values
@@ -42,9 +44,27 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track showAddress = false;
     @track documents;
     @track tipoPlico='';
+    defautlAgenciesManagement;
 
     //@frpanico 07/09 added EntryChannel__c (Canale di Ingresso) to predefault SendMode
     @track entryChannel;
+
+    @api
+    signModeDefault(){
+        return this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value;
+    }
+
+    @api
+    computeAgenciesDefault(setDefault){
+        //eseguo il predefault
+        if (this.defautlAgenciesManagement && this.source && this.source.localeCompare('Agenzie') === 0 && setDefault){
+            let defaultSignModeForAgenzie = this.signSendMap.find((element) => (element.signMode === signModeAgenzie));
+            this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value = defaultSignModeForAgenzie.signMode;
+            this.modalitaInvio = defaultSignModeForAgenzie.sendMode;
+            let defaultSendModeAgenzie = this.modalitaInvio.find((element) => (element.value === sendModeAgenzie));
+            this.sendMode = defaultSendModeAgenzie.value;
+        }
+    }
 
     get disableSignModeInternal(){
         return this.disableSignMode === true || this.disableinput === true;
@@ -69,6 +89,14 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
                 this.entryChannel = inputWrapper.entryChannel;
+                this.defautlAgenciesManagement = false;
+                if (inputWrapper.checkAgencies && inputWrapper.checkAgencies.localeCompare('Y') === 0){
+                    this.defautlAgenciesManagement = true;
+                }
+                let setDefault = false;
+                if (inputWrapper.setDefault === true){
+                    setDefault = true;
+                }
                 if(this.disableSignMode === true){
                     this.signMode = 'Cartacea'; // Pre-default se la modalità di firma viene disabilitata.
                     inputWrapper.signMode = 'Cartacea'; // Modifichiamo anche inputWrapper.signMode poichè è usato dopo in this.signSendMap.find() 
@@ -144,7 +172,10 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                             console.log('out ' + JSON.stringify(temp));
                             this.modalitaInvio = temp.sendMode;
                             this.sendMode = inputWrapper.sendMode;
+                        } else if (this.defautlAgenciesManagement){
+                            this.computeAgenciesDefault(setDefault);
                         }
+                        this.launchSetRequiredFieldEvent(false);
                     }catch(error){
                         console.error(error);
                     }
@@ -153,6 +184,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 .catch(error => {
                     console.log('errore ' +error.body.message);
                 });
+                
             }else{
                 console.log('Params Null');
             }
@@ -263,6 +295,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             this.addressRequired = false;
             this.emailRequired = false;
             this.checkRequired();
+            this.launchSetRequiredFieldEvent(true);
         }catch(error){
             console.error(error);
         }
@@ -408,6 +441,12 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             });
         }catch(error){
             console.error();
+        }
+    }
+
+    launchSetRequiredFieldEvent(resetDate){
+        if (this.defautlAgenciesManagement){
+            this.dispatchEvent(new CustomEvent('setrequiredfield',{detail: resetDate}));
         }
     }
 }

@@ -249,7 +249,12 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         //Impedisco l'errore "TypeError: 'set' on proxy: trap returned falsish for property 'SignMode__c'"
         this.orderParentRecord = JSON.parse(JSON.stringify(this.orderParentRecord))
         //Se l'invio va a buon fine il signMode utilizzato viene sallvato nel campo SignMode.
-        this.orderParentRecord.SignMode__c = this.parentOrder.fields.SignatureMethod__c.value;
+        var signMode = this.parentOrder.fields.SignatureMethod__c.value
+        if (signMode && (signMode.localeCompare('OTP Coopresenza') === 0||signMode.localeCompare('OTP Remoto') === 0||signMode.localeCompare('Vocal Order') === 0||signMode.localeCompare('Cartacea') === 0)){
+            this.orderParentRecord.SignMode__c = signMode;
+        }else{
+            this.orderParentRecord.SignMode__c = null; 
+        }
         save2({orderParent: this.orderParentRecord,isPlicoSend:true}).then(data =>{
             this.loading = false;
 
