@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Account che possiede questa sottoscrizione. Questa relazione è usata per i calcoli della quantità di sconto.</help>
     <label></label>
     <name>SBQQ__Account__c</name>
     <relationshipLabel></relationshipLabel>
