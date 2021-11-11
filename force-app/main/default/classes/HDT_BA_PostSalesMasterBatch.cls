@@ -86,10 +86,10 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     }
                     
                     
-                    if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione')){
+                    if(currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') || currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi')){
                         SObject transition;
                         SObject action;
-                        String method = 'HDT_InstallmentPlans';
+                        String method = currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') ? 'HDT_InstallmentPlans' : 'HDT_ReminderBlock';
                         Map<String, Object> args = new Map<String,Object>();
                         Case newCase = new Case();
                         newCase.Id = currentCase.Id;
@@ -142,7 +142,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             }
         }
         if(!myCurrentCaseList.isEmpty()){
-            update myCurrentCaseList;
+            HDT_UTL_DatabaseService.updateSObject(myCurrentCaseList);
         }
     }
 

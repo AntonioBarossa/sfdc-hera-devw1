@@ -2,7 +2,7 @@
  * @description       : Get records from VasSupplierTable__c and copy their fields to related subscriptions/assets/orders
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-08-13
+ * @last modified on  : 2021-11-10
  * @last modified by  : gabriele.rota@webresults.it
 **/
 public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<SObject>, Schedulable, Database.Stateful{
@@ -87,12 +87,8 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         Map<String, VasSupplierTable__c> vasRecordsMap = mapVasRecords(vasRecords);
         Set<String> codes = vasRecordsMap.keySet();
 
-        system.debug('codici ' + String.join(new List<String>(codes), ',') );
-
         List<SBQQ__Subscription__c> subs = getSubscriptions(codes);
         List<Asset> assets = getAssets(codes);
-        system.debug('subs '+subs?.size()+JSON.serialize(subs));
-        system.debug('assets '+assets?.size()+JSON.serialize(assets));
 
         Map<SObject, String> recordsPerCode = new Map<SObject, String>();
         recordsPerCode.putAll( copyVasFields(subs, vasRecordsMap) );
@@ -104,14 +100,12 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
 
         Boolean limitQueueablesOk = Limits.getQueueableJobs() < Limits.getLimitQueueableJobs();
         if(caseToProcess.size()>400 && limitQueueablesOk){
-            system.debug('test1');
             system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(extractNumRecordsFromMap(2000)));
         }
     }
 
     public void finish(Database.BatchableContext bc) {
         if(!caseToProcess.isEmpty()){
-            system.debug('test2');
             system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(caseToProcess));
         }
     }
@@ -189,7 +183,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     }
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
-                    system.debug(e.getStackTraceString());
+                    System.debug(LoggingLevel.ERROR, e.getStackTraceString());
                     vasRecord.Status__c = STATUS_ERROR;
                     vasRecord.ErrorDescription__c = 'MAPPING_ERROR: Error mapping Asset/Subscription fields';
                 }
@@ -202,7 +196,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                     vasSupplToOrder.put(vasRecord.Id, orderToUpdate.Id);
                 } catch (Exception e) {
                     System.debug(LoggingLevel.ERROR, e.getMessage());
-                    system.debug(e.getStackTraceString());
+                    System.debug(LoggingLevel.ERROR, e.getStackTraceString());
                     vasRecord.Status__c = STATUS_ERROR;
                     vasRecord.ErrorDescription__c = 'MAPPING_ERROR: Error mapping Order fields';
                 }
@@ -396,9 +390,6 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
             accToAssets.get(accId).add(assId);
         }
 
-        system.debug('assetIds');
-        system.debug(assetToAccount.keySet());
-
         list<wrts_prcgvr__Activity__c> activities = getActivities(assetToAccount.values(), templateName);
 
         for(wrts_prcgvr__Activity__c act : activities){
@@ -427,7 +418,9 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
     * @return list<wrts_prcgvr__Activity__c> 
     **/
     private list<wrts_prcgvr__Activity__c> getActivities(List<String> sobjIds, String templateName){
-        if(sobjIds.isEmpty())   return new list<wrts_prcgvr__Activity__c>();
+        if(sobjIds.isEmpty()) {
+            return new list<wrts_prcgvr__Activity__c>();
+        }
         return HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(sobjIds, templateName);
     }
 }

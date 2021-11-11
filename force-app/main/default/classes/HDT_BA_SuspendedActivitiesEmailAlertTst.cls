@@ -21,17 +21,15 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
 
         List<Account> testAcc =  HDT_UTL_DataFactoryTst.createAccountPartner(1, false , 'testact');
         testAcc[0].CompanyOwner__c  = 'HERA COMM';
-        //testAcc[0].owner.Name = 'Marco Arci';
         insert testAcc;
 
         id acctId = [SELECT id FROM Account WHERE id =: testAcc[0].id ].Id;
         
-        List<wrts_prcgvr__Activity__c> testActivity = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acctId);
-        //testActivity[0].owner.Name = 'Marco Arci';
+        List<wrts_prcgvr__Activity__c> testActivity = HDT_UTL_DataFactoryTst.createActivityCustom(1,true,acctId);
         testActivity[0].SuspensionDueDate__c = system.now().addMinutes(30);
         testActivity[0].Status__c = 'Sospesa'; 
         testActivity[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';
-        insert testActivity;         
+        update testActivity;         
          
         }
     }

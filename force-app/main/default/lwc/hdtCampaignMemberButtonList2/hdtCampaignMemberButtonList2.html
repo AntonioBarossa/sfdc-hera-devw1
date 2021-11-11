@@ -1,8 +1,6 @@
 <template>
     <div class="slds-grid">
-        <!-- <lightning-button label="Script Aiuto Vendita" title="Script Aiuto Vendita" onclick={scriptHelpSaleClick}
-            class="slds-m-right_xx-small"></lightning-button> -->
-        <c-hdt-manage-script-modal class="slds-m-right_xx-small" script-process-name={scriptName.data} button-label="scriptAiutoVendita" record-id={recordId}></c-hdt-manage-script-modal>
+        <c-hdt-campaign-member-script-launcher class="slds-m-horizontal_xx-small" camp-member-id={recordId}></c-hdt-campaign-member-script-launcher>
         <div>
             <lightning-button label="Survey" title="Survey" onclick={surveyClick} class="slds-m-right_xx-small">
             </lightning-button>

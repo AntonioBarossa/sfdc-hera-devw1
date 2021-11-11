@@ -9,7 +9,7 @@ false,
 
 IF(
 AND(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,
-OR( Not(BillingIsAddressVerified__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
+OR( AND(Not(BillingIsAddressVerified__c),IsMigrated__c = False), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;))),
 true ,
 
 IF(

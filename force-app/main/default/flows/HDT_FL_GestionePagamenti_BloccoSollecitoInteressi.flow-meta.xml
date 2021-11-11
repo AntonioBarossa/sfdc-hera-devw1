@@ -4,8 +4,8 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.ExpirationDate__c</assignToReference>
             <operator>Assign</operator>
@@ -31,10 +31,54 @@
             <targetReference>Aggiorna_Fase_In_Lavorazione</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>AssegnaValori_0</name>
+        <label>AssegnaValori</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.ExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ExpirationDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pratica In Attesa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.SuspensionDays__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetSuspensionDays.SuspensionDays__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.SuspensionDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Fase_In_Lavorazione_0</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>314</locationX>
+        <locationX>512</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -82,6 +126,31 @@
             <label>Annulla</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>TotaleResiduoMinore0_01</name>
+        <label>TotaleResiduoMinore0.01?</label>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValori</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornato.TotalResidue__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>0.01</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetSuspensionDays</targetReference>
+            </connector>
+            <label>Sì</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione di Blocco Sollecito del cluster Pagamenti</description>
     <formulas>
         <name>ExpirationDateFormula</name>
@@ -113,11 +182,11 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValori</targetReference>
+            <targetReference>TotaleResiduoMinore0_01</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -131,21 +200,56 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetSuspensionDays</name>
+        <label>GetSuspensionDays</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValori_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ObjectName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_SuspensionDays__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Fase_In_Lavorazione</name>
         <label>Aggiorna Fase In Lavorazione</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Fase_In_Lavorazione_0</name>
+        <label>Aggiorna Fase In Lavorazione</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <inputReference>GetCaseAggiornato</inputReference>
+    </recordUpdates>
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -175,7 +279,7 @@
     <screens>
         <name>Screen_Documenti_Selezionati</name>
         <label>Screen Documenti Selezionati</label>
-        <locationX>314</locationX>
+        <locationX>512</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -256,7 +360,7 @@
     <screens>
         <name>Screen_Riepilogo_Dati_0</name>
         <label>Screen Riepilogo Dati</label>
-        <locationX>314</locationX>
+        <locationX>512</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -268,6 +372,21 @@
             <name>DisplayHeader_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!InputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>TotalResidueWarning</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: Calibri, sans-serif; font-size: 11pt;&quot;&gt;Attenzione: Il documento selezionato risulta pareggiato, ricordare al cliente di respingere la bolletta&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetCaseAggiornato.TotalResidue__c</leftValueReference>
+                    <operator>LessThan</operator>
+                    <rightValue>
+                        <numberValue>0.01</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>hdtRecordEditForm_0</name>
@@ -353,7 +472,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Screen_Documenti_Selezionati</targetReference>
@@ -363,7 +482,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>518</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

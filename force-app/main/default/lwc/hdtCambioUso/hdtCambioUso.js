@@ -82,6 +82,8 @@ export default class HdtCambioUso extends NavigationMixin(LightningElement){
         console.log('*****');
         let tipoimpianto =this.template.querySelector('[data-id="TipoImpianto"]').value;
         console.log('*****');
+        let disco = this.template.querySelector('[data-id="Disconnetibilita"]').value;
+        let discoType = this.template.querySelector('[data-id="tipoDisconnetibilita"]').value;
       //  let residente= this.template.querySelector('[data-id="residente"]');
         console.log('*****');
         let note= this.template.querySelector('[data-id="note"]').value;
@@ -101,7 +103,9 @@ export default class HdtCambioUso extends NavigationMixin(LightningElement){
             recapito : recapito, 
             tipoImpianto : tipoimpianto, 
             residente : this.res, 
-            note : note
+            note : note,
+            disco : disco,
+            discotype : discoType
         }).then((response) => {
             if(response){
 
