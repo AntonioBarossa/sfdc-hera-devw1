@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Percentuale di Total Scope impostato al livello componente. Questo campo sovrascrive la Percentuale di Total Scope copiata dalla Opzione Prodotto.</help>
     <label></label>
     <name>SBQQ__ComponentSubscriptionScope__c</name>
     <picklistValues>

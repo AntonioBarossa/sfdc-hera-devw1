@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Indica il prodotto su questa linea incluso in un altro prodotto in questa quota. Le linea associate hanno un prezzo di zero e non permetto che il prezzo o la quantita sia modificata.</help>
     <label></label>
     <name>SBQQ__Bundled__c</name>
 </CustomFieldTranslation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Indica il nest level di questa opzione (si applica unicamente alle linee che sono generate dalle opzioni).</help>
     <label>Livello Opzione</label>
     <name>SBQQ__OptionLevel__c</name>
 </CustomFieldTranslation>
