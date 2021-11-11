@@ -28,6 +28,7 @@ public inherited sharing class HDT_SRV_MetersList {
         System.debug(LoggingLevel.DEBUG, '>>> startRequest');
         System.debug(LoggingLevel.DEBUG, '>>> recordId: ' + recordId);
 
+        String endPoint = '';
         Continuation con = new Continuation(40);
         con.continuationMethod = 'processResponse';
         con.state = recordId;
@@ -50,7 +51,8 @@ public inherited sharing class HDT_SRV_MetersList {
         System.debug(LoggingLevel.DEBUG, '>>> body: ' + body);
 
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(metadataList[0].Endpoint__c);
+        endPoint = metadataList[0].Endpoint__c;
+        req.setEndpoint(endPoint);
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
         req.setbody(body);
