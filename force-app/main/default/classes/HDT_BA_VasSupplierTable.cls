@@ -216,6 +216,18 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         }
         return recordsPerCode;
     }
+
+    private inherited sharing class HDT_WRP_Data{
+        id sobjId {get;set;}
+        string causaleScarto {get;set;}
+        HDT_WRP_Data(Id sobjId){
+            this.sobjId=sobjId;
+        }
+        HDT_WRP_Data(Id sobjId, String causale){
+            this.causaleScarto=causale;
+            this(sobjId);
+        }
+    }
    
     /**
     * @description Updating orders/assets/subscriptions
@@ -247,7 +259,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                             //assetToAccountKoFornitore.put((Id) record.get('id'), (ID) record.get('AccountId'));
                             assetToOrderKoFornitore.put((Id) record.get('id'), sobjToRelateActivity);
                         }else{
-                            assetMigratedKoFornitore.put((Id) record.get('id'),(Id) record.get('id'));
+                            assetMigratedKoFornitore.put((Id) record.get('id'),(Id) record.get('AccountId'));
                         }
                     }
                     when 'CONSEGNA/Installazione RIFIUTATA', 'INSTALLAZIONE FALLITA', 'RESO (PRODOTTO)', 'RIFIUTATO preventivamente' {
@@ -278,7 +290,7 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
         }
 
         relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToOrderKoFornitore, 'CBS_ATT003__KO_FORNITORE', 'HDT_RT_Default'));
-        //relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetMigratedKoFornitore, 'Template KO_FORNITORE ', 'HDT_RT_Default'));
+        relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetMigratedKoFornitore, 'CBS_ATT012__KO_FORNITORE', 'HDT_RT_Default'));
         relatedSobjectsToInsert.addAll(getActivitiesRicontatto(assetToAccountEsitiFornitore, 'VAS001_GESTIONE_ESITI_FORNITORE', ''));
         relatedSobjectsToInsert.addAll(casesDisattVas);
         if(!relatedSobjectsToInsert.isEmpty()){
