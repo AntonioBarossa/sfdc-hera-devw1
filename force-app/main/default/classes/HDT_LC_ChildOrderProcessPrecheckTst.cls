@@ -27,7 +27,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','MMS Azienda','Aziende SME');
             
             List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
             points[0].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
@@ -81,6 +81,12 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             requests[0].BillingProfile__c = billings[0].id;
             requests[0].Account__c = accs[0].id;
             insert requests;
+            
+            List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[2].id);
+            contacts[0].Company__c = 'MMS';
+            insert contacts;
+            
+            HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accs[0].id, contacts[0].id);
 
         }
      }
@@ -135,7 +141,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         ServicePoint__r.RecordType.DeveloperName,
                         SBQQ__Quote__r.AllowChangeUse__c,
                         SBQQ__Quote__r.AmendmentAllowed__c, 
-                        ServicePoint__r.isReseller__c
+                        ServicePoint__r.isReseller__c,
+                        CommodityFormula__c,
+                        SupplyCity__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -187,7 +195,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          ServicePoint__r.RecordType.DeveloperName,
                          SBQQ__Quote__r.AllowChangeUse__c,
                          SBQQ__Quote__r.AmendmentAllowed__c, 
-                         ServicePoint__r.isReseller__c
+                         ServicePoint__r.isReseller__c,
+                         CommodityFormula__c,
+                         SupplyCity__c
                          From Order
                          WHERE Name = 'testOrderName0'];
             
@@ -466,7 +476,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
     }
     
-    @isTest static void callDataEnrichment(){
+    @isTest static void callDataEnrichmentException(){
         
         Order newOrder = [Select id From Order WHERE Name = 'testOrderName0'];
             
@@ -477,7 +487,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
         Test.stopTest();
         
-        System.assertEquals('Imposta Usi Domestici (Cod. G_ICD)', result.ExciseGAS__c, 'callDataEnrichment did not work correctly');
+        System.assertEquals(newOrder, result, 'callDataEnrichment did not work correctly');
         System.assertNotEquals(null, result, 'callDataEnrichment did not work correctly');
         
     }
