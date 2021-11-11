@@ -51,7 +51,7 @@ public with sharing class HDT_SRV_QservHandler {
     public static HttpResponse makePostCallout(String body) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('https://demo1985872.mockable.io/herokuTest');
+        request.setEndpoint('callout:Heroku');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json');
         request.setBody(body);
@@ -61,7 +61,7 @@ public with sharing class HDT_SRV_QservHandler {
             System.debug(LoggingLevel.DEBUG, 'The status code returned was not expected: ' +
                 response.getStatusCode() + ' ' + response.getStatus());
         } else {
-            System.debug(LoggingLevel.DEBUG, response.getBody());
+            System.debug(LoggingLevel.DEBUG, 'RESPONSE BODY: ' + JSON.serialize(response.getBody()));
         }
         
         return response;
