@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Lo sconto Partner è applicato dopo tutti gli sconti automatici e discrezionali. Lo sconto partner è preso dall&apos;account in Prezzo Partner.</help>
+    <label>Sconto Partner</label>
+    <name>SBQQ__PartnerDiscount__c</name>
+</CustomFieldTranslation>

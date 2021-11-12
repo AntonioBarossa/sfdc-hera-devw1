@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Per i Prodotti multi-segmento, questa è l&apos;etichetta della colonna (e.g. &quot;Year 1&quot;) associata con questa linea.</help>
+    <label>Etichetta Segmento</label>
+    <name>SBQQ__SegmentLabel__c</name>
+</CustomFieldTranslation>

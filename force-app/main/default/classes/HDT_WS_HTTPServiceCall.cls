@@ -9,7 +9,7 @@ public class HDT_WS_HTTPServiceCall {
         
         HTTP h = new Http();
         HTTPRequest req = new HTTPRequest();
-        req.setTimeout(120000);
+        req.setTimeout(120000); 
         req.setHeader('Content-type', 'application/json');
         req.setEndpoint(conf.endpoint__c);
         req.setMethod(conf.method__c);
@@ -18,7 +18,6 @@ public class HDT_WS_HTTPServiceCall {
             Blob headerCred = Blob.valueOf(cred.Username__c+':'+cred.Password__c);
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
-            System.debug('************Authorization :' + authorizationHeader);
         }
         else{
             System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
@@ -27,7 +26,7 @@ public class HDT_WS_HTTPServiceCall {
         req.setBody(JSON.serialize(request));
         System.debug('*********Request:' + req.getBody());
         HDT_WS_Response resp = (HDT_WS_Response)respClass.newInstance();
-		String r;
+		//String r;
         try{
             System.debug('**********req:' + req);
             HTTPResponse res = h.send(req);
@@ -64,7 +63,6 @@ public class HDT_WS_HTTPServiceCall {
             Blob headerCred = Blob.valueOf(cred.Username__c+':'+cred.Password__c);
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
-            System.debug('************Authorization :' + authorizationHeader);
         }
         else{
             System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
@@ -122,7 +120,6 @@ public class HDT_WS_HTTPServiceCall {
             Blob headerCred = Blob.valueOf(cred.Username__c+':'+cred.Password__c);
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
-            System.debug('************Authorization :' + authorizationHeader);
         }
         else{
             System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');
@@ -164,7 +161,6 @@ public class HDT_WS_HTTPServiceCall {
             Blob headerCred = Blob.valueOf(cred.Username__c+':'+cred.Password__c);
             String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerCred);
             req.setHeader('Authorization', authorizationHeader);
-            System.debug('************Authorization :' + authorizationHeader);
         }
         else{
             System.debug('********** Username e Password ARE NOT VALORIZE INSIDE THE CUSTOM SETTINGS');

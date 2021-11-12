@@ -21,7 +21,7 @@
         ordList[0].ServicePoint__c = servPointList[0].Id;
         insert ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
-        AccountContactRelation accountContactRel = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
+        HDT_UTL_DataFactoryTst.createAccountContactRelation(true, accList[1].Id,contactList[0].Id);
         
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false, accList[0].Id);
         billingProfileList[0].InvoicingStreetName__c = 'Roma';
@@ -35,7 +35,7 @@
         insert billingProfileList;
 
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
+        HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
 
         List<wrts_prcgvr__ActivityTemplate__c> actTempList = new List<wrts_prcgvr__ActivityTemplate__c>();
 
@@ -110,7 +110,7 @@
     
     @isTest
     static void testQueueableUpdate(){
-        HDT_SRV_BillableVasDeactivation.HDT_QBL_UpdateQueueable q1 = new HDT_SRV_BillableVasDeactivation.HDT_QBL_UpdateQueueable();
+        new HDT_SRV_BillableVasDeactivation.HDT_QBL_UpdateQueueable();
         Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
         testCase.type='Disattivazione VAS';
         HDT_SRV_BillableVasDeactivation.HDT_QBL_UpdateQueueable q2 = new HDT_SRV_BillableVasDeactivation.HDT_QBL_UpdateQueueable(testCase);

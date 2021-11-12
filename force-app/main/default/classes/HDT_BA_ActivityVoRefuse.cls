@@ -9,7 +9,7 @@ public with sharing class HDT_BA_ActivityVoRefuse implements Database.Batchable<
         Date d = date.today();
         Date d2;
         d2 = d.addDays(-Integer.valueOf(numberOfDays));
-        String query = 'SELECT Id, CreatedDate, (SELECT Id, CancellationReason__c from Order__r ) from wrts_prcgvr__Activity__c where validation__c = null AND Type__c = \'Validazione Vocal Order\' and CreatedDate <= :d2';
+        String query = 'SELECT Id, RequestedCancellationDate__c, CreatedDate, (SELECT Id, CancellationReason__c, Phase__c from Order__r ) from wrts_prcgvr__Activity__c where validation__c = null AND Type__c = \'Validazione Vocal Order\' and CreatedDate <= :d2';
         return Database.getQueryLocator(query);
     }
 
@@ -22,6 +22,9 @@ public with sharing class HDT_BA_ActivityVoRefuse implements Database.Batchable<
             actToUpdate.add(act); 
             // cancel quote
             for(Order ord : act.Orders__r) {
+                if (act.RequestedCancellationDate__c > date.today() && act.wrts_prcgvr__Status__c != 'Closed') {
+                    ord.Phase__c = 'Annullato';
+                }
                 ord.CancellationReason__c = 'Registrazione non conforme';
                 orderList.add(ord);
             }

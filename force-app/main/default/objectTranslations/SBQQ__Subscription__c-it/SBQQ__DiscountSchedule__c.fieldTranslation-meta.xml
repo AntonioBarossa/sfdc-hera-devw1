@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Sconti specifici in % o Amt da scontare al prezzo del prodotto usando la quantità acquistata o il termine. Imposta i limiti della quantità/termine in livelli di sconto differenti %. Lo sconto è applicato alla Lista Prezzi e il totale risultante è memorizzato nel Prezzo Regolare.</help>
+    <label>Programma Sconto</label>
+    <name>SBQQ__DiscountSchedule__c</name>
+    <relationshipLabel></relationshipLabel>
+</CustomFieldTranslation>

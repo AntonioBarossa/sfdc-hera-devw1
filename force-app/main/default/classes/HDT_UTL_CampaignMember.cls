@@ -94,7 +94,7 @@ public with sharing class HDT_UTL_CampaignMember {
         }
 
         List<CampaignMemberAssigmentItem__c> query = [
-            SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
+            SELECT Id, Agency__c, PercentageAllocation__c, CampaingMemberAssigment__c, ProcessingType__c  FROM CampaignMemberAssigmentItem__c WHERE CampaingMemberAssigment__c IN (SELECT CampaignMemberAssigment__c FROM Campaign WHERE Id IN :campaignIds AND AssignmentType__c = 'Peso Percentuale') WITH SECURITY_ENFORCED ORDER BY PercentageAllocation__c DESC
         ];
 
         if (query.size()>0 && query[0].CampaingMemberAssigment__c!=null) {
@@ -119,6 +119,11 @@ public with sharing class HDT_UTL_CampaignMember {
                 }
             }
 
+            Map<String,String> agencyProcessingType = new Map<String,String>();
+            for (CampaignMemberAssigmentItem__c row : query) {
+                agencyProcessingType.put((String)row.get('Agency__c'), (String)row.get('ProcessingType__c'));
+            }
+
             List<String> agencies = new List<String>(agencyPercentage.keySet());
 
             Integer totalAssigned = 0;
@@ -135,6 +140,7 @@ public with sharing class HDT_UTL_CampaignMember {
                     for (Integer i = 0; i < toAssign; i++) {
                         Integer index = i + totalAssigned;
                         newCampaignMember[index].Agency__c = agency;
+                        newCampaignMember[index].ProcessingType__c = agencyProcessingType.get(agency);
                     }
                     totalAssigned += (Integer)toAssign;
                 }
@@ -170,7 +176,7 @@ public with sharing class HDT_UTL_CampaignMember {
             //execute batch for each campaign
             if (allMembers.size() > 0) {
                 HDT_BA_CommercialCode ccBatch = new HDT_BA_CommercialCode(allMembers);
-                ID batchProcessId = Database.executeBatch(ccBatch, 200);
+                Database.executeBatch(ccBatch, 200);
             }
         }
     }

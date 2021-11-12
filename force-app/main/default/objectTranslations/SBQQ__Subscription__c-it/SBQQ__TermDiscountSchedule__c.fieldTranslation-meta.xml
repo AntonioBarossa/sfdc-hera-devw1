@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Programma per gli sconti basato sul termine della sottoscrizione. Impostando su &quot;Group&quot;, applica il tasso di sconto per il termine di gruppo, mentre impostando su &quot;Quote&quot; applica il tasso di sconto per il termine dell&apos;intera quota, indipendentemente dai termini differenti nei tuoi gruppi.</help>
+    <label>Termine Programma Sconto</label>
+    <name>SBQQ__TermDiscountSchedule__c</name>
+    <relationshipLabel></relationshipLabel>
+</CustomFieldTranslation>

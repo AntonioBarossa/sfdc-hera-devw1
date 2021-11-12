@@ -275,6 +275,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
     public static AccountStatementFilter__c executeControllForSingleRecord(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj record, AccountStatementFilter__c serviceCatalog, String tabValue){
         
         Set<String> raiFeeSet = new Set<String>();
+        /**@frpanico 22/10/2021
+        * Added Social bonus Map
+        */
+        Map<String,String> socialBonusMap = new Map<String,String>();
 
         serviceCatalog.Multiselect__c = false;
         serviceCatalog.IsInvoice__c = (String.isEmpty(record.numeroFattura)) ? false : true;
@@ -287,6 +291,16 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             raiFeeSet = checkSecondLevel(record.secondoLivelloInformativoF2, raiFeeSet);
         }
         serviceCatalog.IsRaiFee__c = (serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && raiFeeSet.size() > 0);
+        /**@frpanico 22/10/2021
+        * Added logic for "Bonus Sociale"
+        * If the field is not empty add to the Map<String,String>
+        * bonusSociale as key
+        * dataScadenza as value
+        */
+        if(!String.isEmpty(record.bonusSociale))
+        {
+            socialBonusMap.put(record.bonusSociale,record.dataScadenza);
+        }
 
         if(!String.isEmpty(record.fatturaPrescrivibile) && record.fatturaPrescrivibile.equalsIgnoreCase('X') && String.isEmpty(record.DEL_569) ){
             serviceCatalog.IsPrescribable__c = true;
@@ -296,6 +310,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
         serviceCatalog.IsInstallment__c = (!String.isEmpty(record.rateizzato) && record.rateizzato.equalsIgnoreCase('SI')) ? true : false;
         serviceCatalog.SameCA__c = true;
+        /**@frpanico 22/10/2021
+        * Calculate the new field SocialBonus__c
+        * it calls the method checkSocialBonus which takes in input the map previously feeded
+        */
+        serviceCatalog.SocialBonus__c = checkSocialBonus(socialBonusMap, serviceCatalog.Account__c);
 
         return serviceCatalog;
 
@@ -311,6 +330,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCaSet = new Set<String>();
         Set<String> raiFeeSet = new Set<String>();
+        /**@frpanico 21/10/2021
+         * Added Social bonus Map
+         */
+        Map<String,String> socialBonusMap = new Map<String,String>();
         Decimal tot = 0;
 
         for(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj : recordsList){
@@ -327,6 +350,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
             if(!String.isEmpty(obj.rateizzato)){
                 isInstallmentSet.add(obj.rateizzato);
+            }
+
+            /**@frpanico 21/10/2021
+             * Added logic for "Bonus Sociale"
+             * If the field is not empty add to the Map<String,String>
+             * bonusSociale as key
+             * dataScadenza as value
+             */
+            if(!String.isEmpty(obj.bonusSociale))
+            {
+                socialBonusMap.put(obj.bonusSociale,obj.dataScadenza);
             }
 
             if(!String.isEmpty(obj.contoContrattuale)){
@@ -370,6 +404,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;
         serviceCatalog.Multiselect__c = true;
         serviceCatalog.IsRaiFee__c = (serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && raiFeeSet.size() > 0);
+        /**@frpanico 21/10/2021
+         * Calculate the new field SocialBonus__c
+         * it calls the method checkSocialBonus which takes in input the map previously feeded
+         */
+        serviceCatalog.SocialBonus__c = checkSocialBonus(socialBonusMap, serviceCatalog.Account__c);
 
         return serviceCatalog;
     }
@@ -386,4 +425,28 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     }
 
+    /**@frpanico 21/10/2021
+     * Added a method that runs through the map given as input (if null it returns true)
+     * if the "dataScadenza" field of one entryis more than 10 days before today it returns false
+     */
+    private static Boolean checkSocialBonus(Map<String,String> socialBonusMap, String accountId)
+    {   
+        HDT_QR_Case caseQr = new HDT_QR_Case();
+        Boolean result = true;
+        List<Case> caseList = caseQr.getCaseByAccountid(accountId, new Set<String>{'Piano Rateizzazione'});
+        for(String bonusSociale : socialBonusMap.keyset())
+        {
+            if(bonusSociale.equalsIgnoreCase('SI'))
+            {   
+                List<String> splittedDate = socialBonusMap.get(bonusSociale).split('/');
+                Date dataScadenza = Date.newInstance(Integer.valueOf(splittedDate[2]), Integer.valueOf(splittedDate[1]), Integer.valueOf(splittedDate[0]));
+                if(dataScadenza < System.Today().addDays(-10) || (caseList != null && !caseList.isEmpty()))
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }
