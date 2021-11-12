@@ -501,4 +501,81 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertEquals(true, result, 'checkVasAndCommodity did not work correctly');
         System.assertNotEquals(null, result, 'checkVasAndCommodity did not work correctly');
     }
+
+    @IsTest
+    static void testCheckContendibilita(){
+
+        //setup
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+
+        //mock webservice call
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"code":null,"description":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"ANNOTAZIONI","value":"PROVA_NEW_FLOW"},{"fieldType":"TEXT","name":"result","value":"OK"},{"fieldType":"TEXT","name":"requestId","value":""},{"fieldType":"TEXT","name":"errorMessage","value":""},{"fieldType":"TEXT","name":"rifRich","value":"00002349"},{"fieldType":"TEXT","name":"RECORD_ID","value":""},{"fieldType":"TEXT","name":"FASE","value":"Esito OK da DL"},{"fieldType":"TEXT","name":"DES_ERR_AEEG","value":"001"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+        res.setStatusCode(200);
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_QservHandlerMock(res));
+
+        //start test
+        Test.startTest();
+
+        Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(ord);
+
+        //assertions
+        System.assertEquals(true , resultMap.get('ESITO'), 'Esito != true');
+        System.assertEquals('001' , resultMap.get('DES_ERR_AEEG'), 'DES_ERR_AEEG != 001');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testCheckContendibilitaKo(){
+
+        //setup
+        Order ord = [SELECT SupplyCityCode__c, SupplyCity__c, MeterSN__c, ServicePointCode__c, OrderNumber, Description, DiscardReason__c FROM Order WITH SECURITY_ENFORCED LIMIT 1];
+
+        //mock webservice call
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"code":null,"description":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"ANNOTAZIONI","value":"PROVA_NEW_FLOW"},{"fieldType":"TEXT","name":"result","value":"OK"},{"fieldType":"TEXT","name":"requestId","value":""},{"fieldType":"TEXT","name":"errorMessage","value":""},{"fieldType":"TEXT","name":"rifRich","value":"00002349"},{"fieldType":"TEXT","name":"RECORD_ID","value":""},{"fieldType":"TEXT","name":"FASE","value":"Esito KO da DL"},{"fieldType":"TEXT","name":"DES_ERR_AEEG","value":"001"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+        res.setStatusCode(200);
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_QservHandlerMock(res));
+
+        //start test
+        Test.startTest();
+
+        Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(ord);
+
+        //assertions
+        System.assertEquals(false , resultMap.get('ESITO'), 'Esito != false');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testCheckContendibilitaError(){
+        
+        //mock webservice call
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":[{"fieldType":"TEXT","name":"PROCESS_CATEGORY","value":"postsales"}]},"code":null,"description":null,"objects":[{"fields":[{"fieldType":"TEXT","name":"ANNOTAZIONI","value":"PROVA_NEW_FLOW"},{"fieldType":"TEXT","name":"result","value":"OK"},{"fieldType":"TEXT","name":"requestId","value":""},{"fieldType":"TEXT","name":"errorMessage","value":""},{"fieldType":"TEXT","name":"rifRich","value":"00002349"},{"fieldType":"TEXT","name":"RECORD_ID","value":""},{"fieldType":"TEXT","name":"FASE","value":"Esito KO da DL"},{"fieldType":"TEXT","name":"DES_ERR_AEEG","value":"001"}],"id":null,"name":null,"objectType":null,"objects":null}]}]}');
+        res.setStatusCode(200);
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_QservHandlerMock(res));
+
+        //start test
+        Test.startTest();
+
+        try {
+
+            Map<String, Object> resultMap = HDT_LC_ChildOrderProcessPrecheck.checkContendibilita(null);
+                
+        } catch (Exception e) {
+            //assert
+            System.assertNotEquals(null, e.getMessage(), 'Expected exception');
+        }
+
+        Test.stopTest();
+        
+    }
 }
