@@ -460,6 +460,16 @@
                 <default>false</default>
                 <label>Risposta Inviata - Attesa Rettifica</label>
             </value>
+            <value>
+                <fullName>Inviare Legge 80</fullName>
+                <default>false</default>
+                <label>Inviare Legge 80</label>
+            </value>
+            <value>
+                <fullName>Confermare Cambio Decorrenza</fullName>
+                <default>false</default>
+                <label>Confermare Cambio Decorrenza</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

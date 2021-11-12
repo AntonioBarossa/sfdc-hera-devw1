@@ -2307,6 +2307,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -2320,6 +2324,10 @@
         </values>
         <values>
             <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
             <default>false</default>
         </values>
         <values>
