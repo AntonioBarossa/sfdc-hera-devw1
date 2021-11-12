@@ -7,7 +7,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         system.debug('HDT_BA_QualityCall - Start');
-        String query = 'SELECT Id,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
+        String query = 'SELECT Id,IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivityQualityToBeCanceled__c,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c FROM Order Where Phase__c NOT IN (\'In attesa conferma cliente\', \'Completata\',\'Annullato\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null';
         return Database.getQueryLocator(query);
     }
 
@@ -107,10 +107,19 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
                 if ((ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c))
                     || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))) {
+                    
+                    String ordIdToAssoc = ord.Id;
+
+                    system.debug('Keltin test last1: ' + ord.ParentOrder__c);
+                    system.debug('Keltin test last2: ' + ordersAlreadyAssigned.contains(ord.ParentOrder__c));
+
+                    if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
+                        ordIdToAssoc = ord.ParentOrder__c;
+                    }
                     activityVas.add(new wrts_prcgvr__Activity__c(
                         RecordTypeId = rc.Id,
                         Account__c = ord.AccountId,
-                        Order__c = ord.Id,
+                        Order__c = ordIdToAssoc,
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
                 }

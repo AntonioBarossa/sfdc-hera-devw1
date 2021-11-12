@@ -357,7 +357,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, DocumentPackage__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c
+                                            Contact__c, ParentOrder__c, MethodSignedAccepted__c, SignedDate__c
                                   FROM Order WHERE ParentOrder__r.Name='testOrderName0'];
 
             List<Order> ordersNew = ordersOld;

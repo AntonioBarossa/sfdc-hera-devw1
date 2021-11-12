@@ -6,9 +6,38 @@
  */
 @isTest
 public class HDT_SRV_SalesManagerTst {
-	
+
     private static HDT_SRV_SalesManager srvSalesManager = new HDT_SRV_SalesManager();
     private static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
+    
+    public class HDT_WS_VasServiceMock implements HTTPCalloutMock {
+
+        private final Integer SUCCESS_CODE = 201;
+        private final String SUCCESS_BODY = '{"statusCode":201,"status":"success","exceptionMessage":null,"errorDetails":null,"body":null,"timestamp":"2021-11-05T12:47:32","data":null,"correlationId":"292ceab0-3e2e-11ec-81bb-0263debc6266"}';
+
+        private final Integer ERROR_CODE = 502;
+        private final String ERROR_BODY = '{"statusCode":502,"status":"failed","exceptionMessage":null,"errorDetails":[{"message":"Cod. offerta non mappato. Verifica custom","code":"BAD_GATEWAY","additionalInfo":"HTTP POST on resource ... failed with status code 502."}],"body":null,"timestamp":"2021-10-26T15:42:56","data":null,"correlationId":"a02866e0-3662-11ec-81bb-0263debc6266"}';
+
+        private Boolean isSuccess;
+
+        public HDT_WS_VasServiceMock(Boolean isSuccess) {
+            this.isSuccess = isSuccess;
+        }
+
+        public HTTPResponse respond(HTTPRequest request){
+            HttpResponse response = new HttpResponse();
+            response.setHeader('Content-Type', 'application/json');
+            if (isSuccess) {
+                response.setStatusCode(SUCCESS_CODE);
+                response.setBody(SUCCESS_BODY);
+            }
+            else {
+                response.setStatusCode(ERROR_CODE);
+                response.setBody(ERROR_BODY);
+            }
+            return response;
+        }
+    }
 
     @testSetup
     public static void setup(){
@@ -26,237 +55,200 @@ public class HDT_SRV_SalesManagerTst {
             accounts[0].Name='INRETE DIST. ENER.-13R0000000';
             accounts[0].LastName__c='INRETE DIST. ENER.-13R0000000';
             insert accounts;
-            List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(7, false, accounts[0].Id, 'Bozza');
+
+            List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
+
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, false, accounts[0].Id, 'Bozza');
+            orders[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VAS;
+			orders[0].EffectiveDate = Date.today();
+            orders[0].Contact__c = contacts[0].Id;
+            insert orders;
+
             List<Contact> contact = HDT_UTL_DataFactoryTst.createContact(1,true,accounts[0].Id);
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
             List<Contract> contract = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-            HDT_UTL_DataFactoryTst.createCase(1,true,accounts[0].Id,contact[0].Id,spList[0].Id,contract[0].Id,orders[0].Id);
-        
-        id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
-        id orderSubentro=utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
-        id orderSwitchIn=utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-        id orderAttivazione=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE;
-        id orderAttivazioneConModifica=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA;
-        id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-        id orderTemporaneaNuovaAtt=utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
+
+            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accounts[0].Id,contact[0].Id,spList[0].Id,contract[0].Id,orders[0].Id);
+            cases[0].RecordTypeId = utlConstants.CASE_RECORDTYPEID_POST_SALES_VAS;
+            cases[0].Order__c = orders[0].Id;
+            insert cases;
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_CONNESSIONECONATTIVAZIONE);
-			
-            system.debug('order list : ' +orders);
-        	orders[0].RecordTypeId=orderSubentro;
-			orders[0].Username__c='test';
-			orders[0].Password__c='test1';
-			orders[0].NotRegisteredMeterCase__c=true;
-			orders[0].EffectiveDate__c=date.today();
-			orders[0].PowerCommitted__c=2;
-			orders[0].ImplantType__c='13A0-Usi di Abitazione BT';
-			orders[0].RequestOption__c='Domestici-TD';
-			orders[0].CreditCheckDescription__c='test1';
-			orders[0].QualityCall__c=true;  
-        	orders[0].ComfortCallDaysDue__c=null;
+            HDT_UTL_DataFactoryTst.pClickCasePhase();
 
-			orders[1].RecordTypeId=orderVoltura;
-			orders[1].CreditCheckDescription__c='test2Voltura';
-			orders[1].ProcessCode__c='PN1';
-			orders[1].PowerRequested__c=1;
-			orders[1].PowerAvailable__c=3;
-			orders[1].PowerCommitted__c=2;
-			orders[1].NotRegisteredMeterCase__c=false;
-			orders[1].EffectiveDate__c=date.today().addDays(-4);
-			orders[1].RequestOption__c='Domestici-TD';
-			orders[1].Vat__c='Iva 10% (Cod. 01)';
-            orders[1].QualityCall__c=true;
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione Motore VAS','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Motore VAS OK','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Motore VAS KO','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Ko prodotto vas','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
 
-			orders[2].PowerCommitted__c=2;
-			orders[2].CreditCheckDescription__c = 'test3';
-			orders[2].VoltureType__c='In Continuità';
-			orders[2].RecordTypeId = orderSwitchIn;
-        	orders[2].QualityCall__c=true;
-
-			orders[3].PowerCommitted__c=2;
-			orders[3].VoltureType__c='In Continuità';
-			orders[3].CreditCheckDescription__c='test4AttivConMod';
-			orders[3].RecordTypeId=orderAttivazioneConModifica;
-			orders[3].PowerRequested__c=3;
-			orders[3].ProcessCode__c='E02';
-			orders[3].QualityCall__c=true;
-        
-			orders[4].EffectiveDate__c=date.today().addDays(10);
-			orders[4].PowerCommitted__c=2;
-			orders[4].RecordTypeId=orderAttivazione;
-			orders[4].CreditCheckDescription__c='test5Conessione1';
-			orders[4].ProcessCode__c='PN1';
-        	orders[4].QualityCall__c=true;
-
-			orders[5].RecordTypeId=orderConnessioneConAttiv;
-			orders[5].VoltageLevel__c='BT';
-			orders[5].ProcessCode__c='E02';
-			orders[5].UseTypeEnergy__c='Manifest (Temp Straord 16h)';
-			orders[5].CreditCheckDescription__c='test6Temporanea';
-			orders[5].RequestOption__c='Domestici-TD';
-			orders[5].PowerRequested__c=2;
-			orders[5].PowerCommitted__c=2;
-       	 	orders[5].QualityCall__c=true;
-            
-            orders[6].RecordTypeId=orderTemporaneaNuovaAtt;
-			orders[6].VoltageLevel__c='BT';
-			orders[6].ProcessCode__c='E02';
-			orders[6].UseTypeEnergy__c='Manifest (Temp Straord 16h)';
-			orders[6].CreditCheckDescription__c='test6Temporanea';
-			orders[6].RequestOption__c='Domestici-TD';
-			orders[6].PowerRequested__c=2;
-			orders[6].PowerCommitted__c=2;
-        	orders[6].QualityCall__c=true;
-           	system.debug('order list2 : ' +orders[0]);
-        insert orders;
-            
-
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Motore VAS OK','Bozza',utlConstants.CASE_RECORDTYPEID_POST_SALES_VAS,utlConstants.CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Motore VAS KO','Bozza',utlConstants.CASE_RECORDTYPEID_POST_SALES_VAS,utlConstants.CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS);
         }
 
+        HDT_UTL_DataFactoryTst.createWebServiceCredential('MulesoftSalesforceUser', 'testPassword', 'testUsername');
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VAS.Activation','https://hera/vas-engine/activations', 'POST', 'MulesoftSalesforceUser');
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VAS.Deactivation','https://hera/vas-engine/activations', 'DELETE', 'MulesoftSalesforceUser');
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VAS.Service26','https://hera/activations/catalog-attributes', 'POST', 'MulesoftSalesforceUser');
     }
 
+    /**
+    * @description Testing activation
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
     @isTest
-    public static void testExecute(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
+    public static void activationOkTest(){
 
-        Map<String, Object> argsMap = new Map<String, Object>() ;
-        Map<String, Object> argsMap2 = new Map<String, Object>() ;
-        Map<String, Object> argsMap3 = new Map<String, Object>() ;
+        Order originalOrder = [SELECT Id FROM Order LIMIT 1];
 
-        List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
-        system.debug('order-------------------'+ order);
-
+        Map<String, Object> argsMap = new Map<String, Object>();
         argsMap.put('method', 'activation');
-        argsMap.put('sender', order[0]);
-        argsMap2.put('method', 'updatePhase');
-        argsMap2.put('sender', order[0]);
-        argsMap3.put('method', 'contracted');
-        argsMap3.put('sender', order[0]);
+        argsMap.put('sender', originalOrder);
 
-        sm.execute(argsMap);
-        sm.execute(argsMap2);
-        sm.execute(argsMap3);
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_VasServiceMock(true));
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
         
-        system.assertEquals(order != null, true, 'Update Record order');
-        system.assertNotEquals(order == null, true, 'Update Record order');
-
+        Order updatedOrder = [SELECT Phase__c FROM Order LIMIT 1];
+        System.assertEquals('Comunicazione verso Motore VAS OK', updatedOrder.Phase__c, 'Order Phase is not correct');
+        System.assertNotEquals('Comunicazione verso Motore VAS KO', updatedOrder.Phase__c, 'Order Phase is not correct');
     }
-    
-        @isTest
-    public static void testExecute2(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
 
-        Map<String, Object> argsMap4 = new Map<String, Object>() ;
-        List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
-
-
-        argsMap4.put('method', 'deactivation');
-        argsMap4.put('sender', order[0]);
-
-
-        sm.execute(argsMap4);
-
-        
-        system.assertEquals(order != null, true, 'Update Record order');
-        system.assertNotEquals(order == null, true, 'Update Record order');
-
-    }
-    
-            @isTest
-    public static void testExecute3(){
-        HDT_SRV_SalesManager sm = new HDT_SRV_SalesManager();
-
-        Map<String, Object> argsMap5 = new Map<String, Object>() ;
-        List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
-
-        argsMap5.put('method', 'service26');
-        argsMap5.put('sender', order[0]);
-
-        sm.execute(argsMap5);
-        
-        system.assertEquals(order != null, true, 'Update Record order');
-        system.assertNotEquals(order == null, true, 'Update Record order');
-
-    }
-    
-        @isTest
-    public static void testHDT_QBL_AsycnronousCallout(){
-        new HDT_SRV_SalesManager();
-
-        List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
-
-		HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout async = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout(order[0].Id,'activation');
-		System.enqueueJob(async);
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout async2 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout((String)order[0].Id,'activation');
-		System.enqueueJob(async2);
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout async3 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousCallout();
-		System.enqueueJob(async3);
-        
-        system.assertEquals(order != null, true, 'Update Record order');
-        system.assertNotEquals(order == null, true, 'Update Record order');
-
-    }
-    
-            @isTest
-    public static void testHDT_QBL_AsycnronousUpdate(){
-        
-        List<Order> order =[SELECT Id,Name,VASType__c FROM Order WHERE Name='testOrderName0'LIMIT 1];
-
-		HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(order[0].Id,'In attesa conferma cliente');
-		System.enqueueJob(async);
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async2 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate((String)order[0].Id,'In attesa conferma cliente');
-		System.enqueueJob(async2);
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async3 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate();
-		System.enqueueJob(async3);
-        
-        system.assertEquals(order != null, true, 'Update Record order');
-        system.assertNotEquals(order == null, true, 'Update Record order');
-        
-        List<Case> c =[SELECT Id,Status FROM Case WHERE Status='In Lavorazione'LIMIT 1];
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async4 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(c[0].Id,'In attesa conferma cliente');
-		System.enqueueJob(async4);
-        
-        system.assertEquals(c[0] != null, true, 'Update Record Case');
-        system.assertNotEquals(c[0] == null, true, 'Update Record Case');
-        
-        List<ServicePoint__c> s =[SELECT Id FROM ServicePoint__c LIMIT 1];
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async5 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(s[0].Id,'In attesa conferma cliente');
-		System.enqueueJob(async5);
-        
-        System.assertEquals(s[0] != null, true, 'Update Record ServicePoint');
-        System.assertNotEquals(s[0] == null, true, 'Update Record ServicePoint');
-        
-
-
-    }
-    
+    /**
+    * @description Testing activation error
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
     @isTest
-    public static void testHDT_QBL_AsycnronousUpdate2(){
-           
-        List<Case> c =[SELECT Id,Status FROM Case WHERE Status='In Lavorazione'LIMIT 1];
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async4 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(c[0].Id,'In attesa conferma cliente');
-		System.enqueueJob(async4);
-        
-        system.assertEquals(c[0] != null, true, 'Update Record Case');
-        system.assertNotEquals(c[0] == null, true, 'Update Record Case');
+    public static void activationKoTest(){
 
-    }
-    
-        @isTest
-    public static void testHDT_QBL_AsycnronousUpdate3(){
-        
-        List<ServicePoint__c> s =[SELECT Id FROM ServicePoint__c LIMIT 1];
-        HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate async5 = new HDT_SRV_SalesManager.HDT_QBL_AsycnronousUpdate(s[0].Id,'In attesa conferma cliente');
-		System.enqueueJob(async5);
-        
-        System.assertEquals(s[0] != null, true, 'Update Record ServicePoint');
-        System.assertNotEquals(s[0] == null, true, 'Update Record ServicePoint');
+        Order originalOrder = [SELECT Id FROM Order LIMIT 1];
 
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('method', 'activation');
+        argsMap.put('sender', originalOrder);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_VasServiceMock(false));
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
+        
+        Order updatedOrder = [SELECT Phase__c FROM Order LIMIT 1];
+        System.assertEquals('Ko prodotto vas', updatedOrder.Phase__c, 'Order Phase is not correct');
+        System.assertNotEquals('Comunicazione verso Motore VAS OK', updatedOrder.Phase__c, 'Order Phase is not correct');
     }
-    
-      
-    
-    
+
+    /**
+    * @description Testing deactivation
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
+    @isTest
+    public static void deactivationOkTest(){
+
+        Case originalCase = [SELECT Id FROM Case LIMIT 1];
+
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('method', 'deactivation');
+        argsMap.put('sender', originalCase);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_VasServiceMock(true));
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
+        
+        Case updatedCase = [SELECT Phase__c FROM Case LIMIT 1];
+        System.assertEquals('Comunicazione verso Motore VAS OK', updatedCase.Phase__c, 'Case Phase is not correct');
+        System.assertNotEquals('Comunicazione verso Motore VAS KO', updatedCase.Phase__c, 'Case Phase is not correct');
+    }
+
+    /**
+    * @description Testing deactivation error
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
+    @isTest
+    public static void deactivationKoTest(){
+
+        Case originalCase = [SELECT Id FROM Case LIMIT 1];
+
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('method', 'deactivation');
+        argsMap.put('sender', originalCase);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_VasServiceMock(false));
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
+        
+        Case updatedCase = [SELECT Phase__c FROM Case LIMIT 1];
+        System.assertEquals('Comunicazione verso Motore VAS KO', updatedCase.Phase__c, 'Case Phase is not correct');
+        System.assertNotEquals('Comunicazione verso Motore VAS OK', updatedCase.Phase__c, 'Case Phase is not correct');
+    }
+
+    /**
+    * @description Testing service 26
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
+    @isTest
+    public static void serviceTwentySixTest(){
+
+        Order originalOrder = [SELECT Id FROM Order LIMIT 1];
+
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('method', 'service26');
+        argsMap.put('sender', originalOrder);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_VasServiceMock(true));
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
+        
+        List<wrts_prcgvr__Log__c> logs = [SELECT Id FROM wrts_prcgvr__Log__c];
+        System.assertEquals(1, logs.size(), 'Logs have not been saved');
+        System.assertNotEquals(true, logs.isEmpty(), 'Logs have not been saved');
+    }
+
+    /**
+    * @description Testing phase update
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
+    @isTest
+    public static void updatePhaseTest(){
+
+        Order originalOrder = [SELECT VASType__c FROM Order LIMIT 1];
+
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('method', 'updatePhase');
+        argsMap.put('sender', originalOrder);
+
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
+        
+        Order updatedOrder = [SELECT Phase__c FROM Order LIMIT 1];
+        System.assertEquals('Comunicazione Motore VAS', updatedOrder.Phase__c, 'Order Phase is not correct');
+        System.assertNotEquals('In attesa tempi di ripensamento', updatedOrder.Phase__c, 'Order Phase is not correct');
+    }
+
+    /**
+    * @description Testing contracted switch
+    * @author gabriele.rota@webresults.it | 2021-11-10 
+    **/
+    @isTest
+    public static void contractedTest(){
+
+        Order originalOrder = [SELECT Id FROM Order LIMIT 1];
+
+        Map<String, Object> argsMap = new Map<String, Object>();
+        argsMap.put('method', 'contracted');
+        argsMap.put('sender', originalOrder);
+
+        Test.startTest();
+        new HDT_SRV_SalesManager().execute(argsMap);
+        Test.stopTest();
+        
+        Order updatedOrder = [SELECT SBQQ__Contracted__c FROM Order LIMIT 1];
+        System.assertEquals(true, updatedOrder.SBQQ__Contracted__c, 'Contracted has not been updated');
+        System.assertNotEquals(false, updatedOrder.SBQQ__Contracted__c, 'Contracted has not been updated');
+    }
 }
