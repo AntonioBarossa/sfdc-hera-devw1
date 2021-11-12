@@ -7,7 +7,6 @@ public inherited sharing class HDT_QR_MetersList {
             FROM HDT_MetersListColumnTable__mdt
             WITH SECURITY_ENFORCED
             ORDER BY Order__c
-            
         ];
 
         return metersListColumnTable;
