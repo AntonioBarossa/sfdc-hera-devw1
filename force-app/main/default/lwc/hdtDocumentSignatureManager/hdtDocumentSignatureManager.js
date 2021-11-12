@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.getSignSendMode';
 
+const sourceWithDefault = ['Agenzie','Agenzie SME','Business Agent'];
 const signModeAgenzie = 'Contratto già firmato';
 const sendModeAgenzie = 'Posta Cartacea';
 export default class HdtDocumentSignatureManager extends NavigationMixin(LightningElement) {
@@ -57,7 +58,13 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @api
     computeAgenciesDefault(setDefault){
         //eseguo il predefault
-        if (this.defautlAgenciesManagement && this.source && this.source.localeCompare('Agenzie') === 0 && setDefault){
+        let sourceNeedsDefault = false;
+        sourceWithDefault.forEach((element => {
+            if (element.localeCompare(this.source) === 0){
+                sourceNeedsDefault = true;
+            }
+        }));
+        if (this.defautlAgenciesManagement && this.source && sourceNeedsDefault && setDefault){
             let defaultSignModeForAgenzie = this.signSendMap.find((element) => (element.signMode === signModeAgenzie));
             this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value = defaultSignModeForAgenzie.signMode;
             this.modalitaInvio = defaultSignModeForAgenzie.sendMode;
@@ -295,7 +302,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             this.addressRequired = false;
             this.emailRequired = false;
             this.checkRequired();
-            this.launchSetRequiredFieldEvent(true);
+            let resetDate = true;
+            if (event.detail.value.localeCompare(signModeAgenzie) === 0){
+                resetDate = false;
+            }
+            this.launchSetRequiredFieldEvent(resetDate);
         }catch(error){
             console.error(error);
         }

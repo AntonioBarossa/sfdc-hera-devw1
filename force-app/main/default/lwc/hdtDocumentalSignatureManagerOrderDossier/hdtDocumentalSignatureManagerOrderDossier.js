@@ -37,7 +37,8 @@ const FIELDS = [
     'Order.DocSendingMethod__c',
     'Order.ShippingMail__c',
     'Order.PhoneNumber__c',
-	'Order.CreatedBy.LoginChannel__c',
+	/* 'Order.CreatedBy.LoginChannel__c', */
+	'Order.Channel__c',
     'Order.ShippingCity__c',
     'Order.ShippingCityCode__c',
     'Order.ShippingCountry__c',
@@ -247,7 +248,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 					context:'Order',
 					recordId:this.orderRecord.fields.Id.value,
 					processType:'Vendita',
-					source : this.orderRecord.fields.CreatedBy.value.fields.LoginChannel__c.value,
+					source : this.orderRecord.fields.Channel__c.value,
 					phone : phone,
 					email : email,
 					accountId : this.orderRecord.fields.Account.value.fields.Id.value,
