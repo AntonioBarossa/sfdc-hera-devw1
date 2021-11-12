@@ -6,15 +6,18 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
     //private static String waitingActivityTemplate = '';
     @TestVisible
-    private static String waitingPhase = '';
+    private static String waitingPhase = 'Pratica In Attesa';
     @TestVisible
     private static String communicationPhase = 'Comunicazione verso Heroku';
     @TestVisible
-    private static Integer btLimit = 10;
+    private static Integer btLimit = 1;
     @TestVisible
-    private static Integer mtLimit = 20;
+    private static Integer mtLimit = 35;
+    /**@frpanico 12/11/2021
+     * field not used but can be used if other threshold are included (e.g. AAT)
+     */
     @TestVisible
-    private static Integer atLimit = 30;
+    private static Integer atLimit = 35;
     @TestVisible
     private static Decimal lowerThreshold = 10.0;
     @TestVisible
@@ -142,13 +145,14 @@ public with sharing class HDT_UTL_VoltureChangeUtilities {
      * if a key differs from its value 
      * the loop ends and false is returned
      * true is returned otherwise
+     * If the field is empty the check should not be performed
      */
     public Boolean addressCheck(Map<String,String> checkMap)
     {
         Boolean result = true;
         for(String field : checkMap.keySet())
         {
-            if(field != checkMap.get(field))
+            if(String.isNotEmpty(checkMap.get(field)) && field != checkMap.get(field))
             {   
                 result = false;
                 break;
