@@ -2,17 +2,12 @@ public inherited sharing class HDT_QR_MetersList {
 
     public static List<HDT_MetersListColumnTable__mdt> getMetersListColumnTable(List<HDT_MetersListColumnTable__mdt> metersListColumnTable){
         metersListColumnTable = new List<HDT_MetersListColumnTable__mdt>();
-        
-        SObjectType objtype = Schema.getGlobalDescribe().get('HDT_MetersListColumnTable__mdt');
-        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-
-        if(objRes.isAccessible()){
-            metersListColumnTable = [
-                SELECT DeveloperName, MasterLabel
-                FROM HDT_MetersListColumnTable__mdt
-                ORDER BY Order__c
-            ];
-        }
+        metersListColumnTable = [
+            SELECT DeveloperName, MasterLabel
+            FROM HDT_MetersListColumnTable__mdt
+            ORDER BY Order__c
+            WITH SECURITY_ENFORCED
+        ];
 
         return metersListColumnTable;
     }
@@ -38,17 +33,12 @@ public inherited sharing class HDT_QR_MetersList {
 
     public static List<ServicePoint__c> getServicePoint(List<ServicePoint__c> servicePointList, String recordId){
         servicePointList = new List<ServicePoint__c>();
-        
-        SObjectType objtype = Schema.getGlobalDescribe().get('ServicePoint__c');
-        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-
-        if(objRes.isAccessible()){
-            servicePointList = [
-                SELECT Id, Name, ServicePointCode__c
-                FROM ServicePoint__c
-                WHERE Id = :recordId
-            ];
-        }
+        servicePointList = [
+            SELECT Id, Name, ServicePointCode__c
+            FROM ServicePoint__c
+            WHERE Id = :recordId
+            WITH SECURITY_ENFORCED
+        ];
 
         return servicePointList;
     }
