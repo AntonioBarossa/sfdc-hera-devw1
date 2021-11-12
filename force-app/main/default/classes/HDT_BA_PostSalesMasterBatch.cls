@@ -8,12 +8,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         List<SObject> scope = new List<SObject>();
 
 
-        scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getExpiredCase());
         scope.addAll(postsalesQr.getQuotationCase());
         scope.addAll(postsalesQr.getNonReqContract());
         scope.addAll(postsalesQr.getAutoletturaBozzaCase());
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
+        scope.addAll(postsalesQr.getExpiredArticle());
+
 
 
         return scope;
