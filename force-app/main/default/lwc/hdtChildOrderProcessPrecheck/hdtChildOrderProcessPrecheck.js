@@ -32,6 +32,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     creditCheckFields = [];
     creditCheckResult = {};
     service = '';
+    pickValue = '';
+    causaleContendibilita = '';
 
     get isNotBillable(){
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
@@ -314,16 +316,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         this.selectedProcessObject = this.processesReference.filter(el =>  el.processType === event.target.value)[0];
 
-        if((event.target.value === 'Prima Attivazione' || event.target.value === 'Subentro Gas') && this.service === 'Gas') {
-            this.checkContendibilitaPodPdr();
-            this.showEsitoCheck = true;
+        this.pickValue = event.target.value;
+        this.startCheckContendibilita();
 
-            if(this.precheck === true){
-                this.checkCompatibilityProcess();
-            }
-        }else{
-            this.checkCompatibilityProcess();
-        }
 
     }
 
@@ -445,7 +440,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                     this.selectedProcessObject = this.processesReference[0];
                     this.value = this.selectedProcessObject.processType;
                     this.disabledSelectProcess = true;
-                    this.checkCompatibilityProcess();
+                    this.pickValue = this.value;
+                    this.startCheckContendibilita();
+                    // this.checkCompatibilityProcess();
                 }
     
                 if (this.options.length === 0) {
@@ -454,7 +451,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                         this.selectedProcessObject = {processType: 'VAS', recordType: 'HDT_RT_VAS'}
                         this.value = this.selectedProcessObject.processType;
                         this.disabledSelectProcess = true;
-                        this.checkCompatibilityProcess();
+                        this.pickValue = this.value;
+                        this.startCheckContendibilita();
+                        // this.checkCompatibilityProcess();
                     }
                 }
     
@@ -854,6 +853,16 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     /**@Author: Salvatore Alessandro Sarà 01/11/2021
      * Richiamo Servizio per check contendibilità
      **/ 
+
+    startCheckContendibilita(){
+
+        if((this.pickValue === 'Prima Attivazione' || this.pickValue === 'Subentro Gas') && this.service === 'Gas') {
+            this.checkContendibilitaPodPdr();
+        }else{
+            this.checkCompatibilityProcess();
+        }
+    }
+
     checkContendibilitaPodPdr(){
         this.loaded = false;
         let array = [];
@@ -863,8 +872,13 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 console.log('checkContendibilita - Esito: ' + array['ESITO']);
                 console.log('checkContendibilita - Codice Scarto: ' + array['DES_ERR_AEEG']);
                 this.precheck = array['ESITO'];
-                this.causale = array['DES_ERR_AEEG'];
+                this.causaleContendibilita = array['DES_ERR_AEEG'];
                 this.loaded = true;
+                this.showEsitoCheck = true;
+
+                if(this.precheck === true){
+                    this.checkCompatibilityProcess();
+                }
             })
             .catch(error => {
                 this.loaded = true;
