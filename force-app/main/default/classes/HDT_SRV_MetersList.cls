@@ -44,7 +44,7 @@ public inherited sharing class HDT_SRV_MetersList {
         String body = createHttpBody(recordId);
 
         if(String.isEmpty(body)){
-            throw new AuraHandledException('Errore nella creazione del body');
+            throw new AuraHandledException('Attenzione! il POD non è presente. [Codice Punto]');
         }
 
         System.debug(LoggingLevel.DEBUG, '>>> body: ' + body);
@@ -71,6 +71,10 @@ public inherited sharing class HDT_SRV_MetersList {
         servicePointList = HDT_QR_MetersList.getServicePoint(servicePointList, recordId);
 
         if(servicePointList.size() == 0){
+            return null;
+        }
+
+        if(String.isEmpty(servicePointList[0].ServicePointCode__c)){
             return null;
         }
 
