@@ -73,16 +73,6 @@ public class HDT_BA_PostSalesMasterBatchTst {
         
         //HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         
-        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-        // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Hera Standard User'];
-        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
-        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-        LocaleSidKey='en_US', ProfileId = p.Id,
-        TimeZoneSidKey='America/Los_Angeles',
-        UserName=uniqueUserName);
-        u.UserPermissionsKnowledgeUser = true;
-		insert u;
 
         Knowledge__kav kArt = new Knowledge__kav();
         kArt.Title = 'Test Original Title';
@@ -226,13 +216,25 @@ public class HDT_BA_PostSalesMasterBatchTst {
     @IsTest
     static void testBatchExecution5(){
 
-        Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];        
-        User u=[SELECT Id FROM User WHERE Alias='standt' LIMIT 1];
+        Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
+
+        //User u=[SELECT Id FROM User WHERE Alias='standt' LIMIT 1];
+        
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        // This code runs as the system user
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+        LocaleSidKey='en_US', ProfileId = p.Id,
+        TimeZoneSidKey='America/Los_Angeles',
+        UserName=uniqueUserName);
+        u.UserPermissionsKnowledgeUser = true;
+		insert u;
 
         HDT_UTL_DataFactoryTst.assignPermissionSet(u, 'HDT_UtentiPubblicatoriKnowledge', true);
 
         System.runAs(u){
-
+    
             Test.startTest();
 
             KbManagement.PublishingService.publishArticle(kArt.KnowledgeArticleId, true);
@@ -243,7 +245,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
             Test.stopTest();
 
         }
-        System.assertEquals('Online', kArt.PublishStatus, 'PublishStatus != Online');
+        Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
+        System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
 
 
     }
