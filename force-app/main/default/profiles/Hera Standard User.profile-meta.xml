@@ -465,6 +465,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ServicePoint__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ServicePoint__c.IsWrongFiscalData__c</field>
         <readable>true</readable>
     </fieldPermissions>
