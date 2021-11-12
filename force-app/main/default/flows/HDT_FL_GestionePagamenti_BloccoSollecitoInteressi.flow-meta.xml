@@ -380,7 +380,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetCaseAggiornato.TotalResidue__c</leftValueReference>
+                    <leftValueReference>InputCase.TotalResidue__c</leftValueReference>
                     <operator>LessThan</operator>
                     <rightValue>
                         <numberValue>0.01</numberValue>
@@ -413,7 +413,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

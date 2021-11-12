@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Definisce la frequenza di fatturazione.</help>
     <label>Frequenza di Fatturazione</label>
     <name>SBQQ__BillingFrequency__c</name>
 </CustomFieldTranslation>

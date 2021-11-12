@@ -73,12 +73,13 @@ public class HDT_BA_PostSalesMasterBatchTst {
         
         //HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         
-        
+
         Knowledge__kav kArt = new Knowledge__kav();
         kArt.Title = 'Test Original Title';
         kArt.urlName = 'original';
         kArt.ExpirationDate__c = Date.today()-5;
         insert kArt;
+    
 
         CS_DaysToExpiration__c autoletturaCustomSetting = new CS_DaysToExpiration__c();
         autoletturaCustomSetting.Name = 'Autolettura';
@@ -206,6 +207,50 @@ public class HDT_BA_PostSalesMasterBatchTst {
 
         
     }
+
+    /*
+    @Author:        Francesco Vitiello
+    CreatedDate:    10/11/2021
+    Reason: Add Managing Knowledge Article Test Method
+    */
+    @IsTest
+    static void testBatchExecution5(){
+
+        Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
+
+        //User u=[SELECT Id FROM User WHERE Alias='standt' LIMIT 1];
+        
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        // This code runs as the system user
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+        LocaleSidKey='en_US', ProfileId = p.Id,
+        TimeZoneSidKey='America/Los_Angeles',
+        UserName=uniqueUserName);
+        u.UserPermissionsKnowledgeUser = true;
+		insert u;
+
+        HDT_UTL_DataFactoryTst.assignPermissionSet(u, 'HDT_UtentiPubblicatoriKnowledge', true);
+
+        System.runAs(u){
+    
+            Test.startTest();
+
+            KbManagement.PublishingService.publishArticle(kArt.KnowledgeArticleId, true);
+
+            HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();        
+            database.executeBatch(psm);
+
+            Test.stopTest();
+
+        }
+        Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
+        System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
+
+
+    }
+
 
     public class HDT_BA_PostSalesMasterBatchTstMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {

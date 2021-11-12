@@ -8,12 +8,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         List<SObject> scope = new List<SObject>();
 
 
-        scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getExpiredCase());
         scope.addAll(postsalesQr.getQuotationCase());
         scope.addAll(postsalesQr.getNonReqContract());
         scope.addAll(postsalesQr.getAutoletturaBozzaCase());
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
+        scope.addAll(postsalesQr.getExpiredArticle());
+
 
 
         return scope;
@@ -52,11 +53,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
             switch on sobj{
 
-                when Knowledge__kav article{
-                    if(article.ExpirationDate__c != null){
-                        KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
-                    }
-                }
                 when Case currentCase{
                     
                     //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
@@ -103,7 +99,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) paymentsWs.execute(args);
 
                         //TO trigger Technical Phase
-                        HDT_UTL_DatabaseService.updateSObject(newCase);
+                        myCurrentCaseList.add(newCase);
                     }else if(currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')){
                         currentCase.Phase__c = 'Preventivo scaduto';
                         HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
@@ -136,8 +132,12 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }
                         }
+                    }                    
+                }
+                when Knowledge__kav article{
+                    if(article.ExpirationDate__c != null){
+                        KbManagement.PublishingService.archiveOnlineArticle(article.KnowledgeArticleId,null);
                     }
-                    
                 }
             }
         }

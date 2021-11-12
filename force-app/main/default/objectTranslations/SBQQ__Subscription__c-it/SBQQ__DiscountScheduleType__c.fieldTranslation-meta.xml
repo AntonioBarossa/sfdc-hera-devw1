@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Tipo di programma di sconto. Copiato dal campo Tipo nel programma di sconto associato.</help>
     <label></label>
     <name>SBQQ__DiscountScheduleType__c</name>
     <picklistValues>
