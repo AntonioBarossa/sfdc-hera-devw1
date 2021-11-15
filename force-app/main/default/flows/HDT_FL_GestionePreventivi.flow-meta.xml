@@ -4,7 +4,7 @@
         <name>Calcola_Importo_Preventivo</name>
         <label>Calcola Importo Preventivo</label>
         <locationX>1179</locationX>
-        <locationY>2211</locationY>
+        <locationY>2382</locationY>
         <actionName>HDT_UTL_AmountQuote</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -30,7 +30,7 @@
         <name>Calcola_Info_Preventivo</name>
         <label>Calcola Info Preventivo</label>
         <locationX>1468</locationX>
-        <locationY>1494</locationY>
+        <locationY>1665</locationY>
         <actionName>HDT_UTL_QuoteManagement</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -148,7 +148,7 @@
         <name>Opzione</name>
         <label>Predefault_CalcolaOpzione</label>
         <locationX>1184</locationX>
-        <locationY>3354</locationY>
+        <locationY>3525</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -186,7 +186,7 @@
         <name>Aggiorna_Corrispettivo_Fisso</name>
         <label>Aggiorna Corrispettivo Fisso</label>
         <locationX>1047</locationX>
-        <locationY>2451</locationY>
+        <locationY>2622</locationY>
         <assignmentItems>
             <assignToReference>CorrispettivoVar</assignToReference>
             <operator>Assign</operator>
@@ -202,7 +202,7 @@
         <name>Aggiorna_Importo_Case</name>
         <label>Aggiorna Importo Case</label>
         <locationX>882</locationX>
-        <locationY>3651</locationY>
+        <locationY>3822</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Amount__c</assignToReference>
             <operator>Assign</operator>
@@ -218,7 +218,7 @@
         <name>AggiornaCodici</name>
         <label>AggiornaCodici</label>
         <locationX>2079</locationX>
-        <locationY>3510</locationY>
+        <locationY>3681</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.DistributorCode__c</assignToReference>
             <operator>Assign</operator>
@@ -241,7 +241,7 @@
         <name>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</name>
         <label>Assegna Fase Attesa Conferma Preventivo Cliente</label>
         <locationX>1145</locationX>
-        <locationY>4466</locationY>
+        <locationY>4637</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -264,7 +264,7 @@
         <name>Assegna_Valori_0</name>
         <label>Assegna Valori</label>
         <locationX>1342</locationX>
-        <locationY>1876</locationY>
+        <locationY>2047</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -294,7 +294,7 @@
         <name>AssegnaComponenteFissaVariabile</name>
         <label>AssegnaComponenteFissaVariabile</label>
         <locationX>1101</locationX>
-        <locationY>3676</locationY>
+        <locationY>3847</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.FixedAmount__c</assignToReference>
             <operator>Assign</operator>
@@ -317,7 +317,7 @@
         <name>AssegnaDaServicePoint</name>
         <label>AssegnaDaServicePoint</label>
         <locationX>1091</locationX>
-        <locationY>1055</locationY>
+        <locationY>1226</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerLimitation__c</assignToReference>
             <operator>Assign</operator>
@@ -375,7 +375,7 @@
         <name>AssegnaImportoNullo</name>
         <label>AssegnaImportoNullo</label>
         <locationX>1452</locationX>
-        <locationY>2801</locationY>
+        <locationY>2972</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Amount__c</assignToReference>
             <operator>Assign</operator>
@@ -388,7 +388,7 @@
         <name>AssegnaOpzione</name>
         <label>AssegnaOpzione</label>
         <locationX>1676</locationX>
-        <locationY>3220</locationY>
+        <locationY>3391</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.TensionOption__c</assignToReference>
             <operator>Assign</operator>
@@ -404,7 +404,7 @@
         <name>AssegnaPotenzaRichiesta</name>
         <label>AssegnaPotenzaRichiesta</label>
         <locationX>357</locationX>
-        <locationY>1235</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -420,7 +420,7 @@
         <name>AssegnaPredefaultSpostamentoContatoreVarPortata</name>
         <label>AssegnaPredefaultSpostamentoContatoreVarPortata</label>
         <locationX>565</locationX>
-        <locationY>1117</locationY>
+        <locationY>1288</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -443,7 +443,7 @@
         <name>AssegnaRecordType</name>
         <label>AssegnaRecordType</label>
         <locationX>1648</locationX>
-        <locationY>899</locationY>
+        <locationY>1070</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNuovoImpianto.RecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -487,7 +487,7 @@
         <name>AssegnaRipristoFornInterr</name>
         <label>AssegnaRipristoFornInterr</label>
         <locationX>671</locationX>
-        <locationY>1022</locationY>
+        <locationY>1193</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.TaxRate__c</assignToReference>
             <operator>Assign</operator>
@@ -517,7 +517,7 @@
         <name>AssegnaTipoConnessione</name>
         <label>AssegnaTipoConnessione</label>
         <locationX>1032</locationX>
-        <locationY>848</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
             <operator>Assign</operator>
@@ -533,7 +533,7 @@
         <name>AssegnaTipoConnessione_0</name>
         <label>AssegnaTipoConnessione</label>
         <locationX>1203</locationX>
-        <locationY>886</locationY>
+        <locationY>1057</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
             <operator>Assign</operator>
@@ -549,7 +549,7 @@
         <name>AssegnaValori_00</name>
         <label>AssegnaValori</label>
         <locationX>1964</locationX>
-        <locationY>319</locationY>
+        <locationY>490</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -565,7 +565,7 @@
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
         <locationX>1279</locationX>
-        <locationY>1522</locationY>
+        <locationY>1693</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CaliberRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -588,7 +588,7 @@
         <name>AssegnaValoriNoCodOperazione</name>
         <label>AssegnaValoriNoCodOperazione</label>
         <locationX>1694</locationX>
-        <locationY>1956</locationY>
+        <locationY>2127</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -615,7 +615,7 @@
         <name>Corrispettivo_Aumento</name>
         <label>Corrispettivo Aumento</label>
         <locationX>387</locationX>
-        <locationY>3003</locationY>
+        <locationY>3174</locationY>
         <assignmentItems>
             <assignToReference>CorrispettivoVar</assignToReference>
             <operator>Assign</operator>
@@ -631,7 +631,7 @@
         <name>Corrispettivo_Diminuzione</name>
         <label>Corrispettivo Diminuzione</label>
         <locationX>783</locationX>
-        <locationY>2667</locationY>
+        <locationY>2838</locationY>
         <assignmentItems>
             <assignToReference>CorrispettivoVar</assignToReference>
             <operator>Assign</operator>
@@ -647,7 +647,7 @@
         <name>Corrispettivo_Placet</name>
         <label>Corrispettivo Placet</label>
         <locationX>453</locationX>
-        <locationY>3339</locationY>
+        <locationY>3510</locationY>
         <assignmentItems>
             <assignToReference>CorrispettivoVar</assignToReference>
             <operator>Assign</operator>
@@ -663,7 +663,7 @@
         <name>CostoPrestazioneAssignment</name>
         <label>Costo Prestazione</label>
         <locationX>244</locationX>
-        <locationY>2787</locationY>
+        <locationY>2958</locationY>
         <assignmentItems>
             <assignToReference>CostoPrestazioneVar</assignToReference>
             <operator>Assign</operator>
@@ -679,7 +679,7 @@
         <name>CostoPrestazioneAssignment_0</name>
         <label>Costo Prestazione</label>
         <locationX>519</locationX>
-        <locationY>2787</locationY>
+        <locationY>2958</locationY>
         <assignmentItems>
             <assignToReference>CostoPrestazioneVar</assignToReference>
             <operator>Assign</operator>
@@ -695,7 +695,7 @@
         <name>Diritti_Fissi_Dom</name>
         <label>Diritti Fissi</label>
         <locationX>452</locationX>
-        <locationY>2331</locationY>
+        <locationY>2502</locationY>
         <assignmentItems>
             <assignToReference>DirittiFissi</assignToReference>
             <operator>Assign</operator>
@@ -711,7 +711,7 @@
         <name>Diritti_Fissi_NonDom</name>
         <label>Diritti Fissi</label>
         <locationX>717</locationX>
-        <locationY>2331</locationY>
+        <locationY>2502</locationY>
         <assignmentItems>
             <assignToReference>DirittiFissi</assignToReference>
             <operator>Assign</operator>
@@ -727,7 +727,7 @@
         <name>Pratica_non_gestita_per_DL</name>
         <label>Pratica non gestita per DL</label>
         <locationX>1424</locationX>
-        <locationY>4497</locationY>
+        <locationY>4668</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -757,7 +757,7 @@
         <name>Predefaults</name>
         <label>Predefaults</label>
         <locationX>1789</locationX>
-        <locationY>541</locationY>
+        <locationY>712</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Commodity__c</assignToReference>
             <operator>Assign</operator>
@@ -780,7 +780,7 @@
         <name>Preventivo_da_inviare</name>
         <label>Preventivo da Inviare</label>
         <locationX>833</locationX>
-        <locationY>4555</locationY>
+        <locationY>4726</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -936,7 +936,7 @@
         <name>AumentoDiminuzionePotenza</name>
         <label>Aumento o Diminuzione Potenza?</label>
         <locationX>585</locationX>
-        <locationY>2547</locationY>
+        <locationY>2718</locationY>
         <defaultConnector>
             <targetReference>Corrispettivo_Diminuzione</targetReference>
         </defaultConnector>
@@ -961,7 +961,7 @@
         <name>Avanzamento</name>
         <label>Avanzamento</label>
         <locationX>1025</locationX>
-        <locationY>1484</locationY>
+        <locationY>1655</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Conferma_1</name>
@@ -1012,7 +1012,7 @@
         <name>Avanzamento_1</name>
         <label>Avanzamento</label>
         <locationX>2449</locationX>
-        <locationY>1001</locationY>
+        <locationY>1172</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Avanti</name>
@@ -1063,7 +1063,7 @@
         <name>Avanzamento_2</name>
         <label>Avanzamento</label>
         <locationX>910</locationX>
-        <locationY>3871</locationY>
+        <locationY>4042</locationY>
         <defaultConnector>
             <targetReference>Annullamento_Prestazione</targetReference>
         </defaultConnector>
@@ -1095,7 +1095,7 @@
         <name>Bozza_o_Continua</name>
         <label>Bozza o Continua?</label>
         <locationX>1763</locationX>
-        <locationY>1323</locationY>
+        <locationY>1494</locationY>
         <defaultConnectorLabel>Bozza</defaultConnectorLabel>
         <rules>
             <name>Continua</name>
@@ -1146,7 +1146,7 @@
         <name>Codice_Operazione_Valorizzato</name>
         <label>Codice Operazione Valorizzato?</label>
         <locationX>1534</locationX>
-        <locationY>1772</locationY>
+        <locationY>1943</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriNoCodOperazione</targetReference>
         </defaultConnector>
@@ -1171,7 +1171,7 @@
         <name>Domestico_o_Non_Domestico</name>
         <label>Domestico o Non Domestico</label>
         <locationX>586</locationX>
-        <locationY>2211</locationY>
+        <locationY>2382</locationY>
         <defaultConnector>
             <targetReference>Diritti_Fissi_NonDom</targetReference>
         </defaultConnector>
@@ -1203,7 +1203,7 @@
         <name>Domestico_o_Non_Domestico_0</name>
         <label>Domestico o Non Domestico</label>
         <locationX>387</locationX>
-        <locationY>2667</locationY>
+        <locationY>2838</locationY>
         <defaultConnector>
             <targetReference>CostoPrestazioneAssignment_0</targetReference>
         </defaultConnector>
@@ -1235,7 +1235,7 @@
         <name>Esiste_Configurazione</name>
         <label>Esiste Configurazione?</label>
         <locationX>1459</locationX>
-        <locationY>1652</locationY>
+        <locationY>1823</locationY>
         <defaultConnector>
             <targetReference>ErrorConfigurationScreen</targetReference>
         </defaultConnector>
@@ -1260,7 +1260,7 @@
         <name>Esiste_Importo_Configurato</name>
         <label>Esiste Importo Configurato?</label>
         <locationX>1173</locationX>
-        <locationY>2329</locationY>
+        <locationY>2500</locationY>
         <defaultConnector>
             <targetReference>ErroreImportiScreen</targetReference>
         </defaultConnector>
@@ -1285,7 +1285,7 @@
         <name>Fase</name>
         <label>Fase?</label>
         <locationX>1516</locationX>
-        <locationY>270</locationY>
+        <locationY>441</locationY>
         <defaultConnectorLabel>Case non Riprendibile</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
@@ -1329,7 +1329,7 @@
         <name>FT</name>
         <label>FT?</label>
         <locationX>1109</locationX>
-        <locationY>756</locationY>
+        <locationY>927</locationY>
         <defaultConnector>
             <targetReference>AssegnaTipoConnessione_0</targetReference>
         </defaultConnector>
@@ -1354,7 +1354,7 @@
         <name>Nuovo_Impianto_0</name>
         <label>Nuovo Impianto</label>
         <locationX>1844</locationX>
-        <locationY>3367</locationY>
+        <locationY>3538</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_2</targetReference>
         </defaultConnector>
@@ -1386,7 +1386,7 @@
         <name>Offerta_Placet_Decision</name>
         <label>Offerta Placet?</label>
         <locationX>739</locationX>
-        <locationY>3202</locationY>
+        <locationY>3373</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Importo_Case</targetReference>
         </defaultConnector>
@@ -1411,7 +1411,7 @@
         <name>OptionBlank</name>
         <label>OptionBlank</label>
         <locationX>1419</locationX>
-        <locationY>3420</locationY>
+        <locationY>3591</locationY>
         <defaultConnector>
             <targetReference>AssegnaOpzione</targetReference>
         </defaultConnector>
@@ -1440,7 +1440,7 @@
         <name>Prestazione_Gestita</name>
         <label>Prestazione Gestita?</label>
         <locationX>1233</locationX>
-        <locationY>4149</locationY>
+        <locationY>4320</locationY>
         <defaultConnector>
             <targetReference>Pratica_non_gestita_per_DL</targetReference>
         </defaultConnector>
@@ -1465,7 +1465,7 @@
         <name>Preventivo_Rapido</name>
         <label>Preventivo Rapido?</label>
         <locationX>1465</locationX>
-        <locationY>2077</locationY>
+        <locationY>2248</locationY>
         <defaultConnector>
             <targetReference>AssegnaImportoNullo</targetReference>
         </defaultConnector>
@@ -1490,7 +1490,7 @@
         <name>Preventivo_Rapido_0</name>
         <label>Preventivo Rapido?</label>
         <locationX>1031</locationX>
-        <locationY>4261</locationY>
+        <locationY>4432</locationY>
         <defaultConnector>
             <targetReference>Preventivo_da_inviare</targetReference>
         </defaultConnector>
@@ -1515,7 +1515,7 @@
         <name>Riprendi_Case</name>
         <label>Riprendi Case</label>
         <locationX>1548</locationX>
-        <locationY>490</locationY>
+        <locationY>661</locationY>
         <defaultConnector>
             <targetReference>Predefaults</targetReference>
         </defaultConnector>
@@ -1540,7 +1540,7 @@
         <name>RiprendiCase</name>
         <label>RiprendiCase?</label>
         <locationX>1226</locationX>
-        <locationY>598</locationY>
+        <locationY>769</locationY>
         <defaultConnector>
             <targetReference>FT</targetReference>
         </defaultConnector>
@@ -1565,7 +1565,7 @@
         <name>Salva_In_Bozza_O_Conferma</name>
         <label>Salva In Bozza O Conferma</label>
         <locationX>1297</locationX>
-        <locationY>3867</locationY>
+        <locationY>4038</locationY>
         <defaultConnectorLabel>Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -1616,7 +1616,7 @@
         <name>Salva_In_Bozza_o_Continua</name>
         <label>Salva In Bozza o Continua?</label>
         <locationX>608</locationX>
-        <locationY>483</locationY>
+        <locationY>654</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Continua_0</name>
@@ -1667,7 +1667,7 @@
         <name>Tipo_Processo</name>
         <label>Tipo Processo</label>
         <locationX>1003</locationX>
-        <locationY>321</locationY>
+        <locationY>492</locationY>
         <defaultConnector>
             <targetReference>RiprendiCase</targetReference>
         </defaultConnector>
@@ -1714,7 +1714,7 @@
         <name>Tipo_Processo_0</name>
         <label>Tipo Processo?</label>
         <locationX>882</locationX>
-        <locationY>2091</locationY>
+        <locationY>2262</locationY>
         <defaultConnector>
             <targetReference>Calcola_Importo_Preventivo</targetReference>
         </defaultConnector>
@@ -1739,7 +1739,7 @@
         <name>Valorizzare_Potenza_Richiesta</name>
         <label>Valorizzare Potenza Richiesta?</label>
         <locationX>561</locationX>
-        <locationY>839</locationY>
+        <locationY>1010</locationY>
         <defaultConnector>
             <targetReference>AssegnaPotenzaRichiesta</targetReference>
         </defaultConnector>
@@ -1822,7 +1822,7 @@
         <name>Variazione_Portata</name>
         <label>Variazione Portata?</label>
         <locationX>1475</locationX>
-        <locationY>1240</locationY>
+        <locationY>1411</locationY>
         <defaultConnector>
             <targetReference>Calcola_Info_Preventivo</targetReference>
         </defaultConnector>
@@ -2021,7 +2021,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
         <locationX>1530</locationX>
-        <locationY>143</locationY>
+        <locationY>314</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Fase</targetReference>
@@ -2042,7 +2042,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Get_Input_Case_0</name>
         <label>Get Input Case</label>
         <locationX>1768</locationX>
-        <locationY>1184</locationY>
+        <locationY>1355</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bozza_o_Continua</targetReference>
@@ -2063,7 +2063,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>GetCaseNuovoImpianto</name>
         <label>GetCaseNuovoImpianto</label>
         <locationX>1951</locationX>
-        <locationY>995</locationY>
+        <locationY>1166</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetRecordTypePreventivi</targetReference>
@@ -2084,7 +2084,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>getContract</name>
         <label>getContract</label>
         <locationX>1848</locationX>
-        <locationY>844</locationY>
+        <locationY>1015</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaRecordType</targetReference>
@@ -2112,7 +2112,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>GetRecordTypePreventivi</name>
         <label>GetRecordTypePreventivi</label>
         <locationX>1987</locationX>
-        <locationY>878</locationY>
+        <locationY>1049</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getContract</targetReference>
@@ -2134,7 +2134,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
         <locationX>886</locationX>
-        <locationY>4076</locationY>
+        <locationY>4247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
@@ -2204,14 +2204,14 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>1175</locationX>
-        <locationY>4708</locationY>
+        <locationY>4879</locationY>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_2</name>
         <label>Aggiorna Case</label>
         <locationX>1678</locationX>
-        <locationY>3629</locationY>
+        <locationY>3800</locationY>
         <connector>
             <targetReference>RiepilogoRapidoScreen</targetReference>
         </connector>
@@ -2221,7 +2221,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Aggiorna_Fase_In_Lavorazione</name>
         <label>Aggiorna Fase In Lavorazione</label>
         <locationX>608</locationX>
-        <locationY>701</locationY>
+        <locationY>872</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -2248,7 +2248,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>1017</locationX>
-        <locationY>1251</locationY>
+        <locationY>1422</locationY>
         <connector>
             <targetReference>Processo_Screen</targetReference>
         </connector>
@@ -2258,7 +2258,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaCase_00</name>
         <label>AggiornaCase</label>
         <locationX>2169</locationX>
-        <locationY>677</locationY>
+        <locationY>848</locationY>
         <connector>
             <targetReference>LoadingSpinner</targetReference>
         </connector>
@@ -2268,7 +2268,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaCaseDaInviare</name>
         <label>AggiornaCaseDaInviare</label>
         <locationX>849</locationX>
-        <locationY>4717</locationY>
+        <locationY>4888</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -2278,7 +2278,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaCaseNuovoImpianto</name>
         <label>AggiornaCaseNuovoImpianto</label>
         <locationX>1820</locationX>
-        <locationY>995</locationY>
+        <locationY>1166</locationY>
         <connector>
             <targetReference>Processo_Screen</targetReference>
         </connector>
@@ -2288,7 +2288,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaPredefaults</name>
         <label>AggiornaPredefaults</label>
         <locationX>1697</locationX>
-        <locationY>650</locationY>
+        <locationY>821</locationY>
         <connector>
             <targetReference>CommodityScreen</targetReference>
         </connector>
@@ -2299,7 +2299,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>CommodityScreen</name>
         <label>CommodityAddressScreen</label>
         <locationX>1660</locationX>
-        <locationY>770</locationY>
+        <locationY>941</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2430,7 +2430,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>ErrorConfigurationScreen</name>
         <label>ErrorConfigurationScreen</label>
         <locationX>1754</locationX>
-        <locationY>1646</locationY>
+        <locationY>1817</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -2446,7 +2446,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>ErroreImportiScreen</name>
         <label>ErroreImportiScreen</label>
         <locationX>1284</locationX>
-        <locationY>2528</locationY>
+        <locationY>2699</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2462,7 +2462,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>993</locationX>
-        <locationY>4808</locationY>
+        <locationY>4979</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2493,7 +2493,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>LoadingSpinner</name>
         <label>LoadingSpinner</label>
         <locationX>2302</locationX>
-        <locationY>729</locationY>
+        <locationY>900</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2524,7 +2524,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Processo_Screen</name>
         <label>Input Dati Screen</label>
         <locationX>1475</locationX>
-        <locationY>1071</locationY>
+        <locationY>1242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2641,7 +2641,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Riepilogo_Non_Bozza</name>
         <label>Riepilogo Non Bozza</label>
         <locationX>1822</locationX>
-        <locationY>265</locationY>
+        <locationY>436</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2734,7 +2734,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>RiepilogoRapidoScreen</name>
         <label>RiepilogoRapidoScreen</label>
         <locationX>1454</locationX>
-        <locationY>3757</locationY>
+        <locationY>3928</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2839,7 +2839,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>1110</locationX>
-        <locationY>3801</locationY>
+        <locationY>3972</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2917,7 +2917,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
         <locationX>618</locationX>
-        <locationY>314</locationY>
+        <locationY>485</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3022,7 +3022,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Screen_Inserimento_Portata</name>
         <label>Screen Inserimento Portata</label>
         <locationX>1135</locationX>
-        <locationY>1345</locationY>
+        <locationY>1516</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3052,10 +3052,10 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1611</locationX>
+        <locationX>1615</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Get_Input_Case</targetReference>
+            <targetReference>Check_Servizio_Q02</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -3063,7 +3063,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>1960</locationX>
-        <locationY>1309</locationY>
+        <locationY>1480</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3088,7 +3088,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1040</locationX>
-        <locationY>1621</locationY>
+        <locationY>1792</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3113,7 +3113,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
         <locationX>1132</locationX>
-        <locationY>3957</locationY>
+        <locationY>4128</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3138,7 +3138,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>432</locationX>
-        <locationY>515</locationY>
+        <locationY>686</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3158,6 +3158,16 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
                 <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Check_Servizio_Q02</name>
+        <label>Check Servizio Q02</label>
+        <locationX>1531</locationX>
+        <locationY>178</locationY>
+        <connector>
+            <targetReference>Get_Input_Case</targetReference>
+        </connector>
+        <flowName>HDT_FL_GestioneServizioQ02</flowName>
     </subflows>
     <variables>
         <name>CorrispettivoVar</name>

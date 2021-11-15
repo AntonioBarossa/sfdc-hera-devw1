@@ -356,6 +356,11 @@
                 <label>In attesa esecuzione appuntamento</label>
             </value>
             <value>
+                <fullName>In Attesa Legge 80</fullName>
+                <default>false</default>
+                <label>In Attesa Legge 80</label>
+            </value>
+            <value>
                 <fullName>In attesa tempi di ripensamento</fullName>
                 <default>false</default>
                 <label>In attesa tempi di ripensamento</label>
@@ -487,6 +492,11 @@
                 <fullName>Plico validato Firmato</fullName>
                 <default>false</default>
                 <label>Plico validato Firmato</label>
+            </value>
+            <value>
+                <fullName>Pratica In Attesa</fullName>
+                <default>false</default>
+                <label>Pratica In Attesa</label>
             </value>
             <value>
                 <fullName>Pratica non gestita per il DL</fullName>

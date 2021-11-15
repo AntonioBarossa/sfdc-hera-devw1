@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    12/11/2021
+    Reason: Ottimizzazione a seguito di gestione Case Phase "In Bozza", Case Type "Blocco Sollecito/Interessi" e Knowledge Article
+*/
 @isTest
 public class HDT_BA_PostSalesMasterBatchTst {
     
@@ -21,6 +26,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Pratica In Attesa', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPostSales, rtNamePostSales,'A','','','');
@@ -68,21 +74,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
 
         caseList[4].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Domiciliazione').getRecordTypeId();
         caseList[4].Cluster__c = 'Pagamenti';
-        update caseList;
-        
-        
-        //HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
-        
-        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-        // This code runs as the system user
-        Profile p = [SELECT Id FROM Profile WHERE Name='Hera Standard User'];
-        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
-        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-        LocaleSidKey='en_US', ProfileId = p.Id,
-        TimeZoneSidKey='America/Los_Angeles',
-        UserName=uniqueUserName);
-        u.UserPermissionsKnowledgeUser = true;
-		insert u;
+        update caseList;        
 
         Knowledge__kav kArt = new Knowledge__kav();
         kArt.Title = 'Test Original Title';
@@ -108,152 +100,67 @@ public class HDT_BA_PostSalesMasterBatchTst {
     @IsTest
     static void testBatchExecution(){
 
-        Case cs = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Piano Rateizzazione' LIMIT 1];
+        Case myCase1 = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Piano Rateizzazione' LIMIT 1];
+        Case myCase2 = [SELECT Id, Phase__c, SuspensionEndDate__c, Type  FROM Case WHERE Type = 'Piano Rateizzazione'LIMIT 1];
+        Case myCase3 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Contratto Non Richiesto' LIMIT 1];
+        Case myCase4 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Autolettura' LIMIT 1];
+        Case myCase5 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Pagamenti' LIMIT 1];
         
-        Test.startTest();
-
-        //cs.Phase__c = 'Attesa conferma preventivo cliente';
-        //update cs;
-
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();
-        // Id batchId = Database.executeBatch(psm);
-
-        List<SObject> l = psm.start(null);
-        System.assert(l.size() > 0, 'l.size() = 0 or l == null');
-
-        psm.execute(null, l);
-
-        Test.stopTest();
-
-        Case updatedCase = [SELECT Id, Phase__c FROM Case WHERE Id =: cs.Id LIMIT 1];
-        System.assertEquals('Preventivo scaduto', updatedCase.Phase__c, 'Phase != Preventivo scaduto');
-
+        Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
-    }
-
-    @IsTest
-    static void testBatchExecution2(){
-
-        Case cs = [SELECT Id, Phase__c, SuspensionEndDate__c, Type  FROM Case WHERE Type = 'Piano Rateizzazione'LIMIT 1];
-
-        //cs.Phase__c = 'Pratica In Attesa';
-        //update cs;
-
-        Test.startTest();
-
-        Test.setMock(HttpCalloutMock.class, new HDT_BA_PostSalesMasterBatchTstMock());
-        
-        System.debug('DEBUG ===>');
-        System.debug('DEBUG TIPO: ' + cs.Type);
-        System.debug('DEBUG FASE: ' + cs.Phase__c);
-        System.debug('DEBUG SUSP END DATE: ' + cs.SuspensionEndDate__c);
-
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();
-        // Id batchId = Database.executeBatch(psm);
-
-        List<SObject> l = psm.start(null);
-        System.assert(l.size() > 0, 'l.size() = 0 or l == null');
-
-        psm.execute(null, l);
-
-        Test.stopTest();
-
-    }
-
-    @IsTest
-    static void testBatchExecution3(){
-
-        Case cs = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Contratto Non Richiesto' LIMIT 1];
-
-        
-        Test.startTest();
-
-        //cs.Phase__c = 'Pratica In Attesa';
-        //update cs;
-
-        System.debug('DEBUG ===>');
-        System.debug('DEBUG TIPO: ' + cs.Type);
-        System.debug('DEBUG FASE: ' + cs.Phase__c);
-
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();
-
-        // Id batchId = Database.executeBatch(psm);
-
-        List<SObject> l = psm.start(null);
-        System.assert(l.size() > 0, 'l.size() = 0 or l == null');
-
-        psm.execute(null, l);
-        
-        Test.stopTest();
-
-        Case updatedCase = [SELECT Id, Phase__c FROM Case WHERE Id =: cs.Id LIMIT 1];
-        System.assertEquals('Da Inviare', updatedCase.Phase__c, 'Phase != Da Inviare');
-        
-    }
-
-    /*
-    @Author:        Francesco Vitiello
-    CreatedDate:    27/10/2021
-    Reason: Add Managing Cancel Draft Case Test Method
-    */
-    @IsTest
-    static void testBatchExecution4(){
-
-        Case myCase1 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Autolettura' LIMIT 1];
-        Case myCase2 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Pagamenti' LIMIT 1];
-        
-        Test.startTest();   
-
-        HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();        
-        database.executeBatch(psm);
-
-        Test.stopTest();
-
-        Case updatedCase1 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase1.Id LIMIT 1];
-        System.assertEquals('Bozza Annullata', updatedCase1.Phase__c, 'Phase != Bozza Annullata');
-
-        Case updatedCase2 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase2.Id LIMIT 1];
-        System.assertEquals('Bozza Annullata', updatedCase2.Phase__c, 'Phase != Bozza Annullata');
-
-        
-    }
-
-    /*
-    @Author:        Francesco Vitiello
-    CreatedDate:    10/11/2021
-    Reason: Add Managing Knowledge Article Test Method
-    */
-    @IsTest
-    static void testBatchExecution5(){
-
-        Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];        
-        User u=[SELECT Id FROM User WHERE Alias='standt' LIMIT 1];
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+        EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+        LocaleSidKey='en_US', ProfileId = p.Id,
+        TimeZoneSidKey='America/Los_Angeles',
+        UserName=uniqueUserName);
+        u.UserPermissionsKnowledgeUser = true;
+		insert u;
 
         HDT_UTL_DataFactoryTst.assignPermissionSet(u, 'HDT_UtentiPubblicatoriKnowledge', true);
 
         System.runAs(u){
-
-            Test.startTest();
+            
+            Test.setMock(HttpCalloutMock.class, new HDT_BA_PostSalesMasterBatchTstMock());
 
             KbManagement.PublishingService.publishArticle(kArt.KnowledgeArticleId, true);
+    
+            Test.startTest();
 
             HDT_BA_PostSalesMasterBatch psm = new HDT_BA_PostSalesMasterBatch();        
-            database.executeBatch(psm);
+
+            Database.executeBatch(psm);
 
             Test.stopTest();
 
         }
-        System.assertEquals('Online', kArt.PublishStatus, 'PublishStatus != Online');
 
+        Case updatedCase1 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase1.Id LIMIT 1];
+        System.assertEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
+
+        Case updatedCase2 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase2.Id LIMIT 1];
+        System.assertEquals('Completata', updatedCase2.Phase__c, 'Phase != Pratica In Attesa');
+
+        Case updatedCase3 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase3.Id LIMIT 1];
+        System.assertEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
+
+        Case updatedCase4 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase4.Id LIMIT 1];
+        System.assertEquals('Bozza Annullata', updatedCase4.Phase__c, 'Phase != Bozza Annullata');
+
+        Case updatedCase5 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase5.Id LIMIT 1];
+        System.assertEquals('Bozza Annullata', updatedCase5.Phase__c, 'Phase != Bozza Annullata');
+
+        Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
+        System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
 
     }
-
 
     public class HDT_BA_PostSalesMasterBatchTstMock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest request) {
             HttpResponse response = new HttpResponse();
             response.setHeader('Content-Type', 'application/json');
-            response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"rdsRdo":"rds","tipoAttivita":"attivita","note":"nota","numeroBollettino":"98","importoTotale":"10.00","esito":"OK"}}');
+            response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"rdsRdo":"rds","tipoAttivita":"Pratica avviata","note":"nota","numeroBollettino":"98","importoTotale":"10.00","esito":"OK"}}');
             response.setStatusCode(200);
             response.setStatus('OK');
             return response; 
