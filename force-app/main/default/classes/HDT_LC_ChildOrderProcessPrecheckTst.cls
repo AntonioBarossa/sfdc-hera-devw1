@@ -404,7 +404,7 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         
         List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
         activities[0].type__c = 'Gestione Switch in Ripristinatorio';
-        activities[0].status__c = 'Creata';
+        activities[0].wrts_prcgvr__Status__c = 'Creata';
         activities[0].Account__c = accId;
         activities[0].ServicePointCode__c = 'codicepunto';
         insert activities;
