@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Costo unità per questa sottoscrizione.</help>
     <label>Costo Unità</label>
     <name>SBQQ__UnitCost__c</name>
 </CustomFieldTranslation>

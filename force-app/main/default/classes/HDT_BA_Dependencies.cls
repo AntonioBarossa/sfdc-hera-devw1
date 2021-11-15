@@ -4,7 +4,16 @@
 * @description HDT_BA_Dependencies – Batch per lo sblocco dei processi sequenzializzati
 */
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject> {
+public with sharing class HDT_BA_Dependencies implements Database.Batchable<sObject>, Schedulable {
+
+    /**
+    * @description 
+    * @author federico.defelice@webresults.it | 10-11-2021 
+    * @param ctx 
+    **/
+    public void execute(SchedulableContext ctx){
+        Database.executebatch(this, 1);//Concordato con P. Sarais
+    }
     
     /**
     * @author Andrea Arosio (andrea.arosio@webresults.it)

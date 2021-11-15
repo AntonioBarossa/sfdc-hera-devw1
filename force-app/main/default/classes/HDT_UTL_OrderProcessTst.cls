@@ -117,10 +117,10 @@ public with sharing class HDT_UTL_OrderProcessTst {
             actList[1].RecordTypeId = constants.ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO;
             actList[2].RecordTypeId = constants.ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO;
             actList[3].RecordTypeId = constants.ACTIVITYCUSTOM_RECORDTYPEID_CREDITCHECKKO;
-            actList[0].Status__c = 'Creata';
-            actList[1].Status__c = 'Creata';
-            actList[2].Status__c = 'Creata';
-            actList[3].Status__c = 'Creata';
+            actList[0].wrts_prcgvr__Status__c = 'Creata';
+            actList[1].wrts_prcgvr__Status__c = 'Creata';
+            actList[2].wrts_prcgvr__Status__c = 'Creata';
+            actList[3].wrts_prcgvr__Status__c = 'Creata';
             insert actList;
         }
     }
@@ -357,7 +357,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, DocumentPackage__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c
+                                            Contact__c, ParentOrder__c, MethodSignedAccepted__c, SignedDate__c
                                   FROM Order WHERE ParentOrder__r.Name='testOrderName0'];
 
             List<Order> ordersNew = ordersOld;

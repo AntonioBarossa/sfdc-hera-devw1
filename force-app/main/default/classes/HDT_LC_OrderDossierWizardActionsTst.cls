@@ -77,7 +77,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
     
     @isTest static void testSave2(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, SignMode__c,Phase__c, ContractSigned__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
         ord.Phase__c = 'In Lavorazione';
@@ -214,5 +214,19 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 		System.assertNotEquals(false, result, 'isSaveDisabled did not work correctly');
 
 		Test.stopTest();
+	}
+
+	@isTest static void testGetActivePicklistValue(){
+
+		List<String> activeValue = HDT_LC_OrderDossierWizardActions.getActivePicklistValue('Order', 'SignMode__c');
+        
+        System.assert(activeValue != null, 'Non sono stati trovati i valori nella picklist');
+	}	
+	
+	@isTest static void testGetActivePicklistValueError(){
+
+		List<String> activeValue = HDT_LC_OrderDossierWizardActions.getActivePicklistValue('Orderr', 'SignMode__c');
+        
+        System.assert(activeValue.isEmpty(), 'Gestione dell\'errore non funzionante.');
 	}
 }

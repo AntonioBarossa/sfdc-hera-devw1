@@ -96,7 +96,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
         switch on codicePrestazione {
-            when 'A01', 'A40', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+            when 'A01', 'A40','A02', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
                 if (!String.isBlank(codicePraticaDistributore)) {
                     triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);

@@ -912,13 +912,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 isReading: true,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
             },
+            /**@frpanico 12/11/2021
+             * DM RN007 - La sezione "Dati precedente intestatario non deve essere visibile nel processo di SwitchIn"
+             * Commentata condizione switchIn nel field "processVisibility"
+             */
             {
                 step: 4,
                 label: 'Dati precedente intestatario',
                 name: 'datiPrecedenteIntestatario',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                processVisibility: /*this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' ||*/ this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
                     //constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
                     new fieldData('Nome precedente intestatario','PreviousHolderFirstName__c', true, false, false, '',''),   
@@ -1839,8 +1843,44 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                 ]
             },
+            /**@frpanico 12/11/2021 aggiunte sezioni Referente Cliente Finale, Dati Commerciali
+             * constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value)
+             */
             {
                 step: 9,
+                label: 'Referente Cliente Finale/Anagrafica',
+                name: 'primaryContact',
+                objectApiName: 'Contact',
+                recordId: this.order.ContractReference__c !== null ? this.order.ContractReference__c : null,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                data:
+                [
+                    new fieldData('Nome', 'FirstName',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Cognome', 'LastName',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Codice Fiscale', 'FiscalCode__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Telefono Cellulare', 'MobilePhone',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Telefono Fisso', 'HomePhone',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Email', 'Email',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Email PEC', 'CertifiedEmail__c',this.typeVisibility('both'),false,true,true,'')
+                ]
+            },
+            {
+                step: 10,
+                label: 'Dati Commerciali',
+                name: 'commercialData',
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
+                data:
+                [
+                    new fieldData('Mercato', 'Market__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Contratto', 'SapContractCode__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Punto di Fornitura', 'ServicePoint__c',this.typeVisibility('both'),false,true,true,''),
+                    new fieldData('Codice Ateco', 'AtecoCode__c',this.typeVisibility('both'),false,true,true,'')
+                ]
+            },
+            {
+                step: 11,
                 label:'Iva e accise',
                 name: 'ivaAccise',
                 objectApiName: 'Order',

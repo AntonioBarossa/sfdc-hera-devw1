@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Accoppia la data di fine della linea quota di default. Se vuoto, accoppierà la data finale del contratto.</help>
     <label>Data di Fine Sottoscrizione</label>
     <name>SBQQ__SubscriptionEndDate__c</name>
 </CustomFieldTranslation>

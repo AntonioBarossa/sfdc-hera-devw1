@@ -35,7 +35,7 @@ public with sharing class HDT_UTL_ActivityProcess {
                 activity.Account__c = order.AccountId;
                 activity.Contact__c = order.Contact__c;
                                 
-                activity.Status__c = 'Creata';                
+                activity.wrts_prcgvr__Status__c = 'Creata';                
                 activity.Note__c = order.CommentForDL__c;
 
                 listActivity.add(activity);
@@ -43,7 +43,7 @@ public with sharing class HDT_UTL_ActivityProcess {
 
         }
 
-        insert listActivity;
+        new HDT_SRV_ActivityCustom().createRecord(listActivity);
     
     }
 }

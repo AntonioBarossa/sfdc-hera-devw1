@@ -182,10 +182,14 @@
                                 </div> -->
                                 <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-combobox data-id="mobilephonePrefix2" name="mobilephonePrefix2" label="Prefisso Cellulare"
-                                            placeholder="Seleziona prefisso" value={mobilephonePrefix2} default="+39" options={phonePrefixOptions}
+                                        <template if:true={phonePrefixOptions}>
+
+                                        <lightning-combobox data-id="phonePrefix2" name="phonePrefix2" label="Prefisso telefono cliente"
+                                            placeholder="Seleziona prefisso" value={phonePrefixValue2} options={phonePrefixOptions}
+
                                             required>
                                         </lightning-combobox>
+                                        </template>
                                     </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
@@ -201,10 +205,14 @@
                                 </div> -->
                                 <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-combobox data-id="phonePrefix2" name="phonePrefix2" label="Prefisso Telefono Fisso"
-                                            placeholder="Seleziona prefisso" value={phonePrefixValue2} default="+39" options={phonePrefixOptions}
+                                        <template if:true={phonePrefixOptions}>
+
+                                        <lightning-combobox data-id="mobilephonePrefix2" name="mobilephonePrefix2" label="Prefisso telefono cellulare cliente"
+                                            placeholder="Seleziona prefisso" value={mobilephonePrefix2} options={phonePrefixOptions}
+
                                             required>
                                         </lightning-combobox>
+                                        </template>
                                     </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
@@ -402,10 +410,14 @@
                             <div class="slds-col slds-grid">
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix" label="Prefisso Cellulare"
-                                        placeholder="Seleziona prefisso" value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions} 
+                                    <template if:true={mobilePhonePrefixOptions}>
+
+                                    <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix" label="Prefisso cellulare"
+                                        placeholder="Seleziona prefisso" value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions}
+
                                         required>
                                     </lightning-combobox>
+                                    </template>
                                 </div>
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
@@ -419,10 +431,14 @@
                                     
                                     <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                        <lightning-combobox data-id="phonePrefix" name="phonePrefix" label="Prefisso Telefono Fisso"
+                                        <template if:true={phonePrefixOptions}>
+
+                                        <lightning-combobox data-id="phonePrefix" name="phonePrefix" label="Prefisso telefono fisso"
+
                                             placeholder="Seleziona prefisso" value={phonePrefixValue} options={phonePrefixOptions}
                                             required>
                                         </lightning-combobox>
+                                        </template>
                                     </div>
                                     <div
                                         class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">

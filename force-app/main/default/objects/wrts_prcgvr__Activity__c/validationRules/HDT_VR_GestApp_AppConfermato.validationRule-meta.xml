@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_GestApp_AppConfermato</fullName>
+    <active>true</active>
+    <description>Nello stato &quot;Appuntamento confermato&quot; i campi Data e Fascia Appuntamento Confermato sono obbligatori</description>
+    <errorConditionFormula>AND(RecordType.DeveloperName = &quot;HDT_RT_DistributorAppointment&quot;,
+isAtoA__c = false,
+ispickval(wrts_prcgvr__Status__c,&quot;Appuntamento confermato&quot;),
+ISBLANK(AppointmentDate__c),
+ISBLANK(AppoitmentTimeSlotConfirmed__c)
+)</errorConditionFormula>
+    <errorMessage>Popolare i campi Data e Fascia Appuntamento Confermato</errorMessage>
+</ValidationRule>

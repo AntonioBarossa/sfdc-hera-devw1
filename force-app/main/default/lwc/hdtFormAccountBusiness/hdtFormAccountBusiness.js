@@ -467,33 +467,42 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         var businessName =this.template.querySelector('[data-id="businessName"]');
         var vatNumber =this.template.querySelector('[data-id="vatNumber"]');
         this.personFiscalCode= this.template.querySelector('[data-id="personFiscalCode"]');
-        var prefixPhoneNumber = this.phonePrefixValue2;
-        var phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
-        var prefixMobilePhoneNumber = this.mobilephonePrefix2;
-        var mobilephoneNumber= this.template.querySelector('[data-id="mobilePhoneNumber"]');
-        var contactPhoneNumber =this.template.querySelector('[data-id="contactPhoneNumber"]');
-        var customerMarking =this.template.querySelector('[data-id="customerMarking"]');
-        var category= this.template.querySelector('[data-id="category"]');
-        var fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
-        var email= this.template.querySelector('[data-id="email"]');
-        var electronicMail= this.template.querySelector('[data-id="electronicMail"]');
-        var companyOwner= this.template.querySelector('[data-id="companyOwner"]');
-        var phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
-        var mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
-        var companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
-        var customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
-        var numberFax =this.template.querySelector('[data-id="numberFax"]');
-        var firstName =this.template.querySelector('[data-id="firstName"]');
-        var lastName= this.template.querySelector('[data-id="lastName"]');
-        var mobilePhone= this.template.querySelector('[data-id="mobilePhone"]');
-        var contactEmail= this.template.querySelector('[data-id="contactEmail"]');
-        var role=this.template.querySelector('[data-id="role"]');
-        var contactElectronicMail= this.template.querySelector('[data-id="contactElectronicMail"]');
-        var contactFax= this.template.querySelector('[data-id="contactFax"]');
-        var firstIndividualName= this.template.querySelector('[data-id="firstIndividualName"]');
-        var lastIndividualName= this.template.querySelector('[data-id="lastIndividualName"]');
-        var education=this.template.querySelector('[data-id="education"]');  
-        var profession= this.template.querySelector('[data-id="profession"]'); 
+        let prefixPhoneNumber = this.template.querySelector('[data-id="phonePrefix2"]');
+        let phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
+        let prefixMobilePhoneNumber = this.template.querySelector('[data-id="mobilephonePrefix2"]');
+        let mobilephoneNumber= this.template.querySelector('[data-id="mobilePhoneNumber"]');
+        let contactPhoneNumber =this.template.querySelector('[data-id="contactPhoneNumber"]');
+        let customerMarking =this.template.querySelector('[data-id="customerMarking"]');
+        let category= this.template.querySelector('[data-id="category"]');
+        let fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
+        let email= this.template.querySelector('[data-id="email"]');
+        let electronicMail= this.template.querySelector('[data-id="electronicMail"]');
+        let companyOwner= this.template.querySelector('[data-id="companyOwner"]');
+        let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
+        let mobilePhonePrefix= this.template.querySelector('[data-id="mobilePhonePrefix"]');
+        let companyValue= this.template.querySelector('[data-id="SocietaSilos"]');
+        let customerTypeValue=this.template.querySelector('[data-id="customerType"]').value;
+
+
+        // let address =this.template.querySelector('[data-id="address"]');
+        // let location =this.template.querySelector('[data-id="location"]');
+        // let myAddress =this.template.querySelector('[data-id="myAddress"]');
+        let numberFax =this.template.querySelector('[data-id="numberFax"]');
+        // let houseNumber =this.template.querySelector('[data-id="houseNumber"]');
+        // let postalCode =this.template.querySelector('[data-id="postalCode"]');
+        let firstName =this.template.querySelector('[data-id="firstName"]');
+        let lastName= this.template.querySelector('[data-id="lastName"]');
+        let mobilePhone= this.template.querySelector('[data-id="mobilePhone"]');
+        let contactEmail= this.template.querySelector('[data-id="contactEmail"]');
+     //   let legalForm= this.template.querySelector('[data-id="legalForm"]');
+        let role=this.template.querySelector('[data-id="role"]');
+        let contactElectronicMail= this.template.querySelector('[data-id="contactElectronicMail"]');
+        let contactFax= this.template.querySelector('[data-id="contactFax"]');
+        //let otherPhone= this.template.querySelector('[data-id="otherPhone"]');
+        let firstIndividualName= this.template.querySelector('[data-id="firstIndividualName"]');
+        let lastIndividualName= this.template.querySelector('[data-id="lastIndividualName"]');
+        let education=this.template.querySelector('[data-id="education"]');  
+        let profession= this.template.querySelector('[data-id="profession"]'); 
         this.gender=this.template.querySelector('[data-id="gender"]').value;
         this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
         this.birthPlace= this.template.querySelector('[data-id="birthPlace"]').value;
@@ -706,8 +715,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "category" : category.value,
                             "firstIndividualName" : firstIndividualName.value,
                             "lastIndividualName" : lastIndividualName.value,
-                            "prefixPhoneNumber" : prefixPhoneNumber,
-                            "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+                            "prefixPhoneNumber" : prefixPhoneNumber.value,
+                            "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                             "mobilephoneNumber" : mobilephoneNumber.value,
                             "phoneNumber" : phoneNumber.value,
                             "email" : email.value,
@@ -803,8 +812,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "email" : email.value,
                         "electronicMail" : electronicMail.value,
                         "numberFax" : numberFax.value,
-                        "prefixPhoneNumber" : prefixPhoneNumber,
-                        "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+                        "prefixPhoneNumber" : prefixPhoneNumber.value,
+                        "prefixMobilePhoneNumber" : prefixMobilePhoneNumber.value,
                         "mobilephoneNumber" : mobilephoneNumber.value,
                         "firstName" : firstName.value,
                         "gender" : this.gender,

@@ -367,6 +367,12 @@ public class HDT_QR_CampaignMemberTst{
 		                                     FROM PaperProcessing__c
 		                                     LIMIT 1];
 
+		List<CampaignMember> camList = [SELECT id,PaperProcess__c FROM CampaignMember];
+		System.debug('camList++++++++++++++ '+ camList); 
+
+		camList[0].PaperProcess__c = null;
+		update camList;
+
 		List<CampaignMember> getCampMemForPaperProc=campMembQr.getCampaignMembersForPaperProcessing(tPaperProc[0].Id );
 
 		Test.stopTest();

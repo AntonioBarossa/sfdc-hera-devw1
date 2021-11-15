@@ -136,7 +136,7 @@ public class HDT_UTL_ScartiTst {
             
             List<wrts_prcgvr__Activity__c> activities = HDT_UTL_DataFactoryTst.createActivityCustom(4,false,accId);
             activities[0].Order__c = orders[0].id;
-            activities[0].Status__c = 'Creata';
+            activities[0].wrts_prcgvr__Status__c = 'Creata';
             activities[0].NewEmail__c = 'yes@no.it';
             activities[0].NewMobile__c = '3334441122';
             activities[0].DiscardCategory__c = 'Anonima';
@@ -144,7 +144,7 @@ public class HDT_UTL_ScartiTst {
             activities[0].Case__c = cases[0].id;            
             activities[1].Case__c = cases[0].id;
             activities[1].DiscardCategory__c = 'Anonima';
-            activities[1].Status__c = 'Creata';
+            activities[1].wrts_prcgvr__Status__c = 'Creata';
             activities[2].NewEmail__c = 'activityCase@no.it';
             activities[2].Case__c = cases[0].id;   
             activities[3].NewEmail__c = 'activityOrder@no.it';
@@ -574,7 +574,7 @@ public class HDT_UTL_ScartiTst {
             
         HDT_UTL_Scarti.checkForEsitiIntermedi(activities);
         
-        List<wrts_prcgvr__Activity__c> relatedAct = [Select id,status__c,wrts_prcgvr__Status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
+        List<wrts_prcgvr__Activity__c> relatedAct = [Select id,wrts_prcgvr__Status__c From wrts_prcgvr__Activity__c where NewEmail__c != 'yes@no.it'];
         
         System.assertEquals('Not Started', relatedAct[0].wrts_prcgvr__Status__c, 'checkForEsitiIntermedi did not work correctly');
         System.assertNotEquals(null, relatedAct, 'checkForEsitiIntermedi did not work correctly');
@@ -716,9 +716,8 @@ public class HDT_UTL_ScartiTst {
         
         Test.stopTest();
         
-        List<wrts_prcgvr__Activity__c> activities = [Select id, Status__c, wrts_prcgvr__Status__c from wrts_prcgvr__Activity__c where case__c =: caseId];
+        List<wrts_prcgvr__Activity__c> activities = [Select id, wrts_prcgvr__Status__c from wrts_prcgvr__Activity__c where case__c =: caseId];
         
-        System.assertEquals('Chiusa', activities[0].Status__c, 'chiudiAttivitaCase did not work correctly');
         System.assertNotEquals('Aperta', activities[0].wrts_prcgvr__Status__c, 'chiudiAttivitaCase did not work correctly');
 
     }
