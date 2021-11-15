@@ -9,6 +9,7 @@ import cancel from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.cancel';
 import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isSaveDisabled';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
 import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
@@ -37,6 +38,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         return this.isPrintButtonDisabled  || (this.signatureMethod == 'Vocal Order' && (this.isVocalAndActivityNotClose && this.orderParentRecord.Phase__c != 'Documentazione da validare'));
     }
 
+    @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
+    activeValue;
 
     @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD] })
     wiredParentOrder({ error, data }) {
@@ -250,11 +253,19 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
         this.orderParentRecord = JSON.parse(JSON.stringify(this.orderParentRecord))
         //Se l'invio va a buon fine il signMode utilizzato viene sallvato nel campo SignMode.
         var signMode = this.parentOrder.fields.SignatureMethod__c.value
-        if (signMode && (signMode.localeCompare('OTP Coopresenza') === 0||signMode.localeCompare('OTP Remoto') === 0||signMode.localeCompare('Vocal Order') === 0||signMode.localeCompare('Cartacea') === 0)){
-            this.orderParentRecord.SignMode__c = signMode;
-        }else{
-            this.orderParentRecord.SignMode__c = null; 
+        let newSignMode;
+        try{
+            if (this.activeValue){
+                this.activeValue.data.forEach((element) => {
+                    if (element && element.localeCompare(signMode) === 0){
+                        newSignMode = signMode;
+                    }
+                });
+            }
+        }catch(e){
+            console.error(e);
         }
+        this.orderParentRecord.SignMode__c = newSignMode;
         save2({orderParent: this.orderParentRecord,isPlicoSend:true}).then(data =>{
             this.loading = false;
 

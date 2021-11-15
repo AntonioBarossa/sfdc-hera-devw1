@@ -298,4 +298,22 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         return result || orderParent.Status == 'Completed';
     }
 
+    
+    @AuraEnabled(cacheable=true)
+    public static List<String> getActivePicklistValue(String objectApiName,String fieldApiName){
+        List<String> activeValue = new List<String>();
+        try{
+            Schema.SobjectField objField = Schema.getGlobalDescribe().get(objectApiName).getDescribe().fields.getMap().get(fieldApiName);
+            List<Schema.PicklistEntry> pickListEntries = objField.getDescribe().getPickListValues();
+            for (Schema.PicklistEntry entry : pickListEntries) {
+                if (entry.isActive()) {
+                    activeValue.add(entry.getValue());
+                }
+            }
+        }catch(Exception e){
+
+        }
+        return activeValue;
+    }
+
 }
