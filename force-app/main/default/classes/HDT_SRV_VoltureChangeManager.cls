@@ -31,11 +31,12 @@ public with sharing class HDT_SRV_VoltureChangeManager
         extraParams.put('sobjName', 'Order');
         Order clonedOrder = (Order)voltureChangeUtl.cloneSObject(sobj, extraParams);
         Order inputOrder = (Order)sobj;        
-        /* Add process Type to the cloned order and insert*/
+        /* Add process Type, RecordType,Phase__s, Status,OrderReference to the cloned order and insert*/
         clonedOrder.put('ProcessType__c','Voltura con Switch');
         clonedOrder.put('RecordTypeId', clonedOrderRecordTypeId);
         clonedOrder.put('Phase__c','Bozza');
         clonedOrder.put('Status','Draft');
+        clonedOrder.put('OrderReference__c',inputOrder.Id);
         HDT_UTL_DatabaseService.insertSObject(clonedOrder);
         /*Retrieve and clone OrderItems from input order*/
         orderItemsToClone = voltureChangeQr.getOrderItemByOrderId(inputOrder.Id);

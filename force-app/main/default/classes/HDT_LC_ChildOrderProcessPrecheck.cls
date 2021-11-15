@@ -213,4 +213,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static Map<String, Object> checkContendibilita(Order order){
+
+        try {
+            return HDT_SRV_QservHandler.handler(order);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }

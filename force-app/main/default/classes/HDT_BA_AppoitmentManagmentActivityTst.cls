@@ -20,7 +20,7 @@ public class HDT_BA_AppoitmentManagmentActivityTst {
         HDT_UTL_Constants constants = new HDT_UTL_Constants();
 
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acctList[0].Id);
-        actList[0].Status__c = 'Appuntamento confermato';
+        actList[0].wrts_prcgvr__Status__c = 'Appuntamento confermato';
         actList[0].Type__c = 'Presa Appuntamento';
         actList[0].AppointmentDate__c = dt.addDays(1);
         actList[0].Email__c = 'test@test.com';
@@ -29,7 +29,7 @@ public class HDT_BA_AppoitmentManagmentActivityTst {
         insert actList;
 
         List<wrts_prcgvr__Activity__c> actList1 = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acctList[0].Id);
-        actList1[0].Status__c = 'Appuntamento confermato';
+        actList1[0].wrts_prcgvr__Status__c = 'Appuntamento confermato';
         actList1[0].Type__c = 'Presa Appuntamento';
         actList1[0].AppointmentDate__c = dt.addDays(1);
         actList1[0].Email__c = 'test1@test.com';
@@ -71,7 +71,7 @@ public class HDT_BA_AppoitmentManagmentActivityTst {
         HDT_BA_AppoitmentManagmentActivity appManage = new HDT_BA_AppoitmentManagmentActivity();
         Database.executeBatch(appManage);
         Test.stopTest();
-        List<wrts_prcgvr__Activity__c> actList = [SELECT Id,Status__c,Account__c,Name FROM wrts_prcgvr__Activity__c ];
+        List<wrts_prcgvr__Activity__c> actList = [SELECT Id,wrts_prcgvr__Status__c,Account__c,Name FROM wrts_prcgvr__Activity__c ];
 
         System.assertEquals(true, actList.size() > 0, 'Created and insert Activity');
         System.assertNotEquals(true, actList.size() == 0, 'Created and insert Activity');

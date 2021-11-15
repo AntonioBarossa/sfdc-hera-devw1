@@ -14,6 +14,17 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
         'Gas'
     };
     private static final Date TODAY = Date.today();
+    private List<String> idList;
+
+    public HDT_BA_CustomerLifeCycle() {}
+
+    public HDT_BA_CustomerLifeCycle(List<String> idList) {
+        this.idList = idList;
+    }
+
+    public static void testRun(String idList) {
+        Database.executeBatch(new HDT_BA_CustomerLifeCycle(idList.split(',')));
+    }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         String query = 'SELECT ' +
@@ -33,6 +44,11 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
                 'CustomerLifeCycleWater__c' +
             ' FROM Account'
         ;
+
+        if(idList != null) {
+            query += ' WHERE Id IN :idList';
+        }
+
         return Database.getQueryLocator(query);
     }
 
@@ -158,7 +174,7 @@ public with sharing class HDT_BA_CustomerLifeCycle implements Database.Batchable
             }
         }
 
-        update processedAccountMap.values();
+        Database.update(processedAccountMap.values(), false);
     }
 
     /*

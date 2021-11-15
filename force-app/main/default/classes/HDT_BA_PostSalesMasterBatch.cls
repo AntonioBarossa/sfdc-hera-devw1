@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    12/11/2021
+    Reason: Modifica per gestione Annullamento Case con Phase "In Bozza", Case con Type "Blocco Sollecito/Interessi" e inversione porzioni di codice Case/Knowledge Article
+*/
 public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.Batchable<SObject>, Database.AllowsCallouts {
 
 
@@ -8,12 +13,13 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         List<SObject> scope = new List<SObject>();
 
 
-        scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getExpiredCase());
         scope.addAll(postsalesQr.getQuotationCase());
         scope.addAll(postsalesQr.getNonReqContract());
         scope.addAll(postsalesQr.getAutoletturaBozzaCase());
         scope.addAll(postsalesQr.getPostSalesBozzaCase());
+        scope.addAll(postsalesQr.getExpiredArticle());
+
 
 
         return scope;
@@ -118,7 +124,6 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             if(relatedOrder.EffectiveDate__c < System.today()){
                                 currentCase.Phase__c = 'Da Inviare';
                                 //Fire del platform event per inviare il flusso ad Heroku
-                                //System.debug('# case da delegare ad un altro evento: ' + currentCase.size());
                                 HDT_PEV_NonReqContract__e event = new HDT_PEV_NonReqContract__e();
                                 event.SerializedCase__c = JSON.serialize(currentCase);
                                 Database.SaveResult sr = EventBus.publish(event);

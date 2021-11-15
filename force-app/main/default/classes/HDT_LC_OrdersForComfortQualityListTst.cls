@@ -88,7 +88,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE Phase__c='Annullato' LIMIT 1];
 
-    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,Status__c 
+    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,wrts_prcgvr__Status__c 
                                               FROM wrts_prcgvr__Activity__c
                                               WHERE Order__c=:order.id];
 
@@ -96,7 +96,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     HDT_LC_OrdersForComfortQualityList.confirmContract( order.id, activity[0].id , 'ComfortNo');
     Test.stopTest();
     //System.assertEquals(1, acts.size());
-    System.assertEquals(true, [SELECT Id, Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = 'Quality Call OK'].size()>0,'An wrts_prcgvr__Activity__c is created');
+    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = 'Quality Call OK'].size()>0,'An wrts_prcgvr__Activity__c is created');
     System.assertNotEquals(false, [SELECT Id, Phase__c FROM Order WHERE Phase__c = 'Annullato'].size()>0,'An Order is created');
 
   }
@@ -106,7 +106,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_VAS' LIMIT 1];
 
-    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,Status__c 
+    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,wrts_prcgvr__Status__c 
                                               FROM wrts_prcgvr__Activity__c
                                               WHERE Order__c=:order.id];
 
@@ -114,7 +114,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     HDT_LC_OrdersForComfortQualityList.confirmContract( order.id, activity[0].id , 'Comfort');
     Test.stopTest();
     //System.assertEquals(1, acts.size());
-    System.assertEquals(true, [SELECT Id, Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = ''].size()>0,'An wrts_prcgvr__Activity__c is created');
+    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = ''].size()>0,'An wrts_prcgvr__Activity__c is created');
     System.assertNotEquals(false, [SELECT Id, Phase__c FROM Order WHERE Phase__c = 'Comunicazione Motore VAS'].size()>0,'An Order is created');
 
   }
@@ -124,7 +124,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_CambioOfferta' LIMIT 1];
 
-    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,Status__c 
+    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,wrts_prcgvr__Status__c 
                                               FROM wrts_prcgvr__Activity__c
                                               WHERE Order__c=:order.id];
 
@@ -132,7 +132,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     HDT_LC_OrdersForComfortQualityList.confirmContract( order.id, activity[0].id , 'Comfort');
     Test.stopTest();
     //System.assertEquals(1, acts.size());
-    System.assertEquals(true, [SELECT Id, Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = ''].size()>0,'An wrts_prcgvr__Activity__c is created');
+    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = ''].size()>0,'An wrts_prcgvr__Activity__c is created');
     System.assertNotEquals(false, [SELECT Id, Phase__c FROM Order WHERE Phase__c = 'Comunicazione verso Heroku'].size()>0,'An Order is created');
   }
 
@@ -141,7 +141,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
 
     Order order=[SELECT id,ConfirmCustomerContract__c,Phase__c FROM Order WHERE RecordType.DeveloperName='HDT_RT_SwitchIn' LIMIT 1];
 
-    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,Status__c 
+    List<wrts_prcgvr__Activity__c> activity= [SELECT id,Order__r.RecordType.DeveloperName,wrts_prcgvr__Status__c 
                                               FROM wrts_prcgvr__Activity__c
                                               WHERE Order__c=:order.id];
 
@@ -149,7 +149,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     HDT_LC_OrdersForComfortQualityList.confirmContract( order.id, activity[0].id , 'Comfort');
     Test.stopTest();
     //System.assertEquals(1, acts.size());
-    System.assertEquals(true, [SELECT Id, Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = ''].size()>0,'An wrts_prcgvr__Activity__c is created');
+    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = ''].size()>0,'An wrts_prcgvr__Activity__c is created');
     System.assertNotEquals(false, [SELECT Id, Phase__c FROM Order WHERE Phase__c = 'Comunicazione verso Heroku'].size()>0,'An Order is created');
 
   }
@@ -166,7 +166,7 @@ private class HDT_LC_OrdersForComfortQualityListTst {
     HDT_LC_OrdersForComfortQualityList.cancelContract( order.id, activity[0].id , 'Annullo voltura');
     Test.stopTest();
     //System.assertEquals(1, acts.size());
-    System.assertEquals(true, [SELECT Id, Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = 'Annullato'].size()>0,'An wrts_prcgvr__Activity__c is created');
+    System.assertEquals(true, [SELECT Id, wrts_prcgvr__Status__c, ContactResult__c FROM wrts_prcgvr__Activity__c WHERE ContactResult__c = 'Annullato'].size()>0,'An wrts_prcgvr__Activity__c is created');
     System.assertNotEquals(false, [SELECT Id, Phase__c,Status FROM Order WHERE Status = 'Activated'].size()>0,'An Order is created');
 
   }

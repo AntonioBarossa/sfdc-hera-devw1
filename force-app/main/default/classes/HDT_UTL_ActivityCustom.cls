@@ -89,7 +89,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             Type__c = params.get('Type__c'),
             ServicePointCode__c = params.get('ServicePointCode__c'),
             Account__c = !accountListRetrieved.isEmpty() ? accountListRetrieved[0].Id : null,
-            Status__c = params.get('Status__c'),
+            wrts_prcgvr__Status__c = params.get('wrts_prcgvr__Status__c'),
             EffectiveDate__c = String.isNotBlank(params.get('EffectiveDate__c')) ? Date.valueOf(params.get('EffectiveDate__c')) : null,
             HerokuPracticeCode__c = params.get('HerokuPracticeCode__c')
         ));
@@ -156,7 +156,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             }
             for(wrts_prcgvr__Activity__c act : newList){
                 if(recTypeId == act.recordtypeid){
-                    if((mapOld.get(act.id).Status__c != MODCONFERMATO && act.Status__c == MODCONFERMATO) || (mapOld.get(act.id).Status__c != APPCONFERMATO && act.Status__c == APPCONFERMATO)){
+                    if((mapOld.get(act.id).wrts_prcgvr__Status__c != MODCONFERMATO && act.wrts_prcgvr__Status__c == MODCONFERMATO) || (mapOld.get(act.id).wrts_prcgvr__Status__c != APPCONFERMATO && act.wrts_prcgvr__Status__c == APPCONFERMATO)){
                         act.DateTimeRef__c = Datetime.now();
                     }
                 }
@@ -171,7 +171,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         Set<Id> actsToCheck = new Set<Id>();
 
         for(wrts_prcgvr__Activity__c act : newActsMap.values()){
-            if(act.recordTypeId == rtKoOldClient && act.Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c)){
+            if(act.recordTypeId == rtKoOldClient && act.wrts_prcgvr__Status__c=='KO Risolto' && String.isNotBlank(act.Reason__c)){
                 actsToCheck.add(act.Id);
             }
         }
