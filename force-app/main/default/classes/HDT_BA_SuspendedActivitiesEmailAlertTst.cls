@@ -27,7 +27,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         
         List<wrts_prcgvr__Activity__c> testActivity = HDT_UTL_DataFactoryTst.createActivityCustom(1,true,acctId);
         testActivity[0].SuspensionDueDate__c = system.now().addMinutes(30);
-        testActivity[0].Status__c = 'Sospesa'; 
+        testActivity[0].wrts_prcgvr__Status__c = 'Sospesa'; 
         testActivity[0].RecordTypeDevName__c  = 'HDT_RT_Scarto';
         update testActivity;         
          
@@ -42,7 +42,7 @@ public with sharing class HDT_BA_SuspendedActivitiesEmailAlertTst {
         Database.executeBatch(sae);
         test.stopTest();
 
-        wrts_prcgvr__Activity__c q = [SELECT id, Name, ownerid  FROM  wrts_prcgvr__Activity__c WHERE Status__c = 'Sospesa' LIMIT 1];
+        wrts_prcgvr__Activity__c q = [SELECT id, Name, ownerid  FROM  wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Sospesa' LIMIT 1];
         id userName = q.ownerid;
         List<User> users = [SELECT id,Name,Email FROM User WHERE id =: userName ];
 

@@ -948,7 +948,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         system.debug('checkForEsitiIntermedi categories' + JSON.serializePretty(categories));
         system.debug('checkForEsitiIntermedi inputDataIds' + JSON.serializePretty(inputDataIds));
 
-        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, Status__c 
+        list<wrts_prcgvr__Activity__c> relatedActs = [SELECT id, wrts_prcgvr__Status__c 
                                                       FROM wrts_prcgvr__Activity__c 
                                                       WHERE (Case__c IN :parentObjectCase OR Order__c IN :parentObjectOrder) 
                                                       AND DiscardCategory__c IN :categories 
@@ -1023,24 +1023,22 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
     public static void chiudiAttivita(Id objectId){
         List<wrts_prcgvr__Activity__c> toUpdateActivities = new list<wrts_prcgvr__Activity__c>();
         if(Schema.Case.SObjectType == objectId.getSobjectType()){
-            toUpdateActivities = [SELECT id, Status__c, wrts_prcgvr__Status__c
+            toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
                                   FROM wrts_prcgvr__Activity__c
                                   WHERE Case__c= :objectId 
-                                  AND Status__c != 'Chiusa'
+                                  AND wrts_prcgvr__Status__c != 'Chiusa'
                                   WITH SECURITY_ENFORCED]; 
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
-                singleActivity.Status__c='Chiusa';
                 singleActivity.wrts_prcgvr__Status__c='Chiusa';
             }
             HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);
         }else if(Schema.Order.SObjectType == objectId.getSobjectType()){
-            toUpdateActivities = [SELECT id, Status__c, wrts_prcgvr__Status__c
+            toUpdateActivities = [SELECT id, wrts_prcgvr__Status__c
                         FROM wrts_prcgvr__Activity__c
                         WHERE Order__c= :objectId 
-                        AND Status__c != 'Chiusa'
+                        AND wrts_prcgvr__Status__c != 'Chiusa'
                         WITH SECURITY_ENFORCED];
             for(wrts_prcgvr__Activity__c singleActivity : toUpdateActivities){
-                singleActivity.Status__c='Chiusa';
                 singleActivity.wrts_prcgvr__Status__c='Chiusa';
             }
             HDT_UTL_DatabaseService.updateSObject(toUpdateActivities);

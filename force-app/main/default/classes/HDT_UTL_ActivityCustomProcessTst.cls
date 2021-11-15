@@ -133,7 +133,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
         
         wrts_prcgvr__Activity__c updatedActivity = HDT_UTL_ActivityCustomProcess.closeActivityCheck(myActivity);
         
-        System.assertEquals('Chiusa', updatedActivity.Status__c, 'closeActivityCheck did not work correctly');  
+        System.assertEquals('Chiusa', updatedActivity.wrts_prcgvr__Status__c, 'closeActivityCheck did not work correctly');  
         System.assertNotEquals(null, updatedActivity, 'closeActivityCheck did not work correctly');      
     }
     
