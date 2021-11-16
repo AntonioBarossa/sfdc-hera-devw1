@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>wrts_prcgvr__Activity__c$Owner</field>
+    </columns>
+    <columns>
+        <field>wrts_prcgvr__Activity__c$Name</field>
+    </columns>
+    <columns>
+        <field>wrts_prcgvr__Activity__c$wrts_prcgvr__Status__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>wrts_prcgvr__Activity__c$IsAppointmentToEdit__c</field>
+    </columns>
+    <columns>
+        <field>wrts_prcgvr__Activity__c$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>wrts_prcgvr__Activity__c$LastModifiedDate</field>
+    </columns>
+    <columns>
+        <field>wrts_prcgvr__Activity__c$Order__c.RecordType</field>
+    </columns>
+    <columns>
+        <field>wrts_prcgvr__Activity__c$Case__c.RecordType</field>
+    </columns>
+    <description>Questo rapporto mostra le Activity di Appuntamento Non-AtoA che devono essere prese in carico dall&apos;utente che le inserirà a portale Distributore {Create, Da modificare, Non eseguite}</description>
+    <filter>
+        <booleanFilter>1 AND (2 OR (3 AND 4))</booleanFilter>
+        <criteriaItems>
+            <column>wrts_prcgvr__Activity__c$RecordType</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>wrts_prcgvr__Activity__c$wrts_prcgvr__Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Creata,Appuntamento non eseguito</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>wrts_prcgvr__Activity__c$wrts_prcgvr__Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Appuntamento confermato</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>wrts_prcgvr__Activity__c$IsAppointmentToEdit__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>wrts_prcgvr__Activity__c$Distributor__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Activity Gestione Appuntamento</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ActivityCustom__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>wrts_prcgvr__Activity__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
