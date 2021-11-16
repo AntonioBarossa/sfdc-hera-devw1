@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SP_ASSET_ID__c</fullName>
-    <description>SP_ASSET_ID</description>
-    <externalDeveloperName>SP_ASSET_ID</externalDeveloperName>
+    <fullName>ATTRIB_48__c</fullName>
+    <externalDeveloperName>ATTRIB_48</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Id  Punto di Fornitura</label>
-    <length>100</length>
+    <label>Mod. Pagamento/CF Legale rappr.</label>
+    <length>30</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

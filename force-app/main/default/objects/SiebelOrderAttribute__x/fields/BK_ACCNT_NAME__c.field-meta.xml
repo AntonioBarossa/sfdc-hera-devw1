@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SP_ASSET_ID__c</fullName>
-    <description>SP_ASSET_ID</description>
-    <externalDeveloperName>SP_ASSET_ID</externalDeveloperName>
+    <fullName>BK_ACCNT_NAME__c</fullName>
+    <description>BK_ACCNT_NAME</description>
+    <externalDeveloperName>BK_ACCNT_NAME</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Id  Punto di Fornitura</label>
+    <label>Intestatario Conto</label>
     <length>100</length>
     <required>false</required>
     <type>Text</type>
