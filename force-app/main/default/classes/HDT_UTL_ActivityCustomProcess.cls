@@ -109,7 +109,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;                
                 activity.Contact__c = order.Contact__c;                                
-                activity.Status__c = 'Creata';                
+                activity.wrts_prcgvr__Status__c = 'Creata';                
                 activity.Note__c = order.CommentForDL__c;
                 activity.OwnerId = order.OwnerId;
                 activity.CvpId__c= order.CvpId__c;
@@ -147,7 +147,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 
         Set<Id> orderIdToAnnullamento = new Set<Id>();        
         for(wrts_prcgvr__Activity__c act : newActList){
-            if(act.Status__c == 'KO Definitivo'){
+            if(act.wrts_prcgvr__Status__c == 'KO Definitivo'){
                 orderIdToAnnullamento.add(act.Order__c);                 
             }
         }
@@ -189,7 +189,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
 
     // @Picchiri 15.06.21 Credit Check Gestione Esiti ed eventuali invocazione a chiamata Mulesoft
     public static wrts_prcgvr__Activity__c closeActivityCheck(wrts_prcgvr__Activity__c act){
-        act.Status__c = 'Chiusa'; 
+        act.wrts_prcgvr__Status__c = 'Chiusa'; 
         return act;       
     }
 
@@ -204,7 +204,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         for(Integer i = 0; i < newActList.size(); i++){
             wrts_prcgvr__Activity__c act = newActList[i];
             wrts_prcgvr__Activity__c actOld = oldActList[i];
-            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.CreditCheckResolutionReason__c == 'Dimostrata Estraneità' || act.CreditCheckResolutionReason__c == 'Saldo Pagato') && act.Status__c == 'KO Risolto'){                    
+            if(act.recordtypeid == recordtypeid && actOld.CreditCheckResults__c == 'KO' && act.CreditCheckResults__c == 'OK' && (act.CreditCheckResolutionReason__c == 'Dimostrata Estraneità' || act.CreditCheckResolutionReason__c == 'Saldo Pagato') && act.wrts_prcgvr__Status__c == 'KO Risolto'){                    
                 actListToRecheck.add(act);                    
             }
         }
@@ -332,7 +332,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
     //         wrts_prcgvr__Activity__c actOld =  mapActivityOld.get(actId);
 
     //         // esegue il creditcheck su una singola activity
-    //         if(actOld.Status__c != actNew.Status__c && 'KO Forzato'.equalsIgnoreCase(actNew.Status__c)){ //il KO Forzato vale come chiusura? devo annullare anche l'order?                
+    //         if(actOld.wrts_prcgvr__Status__c != actNew.wrts_prcgvr__Status__c && 'KO Forzato'.equalsIgnoreCase(actNew.wrts_prcgvr__Status__c)){ //il KO Forzato vale come chiusura? devo annullare anche l'order?                
     //             actListToRecheck.add(actNew);
     //             listOrderBadPayer.add(actOld.Order__c);
     //         }
@@ -376,7 +376,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
             List<Order> ordersToUpdate = new List<Order>();
             for (wrts_prcgvr__Activity__c activity : activities) {
                 if (activity.RecordTypeId == recordtypeid 
-                    && activity.Status__c == 'Non Esitata'
+                    && activity.wrts_prcgvr__Status__c == 'Non Esitata'
                     && isMonitoringList.contains(activity.Order__r.AgencyCode__c)) {
                     ordersToUpdate.add(new Order(
                         Id = activity.Order__c,

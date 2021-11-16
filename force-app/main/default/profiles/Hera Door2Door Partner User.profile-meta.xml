@@ -456,6 +456,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.IsDigitalMarking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.IsWrongFiscalData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.ExciseGas__c</field>
         <readable>true</readable>
@@ -14950,6 +14960,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ProductCode</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

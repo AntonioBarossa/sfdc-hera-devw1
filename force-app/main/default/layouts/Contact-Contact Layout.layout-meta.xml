@@ -230,6 +230,9 @@
         <fields>ACCOUNT.NAME</fields>
         <fields>ACCCONRELATION.IS_DIRECT</fields>
         <fields>ACCCONRELATION.ROLES</fields>
+        <fields>IsManagerSOL__c</fields>
+        <fields>SolStartDate__c</fields>
+        <fields>SolEndDate__c</fields>
         <relatedList>RelatedContactAccountRelationList</relatedList>
     </relatedLists>
     <relatedLists>

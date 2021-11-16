@@ -142,7 +142,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                                 RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
                                 // Account__c = ord.AccountId, //should not be shown on Account related activities
                                 Type__c = 'Quality Call',
-                                Status__c = 'Creata',
+                                wrts_prcgvr__Status__c = 'Creata',
                                 OwnerId = comfortQualityQueId,
                                 ActivatedDate__c = ord.ActivatedDate,
                                 LoginChannel__c = ord.LoginChannel__c

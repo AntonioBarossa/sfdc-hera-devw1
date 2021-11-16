@@ -428,21 +428,29 @@
             <default>false</default>
         </values>
         <values>
-                <fullName>Approvazione Bonus Commerciale</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Validazione Documentale</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Validazione Vocal Order</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Documenti non validati</fullName>
-                <default>false</default>
-            </values>
+            <fullName>Approvazione Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione Documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione Vocal Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documenti non validati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confermare Cambio Decorrenza</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Priority__c</picklist>

@@ -1157,6 +1157,6 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, Status__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Completed' AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Completed' AND Order__c = :orderId WITH SECURITY_ENFORCED];
     }
 }

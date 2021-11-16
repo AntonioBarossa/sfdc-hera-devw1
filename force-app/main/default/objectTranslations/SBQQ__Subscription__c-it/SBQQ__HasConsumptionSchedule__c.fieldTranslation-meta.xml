@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help></help>
+    <help>Indica se questa sottoscrizione ha almeno un programma di consumo.</help>
     <label>Ha i Programmi di Consumo</label>
     <name>SBQQ__HasConsumptionSchedule__c</name>
 </CustomFieldTranslation>

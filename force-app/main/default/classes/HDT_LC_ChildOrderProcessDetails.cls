@@ -111,6 +111,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
             }
             //@frpanico check "Data Decorrenza"
+            /**@frpanico 12/11/2021
+             * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
+             */
             if(order.EffectiveDate__c != null)
             {
                 if(order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
@@ -119,9 +122,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     {
                         throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
                     }
-                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 10, 31))
+                    else if(order.VoltureType__c != null && order.VoltureType__c == 'Recupero' && order.EffectiveDate__c > Date.newInstance(2015, 08, 31))
                     {
-                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/10/2015');
+                        throw new AuraHandledException('Per Voltura di tipo \"Recupero\" è necessario inserire una data antecedente al 31/08/2015');
                     }
                     else
                     {    

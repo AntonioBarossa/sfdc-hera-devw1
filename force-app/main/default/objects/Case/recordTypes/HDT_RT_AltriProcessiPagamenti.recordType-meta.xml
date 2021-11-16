@@ -7786,6 +7786,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
