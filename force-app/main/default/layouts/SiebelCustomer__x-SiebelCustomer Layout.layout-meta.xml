@@ -452,8 +452,8 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>LAST_NAME__c</fields>
         <fields>FST_NAME__c</fields>
+        <fields>LAST_NAME__c</fields>
         <fields>REFERENCE_TYPE_CD__c</fields>
         <fields>SOC_SECURITY_NUM__c</fields>
         <fields>X_COMP_ADDR__c</fields>
