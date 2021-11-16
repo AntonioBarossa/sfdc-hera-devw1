@@ -332,13 +332,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         system.debug('Ricalcolo delle date da Trigger sugli ordini --> oldOrdersList : ' + JSON.serializePretty(oldOrdersList));
         List<Order> orderList = new List<Order>();                        
         Map<String,Boolean> mapAccountRes = HDT_UTL_SwtichInProcess.checkAccountOrderIsResidential(newOrdersList);
-        Boolean ricalculateDate = false;
         //IsSequanzialized__c
         Map<String,Order> mapOldOrder = new Map<String,Order>();
         for (Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
         }
         for (Order newOrder : newOrdersList) {
+            Boolean ricalculateDate = false;
             //for (Order oldOrder : oldOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
             if(oldOrder != null){
@@ -803,7 +803,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }   
 
         // recuperare l'activity per questi ordini
-        // Le activity sull'ordine potrebbero essere più di una. Bisogna prendere quella con record type "credit check ko" e Status__c "creata" e CreditCheckReason__c contiene  "Cattivo pagatore"
+        // Le activity sull'ordine potrebbero essere più di una. Bisogna prendere quella con record type "credit check ko" e wrts_prcgvr__Status__c "creata" e CreditCheckReason__c contiene  "Cattivo pagatore"
         if(!orderSetId.isEmpty()){
             system.debug('YYY 6 --->');
             List<wrts_prcgvr__Activity__c> actList = HDT_QR_ActivityCustom.getActivityListCrediCheck(orderSetId);
@@ -817,7 +817,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
                 actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
                 actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
-                actToUpdate.Status__c = 'KO Risolto';
+                actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
                 actListToUpdate.add(actToUpdate);
                 
                 if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore')){
@@ -914,7 +914,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr .getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        activity.Status__c = 'Annullata';
                         activity.wrts_prcgvr__Status__c = 'Completed';
                     }
                     HDT_UTL_DatabaseService.updateSObject(activities);

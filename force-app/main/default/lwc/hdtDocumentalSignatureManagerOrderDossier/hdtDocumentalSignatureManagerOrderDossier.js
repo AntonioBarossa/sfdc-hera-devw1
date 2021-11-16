@@ -21,8 +21,11 @@ import ShippingIsAddressVerified from '@salesforce/schema/Order.ShippingIsAddres
 import ShippingProvince from '@salesforce/schema/Order.ShippingProvince__c';
 import ShippingCountry from '@salesforce/schema/Order.ShippingCountry__c';
 import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
+import SignedDate from '@salesforce/schema/Order.SignedDate__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
+
+const signModeFirmato = 'Contratto già firmato';
 
 const FIELDS = [
     'Order.Id',
@@ -35,6 +38,7 @@ const FIELDS = [
     'Order.ShippingMail__c',
     'Order.PhoneNumber__c',
 	'Order.CreatedBy.LoginChannel__c',
+	'Order.Channel__c',
     'Order.ShippingCity__c',
     'Order.ShippingCityCode__c',
     'Order.ShippingCountry__c',
@@ -82,6 +86,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     addressOptions = [];
     choosenAddr = '';
     //EVERIS DOCUMENTALE
+    actualSignedDate = '';
     @track inputParams;
     @track orderRecord;
     @track loadData=false;
@@ -243,7 +248,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 					context:'Order',
 					recordId:this.orderRecord.fields.Id.value,
 					processType:'Vendita',
-					source : this.orderRecord.fields.CreatedBy.value.fields.LoginChannel__c.value,
+					source : this.orderRecord.fields.Channel__c.value,
 					phone : phone,
 					email : email,
 					accountId : this.orderRecord.fields.Account.value.fields.Id.value,
@@ -264,16 +269,18 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     },
                     sendMode:this.orderRecord.fields.DocSendingMethod__c.value,
                     signMode:this.orderRecord.fields.SignatureMethod__c.value,
-                    enableEdit:this.disabledInput
+                    enableEdit:this.disabledInput,
+                    setDefault:!this.disabledInput,
+                    checkAgencies:'Y'
                 }
                 this.inputParams = JSON.stringify(inputParams);
-                if(contractSigned){
+                /* if(contractSigned){
                     console.log('Dentro Signed');
                     this.loadData = false;
                 }else{
-                    console.log('Fuori Signed');
+                    console.log('Fuori Signed'); */
                     this.loadData = true;
-                }
+                /* } */
                 console.log(this.inputParams);
             }else{
                 console.log(data + ' ' + error + ' ' + this.recordId);
@@ -328,14 +335,14 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
         this.dataToSubmit[fieldName] = fieldValue;
 
-        if (fieldName === 'ContractSigned__c') {
+        /* if (fieldName === 'ContractSigned__c') {
             this.isVisibleSignedDate = !this.isVisibleSignedDate;
             this.areInputsVisible = !this.areInputsVisible;
             if(fieldValue)
                 this.loadData = false;
             else
                 this.loadData = true;
-        }
+        } */
 
         if (fieldName === 'DocSendingMethod__c') {
             this.isMailVisible = (fieldValue === 'Mail');
@@ -347,6 +354,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.isAddrVisible = (this.template.querySelector("[data-id='DocSendingMethod__c']").value === 'Posta');
         }
 
+        if (fieldName === 'SignedDate__c'){
+            this.actualSignedDate = fieldValue;
+        }
     }
     handleConfirmData(event){
         this.loading = true;
@@ -390,6 +400,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dataToSubmit['ShippingCountry__c'] = resultWrapper.addressWrapper.Stato;
             fields[ShippingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
             this.dataToSubmit['ShippingStreetName__c'] = resultWrapper.addressWrapper.Via;
+            fields[SignedDate.fieldApiName] = this.actualSignedDate;
+            this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
             const recordInput = { fields };
            
             updateRecord(recordInput)
@@ -443,7 +455,16 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         
         this.dataToSubmit['Id'] = this.orderParentRecord.Id;
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager');
-        if(returnValue){
+        if (this.isVisibleSignedDate && this.actualSignedDate === null){
+            this.loading = false;
+            const errorDataFirma = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Data Firma',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(errorDataFirma);
+        }else if(returnValue){
             returnValue.checkForm();
         }else{
             this.loading = true;
@@ -500,6 +521,15 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dispatchEvent(new CustomEvent('tablerefresh'));
             this.dispatchEvent(new CustomEvent('documentalrefresh'));
             this.disabled = false;
+            let documentSignatureComponent = this.template.querySelector('c-hdt-document-signature-manager');
+            if(documentSignatureComponent){
+                try{
+                    documentSignatureComponent.computeAgenciesDefault(true);
+                    this.setDataFirmaRequired();
+                }catch(error){
+                    console.error(error);
+                }
+            }
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
@@ -514,11 +544,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
     handleFormInit(){
         if (this.orderParentRecord.ContractSigned__c !== undefined) {
-            this.isVisibleSignedDate = this.orderParentRecord.ContractSigned__c;
+            /* this.isVisibleSignedDate = this.orderParentRecord.ContractSigned__c; */
             this.areInputsVisible = !this.orderParentRecord.ContractSigned__c;
-            if(this.orderParentRecord.ContractSigned__c){
+            /* if(this.orderParentRecord.ContractSigned__c){
                this.loadData = false;
-            }
+            } */
         }
 
         if (this.orderParentRecord.DocSendingMethod__c === 'Mail') {
@@ -569,4 +599,30 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         this.openAfterScriptModal = true;
     }
 
+
+    setDataFirmaRequired(event){
+        let documentSignatureComponent = this.template.querySelector('c-hdt-document-signature-manager');
+        let signModeInit;
+        let signedDateInit;
+        if (this.orderRecord){
+            signModeInit = this.orderRecord.fields.SignatureMethod__c.value;
+            signedDateInit = this.orderRecord.fields.SignedDate__c.value;
+        }
+        if(documentSignatureComponent){
+            signModeInit = documentSignatureComponent.signModeDefault();
+        }
+        try{
+            if (event.detail === true){
+                signedDateInit = null;
+            }
+        }catch(e){
+            console.error(e);
+        }
+        this.isVisibleSignedDate = (signModeInit && signModeInit.localeCompare(signModeFirmato) === 0);
+        if (!this.isVisibleSignedDate){
+            this.actualSignedDate = null;
+        }else{
+            this.actualSignedDate = signedDateInit;
+        }
+    }
 }

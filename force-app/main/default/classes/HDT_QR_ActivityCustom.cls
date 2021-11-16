@@ -19,12 +19,12 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             Name,
-            Status__c,
+            wrts_prcgvr__Status__c,
             Account__c,
             ServicePointCode__c
             FROM wrts_prcgvr__Activity__c
             WHERE Type__c = :type
-            AND Status__c = :status
+            AND wrts_prcgvr__Status__c = :status
             AND Account__c = :accountId
             AND ServicePointCode__c = :servicePointCode
             WITH SECURITY_ENFORCED
@@ -36,7 +36,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             Name,
-            Status__c,
+            wrts_prcgvr__Status__c,
             Account__c,
             ServicePointCode__c
             FROM wrts_prcgvr__Activity__c
@@ -53,7 +53,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             Account__c,
-            status__c,
+            wrts_prcgvr__Status__c,
             case__c,
             case__r.phase__c,
             Contact__c,
@@ -75,7 +75,6 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             Account__c,
-            status__c,
             wrts_prcgvr__Status__c,
             order__c,
             order__r.ServicePoint__r.CommoditySector__c,
@@ -140,7 +139,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             Account__c,
-            status__c,
+            wrts_prcgvr__Status__c,
             case__c,
             case__r.phase__c,
             recordtypeid,
@@ -258,7 +257,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
     public static List<wrts_prcgvr__Activity__c> getActivityListCrediCheck(Set<Id> orderSetId){
         List<wrts_prcgvr__Activity__c> actList = [SELECT Id,
                                                              RecordType.DeveloperName,
-                                                             Status__c,
+                                                             wrts_prcgvr__Status__c,
                                                              CreditCheckResults__c,
                                                              Order__c,
                                                              Order__r.OrderNumber,
@@ -286,7 +285,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                              Order__r.Account.RecordType.DeveloperName                                                             
                                                        FROM wrts_prcgvr__Activity__c 
                                                        WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
-                                                                and Status__c = 'Creata' and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
+                                                                and wrts_prcgvr__Status__c = 'Creata' and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
 
         return actList;}
 
@@ -400,7 +399,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     Contact__c,
                     order__c,
                     RecordTypeId,
-                    Status__c
+                    wrts_prcgvr__Status__c
                     FROM wrts_prcgvr__Activity__c
                     where 
                     RecordType.developername = 'HDT_RT_ComfortQualityCall'
@@ -422,7 +421,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     order__c,
                     order__r.ParentOrder__c,
                     RecordTypeId,
-                    Status__c
+                    wrts_prcgvr__Status__c
                     FROM wrts_prcgvr__Activity__c
                     where 
                     RecordType.developername = 'HDT_RT_ComfortQualityCall'
@@ -444,7 +443,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     order__c,
                     order__r.ParentOrder__c,
                     RecordTypeId,
-                    Status__c
+                    wrts_prcgvr__Status__c
                     FROM wrts_prcgvr__Activity__c
                     where 
                     RecordType.developername = 'HDT_RT_ComfortQualityCall'
@@ -468,7 +467,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     order__r.AgencyCode__c,
                     RecordTypeId,
                     RecordType.DeveloperName,
-                    Status__c
+                    wrts_prcgvr__Status__c
                     FROM wrts_prcgvr__Activity__c
                     where Id in :idlist
                     WITH SECURITY_ENFORCED 

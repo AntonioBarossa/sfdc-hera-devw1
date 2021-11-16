@@ -1,3 +1,8 @@
+/*
+    @Author:        Francesco Vitiello
+    CreatedDate:    12/11/2021
+    Reason: Modifiche per gestione Annullamento Case con Phase "In Bozza", Case con Type "Blocco Sollecito/Interessi"
+*/
 public inherited sharing class HDT_QR_PostSalesMasterBatch {
 
     Date todayDate = System.today();

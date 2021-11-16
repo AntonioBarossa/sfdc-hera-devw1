@@ -49,7 +49,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Status__c</field>
+                <field>wrts_prcgvr__Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -188,7 +188,7 @@
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Type__c</fields>
-        <fields>Status__c</fields>
+        <fields>wrts_prcgvr__Status__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>CREATED_DATE</fields>
         <fields>UPDATEDBY_USER</fields>
